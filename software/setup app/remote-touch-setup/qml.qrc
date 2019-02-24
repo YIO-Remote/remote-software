@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>CustomButton.qml</file>
+        <file>WifiNetworkListElement.qml</file>
+        <file>WifiStep1.qml</file>
+        <file>WifiStep2.qml</file>
+        <file>WifiStep3.qml</file>
+        <file>HomeAssistant1.qml</file>
+        <file>HomeAssistant2.qml</file>
+        <file>HomeAssistantAreaElement.qml</file>
+        <file>HomeAssistantEntityElement.qml</file>
+        <file>RoomElement.qml</file>
+    </qresource>
+</RCC>

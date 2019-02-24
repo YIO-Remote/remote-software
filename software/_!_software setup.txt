@@ -1,12 +1,11 @@
 ##########################################################################
 #
 # TOUCH REMOTE SOFTWARE SETUP
-# 2019.01.06.
+# 2019.02.24
 #
 ##########################################################################
 
 OS made with buildroot.
-
 
 
 ##########################################################################
@@ -30,7 +29,8 @@ This service does the following:
 3. app.service
 Launches the file: /usr/bin/app-launch.sh
 This service does the following:
-    - launches the QT main app [remote-touch]
+    - mounts the boot directory to /mnt/boot
+    - launches the QT main app [remote-touch] or the setup app [remote-touch-setup] depending on /setup 
     - launches the display and standby control python script [standby-control.py]
     - launches the battery monitoring and shutdown script [battery.py]
 
@@ -43,30 +43,50 @@ Dependencies of the scripts:
         - ads1115.py [found in /usr/bin/ADS1115.py]
 
 
-
 ##########################################################################
 Configuration
 ##########################################################################
 /usr/bin/home_assistant_config.json
 Contains all the configuration the main app uses.
 
-/splash.png
+/hello.png
 Splash screen that displayed at boot. Used by /usr/bin/sharp-backlight-init.sh
 
+/bye.png
+Spash screen displayed at shutdown or reboot
+
+/setup
+If the file exists, setup app will be launched on boot
+
+/fistboot
+If the file exists, first boot script will be launched [/usr/bin/firstboot.sh].
 
 
 ##########################################################################
 Helper scripts
 ##########################################################################
 
+/usr/bin/firstboot.sh
+Removes journald
+Removes serial console
+
+/usr/bin/wifi_network_list.sh
+Lists the available wifi networks. Used by setup app [remote-touch-setup].
+
+/usr/bin/wifi_network_create.sh
+Creates a wpa supplicant configuration. Used by setup app [remote-touch-setup].
+
+/usr/bin/wifi_network_join.sh
+Joins the wifi network previously created. Used by setup app [remote-touch-setup].
+
 /usr/bin/uptime.sh 
-Calculates the uptime. This script is called from the main app.
+Calculates the uptime. This script is called from the main app [remote-touch].
 
 /usr/bin/wifi_rssi.sh
-Gets the Wifi signal strength. This scripts is called from the main app.
+Gets the Wifi signal strength. This scripts is called from the main app [remote-touch].
 
 /usr/bin/display_brightness.sh
-Dims the display to the specified brightness. This scripts is called from the standby-control.py script and the main app.
+Dims the display to the specified brightness. This scripts is called from the standby-control.py script and the main app [remote-touch].
 Takes 2 parameters. First is the existing brightness and the second is the desired brightness.
 
 
@@ -75,9 +95,12 @@ Remove journald
 ##########################################################################
 Following are the steps to solve this:
 
-Do a flush journalctl --flush
-Remove/Move the directory /var/log/journal
+journalctl --flush
+rm -rf /var/log/journal
 Set Storage=auto in /etc/systemd/journald.conf
 Reboot the machine
-You should see an improvement in the boot time.
 
+
+##########################################################################
+Disable serial console
+##########################################################################

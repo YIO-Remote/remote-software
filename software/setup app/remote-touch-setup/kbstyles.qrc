@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remote/style.qml</file>
+    </qresource>
+</RCC>
