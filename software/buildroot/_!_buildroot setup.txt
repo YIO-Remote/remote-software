@@ -1,0 +1,27 @@
+##########################################################################
+#
+# BUILDROOT SETUP
+# 2019.01.23.
+#
+##########################################################################
+
+##########################################################################
+How to build an image
+##########################################################################
+1. Copy relevant config files to /buildroot
+2. make linux-menuconfig
+3. make menuconfig
+4. make
+
+##########################################################################
+Python Evdev module fix
+##########################################################################
+Search for ecodes.c in output and delete line:
+ PyModule_AddIntMacro(m, BTN_STYLUS3);
+
+##########################################################################
+Adding packages
+##########################################################################
+1. Create a folder in buildroot-master/packages with the name of the package
+2. Edit the Config.in and <package name>.mk files
+3. Edig the main Config.in file in buildroot-master/packages

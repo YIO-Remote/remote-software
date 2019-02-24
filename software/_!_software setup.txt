@@ -1,0 +1,83 @@
+##########################################################################
+#
+# TOUCH REMOTE SOFTWARE SETUP
+# 2019.01.06.
+#
+##########################################################################
+
+OS made with buildroot.
+
+
+
+##########################################################################
+Background services use systemd to start up.
+##########################################################################
+These are located at /etc/systemd/systemd
+
+1. backlight.service
+Launches the file: /usr/bin/sharp-backlight-init.sh
+This service does the following:
+    - dispalys a splash screen
+    - turns on the pwm backlight control
+    - turns off the HDMI port
+    - turns of the activity LED on the Raspberry Pi
+
+2. sharp-init.service
+Launches the file: /usr/bin/sharp-init
+This service does the following:
+    - initalizes the display via a custom program written in C
+
+3. app.service
+Launches the file: /usr/bin/app-launch.sh
+This service does the following:
+    - launches the QT main app [remote-touch]
+    - launches the display and standby control python script [standby-control.py]
+    - launches the battery monitoring and shutdown script [battery.py]
+
+
+Dependencies of the scripts:
+    standby-control.py
+        - apds9960 [included with buildroot]
+    
+    battery.py
+        - ads1115.py [found in /usr/bin/ADS1115.py]
+
+
+
+##########################################################################
+Configuration
+##########################################################################
+/usr/bin/home_assistant_config.json
+Contains all the configuration the main app uses.
+
+/splash.png
+Splash screen that displayed at boot. Used by /usr/bin/sharp-backlight-init.sh
+
+
+
+##########################################################################
+Helper scripts
+##########################################################################
+
+/usr/bin/uptime.sh 
+Calculates the uptime. This script is called from the main app.
+
+/usr/bin/wifi_rssi.sh
+Gets the Wifi signal strength. This scripts is called from the main app.
+
+/usr/bin/display_brightness.sh
+Dims the display to the specified brightness. This scripts is called from the standby-control.py script and the main app.
+Takes 2 parameters. First is the existing brightness and the second is the desired brightness.
+
+
+##########################################################################
+Remove journald
+##########################################################################
+Following are the steps to solve this:
+
+Do a flush journalctl --flush
+Remove/Move the directory /var/log/journal
+Set Storage=auto in /etc/systemd/journald.conf
+Reboot the machine
+You should see an improvement in the boot time.
+
