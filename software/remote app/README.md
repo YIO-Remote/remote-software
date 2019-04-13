@@ -60,7 +60,7 @@ A variable **_current_version** is defined in main.qml. This sould be updated wi
 
 
 ## Supported components
-supported_entitites variable holds all the supported components. When a new component is added, the name should also be added to this variable.
+supported_entitites variable holds all the supported components. When a new component is added, the name should also be added to this variable. A variable named entities_[entity] should be also created for each supported entity.
 
 
 ## Websocket server
