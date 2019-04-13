@@ -34,6 +34,17 @@ List of entities that you want to control. Each entity has a type and data. The 
 The data part holds all the entitites that you have configured.
 
 
+## Integrations
+An integration is a connection and communication between the remote and a home automation software. This could be for example: Home Assistant, Homey, Domoticz, OpenHab, etc. The integration's filename should match with the value defined in the configuration json. The integration is loaded automatically when the app launches. If you'd like to develop an integration, create a file in the integrations directory: for example homeassistant.qml.
+
+
+## Components
+A component is a support to control an entity, for example: lights. For every component, there should be a directory with the entity's name under /components. Minium 3 files are necessary for a component to work:
+- Button.qml This is the graphical representation of the component.
+- Main.qml This is the main component file that loads the integration and hold all the entities from the configuration file
+- [integration name].qml This is the integration file. IF there are more integrations, there should be an integration file for each one. File name should match the files in /integrations
+
+
 ## Translations
 translations.json contains all the text elements. Right now there is only an 'en' entry. Copy the whole thing and create other translations like 'de', 'dk', etc.
 
@@ -44,6 +55,8 @@ Colors are defined in main.qml. Two color schemes are defined. One dark and one 
 
 ## Software update
 At every startup and every 2 hours a script checks if there's a new version on github. A red circle will appear in the status bar when there's a new version. If auto updated is on, it will automatically update the software. There is a bash script that downloads the file and replaces it.
+
+A variable **_current_version** is defined in main.qml. This sould be updated with every release.
 
 
 ## Supported components
