@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>scripts/websocket.js</file>
+        <file>integrations/homeassistant.qml</file>
+        <file>scripts/softwareupdate.js</file>
+        <file>basic_ui/ChargingScreen.qml</file>
+        <file>scripts/helper.js</file>
+        <file>basic_ui/PopupLowBattery.qml</file>
+        <file>basic_ui/ProgressCircle.qml</file>
+        <file>basic_ui/ConnectionScreen.qml</file>
+        <file>basic_ui/CustomButton.qml</file>
+        <file>MainContainer.qml</file>
+        <file>basic_ui/StatusBar.qml</file>
+        <file>basic_ui/main_navigation/MainNavigation.qml</file>
+        <file>basic_ui/main_navigation/NavigationButton.qml</file>
+        <file>components/light/Main.qml</file>
+        <file>components/light/homeassistant.qml</file>
+        <file>components/light/Button.qml</file>
+    </qresource>
+</RCC>

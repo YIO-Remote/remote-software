@@ -1,0 +1,100 @@
+{
+  "integration" : "homeassistant",
+  "homeassistant": {
+    "ip" : "",
+    "token" : ""
+  },
+   "rooms": [
+    {
+      "room": "Entrance"
+    },
+    {
+      "room": "Kitchen"
+    },
+    {
+      "room": "Living room"
+    },
+    {
+      "room": "Bedroom"
+    }
+  ],
+  "entities": [
+    {
+      "type": "light",
+      "data": [
+      {
+        "entity_id": "light.backdoor_lamp",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": false,
+        "room": "Entrance"
+      },
+      {
+        "entity_id": "light.entrance_lamp_level",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": false,
+        "room": "Entrance"
+      },
+      {
+        "entity_id": "light.kitchen_lamp_level",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": true,
+        "room": "Kitchen"
+      },
+      {
+        "entity_id": "light.kitchen_table_lamp_level",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": true,
+        "room": "Kitchen"
+      },
+      {
+        "entity_id": "light.kitchen_sink_lamp",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": false,
+        "room": "Kitchen"
+      },
+      {
+        "entity_id": "light.living_room_lamp_level",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": true,
+        "room": "Living room"
+      },
+      {
+        "entity_id": "light.living_room_corner_lamp_level",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": true,
+        "room": "Living room"
+      },
+      {
+        "entity_id": "light.bedroom_lamp_level",
+        "type": "light",
+        "state": "off",
+        "brightness": 0,
+        "friendly_name": "test",
+        "favorite": false,
+        "room": "Bedroom"
+      }
+      ]
+    },
+    ]
+}
