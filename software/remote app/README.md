@@ -4,7 +4,7 @@
 
 2. Edit the [config.json](config.json) file. Enter your Home Assistant ip:port and your token.
 
-3. Edit line 76 and 109 in [main.qml](main.qml) to change the path.
+3. Edit line 78 and 111 in [main.qml](main.qml) to change the path.
 
 That's it you're ready to try it out.
 
