@@ -37,6 +37,8 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COLORS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property int cornerRadius: 18
+
     property bool darkMode: true
 
     property string colorBackground: darkMode ? "#000000" : "#ffffff"
@@ -49,20 +51,20 @@ ApplicationWindow {
     property string colorLight: darkMode ? "#2E373D" : "#CBCBCB"
     property string colorMedium: darkMode ? "#121519" : "#D4D4D4"
     property string colorDark: darkMode ? "#16191E" : "#ffffff"
-    property string colorDarkest: "#0E0F12"
+    property string colorDarkest: darkMode ? "#0E0F12" : "#0E0F12"
 
     property string colorGreen: "#19D37B"
     property string colorRed: "#EA003C"
 
     property string colorSwitch: darkMode ? "#1E242C" : "#B9B9B9"
-    property string colorSwitchOn : "#ffffff"
+    property string colorSwitchOn : darkMode ? "#ffffff" : "#ffffff"
     property string colorSwitchBackground: darkMode ? "#000000" : "#ffffff"
 
     property string colorButton: darkMode ? "#121519" : "#EAEAEA"
     property string colorButtonPressed :darkMode ? "#16191E" : "#D7D7D7"
-    property string colorButtonFav: "#1A1D23"
+    property string colorButtonFav: darkMode ? "#1A1D23" : "#1A1D23"
 
-    property string colorRoundButton: "#1A1D23"
+//    property string colorRoundButton: "#1A1D23"
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,9 +124,12 @@ ApplicationWindow {
             for (var k=0; k<supported_entities.length; k++) {
                 if (supported_entities[k] == config.entities[i].type) {
                     // load the supported entity
-//                    applicationWindow["entities_"+config.entities[i].type] = config.entities[i].data;
+                    applicationWindow["entities_"+config.entities[i].type] = config.entities[i].data;
+
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    obj = comp.createObject(applicationWindow, {"entities": config.entities[i].data});
+                    obj = comp.createObject(applicationWindow);
+
+                    loaded_entities.push(supported_entities[k]);
                 }
             }
         }
@@ -139,7 +144,8 @@ ApplicationWindow {
     // It is necessary to have a seperate variable for every entity type, otherwise when an event comes all entities and their component would be updated too.
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var supported_entities: ["light"]
-
+    property var loaded_entities: []
+    property var entities_light
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES

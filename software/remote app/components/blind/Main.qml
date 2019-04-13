@@ -1,21 +1,22 @@
 import QtQuick 2.11
 
 Item {
-    id: lightComponent
+    id: blindComponent
 
-    property var lightComponentIntegration
+    property var entities
+    property var blindComponentIntegration
 
     Component.onCompleted: {
         // load the hub integration
-        var comp = Qt.createComponent("qrc:/components/light/"+ config.integration +".qml");
-        lightComponentIntegration = comp.createObject(applicationWindow);
+        var comp = Qt.createComponent("qrc:/components/blind/"+ config.integration +".qml");
+        blindComponentIntegration = comp.createObject(applicationWindow);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    function loadComponent(target, entity_id, state) {
+//    function loadComponent(target) {
 //        var comp = Qt.createComponent("qrc:/components/light/Button.qml");
-//        var obj = comp.createObject(target, {"entity_id": entity_id, "lstate": state});
+//        var obj = comp.createObject(target);
 //    }
 }

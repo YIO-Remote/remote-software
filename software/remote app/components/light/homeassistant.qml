@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import "qrc:/scripts/helper.js" as JSHelper
+
 Item {
     id: lightComponent_homeassistant
 
@@ -12,10 +14,51 @@ Item {
     Connections {
         target: integration
         onSendFetchJson: {
+            console.debug("Got fetched JSON");
             // Process fetched json here. This only has to be one time after connecting to the hub
+            var tmp = entities_light;
+
+            for (var i=0; i<json.result.length; i++) {
+                for (var k=0; k<entities_light.length; k++) {
+                    if (json.result[i].entity_id == entities_light[k].entity_id) {
+                        tmp[k].state = json.result[i].state;
+
+                        if (json.result[i].attributes.brightness == null) {
+                            tmp[k].brightness = "0";
+                        } else {
+                            tmp[k].brightness = JSHelper.convertToPercentage(json.result[i].attributes.brightness); // converting the brightness to percentage
+                        }
+
+                        tmp[k].friendly_name = json.result[i].attributes.friendly_name;
+                    }
+                }
+            }
+
+            entities_light = tmp;
         }
         onSendEventJson: {
             // Process event json here. Every time there's an update
+
+            var entity_id = json.event.data.entity_id;
+            var state = json.event.data.new_state.state;
+            var brightness = json.event.data.new_state.attributes.brightness;
+
+            var tmp = entities_light;
+
+            for (var k=0; k < entities_light.length; k++) {
+                if (entity_id == entities_light[k].entity_id) {
+
+                    // state update
+                    tmp[k].state = state;
+                    // brightness update
+                    if (brightness == null) {
+                        tmp[k].brightness = "0";
+                    } else {
+                        tmp[k].brightness = JSHelper.convertToPercentage(brightness); // converting the brightness to percentage
+                    }
+                    entities_light = tmp;
+                }
+            }
         }
     }
 

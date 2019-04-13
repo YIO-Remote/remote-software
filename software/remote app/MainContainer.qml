@@ -3,6 +3,7 @@ import QtQuick.Controls 2.4
 
 import "basic_ui" as BasicUI
 import "basic_ui/main_navigation" as Navigation
+import "components/light" as ComponentLight
 
 Item {
     id: main_container
@@ -13,6 +14,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN CONTAINER CONTENT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    property alias mainNavigationSwipeview: mainNavigationSwipeview
 
     SwipeView {
         id: mainNavigationSwipeview
@@ -25,6 +28,8 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // DASHBOARD
         Item {
+            visible: mainNavigationSwipeview.currentIndex ==  0 ? true : false
+
             Flickable {
                 id: dashboardFlickable
                 width: parent.width
@@ -32,7 +37,7 @@ Item {
                 maximumFlickVelocity: 4000
                 flickDeceleration: 1000
                 clip: true
-                contentHeight: 2000 // dashboardFlow.height
+                contentHeight: dashboardFlow.height
                 boundsBehavior: Flickable.DragAndOvershootBounds
                 flickableDirection: Flickable.VerticalFlick
 
@@ -44,7 +49,7 @@ Item {
                     id: dashboardFlow
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 6
+                    spacing: 10
 
                 }
             }
@@ -52,6 +57,77 @@ Item {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // ROOMS
+        Item {
+            visible: mainNavigationSwipeview.currentIndex ==  1 ? true : false
+
+            Flickable {
+                width: parent.width
+                height: parent.height
+                maximumFlickVelocity: 4000
+                flickDeceleration: 1000
+                clip: true
+                contentHeight: roomsFlow.height
+                boundsBehavior: Flickable.DragAndOvershootBounds
+                flickableDirection: Flickable.VerticalFlick
+
+                ScrollBar.vertical: ScrollBar {
+                    opacity: 0.5
+                }
+
+                Flow {
+                    id: roomsFlow
+                    width: parent.width
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 10
+
+                }
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        // SUPPORTED ENTITIES
+        Repeater {
+            model: supported_entities
+
+            Item {
+                visible: mainNavigationSwipeview.currentIndex ==  2 + index ? true : false
+
+                Flickable {
+                    width: parent.width
+                    height: parent.height
+                    maximumFlickVelocity: 4000
+                    flickDeceleration: 1000
+                    clip: true
+                    contentHeight: repeaterFlow.height
+                    boundsBehavior: Flickable.DragAndOvershootBounds
+                    flickableDirection: Flickable.VerticalFlick
+
+                    ScrollBar.vertical: ScrollBar {
+                        opacity: 0.5
+                    }
+
+                    Flow {
+                        id: repeaterFlow
+                        width: parent.width
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        spacing: 10
+
+                        Repeater {
+                            id: entityRepeater
+                            property int pageIndex: index
+
+                            model: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]]
+                            ComponentLight.Button {
+                                entity_id: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].entity_id
+                                lstate: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].state
+                                brightness: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].brightness
+                                friendly_name: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].friendly_name
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // SETTINGS
@@ -79,7 +155,7 @@ Item {
 
         gradient: Gradient {
             GradientStop { position: 0.0; color: colorBackgroundTransparent }
-            GradientStop { position: 1.0; color: colorBackground }
+            GradientStop { position: 0.9; color: colorBackground }
         }
     }
 

@@ -17,5 +17,8 @@
         <file>components/light/Main.qml</file>
         <file>components/light/homeassistant.qml</file>
         <file>components/light/Button.qml</file>
+        <file>components/blind/Button.qml</file>
+        <file>components/blind/homeassistant.qml</file>
+        <file>components/blind/Main.qml</file>
     </qresource>
 </RCC>
