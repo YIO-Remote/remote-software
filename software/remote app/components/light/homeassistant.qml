@@ -14,13 +14,13 @@ Item {
     Connections {
         target: integration
         onSendFetchJson: {
-            console.debug("Got fetched JSON");
             // Process fetched json here. This only has to be one time after connecting to the hub
             var tmp = entities_light;
 
             for (var i=0; i<json.result.length; i++) {
                 for (var k=0; k<entities_light.length; k++) {
                     if (json.result[i].entity_id == entities_light[k].entity_id) {
+
                         tmp[k].state = json.result[i].state;
 
                         if (json.result[i].attributes.brightness == null) {
@@ -48,14 +48,14 @@ Item {
             for (var k=0; k < entities_light.length; k++) {
                 if (entity_id == entities_light[k].entity_id) {
 
-                    // state update
                     tmp[k].state = state;
-                    // brightness update
+
                     if (brightness == null) {
                         tmp[k].brightness = "0";
                     } else {
                         tmp[k].brightness = JSHelper.convertToPercentage(brightness); // converting the brightness to percentage
                     }
+
                     entities_light = tmp;
                 }
             }
@@ -71,7 +71,8 @@ Item {
     }
 
     function setBrightness(entity_id, brightness) {
-        integration.webSocketSendCommand("light","turn_on",entity_id, brightness);
+        var data = {"brightness_pct": brightness}
+        integration.webSocketSendCommand("light","turn_on",entity_id, data);
     }
 
     function turnOn(entity_id) {

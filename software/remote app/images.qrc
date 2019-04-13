@@ -9,5 +9,6 @@
         <file>images/navigation/icon-dashboard.png</file>
         <file>images/navigation/icon-blind.png</file>
         <file>images/navigation/icon-light.png</file>
+        <file>components/light/images/icon-light.png</file>
     </qresource>
 </RCC>

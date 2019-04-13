@@ -63,7 +63,6 @@ Item {
             // SUBSCRIBE TO EVENTS IN HOME ASSISTANT
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             socket.sendTextMessage('{"id": 3, "type": "subscribe_events", "event_type": "state_changed"}\n');
-            //            socket.sendTextMessage('{"id": 3, "type": "config/area_registry/list"}\n'); //get areas
         }
 
         if (json.success == true && json.id == 3) {
@@ -84,7 +83,6 @@ Item {
         }
 
         if (json.type == "event" && json.id == 3) {
-            // parse update events
             event_json = json;
         }
     }

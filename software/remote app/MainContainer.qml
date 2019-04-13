@@ -122,6 +122,7 @@ Item {
                                 lstate: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].state
                                 brightness: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].brightness
                                 friendly_name: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].friendly_name
+                                componentID: entityRepeater.pageIndex
                             }
                         }
                     }
