@@ -17,6 +17,14 @@ https://discord.gg/zGVYf58
 - Qi wireless charging
 - docking station
 
+## Supported home automation hubs
+- Home Assistant
+
+## Supported devices
+- Lights
+- Blinds
+- Heating
+- Media players
 
 # Releases
 ## Version 0.1
