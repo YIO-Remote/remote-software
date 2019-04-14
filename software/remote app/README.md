@@ -2,7 +2,7 @@
 
 1. Download an install [Qt](https://www.qt.io/download-qt-installer?hsCtaTracking=9f6a2170-a938-42df-a8e2-a9f0b1d6cdce%7C6cb0de4f-9bb5-4778-ab02-bfb62735f3e5)
 
-2. Edit the [config.json](config.json) file. Enter your Home Assistant ip:port and your token.
+2. Edit the [config.json](config.json) file. Enter your Home Assistant ip:port, your token, rooms and your entitites.
 
 3. Edit line 78 and 111 in [main.qml](main.qml) to change the path.
 
