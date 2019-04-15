@@ -1,0 +1,34 @@
+{
+    "supported_entities": {
+        "alarm": "Alarm",
+        "light": "Lights",
+        "blind": "Blinds",
+        "climate": "Climate",
+        "media_player": "Media",
+        "remote": "Remotes"
+    },
+    "chargingscreen": {
+        "charging": "Charging"
+    },
+    "connectionscreen": {
+        "reconnecting": "Reconnecting ...",
+        "connected": "Connected",
+        "failed": "Connection failed",
+        "tryagain": "Try again",
+        "hello": "Hello",
+        "waitforit": "Wait for it ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "Low battery",
+        "chargesoon": "Please charge the remote soon"
+    },
+    "softwareupdate": {
+        "newversion": "New software version is available.",
+        "update": "Update"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "rooms": "Rooms",
+        "settings": "Settings"
+    }
+}

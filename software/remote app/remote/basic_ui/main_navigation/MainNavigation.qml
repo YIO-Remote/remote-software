@@ -50,8 +50,7 @@ Item {
 
         Behavior on contentX {
             SequentialAnimation {
-                PauseAnimation { duration: 400 }
-                NumberAnimation { duration: 400; easing.type: Easing.OutExpo }
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
             }
         }
 
@@ -114,7 +113,7 @@ Item {
 
         Behavior on opacity {
             NumberAnimation {
-                duration: 400
+                duration: 200
                 easing.type: Easing.OutExpo
             }
         }
@@ -136,7 +135,7 @@ Item {
 
         Behavior on opacity {
             NumberAnimation {
-                duration: 400
+                duration: 200
                 easing.type: Easing.OutExpo
             }
         }

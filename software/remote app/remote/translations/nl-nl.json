@@ -1,0 +1,34 @@
+{
+    "supported_entities": {
+        "alarm": "Alarm",
+        "light": "Verlichting",
+        "blind": "Jaloezieën",
+        "climate": "Thermostaat",
+        "media_player": "Media",
+        "remote": "Afstandsbedieningen"
+    },
+    "chargingscreen": {
+        "charging": "Opladen"
+    },
+    "connectionscreen": {
+        "reconnecting": "Opnieuw verbinden ...",
+        "connected": "Verbonden",
+        "failed": "Verbinding mislukt",
+        "tryagain": "Probeer opnieuw",
+        "hello": "Hallo",
+        "waitforit": "Even wachten ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "Batterij bijna leeg",
+        "chargesoon": "Laad de afstandsbediening binnenkort op"
+    },
+    "softwareupdate": {
+        "newversion": "Nieuwe softwareversie beschikbaar.",
+        "update": "Updaten"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "rooms": "Kamers",
+        "settings": "Instellingen"
+    }
+}

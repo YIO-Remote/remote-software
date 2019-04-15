@@ -15,7 +15,7 @@ Rectangle {
     opacity: selected ? 1 : 0.3
 
     Behavior on opacity {
-        NumberAnimation { duration: 400 }
+        NumberAnimation { duration: 200 }
     }
 
     Text {
