@@ -29,6 +29,11 @@ https://community.yio-remote.com
 - Heating
 - Media players
 
+## Supported languages
+- [x] 🇬🇧 english
+- [x] 🇳🇱 dutch
+- [ ] if you would like to contribue, please create a pull request
+
 # Releases
 ## Version 0.1
 Initial release
