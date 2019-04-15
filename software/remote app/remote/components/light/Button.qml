@@ -211,7 +211,7 @@ Rectangle {
 
             Rectangle {
                 width: brightnessSlider.visualPosition * parent.width
-                height: parent.height
+                height: 4
                 radius: 2
                 color: colorBackgroundTransparent
 
