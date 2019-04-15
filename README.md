@@ -7,6 +7,9 @@ It is divided into two sections: [software](/software) and [hardware](/hardware)
 Discord server to chat about the project: 
 https://discord.gg/zGVYf58
 
+Forum to dsicuss about the project:
+https://community.yio-remote.com
+
 
 ## Features
 - 3.5" 480x800px high resolution capacitive touchscreen
