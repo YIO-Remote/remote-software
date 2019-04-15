@@ -1,0 +1,34 @@
+{
+    "supported_entities": {
+        "alarm": "Alarme",
+        "light": "Lumière",
+        "blind": "Volet",
+        "climate": "Thermostat",
+        "media_player": "Lecteur",
+        "remote": "Télécommande"
+    },
+    "chargingscreen": {
+        "charging": "Chargement en cours"
+    },
+    "connectionscreen": {
+        "reconnecting": "Reconnexion ...",
+        "connected": "Connecté",
+        "failed": "Connection échoué",
+        "tryagain": "Réessaye",
+        "hello": "Bonjour",
+        "waitforit": "Patientez ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "Batterie faible",
+        "chargesoon": "Recharger la télecommande"
+    },
+    "softwareupdate": {
+        "newversion": "Nouvelle version logiciel est disponible.",
+        "update": "Mise à jour"
+    },
+    "navigation": {
+        "dashboard": "Tableau de bord",
+        "rooms": "Pièce",
+        "settings": "Réglages"
+    }
+}
