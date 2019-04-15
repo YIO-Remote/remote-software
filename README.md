@@ -32,6 +32,7 @@ https://community.yio-remote.com
 ## Supported languages
 - [x] 🇬🇧 english
 - [x] 🇳🇱 dutch
+- [x] 🇫🇷 french
 - [ ] if you would like to contribue, please create a pull request
 
 # Releases
