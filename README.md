@@ -1,4 +1,4 @@
-# Touchscreen remote
+# Yio touchscreen remote
 
 Touchscreen remote made to control smart home hubs. Right now there's support for Home Assistant only. Will be updating the project as I have more time.
 
