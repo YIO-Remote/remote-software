@@ -1,0 +1,34 @@
+{
+    "supported_entities": {
+        "alarm": "Alarme",
+        "light": "Luz",
+        "blind": "Cortina/Persiana",
+        "climate": "Termostato",
+        "media_player": "Reprodutor de mídia",
+        "remote": "Controle Remoto"
+    },
+    "chargingscreen": {
+        "charging": "Carregando"
+    },
+    "connectionscreen": {
+        "reconnecting": "Reconectando ...",
+        "connected": "Conectado",
+        "failed": "Erro",
+        "tryagain": "Tente novamente",
+        "hello": "Olá",
+        "waitforit": "Espere um momento ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "Bateria baixa",
+        "chargesoon": "Carregue assim que puder"
+    },
+    "softwareupdate": {
+        "newversion": "Nova versão do software está disponível.",
+        "update": "Atualize"
+    },
+    "navigation": {
+        "dashboard": "Painel de controle",
+        "rooms": "Ambientes",
+        "settings": "Configurações"
+    }
+}
