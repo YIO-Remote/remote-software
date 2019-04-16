@@ -33,6 +33,7 @@ https://community.yio-remote.com
 - [x] 🇬🇧 english
 - [x] 🇳🇱 dutch
 - [x] 🇫🇷 french
+- [x] 🇵🇹/🇧🇷 Portuguese-Brazilian
 - [ ] if you would like to contribue, please create a pull request
 
 # Releases
