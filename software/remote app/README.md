@@ -48,7 +48,7 @@ A component is a support to control an entity, for example: lights. For every co
 
 
 ## Translations
-translations.json contains all the text elements. Right now there is only an 'en' entry. Copy the whole thing and create other translations like 'de', 'dk', etc.
+Translations directory contains all the translations. There are one json file for each language. The app by default loads 'en-us'.
 
 
 ## Colors
