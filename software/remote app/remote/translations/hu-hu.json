@@ -1,0 +1,34 @@
+{
+    "supported_entities": {
+        "alarm": "Riasztó",
+        "light": "Lámpák",
+        "blind": "Redőnyök",
+        "climate": "Fűtés",
+        "media_player": "Média",
+        "remote": "Távirányítók"
+    },
+    "chargingscreen": {
+        "charging": "Töltés"
+    },
+    "connectionscreen": {
+        "reconnecting": "Újrakapcsolódás ...",
+        "connected": "Kapcsolódva",
+        "failed": "Sikertelen kapcsolódás",
+        "tryagain": "Próbáld újra",
+        "hello": "Szia",
+        "waitforit": "Várj egy kicsit ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "Alacsony akkumlátor töltöttség",
+        "chargesoon": "Kérlek töltsd fel a távirányítót hamarosan"
+    },
+    "softwareupdate": {
+        "newversion": "Új software verzió elérhető.",
+        "update": "Frissítés"
+    },
+    "navigation": {
+        "dashboard": "Irányítópult",
+        "rooms": "Szobák",
+        "settings": "Beállítások"
+    }
+}

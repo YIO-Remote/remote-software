@@ -36,11 +36,11 @@ https://community.yio-remote.com
 - [x] 🇵🇹/🇧🇷 Portuguese-Brazilian
 - [x] 🇩🇰 Danish
 - [x] 🇩🇪 German
+- [x] 🇭🇺 Hungarian
 
 ### Still wanted language translations
 - [ ] 🇵🇹 Portuguese
 - [ ] 🇪🇸 Spanish
-- [ ] 🇭🇺 Hungarian
 - [ ] 🇳🇴 Norwegian
 - [ ] 🇸🇪 Swedish
 - [ ] 🇧🇬 Bulgarian
