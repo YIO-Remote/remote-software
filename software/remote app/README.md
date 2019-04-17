@@ -12,7 +12,7 @@ That's it you're ready to try it out.
 
 
 # How does the remote app works
-I'll do my best to explain how I built the app. If something is not clear, please let me know. There's also a [discord channel](https://discord.gg/zGVYf58) where we can talk about the remote.
+I'll do my best to explain how I built the app. If something is not clear, please let me know. There's also a [discord channel](https://discord.gg/zGVYf58) and [forum](https://community.yio-remote.com) where we can talk about the remote. 
 
 
 ## Configuration
