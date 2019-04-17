@@ -6,6 +6,8 @@
 
 3. Edit line 78 and 111 in [main.qml](main.qml) to change the path.
 
+4. Install the font [Open Sans](https://fonts.google.com/specimen/Open+Sans) 
+
 That's it you're ready to try it out.
 
 

@@ -30,11 +30,36 @@ https://community.yio-remote.com
 - Media players
 
 ## Supported languages
-- [x] 🇬🇧 english
-- [x] 🇳🇱 dutch
-- [x] 🇫🇷 french
+- [x] 🇬🇧 English
+- [x] 🇳🇱 Dutch
+- [x] 🇫🇷 French
 - [x] 🇵🇹/🇧🇷 Portuguese-Brazilian
-- [ ] if you would like to contribue, please create a pull request
+- [x] 🇩🇰 Danish
+- [x] 🇩🇪 German
+
+### Still wanted language translations
+- [ ] 🇵🇹 Portuguese
+- [ ] 🇪🇸 Spanish
+- [ ] 🇭🇺 Hungarian
+- [ ] 🇳🇴 Norwegian
+- [ ] 🇸🇪 Swedish
+- [ ] 🇧🇬 Bulgarian
+- [ ] 🇭🇷 Croatian
+- [ ] 🇨🇿 Czech
+- [ ] 🇪🇪 Estonian
+- [ ] 🇫🇮 Finnish
+- [ ] 🇬🇷 Greek
+- [ ] 🇮🇪 Irish
+- [ ] 🇮🇹 Italian
+- [ ] 🇱🇻 Latvian
+- [ ] 🇱🇹 Lithuanian
+- [ ] 🇲🇹 Maltese
+- [ ] 🇵🇱 Polish
+- [ ] 🇷🇴 Romanian
+- [ ] 🇸🇰 Slovak
+- [ ] 🇸🇮 Slovene
+
+If you would like to contribue, please create a pull request or join this topic: https://community.yio-remote.com/t/translation-file/20
 
 # Releases
 ## Version 0.1

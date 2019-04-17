@@ -1,0 +1,34 @@
+{
+    "supported_entities": {
+        "alarm": "Alarme",
+        "light": "Lampen",
+        "blind": "Rolladen",
+        "climate": "Klima",
+        "media_player": "Media",
+        "remote": "Fernbedienungen"
+    },
+    "chargingscreen": {
+        "charging": "aufladen"
+    },
+    "connectionscreen": {
+        "reconnecting": "wiederverbinden ...",
+        "connected": "verbunden",
+        "failed": "Verbindung fehlgeschlagen",
+        "tryagain": "erneut versuchen",
+        "hello": "Hallo",
+        "waitforit": "Bitte warten ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "niedrige Batterie",
+        "chargesoon": "Bitte lade die Fernbedienung bald"
+    },
+    "softwareupdate": {
+        "newversion": "Neue Software Version verfügbar.",
+        "update": "Aktualisieren"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "rooms": "Räume",
+        "settings": "Einstellungen"
+    }
+}
