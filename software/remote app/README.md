@@ -48,7 +48,7 @@ A component is a support to control an entity, for example: lights. For every co
 
 
 ## Translations
-Translations directory contains all the translations. There are one json file for each language. The app by default loads 'en-us'.
+The folder translations contain multiple .json files. With scalability in mind, each file represents a language, for example: en-us.json, pt-br.json or nl-nl.json.
 
 
 ## Colors
@@ -113,6 +113,9 @@ Folder for the various components that control an entity: for example light. Eac
   jsonfile - reads the json files
   launcher - executes bash scripts
   main - main cpp file for the app
+  
+↳ translations
+  contains various json files where each file represents a language.
 
 MainContaner.qml
 The main container for the app. It has the following components:
