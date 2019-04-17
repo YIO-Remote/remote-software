@@ -1,0 +1,34 @@
+{
+    "supported_entities": {
+        "alarm": "Alarm",
+        "light": "Lys",
+        "blind": "Persienner",
+        "climate": "Klima",
+        "media_player": "Medie",
+        "remote": "Fjernbetjeninger"
+    },
+    "chargingscreen": {
+        "charging": "Oplader"
+    },
+    "connectionscreen": {
+        "reconnecting": "Forbinder igen ...",
+        "connected": "Forbundet",
+        "failed": "Forbindelse mislykkedes",
+        "tryagain": "Prøv igen",
+        "hello": "Hej",
+        "waitforit": "Vent venligst ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "Lavt batteri",
+        "chargesoon": "Oplad fjerningbetjeningen snart"
+    },
+    "softwareupdate": {
+        "newversion": "Ny softwareversion er tilgængelig.",
+        "update": "Opdatering"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "rooms": "Værelser",
+        "settings": "Indstillinger"
+    }
+}
