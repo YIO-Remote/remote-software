@@ -37,10 +37,10 @@ https://community.yio-remote.com
 - [x] 🇩🇰 Danish
 - [x] 🇩🇪 German
 - [x] 🇭🇺 Hungarian
+- [X] 🇪🇸 Spanish
 
 ### Still wanted language translations
 - [ ] 🇵🇹 Portuguese
-- [ ] 🇪🇸 Spanish
 - [ ] 🇳🇴 Norwegian
 - [ ] 🇸🇪 Swedish
 - [ ] 🇧🇬 Bulgarian
