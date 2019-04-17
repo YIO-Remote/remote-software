@@ -10,4 +10,6 @@ The software of the remote is written in [Qt](https://www.qt.io/). In order to g
   
 The Developer and Designer Tools are preselected and you can leave that.
 
-> In case you need to add, remove or change components post-install, open the file "MaintenanceTool.exe" in the root of the Install directory (C:\Qt by defu
+> In case you need to add, remove or change components post-install, open the file "MaintenanceTool.exe" in the root of the Install directory (C:\Qt by default)
+
+After setting up your environment you can continue to configure your [remote app](./remote app) project according to the information over there.
