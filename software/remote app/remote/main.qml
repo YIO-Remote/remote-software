@@ -1,6 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtWebSockets 1.0
+import Qt.labs.folderlistmodel 2.2
 
 import Launcher 1.0
 import JsonFile 1.0
@@ -64,7 +65,7 @@ ApplicationWindow {
     property string colorButtonPressed :darkMode ? "#16191E" : "#D7D7D7"
     property string colorButtonFav: darkMode ? "#1A1D23" : "#1A1D23"
 
-//    property string colorRoundButton: "#1A1D23"
+    //    property string colorRoundButton: "#1A1D23"
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +77,26 @@ ApplicationWindow {
     JsonFile {
         id: default_language
         name: "/Users/marton/Qt\ Projects/remote/translations/en-us.json"
+    }
+
+    // load the files from translations directory
+    FolderListModel {
+        id: translationsDirectory
+        folder: "file:///Users/marton/Qt\ Projects/remote/translations"
+        nameFilters: ["*.json"]
+        showFiles: true
+    }
+
+    property int translationsDirectoryCount: translationsDirectory.count
+    property var translationJsonFiles: []
+
+    onTranslationsDirectoryCountChanged: {
+        for (var i=0; i<translationsDirectoryCount; i++) {
+            var lang = translationsDirectory.get(i, "fileName").split(".")
+
+            translationJsonFiles[i] = Qt.createQmlObject('import JsonFile 1.0; JsonFile {id: jsonFilelang' + i + '; name: "/Users/marton/Qt\ Projects/remote/translations/' + lang[0] + '.json"}', applicationWindow, '');
+            translations[lang[0]] = translationJsonFiles[i].read();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
