@@ -51,6 +51,16 @@ function parseWSServerMessage (message) {
         var brightness = message.split(',');
         display_brightness = brightness[1];
         break;
+
+    case "proximityDetected":
+        standbyControl.proximityDetected = true;
+        break;
+    case "touchDetected":
+        standbyControl.touchDetected = true;
+        break;
+    case "buttonPressDetected":
+        standbyControl.buttonPressDetected = true;
+        break;
     }
 }
 
