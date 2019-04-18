@@ -1,4 +1,5 @@
 {
+    "description": "Magyar",
     "supported_entities": {
         "alarm": "Riasztó",
         "light": "Lámpák",

@@ -1,4 +1,5 @@
 {
+    "description": "English, US",
     "supported_entities": {
         "alarm": "Alarm",
         "light": "Lights",
