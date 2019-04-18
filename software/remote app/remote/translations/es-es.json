@@ -1,4 +1,5 @@
 {
+    "description": "",
     "supported_entities": {
         "alarm": "Alarma",
         "light": "Luces",

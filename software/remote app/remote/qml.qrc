@@ -21,5 +21,7 @@
         <file>components/blind/homeassistant.qml</file>
         <file>components/blind/Main.qml</file>
         <file>integrations/homey.qml</file>
+        <file>components/light/homey.qml</file>
+        <file>StandbyControl.qml</file>
     </qresource>
 </RCC>
