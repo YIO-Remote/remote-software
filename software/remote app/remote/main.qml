@@ -150,7 +150,7 @@ ApplicationWindow {
                     applicationWindow["entities_"+config.entities[i].type] = config.entities[i].data;
 
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    obj = comp.createObject(applicationWindow);
+                    obj = comp.createObject(applicationWindow, {integrationId: i});
 
                     loaded_entities.push(supported_entities[k]);
                     loaded_components.push(obj);

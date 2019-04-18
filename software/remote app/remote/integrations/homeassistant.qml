@@ -8,6 +8,7 @@ Item {
     property bool webSocketConnection: false
     property int webSocketId: 4
 
+    property int integrationId
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SIGNALS
@@ -45,7 +46,7 @@ Item {
         if (json.type == "auth_required") {
             json = {};
             json["type"] = "auth";
-            json["access_token"] = config.integration[JSHelper.findIntegration("homeassistant")].data.token;
+            json["access_token"] = config.integration[integrationId].data.token;
             socket.sendTextMessage(JSON.stringify(json));
         }
 
@@ -114,7 +115,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     WebSocket {
         id: socket
-        url: "ws://" + config.integration[JSHelper.findIntegration("homeassistant")].data.ip + "/api/websocket"
+        url: "ws://" + config.integration[integrationId].data.ip + "/api/websocket"
         onTextMessageReceived: {
             //            console.debug("\nReceived message: " + message)
             webSocketProcess(message);

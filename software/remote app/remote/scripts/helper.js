@@ -25,10 +25,3 @@ function convertToTwoDigits(n){
 function convertToPercentage (value) {
     return Math.round(value/255*100);
 }
-
-function findIntegration(name) {
-    for (var i=0; i<config.integration.length; i++)
-        if (config.integration[i].type == name) {
-            return i;
-        }
-}
