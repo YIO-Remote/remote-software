@@ -14,14 +14,17 @@ function parseWSServerMessage (message) {
             battery_time = d.getTime()
         }
         break;
+
     case String(message.match(/^usb,.*/)):
         chargingScreen.state = "visible";
         battery_time = 0;
         break;
+
     case String(message.match(/^voltage,.*/)):
         var voltage = message.split(',');
         battery_voltage = voltage[1];
         break;
+
     case "low battery":
         lowBatteryNotification.open();
         if (displayOff.visible) {
@@ -32,32 +35,31 @@ function parseWSServerMessage (message) {
             socketServer.clientId.sendTextMessage("wakeup");
         }
         break;
-    case "wifi off":
-        socket.active = false;
-        websocketReconnect.running = false;
-        break;
-    case "wifi on":
-        connectionLoader.state = "connecting"
-        websocketReconnect.tries = 0;
-        socket.active = true;
-        break;
-    case "display on": // remove this when standby mode implemented
-        displayOff.visible = false;
-        break;
-    case "display off": // remove this when standby mode implemented
-        displayOff.visible = true;
-        break;
-    case String(message.match(/^brightness,.*/)):
-        var brightness = message.split(',');
-        display_brightness = brightness[1];
-        break;
+
+//    case "wifi off":
+//        socket.active = false;
+//        websocketReconnect.running = false;
+//        break;
+
+//    case "wifi on":
+//        connectionLoader.state = "connecting"
+//        websocketReconnect.tries = 0;
+//        socket.active = true;
+//        break;
+
+//    case String(message.match(/^brightness,.*/)):
+//        var brightness = message.split(',');
+//        display_brightness = brightness[1];
+//        break;
 
     case "proximityDetected":
         standbyControl.proximityDetected = true;
         break;
+
     case "touchDetected":
         standbyControl.touchDetected = true;
         break;
+
     case "buttonPressDetected":
         standbyControl.buttonPressDetected = true;
         break;
