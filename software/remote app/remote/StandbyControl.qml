@@ -22,6 +22,10 @@ Item {
             // if mode wifi_off then turn on wifi and display
             if (mode == "wifi_off") {
                 socketServer.clientId.sendTextMessage("wifi on");
+                // integration socket on
+                for (var i=0; i<config.integration.length; i++) {
+                    integration[config.integration[i].type].connectionOpen = true;
+                }
             }
             // set the display brightness
             //
@@ -45,6 +49,10 @@ Item {
             // if mode wifi_off then turn on wifi and display
             if (mode == "wifi_off") {
                 socketServer.clientId.sendTextMessage("wifi on");
+                // integration socket on
+                for (var i=0; i<config.integration.length; i++) {
+                    integration[config.integration[i].type].connectionOpen = true;
+                }
             }
             // set the display brightness
             //
@@ -61,9 +69,17 @@ Item {
         // if there was a button press event, reset the timers
         if (buttonPressDetected) {
             // if mode standby then turn on the display
+            if (mode == "standby") {
+                //
+            }
+
             // if mode wifi_off then turn on wifi and display
             if (mode == "wifi_off") {
                 socketServer.clientId.sendTextMessage("wifi on");
+                // integration socket on
+                for (var i=0; i<config.integration.length; i++) {
+                    integration[config.integration[i].type].connectionOpen = true;
+                }
             }
 
             // set the display brightness
@@ -140,6 +156,10 @@ Item {
                 console.debug("Wifi off");
                 // turn off wifi
                 socketServer.clientId.sendTextMessage("wifi off");
+                // integration socket off
+                for (var i=0; i<config.integration.length; i++) {
+                    integration[config.integration[i].type].connectionOpen = false;
+                }
                 mode = "wifi_off";
             }
         }

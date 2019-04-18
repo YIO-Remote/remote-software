@@ -1,3 +1,5 @@
 import QtQuick 2.11
 
-Item {}
+Item {
+    property bool connectionOpen: true
+}

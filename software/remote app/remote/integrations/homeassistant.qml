@@ -10,6 +10,20 @@ Item {
 
     property int integrationId
 
+    property bool connectionOpen: true
+
+    onConnectionOpenChanged: {
+        console.debug("YAY")
+        if (connectionOpen) {
+            connectionLoader.state = "connecting"
+            websocketReconnect.tries = 0;
+            socket.active = true;
+        } else {
+            socket.active = false;
+            websocketReconnect.running = false;
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SIGNALS
     // Signals to push the data to the components
