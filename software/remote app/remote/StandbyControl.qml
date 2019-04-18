@@ -20,6 +20,7 @@ Item {
             standbyTimer.stop();
             wifiOffTimer.restart();
             shutdownTimer.restart();
+            touchDetected = false;
         }
     }
 
@@ -31,6 +32,7 @@ Item {
             standbyTimer.stop();
             wifiOffTimer.restart();
             shutdownTimer.restart();
+            proximityDetected = false;
         }
     }
 
@@ -42,6 +44,7 @@ Item {
             standbyTimer.stop();
             wifiOffTimer.restart();
             shutdownTimer.restart();
+            buttonPressDetected = false;
         }
     }
 
@@ -53,7 +56,7 @@ Item {
         interval: displayDimTime * 1000
 
         onTriggered: {
-            if (proximityDetected && mode != "dim") {
+            if (mode != "dim") {
                 displayDimTimer.stop();
                 console.debug("Dim the display");
                 mode = "dim";
