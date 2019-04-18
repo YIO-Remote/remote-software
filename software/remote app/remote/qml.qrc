@@ -20,5 +20,6 @@
         <file>components/blind/Button.qml</file>
         <file>components/blind/homeassistant.qml</file>
         <file>components/blind/Main.qml</file>
+        <file>integrations/homey.qml</file>
     </qresource>
 </RCC>

@@ -1,6 +1,8 @@
 import QtQuick 2.11
 import QtWebSockets 1.0
 
+import "qrc:/scripts/helper.js" as JSHelper
+
 Item {
     id: homeassistant
     property bool webSocketConnection: false
@@ -43,7 +45,7 @@ Item {
         if (json.type == "auth_required") {
             json = {};
             json["type"] = "auth";
-            json["access_token"] = config.homeassistant.token;
+            json["access_token"] = config.integration[JSHelper.findIntegration("homeassistant")].data.token;
             socket.sendTextMessage(JSON.stringify(json));
         }
 
@@ -112,7 +114,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     WebSocket {
         id: socket
-        url: "ws://" + config.homeassistant.ip + "/api/websocket"
+        url: "ws://" + config.integration[JSHelper.findIntegration("homeassistant")].data.ip + "/api/websocket"
         onTextMessageReceived: {
             //            console.debug("\nReceived message: " + message)
             webSocketProcess(message);

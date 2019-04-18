@@ -10,6 +10,7 @@ Rectangle {
     property var lstate
     property int brightness
     property int componentID
+    property string integrationType
 
     property bool favorite: false
 
@@ -176,7 +177,7 @@ Rectangle {
         }
 
         onClicked: {
-            loaded_components[componentID].lightComponentIntegration.toggle(entity_id);
+            loaded_components[componentID].lightComponentIntegration[integrationType].toggle(entity_id);
         }
 
     }
@@ -239,7 +240,7 @@ Rectangle {
 
         onValueChanged: {
             if (sliderMovedByUser) {
-                loaded_components[componentID].lightComponentIntegration.setBrightness(entity_id, brightnessSlider.value);
+                loaded_components[componentID].lightComponentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
                 sliderMovedByUser = false;
             }
         }

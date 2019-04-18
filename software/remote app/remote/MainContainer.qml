@@ -123,6 +123,7 @@ Item {
                                 brightness: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].brightness
                                 friendly_name: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].friendly_name
                                 componentID: entityRepeater.pageIndex
+                                integrationType: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].integration
                             }
                         }
                     }

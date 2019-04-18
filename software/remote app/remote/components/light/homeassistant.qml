@@ -12,7 +12,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Connections {
-        target: integration
+        target: integration.homeassistant
         onSendFetchJson: {
             // Process fetched json here. This only has to be one time after connecting to the hub
             var tmp = entities_light;
@@ -67,19 +67,19 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function toggle(entity_id) {
-        integration.webSocketSendCommand("light","toggle",entity_id);
+        integration.homeassistant.webSocketSendCommand("light","toggle",entity_id);
     }
 
     function setBrightness(entity_id, brightness) {
         var data = {"brightness_pct": brightness}
-        integration.webSocketSendCommand("light","turn_on",entity_id, data);
+        integration.homeassistant.webSocketSendCommand("light","turn_on",entity_id, data);
     }
 
     function turnOn(entity_id) {
-        integration.webSocketSendCommand("light","turn_on",entity_id);
+        integration.homeassistant.webSocketSendCommand("light","turn_on",entity_id);
     }
 
     function turnOff(entity_id) {
-        integration.webSocketSendCommand("light","turn_off",entity_id);
+        integration.homeassistant.webSocketSendCommand("light","turn_off",entity_id);
     }
 }

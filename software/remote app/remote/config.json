@@ -1,10 +1,24 @@
 {
-  "integration" : "homeassistant",
-  "homeassistant": {
-    "ip" : "",
-    "token" : ""
-  },
-   "rooms": [
+  "integration": [
+    {
+      "id" : 1,
+      "type": "homeassistant",
+      "data": {
+        "ip" : "",
+        "token" : ""    
+      }
+    },
+    {
+      "id" : 2,
+      "type": "homey",
+      "data": {
+        "ip" : "",
+        "user" : "",
+        "password": ""
+      }
+    }
+  ],
+  "rooms": [
     {
       "room": "Entrance"
     },
@@ -19,7 +33,7 @@
     }
   ],
   "entities": [
-    {
+      {
       "type": "light",
       "data": [
       {
@@ -29,7 +43,8 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": false,
-        "room": "Entrance"
+        "room": "Entrance",
+        "integration": "homeassistant"
       },
       {
         "entity_id": "light.entrance_lamp_level",
@@ -38,7 +53,8 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": false,
-        "room": "Entrance"
+        "room": "Entrance",
+        "integration": "homeassistant"
       },
       {
         "entity_id": "light.kitchen_lamp_level",
@@ -47,7 +63,8 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": true,
-        "room": "Kitchen"
+        "room": "Kitchen",
+        "integration": "homeassistant"
       },
       {
         "entity_id": "light.kitchen_table_lamp_level",
@@ -56,7 +73,8 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": true,
-        "room": "Kitchen"
+        "room": "Kitchen",
+        "integration": "homeassistant"
       },
       {
         "entity_id": "light.kitchen_sink_lamp",
@@ -65,7 +83,8 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": false,
-        "room": "Kitchen"
+        "room": "Kitchen",
+        "integration": "homeassistant"
       },
       {
         "entity_id": "light.living_room_lamp_level",
@@ -74,7 +93,8 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": true,
-        "room": "Living room"
+        "room": "Living room",
+        "integration": "homey"
       },
       {
         "entity_id": "light.living_room_corner_lamp_level",
@@ -83,7 +103,8 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": true,
-        "room": "Living room"
+        "room": "Living room",
+        "integration": "homeassistant"
       },
       {
         "entity_id": "light.bedroom_lamp_level",
@@ -92,9 +113,10 @@
         "brightness": 0,
         "friendly_name": "test",
         "favorite": false,
-        "room": "Bedroom"
+        "room": "Bedroom",
+        "integration": "homey"
       }
       ]
-    },
-    ]
+    }
+  ]
 }
