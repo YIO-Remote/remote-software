@@ -15,6 +15,16 @@ Item {
     onTouchDetectedChanged: {
         // if there was a touch event, reset the timers
         if (touchDetected) {
+            // if mode standby then turn on the display
+            if (mode == "standby") {
+                //
+            }
+            // if mode wifi_off then turn on wifi and display
+            if (mode == "wifi_off") {
+                socketServer.clientId.sendTextMessage("wifi on");
+            }
+            // set the display brightness
+            //
             mode = "on";
             displayDimTimer.restart();
             standbyTimer.stop();
@@ -27,6 +37,17 @@ Item {
     onProximityDetectedChanged: {
         // if there was a proximity event, reset the timers
         if (proximityDetected) {
+            // if mode standby then turn on the display
+            if (mode == "standby") {
+                //
+            }
+
+            // if mode wifi_off then turn on wifi and display
+            if (mode == "wifi_off") {
+                socketServer.clientId.sendTextMessage("wifi on");
+            }
+            // set the display brightness
+            //
             mode = "on";
             displayDimTimer.restart();
             standbyTimer.stop();
@@ -39,12 +60,31 @@ Item {
     onButtonPressDetectedChanged: {
         // if there was a button press event, reset the timers
         if (buttonPressDetected) {
+            // if mode standby then turn on the display
+            // if mode wifi_off then turn on wifi and display
+            if (mode == "wifi_off") {
+                socketServer.clientId.sendTextMessage("wifi on");
+            }
+
+            // set the display brightness
+            //
             mode = "on";
             displayDimTimer.restart();
             standbyTimer.stop();
             wifiOffTimer.restart();
             shutdownTimer.restart();
             buttonPressDetected = false;
+        }
+    }
+
+    onModeChanged: {
+        // if mode is on change processor to ondemand
+        if (mode == "on") {
+            socketServer.clientId.sendTextMessage("ondemand");
+        }
+        // if mode is standby change processor to powersave
+        if (mode == "standby") {
+            socketServer.clientId.sendTextMessage("powersave");
         }
     }
 
@@ -59,6 +99,8 @@ Item {
             if (mode != "dim") {
                 displayDimTimer.stop();
                 console.debug("Dim the display");
+                // set brightness to 20
+                //
                 mode = "dim";
                 standbyTimer.start();
             }
@@ -76,6 +118,10 @@ Item {
             if (mode == "dim") {
                 standbyTimer.stop()
                 console.debug("Standby the display");
+                // turn off gesture detection
+                socketServer.clientId.sendTextMessage("gesture off");
+                // put display to standby
+                //
                 mode = "standby";
             }
         }
@@ -92,6 +138,8 @@ Item {
             if (mode == "standby") {
                 wifiOffTimer.stop();
                 console.debug("Wifi off");
+                // turn off wifi
+                socketServer.clientId.sendTextMessage("wifi off");
                 mode = "wifi_off";
             }
         }
@@ -105,8 +153,10 @@ Item {
         interval: shutdownTime * 1000
 
         onTriggered: {
-                shutdownTimer.stop();
-                console.debug("Shutdown");
+            shutdownTimer.stop();
+            console.debug("Shutdown");
+            // halt
+            //
         }
     }
 }

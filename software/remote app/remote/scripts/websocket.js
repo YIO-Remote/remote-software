@@ -36,22 +36,6 @@ function parseWSServerMessage (message) {
         }
         break;
 
-//    case "wifi off":
-//        socket.active = false;
-//        websocketReconnect.running = false;
-//        break;
-
-//    case "wifi on":
-//        connectionLoader.state = "connecting"
-//        websocketReconnect.tries = 0;
-//        socket.active = true;
-//        break;
-
-//    case String(message.match(/^brightness,.*/)):
-//        var brightness = message.split(',');
-//        display_brightness = brightness[1];
-//        break;
-
     case "proximityDetected":
         standbyControl.proximityDetected = true;
         break;
