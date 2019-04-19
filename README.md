@@ -38,11 +38,11 @@ https://community.yio-remote.com
 - [x] 🇩🇪 German
 - [x] 🇭🇺 Hungarian
 - [X] 🇪🇸 Spanish
+- [X] 🇸🇪 Swedish
 
 ### Still wanted language translations
 - [ ] 🇵🇹 Portuguese
 - [ ] 🇳🇴 Norwegian
-- [ ] 🇸🇪 Swedish
 - [ ] 🇧🇬 Bulgarian
 - [ ] 🇭🇷 Croatian
 - [ ] 🇨🇿 Czech
