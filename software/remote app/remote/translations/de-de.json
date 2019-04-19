@@ -1,5 +1,5 @@
 {
-    "description": "",
+    "description": "Deutsche",
     "supported_entities": {
         "alarm": "Alarme",
         "light": "Lampen",
