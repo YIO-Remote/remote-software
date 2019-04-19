@@ -1,0 +1,35 @@
+{
+    "description": "Svenska",
+    "supported_entities": {
+        "alarm": "Alarm",
+        "light": "Lampor",
+        "blind": "Persienner",
+        "climate": "Klimat",
+        "media_player": "Media",
+        "remote": "Fjärrkontroller"
+    },
+    "chargingscreen": {
+        "charging": "Laddar"
+    },
+    "connectionscreen": {
+        "reconnecting": "Återansluter ...",
+        "connected": "Ansluten",
+        "failed": "Anslutningen misslyckades",
+        "tryagain": "Försök igen",
+        "hello": "Hej",
+        "waitforit": "Vänligen vänta ..."
+    },
+    "popuplowbattery": {
+        "lowbattery": "Lågt batteri",
+        "chargesoon": "Ladda fjärrkontrollen snart"
+    },
+    "softwareupdate": {
+        "newversion": "Ny mjukvaruuppdatering tillgänglig.",
+        "update": "Uppdatera"
+    },
+    "navigation": {
+        "dashboard": "Dashboard",
+        "rooms": "Rum",
+        "settings": "Inställningar"
+    }
+}
