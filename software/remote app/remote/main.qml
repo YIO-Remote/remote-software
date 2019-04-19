@@ -76,13 +76,13 @@ ApplicationWindow {
 
     JsonFile {
         id: default_language
-        name: "/Users/marton/Qt\ Projects/remote/translations/en-us.json"
+        name: "/Users/marton/Qt\ Projects/remote/translations/en-us.json" // "file:///usr/bin/remote/translations/en-us.json"
     }
 
     // load the files from translations directory
     FolderListModel {
         id: translationsDirectory
-        folder: "file:///Users/marton/Qt\ Projects/remote/translations"
+        folder: "file:///Users/marton/Qt\ Projects/remote/translations" // "file:///usr/bin/remote/translations"
         nameFilters: ["*.json"]
         showFiles: true
     }
@@ -129,7 +129,7 @@ ApplicationWindow {
 
     JsonFile { // this module loads the config file
         id: jsonConfig
-        name: "/Users/marton/Qt\ Projects/remote/config.json"
+        name: "/Users/marton/Qt\ Projects/remote/config.json" // "/mnt/boot/config.json"
     }
 
     Component.onCompleted: {

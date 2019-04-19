@@ -33,6 +33,9 @@ Popup {
 
     onOpened: {
         lowBatteryNotificationTimer.start()
+        if (standbyControl.mode != "on") {
+            standbyControl.touchDetected = true;
+        }
     }
 
     BasicUI.ProgressCircle {

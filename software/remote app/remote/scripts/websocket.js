@@ -25,12 +25,19 @@ function parseWSServerMessage (message) {
         battery_voltage = voltage[1];
         break;
 
+    case String(message.match(/^brightness,.*/)):
+        var brightness = message.split(',');
+        standbyControl.display_brightness_ambient = brightness[1];
+        if (standbyControl.display_autobrightness) {
+            standbyControl.display_brightness = brightness[1];
+        }
+        break;
+
     case "low battery":
         lowBatteryNotification.open();
         if (displayOff.visible) {
             displayOff.visible = false;
         }
-        //        loader_main.item.pageSettings.setBrightness(100);
         if (socketServer.clientId != undefined) {
             socketServer.clientId.sendTextMessage("wakeup");
         }

@@ -1,9 +1,27 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
+import Launcher 1.0
+
 Item {
     width: parent.width
-    height: displayHeader.height + displaySection.height + standbyHeader.height + standbySection.height + batteryHeader.height + batterySection.height + 200
+    height: displayHeader.height + displaySection.height + standbyHeader.height + standbySection.height + batteryHeader.height + batterySection.height + networkHeader.height + networkSection.height + systemHeader.height + systemSection.height + 280
+
+    Launcher {
+        id: settingsLauncher
+    }
+
+    Timer {
+        running: mainNavigationSwipeview.currentIndex ==  2 + supported_entities.length ? true : false
+        repeat: true
+        interval: 2000
+
+        onTriggered: {
+            uptimeValue.text = settingsLauncher.launch("/usr/bin/remote/uptime.sh");
+            temperatureValue.text = parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp"))/1000 + "ºC";
+            wifiSignalValue.text = settingsLauncher.launch("/usr/bin/remote/wifi_rssi.sh");
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DISPLAY
@@ -94,6 +112,8 @@ Item {
             anchors.topMargin: 87
             anchors.horizontalCenter: parent.horizontalCenter
 
+            property bool setbyUser: false
+
             background: Rectangle {
                 x: parent.leftPadding
                 y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
@@ -134,6 +154,14 @@ Item {
 
             onValueChanged: {
                 standbyControl.display_brightness = brightnessSlider.value
+                if (setbyUser) {
+                    standbyControl.display_brightness_set = brightnessSlider.value
+                    setbyUser = false;
+                }
+            }
+
+            onMoved: {
+                setbyUser = true;
             }
         }
 
@@ -629,6 +657,228 @@ Item {
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // NETWORK
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Text {
+        id: networkHeader
+        color: colorText
+        text: translations[languange].settings.network
+        anchors.top: batterySection.bottom
+        anchors.topMargin: 40
+        anchors.left: parent.left
+        font.family: "Open Sans"
+        font.weight: Font.Normal
+        font.pixelSize: 27
+        lineHeight: 1
+    }
+
+    Rectangle {
+        id: networkSection
+        width: parent.width
+        height: 155
+        radius: cornerRadius
+        color: colorMedium
+
+        anchors.top: networkHeader.bottom
+        anchors.topMargin: 20
+
+        Text {
+            id: wifiSignalText
+            color: colorText
+            text: translations[languange].settings.wifisignal
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: parent.top
+            anchors.topMargin: 20
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
+        Text {
+            id: wifiSignalValue
+            color: colorText
+            text: "-59"
+            horizontalAlignment: Text.AlignRight
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.verticalCenter: wifiSignalText.verticalCenter
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
+        Rectangle {
+            id: line6
+            width: parent.width
+            height: 2
+            color: colorBackground
+            anchors.top: wifiSignalText.bottom
+            anchors.topMargin: 20
+        }
+
+        Text {
+            id: ipaddressText
+            color: colorText
+            text: translations[languange].settings.ipaddress
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: line6.bottom
+            anchors.topMargin: 20
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
+        Text {
+            color: colorText
+            text: "192.168.1.1"
+            horizontalAlignment: Text.AlignRight
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.verticalCenter: ipaddressText.verticalCenter
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // SYSTEM
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Text {
+        id: systemHeader
+        color: colorText
+        text: translations[languange].settings.system
+        anchors.top: networkSection.bottom
+        anchors.topMargin: 40
+        anchors.left: parent.left
+        font.family: "Open Sans"
+        font.weight: Font.Normal
+        font.pixelSize: 27
+        lineHeight: 1
+    }
+
+    Rectangle {
+        id: systemSection
+        width: parent.width
+        height: 268
+        radius: cornerRadius
+        color: colorMedium
+
+        anchors.top: systemHeader.bottom
+        anchors.topMargin: 20
+
+        Text {
+            id: uptimeText
+            color: colorText
+            text: translations[languange].settings.uptime
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: parent.top
+            anchors.topMargin: 20
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
+        Text {
+            id: uptimeValue
+            color: colorText
+            text: "0h"
+            horizontalAlignment: Text.AlignRight
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.verticalCenter: uptimeText.verticalCenter
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
+        Rectangle {
+            id: line7
+            width: parent.width
+            height: 2
+            color: colorBackground
+            anchors.top: uptimeText.bottom
+            anchors.topMargin: 20
+        }
+
+        Text {
+            id: temperatureText
+            color: colorText
+            text: translations[languange].settings.cputemperature
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: line7.bottom
+            anchors.topMargin: 20
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
+        Text {
+            id: temperatureValue
+            color: colorText
+            text: "36ºC"
+            horizontalAlignment: Text.AlignRight
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.verticalCenter: temperatureText.verticalCenter
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
+        Rectangle {
+            id: line8
+            width: parent.width
+            height: 2
+            color: colorBackground
+            anchors.top: temperatureText.bottom
+            anchors.topMargin: 20
+        }
+
+        CustomButton {
+            id: buttonReboot
+            buttonText: translations[languange].settings.reboot
+            anchors.top: line8.bottom
+            anchors.topMargin: 30
+            anchors.left: parent.left
+            anchors.leftMargin: (parent.width - (buttonReboot.width + buttonShutdown.width + 60))/2
+
+            mouseArea.onClicked: {
+                settingsLauncher.launch("fbv -d 1 /bye.png")
+                console.debug("now reboot")
+                settingsLauncher.launch("reboot");
+            }
+        }
+
+        CustomButton {
+            id: buttonShutdown
+            buttonText: translations[languange].settings.shutdown
+            anchors.top: line8.bottom
+            anchors.topMargin: 30
+            anchors.left: buttonReboot.right
+            anchors.leftMargin: 60
+
+            mouseArea.onClicked: {
+                settingsLauncher.launch("fbv -d 1 /bye.png")
+                console.debug("now shutdown")
+                settingsLauncher.launch("halt");
+            }
         }
     }
 }

@@ -51,6 +51,14 @@
         "battery": "Battery",
         "batterycharge": "Battery charge",
         "batteryhealth": "Battery health",
-        "batteryvoltage": "Battery voltage"
+        "batteryvoltage": "Battery voltage",
+        "network": "Network",
+        "wifisignal": "Wi-Fi signal strength",
+        "ipaddress": "IP address",
+        "system": "System",
+        "uptime": "Uptime",
+        "cputemperature": "CPU Temperature",
+        "reboot": "Reboot",
+        "shutdown": "Shutdown"
     }
 }

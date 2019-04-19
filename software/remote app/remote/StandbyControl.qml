@@ -1,19 +1,30 @@
 import QtQuick 2.11
 
 Item {
-    property bool proximityDetected: true
+    property bool proximityDetected: false
     property bool touchDetected: false
     property bool buttonPressDetected: false
 
     property string mode: "on" // on, dim, standby, wifi_off
 
-    property int displayDimTime: 10 // seconds
-    property int standbyTime: 20 // seconds
+    property int displayDimTime: 20 // seconds
+    property int standbyTime: 30 // seconds
     property int wifiOffTime: 600 // seconds
     property int shutdownTime: 5400 // seconds
 
     property int display_brightness: 100
+    property int display_brightness_old: 100
     property bool display_autobrightness: true
+    property int display_brightness_ambient: 100
+    property int display_brightness_set: 100
+
+
+    // change the display brightness
+    onDisplay_brightnessChanged: {
+        var cmd = "/usr/bin/remote/display_brightness.sh " + display_brightness_old + " " + display_brightness;
+        mainLauncher.launch(cmd);
+        display_brightness_old = display_brightness;
+    }
 
     onTouchDetectedChanged: {
         // if there was a touch event, reset the timers
@@ -31,7 +42,11 @@ Item {
                 }
             }
             // set the display brightness
-            //
+            if (display_autobrightness) {
+                display_brightness = display_brightness_ambient;
+            } else {
+                display_brightness = display_brightness_set;
+            }
             mode = "on";
             displayDimTimer.restart();
             standbyTimer.stop();
@@ -58,7 +73,11 @@ Item {
                 }
             }
             // set the display brightness
-            //
+            if (display_autobrightness) {
+                display_brightness = display_brightness_ambient;
+            } else {
+                display_brightness = display_brightness_set;
+            }
             mode = "on";
             displayDimTimer.restart();
             standbyTimer.stop();
@@ -86,7 +105,11 @@ Item {
             }
 
             // set the display brightness
-            //
+            if (display_autobrightness) {
+                display_brightness = display_brightness_ambient;
+            } else {
+                display_brightness = display_brightness_set;
+            }
             mode = "on";
             displayDimTimer.restart();
             standbyTimer.stop();
@@ -119,7 +142,7 @@ Item {
                 displayDimTimer.stop();
                 console.debug("Dim the display");
                 // set brightness to 20
-                //
+                display_brightness = 20;
                 mode = "dim";
                 standbyTimer.start();
             }
