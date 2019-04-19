@@ -12,6 +12,9 @@ Item {
     property int wifiOffTime: 600 // seconds
     property int shutdownTime: 5400 // seconds
 
+    property int display_brightness: 100
+    property bool display_autobrightness: true
+
     onTouchDetectedChanged: {
         // if there was a touch event, reset the timers
         if (touchDetected) {

@@ -93,6 +93,7 @@ Item {
 
             NavigationButton {
                 buttonText: translations[languange].navigation.settings
+                icon.source: "qrc:/images/navigation/icon-settings.png"
                 selected: mainNavigationSwipeview.currentIndex == 2 + supported_entities.length ? true : false
                 mouseArea.onClicked: {
                     mainNavigationSwipeview.currentIndex = 2 + supported_entities.length

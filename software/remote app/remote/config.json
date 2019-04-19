@@ -20,16 +20,20 @@
   ],
   "rooms": [
     {
-      "room": "Entrance"
+      "room": "Entrance",
+      "bluetooth": "xx:xx:xx:xx:xx"
     },
     {
-      "room": "Kitchen"
+      "room": "Kitchen",
+      "bluetooth": "xx:xx:xx:xx:xx"
     },
     {
-      "room": "Living room"
+      "room": "Living room",
+      "bluetooth": "xx:xx:xx:xx:xx"
     },
     {
-      "room": "Bedroom"
+      "room": "Bedroom",
+      "bluetooth": "xx:xx:xx:xx:xx"
     }
   ],
   "entities": [

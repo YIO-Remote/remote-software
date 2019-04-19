@@ -133,6 +133,28 @@ Item {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // SETTINGS
+        Item {
+            visible: mainNavigationSwipeview.currentIndex ==  2 + supported_entities.length ? true : false
+
+            Flickable {
+                width: parent.width
+                height: parent.height
+                maximumFlickVelocity: 4000
+                flickDeceleration: 1000
+                clip: true
+                contentHeight: settingsPage.height
+                boundsBehavior: Flickable.DragAndOvershootBounds
+                flickableDirection: Flickable.VerticalFlick
+
+                ScrollBar.vertical: ScrollBar {
+                    opacity: 0.5
+                }
+
+                BasicUI.Settings {
+                    id: settingsPage
+                }
+            }
+        }
     }
 
 
