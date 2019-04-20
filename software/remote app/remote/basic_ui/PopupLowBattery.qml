@@ -95,7 +95,7 @@ Popup {
 
     Text {
         color: colorText
-        text: translations[languange].popuplowbattery.lowbattery
+        text: translations[language].popuplowbattery.lowbattery
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
@@ -110,7 +110,7 @@ Popup {
 
     Text {
         color: colorText
-        text: translations[languange].popuplowbattery.chargesoon
+        text: translations[language].popuplowbattery.chargesoon
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter

@@ -62,7 +62,7 @@ Item {
             height: parent.height
 
             NavigationButton {
-                buttonText: translations[languange].navigation.dashboard
+                buttonText: translations[language].navigation.dashboard
                 icon.source: "qrc:/images/navigation/icon-dashboard.png"
                 selected: mainNavigationSwipeview.currentIndex == 0 ? true : false
                 mouseArea.onClicked: {
@@ -71,7 +71,7 @@ Item {
             }
 
             NavigationButton {
-                buttonText: translations[languange].navigation.rooms
+                buttonText: translations[language].navigation.rooms
                 icon.source: "qrc:/images/navigation/icon-rooms.png"
                 selected: mainNavigationSwipeview.currentIndex == 1 ? true : false
                 mouseArea.onClicked: {
@@ -82,7 +82,7 @@ Item {
             Repeater {
                 model: supported_entities
                 NavigationButton {
-                    buttonText: translations[languange].supported_entities[supported_entities[index]]
+                    buttonText: translations[language].supported_entities[supported_entities[index]]
                     icon.source: "qrc:/images/navigation/icon-"+supported_entities[index]+".png"
                     selected: mainNavigationSwipeview.currentIndex == index + 2 ? true : false
                     mouseArea.onClicked: {
@@ -92,7 +92,7 @@ Item {
             }
 
             NavigationButton {
-                buttonText: translations[languange].navigation.settings
+                buttonText: translations[language].navigation.settings
                 icon.source: "qrc:/images/navigation/icon-settings.png"
                 selected: mainNavigationSwipeview.currentIndex == 2 + supported_entities.length ? true : false
                 mouseArea.onClicked: {

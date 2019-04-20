@@ -1,4 +1,5 @@
 {
+    "id": "es-es",
     "description": "Español ",
     "supported_entities": {
         "alarm": "Alarma",

@@ -1,4 +1,5 @@
 {
+    "id": "de-de",
     "description": "Deutsch, DE",
     "supported_entities": {
         "alarm": "Alarme",

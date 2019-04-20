@@ -1,4 +1,5 @@
 {
+    "id": "sv-se",
     "description": "Svenska",
     "supported_entities": {
         "alarm": "Alarm",

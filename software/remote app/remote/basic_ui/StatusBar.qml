@@ -119,7 +119,7 @@ Item {
         Text {
             id: updateOpenText
             color: colorText
-            text: translations[languange].softwareupdate.newversion
+            text: translations[language].softwareupdate.newversion
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -149,7 +149,7 @@ Item {
 
         CustomButton {
             id: updateButton
-            buttonText: translations[languange].softwareupdate.update
+            buttonText: translations[language].softwareupdate.update
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 60

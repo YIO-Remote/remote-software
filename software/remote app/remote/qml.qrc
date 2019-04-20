@@ -24,5 +24,8 @@
         <file>components/light/homey.qml</file>
         <file>StandbyControl.qml</file>
         <file>basic_ui/Settings.qml</file>
+        <file>basic_ui/settings/Display.qml</file>
+        <file>basic_ui/settings/PowerSaving.qml</file>
+        <file>basic_ui/settings/Languages.qml</file>
     </qresource>
 </RCC>

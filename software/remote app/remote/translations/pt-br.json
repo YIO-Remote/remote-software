@@ -1,4 +1,5 @@
 {
+    "id": "pt-br",
     "description": "Português-BR",
     "supported_entities": {
         "alarm": "Alarme",

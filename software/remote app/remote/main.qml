@@ -9,8 +9,6 @@ import JsonFile 1.0
 import "qrc:/scripts/websocket.js" as JSWebsocket
 import "qrc:/scripts/softwareupdate.js" as JSUpdate
 
-import "basic_ui" as BasicUI
-
 ApplicationWindow {
     id: applicationWindow
 
@@ -72,8 +70,9 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property string languange: "en-us" // default language is English
-    property var translations: ({})
+    property string language: "en-us" // default language is English
+    property var translations: [({})]
+    property var translationsCount: []
 
     // load the files from translations directory
     FolderListModel {
@@ -92,6 +91,7 @@ ApplicationWindow {
 
             translationJsonFiles[i] = Qt.createQmlObject('import JsonFile 1.0; JsonFile {id: jsonFilelang' + i + '; name: "'+ homePath + '/translations/' + lang[0] + '.json"}', applicationWindow, '');
             translations[lang[0]] = translationJsonFiles[i].read();
+            translationsCount[i] = translations[lang[0]]
         }
     }
 

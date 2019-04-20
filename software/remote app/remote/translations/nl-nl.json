@@ -1,4 +1,5 @@
 {
+    "id": "nl-nl",
     "description": "Nederlands",
     "supported_entities": {
         "alarm": "Alarm",

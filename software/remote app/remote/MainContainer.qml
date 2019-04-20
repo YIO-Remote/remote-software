@@ -167,7 +167,7 @@ Item {
     Rectangle {
         id: bottomGradient
         width: parent.width
-        height: 80
+        height: mainNavigation.state == "closed" ? 80 : 160
         anchors.bottom: mainNavigation.top
 
         opacity: mainNavigationSwipeview.currentItem.children[0].atYEnd ? 0 : 1

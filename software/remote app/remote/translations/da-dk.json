@@ -1,4 +1,5 @@
 {
+    "id": "da-dk",
     "description": "Dansk",
     "supported_entities": {
         "alarm": "Alarm",

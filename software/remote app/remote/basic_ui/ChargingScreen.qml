@@ -87,7 +87,7 @@ Rectangle {
 
     Text {
         color: colorText
-        text: translations[languange].chargingscreen.charging
+        text: translations[language].chargingscreen.charging
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 80
         anchors.horizontalCenter: parent.horizontalCenter

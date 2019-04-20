@@ -1,4 +1,5 @@
 {
+    "id": "hu-hu",
     "description": "Magyar",
     "supported_entities": {
         "alarm": "Riasztó",
@@ -48,6 +49,7 @@
         "shutdowntext2": " óra inaktivitás után",
         "shutdowntext3": "Soha ne kapcsold ki a távirányítót",
         "hours": "óra",
+        "languages": "Nyelvek",
         "battery": "Akkumlátor",
         "batterycharge": "Akkumlátor töltöttség",
         "batteryhealth": "Akkumlátor élet",
