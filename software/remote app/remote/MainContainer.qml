@@ -1,9 +1,9 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
-import "basic_ui" as BasicUI
-import "basic_ui/main_navigation" as Navigation
-import "components/light" as ComponentLight
+import "qrc:/basic_ui" as BasicUI
+import "qrc:/basic_ui/main_navigation" as Navigation
+import "qrc:/components/light" as ComponentLight
 
 Item {
     id: main_container

@@ -57,6 +57,7 @@
         "network": "Hálózat",
         "wifisignal": "Wi-Fi jel erősség",
         "ipaddress": "IP cím",
+        "macaddress": "MAC cím",
         "system": "Rendszer",
         "uptime": "Futás idő",
         "cputemperature": "CPU hőmérskélet",

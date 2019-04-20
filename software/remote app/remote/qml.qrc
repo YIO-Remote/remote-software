@@ -27,5 +27,8 @@
         <file>basic_ui/settings/Display.qml</file>
         <file>basic_ui/settings/PowerSaving.qml</file>
         <file>basic_ui/settings/Languages.qml</file>
+        <file>basic_ui/settings/Battery.qml</file>
+        <file>basic_ui/settings/Network.qml</file>
+        <file>basic_ui/settings/System.qml</file>
     </qresource>
 </RCC>

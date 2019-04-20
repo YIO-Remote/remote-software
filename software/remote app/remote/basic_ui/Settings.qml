@@ -28,5 +28,11 @@ Item {
 
         Settings.Languages {}
 
+        Settings.Battery {}
+
+        Settings.Network {}
+
+        Settings.System {}
+
     }
 }

@@ -57,6 +57,7 @@
         "network": "Network",
         "wifisignal": "Wi-Fi signal strength",
         "ipaddress": "IP address",
+        "macaddress": "MAC address",
         "system": "System",
         "uptime": "Uptime",
         "cputemperature": "CPU Temperature",
