@@ -1,6 +1,6 @@
 {
     "id": "pt-br",
-    "description": "Português-BR",
+    "description": "Português-BR, PT-BR",
     "supported_entities": {
         "alarm": "Alarme",
         "light": "Luz",
@@ -49,6 +49,9 @@
         "shutdowntext2": "",
         "shutdowntext3": "",
         "hours": "",
+        "languages": "",
+        "hubs": "",
+        "addnew": "",
         "battery": "",
         "batterycharge": "",
         "batteryhealth": "",
@@ -56,6 +59,7 @@
         "network": "",
         "wifisignal": "",
         "ipaddress": "",
+        "macaddress": "",
         "system": "",
         "uptime": "",
         "cputemperature": "",
