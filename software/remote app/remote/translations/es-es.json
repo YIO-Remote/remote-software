@@ -1,6 +1,6 @@
 {
     "id": "es-es",
-    "description": "Español ",
+    "description": "Español, ES",
     "supported_entities": {
         "alarm": "Alarma",
         "light": "Luces",
