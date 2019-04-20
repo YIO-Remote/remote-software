@@ -1,6 +1,6 @@
 {
     "id": "da-dk",
-    "description": "Dansk",
+    "description": "Dansk, DA",
     "supported_entities": {
         "alarm": "Alarm",
         "light": "Lys",
@@ -49,6 +49,9 @@
         "shutdowntext2": "",
         "shutdowntext3": "",
         "hours": "",
+        "languages": "",
+        "hubs": "",
+        "addnew": "",
         "battery": "",
         "batterycharge": "",
         "batteryhealth": "",
@@ -56,6 +59,7 @@
         "network": "",
         "wifisignal": "",
         "ipaddress": "",
+        "macaddress": "",
         "system": "",
         "uptime": "",
         "cputemperature": "",
