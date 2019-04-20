@@ -1,6 +1,6 @@
 {
     "id": "hu-hu",
-    "description": "Magyar",
+    "description": "Magyar, HU",
     "supported_entities": {
         "alarm": "Riasztó",
         "light": "Lámpák",
@@ -50,6 +50,8 @@
         "shutdowntext3": "Soha ne kapcsold ki a távirányítót",
         "hours": "óra",
         "languages": "Nyelvek",
+        "hubs": "",
+        "addnew": "",
         "battery": "Akkumlátor",
         "batterycharge": "Akkumlátor töltöttség",
         "batteryhealth": "Akkumlátor élet",
