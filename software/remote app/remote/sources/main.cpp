@@ -4,6 +4,7 @@
 
 #include "launcher.h"
 #include "jsonfile.h"
+#include "display_control.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     // LOADING CUSTOM SCRIPT LAUNCHER AND JSON READER
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
+    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

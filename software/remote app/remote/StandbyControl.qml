@@ -1,4 +1,5 @@
 import QtQuick 2.11
+import DisplayControl 1.0
 
 Item {
     property bool proximityDetected: false
@@ -18,6 +19,16 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STANDBY CONTROL
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    DisplayControl {
+        id: displayControl
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUNCTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function wifiHandler(state) {
         var cmd;
 
@@ -41,7 +52,7 @@ Item {
         if (touchDetected) {
             // if mode standby then turn on the display
             if (mode == "standby") {
-                //
+                displayControl.setmode("standbyoff");
             }
             // if mode wifi_off then turn on wifi and display
             if (mode == "wifi_off") {
@@ -71,7 +82,7 @@ Item {
         if (proximityDetected) {
             // if mode standby then turn on the display
             if (mode == "standby") {
-                //
+                displayControl.setmode("standbyoff");
             }
 
             // if mode wifi_off then turn on wifi and display
@@ -102,7 +113,7 @@ Item {
         if (buttonPressDetected) {
             // if mode standby then turn on the display
             if (mode == "standby") {
-                //
+                displayControl.setmode("standbyoff");
             }
 
             // if mode wifi_off then turn on wifi and display
@@ -176,7 +187,8 @@ Item {
                 socketServer.clientId.sendTextMessage("gesture off");
                 socketServer.clientId.sendTextMessage("proximity detect on");
                 // put display to standby
-                //
+                displayControl.setmode("standbyon");
+                display_brightness = 0;
                 mode = "standby";
             }
         }

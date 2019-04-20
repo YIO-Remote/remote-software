@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         sources/main.cpp \
     sources/jsonfile.cpp \
-    sources/launcher.cpp
+    sources/launcher.cpp \
+    sources/display_control.cpp
 
 RESOURCES += qml.qrc \
     images.qrc
@@ -33,6 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     sources/jsonfile.h \
-    sources/launcher.h
+    sources/launcher.h \
+    sources/display_control.h
 
 DISTFILES +=
