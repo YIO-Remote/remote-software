@@ -1,6 +1,6 @@
 {
     "id": "sv-se",
-    "description": "Svenska",
+    "description": "Svenska, SV",
     "supported_entities": {
         "alarm": "Alarm",
         "light": "Lampor",
@@ -49,6 +49,9 @@
         "shutdowntext2": " timmar av inaktivitet",
         "shutdowntext3": "Stäng aldrig av fjärrkontrollen",
         "hours": "timmar",
+        "languages": "",
+        "hubs": "",
+        "addnew": "",
         "battery": "Batteri",
         "batterycharge": "Batterinivå",
         "batteryhealth": "Batterihälsa",
@@ -56,6 +59,7 @@
         "network": "Nätverk",
         "wifisignal": "Wi-Fi Signalstyrka",
         "ipaddress": "IP address",
+        "macaddress": "",
         "system": "System",
         "uptime": "Upptid",
         "cputemperature": "CPU Temperatur",
