@@ -28,7 +28,6 @@ ApplicationWindow {
     // PATH
     property string homePath: "/Users/marton/Qt\ Projects/remote" // /usr/bin/remote
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN WINDOW PROPERTIES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,17 +73,12 @@ ApplicationWindow {
     // TRANSLATIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property string languange: "en-us" // default language is English
-    property var translations: {"en-us": default_language.read()}
-
-    JsonFile {
-        id: default_language
-        name: "/Users/marton/Qt\ Projects/remote/translations/en-us.json" // "file:///usr/bin/remote/translations/en-us.json"
-    }
+    property var translations: ({})
 
     // load the files from translations directory
     FolderListModel {
         id: translationsDirectory
-        folder: "file://" + homePath + "/translations" // "file:///usr/bin/remote/translations"
+        folder: "file://" + homePath + "/translations"
         nameFilters: ["*.json"]
         showFiles: true
     }
@@ -274,8 +268,15 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Visible when charging
 
-    BasicUI.ChargingScreen {
+    property alias chargingScreen: chargingScreen
+    Loader {
         id: chargingScreen
+        width: 480
+        height: 800
+        x: 0
+        y: 0
+        asynchronous: true
+        source: "qrc:/basic_ui/ChargingScreen.qml"
     }
 
 
@@ -285,7 +286,7 @@ ApplicationWindow {
     // Pops up when battery level is under 20%
     onBattery_levelChanged: {
         if (battery_level < 0.2 && !wasBatteryWarning) {
-            lowBatteryNotification.open();
+            lowBatteryNotification.item.open();
             wasBatteryWarning = true;
             if (socketServer.clientId != undefined) {
                 socketServer.clientId.sendTextMessage("wakeup");
@@ -296,8 +297,16 @@ ApplicationWindow {
         }
     }
 
-    BasicUI.PopupLowBattery {
+    property alias lowBatteryNotification: lowBatteryNotification
+
+    Loader {
         id: lowBatteryNotification
+        width: 480
+        height: 800
+        x: 0
+        y: 0
+        asynchronous: true
+        source: "qrc:/basic_ui/PopupLowBattery.qml"
     }
 
 
@@ -305,7 +314,15 @@ ApplicationWindow {
     // CONNECTION SCREEN
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Visible when connecting, reconnecting to the integration
-    BasicUI.ConnectionScreen {
+    property alias connectionLoader: connectionLoader
+
+    Loader {
         id: connectionLoader
+        width: 480
+        height: 800
+        x: 0
+        y: 0
+        asynchronous: true
+        source: "qrc:/basic_ui/ConnectionScreen.qml"
     }
 }

@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
 #include <QDir>
+#include <QtDebug>
 
 #include "launcher.h"
 #include "jsonfile.h"

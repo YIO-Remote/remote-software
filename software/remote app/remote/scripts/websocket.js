@@ -7,7 +7,7 @@ function parseWSServerMessage (message) {
     switch (message) {
     case String(message.match(/^battery,.*/)):
         var chargingType = message.split(',');
-        chargingScreen.state = "hidden";
+        chargingScreen.item.state = "hidden";
         battery_level = chargingType[1];
         if (battery_time == 0) {
             var d = new Date();
@@ -16,7 +16,7 @@ function parseWSServerMessage (message) {
         break;
 
     case String(message.match(/^usb,.*/)):
-        chargingScreen.state = "visible";
+        chargingScreen.item.state = "visible";
         battery_time = 0;
         break;
 
