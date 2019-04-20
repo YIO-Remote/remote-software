@@ -17,9 +17,7 @@ JsonFile::JsonFile(const QString &name, QObject *parent) :
 
 void JsonFile::setName(const QString &name)
 {
-    // fix to convert URL's to local file names
-    QUrl url(name);
-    QString localName = url.isLocalFile() ? url.toLocalFile() : name;
+    QString localName = name;
     if (m_file.fileName() != localName) {
         m_file.setFileName(localName);
         emit nameChanged(localName);
@@ -31,10 +29,10 @@ QString JsonFile::fileName() const
     return QFileInfo(m_file).fileName();
 }
 
-QString JsonFile::relativeFilePath(const QString &dir) const
-{
-    return QDir(dir).relativeFilePath(m_file.fileName());
-}
+//QString JsonFile::relativeFilePath(const QString &dir) const
+//{
+//    return QDir(dir).relativeFilePath(m_file.fileName());
+//}
 
 bool JsonFile::rename(const QString &newName)
 {

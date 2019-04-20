@@ -28,7 +28,7 @@ public:
     inline qint64 size() const { return m_file.size(); }
     inline QString error() const { return m_error; }
 
-    Q_INVOKABLE QString relativeFilePath(const QString &dir = QString()) const;
+//    Q_INVOKABLE QString relativeFilePath(const QString &dir = QString()) const;
     Q_INVOKABLE bool rename(const QString &newName);
 
     Q_INVOKABLE inline bool copy(const QString &newName) { return m_file.copy(newName); }

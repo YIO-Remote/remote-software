@@ -25,6 +25,9 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // PATH
+    property string homePath: "/Users/marton/Qt\ Projects/remote" // /usr/bin/remote
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN WINDOW PROPERTIES
@@ -67,7 +70,6 @@ ApplicationWindow {
 
     //    property string colorRoundButton: "#1A1D23"
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +84,7 @@ ApplicationWindow {
     // load the files from translations directory
     FolderListModel {
         id: translationsDirectory
-        folder: "file:///Users/marton/Qt\ Projects/remote/translations" // "file:///usr/bin/remote/translations"
+        folder: "file://" + homePath + "/translations" // "file:///usr/bin/remote/translations"
         nameFilters: ["*.json"]
         showFiles: true
     }
@@ -94,7 +96,7 @@ ApplicationWindow {
         for (var i=0; i<translationsDirectoryCount; i++) {
             var lang = translationsDirectory.get(i, "fileName").split(".")
 
-            translationJsonFiles[i] = Qt.createQmlObject('import JsonFile 1.0; JsonFile {id: jsonFilelang' + i + '; name: "/Users/marton/Qt\ Projects/remote/translations/' + lang[0] + '.json"}', applicationWindow, '');
+            translationJsonFiles[i] = Qt.createQmlObject('import JsonFile 1.0; JsonFile {id: jsonFilelang' + i + '; name: "'+ homePath + '/translations/' + lang[0] + '.json"}', applicationWindow, '');
             translations[lang[0]] = translationJsonFiles[i].read();
         }
     }
@@ -129,7 +131,7 @@ ApplicationWindow {
 
     JsonFile { // this module loads the config file
         id: jsonConfig
-        name: "/Users/marton/Qt\ Projects/remote/config.json" // "/mnt/boot/config.json"
+        name: homePath + "/config.json" // "/mnt/boot/config.json"
     }
 
     Component.onCompleted: {

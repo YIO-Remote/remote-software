@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
+#include <QDir>
 
 #include "launcher.h"
 #include "jsonfile.h"
@@ -10,7 +11,7 @@ int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
-//    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
 
