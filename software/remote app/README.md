@@ -2,9 +2,9 @@
 
 1. After installing [Qt](../README.md) follow below steps;
 
-2. Edit the [config.json](config.json) file. Enter your Home Assistant ip:port, your token, rooms and your entitites.
+2. Edit the [config.json](/remote/config.json) file. Enter your Home Assistant ip:port, your token, rooms and your entitites.
 
-3. Edit line 29 in [main.qml](main.qml) to change the path.
+3. Edit line 29 in [main.qml](/remote/main.qml) to change the path.
 
 4. Install the font [Open Sans](https://fonts.google.com/specimen/Open+Sans) 
 
