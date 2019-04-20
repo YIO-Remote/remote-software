@@ -30,5 +30,6 @@
         <file>basic_ui/settings/Battery.qml</file>
         <file>basic_ui/settings/Network.qml</file>
         <file>basic_ui/settings/System.qml</file>
+        <file>basic_ui/settings/Hubs.qml</file>
     </qresource>
 </RCC>

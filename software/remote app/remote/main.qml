@@ -122,6 +122,7 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var config: jsonConfig.read()
     property var integration: ({}) // holds the integration qmls
+    property var integrationObj: []
 
     JsonFile { // this module loads the config file
         id: jsonConfig
@@ -135,7 +136,8 @@ ApplicationWindow {
         // load the hub integrations
         for (var i=0; i<config.integration.length; i++) {
             comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
-            integration[config.integration[i].type] = comp.createObject(applicationWindow);
+            integration[config.integration[i].type] = comp.createObject(applicationWindow, {integrationId: i});
+            integrationObj[i] = config.integration[i];
         }
 
         // load the entities from the config file that are supported
@@ -146,7 +148,7 @@ ApplicationWindow {
                     applicationWindow["entities_"+config.entities[i].type] = config.entities[i].data;
 
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    obj = comp.createObject(applicationWindow, {integrationId: i});
+                    obj = comp.createObject(applicationWindow);
 
                     loaded_entities.push(supported_entities[k]);
                     loaded_components.push(obj);

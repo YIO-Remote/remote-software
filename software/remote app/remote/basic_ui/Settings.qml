@@ -28,6 +28,8 @@ Item {
 
         Settings.Languages {}
 
+        Settings.Hubs {}
+
         Settings.Battery {}
 
         Settings.Network {}

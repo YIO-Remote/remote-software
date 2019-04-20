@@ -3,6 +3,7 @@
     {
       "id" : 1,
       "type": "homeassistant",
+      "friendly_name": "Home Assistant",
       "data": {
         "ip" : "",
         "token" : ""    
@@ -11,6 +12,7 @@
     {
       "id" : 2,
       "type": "homey",
+      "friendly_name": "Homey",
       "data": {
         "ip" : "",
         "user" : "",
