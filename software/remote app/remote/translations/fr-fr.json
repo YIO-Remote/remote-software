@@ -1,6 +1,6 @@
 {
     "id": "fr-fr",
-    "description": "Français",
+    "description": "Français, FR",
     "supported_entities": {
         "alarm": "Alarme",
         "light": "Lumière",
@@ -49,6 +49,9 @@
         "shutdowntext2": "",
         "shutdowntext3": "",
         "hours": "",
+        "languages": "",
+        "hubs": "",
+        "addnew": "",
         "battery": "",
         "batterycharge": "",
         "batteryhealth": "",
@@ -56,6 +59,7 @@
         "network": "",
         "wifisignal": "",
         "ipaddress": "",
+        "macaddress": "",
         "system": "",
         "uptime": "",
         "cputemperature": "",
