@@ -56,14 +56,6 @@ def on_message(ws, message):
         proximity_detect = True
     if message == "proximity detect off":
         proximity_detect = False
-    if message == "wifi on":
-        subprocess.call("systemctl start wpa_supplicant@wlan0.service", shell=True)
-    if message == "wifi off":
-        subprocess.call("systemctl stop wpa_supplicant@wlan0.service", shell=True)
-    if message == "ondemand":
-        subprocess.call("echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor", shell=True)
-    if message == "powersave":
-        subprocess.call("echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor", shell=True)
 
 def on_error(ws, error):
     print(error)

@@ -18,6 +18,16 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
+    function wifiHandler(state) {
+        var cmd;
+
+        if (state == "on") {
+            cmd = "systemctl start wpa_supplicant@wlan0.service"
+        } else {
+            cmd = "systemctl stop wpa_supplicant@wlan0.service"
+        }
+        mainLauncher.launch(cmd);
+    }
 
     // change the display brightness
     onDisplay_brightnessChanged: {
@@ -35,7 +45,7 @@ Item {
             }
             // if mode wifi_off then turn on wifi and display
             if (mode == "wifi_off") {
-                socketServer.clientId.sendTextMessage("wifi on");
+                wifiHandler("on")
                 // integration socket on
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].connectionOpen = true;
@@ -66,7 +76,7 @@ Item {
 
             // if mode wifi_off then turn on wifi and display
             if (mode == "wifi_off") {
-                socketServer.clientId.sendTextMessage("wifi on");
+                wifiHandler("on")
                 // integration socket on
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].connectionOpen = true;
@@ -97,7 +107,7 @@ Item {
 
             // if mode wifi_off then turn on wifi and display
             if (mode == "wifi_off") {
-                socketServer.clientId.sendTextMessage("wifi on");
+                wifiHandler("on")
                 // integration socket on
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].connectionOpen = true;
@@ -122,11 +132,13 @@ Item {
     onModeChanged: {
         // if mode is on change processor to ondemand
         if (mode == "on") {
-            socketServer.clientId.sendTextMessage("ondemand");
+            var cmd = "echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+            mainLauncher.launch(cmd);
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
-            socketServer.clientId.sendTextMessage("powersave");
+            cmd = "echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+            mainLauncher.launch(cmd);
         }
     }
 
@@ -162,6 +174,7 @@ Item {
                 console.debug("Standby the display");
                 // turn off gesture detection
                 socketServer.clientId.sendTextMessage("gesture off");
+                socketServer.clientId.sendTextMessage("proximity detect on");
                 // put display to standby
                 //
                 mode = "standby";
@@ -181,7 +194,7 @@ Item {
                 wifiOffTimer.stop();
                 console.debug("Wifi off");
                 // turn off wifi
-                socketServer.clientId.sendTextMessage("wifi off");
+                wifiHandler("off")
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].connectionOpen = false;
@@ -202,7 +215,7 @@ Item {
             shutdownTimer.stop();
             console.debug("Shutdown");
             // halt
-            //
+            mainLauncher.launch("halt");
         }
     }
 }

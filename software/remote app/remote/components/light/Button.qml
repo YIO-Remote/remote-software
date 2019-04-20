@@ -19,6 +19,12 @@ Rectangle {
     color: colorMedium
     radius: cornerRadius
 
+    onBrightnessChanged: {
+        if (brightness > 0) {
+            lightButton.state = "on"
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,48 +35,42 @@ Rectangle {
         State {
             name: "closed"
             PropertyChanges {target: lightButton; height: 125}
-            PropertyChanges {target: brightnessSlider; visible: false; opacity: 0}
+            PropertyChanges {target: brightnessSlider; opacity: 0}
         },
         State {
             name: "on"
-            when: lstate == "on"
             PropertyChanges {target: lightButton; height: 160}
-            PropertyChanges {target: brightnessSlider; visible: true; opacity: 1}
+            PropertyChanges {target: brightnessSlider; opacity: 1}
         },
         State {
             name: "open"
             PropertyChanges {target: lightButton; height: 720}
-            PropertyChanges {target: brightnessSlider; visible: false; opacity: 0}
+            PropertyChanges {target: brightnessSlider; opacity: 0}
         }
     ]
 
     transitions: [
         Transition {
             to: "closed"
-            SequentialAnimation {
-                ParallelAnimation {
-                    PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                }
-                PropertyAnimation { target: brightnessSlider; properties: "visible"; easing.type: Easing.OutExpo; duration: 300 }
-            }
-        },
-        Transition {
-            to: "on"
-            SequentialAnimation {
-                PropertyAnimation { target: brightnessSlider; properties: "visible"; easing.type: Easing.OutExpo; duration: 300 }
+            ParallelAnimation {
                 PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         },
         Transition {
-            to: "open"
+            to: "on"
             SequentialAnimation {
-                ParallelAnimation {
-                    PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                }
-                PropertyAnimation { target: brightnessSlider; properties: "visible"; easing.type: Easing.OutExpo; duration: 300 }
+                PauseAnimation { duration: 200 }
+                PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                PauseAnimation { duration: 200 }
+                PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            }
+        },
+        Transition {
+            to: "open"
+            ParallelAnimation {
+                PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         }
     ]
@@ -195,6 +195,8 @@ Rectangle {
         to: 100
         stepSize: 1
         live: false
+
+        visible: opacity > 0 ? true : false
 
         width: parent.width-40
         anchors.bottom: parent.bottom
