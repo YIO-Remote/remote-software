@@ -257,7 +257,7 @@ ApplicationWindow {
         onStatusChanged: if (loader_main.status == Loader.Ready) {
                              firstRun = false;
                              loader_main.visible = true;
-                             connectionLoader.state = "connected";
+                             connectionState = "connected";
                          }
     }
 
