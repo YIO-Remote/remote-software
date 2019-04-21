@@ -1,6 +1,6 @@
 {
     "id": "nl-nl",
-    "description": "Nederlands",
+    "description": "Nederlands, NL",
     "supported_entities": {
         "alarm": "Alarm",
         "light": "Verlichting",
@@ -49,6 +49,9 @@
         "shutdowntext2": " uren van inactiviteit",
         "shutdowntext3": "Schakel de afstandsbediening nooit uit",
         "hours": "uren",
+        "languages": "Talen",
+        "hubs": "Hubs",
+        "addnew": "Nieuwe toevoegen",
         "battery": "Batterij",
         "batterycharge": "Batterij lading",
         "batteryhealth": "Batterij gezondheid",
@@ -56,6 +59,7 @@
         "network": "Netwerk",
         "wifisignal": "Wi-Fi signaal sterkte",
         "ipaddress": "IP adres",
+        "macaddress": "MAC adres",
         "system": "Systeem",
         "uptime": "Uptime",
         "cputemperature": "CPU-temperatuur",
