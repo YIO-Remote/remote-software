@@ -11,12 +11,12 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
       <source>Battery charge</source>
-      <translation type="unfinished">Battery charge</translation>
+      <translation>Batterij lading</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Batterij gezondheid</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>Opladen</translation>
     </message>
   </context>
   <context>
@@ -38,22 +38,22 @@
       <location filename="../basic_ui/ConnectionScreen.qml" line="21"/>
       <location filename="../basic_ui/ConnectionScreen.qml" line="154"/>
       <source>Reconnecting...</source>
-      <translation type="unfinished">Reconnecting...</translation>
+      <translation>Opnieuw verbinden ...</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="31"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Verbonden</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation type="unfinished">Connection failed</translation>
+      <translation>Verbinding mislukt</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Probeer opnieuw</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
@@ -63,7 +63,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation type="unfinished">Wait for it...</translation>
+      <translation>Even wachten ...</translation>
     </message>
   </context>
   <context>
@@ -71,22 +71,22 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="15"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Scherm</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="36"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Automatische helderheid</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="163"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Nachtmodus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="223"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Reinigingsmodus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="238"/>
