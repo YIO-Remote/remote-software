@@ -27,10 +27,10 @@ Item {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // DASHBOARD
-        Item {
-            visible: mainNavigationSwipeview.currentIndex ==  0 ? true : false
+        Loader {
+            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
-            Flickable {
+            sourceComponent: Flickable {
                 id: dashboardFlickable
                 width: parent.width
                 height: parent.height
@@ -57,10 +57,10 @@ Item {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // ROOMS
-        Item {
-            visible: mainNavigationSwipeview.currentIndex ==  1 ? true : false
+        Loader {
+            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
-            Flickable {
+            sourceComponent: Flickable {
                 width: parent.width
                 height: parent.height
                 maximumFlickVelocity: 4000
@@ -89,10 +89,10 @@ Item {
         Repeater {
             model: supported_entities
 
-            Item {
-                visible: mainNavigationSwipeview.currentIndex ==  2 + index ? true : false
+            Loader {
+                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
-                Flickable {
+                sourceComponent: Flickable {
                     width: parent.width
                     height: parent.height
                     maximumFlickVelocity: 4000
@@ -135,10 +135,10 @@ Item {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // SETTINGS
-        Item {
-            visible: mainNavigationSwipeview.currentIndex ==  2 + supported_entities.length ? true : false
+        Loader {
+            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
-            Flickable {
+            sourceComponent: Flickable {
                 width: parent.width
                 height: parent.height
                 maximumFlickVelocity: 4000
@@ -188,7 +188,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Navigation.MainNavigation {
         id: mainNavigation
         anchors.bottom: miniMediaPlayer.top
