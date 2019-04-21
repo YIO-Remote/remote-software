@@ -6,7 +6,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="17"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Batterij</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
