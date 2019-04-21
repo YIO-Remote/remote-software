@@ -58,7 +58,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Hallo</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
