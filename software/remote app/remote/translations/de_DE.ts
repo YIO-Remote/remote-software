@@ -99,7 +99,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
@@ -120,7 +120,7 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-      <translation type="unfinished">Dashboard</translation>
+      <translation>Dashboard</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
@@ -231,7 +231,7 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="33"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
