@@ -1,6 +1,6 @@
 {
     "id": "es-es",
-    "description": "Español ",
+    "description": "Español, ES",
     "supported_entities": {
         "alarm": "Alarma",
         "light": "Luces",
@@ -49,6 +49,9 @@
         "shutdowntext2": "",
         "shutdowntext3": "",
         "hours": "",
+        "languages": "",
+        "hubs": "",
+        "addnew": "",
         "battery": "",
         "batterycharge": "",
         "batteryhealth": "",
@@ -56,6 +59,7 @@
         "network": "",
         "wifisignal": "",
         "ipaddress": "",
+        "macaddress": "",
         "system": "",
         "uptime": "",
         "cputemperature": "",
