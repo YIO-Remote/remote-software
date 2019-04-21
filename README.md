@@ -34,8 +34,8 @@ https://community.yio-remote.com
 
 ## Supported languages
 
-Localisations Status:
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/yio-remote-translation/localized.svg)](https://crowdin.com/project/yio-remote-translation)
+
 To Help Translate the Yio Remote GUI, please check:
 [https://crwd.in/yio-remote-translation](https://crwd.in/yio-remote-translation)
 
