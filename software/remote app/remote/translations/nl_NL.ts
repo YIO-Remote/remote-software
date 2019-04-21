@@ -21,7 +21,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
       <source>Battery voltage</source>
-      <translation type="unfinished">Battery voltage</translation>
+      <translation>Batterij voltage</translation>
     </message>
   </context>
   <context>
