@@ -5,7 +5,7 @@ Rectangle {
     anchors.fill: parent
     color: "#00000000"
 
-    state: "connecting"
+    state: connectionState
 
     property int iconShowDelay: firstRun ? 300 : 0
 

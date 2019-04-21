@@ -15,7 +15,7 @@ Item {
     onConnectionOpenChanged: {
         console.debug("YAY")
         if (connectionOpen) {
-            connectionLoader.item.state = "connecting"
+            connectionState = "connecting"
             websocketReconnect.tries = 0;
             socket.active = true;
         } else {
@@ -84,7 +84,7 @@ Item {
 
         if (json.success == true && json.id == 3) {
             if (!firstRun) {
-                connectionLoader.item.state = "connected";
+                connectionState = "connected";
             }
             webSocketConnection = true;
             console.debug("Subscribed to state changes");
@@ -162,13 +162,13 @@ Item {
         onTriggered: {
             if (tries == 4) {
                 websocketReconnect.running = false;
-                connectionLoader.item.state = "failed"
+                connectionState = "failed"
                 console.debug("Failed to connect")
                 tries = 0
             } else {
                 webSocketId = 4
-                if (connectionLoader.item.state != "connecting") {
-                    connectionLoader.item.state = "connecting"
+                if (connectionState != "connecting") {
+                    connectionState = "connecting"
                 }
                 socket.active = true
                 console.debug("Reconnecting...")
