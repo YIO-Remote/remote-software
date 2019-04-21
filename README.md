@@ -12,6 +12,7 @@ https://community.yio-remote.com
 
 
 ## Features
+
 - 3.5" 480x800px high resolution capacitive touchscreen
 - customizable physical buttons
 - battery monitoring
@@ -21,45 +22,23 @@ https://community.yio-remote.com
 - docking station
 
 ## Supported home automation hubs
+
 - Home Assistant
 
-## Supported devices
-- Lights
-- Blinds
-- Heating
-- Media players
+## Supported devices Status
+
+- [x] Lights
+- [x] Blinds
+- [x] Heating
+- [x] Media players
 
 ## Supported languages
-- [x] 🇬🇧 English
-- [x] 🇳🇱 Dutch
-- [x] 🇫🇷 French
-- [x] 🇵🇹/🇧🇷 Portuguese-Brazilian
-- [x] 🇩🇰 Danish
-- [x] 🇩🇪 German
-- [x] 🇭🇺 Hungarian
-- [X] 🇪🇸 Spanish
-- [X] 🇸🇪 Swedish
 
-### Still wanted language translations
-- [ ] 🇵🇹 Portuguese
-- [ ] 🇳🇴 Norwegian
-- [ ] 🇧🇬 Bulgarian
-- [ ] 🇭🇷 Croatian
-- [ ] 🇨🇿 Czech
-- [ ] 🇪🇪 Estonian
-- [ ] 🇫🇮 Finnish
-- [ ] 🇬🇷 Greek
-- [ ] 🇮🇪 Irish
-- [ ] 🇮🇹 Italian
-- [ ] 🇱🇻 Latvian
-- [ ] 🇱🇹 Lithuanian
-- [ ] 🇲🇹 Maltese
-- [ ] 🇵🇱 Polish
-- [ ] 🇷🇴 Romanian
-- [ ] 🇸🇰 Slovak
-- [ ] 🇸🇮 Slovene
+Localisations Status:
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/yio-remote-translation/localized.svg)](https://crowdin.com/project/yio-remote-translation)
+To Help Translate the Yio Remote GUI, please check:
+[https://crwd.in/yio-remote-translation](https://crwd.in/yio-remote-translation)
 
-If you would like to contribue, please create a pull request or join this topic: https://community.yio-remote.com/t/translation-file/20
 
 # Releases
 ## Version 0.1
