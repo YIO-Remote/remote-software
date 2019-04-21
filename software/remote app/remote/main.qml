@@ -70,30 +70,30 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property string language: "en-us" // default language is English
-    property var translations: [({})]
-    property var translationsCount: []
+//    property string language: "en-us" // default language is English
+//    property var translations: [({})]
+//    property var translationsCount: []
 
-    // load the files from translations directory
-    FolderListModel {
-        id: translationsDirectory
-        folder: "file://" + homePath + "/translations"
-        nameFilters: ["*.json"]
-        showFiles: true
-    }
+//    // load the files from translations directory
+//    FolderListModel {
+//        id: translationsDirectory
+//        folder: "file://" + homePath + "/translations"
+//        nameFilters: ["*.json"]
+//        showFiles: true
+//    }
 
-    property int translationsDirectoryCount: translationsDirectory.count
-    property var translationJsonFiles: []
+//    property int translationsDirectoryCount: translationsDirectory.count
+//    property var translationJsonFiles: []
 
-    onTranslationsDirectoryCountChanged: {
-        for (var i=0; i<translationsDirectoryCount; i++) {
-            var lang = translationsDirectory.get(i, "fileName").split(".")
+//    onTranslationsDirectoryCountChanged: {
+//        for (var i=0; i<translationsDirectoryCount; i++) {
+//            var lang = translationsDirectory.get(i, "fileName").split(".")
 
-            translationJsonFiles[i] = Qt.createQmlObject('import JsonFile 1.0; JsonFile {id: jsonFilelang' + i + '; name: "'+ homePath + '/translations/' + lang[0] + '.json"}', applicationWindow, '');
-            translations[lang[0]] = translationJsonFiles[i].read();
-            translationsCount[i] = translations[lang[0]]
-        }
-    }
+//            translationJsonFiles[i] = Qt.createQmlObject('import JsonFile 1.0; JsonFile {id: jsonFilelang' + i + '; name: "'+ homePath + '/translations/' + lang[0] + '.json"}', applicationWindow, '');
+//            translations[lang[0]] = translationJsonFiles[i].read();
+//            translationsCount[i] = translations[lang[0]]
+//        }
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SOFTWARE UPDATE

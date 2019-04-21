@@ -30,7 +30,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: translations[language].settings.system
+        text: qsTr("System")
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -51,7 +51,7 @@ Item {
         Text {
             id: uptimeText
             color: colorText
-            text: translations[language].settings.uptime
+            text: qsTr("Uptime")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top
@@ -88,7 +88,7 @@ Item {
         Text {
             id: temperatureText
             color: colorText
-            text: translations[language].settings.cputemperature
+            text: qsTr("CPU temperature")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line7.bottom
@@ -124,7 +124,7 @@ Item {
 
         BasicUI.CustomButton {
             id: buttonReboot
-            buttonText: translations[language].settings.reboot
+            buttonText: qsTr("Reboot")
             anchors.top: line8.bottom
             anchors.topMargin: 30
             anchors.left: parent.left
@@ -139,7 +139,7 @@ Item {
 
         BasicUI.CustomButton {
             id: buttonShutdown
-            buttonText: translations[language].settings.shutdown
+            buttonText: qsTr("Shutdown")
             anchors.top: line8.bottom
             anchors.topMargin: 30
             anchors.left: buttonReboot.right

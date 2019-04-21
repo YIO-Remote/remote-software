@@ -3,6 +3,7 @@
 #include <QFontDatabase>
 #include <QDir>
 #include <QtDebug>
+#include <QTranslator>
 
 #include "launcher.h"
 #include "jsonfile.h"
@@ -15,6 +16,11 @@ int main(int argc, char *argv[])
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+
+    QTranslator translator;
+    translator.load("../../../hu-hu");
+
+    app.installTranslator(&translator);
 
     // LOADING FONTS
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));

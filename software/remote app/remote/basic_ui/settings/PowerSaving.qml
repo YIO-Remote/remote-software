@@ -12,7 +12,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: translations[language].settings.powersaving
+        text: qsTr("Power saving")
         anchors.top: parent.top
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -34,7 +34,7 @@ Item {
         Text {
             id: wifioffText
             color: colorText
-            text: standbyControl.wifiOffTime == 0 ? translations[language].settings.wifiofftext3 : translations[language].settings.wifiofftext1 + "\n" + standbyControl.wifiOffTime/60 + " " + translations[language].settings.wifiofftext2
+            text: standbyControl.wifiOffTime == 0 ? qsTr("Never turn off Wi-Fi") : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(standbyControl.wifiOffTime/60)
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -106,7 +106,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: translations[language].settings.never
+            text: qsTr("Never")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: wifioffSlider.bottom
@@ -119,7 +119,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: "60 " + translations[language].settings.minutes
+            text: qsTr("60 minutes")
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.top: wifioffSlider.bottom
@@ -141,7 +141,7 @@ Item {
         Text {
             id: shutdownText
             color: colorText
-            text: standbyControl.shutdownTime == 0 ? translations[language].settings.shutdowntext3 : translations[language].settings.shutdowntext1 + "\n" + standbyControl.shutdownTime/60/60 + " " + translations[language].settings.shutdowntext2
+            text: standbyControl.shutdownTime == 0 ? qsTr("Never turn off the remote") : qsTr("Turn off the remote after %1 hours of inactivity").arg(standbyControl.shutdownTime/60/60)
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -213,7 +213,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: translations[language].settings.never
+            text: qsTr("Never")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: shutdownSlider.bottom
@@ -226,7 +226,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: "8 " + translations[language].settings.hours
+            text: qsTr("8 hours")
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.top: shutdownSlider.bottom

@@ -87,7 +87,7 @@ Rectangle {
 
     Text {
         color: colorText
-        text: translations[language].chargingscreen.charging
+        text: qsTr("Charging")
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 80
         anchors.horizontalCenter: parent.horizontalCenter

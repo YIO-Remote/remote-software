@@ -18,7 +18,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: true}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
-            PropertyChanges {target: connectionLoaderText; text: translations[language].connectionscreen.reconnecting}
+            PropertyChanges {target: connectionLoaderText; text: qsTr("Reconnecting...")}
         },
         State {
             name: "connected"
@@ -28,7 +28,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: false}
-            PropertyChanges {target: connectionLoaderText; text: translations[language].connectionscreen.connected}
+            PropertyChanges {target: connectionLoaderText; text: qsTr("Connected")}
         },
         State {
             name: "failed"
@@ -37,7 +37,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 1}
             PropertyChanges {target: loadingIconAnim; running: false}
             PropertyChanges {target: buttonTryAgain; opacity: 1}
-            PropertyChanges {target: connectionLoaderText; text: translations[language].connectionscreen.failed}
+            PropertyChanges {target: connectionLoaderText; text: qsTr("Connection failed")}
         }
     ]
 
@@ -151,7 +151,7 @@ Rectangle {
         id: connectionLoaderText
         visible: firstRun ? false : true
         color: colorText
-        text: translations[language].connectionscreen.reconnecting
+        text: qsTr("Reconnecting...")
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: loadingIcon.bottom
         anchors.topMargin: 20
@@ -166,7 +166,7 @@ Rectangle {
     CustomButton {
         id: buttonTryAgain
         opacity: 0
-        buttonText: translations[language].connectionscreen.tryagain
+        buttonText: qsTr("Try again")
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 60
@@ -180,7 +180,7 @@ Rectangle {
     Text {
         id: text_hello
         color: colorText
-        text: translations[language].connectionscreen.hello
+        text: qsTr("Hello")
         opacity: firstRun ? 1 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: loadingIcon.bottom
@@ -200,7 +200,7 @@ Rectangle {
     Text {
         id: text_waitforit
         color: colorText
-        text: translations[language].connectionscreen.waitforit
+        text: qsTr("Wait for it...")
         opacity: firstRun ? 0.4 : 0
         anchors.top: text_hello.bottom
         anchors.topMargin: 0
