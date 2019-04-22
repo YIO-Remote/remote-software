@@ -1,5 +1,5 @@
 # Mac crap
-/.DS_Store
+.DS_Store
 software/.DS_Store
 software/remote app/.DS_Store
 software/remote app/basic_ui/.DS_Store
@@ -17,3 +17,7 @@ software/remote app/remote/images/.DS_Store
 # Windows crap
 software/remote app/build-*
 software/remote app/remote/translations/.DS_Store
+
+#Translation files
+software/remote app/remote/translations/*
+!software/remote app/remote/translations/en_US.ts
