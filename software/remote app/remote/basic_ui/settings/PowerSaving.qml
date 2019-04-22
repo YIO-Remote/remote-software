@@ -12,7 +12,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: qsTr("Power saving")
+        text: qsTr("Power saving") + translateHandler.emptyString
         anchors.top: parent.top
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -34,7 +34,7 @@ Item {
         Text {
             id: wifioffText
             color: colorText
-            text: standbyControl.wifiOffTime == 0 ? qsTr("Never turn off Wi-Fi") : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(standbyControl.wifiOffTime/60)
+            text: standbyControl.wifiOffTime == 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(standbyControl.wifiOffTime/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -106,7 +106,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: qsTr("Never")
+            text: qsTr("Never") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: wifioffSlider.bottom
@@ -119,7 +119,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: qsTr("60 minutes")
+            text: qsTr("60 minutes") + translateHandler.emptyString
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.top: wifioffSlider.bottom
@@ -141,7 +141,7 @@ Item {
         Text {
             id: shutdownText
             color: colorText
-            text: standbyControl.shutdownTime == 0 ? qsTr("Never turn off the remote") : qsTr("Turn off the remote after %1 hours of inactivity").arg(standbyControl.shutdownTime/60/60)
+            text: standbyControl.shutdownTime == 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(standbyControl.shutdownTime/60/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -213,7 +213,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: qsTr("Never")
+            text: qsTr("Never") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: shutdownSlider.bottom
@@ -226,7 +226,7 @@ Item {
         Text {
             color: colorText
             opacity: 0.5
-            text: qsTr("8 hours")
+            text: qsTr("8 hours") + translateHandler.emptyString
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.top: shutdownSlider.bottom

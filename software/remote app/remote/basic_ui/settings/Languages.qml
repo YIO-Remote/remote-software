@@ -20,7 +20,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: qsTr("Languages")
+        text: qsTr("Languages") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -90,7 +90,6 @@ Item {
                             section.height = 74
                             translateHandler.selectLanguage(translations[index].id)
                             language = translations[index].id
-                            loadComponentsEntities();
                         }
                     }
                 }

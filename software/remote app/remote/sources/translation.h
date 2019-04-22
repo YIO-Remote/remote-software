@@ -9,6 +9,8 @@
 class TranslationHandler : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString emptyString READ getEmptyString NOTIFY languageChanged)
+
 public:
     explicit TranslationHandler(QQmlEngine *engine)
     {
@@ -16,13 +18,21 @@ public:
         m_engine = engine;
     }
 
+    QString getEmptyString() {
+        return "";
+    }
+
     Q_INVOKABLE void selectLanguage(QString language)
     {
-          qGuiApp->removeTranslator(m_translator);
-          m_translator->load(":/translations/" + language);
-          qGuiApp->installTranslator(m_translator);
-          m_engine->retranslate();
+        qGuiApp->removeTranslator(m_translator);
+        m_translator->load(":/translations/" + language);
+        qGuiApp->installTranslator(m_translator);
+        //          m_engine->retranslate();
+        emit languageChanged();
     }
+
+signals:
+    void languageChanged();
 
 private:
     QTranslator *m_translator;

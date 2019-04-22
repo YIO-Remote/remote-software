@@ -27,7 +27,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: qsTr("Network")
+        text: qsTr("Network") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -48,7 +48,7 @@ Item {
         Text {
             id: wifiSignalText
             color: colorText
-            text: qsTr("Wi-Fi signal strength")
+            text: qsTr("Wi-Fi signal strength") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top
@@ -85,7 +85,7 @@ Item {
         Text {
             id: ipaddressText
             color: colorText
-            text: qsTr("IP address")
+            text: qsTr("IP address") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line6.bottom
@@ -121,7 +121,7 @@ Item {
         Text {
             id: macaddressText
             color: colorText
-            text: qsTr("MAC address")
+            text: qsTr("MAC address") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line7.bottom

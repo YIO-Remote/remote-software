@@ -14,7 +14,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: qsTr("Hubs")
+        text: qsTr("Hubs") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -35,7 +35,7 @@ Item {
 
         BasicUI.CustomButton {
             id: buttonAdd
-            buttonText: qsTr("Add new")
+            buttonText: qsTr("Add new") + translateHandler.emptyString
             anchors.top: parent.top
             anchors.topMargin: 30
             anchors.left: parent.left

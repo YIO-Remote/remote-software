@@ -87,7 +87,7 @@ Rectangle {
 
     Text {
         color: colorText
-        text: qsTr("Charging")
+        text: qsTr("Charging") + translateHandler.emptyString
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 80
         anchors.horizontalCenter: parent.horizontalCenter

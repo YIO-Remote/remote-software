@@ -12,7 +12,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: qsTr("Display")
+        text: qsTr("Display") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -33,7 +33,7 @@ Item {
         Text {
             id: autobrightnessText
             color: colorText
-            text: qsTr("Auto brightness")
+            text: qsTr("Auto brightness") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top
@@ -160,7 +160,7 @@ Item {
         Text {
             id: darkmodeText
             color: colorText
-            text: qsTr("Dark mode")
+            text: qsTr("Dark mode") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line1.bottom
@@ -220,7 +220,7 @@ Item {
         Text {
             id: cleaningText
             color: colorText
-            text: qsTr("Cleaning mode")
+            text: qsTr("Cleaning mode") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line2.bottom
@@ -235,7 +235,7 @@ Item {
             id: cleaningsmallText
             color: colorText
             opacity: 0.5
-            text: qsTr("Touch the display for 10 seconds to turn cleaning mode off.")
+            text: qsTr("Touch the display for 10 seconds to turn cleaning mode off.") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width - 40 - cleaningmodeButton.width
             anchors.left: parent.left

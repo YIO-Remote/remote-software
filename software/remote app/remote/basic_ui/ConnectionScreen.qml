@@ -18,7 +18,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: true}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
-            PropertyChanges {target: connectionLoaderText; text: qsTr("Reconnecting...")}
+            PropertyChanges {target: connectionLoaderText; text: qsTr("Reconnecting...") + translateHandler.emptyString}
         },
         State {
             name: "connected"
@@ -28,7 +28,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: false}
-            PropertyChanges {target: connectionLoaderText; text: qsTr("Connected")}
+            PropertyChanges {target: connectionLoaderText; text: qsTr("Connected") + translateHandler.emptyString}
         },
         State {
             name: "failed"
@@ -37,7 +37,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 1}
             PropertyChanges {target: loadingIconAnim; running: false}
             PropertyChanges {target: buttonTryAgain; opacity: 1}
-            PropertyChanges {target: connectionLoaderText; text: qsTr("Connection failed")}
+            PropertyChanges {target: connectionLoaderText; text: qsTr("Connection failed") + translateHandler.emptyString}
         }
     ]
 
@@ -151,7 +151,7 @@ Rectangle {
         id: connectionLoaderText
         visible: firstRun ? false : true
         color: colorText
-        text: qsTr("Reconnecting...")
+        text: qsTr("Reconnecting...") + translateHandler.emptyString
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: loadingIcon.bottom
         anchors.topMargin: 20
@@ -166,7 +166,7 @@ Rectangle {
     CustomButton {
         id: buttonTryAgain
         opacity: 0
-        buttonText: qsTr("Try again")
+        buttonText: qsTr("Try again") + translateHandler.emptyString
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 60
@@ -180,7 +180,7 @@ Rectangle {
     Text {
         id: text_hello
         color: colorText
-        text: qsTr("Hello")
+        text: qsTr("Hello") + translateHandler.emptyString
         opacity: firstRun ? 1 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: loadingIcon.bottom
@@ -200,7 +200,7 @@ Rectangle {
     Text {
         id: text_waitforit
         color: colorText
-        text: qsTr("Wait for it...")
+        text: qsTr("Wait for it...") + translateHandler.emptyString
         opacity: firstRun ? 0.4 : 0
         anchors.top: text_hello.bottom
         anchors.topMargin: 0

@@ -95,7 +95,7 @@ Popup {
 
     Text {
         color: colorText
-        text: qsTr("Low battery")
+        text: qsTr("Low battery") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
@@ -110,7 +110,7 @@ Popup {
 
     Text {
         color: colorText
-        text: qsTr("Please charge the remote soon")
+        text: qsTr("Please charge the remote soon") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
