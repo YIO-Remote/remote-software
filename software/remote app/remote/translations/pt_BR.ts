@@ -29,7 +29,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>Carregando</translation>
     </message>
   </context>
   <context>
@@ -38,32 +38,32 @@
       <location filename="../basic_ui/ConnectionScreen.qml" line="21"/>
       <location filename="../basic_ui/ConnectionScreen.qml" line="154"/>
       <source>Reconnecting...</source>
-      <translation type="unfinished">Reconnecting...</translation>
+      <translation>Reconectando...</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="31"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Conectado</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation type="unfinished">Connection failed</translation>
+      <translation>Erro</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Tente novamente</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Olá</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation type="unfinished">Wait for it...</translation>
+      <translation>Espere um momento...</translation>
     </message>
   </context>
   <context>
@@ -120,17 +120,17 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-      <translation type="unfinished">Dashboard</translation>
+      <translation>Painel de controle</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Rooms</source>
-      <translation type="unfinished">Rooms</translation>
+      <translation>Ambientes</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Configurações</translation>
     </message>
   </context>
   <context>
@@ -218,12 +218,12 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation type="unfinished">New software version is available.</translation>
+      <translation>Nova versão do software está disponível.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Atualize</translation>
     </message>
   </context>
   <context>
