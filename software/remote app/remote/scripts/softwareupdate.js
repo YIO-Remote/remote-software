@@ -1,5 +1,5 @@
 function checkForUpdate(update) {
-    var url = "https://api.github.com/repos/martonborzak/touch-remote/releases/latest"
+    var url = "https://api.github.com/repos/martonborzak/yio-remote/releases/latest"
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.responseType = 'json';
