@@ -254,4 +254,12 @@
       <translation>Kikapcsolás</translation>
     </message>
   </context>
+  <context>
+    <name>main</name>
+    <message>
+      <location filename="../main.qml" line="169"/>
+      <source>Lights</source>
+      <translation type="unfinished">Lights</translation>
+    </message>
+  </context>
 </TS>
