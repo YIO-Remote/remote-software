@@ -90,6 +90,7 @@ Item {
                             section.height = 74
                             translateHandler.selectLanguage(translations[index].id)
                             language = translations[index].id
+                            loadComponentsEntities();
                         }
                     }
                 }

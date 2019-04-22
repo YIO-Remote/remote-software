@@ -112,8 +112,13 @@ ApplicationWindow {
         name: homePath + "/config.json" // "/mnt/boot/config.json"
     }
 
-    Component.onCompleted: {
-        translateHandler.selectLanguage(language)
+    function loadComponentsEntities() {
+
+        integration = ({});
+        integrationObj = [];
+        loaded_entities = [];
+        loaded_components = [];
+
         var comp;
         var obj;
 
@@ -139,6 +144,12 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        translateHandler.selectLanguage(language)
+
+        loadComponentsEntities();
 
         // check for software update
         JSUpdate.checkForUpdate();

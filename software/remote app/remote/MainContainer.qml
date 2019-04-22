@@ -90,7 +90,7 @@ Item {
             model: supported_entities
 
             Loader {
-                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+               active: SwipeView.isCurrentItem || SwipeView.isNextItem || (SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
 
                 sourceComponent: Flickable {
                     width: parent.width
