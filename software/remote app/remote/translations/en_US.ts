@@ -257,8 +257,13 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="153"/>
+        <location filename="../main.qml" line="154"/>
         <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="154"/>
+        <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
