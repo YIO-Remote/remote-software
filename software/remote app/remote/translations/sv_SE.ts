@@ -71,27 +71,27 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="15"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Skärm</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="36"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Automatisk ljusstyrka</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="163"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Nattläge</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="223"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Rengöringsläge</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="238"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Rör displayen i 10 sek för att avbryta rengöringsläge.</translation>
     </message>
   </context>
   <context>
@@ -190,17 +190,17 @@
       <location filename="../basic_ui/settings/PowerSaving.qml" line="109"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="216"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Aldrig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="122"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minuter</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Stäng aldrig av fjärrkontrollen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
@@ -210,7 +210,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="229"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 timmar</translation>
     </message>
   </context>
   <context>
@@ -231,27 +231,27 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="33"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Upptid</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="91"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>CPU Temperatur</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="127"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Omstart</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="142"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Stäng av</translation>
     </message>
   </context>
 </TS>
