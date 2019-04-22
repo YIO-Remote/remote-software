@@ -82,7 +82,7 @@ Item {
             Repeater {
                 model: supported_entities
                 NavigationButton {
-                    buttonText: qsTr(supported_entities[index])
+                    buttonText: supported_entities_translation[index]
                     icon.source: "qrc:/images/navigation/icon-"+supported_entities[index]+".png"
                     selected: mainNavigationSwipeview.currentIndex == index + 2 ? true : false
                     mouseArea.onClicked: {

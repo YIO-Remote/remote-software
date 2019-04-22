@@ -166,6 +166,7 @@ ApplicationWindow {
     // It is necessary to have a seperate variable for every entity type, otherwise when an event comes all entities and their component would be updated too.
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var supported_entities: ["light"]
+    property var supported_entities_translation: [qsTr("Lights")]
     property var loaded_entities: []
     property var loaded_components: []
     property var entities_light

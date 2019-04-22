@@ -36,8 +36,33 @@ SOURCES = main.qml \
           components/light/*.qml \
           integrations/*.qml \
 }
-TRANSLATIONS = translations/en_US.ts \
-               translations/hu_HU.ts
+TRANSLATIONS = translations/bg_BG.ts \
+               translations/cs_CZ.ts \
+               translations/da_DK.ts \
+               translations/de_DE.ts \
+               translations/el_GR.ts \
+               translations/en_US.ts \
+               translations/es_ES.ts \
+               translations/et_EE.ts \
+               translations/fi_FI.ts \
+               translations/fr_CA.ts \
+               translations/fr_FR.ts \
+               translations/ga_IE.ts \
+               translations/hr_HR.ts \
+               translations/hu_HU.ts \
+               translations/it_IT.ts \
+               translations/lt_LT.ts \
+               translations/lv_LV.ts \
+               translations/mt_MT.ts \
+               translations/nl_NL.ts \
+               translations/no_NO.ts \
+               translations/pl_PL.ts \
+               translations/pt_BR.ts \
+               translations/pt_PT.ts \
+               translations/ro_RO.ts \
+               translations/sk_SK.ts \
+               translations/sl_SI.ts \
+               translations/sv_SE.ts
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

@@ -1,8 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
-#include <QDir>
-#include <QtDebug>
 #include <QTranslator>
 
 #include "launcher.h"
