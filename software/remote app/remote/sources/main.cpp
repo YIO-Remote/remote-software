@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QTranslator translator;
-    translator.load("../../../hu-hu");
+    translator.load("../../../hu_HU");
 
     app.installTranslator(&translator);
 
