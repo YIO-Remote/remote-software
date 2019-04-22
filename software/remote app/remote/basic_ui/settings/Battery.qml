@@ -14,7 +14,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: translations[language].settings.battery
+        text: qsTr("Battery")
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -35,7 +35,7 @@ Item {
         Text {
             id: batterychargeText
             color: colorText
-            text: translations[language].settings.batterycharge
+            text: qsTr("Battery charge")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top
@@ -71,7 +71,7 @@ Item {
         Text {
             id: batteryhealthText
             color: colorText
-            text: translations[language].settings.batteryhealth
+            text: qsTr("Battery health")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line4.bottom
@@ -107,7 +107,7 @@ Item {
         Text {
             id: batteryvoltageText
             color: colorText
-            text: translations[language].settings.batteryvoltage
+            text: qsTr("Battery voltage")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line5.bottom

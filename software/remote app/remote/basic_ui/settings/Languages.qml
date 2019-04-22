@@ -27,7 +27,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: translations[language].settings.languages
+        text: qsTr("Languages")
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal

@@ -12,7 +12,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: translations[language].settings.display
+        text: qsTr("Display")
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -33,7 +33,7 @@ Item {
         Text {
             id: autobrightnessText
             color: colorText
-            text: translations[language].settings.autobrightness
+            text: qsTr("Auto brightness")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top
@@ -160,7 +160,7 @@ Item {
         Text {
             id: darkmodeText
             color: colorText
-            text: translations[language].settings.darkmode
+            text: qsTr("Dark mode")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line1.bottom
@@ -220,7 +220,7 @@ Item {
         Text {
             id: cleaningText
             color: colorText
-            text: translations[language].settings.cleaningmode
+            text: qsTr("Cleaning mode")
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: line2.bottom
@@ -235,7 +235,7 @@ Item {
             id: cleaningsmallText
             color: colorText
             opacity: 0.5
-            text: translations[language].settings.cleaningtext
+            text: qsTr("Touch the display for 10 seconds to turn cleaning mode off.")
             wrapMode: Text.WordWrap
             width: parent.width - 40 - cleaningmodeButton.width
             anchors.left: parent.left

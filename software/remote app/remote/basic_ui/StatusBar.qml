@@ -119,7 +119,7 @@ Item {
         Text {
             id: updateOpenText
             color: colorText
-            text: translations[language].softwareupdate.newversion
+            text: qsTr("New software version is available.")
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -149,7 +149,7 @@ Item {
 
         CustomButton {
             id: updateButton
-            buttonText: translations[language].softwareupdate.update
+            buttonText: qsTr("Update")
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 60

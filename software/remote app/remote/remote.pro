@@ -25,6 +25,20 @@ SOURCES += \
 RESOURCES += qml.qrc \
     images.qrc
 
+# TRANSLATION
+lupdate_only{
+SOURCES = main.qml \
+          MainContainer.qml \
+          StandbyControl.qml \
+          basic_ui/*.qml \
+          basic_ui/main_navigation/*.qml \
+          basic_ui/settings/*.qml \
+          components/light/*.qml \
+          integrations/*.qml \
+}
+TRANSLATIONS = translations/en_US.ts \
+               translations/hu_HU.ts
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
