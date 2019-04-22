@@ -259,7 +259,7 @@
     <message>
       <location filename="../main.qml" line="153"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lys</translation>
     </message>
   </context>
 </TS>
