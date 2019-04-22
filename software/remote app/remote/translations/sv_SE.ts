@@ -29,7 +29,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>Laddar</translation>
     </message>
   </context>
   <context>
@@ -38,32 +38,32 @@
       <location filename="../basic_ui/ConnectionScreen.qml" line="21"/>
       <location filename="../basic_ui/ConnectionScreen.qml" line="154"/>
       <source>Reconnecting...</source>
-      <translation type="unfinished">Reconnecting...</translation>
+      <translation>Återansluter...</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="31"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Ansluten</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation type="unfinished">Connection failed</translation>
+      <translation>Anslutningen misslyckades</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Försök igen</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Hej</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation type="unfinished">Wait for it...</translation>
+      <translation>Vänligen vänta...</translation>
     </message>
   </context>
   <context>
@@ -71,27 +71,27 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="15"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Skärm</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="36"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Automatisk ljusstyrka</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="163"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Nattläge</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="223"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Rengöringsläge</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="238"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Rör displayen i 10 sek för att avbryta rengöringsläge.</translation>
     </message>
   </context>
   <context>
@@ -120,17 +120,17 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-      <translation type="unfinished">Dashboard</translation>
+      <translation>Dashboard</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Rooms</source>
-      <translation type="unfinished">Rooms</translation>
+      <translation>Rum</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Inställningar</translation>
     </message>
   </context>
   <context>
@@ -138,17 +138,17 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="30"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Nätverk</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="51"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Wi-Fi Signalstyrka</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="88"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP address</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="124"/>
@@ -161,12 +161,12 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Lågt batteri</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Ladda fjärrkontrollen snart</translation>
     </message>
   </context>
   <context>
@@ -174,12 +174,12 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="15"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Energibesparing</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Stäng aldrig av Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
@@ -190,17 +190,17 @@
       <location filename="../basic_ui/settings/PowerSaving.qml" line="109"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="216"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Aldrig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="122"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minuter</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Stäng aldrig av fjärrkontrollen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
@@ -210,7 +210,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="229"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 timmar</translation>
     </message>
   </context>
   <context>
@@ -218,12 +218,12 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation type="unfinished">New software version is available.</translation>
+      <translation>Ny mjukvaruuppdatering tillgänglig.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Uppdatera</translation>
     </message>
   </context>
   <context>
@@ -231,27 +231,27 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="33"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Upptid</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="91"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>CPU Temperatur</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="127"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Omstart</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="142"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Stäng av</translation>
     </message>
   </context>
 </TS>
