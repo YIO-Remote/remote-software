@@ -38,17 +38,17 @@
       <location filename="../basic_ui/ConnectionScreen.qml" line="21"/>
       <location filename="../basic_ui/ConnectionScreen.qml" line="154"/>
       <source>Reconnecting...</source>
-      <translation>Forbinder igen...</translation>
+      <translation>Opretter forbindelse igen...</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="31"/>
       <source>Connected</source>
-      <translation>Forbundet</translation>
+      <translation>Tilsluttet</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation>Forbindelse mislykkedes</translation>
+      <translation>Forbindelse mislykket</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
@@ -63,7 +63,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation>Vent venligst...</translation>
+      <translation>Vent venligst ...</translation>
     </message>
   </context>
   <context>
@@ -76,7 +76,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="36"/>
       <source>Auto brightness</source>
-      <translation>Auto-lysstyrke</translation>
+      <translation>Automatisk lysstyrke</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="163"/>
@@ -86,7 +86,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="223"/>
       <source>Cleaning mode</source>
-      <translation>Rengøring tilstand</translation>
+      <translation>Rengøringstilstand</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="238"/>
