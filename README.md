@@ -35,6 +35,7 @@ https://chat.yio-remote.com
 - [ ] openHAB
 
 You would like to add other hubs?
+
 no problem for us! Find information in our [community](https://community.yio-remote.com)
 
 
@@ -45,6 +46,7 @@ no problem for us! Find information in our [community](https://community.yio-rem
 - [ ] Media players
 
 You would like to add other devices?
+
 no problem for us! Find information in our [community](https://community.yio-remote.com),
 or you file an Issue on [GitHub](https://github.com/martonborzak/yio-remote/issues).
 
@@ -86,7 +88,8 @@ Currently available Languages are (marked when 100% done only):
 - [ ] 🇸🇪 Swedish
 
 You would like to add other languages? 
-no nroblem for us! Find information in our [community](https://community.yio-remote.com),
+
+no problem for us! Find information in our [community](https://community.yio-remote.com),
 or you file an Issue on [GitHub](https://issues.yio-remote.com).
 
 
