@@ -1,65 +1,92 @@
-# Yio touchscreen remote
+# Yio (Your Input/Output) touchscreen remote
 
-Touchscreen remote made to control smart home hubs. Right now there's support for Home Assistant only. Will be updating the project as I have more time.
+What is Yio?
+Yio is made by a smarthome enthusiast, it allows the user to directly interact with a smarthome hub system and extend its usage to the feel and response of a remote.
 
-It is divided into two sections: [software](/software) and [hardware](/hardware).
+This repository is devided into [software](/software) and [hardware](/hardware)
+for more information about Yio, you are welcome to join the growing team of users, helpers & developers via the following methods:
 
-Discord server to chat about the project: 
-https://discord.gg/zGVYf58
-
-Forum to discuss the project:
+Forum to discuss the Project:
 https://community.yio-remote.com
 
+Discord server to chat directly to People:
+https://chat.yio-remote.com
 
-## Features
-- 3.5" 480x800px high resolution capacitive touchscreen
-- customizable physical buttons
-- battery monitoring
-- proximity/ambient light/gesture sensor
-- haptic motor for haptic feedback 
-- Qi wireless charging
-- docking station
+
+## Hardware Features
+
+- [x] 13 customizable physical buttons (each can be used for 2 different functions)
+- [x] 3.5" 480x800px high resolution capacitive touchsreen
+- [x] ambient light sensor
+- [x] battery monitoring (charge, health & voltage)
+- [x] custom designed, CNC milled, sandblasted and anodized housing
+- [x] docking station (charge your remote quickly, present it nicely)
+- [x] gesture sensor
+- [x] haptic feedback motor
+- [x] proximity sensor
+- [x] Qi wireless charging
+
 
 ## Supported home automation hubs
-- Home Assistant
+
+- [x] Home Assistant
+- [ ] Homey
+- [ ] Hubitat
+- [ ] openHAB
+You would like to add other hubs?
+- no problem for us! Find information in our [community](https://community.yio-remote.com)
+
 
 ## Supported devices
-- Lights
-- Blinds
-- Heating
-- Media players
+- [x] Lights
+- [ ] Blinds
+- [ ] Heating
+- [ ] Media players
+You would like to add other devices?
+- no problem for us! Find information in our [community](https://community.yio-remote.com),
+  or you file an Issue on [GitHub](https://github.com/martonborzak/yio-remote/issues).
+
 
 ## Supported languages
-- [x] 🇬🇧 English
-- [x] 🇳🇱 Dutch
-- [x] 🇫🇷 French
-- [x] 🇵🇹/🇧🇷 Portuguese-Brazilian
-- [x] 🇩🇰 Danish
-- [x] 🇩🇪 German
-- [x] 🇭🇺 Hungarian
-- [X] 🇪🇸 Spanish
-- [X] 🇸🇪 Swedish
 
-### Still wanted language translations
-- [ ] 🇵🇹 Portuguese
-- [ ] 🇳🇴 Norwegian
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/yio-remote-translation/localized.svg)](https://crowdin.com/project/yio-remote-translation)
+
+For Language Support Yio rely on [crowdin.com](https://crwd.in/yio-remote-translation).
+Above you see how far the translation process is done, if you like you can help translate the software easily by join there.
+
+Currently available Languages are (marked when 100% done only):
 - [ ] 🇧🇬 Bulgarian
 - [ ] 🇭🇷 Croatian
 - [ ] 🇨🇿 Czech
+- [ ] 🇩🇰 Danish
+- [x] 🇳🇱 Dutch
 - [ ] 🇪🇪 Estonian
+- [x] 🇺🇸 English, US
 - [ ] 🇫🇮 Finnish
+- [ ] 🇫🇷 French
+- [x] 🇩🇪 German
 - [ ] 🇬🇷 Greek
+- [ ] 🇭🇺 Hungarian
 - [ ] 🇮🇪 Irish
 - [ ] 🇮🇹 Italian
 - [ ] 🇱🇻 Latvian
 - [ ] 🇱🇹 Lithuanian
 - [ ] 🇲🇹 Maltese
+- [ ] 🇳🇴 Norwegian
 - [ ] 🇵🇱 Polish
+- [ ] 🇵🇹 Portuguese
+- [ ] 🇧🇷 Portuguese, Brazilian
 - [ ] 🇷🇴 Romanian
 - [ ] 🇸🇰 Slovak
-- [ ] 🇸🇮 Slovene
+- [ ] 🇸🇮 Slovenian
+- [ ] 🇪🇸 Spanish
+- [ ] 🇸🇪 Swedish
+You would like to add other languages? 
+- no nroblem for us! Find information in our [community](https://community.yio-remote.com),
+  or you file an Issue on [GitHub](https://github.com/martonborzak/yio-remote/issues).
 
-If you would like to contribue, please create a pull request or join this topic: https://community.yio-remote.com/t/translation-file/20
+
+
 
 # Releases
 ## Version 0.1
