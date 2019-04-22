@@ -33,6 +33,7 @@ https://chat.yio-remote.com
 - [ ] Homey
 - [ ] Hubitat
 - [ ] openHAB
+
 You would like to add other hubs?
 no problem for us! Find information in our [community](https://community.yio-remote.com)
 
@@ -42,6 +43,7 @@ no problem for us! Find information in our [community](https://community.yio-rem
 - [ ] Blinds
 - [ ] Heating
 - [ ] Media players
+
 You would like to add other devices?
 no problem for us! Find information in our [community](https://community.yio-remote.com),
 or you file an Issue on [GitHub](https://github.com/martonborzak/yio-remote/issues).
@@ -55,6 +57,7 @@ For Language Support Yio rely on [crowdin.com](https://translation.yio-remote.co
 Above you see how far the translation process is done, if you like you can help translate the software easily by join there.
 
 Currently available Languages are (marked when 100% done only):
+
 - [ ] 🇧🇬 Bulgarian
 - [ ] 🇭🇷 Croatian
 - [ ] 🇨🇿 Czech
@@ -81,6 +84,7 @@ Currently available Languages are (marked when 100% done only):
 - [ ] 🇸🇮 Slovenian
 - [ ] 🇪🇸 Spanish
 - [ ] 🇸🇪 Swedish
+
 You would like to add other languages? 
 no nroblem for us! Find information in our [community](https://community.yio-remote.com),
 or you file an Issue on [GitHub](https://issues.yio-remote.com).
