@@ -110,7 +110,7 @@
   <context>
     <name>Languages</name>
     <message>
-      <location filename="../basic_ui/settings/Languages.qml" line="30"/>
+      <location filename="../basic_ui/settings/Languages.qml" line="23"/>
       <source>Languages</source>
       <translation>Sprachen</translation>
     </message>
@@ -257,7 +257,7 @@
   <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="169"/>
+      <location filename="../main.qml" line="153"/>
       <source>Lights</source>
       <translation>Lampen</translation>
     </message>
