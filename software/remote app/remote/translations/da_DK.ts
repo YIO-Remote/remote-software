@@ -86,7 +86,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="223"/>
       <source>Cleaning mode</source>
-      <translation>Rengøring tilstand</translation>
+      <translation>Rengøringstilstand</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="238"/>
