@@ -14,7 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
-    sources/display_control.h
+    sources/display_control.h \
+    sources/translation.h
 
 SOURCES += \
         sources/main.cpp \
@@ -23,7 +24,8 @@ SOURCES += \
     sources/display_control.cpp
 
 RESOURCES += qml.qrc \
-    images.qrc
+    images.qrc \
+    translations.qrc
 
 # TRANSLATION
 lupdate_only{

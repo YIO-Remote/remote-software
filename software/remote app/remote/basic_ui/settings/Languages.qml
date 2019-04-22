@@ -2,21 +2,14 @@ import QtQuick 2.11
 import QtQuick.Controls 2.4
 
 Item {
+    id: languageSection
     width: parent.width
     height: header.height + section.height + 20
 
-    function getLanguage() {
-        for (var i=0; i<translationsCount.length; i++) {
-            if (translationsCount[i].id == language) {
+    function getLanguage(id) {
+        for (var i=0; i<translations.length; i++) {
+            if (translations[i].id == id) {
                 return i;
-            }
-        }
-    }
-
-    function setLanguage(id) {
-        for (var i=0; i<translationsCount.length; i++) {
-            if (translationsCount[i].id == id) {
-                language = translationsCount[i].id;
             }
         }
     }
@@ -57,14 +50,14 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
             height: 300
-            model: translationsCount
+            model: translations
             preferredHighlightBegin: height / 2 - 37
             preferredHighlightEnd: height / 2 + 37
             highlightMoveDuration: 50
             highlightRangeMode: ListView.StrictlyEnforceRange
             interactive: section.height == 300 ? true : false
 
-            currentIndex: getLanguage()
+            currentIndex: getLanguage(language);
 
             focus: true
 
@@ -75,7 +68,7 @@ Item {
                 color: colorBackgroundTransparent
 
                 Text {
-                    text: translationsCount[index].description
+                    text: translations[index].name
                     color: colorText
                     anchors.left: parent.left
                     anchors.leftMargin: 20
@@ -95,7 +88,8 @@ Item {
                         } else {
                             languageListView.currentIndex = index
                             section.height = 74
-                            setLanguage(translationsCount[index].id)
+                            translateHandler.selectLanguage(translations[index].id)
+                            language = translations[index].id
                         }
                     }
                 }

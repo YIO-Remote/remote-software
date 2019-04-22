@@ -117,6 +117,7 @@ Item {
                             property int pageIndex: index
 
                             model: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]]
+
                             ComponentLight.Button {
                                 entity_id: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].entity_id
                                 friendly_name: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].friendly_name

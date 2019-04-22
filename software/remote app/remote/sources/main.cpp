@@ -1,11 +1,13 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
-#include <QTranslator>
+#include <QQmlContext>
 
 #include "launcher.h"
 #include "jsonfile.h"
 #include "display_control.h"
+#include "translation.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -14,11 +16,6 @@ int main(int argc, char *argv[])
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-
-//    QTranslator translator;
-//    translator.load("../../../hu_HU");
-
-//    app.installTranslator(&translator);
 
     // LOADING FONTS
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));
@@ -31,9 +28,15 @@ int main(int argc, char *argv[])
     qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
 
     QQmlApplicationEngine engine;
+
+    // TRANSLATION
+    TranslationHandler transHndl(&engine);
+    engine.rootContext()->setContextProperty("translateHandler", &transHndl);
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
+
 
     return app.exec();
 }
