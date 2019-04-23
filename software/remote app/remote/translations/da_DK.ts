@@ -16,7 +16,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
       <source>Battery health</source>
-      <translation>Batteri sundhed</translation>
+      <translation>Batteritilstand</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
@@ -48,7 +48,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation>Forbindelse mislykkedes</translation>
+      <translation>Forbindelse mislykket</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
@@ -166,7 +166,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation>Oplad fjerningbetjeningen snart</translation>
+      <translation>Oplad fjernbetjeningen snart</translation>
     </message>
   </context>
   <context>
@@ -184,7 +184,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation>Slå Wi-Fi efter %1 minutter af inaktivitet</translation>
+      <translation>Slå Wi-Fi fra efter %1 minutters inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="109"/>
