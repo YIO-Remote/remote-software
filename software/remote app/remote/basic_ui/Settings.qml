@@ -30,6 +30,8 @@ Item {
 
         Settings.Hubs {}
 
+        Settings.Devices {}
+
         Settings.Battery {}
 
         Settings.Network {}

@@ -113,8 +113,6 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        translateHandler.selectLanguage(language)
-
         var comp;
         var obj;
 
@@ -136,10 +134,12 @@ ApplicationWindow {
                     obj = comp.createObject(applicationWindow);
 
                     loaded_entities.push(supported_entities[k]);
+                    loaded_entities_id.push(k)
                     loaded_components.push(obj);
                 }
             }
         }
+        translateHandler.selectLanguage(language)
 
         // check for software update
         JSUpdate.checkForUpdate();
@@ -150,11 +150,15 @@ ApplicationWindow {
     // Create a variable for the supported component. For example one variable for lights, one for blinds, etc.
     // It is necessary to have a seperate variable for every entity type, otherwise when an event comes all entities and their component would be updated too.
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var supported_entities: ["light"]
-    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
+    property var supported_entities: ["light","blind"]
+    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString]
+
     property var loaded_entities: []
+    property var loaded_entities_id: []
     property var loaded_components: []
+
     property var entities_light
+    property var entities_blind
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES

@@ -42,7 +42,7 @@ Item {
         boundsBehavior: Flickable.DragAndOvershootBounds
         flickableDirection: Flickable.HorizontalFlick
         contentWidth: navigationGrid.width-30
-//        contentX: setNavigationPosition()
+        contentX: setNavigationPosition()
 
         function setNavigationPosition() {
             return mainNavigationSwipeview.currentIndex*20
@@ -80,10 +80,10 @@ Item {
             }
 
             Repeater {
-                model: supported_entities
+                model: loaded_entities
                 NavigationButton {
-                    buttonText: supported_entities_translation[index] + translateHandler.emptyString
-                    icon.source: "qrc:/images/navigation/icon-"+supported_entities[index]+".png"
+                    buttonText: supported_entities_translation[loaded_entities_id[index]]
+                    icon.source: "qrc:/images/navigation/icon-"+loaded_entities[index]+".png"
                     selected: mainNavigationSwipeview.currentIndex == index + 2 ? true : false
                     mouseArea.onClicked: {
                         mainNavigationSwipeview.currentIndex = index + 2

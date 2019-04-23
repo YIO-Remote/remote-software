@@ -1,5 +1,17 @@
 [
     {
+        "name": "Dansk",
+        "id": "da_DK"
+    },
+    {
+        "name": "Nederlands",
+        "id": "nl_NL"
+    },
+    {
+        "name": "Deutsche",
+        "id": "de_DE"
+    },
+    {
         "name": "English",
         "id": "en_US"
     },

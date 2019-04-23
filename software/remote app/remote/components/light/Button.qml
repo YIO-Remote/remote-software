@@ -5,12 +5,14 @@ import QtGraphicalEffects 1.0
 Rectangle {
     id: lightButton
 
-    property var entity_id
-    property var friendly_name
-    property var lstate
-    property int brightness
     property int componentID
-    property string integrationType
+    property int entityID
+
+    property var entity_id: entities_light[entityID].entity_id
+    property var friendly_name: entities_light[entityID].friendly_name
+    property var lstate: entities_light[entityID].state
+    property int brightness: entities_light[entityID].brightness
+    property string integrationType: entities_light[entityID].integration
 
     property bool favorite: false
 

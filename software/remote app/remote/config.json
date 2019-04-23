@@ -15,9 +15,6 @@
       "type": "homey",
       "friendly_name": "Homey",
       "data": {
-        "ip" : "",
-        "user" : "",
-        "password": ""
       }
     }
   ],
@@ -40,7 +37,7 @@
     }
   ],
   "entities": [
-      {
+    {
       "type": "light",
       "data": [
       {
@@ -101,7 +98,7 @@
         "friendly_name": "test",
         "favorite": true,
         "room": "Living room",
-        "integration": "homey"
+        "integration": "homeassistant"
       },
       {
         "entity_id": "light.living_room_corner_lamp_level",
@@ -121,7 +118,34 @@
         "friendly_name": "test",
         "favorite": false,
         "room": "Bedroom",
-        "integration": "homey"
+        "integration": "homeassistant"
+      }
+      ]
+    },
+    {
+      "type": "blind",
+      "data": [
+      {
+        "entity_id": "cover.living_room_blinds_level",
+        "type": "blind",
+        "state": "",
+        "position": "",
+        "autoblinds_entity_id": "input_boolean.auto_blinds_living_room",
+        "autoblinds_state": "",
+        "friendly_name": "Living room blinds",
+        "favorite": false,
+        "room": "Living room"
+      },
+      {
+        "entity_id": "cover.bedroom_blinds_level",
+        "type": "blind",
+        "state": "",
+        "position": "",
+        "autoblinds_entity_id": "input_boolean.auto_blinds_bedroom",
+        "autoblinds_state": "",
+        "friendly_name": "Bedroom blinds",
+        "favorite": false,
+        "room": "Bedroom"
       }
       ]
     }

@@ -80,6 +80,27 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     spacing: 10
 
+                    Component.onCompleted: {
+                        for (var k=0; k<config.rooms.length; k++) {
+                            // load room title
+                            if (k>0) {
+                                var spacerObj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', roomsFlow, '')
+                            }
+                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 60; text: "'+ config.rooms[k].room +'";}', roomsFlow, "");
+
+                            // load room entities
+                            // go through all entities, if it matches the room, create a component
+                            for (var i=0; i<loaded_entities.length; i++) {
+                                for (var j=0; j<applicationWindow["entities_"+loaded_entities[i]].length; j++) {
+                                    if (applicationWindow["entities_"+loaded_entities[i]][j].room == config.rooms[k].room) {
+                                        // load entity button
+                                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
+                                        var obj = comp.createObject(roomsFlow, {componentID: i, entityID: j});
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -87,10 +108,10 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // SUPPORTED ENTITIES
         Repeater {
-            model: supported_entities
+            model: loaded_entities
 
             Loader {
-               active: SwipeView.isCurrentItem || SwipeView.isNextItem || (SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
+                active: SwipeView.isCurrentItem || SwipeView.isNextItem || (SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
 
                 sourceComponent: Flickable {
                     width: parent.width
@@ -112,21 +133,17 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
                         spacing: 10
 
-                        Repeater {
-                            id: entityRepeater
-                            property int pageIndex: index
-
-                            model: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]]
-
-                            ComponentLight.Button {
-                                entity_id: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].entity_id
-                                friendly_name: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].friendly_name
-                                componentID: entityRepeater.pageIndex
-                                integrationType: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].integration
-
-                                // light specific properties
-                                lstate: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].state
-                                brightness: applicationWindow["entities_"+loaded_entities[entityRepeater.pageIndex]][index].brightness
+                        Component.onCompleted: {
+                            // load room entities
+                            // go through all entities, if it matches the room, create a component
+                            for (var i=0; i<loaded_entities.length; i++) {
+                                for (var j=0; j<applicationWindow["entities_"+loaded_entities[i]].length; j++) {
+                                    if (applicationWindow["entities_"+loaded_entities[i]][j].type == loaded_entities[index]) {
+                                        // load entity button
+                                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
+                                        var obj = comp.createObject(repeaterFlow, {componentID: i, entityID: j});
+                                    }
+                                }
                             }
                         }
                     }
