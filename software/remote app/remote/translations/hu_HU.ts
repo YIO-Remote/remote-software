@@ -67,6 +67,19 @@
     </message>
   </context>
   <context>
+    <name>Devices</name>
+    <message>
+      <location filename="../basic_ui/settings/Devices.qml" line="17"/>
+      <source>Devices</source>
+      <translation type="unfinished">Devices</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Devices.qml" line="38"/>
+      <source>Add new</source>
+      <translation type="unfinished">Add new</translation>
+    </message>
+  </context>
+  <context>
     <name>Display</name>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="15"/>
