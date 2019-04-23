@@ -91,7 +91,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="238"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Tryk på display i 10 sekunder for at slukke rengøring tilstand.</translation>
+      <translation>Tryk på skærmen i 10 sekunder for at deaktivere rengøringstilstand.</translation>
     </message>
   </context>
   <context>
@@ -104,7 +104,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation>Tilføj nyt</translation>
+      <translation>Tilføj ny</translation>
     </message>
   </context>
   <context>
@@ -120,12 +120,12 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-      <translation>Oversigtspanel</translation>
+      <translation>Dashboard</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Rooms</source>
-      <translation>Værelser</translation>
+      <translation>Rum</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
@@ -161,7 +161,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
       <source>Low battery</source>
-      <translation>Lavt batteri</translation>
+      <translation>Lavt batteriniveau</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
@@ -174,7 +174,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="15"/>
       <source>Power saving</source>
-      <translation>Strømbesparelse</translation>
+      <translation>Energisparring</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
@@ -205,7 +205,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation>Slukke fjernbetjeningen efter %1 timer inaktivitet</translation>
+      <translation>Sluk fjernbetjeningen efter %1 timer inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="229"/>
@@ -218,7 +218,7 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation>Ny softwareversion er tilgængelig.</translation>
+      <translation>Ny software version er tilgængelig.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
@@ -251,7 +251,7 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="142"/>
       <source>Shutdown</source>
-      <translation>Luk ned</translation>
+      <translation>Sluk</translation>
     </message>
   </context>
   <context>
