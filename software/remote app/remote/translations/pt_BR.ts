@@ -164,7 +164,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="30"/>
       <source>Network</source>
-      <translation>Redes</translation>
+      <translation>Rede</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="51"/>
