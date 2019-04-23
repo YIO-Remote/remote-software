@@ -264,7 +264,7 @@
     <message>
       <location filename="../main.qml" line="154"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Rolläden</translation>
     </message>
   </context>
 </TS>

@@ -63,7 +63,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation>Vent venligst ...</translation>
+      <translation>Vent venligst...</translation>
     </message>
   </context>
   <context>
