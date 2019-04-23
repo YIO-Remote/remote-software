@@ -1,6 +1,8 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
+import "qrc:/scripts/helper.js" as JSHelper
+
 Item {
     id: languageSection
     width: parent.width
@@ -90,6 +92,7 @@ Item {
                             section.height = 74
                             translateHandler.selectLanguage(translations[index].id)
                             language = translations[index].id
+                            JSHelper.saveConfig();
                         }
                     }
                 }

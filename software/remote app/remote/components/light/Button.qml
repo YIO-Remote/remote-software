@@ -2,6 +2,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 
+import "qrc:/scripts/helper.js" as JSHelper
+
 Rectangle {
     id: lightButton
     clip: true
@@ -321,6 +323,7 @@ Rectangle {
                     entities_light = tmp;
                     loader_main.item.mainNavigationSwipeview.itemAt(0).active = false;
                     loader_main.item.mainNavigationSwipeview.itemAt(0).active = true;
+                    JSHelper.saveConfig();
                 }
             }
         }

@@ -29,11 +29,6 @@ QString JsonFile::fileName() const
     return QFileInfo(m_file).fileName();
 }
 
-//QString JsonFile::relativeFilePath(const QString &dir) const
-//{
-//    return QDir(dir).relativeFilePath(m_file.fileName());
-//}
-
 bool JsonFile::rename(const QString &newName)
 {
     bool success = m_file.rename(newName);
@@ -43,7 +38,7 @@ bool JsonFile::rename(const QString &newName)
     return success;
 }
 
-bool JsonFile::write(const QVariant &data)
+bool JsonFile::write(const QVariantMap &data)
 {
     if (m_file.fileName().isEmpty()) {
         m_error = tr("empty name");
@@ -51,7 +46,6 @@ bool JsonFile::write(const QVariant &data)
     }
     QJsonDocument doc = QJsonDocument::fromVariant(data);
     if (doc.isNull()) {
-        m_error = tr("cannot convert '%1' to JSON document").arg(data.typeName());
         return false;
     }
     if (doc.isEmpty()) {

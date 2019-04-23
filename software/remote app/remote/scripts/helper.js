@@ -25,3 +25,20 @@ function convertToTwoDigits(n){
 function convertToPercentage (value) {
     return Math.round(value/255*100);
 }
+
+function saveConfig() {
+    //language
+    config.language = language;
+
+    //entities
+    for (var i=0; i<loaded_entities.length; i++) {
+        for (var k=0; k<config.entities.length; k++) {
+            if (config.entities[k].type == loaded_entities[i]) {
+                config.entities[k].data = applicationWindow["entities_"+loaded_entities[i]];
+            }
+        }
+    }
+
+    //save config file
+    jsonConfig.write(config);
+}

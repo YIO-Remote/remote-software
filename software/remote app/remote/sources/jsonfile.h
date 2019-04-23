@@ -34,7 +34,7 @@ public:
     Q_INVOKABLE inline bool copy(const QString &newName) { return m_file.copy(newName); }
     Q_INVOKABLE inline bool remove() { return m_file.remove(); }
 
-    Q_INVOKABLE bool write(const QVariant &data);
+    Q_INVOKABLE bool write(const QVariantMap &data);
     Q_INVOKABLE QVariant read();
 
 signals:
