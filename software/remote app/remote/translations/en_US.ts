@@ -25,6 +25,19 @@
     </message>
 </context>
 <context>
+    <name>Button</name>
+    <message>
+        <location filename="../components/light/Button.qml" line="331"/>
+        <source>Remove from favorits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../components/light/Button.qml" line="331"/>
+        <source>Add to favorits</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChargingScreen</name>
     <message>
         <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
@@ -92,17 +105,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="163"/>
+        <location filename="../basic_ui/settings/Display.qml" line="159"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="223"/>
+        <location filename="../basic_ui/settings/Display.qml" line="215"/>
         <source>Cleaning mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="238"/>
+        <location filename="../basic_ui/settings/Display.qml" line="230"/>
         <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
         <translation type="unfinished"></translation>
     </message>
