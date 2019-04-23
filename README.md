@@ -10,7 +10,7 @@ Forum to discuss the Project:
 https://community.yio-remote.com
 
 Discord server to chat directly to People:
-https://chat.yio-remote.com
+http://chat.yio-remote.com
 
 
 ## Hardware Features
