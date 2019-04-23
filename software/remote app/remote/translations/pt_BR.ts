@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="334"/>
       <source>Remove from favorits</source>
-      <translation type="unfinished">Remove from favorits</translation>
+      <translation>Remover dos favoritos</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="334"/>
       <source>Add to favorits</source>
-      <translation type="unfinished">Add to favorits</translation>
+      <translation>Adicionar aos favoritos</translation>
     </message>
   </context>
   <context>
@@ -61,7 +61,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation>Conexão falhou</translation>
+      <translation>Conexão Falhou</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
@@ -84,12 +84,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Dispositivos</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Adicionar novo</translation>
     </message>
   </context>
   <context>
@@ -97,12 +97,12 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="15"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Exibir</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="36"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Auto brilho</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="159"/>
@@ -130,7 +130,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Adicionar novo</translation>
     </message>
   </context>
   <context>
@@ -164,22 +164,22 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="30"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Redes</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="51"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Intensidade do sinal Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="88"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>Endereço IP</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="124"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>Endereço MAC</translation>
     </message>
   </context>
   <context>
@@ -200,7 +200,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="15"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Economia de energia</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
@@ -226,7 +226,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
       <source>Never turn off the remote</source>
-      <translation>Nunca desligue o telecomando</translation>
+      <translation>Nunca desligue o controle remoto</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
@@ -267,12 +267,12 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="91"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Temperatura da CPU</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="127"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Reiniciar</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="142"/>
