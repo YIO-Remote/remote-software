@@ -259,12 +259,12 @@
     <message>
       <location filename="../main.qml" line="154"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Verlichting</translation>
     </message>
     <message>
       <location filename="../main.qml" line="154"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Jaloezieën</translation>
     </message>
   </context>
 </TS>
