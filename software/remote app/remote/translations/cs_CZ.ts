@@ -143,7 +143,7 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Nastavení</translation>
     </message>
   </context>
   <context>
@@ -151,22 +151,22 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="30"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Síť</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="51"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Síla signálu Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="88"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP adresa</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="124"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC Adresa</translation>
     </message>
   </context>
   <context>
@@ -174,12 +174,12 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Slabá baterie</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Brzy dobijte ovladač prosím</translation>
     </message>
   </context>
   <context>
@@ -187,43 +187,43 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="15"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Úspora energie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Nikdy nevypínat Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Po %1 minutách nečinnosti vypnout Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="109"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="216"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Nikdy</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="122"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minut</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Nikdy nevypínat ovladač</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Po %1 minutách nečinnosti vypnout ovladač</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="229"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 hodin</translation>
     </message>
   </context>
   <context>
@@ -231,12 +231,12 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation type="unfinished">New software version is available.</translation>
+      <translation>Nová verze je k dispozici.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Aktualizace</translation>
     </message>
   </context>
   <context>
@@ -244,27 +244,27 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="33"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Systém</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Doba provozu</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="91"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Teplota CPU</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="127"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Restartovat</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="142"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Vypnout</translation>
     </message>
   </context>
   <context>
@@ -272,12 +272,12 @@
     <message>
       <location filename="../main.qml" line="154"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Světla</translation>
     </message>
     <message>
       <location filename="../main.qml" line="154"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Žaluzie</translation>
     </message>
   </context>
 </TS>
