@@ -27,12 +27,12 @@
   <context>
     <name>Button</name>
     <message>
-      <location filename="../components/light/Button.qml" line="331"/>
+      <location filename="../components/light/Button.qml" line="334"/>
       <source>Remove from favorits</source>
       <translation type="unfinished">Remove from favorits</translation>
     </message>
     <message>
-      <location filename="../components/light/Button.qml" line="331"/>
+      <location filename="../components/light/Button.qml" line="334"/>
       <source>Add to favorits</source>
       <translation type="unfinished">Add to favorits</translation>
     </message>
@@ -136,7 +136,7 @@
   <context>
     <name>Languages</name>
     <message>
-      <location filename="../basic_ui/settings/Languages.qml" line="23"/>
+      <location filename="../basic_ui/settings/Languages.qml" line="25"/>
       <source>Languages</source>
       <translation>Jazyky</translation>
     </message>
