@@ -15,6 +15,7 @@ http://chat.yio-remote.com
 
 ## Hardware Features
 
+- [x] based on a Raspberry Pi Zero W
 - [x] 13 customizable physical buttons (each can be used for 2 different functions)
 - [x] 3.5" 480x800px high resolution capacitive touchsreen
 - [x] ambient light sensor
@@ -55,7 +56,7 @@ or you file an Issue on [GitHub](https://github.com/martonborzak/yio-remote/issu
 
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/yio-remote-translation/localized.svg)](https://crowdin.com/project/yio-remote-translation)
 
-For Language Support Yio rely on [crowdin.com](https://translation.yio-remote.com).
+For Language Support Yio rely on [crowdin.com](http://translation.yio-remote.com).
 Above you see how far the translation process is done, if you like you can help translate the software easily by join there.
 
 Currently available Languages are (marked when 100% done only):
@@ -90,7 +91,7 @@ Currently available Languages are (marked when 100% done only):
 You would like to add other languages? 
 
 no problem for us! Find information in our [community](https://community.yio-remote.com),
-or you file an Issue on [GitHub](https://issues.yio-remote.com).
+or you file an Issue on [GitHub](http://issues.yio-remote.com).
 
 
 
