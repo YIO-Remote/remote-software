@@ -63,7 +63,7 @@ Currently available Languages are (marked when 100% done only):
 - [ ] 🇧🇬 Bulgarian
 - [ ] 🇭🇷 Croatian
 - [ ] 🇨🇿 Czech
-- [ ] 🇩🇰 Danish
+- [x] 🇩🇰 Danish
 - [x] 🇳🇱 Dutch
 - [ ] 🇪🇪 Estonian
 - [x] 🇺🇸 English, US
@@ -71,7 +71,7 @@ Currently available Languages are (marked when 100% done only):
 - [ ] 🇫🇷 French
 - [x] 🇩🇪 German
 - [ ] 🇬🇷 Greek
-- [ ] 🇭🇺 Hungarian
+- [x] 🇭🇺 Hungarian
 - [ ] 🇮🇪 Irish
 - [ ] 🇮🇹 Italian
 - [ ] 🇱🇻 Latvian
