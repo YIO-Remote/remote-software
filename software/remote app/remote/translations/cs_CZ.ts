@@ -6,22 +6,22 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="17"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Baterie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
       <source>Battery charge</source>
-      <translation type="unfinished">Battery charge</translation>
+      <translation>Úroveň baterie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Zdraví baterie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
       <source>Battery voltage</source>
-      <translation type="unfinished">Battery voltage</translation>
+      <translation>Napětí baterie</translation>
     </message>
   </context>
   <context>
@@ -29,7 +29,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>Nabíjení</translation>
     </message>
   </context>
   <context>
@@ -38,32 +38,32 @@
       <location filename="../basic_ui/ConnectionScreen.qml" line="21"/>
       <location filename="../basic_ui/ConnectionScreen.qml" line="154"/>
       <source>Reconnecting...</source>
-      <translation type="unfinished">Reconnecting...</translation>
+      <translation>Znovu se připojuji...</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="31"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Připojeno</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation type="unfinished">Connection failed</translation>
+      <translation>Připojení selhalo</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Zkuste to znovu</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Dobrý den</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation type="unfinished">Wait for it...</translation>
+      <translation>Počkejte si na to...</translation>
     </message>
   </context>
   <context>
@@ -71,12 +71,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Zařízení</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Přidat nový</translation>
     </message>
   </context>
   <context>
@@ -84,27 +84,27 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="15"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Displej</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="36"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Automatický jas</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="163"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Tmavý režim</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="223"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Režim čištění</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="238"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Dotkněte se displeje na 10 sekund pro vypnutí režimu čištění.</translation>
     </message>
   </context>
   <context>
@@ -112,12 +112,12 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Huby</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Přidat nový</translation>
     </message>
   </context>
   <context>
@@ -125,7 +125,7 @@
     <message>
       <location filename="../basic_ui/settings/Languages.qml" line="23"/>
       <source>Languages</source>
-      <translation type="unfinished">Languages</translation>
+      <translation>Jazyky</translation>
     </message>
   </context>
   <context>
@@ -133,12 +133,12 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-      <translation type="unfinished">Dashboard</translation>
+      <translation>Nástěnka</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Rooms</source>
-      <translation type="unfinished">Rooms</translation>
+      <translation>Místnosti</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
