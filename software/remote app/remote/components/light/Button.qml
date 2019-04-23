@@ -204,6 +204,76 @@ Rectangle {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ON STATE ELEMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property bool sliderMovedByUser: false
+
+    Slider {
+        id: brightnessSlider
+        from: 1
+        value: brightness
+        to: 100
+        stepSize: 1
+        live: false
+
+        visible: opacity > 0 ? true : false
+
+        width: parent.width-40
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        background: Rectangle {
+            x: brightnessSlider.leftPadding
+            y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
+            implicitWidth: 200
+            implicitHeight: 4
+            width: brightnessSlider.availableWidth
+            height: implicitHeight
+            radius: 4
+            color: colorBackground
+
+            Rectangle {
+                width: brightnessSlider.visualPosition * parent.width
+                height: 4
+                radius: 2
+                color: colorBackgroundTransparent
+
+                Rectangle {
+                    width: parent.height
+                    height: parent.width
+                    anchors.centerIn: parent
+                    rotation: -90
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: colorMedium }
+                        GradientStop { position: 1.0; color: colorHighlight }
+                    }
+                }
+            }
+        }
+
+        handle: Rectangle {
+            x: brightnessSlider.leftPadding + brightnessSlider.visualPosition * (brightnessSlider.availableWidth - width)
+            y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
+            implicitWidth: cornerRadius*2
+            implicitHeight: cornerRadius*2
+            radius: cornerRadius
+            color: colorLine
+        }
+
+        onValueChanged: {
+            if (sliderMovedByUser) {
+                loaded_components[componentID].lightComponentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
+                sliderMovedByUser = false;
+            }
+        }
+
+        onMoved: {
+            sliderMovedByUser = true;
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ADD TO FAVORITE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -345,74 +415,6 @@ Rectangle {
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // ON STATE ELEMENTS
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property bool sliderMovedByUser: false
-
-    Slider {
-        id: brightnessSlider
-        from: 1
-        value: brightness
-        to: 100
-        stepSize: 1
-        live: false
-
-        visible: opacity > 0 ? true : false
-
-        width: parent.width-40
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        background: Rectangle {
-            x: brightnessSlider.leftPadding
-            y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
-            implicitWidth: 200
-            implicitHeight: 4
-            width: brightnessSlider.availableWidth
-            height: implicitHeight
-            radius: 4
-            color: colorBackground
-
-            Rectangle {
-                width: brightnessSlider.visualPosition * parent.width
-                height: 4
-                radius: 2
-                color: colorBackgroundTransparent
-
-                Rectangle {
-                    width: parent.height
-                    height: parent.width
-                    anchors.centerIn: parent
-                    rotation: -90
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: colorMedium }
-                        GradientStop { position: 1.0; color: colorHighlight }
-                    }
-                }
-            }
-        }
-
-        handle: Rectangle {
-            x: brightnessSlider.leftPadding + brightnessSlider.visualPosition * (brightnessSlider.availableWidth - width)
-            y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
-            implicitWidth: cornerRadius*2
-            implicitHeight: cornerRadius*2
-            radius: cornerRadius
-            color: colorLine
-        }
-
-        onValueChanged: {
-            if (sliderMovedByUser) {
-                loaded_components[componentID].lightComponentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
-                sliderMovedByUser = false;
-            }
-        }
-
-        onMoved: {
-            sliderMovedByUser = true;
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // OPEN STATE ELEMENTS
