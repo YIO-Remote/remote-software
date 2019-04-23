@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     id: lightButton
+    clip: true
 
     property int componentID
     property int entityID
@@ -14,7 +15,7 @@ Rectangle {
     property int brightness: entities_light[entityID].brightness
     property string integrationType: entities_light[entityID].integration
 
-    property bool favorite: false
+    property bool favorite: entities_light[entityID].favorite
 
     width: parent.width
     height: 125
@@ -24,6 +25,22 @@ Rectangle {
     onBrightnessChanged: {
         if (brightness > 0) {
             lightButton.state = "on"
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    layer.enabled: true
+    layer.effect: OpacityMask {
+        maskSource: Item {
+            width: lightButton.width
+            height: lightButton.height
+            Rectangle {
+                anchors.fill: parent
+                radius: cornerRadius
+            }
         }
     }
 
@@ -92,7 +109,7 @@ Rectangle {
         enabled: lightButton.state == "open" ? false: true
 
         onPressAndHold: {
-            //            addToFavButton.state = "open"
+            addToFavButton.state = "open"
         }
 
         onClicked: {
@@ -182,6 +199,146 @@ Rectangle {
             loaded_components[componentID].lightComponentIntegration[integrationType].toggle(entity_id);
         }
 
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ADD TO FAVORITE
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: addToFavButton
+        width: 0
+        height: 0
+        radius: 200
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: colorHighlight
+
+        state: "closed"
+
+        states: [
+            State {
+                name: "closed"
+                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: colorHighlight}
+                PropertyChanges {target: addToFavButtonCircle; opacity: 0}
+                PropertyChanges {target: addToFavButtonText; opacity: 0}
+            },
+            State {
+                name: "open"
+                PropertyChanges {target: addToFavButton; width:500; height: 500; color: colorHighlight}
+                PropertyChanges {target: addToFavButtonCircle; opacity: 1}
+                PropertyChanges {target: addToFavButtonText; opacity: 1}
+            }
+        ]
+
+        transitions: [
+            Transition {
+                to: "closed"
+                SequentialAnimation {
+                    PauseAnimation { duration: 300 }
+                    ParallelAnimation {
+                        PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
+                        PropertyAnimation { target: addToFavButtonText; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
+                    }
+                    PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.OutExpo; duration: 800 }
+                    PropertyAnimation { target: addToFavButton; properties: "color"; duration: 1 }
+                }
+            },
+            Transition {
+                to: "open"
+                SequentialAnimation {
+                    PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.InExpo; duration: 600 }
+                    ParallelAnimation {
+                        PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
+                        PropertyAnimation { target: addToFavButtonText; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
+                    }
+                    PropertyAnimation { target: addToFavButton; properties: "color"; easing.type: Easing.InExpo; duration: 600 }
+                }
+            }
+        ]
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                addToFavButton.state = "closed"
+            }
+        }
+
+        Rectangle {
+            id: addToFavButtonCircle
+            width: 80
+            height: width
+            radius: width/2
+            color: colorSwitch
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 40
+            opacity: 0
+
+            states: State {
+                name: "pressed"
+                when: mouseAreaFav.pressed == true
+                PropertyChanges {
+                    target: addToFavButtonCircle
+                    color: colorHighlight
+                }
+            }
+
+            transitions: [
+                Transition {
+                    from: ""; to: "pressed"; reversible: true
+                    PropertyAnimation { target: addToFavButtonCircle
+                        properties: "color"; duration: 300 }
+                }]
+
+            Image {
+                asynchronous: true
+                width: 80
+                height: 80
+                fillMode: Image.PreserveAspectFit
+                source: favorite ? "qrc:/images/components/fav-minus.png" : "qrc:/images/components/fav-plus.png"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                ColorOverlay {
+                    visible: !darkMode
+                    anchors.fill: parent
+                    source: parent
+                    color: colorText
+                }
+            }
+
+            MouseArea {
+                id: mouseAreaFav
+                anchors.fill: parent
+                enabled: addToFavButtonCircle.opacity == 1 ? true : false
+
+                onClicked: {
+                    addToFavButton.state = "closed";
+                    var tmp = entities_light;
+                    tmp[entityID].favorite = !tmp[entityID].favorite;
+                    entities_light = tmp;
+                    loader_main.item.mainNavigationSwipeview.itemAt(0).active = false;
+                    loader_main.item.mainNavigationSwipeview.itemAt(0).active = true;
+                }
+            }
+        }
+
+        Text {
+            id: addToFavButtonText
+            color: colorText
+            text: favorite ? qsTr("Remove from favorits") + translateHandler.emptyString : qsTr("Add to favorits") + translateHandler.emptyString
+            wrapMode: Text.WordWrap
+            anchors.verticalCenter: addToFavButtonCircle.verticalCenter
+            anchors.left: addToFavButtonCircle.right
+            anchors.leftMargin: 26
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+            opacity: 0
+        }
     }
 
 

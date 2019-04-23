@@ -73,11 +73,7 @@ Item {
             }
 
             onClicked: {
-                if (standbyControl.display_autobrightness) {
-                    standbyControl.display_autobrightness = false;
-                } else {
-                    standbyControl.display_autobrightness = true;
-                }
+                standbyControl.display_autobrightness = !standbyControl.display_autobrightness
             }
 
         }
@@ -200,11 +196,7 @@ Item {
             }
 
             onClicked: {
-                if (darkMode) {
-                    darkMode = false;
-                } else {
-                    darkMode = true;
-                }
+                darkMode = !darkMode
             }
         }
 

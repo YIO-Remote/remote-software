@@ -37,7 +37,7 @@ Item {
                 maximumFlickVelocity: 4000
                 flickDeceleration: 1000
                 clip: true
-                contentHeight: dashboardFlow.height
+                contentHeight: dashboardFlow.height < parent.height - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? dashboardFlow.height + 40 : dashboardFlow.height
                 boundsBehavior: Flickable.DragAndOvershootBounds
                 flickableDirection: Flickable.VerticalFlick
 
@@ -45,12 +45,25 @@ Item {
                     opacity: 0.5
                 }
 
+                property alias dashboardFlow: dashboardFlow
+
                 Flow {
                     id: dashboardFlow
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
                     spacing: 10
 
+                    Component.onCompleted: {
+                        for (var i=0; i<loaded_entities.length; i++) {
+                            for (var j=0; j<applicationWindow["entities_"+loaded_entities[i]].length; j++) {
+                                if (applicationWindow["entities_"+loaded_entities[i]][j].favorite) {
+                                    // load entity button
+                                    var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
+                                    var obj = comp.createObject(dashboardFlow, {componentID: i, entityID: j});
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -188,7 +201,7 @@ Item {
         height: mainNavigation.state == "closed" ? 80 : 160
         anchors.bottom: mainNavigation.top
 
-        opacity: mainNavigationSwipeview.currentItem.children[0].atYEnd ? 0 : 1
+        opacity: mainNavigationSwipeview.currentItem.children[0] && mainNavigationSwipeview.currentItem.children[0].atYEnd ? 0 : 1
 
         Behavior on opacity {
             NumberAnimation {
@@ -211,7 +224,7 @@ Item {
         id: mainNavigation
         anchors.bottom: miniMediaPlayer.top
         anchors.horizontalCenter: parent.horizontalCenter
-        state: mainNavigationSwipeview.currentItem.children[0].atYBeginning ? "open" : "closed"
+        state: mainNavigationSwipeview.currentItem.children[0] && mainNavigationSwipeview.currentItem.children[0].atYBeginning ? "open" : "closed"
     }
 
 

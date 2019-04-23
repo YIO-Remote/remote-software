@@ -11,5 +11,7 @@
         <file>images/navigation/icon-light.png</file>
         <file>components/light/images/icon-light.png</file>
         <file>images/navigation/icon-settings.png</file>
+        <file>images/components/fav-minus.png</file>
+        <file>images/components/fav-plus.png</file>
     </qresource>
 </RCC>
