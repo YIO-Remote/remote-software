@@ -81,7 +81,7 @@ Currently available Languages are (marked when 100% done only):
 - [ ] 🇳🇴 Norwegian
 - [ ] 🇵🇱 Polish
 - [ ] 🇵🇹 Portuguese
-- [ ] 🇧🇷 Portuguese, Brazilian
+- [x] 🇧🇷 Portuguese, Brazilian
 - [ ] 🇷🇴 Romanian
 - [ ] 🇸🇰 Slovak
 - [ ] 🇸🇮 Slovenian
