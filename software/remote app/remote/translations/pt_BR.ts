@@ -61,7 +61,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation>Conexão Falhou</translation>
+      <translation>Conexão falhou</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
@@ -187,7 +187,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
       <source>Low battery</source>
-      <translation>Bateria descarregada</translation>
+      <translation>Bateria fraca</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
