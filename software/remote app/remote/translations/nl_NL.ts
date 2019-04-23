@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="334"/>
       <source>Remove from favorits</source>
-      <translation type="unfinished">Remove from favorits</translation>
+      <translation>Verwijder uit favorieten</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="334"/>
       <source>Add to favorits</source>
-      <translation type="unfinished">Add to favorits</translation>
+      <translation>Toevoegen aan Favorieten</translation>
     </message>
   </context>
   <context>
@@ -84,7 +84,7 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Apparaten</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
