@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="334"/>
       <source>Remove from favorits</source>
-      <translation type="unfinished">Remove from favorits</translation>
+      <translation>Eltávolítás a kedvencekből</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="334"/>
       <source>Add to favorits</source>
-      <translation type="unfinished">Add to favorits</translation>
+      <translation>Hozzáadás a kedvencekhez</translation>
     </message>
   </context>
   <context>
@@ -84,12 +84,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Eszközök</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Új hozzáadása</translation>
     </message>
   </context>
   <context>
