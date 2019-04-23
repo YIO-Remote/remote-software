@@ -48,7 +48,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation>Forbindelse mislykket</translation>
+      <translation>Forbindelse mislykkedes</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
@@ -264,7 +264,7 @@
     <message>
       <location filename="../main.qml" line="154"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Rullegardiner</translation>
     </message>
   </context>
 </TS>
