@@ -89,7 +89,7 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Tilføj ny</translation>
     </message>
   </context>
   <context>
