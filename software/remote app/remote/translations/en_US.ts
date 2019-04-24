@@ -28,12 +28,12 @@
     <name>Button</name>
     <message>
         <location filename="../components/light/Button.qml" line="405"/>
-        <source>Remove from favorits</source>
+        <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../components/light/Button.qml" line="405"/>
-        <source>Add to favorits</source>
+        <source>Add to favorites</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
