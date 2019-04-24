@@ -34,7 +34,7 @@
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Adicionar aos favoritos</translation>
     </message>
   </context>
   <context>
