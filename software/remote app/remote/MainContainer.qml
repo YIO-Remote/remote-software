@@ -28,14 +28,14 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // DASHBOARD
         Loader {
-            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+            active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
 
             sourceComponent: Flickable {
                 id: dashboardFlickable
                 width: parent.width
                 height: parent.height
                 maximumFlickVelocity: 4000
-                flickDeceleration: 1000
+                flickDeceleration: 2000
                 clip: true
                 contentHeight: dashboardFlow.height < parent.height - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? dashboardFlow.height + 40 : dashboardFlow.height
                 boundsBehavior: Flickable.DragAndOvershootBounds
@@ -71,13 +71,13 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // ROOMS
         Loader {
-            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+            active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
 
             sourceComponent: Flickable {
                 width: parent.width
                 height: parent.height
                 maximumFlickVelocity: 4000
-                flickDeceleration: 1000
+                flickDeceleration: 2000
                 clip: true
                 contentHeight: roomsFlow.height
                 boundsBehavior: Flickable.DragAndOvershootBounds
@@ -124,13 +124,13 @@ Item {
             model: loaded_entities
 
             Loader {
-                active: SwipeView.isCurrentItem || SwipeView.isNextItem || (SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
+                active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || (SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
 
                 sourceComponent: Flickable {
                     width: parent.width
                     height: parent.height
                     maximumFlickVelocity: 4000
-                    flickDeceleration: 1000
+                    flickDeceleration: 2000
                     clip: true
                     contentHeight: repeaterFlow.height
                     boundsBehavior: Flickable.DragAndOvershootBounds
@@ -167,13 +167,13 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // SETTINGS
         Loader {
-            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+            active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
 
             sourceComponent: Flickable {
                 width: parent.width
                 height: parent.height
                 maximumFlickVelocity: 4000
-                flickDeceleration: 1000
+                flickDeceleration: 2000
                 clip: true
                 contentHeight: settingsPage.height
                 boundsBehavior: Flickable.DragAndOvershootBounds

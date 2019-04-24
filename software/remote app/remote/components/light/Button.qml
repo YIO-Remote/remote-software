@@ -211,7 +211,7 @@ Rectangle {
 
     Slider {
         id: brightnessSlider
-        from: 1
+        from: 0
         value: brightness
         to: 100
         stepSize: 1

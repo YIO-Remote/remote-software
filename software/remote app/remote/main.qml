@@ -8,6 +8,7 @@ import JsonFile 1.0
 
 import "qrc:/scripts/websocket.js" as JSWebsocket
 import "qrc:/scripts/softwareupdate.js" as JSUpdate
+import "qrc:/basic_ui" as BasicUI
 
 ApplicationWindow {
     id: applicationWindow
@@ -40,7 +41,7 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property int cornerRadius: 18
 
-    property bool darkMode: config.settings.darkmode
+    property bool darkMode: true
 
     property string colorBackground: darkMode ? "#000000" : "#ffffff"
     property string colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
@@ -103,7 +104,7 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var config: jsonConfig.read()
+    property var config: jsonConfig.read();
     property var integration: ({}) // holds the integration qmls
     property var integrationObj: []
 
@@ -113,6 +114,8 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        darkMode = Qt.binding(function () { return config.settings.darkmode});
+
         var comp;
         var obj;
 
@@ -310,15 +313,6 @@ ApplicationWindow {
     // CONNECTION SCREEN
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Visible when connecting, reconnecting to the integration
-    property alias connectionLoader: connectionLoader
-
-    Loader {
-        id: connectionLoader
-        width: 480
-        height: 800
-        x: 0
-        y: 0
-        asynchronous: true
-        source: "qrc:/basic_ui/ConnectionScreen.qml"
+    BasicUI.ConnectionScreen {
     }
 }

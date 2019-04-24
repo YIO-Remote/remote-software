@@ -98,7 +98,7 @@ Item {
 
         Text {
             color: colorText
-            text: "192.168.1.1"
+            text: settingsLauncher.launch("/usr/bin/remote/wifi_ip.sh")
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -134,7 +134,7 @@ Item {
 
         Text {
             color: colorText
-            text: "xx:xx:xx:xx"
+            text: settingsLauncher.launch("cat /sys/class/net/wlan0/address")
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
