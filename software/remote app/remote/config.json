@@ -1,153 +1,151 @@
 {
-  "language" : "en_US",
-  "integration": [
-    {
-      "id" : 1,
-      "type": "homeassistant",
-      "friendly_name": "Home Assistant",
-      "data": {
-        "ip" : "",
-        "token" : ""    
-      }
-    },
-    {
-      "id" : 2,
-      "type": "homey",
-      "friendly_name": "Homey",
-      "data": {
-      }
-    }
-  ],
-  "rooms": [
-    {
-      "room": "Entrance",
-      "bluetooth": "xx:xx:xx:xx:xx"
-    },
-    {
-      "room": "Kitchen",
-      "bluetooth": "xx:xx:xx:xx:xx"
-    },
-    {
-      "room": "Living room",
-      "bluetooth": "xx:xx:xx:xx:xx"
-    },
-    {
-      "room": "Bedroom",
-      "bluetooth": "xx:xx:xx:xx:xx"
-    }
-  ],
-  "entities": [
-    {
-      "type": "light",
-      "data": [
-      {
-        "entity_id": "light.backdoor_lamp",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": false,
-        "room": "Entrance",
-        "integration": "homeassistant"
-      },
-      {
-        "entity_id": "light.entrance_lamp_level",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": false,
-        "room": "Entrance",
-        "integration": "homeassistant"
-      },
-      {
-        "entity_id": "light.kitchen_lamp_level",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": true,
-        "room": "Kitchen",
-        "integration": "homeassistant"
-      },
-      {
-        "entity_id": "light.kitchen_table_lamp_level",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": true,
-        "room": "Kitchen",
-        "integration": "homeassistant"
-      },
-      {
-        "entity_id": "light.kitchen_sink_lamp",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": false,
-        "room": "Kitchen",
-        "integration": "homeassistant"
-      },
-      {
-        "entity_id": "light.living_room_lamp_level",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": true,
-        "room": "Living room",
-        "integration": "homeassistant"
-      },
-      {
-        "entity_id": "light.living_room_corner_lamp_level",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": true,
-        "room": "Living room",
-        "integration": "homeassistant"
-      },
-      {
-        "entity_id": "light.bedroom_lamp_level",
-        "type": "light",
-        "state": "off",
-        "brightness": 0,
-        "friendly_name": "test",
-        "favorite": false,
-        "room": "Bedroom",
-        "integration": "homeassistant"
-      }
-      ]
-    },
-    {
-      "type": "blind",
-      "data": [
-      {
-        "entity_id": "cover.living_room_blinds_level",
-        "type": "blind",
-        "state": "",
-        "position": "",
-        "autoblinds_entity_id": "input_boolean.auto_blinds_living_room",
-        "autoblinds_state": "",
-        "friendly_name": "Living room blinds",
-        "favorite": false,
-        "room": "Living room"
-      },
-      {
-        "entity_id": "cover.bedroom_blinds_level",
-        "type": "blind",
-        "state": "",
-        "position": "",
-        "autoblinds_entity_id": "input_boolean.auto_blinds_bedroom",
-        "autoblinds_state": "",
-        "friendly_name": "Bedroom blinds",
-        "favorite": false,
-        "room": "Bedroom"
-      }
-      ]
-    }
-  ]
+    "entities": [
+        {
+            "data": [
+                {
+                    "brightness": "0",
+                    "entity_id": "light.backdoor_lamp",
+                    "favorite": false,
+                    "friendly_name": "Backdoor lamp",
+                    "integration": "homeassistant",
+                    "room": "Entrance",
+                    "state": "off",
+                    "type": "light"
+                },
+                {
+                    "brightness": "0",
+                    "entity_id": "light.entrance_lamp_level",
+                    "favorite": false,
+                    "friendly_name": "Entrance lamp",
+                    "integration": "homeassistant",
+                    "room": "Entrance",
+                    "state": "off",
+                    "type": "light"
+                },
+                {
+                    "brightness": "0",
+                    "entity_id": "light.kitchen_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Kitchen lamp",
+                    "integration": "homeassistant",
+                    "room": "Kitchen",
+                    "state": "off",
+                    "type": "light"
+                },
+                {
+                    "brightness": "0",
+                    "entity_id": "light.kitchen_table_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Kitchen table lamp",
+                    "integration": "homeassistant",
+                    "room": "Kitchen",
+                    "state": "off",
+                    "type": "light"
+                },
+                {
+                    "brightness": "0",
+                    "entity_id": "light.kitchen_sink_lamp",
+                    "favorite": false,
+                    "friendly_name": "Kitchen sink lamp",
+                    "integration": "homeassistant",
+                    "room": "Kitchen",
+                    "state": "off",
+                    "type": "light"
+                },
+                {
+                    "brightness": "0",
+                    "entity_id": "light.living_room_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Living room lamp",
+                    "integration": "homeassistant",
+                    "room": "Living room",
+                    "state": "off",
+                    "type": "light"
+                },
+                {
+                    "brightness": 73,
+                    "entity_id": "light.living_room_corner_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Living room corner lamp",
+                    "integration": "homeassistant",
+                    "room": "Living room",
+                    "state": "on",
+                    "type": "light"
+                },
+                {
+                    "brightness": "0",
+                    "entity_id": "light.bedroom_lamp_level",
+                    "favorite": false,
+                    "friendly_name": "Bedroom lamp",
+                    "integration": "homeassistant",
+                    "room": "Bedroom",
+                    "state": "off",
+                    "type": "light"
+                }
+            ],
+            "type": "light"
+        },
+        {
+            "data": [
+                {
+                    "entity_id": "cover.living_room_blinds_level",
+                    "favorite": true,
+                    "friendly_name": "Living room blinds",
+                    "integration": "homeassistant",
+                    "position": "",
+                    "room": "Living room",
+                    "state": "",
+                    "type": "blind"
+                },
+                {
+                    "entity_id": "cover.bedroom_blinds_level",
+                    "favorite": false,
+                    "friendly_name": "Bedroom blinds",
+                    "integration": "homeassistant",
+                    "position": "",
+                    "room": "Bedroom",
+                    "state": "",
+                    "type": "blind"
+                }
+            ],
+            "type": "blind"
+        }
+    ],
+    "integration": [
+        {
+            "data": {
+                "ip": "",
+                "token": ""
+            },
+            "friendly_name": "Home Assistant",
+            "id": 1,
+            "type": "homeassistant"
+        },
+        {
+            "data": {
+            },
+            "friendly_name": "Homey",
+            "id": 2,
+            "type": "homey"
+        }
+    ],
+    "language": "en_US",
+    "rooms": [
+        {
+            "bluetooth": "xx:xx:xx:xx:xx",
+            "room": "Entrance"
+        },
+        {
+            "bluetooth": "xx:xx:xx:xx:xx",
+            "room": "Kitchen"
+        },
+        {
+            "bluetooth": "xx:xx:xx:xx:xx",
+            "room": "Living room"
+        },
+        {
+            "bluetooth": "xx:xx:xx:xx:xx",
+            "room": "Bedroom"
+        }
+    ]
 }

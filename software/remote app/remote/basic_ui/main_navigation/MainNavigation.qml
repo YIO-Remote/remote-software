@@ -71,7 +71,7 @@ Item {
             }
 
             NavigationButton {
-                buttonText: qsTr("Rooms") + translateHandler.emptyString
+                buttonText: qsTr("Areas") + translateHandler.emptyString
                 icon.source: "qrc:/images/navigation/icon-rooms.png"
                 selected: mainNavigationSwipeview.currentIndex == 1 ? true : false
                 mouseArea.onClicked: {

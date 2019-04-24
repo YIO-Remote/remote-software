@@ -55,11 +55,11 @@ Item {
 
                     Component.onCompleted: {
                         for (var i=0; i<loaded_entities.length; i++) {
-                            for (var j=0; j<applicationWindow["entities_"+loaded_entities[i]].length; j++) {
-                                if (applicationWindow["entities_"+loaded_entities[i]][j].favorite) {
+                            for (var j=0; j<loaded_components[loaded_entities[i]].entities.length; j++) {
+                                if (loaded_components[loaded_entities[i]].entities[j].favorite) {
                                     // load entity button
                                     var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
-                                    var obj = comp.createObject(dashboardFlow, {componentID: i, entityID: j});
+                                    var obj = comp.createObject(dashboardFlow, {entityID: j});
                                 }
                             }
                         }
@@ -104,11 +104,11 @@ Item {
                             // load room entities
                             // go through all entities, if it matches the room, create a component
                             for (var i=0; i<loaded_entities.length; i++) {
-                                for (var j=0; j<applicationWindow["entities_"+loaded_entities[i]].length; j++) {
-                                    if (applicationWindow["entities_"+loaded_entities[i]][j].room == config.rooms[k].room) {
+                                for (var j=0; j<loaded_components[loaded_entities[i]].entities.length; j++) {
+                                    if (loaded_components[loaded_entities[i]].entities[j].room == config.rooms[k].room) {
                                         // load entity button
                                         var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
-                                        var obj = comp.createObject(roomsFlow, {componentID: i, entityID: j});
+                                        var obj = comp.createObject(roomsFlow, {entityID: j});
                                     }
                                 }
                             }
@@ -150,11 +150,11 @@ Item {
                             // load room entities
                             // go through all entities, if it matches the room, create a component
                             for (var i=0; i<loaded_entities.length; i++) {
-                                for (var j=0; j<applicationWindow["entities_"+loaded_entities[i]].length; j++) {
-                                    if (applicationWindow["entities_"+loaded_entities[i]][j].type == loaded_entities[index]) {
+                                for (var j=0; j<loaded_components[loaded_entities[i]].entities.length; j++) {
+                                    if (loaded_components[loaded_entities[i]].entities[j].type == loaded_entities[index]) {
                                         // load entity button
                                         var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
-                                        var obj = comp.createObject(repeaterFlow, {componentID: i, entityID: j});
+                                        var obj = comp.createObject(repeaterFlow, {entityID: j});
                                     }
                                 }
                             }

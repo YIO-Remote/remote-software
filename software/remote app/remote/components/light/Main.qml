@@ -3,6 +3,7 @@ import QtQuick 2.11
 Item {
     id: lightComponent
 
+    property var entities
     property var lightComponentIntegration: ({})
 
     Component.onCompleted: {

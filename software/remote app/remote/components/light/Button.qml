@@ -8,16 +8,15 @@ Rectangle {
     id: lightButton
     clip: true
 
-    property int componentID
     property int entityID
 
-    property var entity_id: entities_light[entityID].entity_id
-    property var friendly_name: entities_light[entityID].friendly_name
-    property var lstate: entities_light[entityID].state
-    property int brightness: entities_light[entityID].brightness
-    property string integrationType: entities_light[entityID].integration
+    property var entity_id: loaded_components.light.entities[entityID].entity_id
+    property var friendly_name: loaded_components.light.entities[entityID].friendly_name
+    property var lstate: loaded_components.light.entities[entityID].state
+    property int brightness: loaded_components.light.entities[entityID].brightness
+    property string integrationType: loaded_components.light.entities[entityID].integration
 
-    property bool favorite: entities_light[entityID].favorite
+    property bool favorite: loaded_components.light.entities[entityID].favorite
 
     width: parent.width
     height: 125
@@ -198,7 +197,7 @@ Rectangle {
         }
 
         onClicked: {
-            loaded_components[componentID].lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
 
     }
@@ -262,7 +261,7 @@ Rectangle {
 
         onValueChanged: {
             if (sliderMovedByUser) {
-                loaded_components[componentID].lightComponentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
+                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
                 sliderMovedByUser = false;
             }
         }
@@ -388,9 +387,9 @@ Rectangle {
 
                 onClicked: {
                     addToFavButton.state = "closed";
-                    var tmp = entities_light;
+                    var tmp = loaded_components.light.entities;
                     tmp[entityID].favorite = !tmp[entityID].favorite;
-                    entities_light = tmp;
+                    loaded_components.light.entities = tmp;
                     loader_main.item.mainNavigationSwipeview.itemAt(0).active = false;
                     loader_main.item.mainNavigationSwipeview.itemAt(0).active = true;
                     JSHelper.saveConfig();

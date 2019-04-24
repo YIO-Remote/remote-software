@@ -127,15 +127,14 @@ ApplicationWindow {
         for (var i=0; i<config.entities.length; i++) {
             for (var k=0; k<supported_entities.length; k++) {
                 if (supported_entities[k] == config.entities[i].type) {
-                    // load the supported entity
-                    applicationWindow["entities_"+config.entities[i].type] = config.entities[i].data;
-
+                    // load the supported component
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    obj = comp.createObject(applicationWindow);
+                    loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
+                    loaded_components[supported_entities[k]].entities = config.entities[i].data;
 
+                    // store which entity type was loaded. Not app supported entities are loaded.
                     loaded_entities.push(supported_entities[k]);
                     loaded_entities_id.push(k)
-                    loaded_components.push(obj);
                 }
             }
         }
@@ -155,11 +154,8 @@ ApplicationWindow {
 
     property var loaded_entities: []
     property var loaded_entities_id: []
-    property var loaded_components: []
 
-    property var entities_light
-    property var entities_blind
-
+    property var loaded_components: ({})
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES

@@ -16,11 +16,13 @@ Item {
         target: integration.homeassistant
         onSendFetchJson: {
             // Process fetched json here. This only has to be one time after connecting to the hub
-            var tmp = entities_light;
+//            var tmp = entities_light;
+
+            var tmp = loaded_components.light.entities;
 
             for (var i=0; i<json.result.length; i++) {
-                for (var k=0; k<entities_light.length; k++) {
-                    if (json.result[i].entity_id == entities_light[k].entity_id) {
+                for (var k=0; k<loaded_components.light.entities.length; k++) {
+                    if (json.result[i].entity_id == loaded_components.light.entities[k].entity_id) {
 
                         tmp[k].state = json.result[i].state;
 
@@ -35,7 +37,7 @@ Item {
                 }
             }
 
-            entities_light = tmp;
+            loaded_components.light.entities = tmp;
         }
         onSendEventJson: {
             // Process event json here. Every time there's an update
@@ -44,10 +46,10 @@ Item {
             var state = json.event.data.new_state.state;
             var brightness = json.event.data.new_state.attributes.brightness;
 
-            var tmp = entities_light;
+            var tmp = loaded_components.light.entities;
 
-            for (var k=0; k < entities_light.length; k++) {
-                if (entity_id == entities_light[k].entity_id) {
+            for (var k=0; k < loaded_components.light.entities.length; k++) {
+                if (entity_id == loaded_components.light.entities[k].entity_id) {
 
                     tmp[k].state = state;
 
@@ -57,7 +59,7 @@ Item {
                         tmp[k].brightness = JSHelper.convertToPercentage(brightness); // converting the brightness to percentage
                     }
 
-                    entities_light = tmp;
+                    loaded_components.light.entities = tmp;
                 }
             }
         }
