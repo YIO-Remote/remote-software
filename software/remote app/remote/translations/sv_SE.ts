@@ -107,7 +107,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="164"/>
       <source>Dark mode</source>
-      <translation>Nattläge</translation>
+      <translation>Mörkt läge</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
