@@ -27,12 +27,12 @@
 <context>
     <name>Button</name>
     <message>
-        <location filename="../components/light/Button.qml" line="334"/>
+        <location filename="../components/light/Button.qml" line="405"/>
         <source>Remove from favorits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/light/Button.qml" line="334"/>
+        <location filename="../components/light/Button.qml" line="405"/>
         <source>Add to favorits</source>
         <translation type="unfinished"></translation>
     </message>
@@ -95,27 +95,27 @@
 <context>
     <name>Display</name>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="15"/>
+        <location filename="../basic_ui/settings/Display.qml" line="17"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="36"/>
+        <location filename="../basic_ui/settings/Display.qml" line="38"/>
         <source>Auto brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="159"/>
+        <location filename="../basic_ui/settings/Display.qml" line="164"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="215"/>
+        <location filename="../basic_ui/settings/Display.qml" line="224"/>
         <source>Cleaning mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="230"/>
+        <location filename="../basic_ui/settings/Display.qml" line="239"/>
         <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -150,7 +150,7 @@
     </message>
     <message>
         <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
-        <source>Rooms</source>
+        <source>Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -198,43 +198,43 @@
 <context>
     <name>PowerSaving</name>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="15"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
         <source>Power saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Never turn off Wi-Fi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="109"/>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="216"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
         <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="122"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
         <source>60 minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Never turn off the remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Turn off the remote after %1 hours of inactivity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="229"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
         <source>8 hours</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,12 +283,12 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="154"/>
+        <location filename="../main.qml" line="153"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="154"/>
+        <location filename="../main.qml" line="153"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
