@@ -151,7 +151,7 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Areas</source>
-      <translation type="unfinished">Areas</translation>
+      <translation>Bereiche</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
