@@ -28,13 +28,13 @@
     <name>Button</name>
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
-      <source>Remove from favorits</source>
-      <translation>Remover dos favoritos</translation>
+      <source>Remove from favorites</source>
+      <translation>Remover dos Favoritos</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
-      <source>Add to favorits</source>
-      <translation>Adicionar aos favoritos</translation>
+      <source>Add to favorites</source>
+      <translation type="unfinished">Add to favorites</translation>
     </message>
   </context>
   <context>
@@ -76,7 +76,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation>Espere um momento...</translation>
+      <translation>Aguarde...</translation>
     </message>
   </context>
   <context>
@@ -146,12 +146,12 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-      <translation>Painel de controle</translation>
+      <translation>Painel</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Areas</source>
-      <translation type="unfinished">Areas</translation>
+      <translation>Áreas</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
@@ -249,7 +249,7 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
       <source>Update</source>
-      <translation>Atualize</translation>
+      <translation>Atualizar</translation>
     </message>
   </context>
   <context>
