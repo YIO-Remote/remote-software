@@ -1,6 +1,6 @@
 # Yio (Your Input/Output) touchscreen remote
 
-What is Yio?
+## What is Yio?
 Yio is made by a smarthome enthusiast, it allows the user to directly interact with a smarthome hub system and extend its usage to the feel and response of a remote.
 
 This repository is devided into [software](/software) and [hardware](/hardware)
