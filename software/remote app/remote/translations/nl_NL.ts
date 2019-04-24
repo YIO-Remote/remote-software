@@ -28,13 +28,13 @@
     <name>Button</name>
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
-      <source>Remove from favorits</source>
-      <translation>Verwijder uit favorieten</translation>
+      <source>Remove from favorites</source>
+      <translation>Uit favorieten verwijderen</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
-      <source>Add to favorits</source>
-      <translation>Toevoegen aan Favorieten</translation>
+      <source>Add to favorites</source>
+      <translation>Aan favorieten toevoegen</translation>
     </message>
   </context>
   <context>
