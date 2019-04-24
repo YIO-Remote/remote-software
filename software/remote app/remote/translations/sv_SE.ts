@@ -6,22 +6,22 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="17"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Batteri</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
       <source>Battery charge</source>
-      <translation type="unfinished">Battery charge</translation>
+      <translation>Batterinivå</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Batterihälsa</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
       <source>Battery voltage</source>
-      <translation type="unfinished">Battery voltage</translation>
+      <translation>Batterispänning</translation>
     </message>
   </context>
   <context>
@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
       <source>Remove from favorits</source>
-      <translation type="unfinished">Remove from favorits</translation>
+      <translation>Ta bort från favoriter</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
       <source>Add to favorits</source>
-      <translation type="unfinished">Add to favorits</translation>
+      <translation>Lägg till i favoriter</translation>
     </message>
   </context>
   <context>
@@ -84,12 +84,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Enheter</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Lägg till ny</translation>
     </message>
   </context>
   <context>
@@ -125,12 +125,12 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Hubbar</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Lägg till ny</translation>
     </message>
   </context>
   <context>
@@ -138,7 +138,7 @@
     <message>
       <location filename="../basic_ui/settings/Languages.qml" line="25"/>
       <source>Languages</source>
-      <translation type="unfinished">Languages</translation>
+      <translation>Språk</translation>
     </message>
   </context>
   <context>
@@ -151,7 +151,7 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Areas</source>
-      <translation type="unfinished">Areas</translation>
+      <translation>Områden</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
@@ -179,7 +179,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="124"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC-adress</translation>
     </message>
   </context>
   <context>
@@ -210,7 +210,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Stäng av Wi-Fi efter %1 minuters inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
@@ -231,7 +231,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Stäng av fjärrkontrollen efter %1 timmars inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
@@ -285,12 +285,12 @@
     <message>
       <location filename="../main.qml" line="153"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lampor</translation>
     </message>
     <message>
       <location filename="../main.qml" line="153"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persienner</translation>
     </message>
   </context>
 </TS>
