@@ -1,6 +1,8 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
+import "qrc:/scripts/helper.js" as JSHelper
+
 Item {
     width: parent.width
     height: header.height + section.height + 20
@@ -34,7 +36,7 @@ Item {
         Text {
             id: wifioffText
             color: colorText
-            text: standbyControl.wifiOffTime == 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(standbyControl.wifiOffTime/60) + translateHandler.emptyString
+            text: config.settings.wifitime == 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(config.settings.wifitime/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -99,7 +101,15 @@ Item {
             }
 
             onValueChanged: {
-                standbyControl.wifiOffTime = wifioffSlider.value*60
+                var tmp = config;
+                tmp.settings.wifitime = wifioffSlider.value*60
+                config = tmp;
+            }
+
+            onPressedChanged: {
+                if (!this.pressed) {
+                    JSHelper.saveConfig()
+                }
             }
         }
 
@@ -141,7 +151,7 @@ Item {
         Text {
             id: shutdownText
             color: colorText
-            text: standbyControl.shutdownTime == 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(standbyControl.shutdownTime/60/60) + translateHandler.emptyString
+            text: config.settings.shutdowntime == 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(config.settings.shutdowntime/60/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -206,7 +216,15 @@ Item {
             }
 
             onValueChanged: {
-                standbyControl.shutdownTime = shutdownSlider.value*60*60
+                var tmp = config;
+                tmp.settings.shutdowntime = shutdownSlider.value*60*60
+                config = tmp;
+            }
+
+            onPressedChanged: {
+                if (!this.pressed) {
+                    JSHelper.saveConfig()
+                }
             }
         }
 

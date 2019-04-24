@@ -26,6 +26,8 @@ Rectangle {
     onBrightnessChanged: {
         if (brightness > 0) {
             lightButton.state = "on"
+        } else {
+            lightButton.state = "closed"
         }
     }
 

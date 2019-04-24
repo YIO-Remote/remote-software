@@ -53,17 +53,17 @@
                     "type": "light"
                 },
                 {
-                    "brightness": "0",
+                    "brightness": 26,
                     "entity_id": "light.living_room_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room lamp",
                     "integration": "homeassistant",
                     "room": "Living room",
-                    "state": "off",
+                    "state": "on",
                     "type": "light"
                 },
                 {
-                    "brightness": 73,
+                    "brightness": 75,
                     "entity_id": "light.living_room_corner_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room corner lamp",
@@ -147,5 +147,11 @@
             "bluetooth": "xx:xx:xx:xx:xx",
             "room": "Bedroom"
         }
-    ]
+    ],
+    "settings": {
+        "autobrightness": true,
+        "darkmode": true,
+        "shutdowntime": 7200,
+        "wifitime": 600
+    }
 }

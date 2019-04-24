@@ -1,6 +1,8 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 
+import "qrc:/scripts/helper.js" as JSHelper
+
 Item {
     width: parent.width
     height: header.height + section.height + 20
@@ -73,7 +75,10 @@ Item {
             }
 
             onClicked: {
-                standbyControl.display_autobrightness = !standbyControl.display_autobrightness
+                var tmp = config;
+                tmp.settings.autobrightness = !tmp.settings.autobrightness
+                config = tmp;
+                JSHelper.saveConfig();
             }
 
         }
@@ -196,7 +201,11 @@ Item {
             }
 
             onClicked: {
-                darkMode = !darkMode
+//                darkMode = !darkMode
+                var tmp = config;
+                tmp.settings.darkmode = !tmp.settings.darkmode
+                config = tmp;
+                JSHelper.saveConfig();
             }
         }
 

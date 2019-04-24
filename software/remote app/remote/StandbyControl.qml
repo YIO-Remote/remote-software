@@ -10,8 +10,8 @@ Item {
 
     property int displayDimTime: 20 // seconds
     property int standbyTime: 30 // seconds
-    property int wifiOffTime: 600 // seconds
-    property int shutdownTime: 5400 // seconds
+    property int wifiOffTime // seconds
+    property int shutdownTime // seconds
 
     property int display_brightness: 100
     property int display_brightness_old: 100
