@@ -283,12 +283,12 @@
   <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="153"/>
+      <location filename="../main.qml" line="158"/>
       <source>Lights</source>
       <translation>Lampen</translation>
     </message>
     <message>
-      <location filename="../main.qml" line="153"/>
+      <location filename="../main.qml" line="158"/>
       <source>Blinds</source>
       <translation>Rolläden</translation>
     </message>
