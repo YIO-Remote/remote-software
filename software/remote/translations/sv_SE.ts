@@ -146,7 +146,7 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-      <translation>Dashboard</translation>
+<translation>Dashboard</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
@@ -174,7 +174,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="88"/>
       <source>IP address</source>
-      <translation>IP address</translation>
+<translation>IP address</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="124"/>
@@ -257,7 +257,7 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="33"/>
       <source>System</source>
-      <translation>System</translation>
+<translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
