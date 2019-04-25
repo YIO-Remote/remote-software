@@ -6,22 +6,22 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="17"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Batería</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
       <source>Battery charge</source>
-      <translation type="unfinished">Battery charge</translation>
+      <translation>Carga de la batería</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Estado de la batería</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
       <source>Battery voltage</source>
-      <translation type="unfinished">Battery voltage</translation>
+      <translation>Voltaje de la batería</translation>
     </message>
   </context>
   <context>
@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Eliminar de favoritos</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Añadir a favoritos</translation>
     </message>
   </context>
   <context>
@@ -61,12 +61,12 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
       <source>Connection failed</source>
-      <translation>La conexión falló</translation>
+      <translation>Fallo de conexión</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
       <source>Try again</source>
-      <translation>Inténtalo de nuevo</translation>
+      <translation>Vuelva a intentarlo</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
@@ -84,12 +84,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Dispositivos</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Añadir nuevo</translation>
     </message>
   </context>
   <context>
@@ -97,27 +97,27 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="17"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Pantalla</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="38"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Brillo automático</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="164"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Modo oscuro</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Modo de limpieza</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="239"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Toque la pantalla durante 10 segundos desactivar el modo de limpieza.</translation>
     </message>
   </context>
   <context>
@@ -125,12 +125,12 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Añadir nuevo</translation>
     </message>
   </context>
   <context>
@@ -138,7 +138,7 @@
     <message>
       <location filename="../basic_ui/settings/Languages.qml" line="25"/>
       <source>Languages</source>
-      <translation type="unfinished">Languages</translation>
+      <translation>Idiomas</translation>
     </message>
   </context>
   <context>
@@ -151,12 +151,12 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Areas</source>
-      <translation type="unfinished">Areas</translation>
+      <translation>Áreas</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
       <source>Settings</source>
-      <translation>Configuración</translation>
+      <translation>Ajustes</translation>
     </message>
   </context>
   <context>
@@ -164,22 +164,22 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="30"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Red</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="51"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Intensidad de la señal Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="88"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>Dirección IP</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="124"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>Dirección MAC</translation>
     </message>
   </context>
   <context>
@@ -192,7 +192,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation>Por favor, cargue el control remoto</translation>
+      <translation>Por favor, cargue el mando</translation>
     </message>
   </context>
   <context>
@@ -200,43 +200,43 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Ahorro de energía</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Nunca desactivar Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Desactivar Wi-Fi tras %1 minutos de inactividad</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Nunca</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minutos</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Nunca apagar el mando</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Apagar el mando tras %1 horas de inactividad</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 horas</translation>
     </message>
   </context>
   <context>
@@ -244,7 +244,7 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation>Nueva versión de software está disponible.</translation>
+      <translation>Nueva versión de software disponible.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
@@ -257,27 +257,27 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="33"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Sistema</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Tiempo de actividad</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="91"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Temperatura de la CPU</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="127"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Reiniciar</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="142"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Apagar</translation>
     </message>
   </context>
   <context>
@@ -285,12 +285,12 @@
     <message>
       <location filename="../main.qml" line="153"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Luces</translation>
     </message>
     <message>
       <location filename="../main.qml" line="153"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persianas</translation>
     </message>
   </context>
 </TS>
