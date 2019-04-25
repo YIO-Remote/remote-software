@@ -17,7 +17,7 @@ Item {
         interval: 2000
 
         onTriggered: {
-            wifiSignalValue.text = settingsLauncher.launch("/usr/bin/remote/wifi_rssi.sh");
+            wifiSignalValue.text = settingsLauncher.launch("/usr/bin/remote/wifi_rssi.sh").trim();
         }
     }
 
@@ -98,7 +98,7 @@ Item {
 
         Text {
             color: colorText
-            text: settingsLauncher.launch("/usr/bin/remote/wifi_ip.sh")
+            text: settingsLauncher.launch("/usr/bin/remote/wifi_ip.sh").trim()
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -134,7 +134,7 @@ Item {
 
         Text {
             color: colorText
-            text: settingsLauncher.launch("cat /sys/class/net/wlan0/address")
+            text: settingsLauncher.launch("cat /sys/class/net/wlan0/address").trim()
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20

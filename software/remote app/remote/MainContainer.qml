@@ -28,7 +28,7 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // DASHBOARD
         Loader {
-            active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
+            active: SwipeView.isCurrentItem // || SwipeView.isNextItem || SwipeView.isPreviousItem
 
             sourceComponent: Flickable {
                 id: dashboardFlickable
@@ -71,7 +71,7 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // ROOMS
         Loader {
-            active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
+            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
             sourceComponent: Flickable {
                 width: parent.width
@@ -124,7 +124,7 @@ Item {
             model: loaded_entities
 
             Loader {
-                active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || (SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
+                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem //(SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
 
                 sourceComponent: Flickable {
                     width: parent.width
@@ -167,7 +167,7 @@ Item {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // SETTINGS
         Loader {
-            active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
+            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
             sourceComponent: Flickable {
                 width: parent.width

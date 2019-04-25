@@ -28,9 +28,13 @@ Item {
 
         Settings.Languages {}
 
-        Settings.Hubs {}
+        Settings.Hubs {
+            visible: Object.keys(integration).length == 0 ? false : true
+        }
 
-        Settings.Devices {}
+        Settings.Devices {
+            visible: Object.keys(device).length == 0 ? false : true
+        }
 
         Settings.Battery {}
 

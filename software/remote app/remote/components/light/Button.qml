@@ -402,7 +402,7 @@ Rectangle {
         Text {
             id: addToFavButtonText
             color: colorText
-            text: favorite ? qsTr("Remove from favorits") + translateHandler.emptyString : qsTr("Add to favorits") + translateHandler.emptyString
+            text: favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.verticalCenter: addToFavButtonCircle.verticalCenter
             anchors.left: addToFavButtonCircle.right
