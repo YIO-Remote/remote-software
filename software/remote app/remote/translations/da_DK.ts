@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Fjern fra favoritter</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="405"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Tilføj til favoritter</translation>
     </message>
   </context>
   <context>
@@ -84,7 +84,7 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Enheder</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
@@ -151,7 +151,7 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
       <source>Areas</source>
-      <translation type="unfinished">Areas</translation>
+      <translation>Områder</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
