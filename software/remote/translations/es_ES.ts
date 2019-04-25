@@ -125,7 +125,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-<translation>Hubs</translation>
+      <translation type="unfinished">Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
@@ -146,7 +146,7 @@
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
       <source>Dashboard</source>
-<translation>Dashboard</translation>
+      <translation type="unfinished">Dashboard</translation>
     </message>
     <message>
       <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
