@@ -19,5 +19,5 @@ software/remote app/build-*
 software/remote app/remote/translations/.DS_Store
 
 #Translation files
-software/remote app/remote/translations/*
-!software/remote app/remote/translations/en_US.ts
+software/remote/translations/*
+!software/remote/translations/en_US.ts
