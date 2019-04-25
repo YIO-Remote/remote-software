@@ -205,38 +205,38 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Nunca desactivar Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Desactivar Wi-Fi tras %1 minutos de inactividad</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Nunca</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minutos</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Nunca apagar el mando</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Apagar el mando tras %1 horas de inactividad</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 horas</translation>
     </message>
   </context>
   <context>
@@ -257,27 +257,27 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="33"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Sistema</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Tiempo de actividad</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="91"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Temperatura de la CPU</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="127"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Reiniciar</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="142"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Apagar</translation>
     </message>
   </context>
   <context>
@@ -285,12 +285,12 @@
     <message>
       <location filename="../main.qml" line="153"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Luces</translation>
     </message>
     <message>
       <location filename="../main.qml" line="153"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persianas</translation>
     </message>
   </context>
 </TS>
