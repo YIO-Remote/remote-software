@@ -6,12 +6,12 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="17"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Batería</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
       <source>Battery charge</source>
-      <translation type="unfinished">Battery charge</translation>
+      <translation>Carga de la batería</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
