@@ -125,7 +125,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+<translation>Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
@@ -262,7 +262,7 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="54"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+<translation>Uptime</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="91"/>
