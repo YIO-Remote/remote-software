@@ -78,3 +78,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES +=
+
+# Copy config file to output directory
+copyConfig.commands = $(COPY_DIR) $$shell_path($$PWD/config.json) $$OUT_PWD
+
+# Copy translation file to output directory
+copyTranslations.commands = $(COPY_DIR) $$shell_path($$PWD/translations.json) $$OUT_PWD
+
+# Add copy commands to build output
+first.depends = $(first) copyConfig copyTranslations
+export(first.depends)
+export(copyConfig.commands)
+export(copyTranslations.commands)
+QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
