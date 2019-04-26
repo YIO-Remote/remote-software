@@ -115,7 +115,6 @@ ApplicationWindow {
     Component.onCompleted: {
         darkMode = Qt.binding(function () { return config.settings.darkmode});
 
-
         var comp;
         var obj;
 

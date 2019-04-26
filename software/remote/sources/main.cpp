@@ -2,7 +2,6 @@
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
 #include <QQmlContext>
-#include <QDebug>
 #include <QFile>
 #include <QFileInfo>
 
