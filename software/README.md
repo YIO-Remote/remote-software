@@ -60,8 +60,8 @@ The integration that should be loaded. At the moment only one integration can be
 This json entry name should match the integration name and file as above. This entry various from integration to integration. For Home Assistant one entry is required: ip address and port. Token is optional.
 
 
-**Rooms**
-List of rooms that your setup has.
+**Areas**
+List of areas that your setup has.
 
 
 **Entities**
