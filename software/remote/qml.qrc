@@ -34,5 +34,6 @@
         <file>basic_ui/pages/Dashboard.qml</file>
         <file>basic_ui/pages/Device.qml</file>
         <file>basic_ui/pages/Settings.qml</file>
+        <file>basic_ui/pages/Area.qml</file>
     </qresource>
 </RCC>

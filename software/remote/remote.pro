@@ -90,5 +90,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #export(copyConfig.commands)
 #export(copyTranslations.commands)
 #QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
-
-DISTFILES +=

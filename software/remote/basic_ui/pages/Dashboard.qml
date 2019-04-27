@@ -8,7 +8,7 @@ Flickable {
     maximumFlickVelocity: 4000
     flickDeceleration: 2000
     clip: true
-    contentHeight: dashboardFlow.height < parent.height - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? dashboardFlow.height + 40 : dashboardFlow.height
+    contentHeight: iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
 
@@ -16,10 +16,10 @@ Flickable {
         opacity: 0.5
     }
 
-    property alias dashboardFlow: dashboardFlow
+    property alias iconFlow: iconFlow
 
     Flow {
-        id: dashboardFlow
+        id: iconFlow
         width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 10
@@ -30,7 +30,7 @@ Flickable {
                     if (loaded_components[loaded_entities[i]].entities[j].favorite) {
                         // load entity button
                         var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
-                        var obj = comp.createObject(dashboardFlow, {entityID: j});
+                        var obj = comp.createObject(iconFlow, {entityID: j});
                     }
                 }
             }

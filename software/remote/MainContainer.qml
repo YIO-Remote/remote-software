@@ -63,7 +63,8 @@ Item {
             height: listHeight
 
             property bool selected: ListView.isCurrentItem
-            property string nameValue: name
+//            property string nameValue: name
+//            property string displayNameValue: display_name
 
             property alias pageLoader: pageLoader
 
@@ -72,11 +73,11 @@ Item {
                 if (name === "dashboard") {
                     pageLoader.source = "qrc:/basic_ui/pages/Dashboard.qml";
                 } else if (name === "area") {
-                    console.debug("Load area")
+                   pageLoader.setSource("qrc:/basic_ui/pages/Area.qml", { "area": display_name });
                 } else if (name === "settings") {
                     pageLoader.source = "qrc:/basic_ui/pages/Settings.qml";
                 } else {
-                    pageLoader.setSource("qrc:/basic_ui/pages/Device.qml", { "type": nameValue });
+                    pageLoader.setSource("qrc:/basic_ui/pages/Device.qml", { "type": name });
                 }
             }
 
