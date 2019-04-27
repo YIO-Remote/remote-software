@@ -53,23 +53,23 @@
                     "type": "light"
                 },
                 {
-                    "brightness": 26,
+                    "brightness": "0",
                     "entity_id": "light.living_room_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room lamp",
                     "integration": "homeassistant",
                     "room": "Living room",
-                    "state": "on",
+                    "state": "off",
                     "type": "light"
                 },
                 {
-                    "brightness": 75,
+                    "brightness": "0",
                     "entity_id": "light.living_room_corner_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room corner lamp",
                     "integration": "homeassistant",
                     "room": "Living room",
-                    "state": "on",
+                    "state": "off",
                     "type": "light"
                 },
                 {
@@ -152,6 +152,26 @@
         "autobrightness": true,
         "darkmode": true,
         "shutdowntime": 7200,
-        "wifitime": 600
+        "wifitime": 600,
+        "menu": {
+            "showareas": true,
+            "showdevices": true,
+            "order": [
+            {
+            "name": "dashboard",
+            "display_name": "Dashboard",
+            "show": true        
+            },
+            {
+            "name": "areas",
+            "display_name": "Areas",
+            "show": true        
+            },
+            {
+            "name": "settings",
+            "display_name": "Settings",
+            "show": true
+            }
+        ]}
     }
 }

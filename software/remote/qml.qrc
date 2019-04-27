@@ -12,8 +12,7 @@
         <file>basic_ui/CustomButton.qml</file>
         <file>MainContainer.qml</file>
         <file>basic_ui/StatusBar.qml</file>
-        <file>basic_ui/main_navigation/MainNavigation.qml</file>
-        <file>basic_ui/main_navigation/NavigationButton.qml</file>
+        <file>basic_ui/MainNavigation.qml</file>
         <file>components/light/Main.qml</file>
         <file>components/light/homeassistant.qml</file>
         <file>components/light/Button.qml</file>
