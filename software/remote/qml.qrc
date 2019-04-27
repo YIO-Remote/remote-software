@@ -31,5 +31,8 @@
         <file>basic_ui/settings/System.qml</file>
         <file>basic_ui/settings/Hubs.qml</file>
         <file>basic_ui/settings/Devices.qml</file>
+        <file>basic_ui/pages/Dashboard.qml</file>
+        <file>basic_ui/pages/Device.qml</file>
+        <file>basic_ui/pages/Settings.qml</file>
     </qresource>
 </RCC>

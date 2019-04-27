@@ -392,8 +392,12 @@ Rectangle {
                     var tmp = loaded_components.light.entities;
                     tmp[entityID].favorite = !tmp[entityID].favorite;
                     loaded_components.light.entities = tmp;
-                    loader_main.item.mainNavigationSwipeview.itemAt(0).active = false;
-                    loader_main.item.mainNavigationSwipeview.itemAt(0).active = true;
+                    for (var i=0; i<mainNavigationSwipeview.count; i++) {
+                        if (mainNavigationSwipeview.currentItem.pageLoader.source == "qrc:/basic_ui/pages/Dashboard.qml") {
+                            mainNavigationSwipeview.currentItem.pageLoader.active = false;
+                            mainNavigationSwipeview.currentItem.pageLoader.active = true;
+                        }
+                    }
                     JSHelper.saveConfig();
                 }
             }

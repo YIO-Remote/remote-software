@@ -10,185 +10,89 @@ Item {
     height: parent.height
     clip: true
 
+    property int listWidth: parent.width-20
+    property int listHeight: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN CONTAINER CONTENT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     property alias mainNavigationSwipeview: mainNavigationSwipeview
 
-    SwipeView {
+    ListView {
         id: mainNavigationSwipeview
+
         width: parent.width-20
         height: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
         anchors.top: statusBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+
+        maximumFlickVelocity: 2000
+        flickDeceleration: 400
         clip: true
+        boundsBehavior: Flickable.DragAndOvershootBounds
+        flickableDirection: Flickable.HorizontalFlick
+        orientation: ListView.Horizontal
+        interactive: true
+        focus: true
+        highlightMoveDuration: 200
+        snapMode: ListView.SnapOneItem
+        highlightRangeMode: ListView.StrictlyEnforceRange
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
-        // DASHBOARD
-        Loader {
-            active: SwipeView.isCurrentItem // || SwipeView.isNextItem || SwipeView.isPreviousItem
+        currentIndex: 0
 
-            sourceComponent: Flickable {
-                id: dashboardFlickable
-                width: parent.width
-                height: parent.height
-                maximumFlickVelocity: 4000
-                flickDeceleration: 2000
-                clip: true
-                contentHeight: dashboardFlow.height < parent.height - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? dashboardFlow.height + 40 : dashboardFlow.height
-                boundsBehavior: Flickable.DragAndOvershootBounds
-                flickableDirection: Flickable.VerticalFlick
+        model: mainNavigation.menuConfig
 
-                ScrollBar.vertical: ScrollBar {
-                    opacity: 0.5
-                }
+        delegate: swipeViewPage
 
-                property alias dashboardFlow: dashboardFlow
-
-                Flow {
-                    id: dashboardFlow
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 10
-
-                    Component.onCompleted: {
-                        for (var i=0; i<loaded_entities.length; i++) {
-                            for (var j=0; j<loaded_components[loaded_entities[i]].entities.length; j++) {
-                                if (loaded_components[loaded_entities[i]].entities[j].favorite) {
-                                    // load entity button
-                                    var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
-                                    var obj = comp.createObject(dashboardFlow, {entityID: j});
-                                }
-                            }
-                        }
-                    }
-                }
+        onCurrentIndexChanged: {
+            if (!mainNavigation.mainNavigationListView.currentItem.held) {
+                mainNavigation.mainNavigationListView.currentIndex = currentIndex
+                //            mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
             }
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
-        // ROOMS
-        Loader {
-            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+    }
 
-            sourceComponent: Flickable {
-                width: parent.width
-                height: parent.height
-                maximumFlickVelocity: 4000
-                flickDeceleration: 2000
-                clip: true
-                contentHeight: roomsFlow.height
-                boundsBehavior: Flickable.DragAndOvershootBounds
-                flickableDirection: Flickable.VerticalFlick
+    Component {
+        id: swipeViewPage
 
-                ScrollBar.vertical: ScrollBar {
-                    opacity: 0.5
-                }
+        Item {
+            id: contentWrapper
+            width: listWidth
+            height: listHeight
 
-                Flow {
-                    id: roomsFlow
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 10
+            property bool selected: ListView.isCurrentItem
+            property string nameValue: name
 
-                    Component.onCompleted: {
-                        for (var k=0; k<config.rooms.length; k++) {
-                            // load room title
-                            if (k>0) {
-                                var spacerObj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', roomsFlow, '')
-                            }
-                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 60; text: "'+ config.rooms[k].room +'";}', roomsFlow, "");
+            property alias pageLoader: pageLoader
 
-                            // load room entities
-                            // go through all entities, if it matches the room, create a component
-                            for (var i=0; i<loaded_entities.length; i++) {
-                                for (var j=0; j<loaded_components[loaded_entities[i]].entities.length; j++) {
-                                    if (loaded_components[loaded_entities[i]].entities[j].room == config.rooms[k].room) {
-                                        // load entity button
-                                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
-                                        var obj = comp.createObject(roomsFlow, {entityID: j});
-                                    }
-                                }
-                            }
-                        }
-                    }
+            // figure out which page type to load
+            function determinePageToLoad(name) {
+                if (name === "dashboard") {
+                    pageLoader.source = "qrc:/basic_ui/pages/Dashboard.qml";
+                } else if (name === "area") {
+                    console.debug("Load area")
+                } else if (name === "settings") {
+                    pageLoader.source = "qrc:/basic_ui/pages/Settings.qml";
+                } else {
+                    pageLoader.setSource("qrc:/basic_ui/pages/Device.qml", { "type": nameValue });
                 }
             }
-        }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
-        // SUPPORTED ENTITIES
-        Repeater {
-            model: loaded_entities
+            Component.onCompleted: {
+                determinePageToLoad(name);
+            }
 
             Loader {
-                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem //(SwipeView.isPreviousItem && (mainNavigationSwipeview.currentIndex !=  2 + supported_entities.length))
-
-                sourceComponent: Flickable {
-                    width: parent.width
-                    height: parent.height
-                    maximumFlickVelocity: 4000
-                    flickDeceleration: 2000
-                    clip: true
-                    contentHeight: repeaterFlow.height
-                    boundsBehavior: Flickable.DragAndOvershootBounds
-                    flickableDirection: Flickable.VerticalFlick
-
-                    ScrollBar.vertical: ScrollBar {
-                        opacity: 0.5
-                    }
-
-                    Flow {
-                        id: repeaterFlow
-                        width: parent.width
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        spacing: 10
-
-                        Component.onCompleted: {
-                            // load room entities
-                            // go through all entities, if it matches the room, create a component
-                            for (var i=0; i<loaded_entities.length; i++) {
-                                for (var j=0; j<loaded_components[loaded_entities[i]].entities.length; j++) {
-                                    if (loaded_components[loaded_entities[i]].entities[j].type == loaded_entities[index]) {
-                                        // load entity button
-                                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
-                                        var obj = comp.createObject(repeaterFlow, {entityID: j});
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
-        // SETTINGS
-        Loader {
-            active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
-
-            sourceComponent: Flickable {
-                width: parent.width
-                height: parent.height
-                maximumFlickVelocity: 4000
-                flickDeceleration: 2000
-                clip: true
-                contentHeight: settingsPage.height
-                boundsBehavior: Flickable.DragAndOvershootBounds
-                flickableDirection: Flickable.VerticalFlick
-
-                ScrollBar.vertical: ScrollBar {
-                    opacity: 0.5
-                }
-
-                BasicUI.Settings {
-                    id: settingsPage
-                }
+                id: pageLoader
+                //                                active: selected
+                asynchronous: true
+                width: listWidth
+                height: listHeight
             }
         }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BOTTOM GRADIENT FADE
@@ -200,7 +104,7 @@ Item {
         height: mainNavigation.state == "closed" ? 80 : 160
         anchors.bottom: mainNavigation.top
 
-        opacity: mainNavigationSwipeview.currentItem.children[0] && mainNavigationSwipeview.currentItem.children[0].atYEnd ? 0 : 1
+        opacity: mainNavigationSwipeview.currentItem && mainNavigationSwipeview.currentItem.pageLoader.status == Loader.Ready && mainNavigationSwipeview.currentItem.pageLoader.item.atYEnd ? 0 : 1
 
         Behavior on opacity {
             NumberAnimation {
@@ -223,7 +127,8 @@ Item {
         id: mainNavigation
         anchors.bottom: miniMediaPlayer.top
         anchors.horizontalCenter: parent.horizontalCenter
-        state: mainNavigationSwipeview.currentItem.children[0] && mainNavigationSwipeview.currentItem.children[0].atYBeginning ? "open" : "closed"
+        state: /*mainNavigationSwipeview.currentItem && mainNavigationSwipeview.currentItem.pageLoader.status == Loader.Ready &&*/ mainNavigationSwipeview.currentItem.pageLoader.item.atYBeginning ? "open" : "closed"
+
     }
 
 

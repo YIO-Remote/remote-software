@@ -35,6 +35,8 @@ Item {
     // MENU CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    property alias menuConfig: menuConfig
+
     ListModel {
         id: menuConfig
     }
@@ -44,13 +46,13 @@ Item {
         menuConfig.clear();
 
         // if the default config is in the menu
-        if (config.settings.menu.order.length < 4) {
+        if (config.settings.menu.order.length < 3) {
             for (var i=0; i<config.settings.menu.order.length; i++) {
                 menuConfig.append(config.settings.menu.order[i]);
             }
             addDeviceTypes();
             addAreas();
-            menuConfig.move(2, menuConfig.count-1, 1);
+            menuConfig.move(1, menuConfig.count-1, 1);
         } else {
             for (var i=0; i<config.settings.menu.order.length; i++) {
                 menuConfig.append(config.settings.menu.order[i]);
@@ -77,8 +79,8 @@ Item {
     }
 
     function addAreas(where) {
-        for (var i=0; i<config.rooms.length; i++) {
-            menuConfig.append({"name": "areas", "display_name": config.rooms[i].room,"show": true});
+        for (var i=0; i<config.areas.length; i++) {
+            menuConfig.append({"name": "area", "display_name": config.areas[i].area,"show": true});
         }
     }
 
@@ -113,6 +115,7 @@ Item {
 
                 held = false
                 mainNavigationListView.currentIndex = index
+                mainNavigationSwipeview.currentIndex = index
             }
 
             property ListView _listView: ListView.view
@@ -225,7 +228,7 @@ Item {
                     anchors.horizontalCenter: buttonText.horizontalCenter
                     anchors.bottom: buttonText.top
                     anchors.bottomMargin: 10
-                    source: "qrc:/images/navigation/icon-" + name + ".png"
+                    source: name == "area" ? "qrc:/images/navigation/icon-area-" + Math.floor(Math.random() * (3 - 0)) + ".png" : "qrc:/images/navigation/icon-" + name + ".png"
 
                     ColorOverlay {
                         visible: !darkMode
@@ -249,6 +252,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias mainNavigationListView: mainNavigationListView
+
     ListView {
         id: mainNavigationListView
 
@@ -263,6 +268,7 @@ Item {
         orientation: ListView.Horizontal
         interactive: true
         focus: true
+        highlightMoveDuration: 200
 
         currentIndex: 0
 

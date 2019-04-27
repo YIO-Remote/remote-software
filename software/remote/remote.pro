@@ -91,5 +91,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #export(copyTranslations.commands)
 #QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
 
-DISTFILES += \
-    basic_ui/settings/Menu.qml
+DISTFILES +=

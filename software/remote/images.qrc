@@ -5,7 +5,10 @@
         <file>images/loading/icon-loading-ok.png</file>
         <file>images/loading/icon-loading-x.png</file>
         <file>images/loading/icon-loading.png</file>
-        <file>images/navigation/icon-areas.png</file>
+        <file>images/navigation/icon-area-0.png</file>
+        <file>images/navigation/icon-area-1.png</file>
+        <file>images/navigation/icon-area-2.png</file>
+        <file>images/navigation/icon-area-3.png</file>
         <file>images/navigation/icon-dashboard.png</file>
         <file>images/navigation/icon-blind.png</file>
         <file>images/navigation/icon-light.png</file>
