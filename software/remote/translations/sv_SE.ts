@@ -146,22 +146,22 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoriter</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Inställningar</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persienner</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lampor</translation>
     </message>
   </context>
   <context>
@@ -249,17 +249,17 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Mjukvaruuppdatering</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
       <source>auto update</source>
-      <translation type="unfinished">auto update</translation>
+      <translation>automatisk uppdatering</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
       <source>Automatically look for updates and install it when available.</source>
-      <translation type="unfinished">Automatically look for updates and install it when available.</translation>
+      <translation>Sök automatiskt efter uppdateringar och installera det när det är tillgängligt.</translation>
     </message>
   </context>
   <context>
