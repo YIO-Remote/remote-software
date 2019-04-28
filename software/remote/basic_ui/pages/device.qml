@@ -27,6 +27,9 @@ Flickable {
         Component.onCompleted: {
             for (var i=0; i<loaded_components[type].entities.length; i++) {
                 var comp = Qt.createComponent("qrc:/components/"+ type +"/Button.qml");
+                if (comp.status != Component.Ready) {
+                    console.debug("Error: " + comp.errorString() );
+                }
                 var obj = comp.createObject(iconFlow, {entityID: i});
             }
         }

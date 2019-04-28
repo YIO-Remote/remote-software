@@ -24,6 +24,8 @@ Item {
 
         Settings.Display {}
 
+        Settings.Softwareupdate {}
+
         Settings.PowerSaving {}
 
         Settings.Languages {}

@@ -83,7 +83,6 @@ ApplicationWindow {
     property bool updateAvailable: false
     property real _new_version
     property string updateURL
-    property bool autoUpdate: false
 
     Timer {
         repeat: true
@@ -120,7 +119,11 @@ ApplicationWindow {
         for (var i=0; i<config.integration.length; i++) {
             comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
             integration[config.integration[i].type] = comp.createObject(applicationWindow, {integrationId: i});
+            if (comp.status != Component.Ready) {
+                console.debug("Error: " + comp.errorString() );
+            }
             integrationObj[i] = config.integration[i];
+
         }
 
         // must be at least one integration for this to be successful
@@ -142,6 +145,9 @@ ApplicationWindow {
                 if (supported_entities[k] === config.entities[i].type) {
                     // load the supported component
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
+                    if (comp.status != Component.Ready) {
+                        console.debug("Error: " + comp.errorString() );
+                    }
                     loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
                     loaded_components[supported_entities[k]].entities = config.entities[i].data;
 
@@ -250,7 +256,7 @@ ApplicationWindow {
         x: 0
         y: 0
         active: false
-//        source: "qrc:/MainContainer.qml"
+        //        source: "qrc:/MainContainer.qml"
 
         transform: Scale {
             id: scale
@@ -280,19 +286,19 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    Loader {
-//        id: loader_second
-//        asynchronous: true
-//        visible: false
-//        width: 480
-//        height: 800
-//        x: 0
-//        y: 0
+    //    Loader {
+    //        id: loader_second
+    //        asynchronous: true
+    //        visible: false
+    //        width: 480
+    //        height: 800
+    //        x: 0
+    //        y: 0
 
-//        onStatusChanged: if (loader_second.status == Loader.Ready) {
-//                             loader_second.visible = true;
-//                         }
-//    }
+    //        onStatusChanged: if (loader_second.status == Loader.Ready) {
+    //                             loader_second.visible = true;
+    //                         }
+    //    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

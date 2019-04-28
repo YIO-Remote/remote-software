@@ -31,6 +31,8 @@ Item {
             PropertyAnimation { target: mainNavigation; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
         }
     ]
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MENU CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,6 +43,11 @@ Item {
         id: menuConfig
     }
 
+    property var menuTranslations: [qsTr("Favorites") + translateHandler.emptyString, qsTr("Settings") + translateHandler.emptyString,
+                qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString
+    ]
+
+
     function loadMenuConfig() {
         // clear the menuConfig
         menuConfig.clear();
@@ -48,6 +55,7 @@ Item {
         // if the default config is in the menu
         if (config.settings.menu.order.length < 3) {
             for (var i=0; i<config.settings.menu.order.length; i++) {
+                config.settings.menu.order[i].displayname = qsTr(config.settings.menu.order[i].display_name) + translateHandler.emptyString;
                 menuConfig.append(config.settings.menu.order[i]);
             }
             addDeviceTypes();
@@ -55,6 +63,7 @@ Item {
             menuConfig.move(1, menuConfig.count-1, 1);
         } else {
             for (var i=0; i<config.settings.menu.order.length; i++) {
+                config.settings.menu.order[i].displayname = qsTr(config.settings.menu.order[i].display_name) + translateHandler.emptyString;
                 menuConfig.append(config.settings.menu.order[i]);
             }
         }

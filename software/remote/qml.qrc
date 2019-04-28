@@ -36,5 +36,6 @@
         <file>basic_ui/pages/settings.qml</file>
         <file>basic_ui/pages/area.qml</file>
         <file>components/light/Card.qml</file>
+        <file>basic_ui/settings/Softwareupdate.qml</file>
     </qresource>
 </RCC>

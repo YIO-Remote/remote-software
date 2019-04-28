@@ -13,7 +13,7 @@ function checkForUpdate(update) {
                     _new_version = obj.tag_name;
                     updateURL = obj.assets[0].browser_download_url;
                     updateAvailable = true;
-                    if (autoUpdate) {
+                    if (config.settings.softwareupdate) {
                         console.debug("Updating the app")
                         var command = "/usr/bin/remote/updater.sh " + obj.assets[0].browser_download_url;
                         mainLauncher.launch(command);

@@ -49,7 +49,11 @@ Flickable {
                             if (loaded_components[loaded_entities[k]].entities[j].area == config.areas[i].area) {
                                 // load entity button
                                 var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[k] +"/Button.qml");
+                                if (comp.status != Component.Ready) {
+                                    console.debug("Error: " + comp.errorString() );
+                                }
                                 var obj = comp.createObject(iconFlow, {entityID: j});
+
                             }
                         }
                     }

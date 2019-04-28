@@ -153,6 +153,7 @@
         "darkmode": true,
         "shutdowntime": 7200,
         "wifitime": 600,
+        "softwareupdate": false,
         "menu": {
             "showareas": true,
             "showdevices": true,
