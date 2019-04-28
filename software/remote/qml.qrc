@@ -31,9 +31,10 @@
         <file>basic_ui/settings/System.qml</file>
         <file>basic_ui/settings/Hubs.qml</file>
         <file>basic_ui/settings/Devices.qml</file>
-        <file>basic_ui/pages/Dashboard.qml</file>
-        <file>basic_ui/pages/Device.qml</file>
-        <file>basic_ui/pages/Settings.qml</file>
-        <file>basic_ui/pages/Area.qml</file>
+        <file>basic_ui/pages/dashboard.qml</file>
+        <file>basic_ui/pages/device.qml</file>
+        <file>basic_ui/pages/settings.qml</file>
+        <file>basic_ui/pages/area.qml</file>
+        <file>components/light/Card.qml</file>
     </qresource>
 </RCC>

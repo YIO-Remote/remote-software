@@ -6,7 +6,6 @@ import "qrc:/scripts/helper.js" as JSHelper
 
 Rectangle {
     id: lightButton
-    clip: true
 
     property int entityID
 
@@ -30,6 +29,9 @@ Rectangle {
             lightButton.state = "closed"
         }
     }
+
+
+    property var originParent: lightButton.parent
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
@@ -56,17 +58,17 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: lightButton; height: 125}
+            PropertyChanges {target: lightButton; width: parent.width; height: 125}
             PropertyChanges {target: brightnessSlider; opacity: 0}
         },
         State {
             name: "on"
-            PropertyChanges {target: lightButton; height: 160}
+            PropertyChanges {target: lightButton; width: parent.width; height: 160}
             PropertyChanges {target: brightnessSlider; opacity: 1}
         },
         State {
             name: "open"
-            PropertyChanges {target: lightButton; height: 720}
+            PropertyChanges {target: lightButton; width: 440; height: 720}
             PropertyChanges {target: brightnessSlider; opacity: 0}
         }
     ]
@@ -75,7 +77,7 @@ Rectangle {
         Transition {
             to: "closed"
             ParallelAnimation {
-                PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         },
@@ -83,7 +85,7 @@ Rectangle {
             to: "on"
             SequentialAnimation {
                 PauseAnimation { duration: 200 }
-                PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PauseAnimation { duration: 200 }
                 PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
@@ -91,7 +93,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: lightButton; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         }
@@ -116,7 +118,6 @@ Rectangle {
         }
 
         onClicked: {
-            //            FN.loadScreen("ButtonLight", button_main)
         }
     }
 
@@ -313,19 +314,19 @@ Rectangle {
                         PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                         PropertyAnimation { target: addToFavButtonText; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                     }
-                    PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.OutExpo; duration: 800 }
+                    PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.OutExpo; duration: 400 }
                     PropertyAnimation { target: addToFavButton; properties: "color"; duration: 1 }
                 }
             },
             Transition {
                 to: "open"
                 SequentialAnimation {
-                    PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.InExpo; duration: 600 }
+                    PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.InExpo; duration: 400 }
                     ParallelAnimation {
                         PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                         PropertyAnimation { target: addToFavButtonText; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                     }
-                    PropertyAnimation { target: addToFavButton; properties: "color"; easing.type: Easing.InExpo; duration: 600 }
+                    PropertyAnimation { target: addToFavButton; properties: "color"; easing.type: Easing.InExpo; duration: 400 }
                 }
             }
         ]
@@ -393,9 +394,9 @@ Rectangle {
                     tmp[entityID].favorite = !tmp[entityID].favorite;
                     loaded_components.light.entities = tmp;
                     for (var i=0; i<mainNavigationSwipeview.count; i++) {
-                        if (mainNavigationSwipeview.currentItem.pageLoader.source == "qrc:/basic_ui/pages/Dashboard.qml") {
-                            mainNavigationSwipeview.currentItem.pageLoader.active = false;
-                            mainNavigationSwipeview.currentItem.pageLoader.active = true;
+                        if (mainNavigationSwipeview.itemAt(i).mainNavigationLoader.source == "qrc:/basic_ui/pages/dashboard.qml") {
+                            mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = false;
+                            mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = true;
                         }
                     }
                     JSHelper.saveConfig();
@@ -424,5 +425,14 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // OPEN STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Loader {
+        id: cardLoader
+        width: 400
+        height: 600
+        asynchronous: true
+        //        active: lightButton.state == "open"
+        //        source: lightButton.state != "open" ? "" : "qrc:/components/light/Card.qml"
+    }
 
 }

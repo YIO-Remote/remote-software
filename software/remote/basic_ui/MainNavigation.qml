@@ -6,7 +6,7 @@ import "qrc:/scripts/helper.js" as JSHelper
 
 Item {
     id: mainNavigation
-    width: parent.width-20
+    width: parent.width
 
     state: "open"
 

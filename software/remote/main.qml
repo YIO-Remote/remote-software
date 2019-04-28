@@ -89,6 +89,7 @@ ApplicationWindow {
         repeat: true
         running: true
         interval: 7200000
+        triggeredOnStart: true
 
         onTriggered: {
             JSUpdate.checkForUpdate();
@@ -112,10 +113,10 @@ ApplicationWindow {
         name: configPath + "/config.json"
     }
 
+    // load the hub integrations
     function loadHubIntegrations() {
         var comp;
 
-        // load the hub integrations
         for (var i=0; i<config.integration.length; i++) {
             comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
             integration[config.integration[i].type] = comp.createObject(applicationWindow, {integrationId: i});
@@ -130,6 +131,7 @@ ApplicationWindow {
         }
     }
 
+    // load the entities
     function loadEntities() {
         var comp;
         var obj;
@@ -162,10 +164,11 @@ ApplicationWindow {
         }
 
         // set the language
-        translateHandler.selectLanguage(language)
+        translateHandler.selectLanguage(language);
 
-        // check for software update
-        JSUpdate.checkForUpdate();
+        // when everything is loaded, load the main UI
+        loader_main.setSource("qrc:/MainContainer.qml");
+        loader_main.active = true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -206,7 +209,7 @@ ApplicationWindow {
             webSocket.sendTextMessage("OK")
             webSocket.onTextMessageReceived.connect(function(message) {
                 JSWebsocket.parseWSServerMessage(message);
-                if (message == "display") {
+                if (message == "display") { // when we get the message display from the client, we store the ID
                     clientId = webSocket;
                     console.debug("got websocket client id");
                 }
@@ -246,7 +249,8 @@ ApplicationWindow {
         height: 800
         x: 0
         y: 0
-        source: "qrc:/MainContainer.qml"
+        active: false
+//        source: "qrc:/MainContainer.qml"
 
         transform: Scale {
             id: scale
@@ -276,19 +280,20 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Loader {
-        id: loader_second
-        asynchronous: true
-        visible: false
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+//    Loader {
+//        id: loader_second
+//        asynchronous: true
+//        visible: false
+//        width: 480
+//        height: 800
+//        x: 0
+//        y: 0
 
-        onStatusChanged: if (loader_second.status == Loader.Ready) {
-                             loader_second.visible = true;
-                         }
-    }
+//        onStatusChanged: if (loader_second.status == Loader.Ready) {
+//                             loader_second.visible = true;
+//                         }
+//    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CHARING SCREEN

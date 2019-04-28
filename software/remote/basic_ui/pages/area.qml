@@ -19,7 +19,7 @@ Flickable {
         opacity: 0.5
     }
 
-    Flow {
+    Column {
         id: iconFlow
         width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter

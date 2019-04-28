@@ -2,7 +2,6 @@ import QtQuick 2.11
 import QtQuick.Controls 2.4
 
 import "qrc:/basic_ui" as BasicUI
-import "qrc:/components/light" as ComponentLight
 
 Item {
     id: main_container
@@ -10,88 +9,85 @@ Item {
     height: parent.height
     clip: true
 
-    property int listWidth: parent.width-20
-    property int listHeight: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN CONTAINER CONTENT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     property alias mainNavigationSwipeview: mainNavigationSwipeview
+    property int itemsLoaded: 0
 
-    ListView {
+    SwipeView {
         id: mainNavigationSwipeview
-
         width: parent.width-20
         height: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
         anchors.top: statusBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-
-        maximumFlickVelocity: 2000
-        flickDeceleration: 400
         clip: true
-        boundsBehavior: Flickable.DragAndOvershootBounds
-        flickableDirection: Flickable.HorizontalFlick
-        orientation: ListView.Horizontal
-        interactive: true
-        focus: true
-        highlightMoveDuration: 200
-        snapMode: ListView.SnapOneItem
-        highlightRangeMode: ListView.StrictlyEnforceRange
 
-        currentIndex: 0
+        currentIndex: mainNavigation.menuConfig.count-1
 
-        model: mainNavigation.menuConfig
+        Repeater {
+            id: mainNavigationRepeater
+            model: mainNavigation.menuConfig
 
-        delegate: swipeViewPage
+            Loader {
+                id: mainNavigationLoader
+                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
-        onCurrentIndexChanged: {
-            if (!mainNavigation.mainNavigationListView.currentItem.held) {
-                mainNavigation.mainNavigationListView.currentIndex = currentIndex
-                //            mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+                property alias mainNavigationLoader: mainNavigationLoader
+
+                function determinePageToLoad(name) {
+                    if (name === "favorites") {
+                        mainNavigationLoader.source = "qrc:/basic_ui/pages/dashboard.qml";
+                    } else if (name === "area") {
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/area.qml", { "area": display_name });
+                    } else if (name === "settings") {
+                        mainNavigationLoader.source = "qrc:/basic_ui/pages/settings.qml";
+                    } else {
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/device.qml", { "type": name });
+                    }
+                }
+
+                Component.onCompleted: {
+                    determinePageToLoad(name);
+                }
+
+                onStatusChanged: {
+                    if (status == Loader.Ready) {
+                        itemsLoaded += 1
+                    }
+                }
             }
         }
 
-    }
-
-    Component {
-        id: swipeViewPage
-
-        Item {
-            id: contentWrapper
-            width: listWidth
-            height: listHeight
-
-            property bool selected: ListView.isCurrentItem
-//            property string nameValue: name
-//            property string displayNameValue: display_name
-
-            property alias pageLoader: pageLoader
-
-            // figure out which page type to load
-            function determinePageToLoad(name) {
-                if (name === "favorites") {
-                    pageLoader.source = "qrc:/basic_ui/pages/Dashboard.qml";
-                } else if (name === "area") {
-                   pageLoader.setSource("qrc:/basic_ui/pages/Area.qml", { "area": display_name });
-                } else if (name === "settings") {
-                    pageLoader.source = "qrc:/basic_ui/pages/Settings.qml";
-                } else {
-                    pageLoader.setSource("qrc:/basic_ui/pages/Device.qml", { "type": name });
+        onCurrentIndexChanged: {
+            if (itemsLoaded == mainNavigation.menuConfig.count) {
+                if (!mainNavigation.mainNavigationListView.currentItem.held) {
+                    mainNavigation.mainNavigationListView.currentIndex = currentIndex
+                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
+        }
+    }
 
-            Component.onCompleted: {
-                determinePageToLoad(name);
-            }
+    onItemsLoadedChanged: {
+        if (itemsLoaded == mainNavigation.menuConfig.count) {
 
-            Loader {
-                id: pageLoader
-                //                                active: selected
-                asynchronous: true
-                width: listWidth
-                height: listHeight
-            }
+            mainNavigation.state = Qt.binding(function() {
+             if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
+                 return "open"
+             } else {
+                 return "closed"
+             }
+            })
+
+            bottomGradient.state = Qt.binding(function() {
+             if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd) {
+                 return 0
+             } else {
+                 return 1
+             }
+            })
         }
     }
 
@@ -105,7 +101,7 @@ Item {
         height: mainNavigation.state == "closed" ? 80 : 160
         anchors.bottom: mainNavigation.top
 
-        opacity: mainNavigationSwipeview.currentItem && mainNavigationSwipeview.currentItem.pageLoader.status == Loader.Ready && mainNavigationSwipeview.currentItem.pageLoader.item.atYEnd ? 0 : 1
+        opacity: 1 //mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd ? 0 : 1
 
         Behavior on opacity {
             NumberAnimation {
@@ -128,7 +124,7 @@ Item {
         id: mainNavigation
         anchors.bottom: miniMediaPlayer.top
         anchors.horizontalCenter: parent.horizontalCenter
-        state: /*mainNavigationSwipeview.currentItem && mainNavigationSwipeview.currentItem.pageLoader.status == Loader.Ready &&*/ mainNavigationSwipeview.currentItem.pageLoader.item.atYBeginning ? "open" : "closed"
+        state: "open" // mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning ? "open" : "closed"
 
     }
 
