@@ -27,12 +27,12 @@
 <context>
     <name>Button</name>
     <message>
-        <location filename="../components/light/Button.qml" line="405"/>
+        <location filename="../components/light/Button.qml" line="410"/>
         <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/light/Button.qml" line="405"/>
+        <location filename="../components/light/Button.qml" line="410"/>
         <source>Add to favorites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -172,22 +172,22 @@
 <context>
     <name>Network</name>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="30"/>
+        <location filename="../basic_ui/settings/Network.qml" line="34"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="51"/>
+        <location filename="../basic_ui/settings/Network.qml" line="55"/>
         <source>Wi-Fi signal strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="88"/>
+        <location filename="../basic_ui/settings/Network.qml" line="92"/>
         <source>IP address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="124"/>
+        <location filename="../basic_ui/settings/Network.qml" line="128"/>
         <source>MAC address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,27 +265,27 @@
 <context>
     <name>System</name>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="33"/>
+        <location filename="../basic_ui/settings/System.qml" line="37"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="54"/>
+        <location filename="../basic_ui/settings/System.qml" line="58"/>
         <source>Uptime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="91"/>
+        <location filename="../basic_ui/settings/System.qml" line="95"/>
         <source>CPU temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="127"/>
+        <location filename="../basic_ui/settings/System.qml" line="131"/>
         <source>Reboot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="142"/>
+        <location filename="../basic_ui/settings/System.qml" line="146"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -293,12 +293,12 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="155"/>
+        <location filename="../main.qml" line="178"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="155"/>
+        <location filename="../main.qml" line="178"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
