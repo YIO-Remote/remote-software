@@ -254,12 +254,12 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
       <source>auto update</source>
-      <translation type="unfinished">auto update</translation>
+      <translation>automatisch aktualisieren</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
       <source>Automatically look for updates and install it when available.</source>
-      <translation type="unfinished">Automatically look for updates and install it when available.</translation>
+      <translation>sucht automatisch nach Updates und installiert sie, wenn verfügbar.</translation>
     </message>
   </context>
   <context>
