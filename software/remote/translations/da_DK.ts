@@ -146,22 +146,22 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoritter</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Indstillinger</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Gardiner</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lys</translation>
     </message>
   </context>
   <context>
