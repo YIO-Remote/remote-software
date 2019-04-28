@@ -165,34 +165,6 @@
     </message>
   </context>
   <context>
-    <name>Menu</name>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="17"/>
-      <source>Display</source>
-      <translation>Skärm</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="38"/>
-      <source>Auto brightness</source>
-      <translation>Automatisk ljusstyrka</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="164"/>
-      <source>Dark mode</source>
-      <translation>Nattläge</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="224"/>
-      <source>Cleaning mode</source>
-      <translation>Rengöringsläge</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="239"/>
-      <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Rör displayen i 10 sek för att avbryta rengöringsläge.</translation>
-    </message>
-  </context>
-  <context>
     <name>Network</name>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="34"/>
@@ -273,6 +245,24 @@
     </message>
   </context>
   <context>
+    <name>Softwareupdate</name>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
+      <source>Software update</source>
+      <translation type="unfinished">Software update</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
+      <source>Keep the remote updated</source>
+      <translation type="unfinished">Keep the remote updated</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
+      <source>Automatically look for updates and update when a new software version is available.</source>
+      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
+    </message>
+  </context>
+  <context>
     <name>StatusBar</name>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
@@ -316,12 +306,12 @@
   <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="178"/>
+      <location filename="../main.qml" line="184"/>
       <source>Lights</source>
       <translation>Lampor</translation>
     </message>
     <message>
-      <location filename="../main.qml" line="178"/>
+      <location filename="../main.qml" line="184"/>
       <source>Blinds</source>
       <translation>Persienner</translation>
     </message>
