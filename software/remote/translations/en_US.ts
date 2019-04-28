@@ -253,12 +253,12 @@
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
-        <source>Keep the remote updated</source>
+        <source>auto update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
-        <source>Automatically look for updates and update when a new software version is available.</source>
+        <source>Automatically look for updates and install it when available.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
