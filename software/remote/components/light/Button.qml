@@ -14,18 +14,21 @@ Rectangle {
     property var lstate: loaded_components.light.entities[entityID].state
     property int brightness: loaded_components.light.entities[entityID].brightness
     property string integrationType: loaded_components.light.entities[entityID].integration
+    property string area: loaded_components.light.entities[entityID].area
+    property int supported_features: loaded_components.light.entities[entityID].supported_features
 
     property bool favorite: loaded_components.light.entities[entityID].favorite
 
     width: parent.width
     height: 125
+    anchors.horizontalCenter: parent.horizontalCenter
     color: colorMedium
     radius: cornerRadius
 
     onBrightnessChanged: {
-        if (brightness > 0) {
+        if (brightness > 0 && lightButton.state != "open") {
             lightButton.state = "on"
-        } else {
+        } else if (lightButton.state != "open") {
             lightButton.state = "closed"
         }
     }
@@ -60,6 +63,7 @@ Rectangle {
             name: "closed"
             PropertyChanges {target: lightButton; width: parent.width; height: 125}
             PropertyChanges {target: brightnessSlider; opacity: 0}
+            ParentChange { target: lightButton; parent: originParent }
         },
         State {
             name: "on"
@@ -70,6 +74,7 @@ Rectangle {
             name: "open"
             PropertyChanges {target: lightButton; width: 440; height: 720}
             PropertyChanges {target: brightnessSlider; opacity: 0}
+            ParentChange { target: lightButton; parent: contentWrapper; x: 20; y: 80 }
         }
     ]
 
@@ -95,6 +100,9 @@ Rectangle {
             ParallelAnimation {
                 PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: brightnessSlider; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                ParentAnimation {
+                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+                }
             }
         }
     ]
@@ -118,6 +126,10 @@ Rectangle {
         }
 
         onClicked: {
+            originParent = lightButton.parent
+
+            loader_main.state = "hidden"
+            lightButton.state = "open"
         }
     }
 
@@ -179,6 +191,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 20
         checked: lstate == "off" ? false : true
+        enabled: lightButton.state == "open" ? false: true
 
         indicator: Rectangle {
             x: button.visualPosition * (button.width - width)
@@ -428,11 +441,20 @@ Rectangle {
 
     Loader {
         id: cardLoader
-        width: 400
-        height: 600
+        width: lightButton.width
+        height: lightButton.height
         asynchronous: true
-        //        active: lightButton.state == "open"
-        //        source: lightButton.state != "open" ? "" : "qrc:/components/light/Card.qml"
+        active: lightButton.state == "open"
+        source: lightButton.state != "open" ? "" : "qrc:/components/light/Card.qml"
+        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 300
+                easing.type: Easing.OutExpo
+            }
+        }
+
     }
 
 }

@@ -265,8 +265,8 @@ ApplicationWindow {
         }
 
         states: [
-            State { name: "hidden"; PropertyChanges {target: loader_main; y: -60; scale: 0.8; opacity: 0.4}},
-            State { name: "visible"; PropertyChanges {target: loader_main; scale: 1; opacity: 1; visible: true}}
+            State { name: "hidden"; PropertyChanges {target: loader_main; y: -60; scale: 0.8; opacity: 0.4; enabled: false}},
+            State { name: "visible"; PropertyChanges {target: loader_main; scale: 1; opacity: 1; visible: true; enabled: true}}
         ]
         transitions: [
             Transition {to: "hidden"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 800 }},
@@ -300,6 +300,15 @@ ApplicationWindow {
     //                         }
     //    }
 
+    property alias contentWrapper: contentWrapper
+
+    Item {
+        id: contentWrapper
+        width: 480
+        height: 800
+        x: 0
+        y: 0
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CHARING SCREEN

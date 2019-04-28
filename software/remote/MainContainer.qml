@@ -15,6 +15,7 @@ Item {
 
     property alias mainNavigationSwipeview: mainNavigationSwipeview
     property int itemsLoaded: 0
+    property bool startUp: false
 
     SwipeView {
         id: mainNavigationSwipeview
@@ -24,7 +25,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         clip: true
 
-        currentIndex: mainNavigation.menuConfig.count-1
+        currentIndex: 0 //mainNavigation.menuConfig.count-1
 
         Repeater {
             id: mainNavigationRepeater
@@ -61,7 +62,12 @@ Item {
         }
 
         onCurrentIndexChanged: {
-            if (itemsLoaded >= 2) {
+            if (mainNavigationSwipeview.count == mainNavigation.menuConfig.count && !startUp) {
+                startUp = true
+                mainNavigationSwipeview.currentIndex = 0
+            }
+
+            if (itemsLoaded >= 3) {
                 if (!mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
 //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
