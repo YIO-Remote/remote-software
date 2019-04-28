@@ -114,8 +114,8 @@
     "integration": [
         {
             "data": {
-                "ip": "homeassistant.facan.lan:8123",
-                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE4NTQwMjU5NjIsImlhdCI6MTUzODY2NTk2MiwiaXNzIjoiNmY3NzVjNThhMDYwNGM3MzgxZTIyZGVlMjAyMjRhOGEifQ.Wai50qqOiakAJVc4buX5LbNBbVeWudjv0tSo7NNfDu4"
+                "ip": "",
+                "token": ""
             },
             "friendly_name": "Home Assistant",
             "id": 1,
