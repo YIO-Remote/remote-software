@@ -36,7 +36,7 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COLORS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property int cornerRadius: 18
+    property int cornerRadius: 18 // radius of the buttons, defined here
 
     property bool darkMode: true
 
@@ -122,7 +122,12 @@ ApplicationWindow {
             integrationObj[i] = config.integration[i];
         }
 
-        return true;
+        // must be at least one integration for this to be successful
+        if (i != 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function loadEntities() {
@@ -147,8 +152,16 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        // change dark mode to the configured value
         darkMode = Qt.binding(function () { return config.settings.darkmode});
 
+        // load the hub integrations
+        if (loadHubIntegrations()) {
+            // if success, load the entities
+            loadEntities();
+        }
+
+        // set the language
         translateHandler.selectLanguage(language)
 
         // check for software update
@@ -157,16 +170,14 @@ ApplicationWindow {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SUPPORTED COMPONENTS
-    // Create a variable for the supported component. For example one variable for lights, one for blinds, etc.
-    // It is necessary to have a seperate variable for every entity type, otherwise when an event comes all entities and their component would be updated too.
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var supported_entities: ["light","blind"]
     property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString]
 
-    property var loaded_entities: []
-    property var loaded_entities_id: []
+    property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
+    property var loaded_entities_id: [] // holds the loaded entity ids
 
-    property var loaded_components: ({})
+    property var loaded_components: ({}) // holds the loaded component, for example it has the Main.qml file from lights
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES
@@ -179,10 +190,7 @@ ApplicationWindow {
     property real battery_time: (new Date()).getTime()
     property bool wasBatteryWarning: false
 
-    property bool favoriteAdded: false
-
     property string connectionState: "connecting"
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // WEBSOCKET SERVER
@@ -261,12 +269,6 @@ ApplicationWindow {
                              firstRun = false;
                              loader_main.visible = true;
                              connectionState = "connected";
-
-                             // when the main.qml file is loaded, load the hub integrations
-                             if (loadHubIntegrations()) {
-                                 // if success, load the entities
-                                 loadEntities();
-                             }
                          }
     }
 
@@ -339,6 +341,5 @@ ApplicationWindow {
     // CONNECTION SCREEN
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Visible when connecting, reconnecting to the integration
-    BasicUI.ConnectionScreen {
-    }
+    BasicUI.ConnectionScreen {}
 }

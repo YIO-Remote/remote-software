@@ -72,13 +72,13 @@ Item {
         jsonConfig.write(config);
     }
 
-    function addDeviceTypes(where) {
+    function addDeviceTypes() {
         for (var i=0; i<loaded_entities.length; i++) {
             menuConfig.append({"name": loaded_entities[i], "display_name": supported_entities_translation[loaded_entities_id[i]],"show": true});
         }
     }
 
-    function addAreas(where) {
+    function addAreas() {
         for (var i=0; i<config.areas.length; i++) {
             menuConfig.append({"name": "area", "display_name": config.areas[i].area,"show": true});
         }
