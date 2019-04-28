@@ -12,14 +12,18 @@ Item {
     }
 
     Timer {
-        running: mainNavigationSwipeview.currentIndex ==  2 + supported_entities.length ? true : false
+        id: timer
+        running: false
         repeat: true
-        interval: 2000
+        interval: 10000
+        triggeredOnStart: true
 
         onTriggered: {
             wifiSignalValue.text = settingsLauncher.launch("/usr/bin/remote/wifi_rssi.sh").trim();
         }
     }
+
+    Component.onCompleted: timer.start()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NETWORK

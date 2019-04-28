@@ -14,15 +14,19 @@ Item {
     }
 
     Timer {
-        running: mainNavigationSwipeview.currentIndex ==  2 + supported_entities.length ? true : false
+        id: timer
+        running: false
         repeat: true
-        interval: 2000
+        interval: 10000
+        triggeredOnStart: true
 
         onTriggered: {
             uptimeValue.text = settingsLauncher.launch("/usr/bin/remote/uptime.sh").trim();
             temperatureValue.text = parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp"))/1000 + "ºC";
         }
     }
+
+    Component.onCompleted: timer.start()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM

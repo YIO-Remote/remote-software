@@ -18,17 +18,6 @@ int main(int argc, char *argv[])
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-    
-    // LOADING FONTS
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Light.ttf"));
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Bold.ttf"));
-
-    // LOADING CUSTOM SCRIPT LAUNCHER AND JSON READER
-    qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
-    qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
-    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
-    
     QQmlApplicationEngine engine;
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
@@ -49,6 +38,16 @@ int main(int argc, char *argv[])
         configPath = "/mnt/boot";
     }
     engine.rootContext()->setContextProperty("configPath", configPath);
+
+    // LOADING FONTS
+    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Light.ttf"));
+    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Bold.ttf"));
+
+    // LOADING CUSTOM SCRIPT LAUNCHER AND JSON READER
+    qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
+    qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
+    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);

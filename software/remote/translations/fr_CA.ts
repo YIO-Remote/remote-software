@@ -25,6 +25,19 @@
     </message>
 </context>
 <context>
+    <name>Button</name>
+    <message>
+        <location filename="../components/light/Button.qml" line="405"/>
+        <source>Remove from favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../components/light/Button.qml" line="405"/>
+        <source>Add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChargingScreen</name>
     <message>
         <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
@@ -67,29 +80,42 @@
     </message>
 </context>
 <context>
+    <name>Devices</name>
+    <message>
+        <location filename="../basic_ui/settings/Devices.qml" line="17"/>
+        <source>Devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Devices.qml" line="38"/>
+        <source>Add new</source>
+        <translation type="unfinished">Add new</translation>
+    </message>
+</context>
+<context>
     <name>Display</name>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="15"/>
+        <location filename="../basic_ui/settings/Display.qml" line="17"/>
         <source>Display</source>
         <translation type="unfinished">Display</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="36"/>
+        <location filename="../basic_ui/settings/Display.qml" line="38"/>
         <source>Auto brightness</source>
         <translation type="unfinished">Auto brightness</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="163"/>
+        <location filename="../basic_ui/settings/Display.qml" line="164"/>
         <source>Dark mode</source>
         <translation type="unfinished">Dark mode</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="223"/>
+        <location filename="../basic_ui/settings/Display.qml" line="224"/>
         <source>Cleaning mode</source>
         <translation type="unfinished">Cleaning mode</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="238"/>
+        <location filename="../basic_ui/settings/Display.qml" line="239"/>
         <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
         <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
     </message>
@@ -110,7 +136,7 @@
 <context>
     <name>Languages</name>
     <message>
-        <location filename="../basic_ui/settings/Languages.qml" line="23"/>
+        <location filename="../basic_ui/settings/Languages.qml" line="25"/>
         <source>Languages</source>
         <translation type="unfinished">Languages</translation>
     </message>
@@ -118,19 +144,44 @@
 <context>
     <name>MainNavigation</name>
     <message>
-        <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
         <source>Dashboard</source>
-        <translation type="unfinished">Dashboard</translation>
+        <translation type="obsolete">Dashboard</translation>
     </message>
     <message>
-        <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
         <source>Rooms</source>
-        <translation type="unfinished">Rooms</translation>
+        <translation type="obsolete">Rooms</translation>
     </message>
     <message>
-        <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
         <source>Settings</source>
-        <translation type="unfinished">Settings</translation>
+        <translation type="obsolete">Settings</translation>
+    </message>
+</context>
+<context>
+    <name>Menu</name>
+    <message>
+        <location filename="../basic_ui/settings/Menu.qml" line="17"/>
+        <source>Display</source>
+        <translation type="unfinished">Display</translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Menu.qml" line="38"/>
+        <source>Auto brightness</source>
+        <translation type="unfinished">Auto brightness</translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Menu.qml" line="164"/>
+        <source>Dark mode</source>
+        <translation type="unfinished">Dark mode</translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Menu.qml" line="224"/>
+        <source>Cleaning mode</source>
+        <translation type="unfinished">Cleaning mode</translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Menu.qml" line="239"/>
+        <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
+        <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
     </message>
 </context>
 <context>
@@ -172,43 +223,43 @@
 <context>
     <name>PowerSaving</name>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="15"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
         <source>Power saving</source>
         <translation type="unfinished">Power saving</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Never turn off Wi-Fi</source>
         <translation type="unfinished">Never turn off Wi-Fi</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="37"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
         <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="109"/>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="216"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
         <source>Never</source>
         <translation type="unfinished">Never</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="122"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
         <source>60 minutes</source>
         <translation type="unfinished">60 minutes</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Never turn off the remote</source>
         <translation type="unfinished">Never turn off the remote</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="144"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Turn off the remote after %1 hours of inactivity</source>
         <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/PowerSaving.qml" line="229"/>
+        <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
         <source>8 hours</source>
         <translation type="unfinished">8 hours</translation>
     </message>
@@ -257,8 +308,13 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="153"/>
+        <location filename="../main.qml" line="155"/>
         <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="155"/>
+        <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

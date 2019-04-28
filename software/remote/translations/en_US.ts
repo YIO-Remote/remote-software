@@ -142,20 +142,30 @@
     </message>
 </context>
 <context>
-    <name>MainNavigation</name>
+    <name>Menu</name>
     <message>
-        <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
-        <source>Dashboard</source>
+        <location filename="../basic_ui/settings/Menu.qml" line="17"/>
+        <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
-        <source>Areas</source>
+        <location filename="../basic_ui/settings/Menu.qml" line="38"/>
+        <source>Auto brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
-        <source>Settings</source>
+        <location filename="../basic_ui/settings/Menu.qml" line="164"/>
+        <source>Dark mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Menu.qml" line="224"/>
+        <source>Cleaning mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Menu.qml" line="239"/>
+        <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -283,12 +293,12 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="158"/>
+        <location filename="../main.qml" line="155"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="158"/>
+        <location filename="../main.qml" line="155"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>

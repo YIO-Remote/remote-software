@@ -8,7 +8,7 @@
                     "favorite": false,
                     "friendly_name": "Backdoor lamp",
                     "integration": "homeassistant",
-                    "room": "Entrance",
+                    "area": "Entrance",
                     "state": "off",
                     "type": "light"
                 },
@@ -18,7 +18,7 @@
                     "favorite": false,
                     "friendly_name": "Entrance lamp",
                     "integration": "homeassistant",
-                    "room": "Entrance",
+                    "area": "Entrance",
                     "state": "off",
                     "type": "light"
                 },
@@ -28,7 +28,7 @@
                     "favorite": true,
                     "friendly_name": "Kitchen lamp",
                     "integration": "homeassistant",
-                    "room": "Kitchen",
+                    "area": "Kitchen",
                     "state": "off",
                     "type": "light"
                 },
@@ -38,7 +38,7 @@
                     "favorite": true,
                     "friendly_name": "Kitchen table lamp",
                     "integration": "homeassistant",
-                    "room": "Kitchen",
+                    "area": "Kitchen",
                     "state": "off",
                     "type": "light"
                 },
@@ -48,28 +48,28 @@
                     "favorite": false,
                     "friendly_name": "Kitchen sink lamp",
                     "integration": "homeassistant",
-                    "room": "Kitchen",
+                    "area": "Kitchen",
                     "state": "off",
                     "type": "light"
                 },
                 {
-                    "brightness": 26,
+                    "brightness": "0",
                     "entity_id": "light.living_room_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room lamp",
                     "integration": "homeassistant",
-                    "room": "Living room",
-                    "state": "on",
+                    "area": "Living room",
+                    "state": "off",
                     "type": "light"
                 },
                 {
-                    "brightness": 75,
+                    "brightness": "0",
                     "entity_id": "light.living_room_corner_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room corner lamp",
                     "integration": "homeassistant",
-                    "room": "Living room",
-                    "state": "on",
+                    "area": "Living room",
+                    "state": "off",
                     "type": "light"
                 },
                 {
@@ -78,7 +78,7 @@
                     "favorite": false,
                     "friendly_name": "Bedroom lamp",
                     "integration": "homeassistant",
-                    "room": "Bedroom",
+                    "area": "Bedroom",
                     "state": "off",
                     "type": "light"
                 }
@@ -93,7 +93,7 @@
                     "friendly_name": "Living room blinds",
                     "integration": "homeassistant",
                     "position": "",
-                    "room": "Living room",
+                    "area": "Living room",
                     "state": "",
                     "type": "blind"
                 },
@@ -103,7 +103,7 @@
                     "friendly_name": "Bedroom blinds",
                     "integration": "homeassistant",
                     "position": "",
-                    "room": "Bedroom",
+                    "area": "Bedroom",
                     "state": "",
                     "type": "blind"
                 }
@@ -114,8 +114,8 @@
     "integration": [
         {
             "data": {
-                "ip": "",
-                "token": ""
+                "ip": "homeassistant.facan.lan:8123",
+                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE4NTQwMjU5NjIsImlhdCI6MTUzODY2NTk2MiwiaXNzIjoiNmY3NzVjNThhMDYwNGM3MzgxZTIyZGVlMjAyMjRhOGEifQ.Wai50qqOiakAJVc4buX5LbNBbVeWudjv0tSo7NNfDu4"
             },
             "friendly_name": "Home Assistant",
             "id": 1,
@@ -130,28 +130,43 @@
         }
     ],
     "language": "en_US",
-    "rooms": [
+    "areas": [
         {
             "bluetooth": "xx:xx:xx:xx:xx",
-            "room": "Entrance"
+            "area": "Entrance"
         },
         {
             "bluetooth": "xx:xx:xx:xx:xx",
-            "room": "Kitchen"
+            "area": "Kitchen"
         },
         {
             "bluetooth": "xx:xx:xx:xx:xx",
-            "room": "Living room"
+            "area": "Living room"
         },
         {
             "bluetooth": "xx:xx:xx:xx:xx",
-            "room": "Bedroom"
+            "area": "Bedroom"
         }
     ],
     "settings": {
         "autobrightness": true,
         "darkmode": true,
         "shutdowntime": 7200,
-        "wifitime": 600
+        "wifitime": 600,
+        "menu": {
+            "showareas": true,
+            "showdevices": true,
+            "order": [
+            {
+            "name": "favorites",
+            "display_name": "Favorites",
+            "show": true        
+            },
+            {
+            "name": "settings",
+            "display_name": "Settings",
+            "show": true
+            }
+        ]}
     }
 }

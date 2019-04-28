@@ -12,8 +12,7 @@
         <file>basic_ui/CustomButton.qml</file>
         <file>MainContainer.qml</file>
         <file>basic_ui/StatusBar.qml</file>
-        <file>basic_ui/main_navigation/MainNavigation.qml</file>
-        <file>basic_ui/main_navigation/NavigationButton.qml</file>
+        <file>basic_ui/MainNavigation.qml</file>
         <file>components/light/Main.qml</file>
         <file>components/light/homeassistant.qml</file>
         <file>components/light/Button.qml</file>
@@ -32,5 +31,10 @@
         <file>basic_ui/settings/System.qml</file>
         <file>basic_ui/settings/Hubs.qml</file>
         <file>basic_ui/settings/Devices.qml</file>
+        <file>basic_ui/pages/dashboard.qml</file>
+        <file>basic_ui/pages/device.qml</file>
+        <file>basic_ui/pages/settings.qml</file>
+        <file>basic_ui/pages/area.qml</file>
+        <file>components/light/Card.qml</file>
     </qresource>
 </RCC>

@@ -16,7 +16,7 @@ Item {
         target: integration.homeassistant
         onSendFetchJson: {
             // Process fetched json here. This only has to be one time after connecting to the hub
-//            var tmp = entities_light;
+            //            var tmp = entities_light;
 
             var tmp = loaded_components.light.entities;
 
@@ -33,6 +33,8 @@ Item {
                         }
 
                         tmp[k].friendly_name = json.result[i].attributes.friendly_name;
+
+                        tmp[k].supported_features = json.result[i].attributes.supported_features;
                     }
                 }
             }
@@ -85,5 +87,27 @@ Item {
 
     function turnOff(entity_id) {
         integration.homeassistant.webSocketSendCommand("light","turn_off",entity_id);
+    }
+
+    function decodeSupportedFeatures(features) {
+        //        SUPPORT_BRIGHTNESS = 1
+        //        SUPPORT_COLOR_TEMP = 2
+        //        SUPPORT_EFFECT = 4
+        //        SUPPORT_FLASH = 8
+        //        SUPPORT_COLOR = 16
+        //        SUPPORT_TRANSITION = 32
+        //        SUPPORT_WHITE_VALUE = 128
+
+        switch (features) {
+        case 0:
+            console.debug("just a switch")
+            break;
+        case 33:
+            console.debug("dimmable");
+            break;
+        case 49:
+            console.debug("dimmable RGB");
+            break;
+        }
     }
 }
