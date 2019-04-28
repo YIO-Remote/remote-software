@@ -112,11 +112,8 @@ ApplicationWindow {
         name: configPath + "/config.json"
     }
 
-    Component.onCompleted: {
-        darkMode = Qt.binding(function () { return config.settings.darkmode});
-
+    function loadHubIntegrations() {
         var comp;
-        var obj;
 
         // load the hub integrations
         for (var i=0; i<config.integration.length; i++) {
@@ -125,10 +122,17 @@ ApplicationWindow {
             integrationObj[i] = config.integration[i];
         }
 
+        return true;
+    }
+
+    function loadEntities() {
+        var comp;
+        var obj;
+
         // load the entities from the config file that are supported
         for (var i=0; i<config.entities.length; i++) {
             for (var k=0; k<supported_entities.length; k++) {
-                if (supported_entities[k] == config.entities[i].type) {
+                if (supported_entities[k] === config.entities[i].type) {
                     // load the supported component
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
                     loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
@@ -140,6 +144,11 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        darkMode = Qt.binding(function () { return config.settings.darkmode});
+
         translateHandler.selectLanguage(language)
 
         // check for software update
@@ -252,6 +261,12 @@ ApplicationWindow {
                              firstRun = false;
                              loader_main.visible = true;
                              connectionState = "connected";
+
+                             // when the main.qml file is loaded, load the hub integrations
+                             if (loadHubIntegrations()) {
+                                 // if success, load the entities
+                                 loadEntities();
+                             }
                          }
     }
 

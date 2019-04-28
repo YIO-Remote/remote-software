@@ -70,7 +70,7 @@ Item {
 
             // figure out which page type to load
             function determinePageToLoad(name) {
-                if (name === "dashboard") {
+                if (name === "favorites") {
                     pageLoader.source = "qrc:/basic_ui/pages/Dashboard.qml";
                 } else if (name === "area") {
                    pageLoader.setSource("qrc:/basic_ui/pages/Area.qml", { "area": display_name });
