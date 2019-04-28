@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/chargingscreen/icon-battery-lightning.png</file>
+        <file>images/popuplowbattery/icon-lowbattery.png</file>
+        <file>images/loading/icon-loading-ok.png</file>
+        <file>images/loading/icon-loading-x.png</file>
+        <file>images/loading/icon-loading.png</file>
+        <file>images/navigation/icon-rooms.png</file>
+        <file>images/navigation/icon-dashboard.png</file>
+        <file>images/navigation/icon-blind.png</file>
+        <file>images/navigation/icon-light.png</file>
+        <file>components/light/images/icon-light.png</file>
+        <file>images/navigation/icon-settings.png</file>
+        <file>images/components/fav-minus.png</file>
+        <file>images/components/fav-plus.png</file>
+    </qresource>
+</RCC>
