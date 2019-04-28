@@ -27,12 +27,12 @@
   <context>
     <name>Button</name>
     <message>
-      <location filename="../components/light/Button.qml" line="405"/>
+      <location filename="../components/light/Button.qml" line="410"/>
       <source>Remove from favorites</source>
       <translation type="unfinished">Remove from favorites</translation>
     </message>
     <message>
-      <location filename="../components/light/Button.qml" line="405"/>
+      <location filename="../components/light/Button.qml" line="410"/>
       <source>Add to favorites</source>
       <translation type="unfinished">Add to favorites</translation>
     </message>
@@ -142,42 +142,52 @@
     </message>
   </context>
   <context>
-    <name>MainNavigation</name>
+    <name>Menu</name>
     <message>
-      <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="65"/>
-      <source>Dashboard</source>
-      <translation>Tableau de bord</translation>
+      <location filename="../basic_ui/settings/Menu.qml" line="17"/>
+      <source>Display</source>
+      <translation type="unfinished">Display</translation>
     </message>
     <message>
-      <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="74"/>
-      <source>Areas</source>
-      <translation type="unfinished">Areas</translation>
+      <location filename="../basic_ui/settings/Menu.qml" line="38"/>
+      <source>Auto brightness</source>
+      <translation type="unfinished">Auto brightness</translation>
     </message>
     <message>
-      <location filename="../basic_ui/main_navigation/MainNavigation.qml" line="95"/>
-      <source>Settings</source>
-      <translation>Réglages</translation>
+      <location filename="../basic_ui/settings/Menu.qml" line="164"/>
+      <source>Dark mode</source>
+      <translation type="unfinished">Dark mode</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Menu.qml" line="224"/>
+      <source>Cleaning mode</source>
+      <translation type="unfinished">Cleaning mode</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Menu.qml" line="239"/>
+      <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
+      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
     </message>
   </context>
   <context>
     <name>Network</name>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="30"/>
+      <location filename="../basic_ui/settings/Network.qml" line="34"/>
       <source>Network</source>
       <translation type="unfinished">Network</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="51"/>
+      <location filename="../basic_ui/settings/Network.qml" line="55"/>
       <source>Wi-Fi signal strength</source>
       <translation type="unfinished">Wi-Fi signal strength</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="88"/>
+      <location filename="../basic_ui/settings/Network.qml" line="92"/>
       <source>IP address</source>
       <translation type="unfinished">IP address</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="124"/>
+      <location filename="../basic_ui/settings/Network.qml" line="128"/>
       <source>MAC address</source>
       <translation type="unfinished">MAC address</translation>
     </message>
@@ -255,27 +265,27 @@
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="33"/>
+      <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
       <translation type="unfinished">System</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="54"/>
+      <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
       <translation type="unfinished">Uptime</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="91"/>
+      <location filename="../basic_ui/settings/System.qml" line="95"/>
       <source>CPU temperature</source>
       <translation type="unfinished">CPU temperature</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="127"/>
+      <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Reboot</source>
       <translation type="unfinished">Reboot</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="142"/>
+      <location filename="../basic_ui/settings/System.qml" line="146"/>
       <source>Shutdown</source>
       <translation type="unfinished">Shutdown</translation>
     </message>
@@ -283,12 +293,12 @@
   <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="158"/>
+      <location filename="../main.qml" line="178"/>
       <source>Lights</source>
       <translation type="unfinished">Lights</translation>
     </message>
     <message>
-      <location filename="../main.qml" line="158"/>
+      <location filename="../main.qml" line="178"/>
       <source>Blinds</source>
       <translation type="unfinished">Blinds</translation>
     </message>
