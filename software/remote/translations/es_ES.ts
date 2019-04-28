@@ -66,7 +66,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
       <source>Try again</source>
-      <translation>Inténtalo de nuevo</translation>
+      <translation>Vuelva a intentarlo</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
@@ -117,7 +117,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="239"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Toque la pantalla durante 10 segundos desactivar el modo de limpieza.</translation>
+      <translation>Toque la pantalla durante 10 segundos para desactivar el modo de limpieza.</translation>
     </message>
   </context>
   <context>
@@ -146,22 +146,22 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoritos</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Ajustes</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persianas</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Luces</translation>
     </message>
   </context>
   <context>
@@ -197,7 +197,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation>Por favor, cargue el control remoto</translation>
+      <translation>Por favor, cargue el mando</translation>
     </message>
   </context>
   <context>
@@ -249,17 +249,17 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Actualización de software</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
-      <source>Keep the remote updated</source>
-      <translation type="unfinished">Keep the remote updated</translation>
+      <source>auto update</source>
+      <translation type="unfinished">auto update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
-      <source>Automatically look for updates and update when a new software version is available.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
+      <source>Automatically look for updates and install it when available.</source>
+      <translation type="unfinished">Automatically look for updates and install it when available.</translation>
     </message>
   </context>
   <context>
@@ -267,7 +267,7 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation>Nueva versión de software está disponible.</translation>
+      <translation>Nueva versión de software disponible.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
