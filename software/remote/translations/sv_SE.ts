@@ -27,12 +27,14 @@
 <context>
     <name>Button</name>
     <message>
-        <source>Remove from favorits</source>
-        <translation type="obsolete">Remove from favorits</translation>
+      <location filename="../components/light/Button.qml" line="405"/>
+      <source>Remove from favorites</source>
+      <translation>Ta bort från Favoriter</translation>
     </message>
     <message>
-        <source>Add to favorits</source>
-        <translation type="obsolete">Add to favorits</translation>
+      <location filename="../components/light/Button.qml" line="405"/>
+      <source>Add to favorites</source>
+      <translation>Lägg till i favoriter</translation>
     </message>
     <message>
         <location filename="../components/light/Button.qml" line="405"/>
