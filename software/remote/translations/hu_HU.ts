@@ -253,13 +253,13 @@
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
-      <source>Keep the remote updated</source>
-      <translation>Automatikus frissítés</translation>
+      <source>auto update</source>
+      <translation type="unfinished">auto update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
-      <source>Automatically look for updates and update when a new software version is available.</source>
-      <translation>Automatikusan frissít, amikor új software verzió elérhető.</translation>
+      <source>Automatically look for updates and install it when available.</source>
+      <translation type="unfinished">Automatically look for updates and install it when available.</translation>
     </message>
   </context>
   <context>
