@@ -165,34 +165,6 @@
     </message>
   </context>
   <context>
-    <name>Menu</name>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="17"/>
-      <source>Display</source>
-      <translation>Skærm</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="38"/>
-      <source>Auto brightness</source>
-      <translation>Automatisk lysstyrke</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="164"/>
-      <source>Dark mode</source>
-      <translation>Mørk tilstand</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="224"/>
-      <source>Cleaning mode</source>
-      <translation>Rengøringstilstand</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Menu.qml" line="239"/>
-      <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Tryk på skærmen i 10 sekunder for at deaktivere rengøringstilstand.</translation>
-    </message>
-  </context>
-  <context>
     <name>Network</name>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="34"/>
@@ -273,6 +245,24 @@
     </message>
   </context>
   <context>
+    <name>Softwareupdate</name>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
+      <source>Software update</source>
+      <translation type="unfinished">Software update</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
+      <source>Keep the remote updated</source>
+      <translation type="unfinished">Keep the remote updated</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
+      <source>Automatically look for updates and update when a new software version is available.</source>
+      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
+    </message>
+  </context>
+  <context>
     <name>StatusBar</name>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
@@ -316,12 +306,12 @@
   <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="178"/>
+      <location filename="../main.qml" line="184"/>
       <source>Lights</source>
       <translation>Lys</translation>
     </message>
     <message>
-      <location filename="../main.qml" line="178"/>
+      <location filename="../main.qml" line="184"/>
       <source>Blinds</source>
       <translation>Rullegardiner</translation>
     </message>
