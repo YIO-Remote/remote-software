@@ -146,22 +146,22 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoriten</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Einstellungen</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Rolläden</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lampen</translation>
     </message>
   </context>
   <context>
@@ -169,7 +169,7 @@
     <message>
       <location filename="../basic_ui/settings/Menu.qml" line="17"/>
       <source>Display</source>
-      <translation>Bildschirm</translation>
+      <translation>Anzeige</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Menu.qml" line="38"/>

@@ -161,7 +161,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Világítás</translation>
     </message>
   </context>
   <context>
