@@ -3,7 +3,6 @@
 #--------------------
 # YIO updater script
 #--------------------
-if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root (probably not a good idea to run this script yourself)." 1>&2
    exit 1
 fi
