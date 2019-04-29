@@ -3,7 +3,6 @@
 #--------------------
 # YIO updater script
 #--------------------
-   exit 1
 fi
 
 if [ -z $1 ]; then
