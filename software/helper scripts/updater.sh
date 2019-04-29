@@ -3,22 +3,10 @@
 #--------------------
 # YIO updater script
 #--------------------
-
 if [ -z $1 ]; then
     echo "This script requires the URL to download (probably not a good idea to run this script yourself)."
     exit 1
 fi
-
-
-#--------------------
-# note: Since OSX 10.11, Apple reinforces System Integrity Protection and locks down:
-# - /System
-# - /sbin
-# - /usr (with the exception of /usr/local subdirectory)
-#
-# Since the developers of the yio-remote use macs, i adopted this script to work with the /usr/local/yio-remote target path.
-# That is also why we require root access
-#--------------------
 
 
 #--------------------
@@ -70,7 +58,7 @@ sleep 2
 
 
 #--------------------
-# 8. Rename the update folder to /usr/local/yio-remote
+# 8. Rename the update folder to /usr/bin/yio-remote
 #--------------------
 mv "${tmpdir}" "/usr/bin/yio-remote"
 
@@ -78,4 +66,4 @@ mv "${tmpdir}" "/usr/bin/yio-remote"
 #--------------------
 # 9. Launch the remote app with the launcher bash script
 #--------------------
-/usr/local/yio-remote/app-launch.sh &
+/usr/bin/yio-remote/app-launch.sh &
