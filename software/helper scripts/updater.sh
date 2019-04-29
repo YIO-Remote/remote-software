@@ -3,7 +3,6 @@
 #--------------------
 # YIO updater script
 #--------------------
-fi
 
 if [ -z $1 ]; then
     echo "This script requires the URL to download (probably not a good idea to run this script yourself)."
