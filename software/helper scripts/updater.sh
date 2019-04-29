@@ -24,7 +24,7 @@ fi
 #--------------------
 # TODO: Rework based on path?
 #--------------------
-fbv -d 1 /usr/local/yio-remote/update.png
+fbv -d 1 /usr/bin/yio-remote/update.png
 
 
 #--------------------
