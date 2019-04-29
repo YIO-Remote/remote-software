@@ -51,7 +51,7 @@ chmod +x ${tmpdir}/remote
 #--------------------
 # 4. Remove previous backups (should not be needed, unless this scripts fails somewhere, therefore not yet implemented)
 #--------------------
-rm -rf "/usr/local/yio-remote-backup"
+rm -rf "/usr/bin/yio-remote-backup"
 
 
 #--------------------
