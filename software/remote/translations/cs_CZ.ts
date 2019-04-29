@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="410"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Odebrat z oblíbených</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="410"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Přidat k oblíbeným</translation>
     </message>
   </context>
   <context>
@@ -146,22 +146,22 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Oblíbené</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Nastavení</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Žaluzie</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Světla</translation>
     </message>
   </context>
   <context>
@@ -249,17 +249,17 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Aktualizace softwaru</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
       <source>auto update</source>
-      <translation type="unfinished">auto update</translation>
+      <translation>automatický update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
       <source>Automatically look for updates and install it when available.</source>
-      <translation type="unfinished">Automatically look for updates and install it when available.</translation>
+      <translation>Automaticky vyhledávat a instalovat aktualizace.</translation>
     </message>
   </context>
   <context>
