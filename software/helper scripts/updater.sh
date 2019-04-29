@@ -72,7 +72,7 @@ sleep 2
 #--------------------
 # 8. Rename the update folder to /usr/local/yio-remote
 #--------------------
-mv "${tmpdir}" "/usr/local/yio-remote"
+mv "${tmpdir}" "/usr/bin/yio-remote"
 
 
 #--------------------
