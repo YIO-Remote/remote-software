@@ -2,7 +2,7 @@
 
 #####################################################################################################################
 ###
-### Wakes up and puts the display to sleep, as well as handling gesture volume control and wifi-standby
+### Handling proximity detection, ambient light detection and touch detection
 ###
 #####################################################################################################################
 
