@@ -31,7 +31,7 @@ fbv -d 1 /usr/bin/yio-remote/update.png
 # 1. Create temp location
 #    - Download file and pipe to tar to unzip to temp location
 #--------------------
-tmpdir="/usr/local/yio-$(date +"%Y%m%d%H%M%S")"
+tmpdir="/usr/bin/yio-$(date +"%Y%m%d%H%M%S")"
 mkdir -p "${tmpdir}"
 
 
