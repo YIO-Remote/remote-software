@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
-    QString macPath = QFileInfo(appPath + "/../../").canonicalPath();
+    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + QString("/Contents/Resources");
 
     // In case the translation file does not exist at root level (which is copied via the .pro file)
     // we are probably running on a mac, which gives a different result for the applicationDirPath
