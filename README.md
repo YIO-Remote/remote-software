@@ -86,7 +86,7 @@ Currently available Languages are (marked when 100% done only):
 - [ ] 🇸🇰 Slovak
 - [ ] 🇸🇮 Slovenian
 - [x] 🇪🇸 Spanish
-- [ ] 🇸🇪 Swedish
+- [x] 🇸🇪 Swedish
 
 You would like to add other languages? 
 
