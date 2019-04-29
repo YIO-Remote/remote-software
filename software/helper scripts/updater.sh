@@ -57,7 +57,7 @@ rm -rf "/usr/bin/yio-remote-backup"
 #--------------------
 # 5. Make a backup of the /usr/bin/remote folder (if not already exist, maybe add timestamp to folder)
 #--------------------
-mv "/usr/local/yio-remote" "/usr/local/yio-remote-backup"
+mv "/usr/bin/yio-remote" "/usr/bin/yio-remote-backup"
 
 
 #--------------------
