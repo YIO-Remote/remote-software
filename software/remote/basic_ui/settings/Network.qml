@@ -42,7 +42,7 @@ Item {
     Rectangle {
         id: section
         width: parent.width
-        height: 235
+        height: childrenRect.height + 40
         radius: cornerRadius
         color: colorMedium
 

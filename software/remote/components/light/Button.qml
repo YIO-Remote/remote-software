@@ -445,7 +445,7 @@ Rectangle {
         height: lightButton.height
         asynchronous: true
         active: lightButton.state == "open"
-        source: lightButton.state != "open" ? "" : "qrc:/components/light/Card.qml"
+        source: lightButton.state != "open" ? "" : "qrc:/components/light/CardDimmable.qml"
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {

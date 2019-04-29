@@ -25,7 +25,7 @@ Item {
     Rectangle {
         id: section
         width: parent.width
-        height: softwareUpdateText.height + smallText.height + 60
+        height: childrenRect.height + 40 //softwareUpdateText.height + smallText.height + 60
         radius: cornerRadius
         color: colorMedium
 
@@ -35,7 +35,7 @@ Item {
         Text {
             id: softwareUpdateText
             color: colorText
-            text: qsTr("Keep the remote updated") + translateHandler.emptyString
+            text: qsTr("Auto update") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top

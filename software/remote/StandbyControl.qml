@@ -19,6 +19,9 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
+    property double startTime: new Date().getTime()
+    property double screenUsage: 0
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY CONTROL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,11 +148,15 @@ Item {
         if (mode == "on") {
             var cmd = "echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
             mainLauncher.launch(cmd);
+            startTime = new Date().getTime()
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
             cmd = "echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
             mainLauncher.launch(cmd);
+            // add screen on time
+            screenUsage += new Date().getTime() - startTime
+            console.debug("Screen on time: " + screenUsage/1000 + "ms")
         }
     }
 
