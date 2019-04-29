@@ -27,12 +27,12 @@
   <context>
     <name>Button</name>
     <message>
-      <location filename="../components/light/Button.qml" line="410"/>
+      <location filename="../components/light/Button.qml" line="423"/>
       <source>Remove from favorites</source>
       <translation>Eltávolítás a kedvencekből</translation>
     </message>
     <message>
-      <location filename="../components/light/Button.qml" line="410"/>
+      <location filename="../components/light/Button.qml" line="423"/>
       <source>Add to favorites</source>
       <translation>Hozzáadás a kedvencekhez</translation>
     </message>
@@ -253,13 +253,13 @@
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
-      <source>auto update</source>
-      <translation type="unfinished">auto update</translation>
+      <source>Auto update</source>
+      <translation type="unfinished">Auto update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
-      <source>Automatically look for updates and install it when available.</source>
-      <translation type="unfinished">Automatically look for updates and install it when available.</translation>
+      <source>Automatically look for updates and update when a new software version is available.</source>
+      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
     </message>
   </context>
   <context>
