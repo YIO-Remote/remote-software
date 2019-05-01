@@ -10,8 +10,8 @@
 void DisplayControl::setup(void)
 {
     qDebug() << "spi screen setup function called";
-    //    wiringPiSetup () ;
-    //    mcp23017Setup (100, 0x20);
+        wiringPiSetup () ;
+        mcp23017Setup (100, 0x20);
 }
 
 void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1)

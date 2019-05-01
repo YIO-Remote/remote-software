@@ -3,10 +3,10 @@
 
 #include <QObject>
 
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <wiringPi.h>
-//#include <mcp23017.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <wiringPi.h>
+#include <mcp23017.h>
 
 class DisplayControl : public QObject
 {

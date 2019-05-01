@@ -71,12 +71,19 @@ TRANSLATIONS = translations/bg_BG.ts \
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 #QML_DESIGNER_IMPORT_PATH =
 
+# Wiringpi config
+INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
+
+LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+LIBS += -lwiringPi
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 #DISTFILES +=
+
 
 win32 {
 # Copy config file to output directory
