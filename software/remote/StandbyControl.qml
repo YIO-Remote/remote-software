@@ -193,9 +193,10 @@ Item {
                 // turn off gesture detection
                 socketServer.clientId.sendTextMessage("gesture off");
                 socketServer.clientId.sendTextMessage("proximity detect on");
+                // turn off the backlight
+                display_brightness = 0;
                 // put display to standby
                 displayControl.setmode("standbyon");
-                display_brightness = 0;
                 mode = "standby";
             }
         }
