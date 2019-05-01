@@ -18,6 +18,9 @@ software/remote app/remote/images/.DS_Store
 software/remote app/build-*
 software/remote app/remote/translations/.DS_Store
 
+# Linux build files
+software/build-*
+
 #Translation files
 software/remote/translations/*
 !software/remote/translations/en_US.ts
