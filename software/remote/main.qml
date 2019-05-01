@@ -1,7 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtWebSockets 1.0
-import Qt.labs.folderlistmodel 2.2
 
 import Launcher 1.0
 import JsonFile 1.0
