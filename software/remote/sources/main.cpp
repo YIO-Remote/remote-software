@@ -10,7 +10,6 @@
 #include "display_control.h"
 #include "translation.h"
 
-
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -47,7 +46,7 @@ int main(int argc, char *argv[])
     // LOADING CUSTOM SCRIPT LAUNCHER AND JSON READER
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
-    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
+    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");         
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);
