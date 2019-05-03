@@ -16,13 +16,15 @@ HEADERS += \
     sources/launcher.h \
     sources/display_control.h \
     sources/translation.h \
-    sources/touchdetect.h
+    sources/touchdetect.h \
+    sources/apds9960.h
 
 SOURCES += \
         sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
-    sources/display_control.cpp
+    sources/display_control.cpp \
+    sources/apds9960.cpp
 
 RESOURCES += qml.qrc \
     images.qrc \
