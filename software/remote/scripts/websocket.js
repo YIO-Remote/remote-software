@@ -47,10 +47,6 @@ function parseWSServerMessage (message) {
         standbyControl.proximityDetected = true;
         break;
 
-    case "touchDetected":
-        standbyControl.touchDetected = true;
-        break;
-
     case "buttonPressDetected":
         standbyControl.buttonPressDetected = true;
         break;

@@ -15,7 +15,8 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/display_control.h \
-    sources/translation.h
+    sources/translation.h \
+    sources/touchdetect.h
 
 SOURCES += \
         sources/main.cpp \
