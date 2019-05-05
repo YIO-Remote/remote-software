@@ -21,14 +21,16 @@ HEADERS += \
     sources/bq27441.h \
     sources/proximity_gesture_control.h \
     sources/interrupt_handler.h \
-    sources/mcp23017.h
+    sources/mcp23017.h \
+    sources/drv2605.h
 
 SOURCES += \
         sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
     sources/display_control.cpp \
-    sources/apds9960.cpp
+    sources/apds9960.cpp \
+    sources/drv2605.cpp
 
 RESOURCES += qml.qrc \
     images.qrc \

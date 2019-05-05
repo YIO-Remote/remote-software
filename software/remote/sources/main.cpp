@@ -11,6 +11,7 @@
 #include "translation.h"
 #include "touchdetect.h"
 #include "interrupt_handler.h"
+#include "drv2605.h"
 
 int main(int argc, char *argv[])
 {
@@ -51,6 +52,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
     qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
     qmlRegisterType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler");
+    qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);
