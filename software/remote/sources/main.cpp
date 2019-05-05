@@ -10,33 +10,10 @@
 #include "display_control.h"
 #include "translation.h"
 #include "touchdetect.h"
+#include "interrupt_handler.h"
 
 int main(int argc, char *argv[])
 {
-//    uint16_t ambient_light = 0;
-
-//    APDS9960 apds = APDS9960();
-
-//    qDebug() << endl;
-//    qDebug() << "------------------------------------" << endl;
-//    qDebug() << "APDS-9960 - ColorSensor  " << endl;
-//    qDebug() << "------------------------------------" << endl;
-
-//    // Initialize APDS-9960 (configure I2C and initial values)
-//    if ( (false == apds.init()) || (false == apds.enableLightSensor(false)) )
-//    {
-//        qDebug() << "APDS-9960 init failed!" << endl;
-//    }
-
-//    delay(500);
-
-//    if ( !apds.readAmbientLight(ambient_light)) {
-//        qDebug() << "Error reading light values" << endl;
-//    } else {
-//        qDebug() << "Ambient: ";
-//        qDebug() << int(ambient_light);
-//    }
-
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -73,6 +50,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
     qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
     qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
+    qmlRegisterType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler");
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);

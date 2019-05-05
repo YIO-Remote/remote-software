@@ -22,6 +22,8 @@ class DisplayControl : public QObject
 public:
     Q_INVOKABLE void setmode(const QString &mode);
 
+    DisplayControl();
+
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
     void setup(void);
 

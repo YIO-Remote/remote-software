@@ -279,6 +279,10 @@ public:
     bool isGestureAvailable();
     int readGesture();
 
+    /* LED Boost Control */
+    uint8_t getLEDBoost();
+    bool setLEDBoost(uint8_t boost);
+
 private:
 
     /* Gesture processing */
@@ -291,10 +295,6 @@ private:
     bool setProxIntLowThresh(uint8_t threshold);
     uint8_t getProxIntHighThresh();
     bool setProxIntHighThresh(uint8_t threshold);
-
-    /* LED Boost Control */
-    uint8_t getLEDBoost();
-    bool setLEDBoost(uint8_t boost);
 
     /* Proximity photodiode select */
     uint8_t getProxGainCompEnable();

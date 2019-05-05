@@ -17,7 +17,11 @@ HEADERS += \
     sources/display_control.h \
     sources/translation.h \
     sources/touchdetect.h \
-    sources/apds9960.h
+    sources/apds9960.h \
+    sources/bq27441.h \
+    sources/proximity_gesture_control.h \
+    sources/interrupt_handler.h \
+    sources/mcp23017.h
 
 SOURCES += \
         sources/main.cpp \

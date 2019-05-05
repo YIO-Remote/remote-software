@@ -7,16 +7,21 @@
 #define CS 105 // GPIO 6
 #define RST 104 // GPIO 4
 
+DisplayControl::DisplayControl()
+{
+    setup();
+}
+
 void DisplayControl::setup(void)
 {
-    qDebug() << "spi screen setup function called";
+//    qDebug() << "spi screen setup function called";
     wiringPiSetup () ;
     mcp23017Setup (100, 0x20);
 }
 
 void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1)
 {
-    qDebug() << "spi screenreg function called";
+//    qDebug() << "spi screenreg function called";
     int32_t i;
     int32_t control_bit;
 
@@ -110,14 +115,12 @@ void DisplayControl::setmode(const QString &mode)
 {
     if (mode == "standbyon") {
         qDebug() << "spi standby on function called";
-        setup();
         spi_screenreg_set(0x10, 0xffff, 0xffff);
         delay(120);
         spi_screenreg_set(0x28, 0xffff, 0xffff);
     }
     if (mode == "standbyoff") {
         qDebug() << "spi standby off function called";
-        setup();
         spi_screenreg_set(0x29, 0xffff, 0xffff);
         spi_screenreg_set(0x11, 0xffff, 0xffff);
     }
