@@ -1,4 +1,4 @@
-#include <QtDebug>
+//#include <QtDebug>
 
 #include "display_control.h"
 
@@ -114,13 +114,13 @@ void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data
 void DisplayControl::setmode(const QString &mode)
 {
     if (mode == "standbyon") {
-        qDebug() << "spi standby on function called";
+//        qDebug() << "spi standby on function called";
         spi_screenreg_set(0x10, 0xffff, 0xffff);
         delay(120);
         spi_screenreg_set(0x28, 0xffff, 0xffff);
     }
     if (mode == "standbyoff") {
-        qDebug() << "spi standby off function called";
+//        qDebug() << "spi standby off function called";
         spi_screenreg_set(0x29, 0xffff, 0xffff);
         spi_screenreg_set(0x11, 0xffff, 0xffff);
     }

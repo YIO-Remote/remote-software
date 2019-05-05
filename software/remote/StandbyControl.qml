@@ -3,6 +3,7 @@ import DisplayControl 1.0
 import TouchEventFilter 1.0
 
 Item {
+    id: standbyControl
     property bool proximityDetected: false
     property bool touchDetected: false
     property bool buttonPressDetected: false
@@ -10,13 +11,13 @@ Item {
     property string mode: "on" // on, dim, standby, wifi_off
 
     property int displayDimTime: 20 // seconds
-    property int standbyTime: 30 // seconds
+    property int standbyTime: 40 // seconds
     property int wifiOffTime // seconds
     property int shutdownTime // seconds
 
     property int display_brightness: 100
     property int display_brightness_old: 100
-    property bool display_autobrightness: true
+    property bool display_autobrightness
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
@@ -59,37 +60,82 @@ Item {
 
     // change the display brightness
     onDisplay_brightnessChanged: {
-        var cmd = "/usr/bin/remote/display_brightness.sh " + display_brightness_old + " " + display_brightness;
+        var cmd = "/usr/bin/yio-remote/display_brightness.sh " + standbyControl.display_brightness_old + " " + standbyControl.display_brightness;
         mainLauncher.launch(cmd);
-        display_brightness_old = display_brightness;
+        standbyControl.display_brightness_old = standbyControl.display_brightness;
+    }
+
+    function wakeUp() {
+        switch (mode) {
+        case "dim":
+            // set the display brightness
+            if (standbyControl.display_autobrightness) {
+                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+            } else {
+                standbyControl.display_brightness = standbyControl.display_brightness_set;
+            }
+
+            // set the mode
+            mode = "on";
+
+            // reset timers
+            displayDimTimer.restart();
+            standbyTimer.stop();
+            wifiOffTimer.restart();
+            shutdownTimer.restart();
+            break;
+
+        case "standby":
+            // turn off standby
+            displayControl.setmode("standbyoff");
+
+            if (standbyControl.display_autobrightness) {
+                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+            } else {
+                standbyControl.display_brightness = standbyControl.display_brightness_set;
+            }
+
+            // set the mode
+            mode = "on";
+
+            // reset timers
+            displayDimTimer.restart();
+            standbyTimer.stop();
+            wifiOffTimer.restart();
+            shutdownTimer.restart();
+            break;
+
+        case "wifi_off":
+            wifiHandler("on")
+            // integration socket on
+            for (var i=0; i<config.integration.length; i++) {
+                integration[config.integration[i].type].connectionOpen = true;
+            }
+            // turn off standby
+            displayControl.setmode("standbyoff");
+
+            if (standbyControl.display_autobrightness) {
+                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+            } else {
+                standbyControl.display_brightness = standbyControl.display_brightness_set;
+            }
+
+            // set the mode
+            mode = "on";
+
+            // reset timers
+            displayDimTimer.restart();
+            standbyTimer.stop();
+            wifiOffTimer.restart();
+            shutdownTimer.restart();
+            break;
+        }
     }
 
     onTouchDetectedChanged: {
         // if there was a touch event, reset the timers
         if (touchDetected) {
-            // if mode standby then turn on the display
-            if (mode == "standby") {
-                displayControl.setmode("standbyoff");
-            }
-            // if mode wifi_off then turn on wifi and display
-            if (mode == "wifi_off") {
-                wifiHandler("on")
-                // integration socket on
-                for (var i=0; i<config.integration.length; i++) {
-                    integration[config.integration[i].type].connectionOpen = true;
-                }
-            }
-            // set the display brightness
-            if (display_autobrightness) {
-                display_brightness = display_brightness_ambient;
-            } else {
-                display_brightness = display_brightness_set;
-            }
-            mode = "on";
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            wifiOffTimer.restart();
-            shutdownTimer.restart();
+            wakeUp();
             touchDetected = false;
         }
     }
@@ -97,30 +143,7 @@ Item {
     onProximityDetectedChanged: {
         // if there was a proximity event, reset the timers
         if (proximityDetected) {
-            // if mode standby then turn on the display
-            if (mode == "standby") {
-                displayControl.setmode("standbyoff");
-            }
-
-            // if mode wifi_off then turn on wifi and display
-            if (mode == "wifi_off") {
-                wifiHandler("on")
-                // integration socket on
-                for (var i=0; i<config.integration.length; i++) {
-                    integration[config.integration[i].type].connectionOpen = true;
-                }
-            }
-            // set the display brightness
-            if (display_autobrightness) {
-                display_brightness = display_brightness_ambient;
-            } else {
-                display_brightness = display_brightness_set;
-            }
-            mode = "on";
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            wifiOffTimer.restart();
-            shutdownTimer.restart();
+            wakeUp();
             proximityDetected = false;
         }
     }
@@ -128,31 +151,7 @@ Item {
     onButtonPressDetectedChanged: {
         // if there was a button press event, reset the timers
         if (buttonPressDetected) {
-            // if mode standby then turn on the display
-            if (mode == "standby") {
-                displayControl.setmode("standbyoff");
-            }
-
-            // if mode wifi_off then turn on wifi and display
-            if (mode == "wifi_off") {
-                wifiHandler("on")
-                // integration socket on
-                for (var i=0; i<config.integration.length; i++) {
-                    integration[config.integration[i].type].connectionOpen = true;
-                }
-            }
-
-            // set the display brightness
-            if (display_autobrightness) {
-                display_brightness = display_brightness_ambient;
-            } else {
-                display_brightness = display_brightness_set;
-            }
-            mode = "on";
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            wifiOffTimer.restart();
-            shutdownTimer.restart();
+            wakeUp();
             buttonPressDetected = false;
         }
     }
@@ -186,7 +185,7 @@ Item {
                 displayDimTimer.stop();
                 console.debug("Dim the display");
                 // set brightness to 20
-                display_brightness = 20;
+                standbyControl.display_brightness = 20;
                 mode = "dim";
                 standbyTimer.start();
             }
@@ -205,8 +204,8 @@ Item {
                 standbyTimer.stop()
                 console.debug("Standby the display");
                 // turn off gesture detection
-//                socketServer.clientId.sendTextMessage("gesture off");
-//                socketServer.clientId.sendTextMessage("proximity detect on");
+                //                socketServer.clientId.sendTextMessage("gesture off");
+                //                socketServer.clientId.sendTextMessage("proximity detect on");
                 // turn off the backlight
                 display_brightness = 0;
                 // put display to standby

@@ -159,6 +159,7 @@ ApplicationWindow {
     Component.onCompleted: {
         // change dark mode to the configured value
         darkMode = Qt.binding(function () { return config.settings.darkmode});
+        standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
 
         // load the hub integrations
         if (loadHubIntegrations()) {
@@ -201,6 +202,8 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY CONTROL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias standbyControl: standbyControl
+
     StandbyControl {
         id: standbyControl
 

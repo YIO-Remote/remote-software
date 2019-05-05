@@ -15,10 +15,24 @@ Item {
                 buttonTimeout.start()
 
                 standbyControl.buttonPressDetected = true;
-                console.debug(interruptHandler.button)
 
-                if (standbyControl.state == "standby") {
-                    // do nothing
+                if (standbyControl.state != "standby") {
+                    // do button stuff here
+
+                    /////////////////////////////////////////////////////////////////////////////////////////////////
+                    // MAIN SCREEN
+                    /////////////////////////////////////////////////////////////////////////////////////////////////
+                    if (loader_main.state == "visible") {
+                        switch (interruptHandler.button) {
+                        case "dpad right":
+                                loader_main.item.mainNavigationSwipeview.currentIndex += 1;
+                            break;
+                        case "dpad left":
+                                loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
+                            break;
+                        }
+                    }
+
                 }
             }
         }

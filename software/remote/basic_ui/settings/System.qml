@@ -21,7 +21,7 @@ Item {
         triggeredOnStart: true
 
         onTriggered: {
-            uptimeValue.text = settingsLauncher.launch("/usr/bin/remote/uptime.sh").trim();
+            uptimeValue.text = settingsLauncher.launch("/usr/bin/yio-remote/uptime.sh").trim();
             temperatureValue.text = parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp"))/1000 + "ºC";
         }
     }
