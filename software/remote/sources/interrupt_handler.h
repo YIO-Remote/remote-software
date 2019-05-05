@@ -50,7 +50,7 @@ public:
         file->open(QIODevice::ReadOnly);
 
         // connect to a signal
-        notifier = new QSocketNotifier(file->handle(), QSocketNotifier::Read);
+        notifier = new QSocketNotifier(file->handle(), QSocketNotifier::Exception);
         notifier->setEnabled(true);
         connect(notifier, &QSocketNotifier::activated, this, &InterruptHandler::interruptHandler);
     }
@@ -69,6 +69,7 @@ public:
             // tell qml that there was a button press
             emit buttonPressed();
         }
+        delay(10);
     }
 
 private:
