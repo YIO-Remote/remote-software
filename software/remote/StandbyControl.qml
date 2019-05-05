@@ -205,8 +205,8 @@ Item {
                 standbyTimer.stop()
                 console.debug("Standby the display");
                 // turn off gesture detection
-                socketServer.clientId.sendTextMessage("gesture off");
-                socketServer.clientId.sendTextMessage("proximity detect on");
+//                socketServer.clientId.sendTextMessage("gesture off");
+//                socketServer.clientId.sendTextMessage("proximity detect on");
                 // turn off the backlight
                 display_brightness = 0;
                 // put display to standby

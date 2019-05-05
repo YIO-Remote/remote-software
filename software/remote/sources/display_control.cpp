@@ -110,12 +110,14 @@ void DisplayControl::setmode(const QString &mode)
 {
     if (mode == "standbyon") {
         qDebug() << "spi standby on function called";
+        setup();
         spi_screenreg_set(0x10, 0xffff, 0xffff);
         delay(120);
         spi_screenreg_set(0x28, 0xffff, 0xffff);
     }
     if (mode == "standbyoff") {
         qDebug() << "spi standby off function called";
+        setup();
         spi_screenreg_set(0x29, 0xffff, 0xffff);
         spi_screenreg_set(0x11, 0xffff, 0xffff);
     }
