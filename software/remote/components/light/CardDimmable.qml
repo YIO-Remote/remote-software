@@ -132,6 +132,7 @@ Rectangle {
             value: brightness
 
             onMoved: {
+                haptic.playEffect("bump");
                 brightnessSettings.moving = true
                 change_brightness_timer.running = true
             }

@@ -90,6 +90,7 @@ public:
 
     QString readInterrupt()
     {
+
         int intf;
 
         intf = wiringPiI2CReadReg8(bus, MCP23017_INTFA);

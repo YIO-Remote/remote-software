@@ -16,9 +16,8 @@ Item {
 
                 standbyControl.buttonPressDetected = true;
 
-                if (standbyControl.state != "standby") {
+                if (standbyControl.mode == "on") {
                     // do button stuff here
-
                     /////////////////////////////////////////////////////////////////////////////////////////////////
                     // MAIN SCREEN
                     /////////////////////////////////////////////////////////////////////////////////////////////////

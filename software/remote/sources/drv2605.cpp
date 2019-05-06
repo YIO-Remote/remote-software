@@ -14,6 +14,10 @@ void drv2605::playEffect(QString effect)
         setWaveform(0, 1);
         go();
     }
+    if (effect == "bump") {
+        setWaveform(0, 8);
+        go();
+    }
 }
 
 bool drv2605::init()
