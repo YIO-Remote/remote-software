@@ -3,7 +3,6 @@
 
 #include <QString>
 
-#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <time.h>
@@ -57,11 +56,11 @@ public:
         bus = wiringPiI2CSetupInterface("/dev/i2c-3", MCP23017_ADDRESS);
 
         // set up all inputs on both ports
-        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0b00111110);
+        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0x3e); //0b00111110
         wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0xff);
 
         // set up interrupts
-        uint8_t ioconfValue = wiringPiI2CReadReg8(bus, MCP23017_IOCONA);
+        int ioconfValue = wiringPiI2CReadReg8(bus, MCP23017_IOCONA);
         bitWrite(ioconfValue,6,true);
         bitWrite(ioconfValue,2,false);
         bitWrite(ioconfValue,1,false);
@@ -75,13 +74,13 @@ public:
 
         // setup pin for interrupt
         wiringPiI2CWriteReg8(bus, MCP23017_INTCONA, 0x00);
-        wiringPiI2CWriteReg8(bus, MCP23017_GPPUA, 0b00111110);
+        wiringPiI2CWriteReg8(bus, MCP23017_GPPUA, 0x3e);
 
         wiringPiI2CWriteReg8(bus, MCP23017_INTCONB, 0x00);
         wiringPiI2CWriteReg8(bus, MCP23017_GPPUB, 0xff);
 
         // enable pin for interrupt
-        wiringPiI2CWriteReg8(bus, MCP23017_GPINTENA, 0b00111110);
+        wiringPiI2CWriteReg8(bus, MCP23017_GPINTENA, 0x3e);
         wiringPiI2CWriteReg8(bus, MCP23017_GPINTENB, 0xff);
 
         wiringPiI2CReadReg8(bus, MCP23017_INTCAPA);
@@ -144,6 +143,8 @@ public:
             clearInterrupt();
             return "top left";
         }
+
+        return "";
     }
 
     void clearInterrupt()
@@ -157,7 +158,7 @@ private:
     int bus;
 
 private:
-    void bitWrite(uint8_t x, int n, bool b) {
+    void bitWrite(int x, int n, bool b) {
         if (n <= 7 && n >= 0) {
             if (b) {
                 x |= (1u << n);

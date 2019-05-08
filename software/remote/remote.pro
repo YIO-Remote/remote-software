@@ -18,11 +18,11 @@ HEADERS += \
     sources/translation.h \
     sources/touchdetect.h \
     sources/apds9960.h \
-    sources/bq27441.h \
     sources/proximity_gesture_control.h \
     sources/interrupt_handler.h \
     sources/mcp23017.h \
-    sources/drv2605.h
+    sources/drv2605.h \
+    sources/bq27441.h
 
 SOURCES += \
         sources/main.cpp \
@@ -30,7 +30,8 @@ SOURCES += \
     sources/launcher.cpp \
     sources/display_control.cpp \
     sources/apds9960.cpp \
-    sources/drv2605.cpp
+    sources/drv2605.cpp \
+    sources/bq27441.cpp
 
 RESOURCES += qml.qrc \
     images.qrc \

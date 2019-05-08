@@ -11,6 +11,7 @@ class TouchEventFilter : public QQuickItem
 public:
     Q_PROPERTY(QObject * source READ getSource WRITE setSource)
     Q_PROPERTY(bool detected NOTIFY detectedChanged)
+    Q_PROPERTY(bool disabled WRITE setDisabled)
 
 public:
     TouchEventFilter()
@@ -32,6 +33,11 @@ public:
 
     QObject * getSource() { return m_source; }
 
+    void setDisabled(bool disabled)
+    {
+        m_disabled = disabled;
+    }
+
 
 private:
     bool eventFilter(QObject *obj, QEvent *event)
@@ -42,7 +48,11 @@ private:
             emit detectedChanged();
             break;
         }
-        return QQuickItem::eventFilter(this, event);
+        if (!m_disabled) {
+            return QQuickItem::eventFilter(this, event);
+        } else {
+            return false;
+        }
     }
 
 signals:
@@ -50,6 +60,7 @@ signals:
 
 private:
     QObject *m_source;
+    bool m_disabled;
 
 };
 

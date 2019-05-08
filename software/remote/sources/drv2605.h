@@ -6,7 +6,6 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include <stdint.h>
-#include <stdlib.h>
 
 #define DRV2605_ADDR 0x5A             ///< Device I2C address
 

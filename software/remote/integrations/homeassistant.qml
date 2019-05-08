@@ -13,7 +13,6 @@ Item {
     property bool connectionOpen: true
 
     onConnectionOpenChanged: {
-        console.debug("YAY")
         if (connectionOpen) {
             connectionState = "connecting"
             websocketReconnect.tries = 0;

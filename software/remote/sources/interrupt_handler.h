@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QFile>
 #include <QSocketNotifier>
-#include <QtDebug>
 
 #include "mcp23017.h"
 

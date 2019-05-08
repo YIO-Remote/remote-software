@@ -31,6 +31,7 @@ Item {
     TouchEventFilter {
         id: touchFilter
         source: applicationWindow
+        disabled: mode == "on" ? false : true
 
         onDetectedChanged: {
             touchDetected = true;
