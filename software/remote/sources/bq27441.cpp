@@ -15,35 +15,35 @@ BQ27441::BQ27441()
     {
         qDebug() << "Error: Unable to communicate with BQ27441.";
     }
-
-    setCapacity(2500);
-
-    qDebug() << "Control status" << getControlStatus();
-    qDebug() << "Full charge capacity:" << getFullChargeCapacity();
-    qDebug() << "Nominal available capacity:" << getNominalAvailableCapacity();
-    qDebug() << "Remaining capacity:" << getRemainingCapacity();
-    qDebug() << "Voltage:" << getVoltage();
-    qDebug() << "State of charge:" << getStateOfCharge();
-    qDebug() << "Health:" << getStateOfHealth();
-    qDebug() << "Temperature:" << getTemperatureC();
-    qDebug() << "Average current:" << getAverageCurrent();
 }
 
 BQ27441::~BQ27441() {}
 
-void BQ27441::setCapacity(uint16_t capacity)
+void BQ27441::begin()
+{
+    if (getDesignCapacity() != ((uint16_t) m_capacity)) {
+        // change the designcapacity if it doesn't match
+        changeCapacity(((uint16_t) m_capacity));
+    }
+}
+
+void BQ27441::changeCapacity(uint16_t capacity)
 {
     // unseal the device
     wiringPiI2CWriteReg8(bus, 0x00, 0x00);
     wiringPiI2CWriteReg8(bus, 0x01, 0x80);
     wiringPiI2CWriteReg8(bus, 0x00, 0x00);
     wiringPiI2CWriteReg8(bus, 0x01, 0x80);
+    delay(5);
 
     // SET_CFGUPDATE
     wiringPiI2CWriteReg8(bus, 0x00, 0x13);
     wiringPiI2CWriteReg8(bus, 0x01, 0x00);
+    delay(1000);
 
     // check flag
+    wiringPiI2CWrite(bus, 0x06);
+    delay(5);
     wiringPiI2CReadReg8(bus, 0x06);
     delay(1000);
     uint8_t checkBit = (uint8_t) wiringPiI2CReadReg8(bus, 0x06);
@@ -52,19 +52,28 @@ void BQ27441::setCapacity(uint16_t capacity)
 
         // block data control command
         wiringPiI2CWriteReg8(bus, 0x61, 0x00);
+        delay(5);
 
         // data block class command
         wiringPiI2CWriteReg8(bus, 0x3e, 0x52);
+        delay(5);
 
         // write block offset location
         wiringPiI2CWriteReg8(bus, 0x3f, 0x00);
+        delay(5);
 
         // read old checksum
+        wiringPiI2CWrite(bus, 0x60);
+        delay(5);
         uint8_t old_checksum = (uint8_t) wiringPiI2CReadReg8(bus, 0x60);
+        delay(5);
 
         // read existing capacity
+        wiringPiI2CWrite(bus, 0x4a);
+        delay(5);
         uint8_t old_descap_msb = (uint8_t) wiringPiI2CReadReg8(bus, 0x4a);
         uint8_t old_descap_lsb = (uint8_t) wiringPiI2CReadReg8(bus, 0x4b);
+        delay(5);
 
         // write new capacity
         uint8_t new_descap_msb = capacity >> 8;
@@ -74,9 +83,32 @@ void BQ27441::setCapacity(uint16_t capacity)
         wiringPiI2CWriteReg8(bus, 0x4b, new_descap_lsb);
         delay(1000);
 
+        // read existing energy
+        wiringPiI2CWrite(bus, 0x4c);
+        delay(5);
+        uint8_t old_desen = (uint8_t) wiringPiI2CReadReg8(bus, 0x4c);
+        delay(5);
+
+        // write new energy
+        uint8_t new_desen = (uint8_t) (capacity*3.8) >> 8;
+
+        wiringPiI2CWriteReg8(bus, 0x4c, new_desen);
+        delay(5);
+
+        // read terminate voltage
+        wiringPiI2CWrite(bus, 0x50);
+        delay(5);
+        uint8_t old_termv = (uint8_t) wiringPiI2CReadReg8(bus, 0x50);
+
+        // write terminate voltage
+        uint8_t new_termv = (uint8_t) (3400) >> 8;
+
+        wiringPiI2CWriteReg8(bus, 0x50, new_termv);
+        delay(5);
+
         // calculate new checksum
-        uint8_t temp = (255 - old_checksum - old_descap_lsb - old_descap_msb) % 256;
-        uint8_t new_checksum = 255 - ((temp + new_descap_lsb + new_descap_msb) % 256);
+        uint8_t temp = (255 - old_checksum - old_descap_lsb - old_descap_msb - old_desen - old_termv) % 256;
+        uint8_t new_checksum = 255 - ((temp + new_descap_lsb + new_descap_msb + new_desen + new_termv) % 256);
 
         // write new checksum
         wiringPiI2CWriteReg8(bus, 0x60, new_checksum);
@@ -88,8 +120,10 @@ void BQ27441::setCapacity(uint16_t capacity)
         delay(500);
 
         // check flag
+        wiringPiI2CWrite(bus, 0x06);
+        delay(500);
         wiringPiI2CReadReg8(bus, 0x06);
-        delay(1000);
+        delay(500);
         checkBit = (uint8_t) wiringPiI2CReadReg8(bus, 0x06);
         if (!((checkBit) & (1<<(4)))) {
             // bit changed, let's seal
@@ -100,20 +134,19 @@ void BQ27441::setCapacity(uint16_t capacity)
     }
 }
 
-int16_t BQ27441::getTemperatureC() {  // Result in 0.1 Celcius
-    int16_t result;
+int32_t BQ27441::getTemperatureC() {  // Result in 1 Celcius
+    int32_t result;
     uint16_t raw;
 
     raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_TEMP);
-    // Convert to 0.1 Celsius using integer math
-    result = (int16_t) raw - 2731;
+    result = ((int32_t) raw / 10 ) - 273;
     return result;
 }
 
-uint16_t BQ27441::getVoltage() {
-    uint16_t result;
+int BQ27441::getVoltage() {
+    int result;
 
-    result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_VOLTAGE);
+    result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_VOLTAGE);
     return result;
 }
 
@@ -180,10 +213,10 @@ int16_t  BQ27441::getAveragePower() {
     return (int16_t) result;
 }
 
-uint16_t BQ27441::getStateOfCharge() {
-    uint16_t result;
+int BQ27441::getStateOfCharge() {
+    int result;
 
-    result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
+    result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
     return result;
 }
 
@@ -197,11 +230,11 @@ int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
     return result;
 }
 
-uint16_t BQ27441::getStateOfHealth() {
-    uint16_t result;
+int BQ27441::getStateOfHealth() {
+    int result;
 
-    result = (uint16_t) wiringPiI2CReadReg8(bus,BQ27441_COMMAND_SOH);
-    return (result);
+    result = wiringPiI2CReadReg8(bus,BQ27441_COMMAND_SOH);
+    return result;
 }
 
 uint16_t BQ27441::getRemainingCapacityUnfiltered() {
@@ -243,6 +276,10 @@ uint16_t BQ27441::getOpConfig() {
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_EXTENDED_OPCONFIG);
+    if ((result & (1 << 5)) == 0) {
+        qDebug("Device is in sleep mode");
+    }
+
     return result;
 }
 
@@ -258,7 +295,6 @@ uint16_t BQ27441::getControlStatus() {
 
     wiringPiI2CWriteReg16(bus,BQ27441_COMMAND_CONTROL,(uint16_t) BQ27441_CONTROL_STATUS);
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_CONTROL);
-
     return result;
 }
 
@@ -279,25 +315,6 @@ uint16_t BQ27441::getChemID() {
 
     return result;
 }
-
-uint16_t BQ27441::readRegister(uint8_t regAddress){
-    uint16_t result;
-
-    result = (uint16_t) wiringPiI2CReadReg16(bus,regAddress);
-    return result;
-}
-
-uint16_t BQ27441::getControlWord(uint8_t subCommand) {
-    uint16_t result;
-
-    // Since the MSB of all the CONTROL subcommands is zero, an unsigned 8-bit
-    // value is unchanged when casting to a 16-bit value.
-    wiringPiI2CWriteReg16(bus,BQ27441_COMMAND_CONTROL,(uint16_t) subCommand);
-    result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_CONTROL);
-
-    return result;
-}
-
 
 
 

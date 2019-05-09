@@ -60,13 +60,27 @@ class BQ27441 : public QObject
     Q_OBJECT
 
 public:
+    Q_PROPERTY(int capacity READ getCapacity WRITE setCapacity)
+
+public:
 
     BQ27441();
     ~BQ27441();
 
-    void begin();
-    int16_t  getTemperatureC();                 // Result in 0.1 Celsius
-    uint16_t getVoltage();
+    void setCapacity(int capacity)
+    {
+        m_capacity = capacity;
+    }
+
+    int getCapacity()
+    {
+        return m_capacity;
+    }
+
+
+   Q_INVOKABLE void begin();
+    int32_t  getTemperatureC();                 // Result in 1 Celsius
+    Q_INVOKABLE int getVoltage();
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
     uint16_t getFullAvailableCapacity();
@@ -76,11 +90,11 @@ public:
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
     int16_t  getAveragePower();
-    uint16_t getStateOfCharge();
+    Q_INVOKABLE int getStateOfCharge();
     uint16_t getInternalTemperature();            // Result in 0.1 Kelvins
     int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
     int16_t  getInternalTemperatureF();           // Result in 0.1 Fahrenheit
-    uint16_t getStateOfHealth();
+    Q_INVOKABLE int getStateOfHealth();
     uint16_t getRemainingCapacityUnfiltered();
     uint16_t getRemainingCapacityFiltered();
     uint16_t getFullChargeCapacityUnfiltered();
@@ -97,13 +111,11 @@ public:
 //    uint16_t getPrevMacwrite();
     uint16_t getChemID();
 
-    void setCapacity(uint16_t capacity);
-
-    uint16_t readRegister(uint8_t regAddress);
-    uint16_t getControlWord(uint8_t subCommand);
+    Q_INVOKABLE void changeCapacity(uint16_t capacity);
 
 private:
     int bus;
+    int m_capacity;
 };
 
 #endif // BQ27441_H
