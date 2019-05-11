@@ -11,11 +11,11 @@ drv2605::drv2605()
 void drv2605::playEffect(QString effect)
 {
     if (effect == "click") {
-        setWaveform(0, 1);
+        setWaveform(0, 5);
         go();
     }
     if (effect == "bump") {
-        setWaveform(0, 8);
+        setWaveform(0, 6);
         go();
     }
 }

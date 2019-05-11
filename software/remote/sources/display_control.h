@@ -20,7 +20,7 @@ class DisplayControl : public QObject
 
 
 public:
-    Q_INVOKABLE void setmode(const QString &mode);
+    Q_INVOKABLE bool setmode(const QString &mode);
 
     DisplayControl();
 

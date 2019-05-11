@@ -206,7 +206,9 @@ typedef struct gesture_data_type {
 } gesture_data_type;
 
 /* APDS9960 Class */
-class APDS9960 {
+class APDS9960
+{
+
 public:
 
     /* Initialization methods */

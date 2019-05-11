@@ -215,6 +215,7 @@ Rectangle {
         }
 
         onClicked: {
+            haptic.playEffect("click");
             loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
 

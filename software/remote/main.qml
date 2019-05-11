@@ -53,10 +53,6 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
-
-            console.debug(battery_voltage);
-            console.debug(battery_level);
-            console.debug(battery_health);
         }
     }
 

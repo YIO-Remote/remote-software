@@ -248,6 +248,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
+                haptic.playEffect("click");
                 lightButton.state = "closed"
                 loader_main.state = "visible"
                 var tmp = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY;

@@ -16,7 +16,7 @@ void DisplayControl::setup(void)
 {
 //    qDebug() << "spi screen setup function called";
     wiringPiSetup () ;
-    mcp23017Setup (100, 0x20);
+    mcp23017Setup (100, 0x21);
 }
 
 void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1)
@@ -111,17 +111,19 @@ void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data
     nanosleep(&ts3, NULL);
 }
 
-void DisplayControl::setmode(const QString &mode)
+bool DisplayControl::setmode(const QString &mode)
 {
     if (mode == "standbyon") {
 //        qDebug() << "spi standby on function called";
         spi_screenreg_set(0x10, 0xffff, 0xffff);
         delay(120);
         spi_screenreg_set(0x28, 0xffff, 0xffff);
+        return true;
     }
     if (mode == "standbyoff") {
 //        qDebug() << "spi standby off function called";
         spi_screenreg_set(0x29, 0xffff, 0xffff);
         spi_screenreg_set(0x11, 0xffff, 0xffff);
+        return true;
     }
 }

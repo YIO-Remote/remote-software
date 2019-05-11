@@ -14,6 +14,10 @@ Item {
                 wasPressed = true;
                 buttonTimeout.start()
 
+                if (interruptHandler.button == "apds9960") {
+                    standbyControl.proximity.readInterrupt()
+                }
+
                 standbyControl.buttonPressDetected = true;
 
                 if (standbyControl.mode == "on") {
@@ -47,7 +51,5 @@ Item {
         onTriggered: {
             wasPressed = false;
         }
-
     }
-
 }

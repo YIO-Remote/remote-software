@@ -322,7 +322,17 @@ bool APDS9960::enableProximitySensor(bool interrupts)
 
     return true;
 }
-bool disableProximitySensor();
+bool APDS9960::disableProximitySensor()
+{
+    if ( !setProximityIntEnable(0) ) {
+        return false;
+    }
+    if ( !setMode(PROXIMITY, 0) ) {
+        return false;
+    }
+
+    return true;
+}
 
 /**
 * @brief Starts the gesture recognition engine on the APDS-9960

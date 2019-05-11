@@ -1,6 +1,7 @@
 import QtQuick 2.11
 import DisplayControl 1.0
 import TouchEventFilter 1.0
+import Proximity 1.0
 
 Item {
     id: standbyControl
@@ -31,11 +32,33 @@ Item {
     TouchEventFilter {
         id: touchFilter
         source: applicationWindow
-        disabled: mode == "on" ? false : true
 
         onDetectedChanged: {
             touchDetected = true;
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // PROXIMITY SENSOR APDS9960
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias proximity: proximity
+
+    Proximity {
+        id: proximity
+
+        onProximityEvent: {
+            standbyControl.proximityDetected = true;
+            standbyControl.display_brightness_ambient = convertFromAmbientLightToBrightness(ambientLight);
+        }
+    }
+
+    function convertFromAmbientLightToBrightness(ambientlight) {
+        var leftSpan = 450-0;
+        var rightSpan = 100-10;
+
+        var valueScaled = (ambientlight - 0) / leftSpan;
+
+        return Math.round(10 + (valueScaled*rightSpan));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,12 +111,12 @@ Item {
 
         case "standby":
             // turn off standby
-            displayControl.setmode("standbyoff");
-
-            if (standbyControl.display_autobrightness) {
-                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-            } else {
-                standbyControl.display_brightness = standbyControl.display_brightness_set;
+            if (displayControl.setmode("standbyoff")) {
+                if (standbyControl.display_autobrightness) {
+                    standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+                } else {
+                    standbyControl.display_brightness = standbyControl.display_brightness_set;
+                }
             }
 
             // set the mode
@@ -113,12 +136,12 @@ Item {
                 integration[config.integration[i].type].connectionOpen = true;
             }
             // turn off standby
-            displayControl.setmode("standbyoff");
-
-            if (standbyControl.display_autobrightness) {
-                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-            } else {
-                standbyControl.display_brightness = standbyControl.display_brightness_set;
+            if (displayControl.setmode("standbyoff")) {
+                if (standbyControl.display_autobrightness) {
+                    standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+                } else {
+                    standbyControl.display_brightness = standbyControl.display_brightness_set;
+                }
             }
 
             // set the mode
@@ -186,7 +209,7 @@ Item {
                 displayDimTimer.stop();
                 console.debug("Dim the display");
                 // set brightness to 20
-                standbyControl.display_brightness = 20;
+                standbyControl.display_brightness = 10;
                 mode = "dim";
                 standbyTimer.start();
             }
@@ -205,8 +228,8 @@ Item {
                 standbyTimer.stop()
                 console.debug("Standby the display");
                 // turn off gesture detection
-                //                socketServer.clientId.sendTextMessage("gesture off");
-                //                socketServer.clientId.sendTextMessage("proximity detect on");
+                proximity.gestureDetection(false);
+                proximity.proximityDetection(true);
                 // turn off the backlight
                 display_brightness = 0;
                 // put display to standby
