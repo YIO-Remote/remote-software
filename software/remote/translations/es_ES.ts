@@ -66,7 +66,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
       <source>Try again</source>
-      <translation>Vuelva a intentarlo</translation>
+      <translation>Inténtalo de nuevo</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
@@ -197,7 +197,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation>Por favor, cargue el mando</translation>
+      <translation>Por favor, cargue el control remoto</translation>
     </message>
   </context>
   <context>
@@ -267,7 +267,7 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation>Nueva versión de software disponible.</translation>
+      <translation>Nueva versión de software está disponible.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
