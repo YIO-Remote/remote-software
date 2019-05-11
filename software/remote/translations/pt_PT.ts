@@ -249,17 +249,17 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Atualização de software</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>Atualização automática</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
       <source>Automatically look for updates and update when a new software version is available.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
+      <translation>Procurar atualizações automaticamente e atualizar quando uma nova versão do software estiver disponível.</translation>
     </message>
   </context>
   <context>
