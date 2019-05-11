@@ -13,7 +13,7 @@ class ProximityGestureControl : public QObject
 public:
     Q_PROPERTY(int ambientLight READ getambientLight)
     Q_PROPERTY(int proximity NOTIFY proximityEvent)
-    //    Q_PROPERTY(QString gesture READ getgesture)
+    Q_PROPERTY(QString gesture READ gestureEvent)
 
     int getambientLight() {
         return (int) m_ambientLight;
@@ -21,16 +21,16 @@ public:
 
     Q_INVOKABLE void proximityDetection(bool state)
     {
+        m_proximityDetection = state;
+
         if (state) {
             // turn on
-            m_proximityDetection = state;
-
             apds.setProximityGain(1);
             apds.setProximityIntLowThreshold(0);
             apds.setProximityIntHighThreshold(110);
             apds.clearProximityInt();
-            apds.enableProximitySensor(true);
             apds.setLEDBoost(0);
+            apds.enableProximitySensor(true);
 
         } else {
             // turn off
@@ -40,13 +40,13 @@ public:
 
     Q_INVOKABLE void gestureDetection(bool state)
     {
+        m_gestureDetection = state;
+
         if (state) {
             // turn on
-            m_gestureDetection = state;
-
-            apds.enableGestureSensor();
             apds.setGestureGain(0);
             apds.setLEDBoost(0);
+            apds.enableGestureSensor(true);
 
         } else {
             // turn off
@@ -70,7 +70,40 @@ public:
             // turn off proximity detection
             proximityDetection(false);
 
+            delay(500);
+
             // enable gesture detection
+            gestureDetection(true);
+
+        } else if (m_gestureDetection) {
+            // read the gesture
+            if ( false == apds.isGestureAvailable() )
+            {
+                return;
+            }
+            switch ( apds.readGesture() )
+            {
+            case DIR_UP:
+                qDebug() << "UP";
+                m_gesture = "up";
+                emit gestureEvent();
+                break;
+            case DIR_DOWN:
+                emit gestureEvent();
+                m_gesture = "down";
+                qDebug() << "DOWN";
+                break;
+            case DIR_LEFT:
+                emit gestureEvent();
+                m_gesture = "left";
+                qDebug() << "LEFT";
+                break;
+            case DIR_RIGHT:
+                emit gestureEvent();
+                m_gesture = "right";
+                qDebug() << "RIGHT";
+                break;
+            }
         }
     }
 
@@ -90,7 +123,6 @@ public:
             qDebug() << "Error reading light values" << endl;
         } else {
             qDebug() << "Ambient light:" << int(m_ambientLight);
-
             apds.disableLightSensor();
             delay(500);
             proximityDetection(true);
@@ -104,6 +136,7 @@ public:
 
 signals:
     void proximityEvent();
+    void gestureEvent();
 
 private:
     APDS9960 apds = APDS9960();
