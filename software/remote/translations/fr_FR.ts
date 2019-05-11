@@ -112,12 +112,12 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
       <source>Cleaning mode</source>
-      <translation>Mode nettoyage</translation>
+      <translation>Mode de nettoyage</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="239"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Appuyez sur l'écran pendant 10 secondes pour désactiver le mode nettoyage.</translation>
+      <translation>Appuyez sur l'écran pendant 10 secondes pour désactiver le mode de nettoyage.</translation>
     </message>
   </context>
   <context>
