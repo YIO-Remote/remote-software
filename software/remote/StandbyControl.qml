@@ -13,8 +13,8 @@ Item {
 
     property int displayDimTime: 20 // seconds
     property int standbyTime: 40 // seconds
-    property int wifiOffTime // seconds
-    property int shutdownTime // seconds
+    property int wifiOffTime: 0 // seconds
+    property int shutdownTime: 0 // seconds
 
     property int display_brightness: 100
     property int display_brightness_old: 100
@@ -49,6 +49,10 @@ Item {
         onProximityEvent: {
             standbyControl.proximityDetected = true;
             standbyControl.display_brightness_ambient = convertFromAmbientLightToBrightness(ambientLight);
+        }
+
+        onGestureEvent: {
+            console.debug(proximity.gesture);
         }
     }
 
@@ -105,8 +109,12 @@ Item {
             // reset timers
             displayDimTimer.restart();
             standbyTimer.stop();
-            wifiOffTimer.restart();
-            shutdownTimer.restart();
+            if (wifiOffTime != 0) {
+                wifiOffTimer.restart();
+            }
+            if (shutdownTime != 0) {
+                shutdownTimer.restart();
+            }
             break;
 
         case "standby":
@@ -125,8 +133,12 @@ Item {
             // reset timers
             displayDimTimer.restart();
             standbyTimer.stop();
-            wifiOffTimer.restart();
-            shutdownTimer.restart();
+            if (wifiOffTime != 0) {
+                wifiOffTimer.restart();
+            }
+            if (shutdownTime != 0) {
+                shutdownTimer.restart();
+            }
             break;
 
         case "wifi_off":
@@ -150,8 +162,12 @@ Item {
             // reset timers
             displayDimTimer.restart();
             standbyTimer.stop();
-            wifiOffTimer.restart();
-            shutdownTimer.restart();
+            if (wifiOffTime != 0) {
+                wifiOffTimer.restart();
+            }
+            if (shutdownTime != 0) {
+                shutdownTimer.restart();
+            }
             break;
         }
     }
@@ -267,10 +283,11 @@ Item {
         repeat: false
         running: shutdownTime != 0 ? true : false
         interval: shutdownTime * 1000
+        triggeredOnStart: false
 
         onTriggered: {
             shutdownTimer.stop();
-            console.debug("Shutdown");
+            console.debug("Shutdown timer triggered");
             // halt
             mainLauncher.launch("halt");
         }

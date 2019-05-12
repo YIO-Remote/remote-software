@@ -47,7 +47,7 @@ ApplicationWindow {
     Timer {
         running: true
         repeat: true
-        interval: standbyControl.mode == "on" ? 2000 : 10000
+        interval: standbyControl.mode == "on" ? 4000 : 10000
 
         onTriggered: {
             battery_voltage = battery.getVoltage() / 1000
@@ -236,8 +236,8 @@ ApplicationWindow {
         id: standbyControl
 
         Component.onCompleted: {
-            standbyControl.wifiOffTime = config.settings.wifitime
-            standbyControl.shutdownTime = config.settings.shutdowntime
+            standbyControl.wifiOffTime = Qt.binding(function () { return config.settings.wifitime});
+            standbyControl.shutdownTime = Qt.binding(function () { return config.settings.shutdowntime});
         }
     }
 

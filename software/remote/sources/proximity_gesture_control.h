@@ -13,10 +13,15 @@ class ProximityGestureControl : public QObject
 public:
     Q_PROPERTY(int ambientLight READ getambientLight)
     Q_PROPERTY(int proximity NOTIFY proximityEvent)
-    Q_PROPERTY(QString gesture READ gestureEvent)
+    Q_PROPERTY(QString gesture READ getgesture NOTIFY gestureEvent)
 
     int getambientLight() {
         return (int) m_ambientLight;
+    }
+
+    QString getgesture()
+    {
+        return m_gesture;
     }
 
     Q_INVOKABLE void proximityDetection(bool state)
@@ -70,7 +75,7 @@ public:
             // turn off proximity detection
             proximityDetection(false);
 
-            delay(500);
+            delay(1000);
 
             // enable gesture detection
             gestureDetection(true);
@@ -84,24 +89,20 @@ public:
             switch ( apds.readGesture() )
             {
             case DIR_UP:
-                qDebug() << "UP";
-                m_gesture = "up";
+                m_gesture = "right";
                 emit gestureEvent();
                 break;
             case DIR_DOWN:
                 emit gestureEvent();
-                m_gesture = "down";
-                qDebug() << "DOWN";
+                m_gesture = "left";
                 break;
             case DIR_LEFT:
                 emit gestureEvent();
-                m_gesture = "left";
-                qDebug() << "LEFT";
+                m_gesture = "up";
                 break;
             case DIR_RIGHT:
                 emit gestureEvent();
-                m_gesture = "right";
-                qDebug() << "RIGHT";
+                m_gesture = "down";
                 break;
             }
         }
@@ -122,10 +123,9 @@ public:
         if ( !apds.readAmbientLight(m_ambientLight)) {
             qDebug() << "Error reading light values" << endl;
         } else {
-            qDebug() << "Ambient light:" << int(m_ambientLight);
             apds.disableLightSensor();
             delay(500);
-            proximityDetection(true);
+            gestureDetection(true);
         }
     }
 

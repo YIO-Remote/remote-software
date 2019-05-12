@@ -86,13 +86,13 @@ public:
     uint16_t getFullAvailableCapacity();
     uint16_t getRemainingCapacity();
     uint16_t getFullChargeCapacity();
-    int16_t  getAverageCurrent();
+    Q_INVOKABLE int16_t  getAverageCurrent();
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
-    int16_t  getAveragePower();
+    Q_INVOKABLE int16_t  getAveragePower();
     Q_INVOKABLE int getStateOfCharge();
     uint16_t getInternalTemperature();            // Result in 0.1 Kelvins
-    int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
+    Q_INVOKABLE int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
     int16_t  getInternalTemperatureF();           // Result in 0.1 Fahrenheit
     Q_INVOKABLE int getStateOfHealth();
     uint16_t getRemainingCapacityUnfiltered();
