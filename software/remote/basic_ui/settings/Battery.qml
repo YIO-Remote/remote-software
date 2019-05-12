@@ -48,7 +48,7 @@ Item {
 
         Text {
             color: colorText
-            text: battery_level + "%"
+            text: battery_level * 100 + "%"
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20

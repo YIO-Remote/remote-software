@@ -1,0 +1,7 @@
+#include "bq72441.h"
+#include "bq27441_definitions.h"
+
+BQ72441::BQ27441() : _deviceAddress(BQ72441_I2C_ADDRESS), _sealFlag(false), _userConfigControl(false)
+{
+}
+

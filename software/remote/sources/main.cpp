@@ -9,7 +9,11 @@
 #include "jsonfile.h"
 #include "display_control.h"
 #include "translation.h"
-
+#include "touchdetect.h"
+#include "interrupt_handler.h"
+#include "drv2605.h"
+#include "bq27441.h"
+#include "proximity_gesture_control.h"
 
 int main(int argc, char *argv[])
 {
@@ -48,6 +52,11 @@ int main(int argc, char *argv[])
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
     qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
+    qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
+    qmlRegisterType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler");
+    qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
+    qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
+    qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);

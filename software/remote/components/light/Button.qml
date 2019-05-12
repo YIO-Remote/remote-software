@@ -126,6 +126,8 @@ Rectangle {
         }
 
         onClicked: {
+            haptic.playEffect("click");
+
             originParent = lightButton.parent
 
             loader_main.state = "hidden"
@@ -213,6 +215,7 @@ Rectangle {
         }
 
         onClicked: {
+            haptic.playEffect("click");
             loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
 

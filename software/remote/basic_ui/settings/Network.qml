@@ -19,7 +19,7 @@ Item {
         triggeredOnStart: true
 
         onTriggered: {
-            wifiSignalValue.text = settingsLauncher.launch("/usr/bin/remote/wifi_rssi.sh").trim();
+            wifiSignalValue.text = settingsLauncher.launch("/usr/bin/yio-remote/wifi_rssi.sh").trim();
         }
     }
 
@@ -102,7 +102,7 @@ Item {
 
         Text {
             color: colorText
-            text: settingsLauncher.launch("/usr/bin/remote/wifi_ip.sh").trim()
+            text: settingsLauncher.launch("/usr/bin/yio-remote/wifi_ip.sh").trim()
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20

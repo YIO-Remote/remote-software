@@ -15,13 +15,23 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/display_control.h \
-    sources/translation.h
+    sources/translation.h \
+    sources/touchdetect.h \
+    sources/apds9960.h \
+    sources/proximity_gesture_control.h \
+    sources/interrupt_handler.h \
+    sources/mcp23017.h \
+    sources/drv2605.h \
+    sources/bq27441.h
 
 SOURCES += \
         sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
-    sources/display_control.cpp
+    sources/display_control.cpp \
+    sources/apds9960.cpp \
+    sources/drv2605.cpp \
+    sources/bq27441.cpp
 
 RESOURCES += qml.qrc \
     images.qrc \
@@ -71,12 +81,19 @@ TRANSLATIONS = translations/bg_BG.ts \
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 #QML_DESIGNER_IMPORT_PATH =
 
+# Wiringpi config
+INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
+
+LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+LIBS += -lwiringPi
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 #DISTFILES +=
+
 
 win32 {
 # Copy config file to output directory

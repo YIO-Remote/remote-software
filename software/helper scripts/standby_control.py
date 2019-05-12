@@ -14,12 +14,6 @@ from time import sleep
 import time
 import subprocess
 
-# touch things
-from evdev import InputDevice
-from select import select
-
-dev = InputDevice('/dev/input/event0')
-
 # multi threading
 import thread
 
@@ -105,18 +99,6 @@ def gesture_detection():
                 if dirs.get(motion, "unknown") == "down":
                     ws.send("gesture left")
 
-def touch_event_checker():
-    global dev
-    while True:
-        sleep(1)
-        r,w,x = select([dev], [], [])
-        for event in dev.read():
-            if event:
-                ws.send("touchDetected")
-                break
-            break
-
-thread.start_new_thread(touch_event_checker, ())
 thread.start_new_thread(gesture_detection, ())
 thread.start_new_thread(websocket_start, ())
 

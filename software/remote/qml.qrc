@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>scripts/websocket.js</file>
         <file>integrations/homeassistant.qml</file>
         <file>scripts/softwareupdate.js</file>
         <file>basic_ui/ChargingScreen.qml</file>
@@ -36,8 +35,9 @@
         <file>basic_ui/pages/settings.qml</file>
         <file>basic_ui/pages/area.qml</file>
         <file>components/light/CardDimmable.qml</file>
-	<file>components/light/CardSwitch.qml</file>
+        <file>components/light/CardSwitch.qml</file>
         <file>basic_ui/settings/Softwareupdate.qml</file>
         <file>basic_ui/CustomButtonState.qml</file>
+        <file>ButtonHandler.qml</file>
     </qresource>
 </RCC>

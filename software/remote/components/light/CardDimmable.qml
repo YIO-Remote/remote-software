@@ -132,6 +132,7 @@ Rectangle {
             value: brightness
 
             onMoved: {
+                haptic.playEffect("bump");
                 brightnessSettings.moving = true
                 change_brightness_timer.running = true
             }
@@ -247,6 +248,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
+                haptic.playEffect("click");
                 lightButton.state = "closed"
                 loader_main.state = "visible"
                 var tmp = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY;
