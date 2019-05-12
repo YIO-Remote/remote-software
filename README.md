@@ -73,12 +73,13 @@ Currently available Languages are (marked when 100% done only):
 - [x] 🇩🇪 German
 - [ ] 🇬🇷 Greek
 - [x] 🇭🇺 Hungarian
+- [ ] 🇮🇸 Icelandic
 - [ ] 🇮🇪 Irish
 - [ ] 🇮🇹 Italian
 - [ ] 🇱🇻 Latvian
 - [ ] 🇱🇹 Lithuanian
 - [ ] 🇲🇹 Maltese
-- [ ] 🇳🇴 Norwegian
+- [x] 🇳🇴 Norwegian
 - [ ] 🇵🇱 Polish
 - [ ] 🇵🇹 Portuguese
 - [x] 🇧🇷 Portuguese, Brazilian
