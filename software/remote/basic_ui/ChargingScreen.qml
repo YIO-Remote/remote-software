@@ -36,7 +36,7 @@ Rectangle {
             anchors.left: batteryFrame.left
             anchors.leftMargin: 11
             id: icon_battery
-            width: JSHelper.mapValues(battery_voltage,3.5,4.2,4,144)
+            width: battery_level*144
             height: 78
             color: colorGreen
             radius: 3

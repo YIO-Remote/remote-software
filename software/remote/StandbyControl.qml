@@ -1,7 +1,10 @@
 import QtQuick 2.11
+
 import DisplayControl 1.0
 import TouchEventFilter 1.0
 import Proximity 1.0
+
+import "qrc:/scripts/helper.js" as JSHelper
 
 Item {
     id: standbyControl
@@ -48,21 +51,16 @@ Item {
 
         onProximityEvent: {
             standbyControl.proximityDetected = true;
-            standbyControl.display_brightness_ambient = convertFromAmbientLightToBrightness(ambientLight);
+            standbyControl.display_brightness_ambient = JSHelper.mapValues(ambientLight,0,450,0,100);
         }
 
-        onGestureEvent: {
-            console.debug(proximity.gesture);
+        onApds9960Notify: {
+            console.debug("Error while initializing the Proximity sensor. Please restart.")
         }
-    }
 
-    function convertFromAmbientLightToBrightness(ambientlight) {
-        var leftSpan = 450-0;
-        var rightSpan = 100-10;
-
-        var valueScaled = (ambientlight - 0) / leftSpan;
-
-        return Math.round(10 + (valueScaled*rightSpan));
+//        onGestureEvent: {
+//            console.debug(proximity.gesture);
+//        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,6 +93,18 @@ Item {
 
     function wakeUp() {
         switch (mode) {
+        case "on":
+            // reset timers
+            displayDimTimer.restart();
+            standbyTimer.stop();
+            if (wifiOffTime != 0) {
+                wifiOffTimer.restart();
+            }
+            if (shutdownTime != 0) {
+                shutdownTimer.restart();
+            }
+            break;
+
         case "dim":
             // set the display brightness
             if (standbyControl.display_autobrightness) {
@@ -120,11 +130,7 @@ Item {
         case "standby":
             // turn off standby
             if (displayControl.setmode("standbyoff")) {
-                if (standbyControl.display_autobrightness) {
-                    standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-                } else {
-                    standbyControl.display_brightness = standbyControl.display_brightness_set;
-                }
+                standbyoffDelay.start();
             }
 
             // set the mode
@@ -149,11 +155,7 @@ Item {
             }
             // turn off standby
             if (displayControl.setmode("standbyoff")) {
-                if (standbyControl.display_autobrightness) {
-                    standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-                } else {
-                    standbyControl.display_brightness = standbyControl.display_brightness_set;
-                }
+                standbyoffDelay.start();
             }
 
             // set the mode
@@ -169,6 +171,21 @@ Item {
                 shutdownTimer.restart();
             }
             break;
+        }
+    }
+
+    Timer {
+        id: standbyoffDelay
+        repeat: false
+        running: false
+        interval: 200
+
+        onTriggered: {
+            if (standbyControl.display_autobrightness) {
+                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+            } else {
+                standbyControl.display_brightness = standbyControl.display_brightness_set;
+            }
         }
     }
 
@@ -209,7 +226,7 @@ Item {
             mainLauncher.launch(cmd);
             // add screen on time
             screenUsage += new Date().getTime() - startTime
-            console.debug("Screen on time: " + screenUsage/1000 + "ms")
+            console.debug("Screen on time: " + Math.round(screenUsage/1000) + "s")
         }
     }
 
@@ -223,7 +240,6 @@ Item {
         onTriggered: {
             if (mode != "dim") {
                 displayDimTimer.stop();
-                console.debug("Dim the display");
                 // set brightness to 20
                 standbyControl.display_brightness = 10;
                 mode = "dim";
@@ -242,9 +258,8 @@ Item {
         onTriggered: {
             if (mode == "dim") {
                 standbyTimer.stop()
-                console.debug("Standby the display");
                 // turn off gesture detection
-                proximity.gestureDetection(false);
+//                proximity.gestureDetection(false);
                 proximity.proximityDetection(true);
                 // turn off the backlight
                 display_brightness = 0;
@@ -265,7 +280,6 @@ Item {
         onTriggered: {
             if (mode == "standby") {
                 wifiOffTimer.stop();
-                console.debug("Wifi off");
                 // turn off wifi
                 wifiHandler("off")
                 // integration socket off
@@ -287,7 +301,8 @@ Item {
 
         onTriggered: {
             shutdownTimer.stop();
-            console.debug("Shutdown timer triggered");
+            // set turn on button to low
+            buttonHandler.interruptHandler.shutdown();
             // halt
             mainLauncher.launch("halt");
         }

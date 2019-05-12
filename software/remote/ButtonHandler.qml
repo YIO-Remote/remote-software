@@ -6,6 +6,8 @@ Item {
 
     property bool wasPressed: false;
 
+    property alias interruptHandler: interruptHandler
+
     InterruptHandler {
         id: interruptHandler
 

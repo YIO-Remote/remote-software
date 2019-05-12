@@ -21,6 +21,7 @@ Rectangle {
         buttonState: lstate == "off" ? false : true
 
         mouseArea.onClicked: {
+            haptic.playEffect("click");
             loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
     }

@@ -17,6 +17,11 @@ class InterruptHandler : public QObject
 public:
     Q_PROPERTY(QString button READ getButton NOTIFY buttonPressed)
 
+    Q_INVOKABLE void shutdown()
+    {
+        mcp.shutdown();
+    }
+
 public:
 
     InterruptHandler()
@@ -63,11 +68,14 @@ public:
 
         // if the GPIO is 0, then it's a button press
         if (gpioVal == 0) {
+
             // check the MCP23017 what caused the interrupt
             m_button = mcp.readInterrupt();
+
             // tell qml that there was a button press
             emit buttonPressed();
         }
+
         delay(10);
     }
 

@@ -14,6 +14,7 @@
 #include "drv2605.h"
 #include "bq27441.h"
 #include "proximity_gesture_control.h"
+#include "shutdown.h"
 
 int main(int argc, char *argv[])
 {
@@ -48,7 +49,7 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Light.ttf"));
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Bold.ttf"));
 
-    // LOADING CUSTOM SCRIPT LAUNCHER AND JSON READER
+    // LOADING CUSTOM COMPONENTS
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
     qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
+    qmlRegisterType<Shutdown>("Shutdown", 1, 0, "Shutdown");
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);

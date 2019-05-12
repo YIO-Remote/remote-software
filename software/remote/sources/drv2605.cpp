@@ -18,6 +18,10 @@ void drv2605::playEffect(QString effect)
         setWaveform(0, 6);
         go();
     }
+    if (effect == "press") {
+        setWaveform(0, 111);
+        go();
+    }
 }
 
 bool drv2605::init()

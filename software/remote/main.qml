@@ -53,6 +53,12 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
+
+            if (battery.getAveragePower() > 0 ) {
+                chargingScreen.item.state = "visible";
+            } else {
+                chargingScreen.item.state = "hidden";
+            }
         }
     }
 

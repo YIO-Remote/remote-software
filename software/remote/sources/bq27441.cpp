@@ -206,11 +206,11 @@ int16_t  BQ27441::getMaxLoadCurrent() {
     return (int16_t) result;
 }
 
-int16_t  BQ27441::getAveragePower() {
-    uint16_t result;
+int BQ27441::getAveragePower() {
+    int16_t result;
 
-    result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_POWER);
-    return (int16_t) result;
+    result = (int16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_POWER);
+    return (int) result;
 }
 
 int BQ27441::getStateOfCharge() {
@@ -231,10 +231,11 @@ int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
 }
 
 int BQ27441::getStateOfHealth() {
-    int result;
+    uint8_t result;
 
-    result = wiringPiI2CReadReg8(bus,BQ27441_COMMAND_SOH);
-    return result;
+    uint16_t raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOH);
+    result = raw & 0x0ff;
+    return (int) result;
 }
 
 uint16_t BQ27441::getRemainingCapacityUnfiltered() {

@@ -89,7 +89,7 @@ public:
     Q_INVOKABLE int16_t  getAverageCurrent();
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
-    Q_INVOKABLE int16_t  getAveragePower();
+    Q_INVOKABLE int getAveragePower();
     Q_INVOKABLE int getStateOfCharge();
     uint16_t getInternalTemperature();            // Result in 0.1 Kelvins
     Q_INVOKABLE int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
