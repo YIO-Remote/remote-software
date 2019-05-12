@@ -11,17 +11,17 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
       <source>Battery charge</source>
-      <translation type="unfinished">Battery charge</translation>
+      <translation>Batteriladning</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Batterihelse</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
       <source>Battery voltage</source>
-      <translation type="unfinished">Battery voltage</translation>
+      <translation>Batterispenning</translation>
     </message>
   </context>
   <context>
@@ -76,7 +76,7 @@
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
       <source>Wait for it...</source>
-      <translation type="unfinished">Wait for it...</translation>
+      <translation>Vent på det...</translation>
     </message>
   </context>
   <context>
@@ -89,7 +89,7 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Legg til ny</translation>
     </message>
   </context>
   <context>
@@ -112,12 +112,12 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Rensemodus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="239"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Berør skjermen i 10 sekunder for å slå av rensemodus.</translation>
     </message>
   </context>
   <context>
@@ -125,12 +125,12 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Hubber</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Legg til ny</translation>
     </message>
   </context>
   <context>
@@ -156,7 +156,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persienner</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
@@ -215,7 +215,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Slå av Wi-Fi etter %1 minutters inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
@@ -236,7 +236,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Slå av fjernkontrollen etter %1 times inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
@@ -259,7 +259,7 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
       <source>Automatically look for updates and update when a new software version is available.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
+      <translation>Se etter oppdateringer og oppdater når ny versjon er tilgjengelig.</translation>
     </message>
   </context>
   <context>
