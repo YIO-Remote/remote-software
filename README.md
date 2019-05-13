@@ -73,7 +73,7 @@ Currently available Languages are (marked when 100% done only):
 - [x] 🇩🇪 German
 - [ ] 🇬🇷 Greek
 - [x] 🇭🇺 Hungarian
-- [ ] 🇮🇸 Icelandic
+- [x] 🇮🇸 Icelandic
 - [ ] 🇮🇪 Irish
 - [ ] 🇮🇹 Italian
 - [ ] 🇱🇻 Latvian
