@@ -26,7 +26,9 @@ Item {
     property int display_brightness_set: 100
 
     property double startTime: new Date().getTime()
-    property double screenUsage: 0
+    property double baseTime: new Date().getTime()
+    property double screenOnTime: 0
+    property double screenOffTime: 0
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TOUCH EVENT DETECTOR
@@ -51,7 +53,7 @@ Item {
 
         onProximityEvent: {
             standbyControl.proximityDetected = true;
-            standbyControl.display_brightness_ambient = JSHelper.mapValues(ambientLight,0,450,0,100);
+            standbyControl.display_brightness_ambient = JSHelper.mapValues(ambientLight,0,450,15,100);
         }
 
         onApds9960Notify: {
@@ -86,8 +88,17 @@ Item {
 
     // change the display brightness
     onDisplay_brightnessChanged: {
-        var cmd = "/usr/bin/yio-remote/display_brightness.sh " + standbyControl.display_brightness_old + " " + standbyControl.display_brightness;
-        mainLauncher.launch(cmd);
+        if (display_brightness_old >= display_brightness) {
+            // dim down
+            for (var i=display_brightness_old; i>display_brightness-1; i--) {
+                displayControl.setBrightness(i);
+            }
+        } else {
+            // dim up
+            for (var i=display_brightness_old; i<display_brightness+1; i++) {
+                displayControl.setBrightness(i);
+            }
+        }
         standbyControl.display_brightness_old = standbyControl.display_brightness;
     }
 
@@ -225,8 +236,8 @@ Item {
             cmd = "echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
             mainLauncher.launch(cmd);
             // add screen on time
-            screenUsage += new Date().getTime() - startTime
-            console.debug("Screen on time: " + Math.round(screenUsage/1000) + "s")
+            screenOnTime += new Date().getTime() - startTime
+            screenOffTime = new Date().getTime() - baseTime - screenOnTime
         }
     }
 

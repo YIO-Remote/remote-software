@@ -9,12 +9,26 @@ function mapValues (x,a,b,c,d) {
 }
 
 function secondsToHours (value) {
-
     var hours = Math.floor(value / 3600);
     value %= 3600;
     var minutes = Math.floor(value / 60);
     var seconds = value % 60;
-    var returnString = hours + ":" + convertToTwoDigits(minutes) + ":" + convertToTwoDigits(seconds);
+
+    if (hours == 0) {
+        hours = "";
+    } else {
+        hours = hours + "h ";
+    }
+
+    if (minutes == 0) {
+        minutes = "";
+    } else {
+        minutes = minutes + "m ";
+    }
+
+    seconds = seconds + "s";
+
+    var returnString = hours + minutes + seconds;
     return returnString;
 }
 

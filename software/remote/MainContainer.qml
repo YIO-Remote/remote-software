@@ -70,7 +70,7 @@ Item {
             if (itemsLoaded >= 3) {
                 if (!mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-//                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+                    //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
         }
@@ -79,19 +79,19 @@ Item {
     onItemsLoadedChanged: {
         if (itemsLoaded >= 2) {
             mainNavigation.state = Qt.binding(function() {
-             if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
-                 return "open"
-             } else {
-                 return "closed"
-             }
+                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
+                    return "open"
+                } else {
+                    return "closed"
+                }
             })
 
             bottomGradient.opacity = Qt.binding(function() {
-             if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd) {
-                 return 0
-             } else {
-                 return 1
-             }
+                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd) {
+                    return 0
+                } else {
+                    return 1
+                }
             })
         }
     }

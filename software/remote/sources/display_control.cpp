@@ -121,3 +121,9 @@ bool DisplayControl::setmode(const QString &mode)
         return true;
     }
 }
+
+void DisplayControl::setBrightness(int value)
+{
+    pwmWrite(1, value);
+    delay(10);
+}
