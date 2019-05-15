@@ -189,7 +189,7 @@ Item {
         id: standbyoffDelay
         repeat: false
         running: false
-        interval: 200
+        interval: 300
 
         onTriggered: {
             if (standbyControl.display_autobrightness) {

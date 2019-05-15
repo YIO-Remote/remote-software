@@ -11,28 +11,39 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
 HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/display_control.h \
     sources/translation.h \
     sources/touchdetect.h \
-    sources/apds9960.h \
+#    sources/apds9960.h \
     sources/proximity_gesture_control.h \
     sources/interrupt_handler.h \
-    sources/mcp23017.h \
+#    sources/mcp23017.h \
     sources/drv2605.h \
     sources/bq27441.h \
     sources/shutdown.h
 
 SOURCES += \
-        sources/main.cpp \
+    sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
     sources/display_control.cpp \
-    sources/apds9960.cpp \
+#    sources/apds9960.cpp \
     sources/drv2605.cpp \
     sources/bq27441.cpp
+
+linux {
+    HEADERS += \
+        sources/apds9960.h \
+        sources/mcp23017.h \
+
+    SOURCES += \
+        sources/apds9960.cpp \
+
+}
 
 RESOURCES += qml.qrc \
     images.qrc \
@@ -83,10 +94,12 @@ TRANSLATIONS = translations/bg_BG.ts \
 #QML_DESIGNER_IMPORT_PATH =
 
 # Wiringpi config
-INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
+linux {
+    INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
 
-LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
-LIBS += -lwiringPi
+    LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+    LIBS += -lwiringPi
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -97,34 +110,34 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 win32 {
-# Copy config file to output directory
-copyConfig.commands = $(COPY_DIR) $$shell_path($$PWD/config.json) $$OUT_PWD
+    # Copy config file to output directory
+    copyConfig.commands = $(COPY_DIR) $$shell_path($$PWD/config.json) $$OUT_PWD
 
-# Copy translation file to output directory
-copyTranslations.commands = $(COPY_DIR) $$shell_path($$PWD/translations.json) $$OUT_PWD
+    # Copy translation file to output directory
+    copyTranslations.commands = $(COPY_DIR) $$shell_path($$PWD/translations.json) $$OUT_PWD
 
-# Add copy commands to build output
-first.depends = $(first) copyConfig copyTranslations
-export(first.depends)
-export(copyConfig.commands)
-export(copyTranslations.commands)
-QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
+    # Add copy commands to build output
+    first.depends = $(first) copyConfig copyTranslations
+    export(first.depends)
+    export(copyConfig.commands)
+    export(copyTranslations.commands)
+    QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
 }
 macx {
-APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
-APP_QML_FILES.path = Contents/Resources
-QMAKE_BUNDLE_DATA += APP_QML_FILES
+    APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
+    APP_QML_FILES.path = Contents/Resources
+    QMAKE_BUNDLE_DATA += APP_QML_FILES
 } else {
-# Copy config file to output directory
-copyConfig.commands = $(COPY_DIR) $$PWD/config.json $$OUT_PWD
+    # Copy config file to output directory
+    copyConfig.commands = $(COPY_DIR) $$PWD/config.json $$OUT_PWD
 
-# Copy translation file to output directory
-copyTranslations.commands = $(COPY_DIR) $$PWD/translations.json $$OUT_PWD
+    # Copy translation file to output directory
+    copyTranslations.commands = $(COPY_DIR) $$PWD/translations.json $$OUT_PWD
 
-# Add copy commands to build output
-first.depends = $(first) copyConfig copyTranslations
-export(first.depends)
-export(copyConfig.commands)
-export(copyTranslations.commands)
-QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
+    # Add copy commands to build output
+    first.depends = $(first) copyConfig copyTranslations
+    export(first.depends)
+    export(copyConfig.commands)
+    export(copyTranslations.commands)
+    QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
 }

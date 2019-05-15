@@ -2,6 +2,7 @@
 
 BQ27441::BQ27441()
 {
+#ifdef __linux__
     /* Initialize I2C */
     bus = wiringPiI2CSetupInterface("/dev/i2c-3", BQ27441_I2C_ADDRESS);
 
@@ -15,18 +16,22 @@ BQ27441::BQ27441()
     {
         qDebug() << "Error: Unable to communicate with BQ27441.";
     }
+#endif
 }
 
 BQ27441::~BQ27441() {}
 
 void BQ27441::begin()
 {
+#ifdef __linux__
     if (getDesignCapacity() != ((uint16_t) m_capacity)) {
         // change the designcapacity if it doesn't match
         changeCapacity(((uint16_t) m_capacity));
     }
+#endif
 }
 
+#ifdef __linux__
 void BQ27441::changeCapacity(uint16_t capacity)
 {
     // unseal the device
@@ -178,11 +183,11 @@ uint16_t BQ27441::getRemainingCapacity() {
     return result;
 }
 
-uint16_t BQ27441::getFullChargeCapacity() {
-    uint16_t result;
+int BQ27441::getFullChargeCapacity() {
+    int result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_FULL_CAPACITY);
-    return result;
+    return int(result);
 }
 
 int16_t  BQ27441::getAverageCurrent() {
@@ -316,7 +321,7 @@ uint16_t BQ27441::getChemID() {
 
     return result;
 }
-
+#endif
 
 
 

@@ -5,8 +5,10 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include <wiringPi.h>
-#include <mcp23017.h>
+#ifdef __linux__
+    #include <wiringPi.h>
+    #include <mcp23017.h>
+#endif
 #include <time.h>
 
 class DisplayControl : public QObject

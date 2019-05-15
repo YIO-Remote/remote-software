@@ -5,7 +5,9 @@
 #include <QtDebug>
 #include <QThread>
 
+#ifdef __linux__
 #include "apds9960.h"
+#endif
 
 class ProximityGestureControl : public QObject
 {
@@ -34,7 +36,7 @@ public:
     Q_INVOKABLE void proximityDetection(bool state)
     {
         m_proximityDetection = state;
-
+#ifdef __linux__
         if (state) {
             // turn on
             apds.setProximityGain(2);
@@ -48,12 +50,13 @@ public:
             // turn off
             apds.disableProximitySensor();
         }
+#endif
     }
 
     Q_INVOKABLE void gestureDetection(bool state)
     {
         m_gestureDetection = state;
-
+#ifdef __linux__
         if (state) {
             // turn on
             apds.setGestureGain(0);
@@ -64,10 +67,11 @@ public:
             // turn off
             apds.disableGestureSensor();
         }
+#endif
     }
 
     Q_INVOKABLE void readInterrupt() {
-
+#ifdef __linux__
         if (m_proximityDetection) {
 
             // clear the interrupt
@@ -119,11 +123,13 @@ public:
                 break;
             }
         }
+#endif
     }
 
 public:
     ProximityGestureControl()
     {
+#ifdef __linux__
         if ( (false == apds.init()) || (false == apds.enableLightSensor(false)) )
         {
             qDebug() << "Cannot initialize the proximity sensor";
@@ -141,6 +147,7 @@ public:
             delay(200);
             //            gestureDetection(true);
         }
+#endif
     }
 
     ~ProximityGestureControl()
@@ -154,7 +161,9 @@ signals:
     void apds9960Notify();
 
 private:
+#ifdef __linux__
     APDS9960 apds = APDS9960();
+#endif
     uint16_t m_ambientLight;
     uint8_t m_proximity;
     QString m_gesture;
