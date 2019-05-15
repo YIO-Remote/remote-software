@@ -157,7 +157,9 @@ ApplicationWindow {
         triggeredOnStart: true
 
         onTriggered: {
-            JSUpdate.checkForUpdate();
+            if (config.settings.softwareupdate) {
+                JSUpdate.checkForUpdate();
+            }
         }
     }
 

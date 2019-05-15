@@ -74,12 +74,11 @@ public:
 #ifdef __linux__
         if (m_proximityDetection) {
 
-            // clear the interrupt
+            // read the value
             apds.readProximity(m_proximity);
             qDebug() << "Proximity reading:" << m_proximity;
-            apds.clearProximityInt();
-            apds.enableLightSensor(false);
             delay(200);
+            apds.enableLightSensor(false);
 
             // read the ambient light
             apds.readAmbientLight(m_ambientLight);
@@ -89,6 +88,10 @@ public:
 
             // turn off proximity detection
             proximityDetection(false);
+
+            // clear the interrupt
+            apds.clearProximityInt();
+
 
             //            delay(1000);
 

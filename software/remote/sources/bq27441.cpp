@@ -26,6 +26,7 @@ void BQ27441::begin()
 #ifdef __linux__
     if (getDesignCapacity() != ((uint16_t) m_capacity)) {
         // change the designcapacity if it doesn't match
+        qDebug() << "Setting charge capacity to:" << m_capacity;
         changeCapacity(((uint16_t) m_capacity));
     }
 #endif
@@ -106,14 +107,22 @@ void BQ27441::changeCapacity(uint16_t capacity)
         uint8_t old_termv = (uint8_t) wiringPiI2CReadReg8(bus, 0x50);
 
         // write terminate voltage
-        uint8_t new_termv = (uint8_t) (3400) >> 8;
+        uint8_t new_termv = (uint8_t) (3300) >> 8;
 
         wiringPiI2CWriteReg8(bus, 0x50, new_termv);
         delay(5);
 
+        // read taper rate
+        wiringPiI2CWrite(bus, 0x5b);
+        delay(5);
+        uint8_t old_taper = (uint8_t) wiringPiI2CReadReg8(bus, 0x5b);
+
+        // write taper rate
+        uint8_t new_taper = (uint8_t) (217) >> 8;
+
         // calculate new checksum
-        uint8_t temp = (255 - old_checksum - old_descap_lsb - old_descap_msb - old_desen - old_termv) % 256;
-        uint8_t new_checksum = 255 - ((temp + new_descap_lsb + new_descap_msb + new_desen + new_termv) % 256);
+        uint8_t temp = (255 - old_checksum - old_descap_lsb - old_descap_msb - old_desen - old_termv - old_taper) % 256;
+        uint8_t new_checksum = 255 - ((temp + new_descap_lsb + new_descap_msb + new_desen + new_termv + new_taper) % 256);
 
         // write new checksum
         wiringPiI2CWriteReg8(bus, 0x60, new_checksum);
