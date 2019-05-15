@@ -121,6 +121,7 @@ Item {
                 if (held) {
                     saveMenuConfig()
                 }
+                haptic.playEffect("click");
 
                 held = false
                 mainNavigationListView.currentIndex = index

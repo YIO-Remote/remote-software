@@ -154,6 +154,15 @@ public:
         wiringPiI2CReadReg8(bus, MCP23017_INTCAPB);
     }
 
+    void shutdown()
+    {
+        // set pins output
+        wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0x00);
+
+        // set pin power button pin low
+        wiringPiI2CWriteReg8(bus, MCP23017_OLATB, 0x00);
+    }
+
 private:
     int bus;
 

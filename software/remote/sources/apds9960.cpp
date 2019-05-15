@@ -36,7 +36,6 @@ bool APDS9960::init()
     uint8_t id;
 
     /* Initialize I2C */
-//    fd_ = wiringPiI2CSetup(APDS9960_I2C_ADDR);
     fd_ = wiringPiI2CSetupInterface("/dev/i2c-3", APDS9960_I2C_ADDR);
     if(fd_ == -1) {
         return false;
@@ -145,34 +144,6 @@ bool APDS9960::init()
     if( !setGestureIntEnable(DEFAULT_GIEN) ) {
         return false;
     }
-
-#if 0
-    /* Gesture config register dump */
-    uint8_t reg;
-    uint8_t val;
-
-    for(reg = 0x80; reg <= 0xAF; reg++) {
-        if( (reg != 0x82) && \
-                (reg != 0x8A) && \
-                (reg != 0x91) && \
-                (reg != 0xA8) && \
-                (reg != 0xAC) && \
-                (reg != 0xAD) )
-        {
-            wireReadDataByte(reg, val);
-            Serial.print(reg, HEX);
-            Serial.print(": 0x");
-            Serial.println(val, HEX);
-        }
-    }
-
-    for(reg = 0xE4; reg <= 0xE7; reg++) {
-        wireReadDataByte(reg, val);
-        Serial.print(reg, HEX);
-        Serial.print(": 0x");
-        Serial.println(val, HEX);
-    }
-#endif
 
     return true;
 }
@@ -470,11 +441,6 @@ int APDS9960::readGesture()
                 return ERROR;
             }
 
-#if DEBUG
-            Serial.print("FIFO Level: ");
-            Serial.println(fifo_level);
-#endif
-
             /* If there's stuff in the FIFO, read it into our data block */
             if( fifo_level > 0) {
                 bytes_read = wireReadDataBlock(  APDS9960_GFIFO_U,
@@ -483,14 +449,6 @@ int APDS9960::readGesture()
                 if( bytes_read == -1 ) {
                     return ERROR;
                 }
-#if DEBUG
-                Serial.print("FIFO Dump: ");
-                for ( i = 0; i < bytes_read; i++ ) {
-                    Serial.print(fifo_data[i]);
-                    Serial.print(" ");
-                }
-                Serial.println();
-#endif
 
                 /* If at least 1 set of data, sort the data into U/D/L/R */
                 if( bytes_read >= 4 ) {
@@ -507,22 +465,10 @@ int APDS9960::readGesture()
                         gesture_data_.total_gestures++;
                     }
 
-#if DEBUG
-                    Serial.print("Up Data: ");
-                    for ( i = 0; i < gesture_data_.total_gestures; i++ ) {
-                        Serial.print(gesture_data_.u_data[i]);
-                        Serial.print(" ");
-                    }
-                    Serial.println();
-#endif
-
                     /* Filter and process gesture data. Decode near/far state */
                     if( processGestureData() ) {
                         if( decodeGesture() ) {
                             //***TODO: U-Turn Gestures
-#if DEBUG
-                            //Serial.println(gesture_motion_);
-#endif
                         }
                     }
 
@@ -537,10 +483,6 @@ int APDS9960::readGesture()
             delay(FIFO_PAUSE_TIME);
             decodeGesture();
             motion = gesture_motion_;
-#if DEBUG
-            Serial.print("END: ");
-            Serial.println(gesture_motion_);
-#endif
             resetGestureParameters();
             return motion;
         }
@@ -785,17 +727,6 @@ bool APDS9960::processGestureData()
         }
         /* Find the last value in U/D/L/R above the threshold */
         for( i = gesture_data_.total_gestures - 1; i >= 0; i-- ) {
-#if DEBUG
-            Serial.print(F("Finding last: "));
-            Serial.print(F("U:"));
-            Serial.print(gesture_data_.u_data[i]);
-            Serial.print(F(" D:"));
-            Serial.print(gesture_data_.d_data[i]);
-            Serial.print(F(" L:"));
-            Serial.print(gesture_data_.l_data[i]);
-            Serial.print(F(" R:"));
-            Serial.println(gesture_data_.r_data[i]);
-#endif
             if( (gesture_data_.u_data[i] > GESTURE_THRESHOLD_OUT) &&
                     (gesture_data_.d_data[i] > GESTURE_THRESHOLD_OUT) &&
                     (gesture_data_.l_data[i] > GESTURE_THRESHOLD_OUT) &&
@@ -816,51 +747,13 @@ bool APDS9960::processGestureData()
     ud_ratio_last = ((u_last - d_last) * 100) / (u_last + d_last);
     lr_ratio_last = ((l_last - r_last) * 100) / (l_last + r_last);
 
-#if DEBUG
-    Serial.print(F("Last Values: "));
-    Serial.print(F("U:"));
-    Serial.print(u_last);
-    Serial.print(F(" D:"));
-    Serial.print(d_last);
-    Serial.print(F(" L:"));
-    Serial.print(l_last);
-    Serial.print(F(" R:"));
-    Serial.println(r_last);
-
-    Serial.print(F("Ratios: "));
-    Serial.print(F("UD Fi: "));
-    Serial.print(ud_ratio_first);
-    Serial.print(F(" UD La: "));
-    Serial.print(ud_ratio_last);
-    Serial.print(F(" LR Fi: "));
-    Serial.print(lr_ratio_first);
-    Serial.print(F(" LR La: "));
-    Serial.println(lr_ratio_last);
-#endif
-
     /* Determine the difference between the first and last ratios */
     ud_delta = ud_ratio_last - ud_ratio_first;
     lr_delta = lr_ratio_last - lr_ratio_first;
 
-#if DEBUG
-    Serial.print("Deltas: ");
-    Serial.print("UD: ");
-    Serial.print(ud_delta);
-    Serial.print(" LR: ");
-    Serial.println(lr_delta);
-#endif
-
     /* Accumulate the UD and LR delta values */
     gesture_ud_delta_ += ud_delta;
     gesture_lr_delta_ += lr_delta;
-
-#if DEBUG
-    Serial.print("Accumulations: ");
-    Serial.print("UD: ");
-    Serial.print(gesture_ud_delta_);
-    Serial.print(" LR: ");
-    Serial.println(gesture_lr_delta_);
-#endif
 
     /* Determine U/D gesture */
     if( gesture_ud_delta_ >= GESTURE_SENSITIVITY_1 ) {
@@ -916,18 +809,6 @@ bool APDS9960::processGestureData()
             }
         }
     }
-
-#if DEBUG
-    Serial.print("UD_CT: ");
-    Serial.print(gesture_ud_count_);
-    Serial.print(" LR_CT: ");
-    Serial.print(gesture_lr_count_);
-    Serial.print(" NEAR_CT: ");
-    Serial.print(gesture_near_count_);
-    Serial.print(" FAR_CT: ");
-    Serial.println(gesture_far_count_);
-    Serial.println("----------");
-#endif
 
     return false;
 }

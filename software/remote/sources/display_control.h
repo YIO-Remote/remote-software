@@ -5,8 +5,10 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include <wiringPi.h>
-#include <mcp23017.h>
+#ifdef __linux__
+    #include <wiringPi.h>
+    #include <mcp23017.h>
+#endif
 #include <time.h>
 
 class DisplayControl : public QObject
@@ -21,6 +23,8 @@ class DisplayControl : public QObject
 
 public:
     Q_INVOKABLE bool setmode(const QString &mode);
+
+    Q_INVOKABLE void setBrightness(int value);
 
     DisplayControl();
 

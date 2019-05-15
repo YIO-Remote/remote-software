@@ -35,6 +35,8 @@ ApplicationWindow {
     property real battery_time: (new Date()).getTime()
     property bool wasBatteryWarning: false
 
+    property var battery_data: []
+
     Battery {
         id: battery
         capacity: 2500
@@ -53,6 +55,39 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
+
+            if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
+                // set turn on button to low
+                buttonHandler.interruptHandler.shutdown();
+                // halt
+                mainLauncher.launch("halt");
+            }
+
+            if (battery.getAveragePower() > 0 ) {
+                chargingScreen.item.state = "visible";
+            } else {
+                chargingScreen.item.state = "hidden";
+            }
+        }
+    }
+
+    // battery data logger
+    Timer {
+        running: true
+        repeat: true
+        interval: 600000
+
+        onTriggered: {
+            var tmp = {};
+            tmp.timestamp = new Date().getTime();
+            tmp.datestamp = new Date().getDate();
+            tmp.level = battery_level;
+            tmp.power = battery.getAveragePower();
+            tmp.voltage = battery_voltage;
+
+            battery_data.push(tmp);
+
+            console.debug(JSON.stringify(battery_data));
         }
     }
 
@@ -357,9 +392,7 @@ ApplicationWindow {
         if (battery_level < 0.2 && !wasBatteryWarning) {
             lowBatteryNotification.item.open();
             wasBatteryWarning = true;
-            if (socketServer.clientId != undefined) {
-                socketServer.clientId.sendTextMessage("wakeup");
-            }
+            standbyControl.touchDetected = true;
         }
         if (battery_level > 0.3) {
             wasBatteryWarning = false;

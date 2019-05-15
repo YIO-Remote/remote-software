@@ -3,8 +3,10 @@
 
 #include <QObject>
 
+#ifdef __linux__
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#endif
 #include <stdint.h>
 
 #define DRV2605_ADDR 0x5A             ///< Device I2C address
@@ -66,6 +68,7 @@ public:
     drv2605();
 
     bool init();
+#ifdef __linux__
     void writeRegister8(uint8_t reg, uint8_t val);
     int readRegister8(uint8_t reg);
     void setWaveform(uint8_t slot, uint8_t w);
@@ -74,6 +77,7 @@ public:
     void stop(void);
     void setMode(uint8_t mode);
     void setRealtimeValue(uint8_t rtp);
+#endif
 
 private:
     int bus;

@@ -122,6 +122,8 @@ Rectangle {
         enabled: lightButton.state == "open" ? false: true
 
         onPressAndHold: {
+            haptic.playEffect("press");
+
             addToFavButton.state = "open"
         }
 
@@ -351,6 +353,7 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
+                haptic.playEffect("click");
                 addToFavButton.state = "closed"
             }
         }

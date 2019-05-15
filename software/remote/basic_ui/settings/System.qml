@@ -152,6 +152,7 @@ Item {
             mouseArea.onClicked: {
                 settingsLauncher.launch("fbv -d 1 /bye.png")
                 console.debug("now shutdown")
+                buttonHandler.interruptHandler.shutdown();
                 settingsLauncher.launch("halt");
             }
         }

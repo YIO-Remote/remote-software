@@ -4,8 +4,10 @@
 #include <QObject>
 #include <QtDebug>
 
+#ifdef __linux__
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#endif
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,18 +80,19 @@ public:
     }
 
 
-   Q_INVOKABLE void begin();
+    Q_INVOKABLE void begin();
+#ifdef __linux__
     int32_t  getTemperatureC();                 // Result in 1 Celsius
     Q_INVOKABLE int getVoltage();
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
     uint16_t getFullAvailableCapacity();
     uint16_t getRemainingCapacity();
-    uint16_t getFullChargeCapacity();
+    Q_INVOKABLE int getFullChargeCapacity();
     Q_INVOKABLE int16_t  getAverageCurrent();
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
-    Q_INVOKABLE int16_t  getAveragePower();
+    Q_INVOKABLE int getAveragePower();
     Q_INVOKABLE int getStateOfCharge();
     uint16_t getInternalTemperature();            // Result in 0.1 Kelvins
     Q_INVOKABLE int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
@@ -106,12 +109,13 @@ public:
     // Control Subcommands
     uint16_t getControlStatus();
     uint16_t getDeviceType();
-//    uint16_t getFWVersion();
-//    uint16_t getDMCode();
-//    uint16_t getPrevMacwrite();
+    //    uint16_t getFWVersion();
+    //    uint16_t getDMCode();
+    //    uint16_t getPrevMacwrite();
     uint16_t getChemID();
 
     Q_INVOKABLE void changeCapacity(uint16_t capacity);
+#endif
 
 private:
     int bus;

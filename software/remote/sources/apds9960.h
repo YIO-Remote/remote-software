@@ -338,5 +338,4 @@ private:
     int fd_;
 };
 
-
 #endif // APDS9960_H
