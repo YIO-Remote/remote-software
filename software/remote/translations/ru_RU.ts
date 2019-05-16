@@ -197,7 +197,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation>Пожалуйста, зарядите аккумулятор</translation>
+      <translation>Пожалуйста, зарядите пульт</translation>
     </message>
   </context>
   <context>
@@ -210,7 +210,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Never turn off Wi-Fi</source>
-      <translation>Никогда не отключать Wi-Fi</translation>
+      <translation>Никогда не выключать Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
@@ -272,7 +272,7 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Установить</translation>
     </message>
   </context>
   <context>
@@ -280,27 +280,27 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Система</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Аптайм</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="95"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Температура процессора</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Перезагрузить</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="146"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Выключить</translation>
     </message>
   </context>
   <context>
@@ -308,12 +308,12 @@
     <message>
       <location filename="../main.qml" line="184"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Свет</translation>
     </message>
     <message>
       <location filename="../main.qml" line="184"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Жалюзи</translation>
     </message>
   </context>
 </TS>
