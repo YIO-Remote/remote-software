@@ -6,22 +6,22 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="17"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Akumulator</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="38"/>
       <source>Battery charge</source>
-      <translation type="unfinished">Battery charge</translation>
+      <translation>Ładowanie akumulatora</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="74"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Stan akumulatora</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="110"/>
       <source>Battery voltage</source>
-      <translation type="unfinished">Battery voltage</translation>
+      <translation>Napięcie akumulatora</translation>
     </message>
   </context>
   <context>
@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="423"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Usuń z ulubionych</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="423"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Dodaj do ulubionych</translation>
     </message>
   </context>
   <context>
@@ -42,7 +42,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>Ładowanie</translation>
     </message>
   </context>
   <context>
@@ -51,12 +51,12 @@
       <location filename="../basic_ui/ConnectionScreen.qml" line="21"/>
       <location filename="../basic_ui/ConnectionScreen.qml" line="154"/>
       <source>Reconnecting...</source>
-      <translation type="unfinished">Reconnecting...</translation>
+      <translation>Łączenie...</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="31"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Połączony</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
