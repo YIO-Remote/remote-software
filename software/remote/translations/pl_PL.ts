@@ -285,22 +285,22 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Czas pracy</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="95"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Temperatura procesora</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Restart</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="146"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Wyłącz</translation>
     </message>
   </context>
   <context>
@@ -308,12 +308,12 @@
     <message>
       <location filename="../main.qml" line="184"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Światła</translation>
     </message>
     <message>
       <location filename="../main.qml" line="184"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Żaluzje</translation>
     </message>
   </context>
 </TS>
