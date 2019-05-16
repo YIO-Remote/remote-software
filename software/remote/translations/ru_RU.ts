@@ -156,12 +156,12 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Жалюзи</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Свет</translation>
     </message>
   </context>
   <context>
@@ -169,22 +169,22 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="34"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Сеть</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="55"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Мощность сигнала Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="92"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP-адрес</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="128"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC-адрес</translation>
     </message>
   </context>
   <context>
@@ -192,12 +192,12 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Аккумулятор разряжен</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Пожалуйста, зарядите аккумулятор</translation>
     </message>
   </context>
   <context>
@@ -205,43 +205,43 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Энергосбережение</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Никогда не отключать Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Выключить Wi-Fi после %1 минут бездействия</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Никогда</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 минут</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Никогда не выключать пульт</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Выключить пульт после %1 часов бездействия</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 часов</translation>
     </message>
   </context>
   <context>
@@ -249,17 +249,17 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Обновление ПО</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>Автообновление</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
       <source>Automatically look for updates and update when a new software version is available.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
+      <translation>Автоматически проверять наличие обновлений и устанавливать, когда доступна новая версия ПО.</translation>
     </message>
   </context>
   <context>
@@ -267,7 +267,7 @@
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="122"/>
       <source>New software version is available.</source>
-      <translation type="unfinished">New software version is available.</translation>
+      <translation>Доступна новая версия ПО.</translation>
     </message>
     <message>
       <location filename="../basic_ui/StatusBar.qml" line="152"/>
