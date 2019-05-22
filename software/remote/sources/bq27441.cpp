@@ -315,7 +315,7 @@ int BQ27441::getStateOfCharge() {
 #ifdef __linux__
     return wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
 #else
-    return 100; // 100% full
+    return 1; // 100% full
 #endif
 }
 

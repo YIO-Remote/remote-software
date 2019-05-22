@@ -30,7 +30,7 @@ ApplicationWindow {
     // BATTERY
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property real battery_voltage: 0
-    property real battery_level: 0
+    property real battery_level: battery.getStateOfCharge()
     property real battery_health: 0
     property real battery_time: (new Date()).getTime()
     property bool wasBatteryWarning: false
