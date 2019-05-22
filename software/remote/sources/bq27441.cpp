@@ -148,13 +148,6 @@ int32_t BQ27441::getTemperatureC() {  // Result in 1 Celcius
     return result;
 }
 
-int BQ27441::getVoltage() {
-    int result;
-
-    result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_VOLTAGE);
-    return result;
-}
-
 uint16_t BQ27441::getFlags() {
     uint16_t result;
 
@@ -211,20 +204,6 @@ int16_t  BQ27441::getMaxLoadCurrent() {
     return (int16_t) result;
 }
 
-int BQ27441::getAveragePower() {
-    int16_t result;
-
-    result = (int16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_POWER);
-    return (int) result;
-}
-
-int BQ27441::getStateOfCharge() {
-    int result;
-
-    result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
-    return result;
-}
-
 int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
     int16_t result;
     uint16_t raw;
@@ -233,14 +212,6 @@ int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
     // Convert to 0.1 Celsius using integer math
     result = (int16_t) raw - 2731;
     return result;
-}
-
-int BQ27441::getStateOfHealth() {
-    uint8_t result;
-
-    uint16_t raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOH);
-    result = raw & 0x0ff;
-    return (int) result;
 }
 
 uint16_t BQ27441::getRemainingCapacityUnfiltered() {
@@ -324,5 +295,37 @@ uint16_t BQ27441::getChemID() {
 #endif
 
 
+int BQ27441::getVoltage() {
+#ifdef __linux__
+    return wiringPiI2CReadReg16(bus,BQ27441_COMMAND_VOLTAGE);
+#else
+    return 5000; // 5v default
+#endif
+}
+
+int BQ27441::getAveragePower() {
+#ifdef __linux__
+    return (int16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_POWER);
+#else
+    return 1; // Anything above 0 would suffice
+#endif
+}
+
+int BQ27441::getStateOfCharge() {
+#ifdef __linux__
+    return wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
+#else
+    return 100; // 100% full
+#endif
+}
+
+int BQ27441::getStateOfHealth() {
+#ifdef __linux__
+    uint16_t raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOH);
+    return raw & 0x0ff;
+#else
+    return 1; // Not used yet, i think?
+#endif
+}
 
 

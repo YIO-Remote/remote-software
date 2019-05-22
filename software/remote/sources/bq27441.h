@@ -81,9 +81,12 @@ public:
 
 
     Q_INVOKABLE void begin();
+    Q_INVOKABLE int getVoltage();
+    Q_INVOKABLE int getStateOfCharge();
+    Q_INVOKABLE int getStateOfHealth();
+    Q_INVOKABLE int getAveragePower();
 #ifdef __linux__
     int32_t  getTemperatureC();                 // Result in 1 Celsius
-    Q_INVOKABLE int getVoltage();
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
     uint16_t getFullAvailableCapacity();
@@ -92,12 +95,9 @@ public:
     Q_INVOKABLE int16_t  getAverageCurrent();
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
-    Q_INVOKABLE int getAveragePower();
-    Q_INVOKABLE int getStateOfCharge();
     uint16_t getInternalTemperature();            // Result in 0.1 Kelvins
     Q_INVOKABLE int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
     int16_t  getInternalTemperatureF();           // Result in 0.1 Fahrenheit
-    Q_INVOKABLE int getStateOfHealth();
     uint16_t getRemainingCapacityUnfiltered();
     uint16_t getRemainingCapacityFiltered();
     uint16_t getFullChargeCapacityUnfiltered();
