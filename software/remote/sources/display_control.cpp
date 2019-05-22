@@ -128,6 +128,7 @@ bool DisplayControl::setmode(const QString &mode)
 #endif
         return true;
     }
+    return false;
 }
 
 void DisplayControl::setBrightness(int value)
