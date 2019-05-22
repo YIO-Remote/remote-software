@@ -163,9 +163,9 @@ signals:
 private:
 #ifdef __linux__
     APDS9960 apds = APDS9960();
+    uint8_t m_proximity;
 #endif
     uint16_t m_ambientLight;
-    uint8_t m_proximity;
     QString m_gesture;
     QString m_apds9960Error;
     bool m_proximityDetection = false;
