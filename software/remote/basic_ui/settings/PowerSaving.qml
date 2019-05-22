@@ -36,7 +36,7 @@ Item {
         Text {
             id: wifioffText
             color: colorText
-            text: config.settings.wifitime == 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(config.settings.wifitime/60) + translateHandler.emptyString
+            text: config.settings.wifitime === 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(config.settings.wifitime/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -151,7 +151,7 @@ Item {
         Text {
             id: shutdownText
             color: colorText
-            text: config.settings.shutdowntime == 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(config.settings.shutdowntime/60/60) + translateHandler.emptyString
+            text: config.settings.shutdowntime === 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(config.settings.shutdowntime/60/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left

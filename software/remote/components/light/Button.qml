@@ -194,7 +194,7 @@ Rectangle {
         implicitWidth: 66
         anchors.right: parent.right
         anchors.rightMargin: 20
-        checked: lstate == "off" ? false : true
+        checked: lstate === "off" ? false : true
         enabled: lightButton.state == "open" ? false: true
 
         indicator: Rectangle {

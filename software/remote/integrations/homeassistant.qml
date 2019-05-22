@@ -52,18 +52,18 @@ Item {
         //                        console.debug(message);
         var json = JSON.parse(message);
 
-        if (json.error != null) {
+        if (json.error !== null) {
             console.debug(json.error);
         }
 
-        if (json.type == "auth_required") {
+        if (json.type === "auth_required") {
             json = {};
             json["type"] = "auth";
             json["access_token"] = config.integration[integrationId].data.token;
             socket.sendTextMessage(JSON.stringify(json));
         }
 
-        if (json.type == "auth_ok") {
+        if (json.type === "auth_ok") {
             console.debug("Connection successful")
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // FETCH STATES
@@ -71,7 +71,7 @@ Item {
             socket.sendTextMessage('{"id": 2, "type": "get_states"}\n');
         }
 
-        if (json.success == true && json.id == 2) {
+        if (json.success === true && json.id === 2) {
 
             fetch_json = json;
 
@@ -81,7 +81,7 @@ Item {
             socket.sendTextMessage('{"id": 3, "type": "subscribe_events", "event_type": "state_changed"}\n');
         }
 
-        if (json.success == true && json.id == 3) {
+        if (json.success === true && json.id === 3) {
             if (!firstRun) {
                 connectionState = "connected";
             }
@@ -90,15 +90,15 @@ Item {
             console.debug("Command successful");
         }
 
-        if (json.success == true && json.id == webSocketId) {
+        if (json.success === true && json.id === webSocketId) {
             console.debug("Command successful");
         }
 
-        if (json.success == false) {
+        if (json.success === false) {
             console.debug("Websocket error: " + json.error.message);
         }
 
-        if (json.type == "event" && json.id == 3) {
+        if (json.type === "event" && json.id === 3) {
             event_json = json;
         }
     }
@@ -113,7 +113,7 @@ Item {
         json["type"] = "call_service";
         json["domain"] = domain;
         json["service"] = service;
-        if (data == null) {
+        if (data === null) {
             json["service_data"] = {"entity_id" : entity_id};
         } else {
             data["entity_id"] = entity_id;

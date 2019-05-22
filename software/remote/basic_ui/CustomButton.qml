@@ -15,7 +15,7 @@ Rectangle {
 
     states: State {
         name: "pressed"
-        when: mouseArea.pressed == true
+        when: mouseArea.pressed === true
         PropertyChanges {
             target: button
             color: colorLine

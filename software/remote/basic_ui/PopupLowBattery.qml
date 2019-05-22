@@ -33,7 +33,7 @@ Popup {
 
     onOpened: {
         lowBatteryNotificationTimer.start()
-        if (standbyControl.mode != "on") {
+        if (standbyControl.mode !== "on") {
             standbyControl.touchDetected = true;
         }
     }

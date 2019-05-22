@@ -10,7 +10,7 @@ Item {
 
     function getLanguage(id) {
         for (var i=0; i<translations.length; i++) {
-            if (translations[i].id == id) {
+            if (translations[i].id === id) {
                 return i;
             }
         }

@@ -62,9 +62,9 @@ Item {
             addAreas();
             menuConfig.move(1, menuConfig.count-1, 1);
         } else {
-            for (var i=0; i<config.settings.menu.order.length; i++) {
-                config.settings.menu.order[i].displayname = qsTr(config.settings.menu.order[i].display_name) + translateHandler.emptyString;
-                menuConfig.append(config.settings.menu.order[i]);
+            for (var j=0; j<config.settings.menu.order.length; j++) {
+                config.settings.menu.order[j].displayname = qsTr(config.settings.menu.order[j].display_name) + translateHandler.emptyString;
+                menuConfig.append(config.settings.menu.order[j]);
             }
         }
     }

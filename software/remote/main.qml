@@ -185,7 +185,7 @@ ApplicationWindow {
         for (var i=0; i<config.integration.length; i++) {
             comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
             integration[config.integration[i].type] = comp.createObject(applicationWindow, {integrationId: i});
-            if (comp.status != Component.Ready) {
+            if (comp.status !== Component.Ready) {
                 console.debug("Error: " + comp.errorString() );
             }
             integrationObj[i] = config.integration[i];
@@ -193,7 +193,7 @@ ApplicationWindow {
         }
 
         // must be at least one integration for this to be successful
-        if (i != 0) {
+        if (i !== 0) {
             return true;
         } else {
             return false;
@@ -211,7 +211,7 @@ ApplicationWindow {
                 if (supported_entities[k] === config.entities[i].type) {
                     // load the supported component
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    if (comp.status != Component.Ready) {
+                    if (comp.status !== Component.Ready) {
                         console.debug("Error: " + comp.errorString() );
                     }
                     loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);

@@ -78,7 +78,7 @@ Item {
     function wifiHandler(state) {
         var cmd;
 
-        if (state == "on") {
+        if (state === "on") {
             cmd = "systemctl start wpa_supplicant@wlan0.service"
         } else {
             cmd = "systemctl stop wpa_supplicant@wlan0.service"
@@ -90,13 +90,13 @@ Item {
     onDisplay_brightnessChanged: {
         if (display_brightness_old >= display_brightness) {
             // dim down
-            for (var i=display_brightness_old; i>display_brightness-1; i--) {
-                displayControl.setBrightness(i);
+            for (var d=display_brightness_old; d>display_brightness--; d--) {
+                displayControl.setBrightness(d);
             }
         } else {
             // dim up
-            for (var i=display_brightness_old; i<display_brightness+1; i++) {
-                displayControl.setBrightness(i);
+            for (var u=display_brightness_old; u<display_brightness++; u++) {
+                displayControl.setBrightness(u);
             }
         }
         standbyControl.display_brightness_old = standbyControl.display_brightness;
