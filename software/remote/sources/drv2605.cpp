@@ -56,8 +56,9 @@ bool drv2605::init()
     writeRegister8(DRV2605_REG_FEEDBACK, readRegister8(DRV2605_REG_FEEDBACK) & 0x7F);
     // turn on ERM_OPEN_LOOP
     writeRegister8(DRV2605_REG_CONTROL3, readRegister8(DRV2605_REG_CONTROL3) | 0x20);
-
     return true;
+#else
+    return false;
 #endif
 }
 #ifdef __linux__
