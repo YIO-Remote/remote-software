@@ -307,7 +307,7 @@ int BQ27441::getAveragePower() {
 #ifdef __linux__
     return (int16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_POWER);
 #else
-    return 1; // Anything above 0 would suffice
+    return 0; // Not charging
 #endif
 }
 
@@ -315,7 +315,7 @@ int BQ27441::getStateOfCharge() {
 #ifdef __linux__
     return wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
 #else
-    return 1; // 100% full
+    return 100; // 100% full
 #endif
 }
 
@@ -324,7 +324,7 @@ int BQ27441::getStateOfHealth() {
     uint16_t raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOH);
     return raw & 0x0ff;
 #else
-    return 1; // Not used yet, i think?
+    return 100; // Very healthy
 #endif
 }
 
