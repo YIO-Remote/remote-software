@@ -106,38 +106,24 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#DISTFILES +=
-
+# Configure default JSON destination path
+DESTDIR = $$OUT_PWD
 
 win32 {
-    # Copy config file to output directory
-    copyConfig.commands = $(COPY_DIR) $$shell_path($$PWD/config.json) $$OUT_PWD
-
-    # Copy translation file to output directory
-    copyTranslations.commands = $(COPY_DIR) $$shell_path($$PWD/translations.json) $$OUT_PWD
-
-    # Add copy commands to build output
-    first.depends = $(first) copyConfig copyTranslations
-    export(first.depends)
-    export(copyConfig.commands)
-    export(copyTranslations.commands)
-    QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
+    CONFIG(debug, debug|release) {
+    DESTDIR = $$OUT_PWD/debug
+    }
+    CONFIG(release, debug|release) {
+    DESTDIR = $$OUT_PWD/release
+    }
 }
 macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 } else {
-    # Copy config file to output directory
-    copyConfig.commands = $(COPY_DIR) $$PWD/config.json $$OUT_PWD
-
-    # Copy translation file to output directory
-    copyTranslations.commands = $(COPY_DIR) $$PWD/translations.json $$OUT_PWD
-
-    # Add copy commands to build output
-    first.depends = $(first) copyConfig copyTranslations
-    export(first.depends)
-    export(copyConfig.commands)
-    export(copyTranslations.commands)
-    QMAKE_EXTRA_TARGETS += first copyConfig copyTranslations
+    CONFIG += file_copies
+    COPIES += extraData
+    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.path = $$DESTDIR
 }

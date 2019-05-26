@@ -95,8 +95,8 @@ Item {
             }
         } else {
             // dim up
-            for (var i=display_brightness_old; i<display_brightness+1; i++) {
-                displayControl.setBrightness(i);
+            for (var j=display_brightness_old; j<display_brightness+1; j++) {
+                displayControl.setBrightness(j);
             }
         }
         standbyControl.display_brightness_old = standbyControl.display_brightness;

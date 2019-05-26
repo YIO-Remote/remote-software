@@ -13,8 +13,10 @@ class InterruptHandler : public QObject
 {
     Q_OBJECT
 
+#ifdef __linux__
     QSocketNotifier *notifier;
     QFile *file;
+#endif
 
 public:
     Q_PROPERTY(QString button READ getButton NOTIFY buttonPressed)

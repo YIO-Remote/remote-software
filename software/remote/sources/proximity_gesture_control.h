@@ -133,10 +133,16 @@ public:
     ProximityGestureControl()
     {
 #ifdef __linux__
-        if ( (false == apds.init()) || (false == apds.enableLightSensor(false)) )
+        if ( !apds.init() )
         {
             qDebug() << "Cannot initialize the proximity sensor";
             m_apds9960Error = "Cannot initialize the proximity sensor";
+            emit apds9960Notify();
+        }
+
+        if ( !apds.enableLightSensor(false) ) {
+            qDebug() << "Cannot initialize the light sensor";
+            m_apds9960Error = "Cannot initialize the light sensor";
             emit apds9960Notify();
         }
 
