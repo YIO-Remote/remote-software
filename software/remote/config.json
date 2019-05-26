@@ -142,6 +142,16 @@
             "showareas": true,
             "showdevices": true,
             "order": [
+                {
+                    "name": "favorites",
+                    "display_name": "Favorites",
+                    "show": true        
+                    },
+                    {
+                    "name": "settings",
+                    "display_name": "Settings",
+                    "show": true
+                    }
         ]}
     }
 }
