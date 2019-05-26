@@ -14,7 +14,7 @@ Item {
 
     onConnectionOpenChanged: {
         if (connectionOpen) {
-            connectionState = "connecting"
+            connecting = true;
             websocketReconnect.tries = 0;
             socket.active = true;
         } else {
@@ -82,9 +82,7 @@ Item {
         }
 
         if (json.success == true && json.id == 3) {
-            if (!firstRun) {
-                connectionState = "connected";
-            }
+            connecting = false;
             webSocketConnection = true;
             console.debug("Subscribed to state changes");
             console.debug("Command successful");
@@ -161,13 +159,20 @@ Item {
         onTriggered: {
             if (tries == 4) {
                 websocketReconnect.running = false;
-                connectionState = "failed"
-                console.debug("Failed to connect")
+//                connectionState = "failed"
+                console.debug("Failed to connect");
+
+                var tmp = {};
+                tmp.type = "error";
+                tmp.text = "Failed to connect to Home Assistant."
+                tmp.action = "";
+                notifications.push(tmp);
+
                 tries = 0
             } else {
                 webSocketId = 4
-                if (connectionState != "connecting") {
-                    connectionState = "connecting"
+                if (!connecting) {
+                    connecting = true;
                 }
                 socket.active = true
                 console.debug("Reconnecting...")

@@ -17,5 +17,6 @@
         <file>images/components/fav-minus.png</file>
         <file>images/components/fav-plus.png</file>
         <file>images/components/close_button.png</file>
+        <file>images/statusbar/statusbar-loader.png</file>
     </qresource>
 </RCC>
