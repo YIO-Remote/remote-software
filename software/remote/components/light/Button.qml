@@ -9,15 +9,15 @@ Rectangle {
 
     property int entityID
 
-    property var entity_id: loaded_components.light.entities[entityID].entity_id
-    property var friendly_name: loaded_components.light.entities[entityID].friendly_name
-    property var lstate: loaded_components.light.entities[entityID].state
-    property int brightness: loaded_components.light.entities[entityID].brightness
-    property string integrationType: loaded_components.light.entities[entityID].integration
-    property string area: loaded_components.light.entities[entityID].area
-    property int supported_features: loaded_components.light.entities[entityID].supported_features
+    property var entity_id:             loaded_components.light.entities[entityID].entity_id
+    property var friendly_name:         loaded_components.light.entities[entityID].friendly_name
+    property var lstate:                loaded_components.light.entities[entityID].state
+    property int brightness:            loaded_components.light.entities[entityID].brightness
+    property string integrationType:    loaded_components.light.entities[entityID].integration
+    property string area:               loaded_components.light.entities[entityID].area
+    property int supported_features:    loaded_components.light.entities[entityID].supported_features
 
-    property bool favorite: loaded_components.light.entities[entityID].favorite
+    property bool favorite:             loaded_components.light.entities[entityID].favorite
 
     width: parent.width
     height: 125
@@ -194,7 +194,7 @@ Rectangle {
         implicitWidth: 66
         anchors.right: parent.right
         anchors.rightMargin: 20
-        checked: lstate == "off" ? false : true
+        checked: lstate === "off" ? false : true
         enabled: lightButton.state == "open" ? false: true
 
         indicator: Rectangle {
@@ -371,7 +371,7 @@ Rectangle {
 
             states: State {
                 name: "pressed"
-                when: mouseAreaFav.pressed == true
+                when: mouseAreaFav.pressed === true
                 PropertyChanges {
                     target: addToFavButtonCircle
                     color: colorHighlight
@@ -413,7 +413,7 @@ Rectangle {
                     tmp[entityID].favorite = !tmp[entityID].favorite;
                     loaded_components.light.entities = tmp;
                     for (var i=0; i<mainNavigationSwipeview.count; i++) {
-                        if (mainNavigationSwipeview.itemAt(i).mainNavigationLoader.source == "qrc:/basic_ui/pages/dashboard.qml") {
+                        if (mainNavigationSwipeview.itemAt(i).mainNavigationLoader.source === "qrc:/basic_ui/pages/dashboard.qml") {
                             mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = false;
                             mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = true;
                         }

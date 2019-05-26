@@ -10,7 +10,7 @@ Item {
 
     property int integrationId
 
-    property bool connectionOpen: true
+    property bool connectionOpen: false
 
     onConnectionOpenChanged: {
         if (connectionOpen) {

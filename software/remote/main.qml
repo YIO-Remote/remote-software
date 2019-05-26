@@ -187,7 +187,7 @@ ApplicationWindow {
         for (var i=0; i<config.integration.length; i++) {
             comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
             integration[config.integration[i].type] = comp.createObject(applicationWindow, {integrationId: i});
-            if (comp.status != Component.Ready) {
+            if (comp.status !== Component.Ready) {
                 console.debug("Error: " + comp.errorString() );
             }
             integrationObj[i] = config.integration[i];
@@ -213,7 +213,7 @@ ApplicationWindow {
                 if (supported_entities[k] === config.entities[i].type) {
                     // load the supported component
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    if (comp.status != Component.Ready) {
+                    if (comp.status !== Component.Ready) {
                         console.debug("Error: " + comp.errorString() );
                     }
                     loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
@@ -422,4 +422,12 @@ ApplicationWindow {
         state: "connecting"
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STANDBY MODE TOUCHEVENT OVERLAY
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // captures all touch events when in standby mode. Avoids clicking on random buttons when waking up the display
+    MouseArea {
+        anchors.fill: parent
+        enabled: standbyControl.mode == "standby" ? true : false
+    }
 }
