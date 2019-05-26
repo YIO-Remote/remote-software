@@ -156,14 +156,19 @@ int32_t BQ27441::getTemperatureC() {  // Result in 1 Celcius
     result = ((int32_t) raw / 10 ) - 273;
     return result;
 }
+#endif
 
 int BQ27441::getVoltage() {
+#ifdef __linux__
     int result;
-
     result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_VOLTAGE);
     return result;
+#else
+    return 5000;
+#endif
 }
 
+#ifdef __linux__
 uint16_t BQ27441::getFlags() {
     uint16_t result;
 
@@ -191,21 +196,31 @@ uint16_t BQ27441::getRemainingCapacity() {
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_REM_CAPACITY);
     return result;
 }
+#endif
 
 int BQ27441::getFullChargeCapacity() {
+#ifdef __linux__
     int result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_FULL_CAPACITY);
     return int(result);
+#else
+    return 2500;
+#endif
 }
 
 int16_t  BQ27441::getAverageCurrent() {
+#ifdef __linux__
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_CURRENT);
     return (int16_t) result;
+#else
+    return -1600;
+#endif
 }
 
+#ifdef __linux__
 int16_t  BQ27441::getStandbyCurrent() {
     uint16_t result;
 
@@ -219,22 +234,32 @@ int16_t  BQ27441::getMaxLoadCurrent() {
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_MAX_CURRENT);
     return (int16_t) result;
 }
+#endif
 
 int BQ27441::getAveragePower() {
+#ifdef __linux__
     int16_t result;
 
     result = (int16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_POWER);
     return (int) result;
+#else
+    return -2500;
+#endif
 }
 
 int BQ27441::getStateOfCharge() {
+#ifdef __linux__
     int result;
 
     result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
     return result;
+#else
+    return 100;
+#endif
 }
 
 int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
+#ifdef __linux__
     int16_t result;
     uint16_t raw;
 
@@ -242,16 +267,24 @@ int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
     // Convert to 0.1 Celsius using integer math
     result = (int16_t) raw - 2731;
     return result;
+#else
+    return 23;
+#endif
 }
 
 int BQ27441::getStateOfHealth() {
+    #ifdef __linux__
     uint8_t result;
 
     uint16_t raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOH);
     result = raw & 0x0ff;
     return (int) result;
+#else
+    return 100;
+#endif
 }
 
+#ifdef __linux__
 uint16_t BQ27441::getRemainingCapacityUnfiltered() {
     uint16_t result;
 
