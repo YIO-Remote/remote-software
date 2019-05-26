@@ -147,7 +147,7 @@ Item {
                              console.debug("Websocket connection closed: " + webSocketConnection);
                              websocketReconnect.start()
                          }
-        active: true
+        active: false
     }
 
     Timer {

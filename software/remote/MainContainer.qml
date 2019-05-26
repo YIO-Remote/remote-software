@@ -15,7 +15,7 @@ Item {
 
     Component.onCompleted: {
         for (var i=0; i<integrationObj.length; i++) {
-            integrationObj[i].connectionOpen = true
+            integration[config.integration[i].type].connectionOpen = true
         }
     }
 

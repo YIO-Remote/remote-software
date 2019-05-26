@@ -119,7 +119,7 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        enabled: lightButton.state == "open" ? false: true
+        enabled: lightButton.state == "open" ? false : true
 
         onPressAndHold: {
             haptic.playEffect("press");

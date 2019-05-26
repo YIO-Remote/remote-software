@@ -427,7 +427,23 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // captures all touch events when in standby mode. Avoids clicking on random buttons when waking up the display
     MouseArea {
+        id: touchEventCatcher
         anchors.fill: parent
-        enabled: standbyControl.mode == "standby" ? true : false
+        enabled: true
+    }
+
+    Timer {
+        running: standbyControl.mode == "standby" || standbyControl.mode == "on" ? true : false
+        repeat: false
+        interval: 200
+
+        onTriggered: {
+            if (standbyControl.mode == "on") {
+                touchEventCatcher.enabled = false;
+            }
+            if (standbyControl.mode == "standby") {
+                 touchEventCatcher.enabled = true;
+            }
+        }
     }
 }
