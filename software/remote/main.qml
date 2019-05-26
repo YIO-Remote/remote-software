@@ -335,9 +335,8 @@ ApplicationWindow {
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready) {
-                             firstRun = false;
                              loader_main.visible = true;
-                             connectionState = "connected";
+                             loadingScreen.state = "connected";
                          }
     }
 
@@ -418,6 +417,9 @@ ApplicationWindow {
     // CONNECTION SCREEN
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Visible when connecting, reconnecting to the integration
-    BasicUI.ConnectionScreen {}
+    BasicUI.LoadingScreen {
+        id: loadingScreen
+        state: "connecting"
+    }
 
 }

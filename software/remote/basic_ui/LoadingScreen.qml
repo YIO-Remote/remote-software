@@ -5,9 +5,9 @@ Rectangle {
     anchors.fill: parent
     color: "#00000000"
 
-    state: connectionState
+    state: "connecting"
 
-    property int iconShowDelay: firstRun ? 300 : 0
+    property int iconShowDelay: 300
 
     states: [
         State {
@@ -18,7 +18,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: true}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
-            PropertyChanges {target: connectionLoaderText; text: qsTr("Reconnecting...") + translateHandler.emptyString}
+            PropertyChanges {target: text_small; text: qsTr("Wait for it ...") + translateHandler.emptyString}
         },
         State {
             name: "connected"
@@ -28,7 +28,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: false}
-            PropertyChanges {target: connectionLoaderText; text: qsTr("Connected") + translateHandler.emptyString}
+            PropertyChanges {target: text_small; text: qsTr("Done") + translateHandler.emptyString}
         },
         State {
             name: "failed"
@@ -37,7 +37,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 1}
             PropertyChanges {target: loadingIconAnim; running: false}
             PropertyChanges {target: buttonTryAgain; opacity: 1}
-            PropertyChanges {target: connectionLoaderText; text: qsTr("Connection failed") + translateHandler.emptyString}
+            PropertyChanges {target: text_small; text: qsTr("Something went wrong. Please reboot") + translateHandler.emptyString}
         }
     ]
 
@@ -52,18 +52,17 @@ Rectangle {
                 PropertyAnimation { target: loadingIconOK; properties: "opacity"; duration: 0 }
                 PropertyAnimation { target: loadingIconX; properties: "opacity"; duration: 0 }
                 PropertyAnimation { target: buttonTryAgain; properties: "opacity"; duration: 0 }
-                PropertyAnimation { target: connectionLoaderText; properties: "text"; duration: 0 }
+                PropertyAnimation { target: text_small; properties: "text"; duration: 0 }
                 PropertyAnimation { target: connectionLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
             }},
         Transition {
-            //                from: "connecting"
             to: "connected"
             SequentialAnimation {
                 ParallelAnimation {
                     PropertyAnimation { target: loadingIcon; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                     PropertyAnimation { target: loadingIconAnim; properties: "running"; duration: 0 }
                     PropertyAnimation { target: loadingIconOK; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
-                    PropertyAnimation { target: connectionLoaderText; properties: "text"; duration: 0 }
+                    PropertyAnimation { target: text_small; properties: "text"; duration: 0 }
                 }
                 PauseAnimation { duration: 800 }
                 PropertyAnimation { target: connectionLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
@@ -77,7 +76,7 @@ Rectangle {
                     PropertyAnimation { target: loadingIcon; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                     PropertyAnimation { target: loadingIconAnim; properties: "running"; duration: 0 }
                     PropertyAnimation { target: loadingIconX; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
-                    PropertyAnimation { target: connectionLoaderText; properties: "text"; duration: 0 }
+                    PropertyAnimation { target: text_small; properties: "text"; duration: 0 }
                 }
                 PauseAnimation { duration: 200 }
                 PropertyAnimation { target: buttonTryAgain; properties: "opacity"; easing.type: Easing.InExpo; duration: 600 }
@@ -96,7 +95,7 @@ Rectangle {
         width: 160
         height: 160
         opacity: 0
-        y: firstRun ? 230 : 300
+        y: 230
         anchors.horizontalCenter: parent.horizontalCenter
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/loading/icon-loading.png"
@@ -121,7 +120,7 @@ Rectangle {
         width: 160
         height: 160
         opacity: 0
-        y: firstRun ? 230 : 300
+        y: 230
         anchors.horizontalCenter: parent.horizontalCenter
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/loading/icon-loading-ok.png"
@@ -137,7 +136,7 @@ Rectangle {
         width: 160
         height: 160
         opacity: 0
-        y: firstRun ? 230 : 300
+        y: 230
         anchors.horizontalCenter: parent.horizontalCenter
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/loading/icon-loading-x.png"
@@ -147,33 +146,18 @@ Rectangle {
         }
     }
 
-    Text {
-        id: connectionLoaderText
-        visible: firstRun ? false : true
-        color: colorText
-        text: qsTr("Reconnecting...") + translateHandler.emptyString
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: loadingIcon.bottom
-        anchors.topMargin: 20
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font.family: "Open Sans"
-        font.weight: Font.Light
-        font.pixelSize: 27
-        lineHeight: 0.8
-    }
-
     CustomButton {
         id: buttonTryAgain
         opacity: 0
-        buttonText: qsTr("Try again") + translateHandler.emptyString
+        buttonText: qsTr("Reboot") + translateHandler.emptyString
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 60
 
         mouseArea.onClicked: {
-            websocketReconnect.start()
-            connectionLoader.state = "connecting"
+            settingsLauncher.launch("fbv -d 1 /bye.png")
+            console.debug("now reboot")
+            settingsLauncher.launch("reboot");
         }
     }
 
@@ -181,7 +165,7 @@ Rectangle {
         id: text_hello
         color: colorText
         text: qsTr("Hello") + translateHandler.emptyString
-        opacity: firstRun ? 1 : 0
+        opacity: 1
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: loadingIcon.bottom
         anchors.topMargin: 30
@@ -198,14 +182,16 @@ Rectangle {
     }
 
     Text {
-        id: text_waitforit
+        id: text_small
         color: colorText
-        text: qsTr("Wait for it...") + translateHandler.emptyString
-        opacity: firstRun ? 0.4 : 0
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
+        width: parent.width-80
+        opacity: 0.4
         anchors.top: text_hello.bottom
         anchors.topMargin: 0
         anchors.horizontalCenter: text_hello.horizontalCenter
-        verticalAlignment: Text.AlignVCenter
+        verticalAlignment: Text.AlignTop
         font.family: "Open Sans"
         font.weight: Font.Normal
         font.pixelSize: 27
