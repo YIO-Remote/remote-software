@@ -315,6 +315,7 @@ ApplicationWindow {
         x: 0
         y: 0
         active: false
+        state: "visible"
         //        source: "qrc:/MainContainer.qml"
 
         transform: Scale {
