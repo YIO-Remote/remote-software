@@ -161,4 +161,5 @@ Item {
     BasicUI.StatusBar {
         id: statusBar
     }
+
 }

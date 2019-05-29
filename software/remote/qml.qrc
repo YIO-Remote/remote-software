@@ -39,5 +39,6 @@
         <file>basic_ui/settings/Softwareupdate.qml</file>
         <file>basic_ui/CustomButtonState.qml</file>
         <file>ButtonHandler.qml</file>
+        <file>basic_ui/Notification.qml</file>
     </qresource>
 </RCC>

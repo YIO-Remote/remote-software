@@ -55,7 +55,6 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
-            console.debug("Battery voltage: " + battery_voltage)
 
             if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
                 // set turn on button to low
@@ -339,6 +338,10 @@ ApplicationWindow {
         onStatusChanged: if (loader_main.status == Loader.Ready) {
                              loader_main.visible = true;
                              loadingScreen.state = "connected";
+
+                             //TEST
+                             addNotification("error", "Everything is not good.", "");
+                             //
                          }
     }
 
@@ -433,7 +436,57 @@ ApplicationWindow {
     //
     // type can be "normal" or "error"
 
+    function addNotification(type, text, action) {
+        var json = {};
+        json.type = type;
+        json.text = text;
+        json.action = action;
+
+        var tmp = notifications;
+        tmp.push(json);
+        notifications = tmp;
+
+        // show notification
+        var comp = Qt.createComponent("qrc:/basic_ui/Notification.qml");
+        notificationObj = comp.createObject(applicationWindow, {text: json.text});
+        notificationObj.removeNotification.connect(removeNotification);
+    }
+
+    function removeNotification() {
+        notificationObj.destroy(400);
+    }
+
     property var notifications: [] // json array that holds all the active notifications
+    property var notificationObj
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // NOTIFICATION DRAWER
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Drawer {
+        id: notificationsDrawer
+        width: parent.width
+        height: 400
+        edge: Qt.TopEdge
+        interactive: loader_main.state == "visible" ? true : false
+        dim: false
+        opacity: position
+
+        background: Rectangle {
+            x: parent.width - 1
+            width: parent.width
+            height: parent.height
+            color: colorBackgroundTransparent
+        }
+
+        Rectangle {
+            width: parent.width
+            height: parent.height - 40
+            y: 40
+            color: colorBackground
+            opacity: notificationsDrawer.opened ? 1 : 0
+        }
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -456,7 +509,7 @@ ApplicationWindow {
                 touchEventCatcher.enabled = false;
             }
             if (standbyControl.mode == "standby") {
-                 touchEventCatcher.enabled = true;
+                touchEventCatcher.enabled = true;
             }
         }
     }

@@ -1,4 +1,5 @@
 import QtQuick 2.11
+import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 
 Item {
@@ -56,7 +57,7 @@ Item {
         Text {
             id: notificationCountText
             color: colorText
-            text: "3"
+            text: notifications.length
             verticalAlignment: Text.AlignVCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
