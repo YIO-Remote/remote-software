@@ -55,6 +55,7 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
+            console.debug("Battery voltage: " + battery_voltage)
 
             if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
                 // set turn on button to low
@@ -187,7 +188,7 @@ ApplicationWindow {
         for (var i=0; i<config.integration.length; i++) {
             comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
             integration[config.integration[i].type] = comp.createObject(applicationWindow, {integrationId: i});
-            if (comp.status != Component.Ready) {
+            if (comp.status !== Component.Ready) {
                 console.debug("Error: " + comp.errorString() );
             }
             integrationObj[i] = config.integration[i];
@@ -213,7 +214,7 @@ ApplicationWindow {
                 if (supported_entities[k] === config.entities[i].type) {
                     // load the supported component
                     comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    if (comp.status != Component.Ready) {
+                    if (comp.status !== Component.Ready) {
                         console.debug("Error: " + comp.errorString() );
                     }
                     loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
@@ -262,7 +263,7 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property bool firstRun: true // tells if the application is running for the first time
 
-    property string connectionState: "connecting"
+    property bool connecting: false
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY CONTROL
@@ -315,6 +316,7 @@ ApplicationWindow {
         x: 0
         y: 0
         active: false
+        state: "visible"
         //        source: "qrc:/MainContainer.qml"
 
         transform: Scale {
@@ -414,12 +416,48 @@ ApplicationWindow {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECTION SCREEN
+    // LOADING SCREEN
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Visible when connecting, reconnecting to the integration
     BasicUI.LoadingScreen {
         id: loadingScreen
         state: "connecting"
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // NOTIFICATIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // { "type": "normal",
+    //   "text": "This is the notification text to display",
+    //   "action": "function () { return 1; }"
+    // }
+    //
+    // type can be "normal" or "error"
+
+    property var notifications: [] // json array that holds all the active notifications
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STANDBY MODE TOUCHEVENT OVERLAY
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // captures all touch events when in standby mode. Avoids clicking on random buttons when waking up the display
+    MouseArea {
+        id: touchEventCatcher
+        anchors.fill: parent
+        enabled: true
+    }
+
+    Timer {
+        running: standbyControl.mode == "standby" || standbyControl.mode == "on" ? true : false
+        repeat: false
+        interval: 200
+
+        onTriggered: {
+            if (standbyControl.mode == "on") {
+                touchEventCatcher.enabled = false;
+            }
+            if (standbyControl.mode == "standby") {
+                 touchEventCatcher.enabled = true;
+            }
+        }
+    }
 }

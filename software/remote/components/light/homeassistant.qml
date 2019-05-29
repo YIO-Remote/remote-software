@@ -22,11 +22,11 @@ Item {
 
             for (var i=0; i<json.result.length; i++) {
                 for (var k=0; k<loaded_components.light.entities.length; k++) {
-                    if (json.result[i].entity_id == loaded_components.light.entities[k].entity_id) {
+                    if (json.result[i].entity_id === loaded_components.light.entities[k].entity_id) {
 
                         tmp[k].state = json.result[i].state;
 
-                        if (json.result[i].attributes.brightness == null) {
+                        if (json.result[i].attributes.brightness === null) {
                             tmp[k].brightness = "0";
                         } else {
                             tmp[k].brightness = JSHelper.convertToPercentage(json.result[i].attributes.brightness); // converting the brightness to percentage
@@ -51,11 +51,11 @@ Item {
             var tmp = loaded_components.light.entities;
 
             for (var k=0; k < loaded_components.light.entities.length; k++) {
-                if (entity_id == loaded_components.light.entities[k].entity_id) {
+                if (entity_id === loaded_components.light.entities[k].entity_id) {
 
                     tmp[k].state = state;
 
-                    if (brightness == null) {
+                    if (brightness === null) {
                         tmp[k].brightness = "0";
                     } else {
                         tmp[k].brightness = JSHelper.convertToPercentage(brightness); // converting the brightness to percentage
