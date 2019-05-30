@@ -91,6 +91,7 @@ public:
 
             // clear the interrupt
             apds.clearProximityInt();
+            delay(100);
 
 
             //            delay(1000);
