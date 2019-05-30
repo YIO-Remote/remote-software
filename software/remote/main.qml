@@ -339,6 +339,11 @@ ApplicationWindow {
         onStatusChanged: if (loader_main.status == Loader.Ready) {
                              loader_main.visible = true;
                              loadingScreen.state = "connected";
+
+                             //TEST
+                             addNotification("normal", "Everything is good. This is a test notification.", function() { console.debug("TEST")}, "Reboot");
+//                             addNotification("error", "Warning! This is a test notification.", "");
+                             //
                          }
     }
 
@@ -392,12 +397,12 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pops up when battery level is under 20%
     onBattery_levelChanged: {
-        if (battery_level < 0.2 && !wasBatteryWarning) {
+        if (battery_level < 0.1 && !wasBatteryWarning) {
             lowBatteryNotification.item.open();
             wasBatteryWarning = true;
             standbyControl.touchDetected = true;
         }
-        if (battery_level > 0.3) {
+        if (battery_level > 0.2) {
             wasBatteryWarning = false;
         }
     }
@@ -428,12 +433,108 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // { "type": "normal",
     //   "text": "This is the notification text to display",
-    //   "action": "function () { return 1; }"
+    //   "action": "function () { return 1; }",
+    //   "timestamp" : this is added automatically,
+    //   "id": position in the array, assigned automatically
     // }
     //
     // type can be "normal" or "error"
 
+    function addNotification(type, text, action, actionlabel) {
+        var json = {};
+        json.type = type;
+        json.text = text;
+        json.action = action;
+        json.actionlabel = actionlabel;
+        json.timestamp = new Date();
+
+        var tmp = notifications;
+        tmp.push(json);
+        notifications = tmp;
+
+        // show notification
+        var comp = Qt.createComponent("qrc:/basic_ui/Notification.qml");
+        notificationObj[notifications.length-1] = comp.createObject(notificationsRow, {type: json.type, text: json.text, actionlabel: json.actionlabel, action: json.action, timestamp: json.timestamp, idN: notifications.length-1, state: "visible"});
+        notificationObj[notifications.length-1].removeNotification.connect(removeNotification);
+        notificationObj[notifications.length-1].dismissNotification.connect(dismissNotification);
+    }
+
+    function removeNotification(idN) {
+        notificationObj[idN].destroy(400);
+        var tmp = notifications;
+        tmp.splice(notificationObj[idN].idN, 1);
+        notifications = tmp;
+    }
+
+    function dismissNotification(idN) {
+        notificationObj[idN].destroy(400);
+    }
+
+
     property var notifications: [] // json array that holds all the active notifications
+    property var notificationObj: []
+
+    // close the notification drawer when there is no notification left to show
+    onNotificationsChanged: {
+        if (notifications.length == 0) {
+            notificationsDrawer.close();
+        }
+    }
+
+    Column {
+        id: notificationsRow
+        anchors.fill: parent
+        spacing: 10
+        topPadding: 20
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // NOTIFICATION DRAWER
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Drawer {
+        id: notificationsDrawer
+        width: parent.width
+        height: notifications.length > 5 ? 100 + 5 * 104 : 100 + (notifications.length + 1) * 104
+        edge: Qt.TopEdge
+        interactive: loader_main.state == "visible" ? true : false
+        dim: false
+        opacity: position
+
+        background: Rectangle {
+            x: parent.width - 1
+            width: parent.width
+            height: parent.height
+            color: colorBackgroundTransparent
+        }
+
+        Rectangle {
+            width: parent.width
+            height: parent.height - 40
+            y: 40
+            color: colorBackground
+            opacity: notificationsDrawer.position
+        }
+
+        onOpened: {
+            loader_main.item.mainNavigation.opacity = 0.3
+            loader_main.item.mainNavigationSwipeview.opacity = 0.3
+        }
+
+        onClosed: {
+            loader_main.item.mainNavigation.opacity = 1
+            loader_main.item.mainNavigationSwipeview.opacity = 1
+        }
+
+        Loader {
+            width: parent.width
+            height: parent.height
+
+            asynchronous: true
+            active: notificationsDrawer.position > 0 ? true : false
+            source: notificationsDrawer.position > 0 ? "qrc:/basic_ui/NotificationDrawer.qml" : ""
+        }
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -456,7 +557,7 @@ ApplicationWindow {
                 touchEventCatcher.enabled = false;
             }
             if (standbyControl.mode == "standby") {
-                 touchEventCatcher.enabled = true;
+                touchEventCatcher.enabled = true;
             }
         }
     }

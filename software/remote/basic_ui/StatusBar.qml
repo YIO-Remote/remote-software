@@ -1,4 +1,5 @@
 import QtQuick 2.11
+import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 
 Item {
@@ -42,12 +43,23 @@ Item {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATION ICON
     //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function isThereAnError() {
+        var returning = false;
+        for (var i=0; i<notifications.length; i++) {
+            if (notifications[i].type == "error") {
+                returning = true;
+            }
+        }
+        return returning;
+    }
+
     Rectangle {
         id: notificationCount
         width: 26
         height: width
         radius: width/2
-        color: colorHighlight
+        color: isThereAnError() ? colorRed : colorHighlight
         visible: notifications.length > 0 ? true : false
         anchors.left: timeText.right
         anchors.leftMargin: 10
@@ -56,7 +68,7 @@ Item {
         Text {
             id: notificationCountText
             color: colorText
-            text: "3"
+            text: notifications.length
             verticalAlignment: Text.AlignVCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
