@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="it" sourcelanguage="en">
+<TS version="2.1" language="is" sourcelanguage="en">
   <context>
     <name>Battery</name>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="24"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Rafhlaða</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="81"/>
@@ -42,7 +42,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>Í hleðslu</translation>
     </message>
   </context>
   <context>
@@ -55,7 +55,7 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Bæta Við</translation>
     </message>
   </context>
   <context>
@@ -63,17 +63,17 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="17"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Skjár</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="38"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Sjálfvirkt birtustig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="164"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Dökkur hamur</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
@@ -96,7 +96,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Bæta Við</translation>
     </message>
   </context>
   <context>
@@ -104,7 +104,7 @@
     <message>
       <location filename="../basic_ui/settings/Languages.qml" line="25"/>
       <source>Languages</source>
-      <translation type="unfinished">Languages</translation>
+      <translation>Tungumál</translation>
     </message>
   </context>
   <context>
@@ -140,22 +140,22 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Eftirlæti</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Stillingar</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Gardínur</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Ljós</translation>
     </message>
   </context>
   <context>
@@ -163,7 +163,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="34"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Netverk</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="55"/>
@@ -173,12 +173,12 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="92"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP vistfang</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="128"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC vistfang</translation>
     </message>
   </context>
   <context>
@@ -202,12 +202,12 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Lítil hleðsla á rafhlöðu</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Vinsamlegast settu í hleðslu snarlega</translation>
     </message>
   </context>
   <context>
@@ -215,12 +215,12 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Orkusparnaður</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Aldrei slökkva á Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
@@ -231,17 +231,17 @@
       <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Aldrei</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 mínútur</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Aldrei slökkva á fjarstýringunni</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
@@ -251,7 +251,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 tímar</translation>
     </message>
   </context>
   <context>
@@ -259,12 +259,12 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Hugbúnaðaruppfærsla</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>Sjálfvirk uppfærsla</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
@@ -277,7 +277,7 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Kerfi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
@@ -292,7 +292,7 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Endurræsa</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="146"/>

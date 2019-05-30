@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="it" sourcelanguage="en">
+<TS version="2.1" language="zh-CN" sourcelanguage="en">
   <context>
     <name>Battery</name>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="24"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>电量</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="81"/>
@@ -21,7 +21,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="45"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>电池健康状态</translation>
     </message>
   </context>
   <context>
@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="429"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>取消收藏</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="429"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>添加到收藏</translation>
     </message>
   </context>
   <context>
@@ -42,7 +42,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>充电中</translation>
     </message>
   </context>
   <context>
@@ -50,12 +50,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>设备</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>新建</translation>
     </message>
   </context>
   <context>
@@ -63,27 +63,27 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="17"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>显示设置</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="38"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>自动调节亮度</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="164"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>夜间模式</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>清洁模式</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="239"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>长按屏幕10秒后关闭清洁模式</translation>
     </message>
   </context>
   <context>
@@ -91,12 +91,12 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>添加</translation>
     </message>
   </context>
   <context>
@@ -104,7 +104,7 @@
     <message>
       <location filename="../basic_ui/settings/Languages.qml" line="25"/>
       <source>Languages</source>
-      <translation type="unfinished">Languages</translation>
+      <translation>语言</translation>
     </message>
   </context>
   <context>
@@ -140,22 +140,22 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>收藏夹</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>设置</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>百叶窗</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>灯</translation>
     </message>
   </context>
   <context>
@@ -163,22 +163,22 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="34"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>网络</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="55"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Wi-Fi信号强度</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="92"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP 地址</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="128"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC 地址</translation>
     </message>
   </context>
   <context>
@@ -202,12 +202,12 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>电池电量低</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>请尽快充电</translation>
     </message>
   </context>
   <context>
@@ -215,43 +215,43 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>省电模式</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>从不关闭 Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>在 %1 分钟后关闭 Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>从不</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 分钟</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>永不关闭遥控器</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>在 %1 小时后关闭遥控器</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 小时</translation>
     </message>
   </context>
   <context>
@@ -259,17 +259,17 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>软件更新</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>自动更新</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
       <source>Automatically look for updates and update when a new software version is available.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.</translation>
+      <translation>当有新软件版本可用时自动检查更新</translation>
     </message>
   </context>
   <context>
@@ -277,27 +277,27 @@
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>系统</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>开机时间</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="95"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>CPU 温度</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>重启</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="146"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>关机</translation>
     </message>
   </context>
   <context>
@@ -305,12 +305,12 @@
     <message>
       <location filename="../main.qml" line="260"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>灯</translation>
     </message>
     <message>
       <location filename="../main.qml" line="260"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>百叶窗</translation>
     </message>
   </context>
 </TS>
