@@ -4,35 +4,35 @@
 <context>
     <name>Battery</name>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="17"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="24"/>
         <source>Battery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="38"/>
-        <source>Battery charge</source>
+        <location filename="../basic_ui/settings/Battery.qml" line="81"/>
+        <source>Screen on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="74"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="109"/>
+        <source>Screen off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Battery.qml" line="45"/>
         <source>Battery health</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="110"/>
-        <source>Battery voltage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Button</name>
     <message>
-        <location filename="../components/light/Button.qml" line="423"/>
+        <location filename="../components/light/Button.qml" line="429"/>
         <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/light/Button.qml" line="423"/>
+        <location filename="../components/light/Button.qml" line="429"/>
         <source>Add to favorites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -42,40 +42,6 @@
     <message>
         <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
         <source>Charging</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ConnectionScreen</name>
-    <message>
-        <location filename="../basic_ui/ConnectionScreen.qml" line="21"/>
-        <location filename="../basic_ui/ConnectionScreen.qml" line="154"/>
-        <source>Reconnecting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/ConnectionScreen.qml" line="31"/>
-        <source>Connected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/ConnectionScreen.qml" line="40"/>
-        <source>Connection failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/ConnectionScreen.qml" line="169"/>
-        <source>Try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/ConnectionScreen.qml" line="183"/>
-        <source>Hello</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/ConnectionScreen.qml" line="203"/>
-        <source>Wait for it...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -142,6 +108,34 @@
     </message>
 </context>
 <context>
+    <name>LoadingScreen</name>
+    <message>
+        <location filename="../basic_ui/LoadingScreen.qml" line="21"/>
+        <source>Wait for it ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/LoadingScreen.qml" line="31"/>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/LoadingScreen.qml" line="40"/>
+        <source>Something went wrong. Please reboot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/LoadingScreen.qml" line="152"/>
+        <source>Reboot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/LoadingScreen.qml" line="167"/>
+        <source>Hello</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainNavigation</name>
     <message>
         <location filename="../basic_ui/MainNavigation.qml" line="46"/>
@@ -184,6 +178,22 @@
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="128"/>
         <source>MAC address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Notification</name>
+    <message>
+        <location filename="../basic_ui/Notification.qml" line="250"/>
+        <source>Dismiss</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NotificationDrawer</name>
+    <message>
+        <location filename="../basic_ui/NotificationDrawer.qml" line="16"/>
+        <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -263,19 +273,6 @@
     </message>
 </context>
 <context>
-    <name>StatusBar</name>
-    <message>
-        <location filename="../basic_ui/StatusBar.qml" line="122"/>
-        <source>New software version is available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/StatusBar.qml" line="152"/>
-        <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>System</name>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="37"/>
@@ -306,12 +303,12 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="184"/>
+        <location filename="../main.qml" line="260"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="184"/>
+        <location filename="../main.qml" line="260"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
