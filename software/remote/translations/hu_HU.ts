@@ -112,27 +112,27 @@
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="21"/>
       <source>Wait for it ...</source>
-      <translation type="unfinished">Wait for it ...</translation>
+      <translation>Várj egy kicsit ...</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="31"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Kész</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="40"/>
       <source>Something went wrong. Please reboot</source>
-      <translation type="unfinished">Something went wrong. Please reboot</translation>
+      <translation>Valami hiba történt. Kérlek indítsd újra</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="152"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Újraindítás</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="167"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Szia</translation>
     </message>
   </context>
   <context>
@@ -186,7 +186,7 @@
     <message>
       <location filename="../basic_ui/Notification.qml" line="250"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Bezár</translation>
     </message>
   </context>
   <context>
@@ -194,7 +194,7 @@
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="16"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Értesítések</translation>
     </message>
   </context>
   <context>
