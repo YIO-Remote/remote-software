@@ -127,3 +127,5 @@ macx {
     extraData.files = $$PWD/config.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 }
+
+DISTFILES +=

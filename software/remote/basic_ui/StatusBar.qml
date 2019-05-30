@@ -43,12 +43,23 @@ Item {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATION ICON
     //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function isThereAnError() {
+        var returning = false;
+        for (var i=0; i<notifications.length; i++) {
+            if (notifications[i].type == "error") {
+                returning = true;
+            }
+        }
+        return returning;
+    }
+
     Rectangle {
         id: notificationCount
         width: 26
         height: width
         radius: width/2
-        color: colorHighlight
+        color: isThereAnError() ? colorRed : colorHighlight
         visible: notifications.length > 0 ? true : false
         anchors.left: timeText.right
         anchors.leftMargin: 10

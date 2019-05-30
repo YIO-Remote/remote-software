@@ -340,7 +340,9 @@ ApplicationWindow {
                              loadingScreen.state = "connected";
 
                              //TEST
-                             addNotification("error", "Everything is not good.", "");
+                             addNotification("normal", "Everything is good. This is a test notification.", "");
+                             addNotification("error", "Warning. This is a test notification.", "");
+                             addNotification("normal", "Everything is good. This is a test notification.", "");
                              //
                          }
     }
@@ -431,7 +433,9 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // { "type": "normal",
     //   "text": "This is the notification text to display",
-    //   "action": "function () { return 1; }"
+    //   "action": "function () { return 1; }",
+    //   "timestamp" : this is added automatically,
+    //   "id": position in the array, assigned automatically
     // }
     //
     // type can be "normal" or "error"
@@ -441,6 +445,7 @@ ApplicationWindow {
         json.type = type;
         json.text = text;
         json.action = action;
+        json.timestamp = new Date().getTime();
 
         var tmp = notifications;
         tmp.push(json);
@@ -448,16 +453,32 @@ ApplicationWindow {
 
         // show notification
         var comp = Qt.createComponent("qrc:/basic_ui/Notification.qml");
-        notificationObj = comp.createObject(applicationWindow, {text: json.text});
+        notificationObj = comp.createObject(applicationWindow, {type: json.type, text: json.text, action: json.action, timestamp: json.timestamp, id: notifications.length-1});
         notificationObj.removeNotification.connect(removeNotification);
+        notificationObj.dismissNotification.connect(dismissNotification);
     }
 
     function removeNotification() {
         notificationObj.destroy(400);
+        var tmp = notifications;
+        tmp.splice(notificationObj.id, 1);
+        notifications = tmp;
     }
+
+    function dismissNotification() {
+        notificationObj.destroy(400);
+    }
+
 
     property var notifications: [] // json array that holds all the active notifications
     property var notificationObj
+
+    // close the notification drawer when there is no notification left to show
+    onNotificationsChanged: {
+        if (notifications.length == 0) {
+            notificationsDrawer.close();
+        }
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATION DRAWER
@@ -466,7 +487,7 @@ ApplicationWindow {
     Drawer {
         id: notificationsDrawer
         width: parent.width
-        height: 400
+        height: notifications.length > 5 ? 100 + 5 * 104 : 100 + (notifications.length + 1) * 104
         edge: Qt.TopEdge
         interactive: loader_main.state == "visible" ? true : false
         dim: false
@@ -484,7 +505,26 @@ ApplicationWindow {
             height: parent.height - 40
             y: 40
             color: colorBackground
-            opacity: notificationsDrawer.opened ? 1 : 0
+            opacity: notificationsDrawer.position
+        }
+
+        onOpened: {
+            loader_main.item.mainNavigation.opacity = 0.3
+            loader_main.item.mainNavigationSwipeview.opacity = 0.3
+        }
+
+        onClosed: {
+            loader_main.item.mainNavigation.opacity = 1
+            loader_main.item.mainNavigationSwipeview.opacity = 1
+        }
+
+        Loader {
+            width: parent.width
+            height: parent.height
+
+            asynchronous: true
+            active: notificationsDrawer.position > 0 ? true : false
+            source: notificationsDrawer.position > 0 ? "qrc:/basic_ui/NotificationDrawer.qml" : ""
         }
     }
 
