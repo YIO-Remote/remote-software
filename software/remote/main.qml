@@ -166,6 +166,12 @@ ApplicationWindow {
 
     Launcher { id: mainLauncher }
 
+    onUpdateAvailableChanged: {
+        if (updateAvailable) {
+            addNotification("normal", "New software version is available!", function() { var command = "/usr/bin/remote/updater.sh " + obj.assets[0].browser_download_url; mainLauncher.launch(command); }, "Update");
+        }
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
