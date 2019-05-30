@@ -1,5 +1,8 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+
+import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: notification
@@ -28,8 +31,8 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // signal is emitted when clicked, so the notification is not removed automatically
 
-    signal removeNotification()
-    signal dismissNotification()
+    signal removeNotification(int idN)
+    signal dismissNotification(int idN)
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,13 +45,24 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
 
-        drag.target: notification
+        drag.target: notification.state != "open" ? notification : null
         drag.axis: Drag.XAxis
         drag.minimumX: 10
         drag.maximumX: 400
 
         onClicked: {
             notificationRemoverTimer.stop();
+            notification.state = "open";
+            if (notificationsDrawer.position > 0) {
+                notificationsDrawer.height += 176;
+                if (notificationsDrawer.height >= 100 + 5 * 104 ) {
+                    notificationsDrawer.height = 100 + 5 * 104;
+                }
+            } else {
+                for (var i=idN+1; i<notifications.length; i++) {
+                    notificationObj[i].y += 176;
+                }
+            }
         }
     }
 
@@ -65,7 +79,7 @@ Rectangle {
                 tmp.splice(idN, 1);
                 notifications = tmp;
             } else {
-                removeNotification();
+                removeNotification(idN);
             }
         }
     }
@@ -77,27 +91,40 @@ Rectangle {
     property alias text: notificationText.text
     property string type
     property var action
+    property string actionlabel
     property var timestamp
     property int idN
-
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    state: "visible"
+    state: "hidden"
 
     states: [
         State {
             name: "visible"
             PropertyChanges { target: notification; opacity: 1; y: 20}
+            PropertyChanges { target: timestampText; opacity: 0 }
+            PropertyChanges { target: buttons; opacity: 0; enabled: false }
         },
         State {
             name: "hidden"
-            PropertyChanges { target: notification; opacity: 0; y: -200}
+            PropertyChanges { target: notification; opacity: 0; y: -200 }
+            PropertyChanges { target: timestampText; opacity: 0 }
+            PropertyChanges { target: buttons; opacity: 0; enabled: false }
         },
         State {
             name: "permanent"
+            PropertyChanges { target: timestampText; opacity: 0 }
+            PropertyChanges { target: buttons; opacity: 0; enabled: false }
+        },
+        State {
+            name: "open"
+            PropertyChanges { target: notification; height: 280; y:20 }
+            PropertyChanges { target: notificationText; height: 120 }
+            PropertyChanges { target: timestampText; opacity: 0.5 }
+            PropertyChanges { target: buttons; opacity: 1; enabled: true }
         }
     ]
 
@@ -105,10 +132,20 @@ Rectangle {
         Transition {
             to: "visible"
             PropertyAnimation { target: notification; properties: "opacity, y"; easing.type: Easing.InExpo; duration: 300 }
+            PropertyAnimation { target: timestampText; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
+            PropertyAnimation { target: buttons; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
         },
         Transition {
             to: "hidden"
             PropertyAnimation { target: notification; properties: "opacity, y"; easing.type: Easing.InExpo; duration: 300 }
+            PropertyAnimation { target: timestampText; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
+            PropertyAnimation { target: buttons; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
+        },
+        Transition {
+            to: "open"
+            PropertyAnimation { target: notification; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: timestampText; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
+            PropertyAnimation { target: buttons; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
         }
     ]
 
@@ -164,7 +201,7 @@ Rectangle {
     Text {
         id: notificationText
         width: parent.width-170
-        height: parent.height-20
+        height: 84
         anchors.left: parent.left
         anchors.leftMargin: 108
         anchors.top: parent.top
@@ -180,6 +217,68 @@ Rectangle {
         lineHeight: 1
     }
 
+    Text {
+        id: timestampText
+        text: timestamp.toDateString() + "  " +  timestamp.toTimeString()
+        width: parent.width-170
+        anchors.left: parent.left
+        anchors.leftMargin: 108
+        anchors.top: notificationText.bottom
+        anchors.topMargin: 10
+
+        color: colorText
+        font.family: "Open Sans"
+        font.weight: Font.Normal
+        font.pixelSize: 20
+        lineHeight: 1
+    }
+
+    Item {
+        id: buttons
+        width: parent.width
+        height: 60
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        RowLayout {
+            spacing: 40
+            anchors.horizontalCenter: parent.horizontalCenter
+            Layout.alignment: Qt.AlignHCenter
+
+            BasicUI.CustomButton {
+                buttonText: qsTr("Dismiss") + translateHandler.emptyString
+                mouseArea.onClicked: {
+                    notification.opacity = 0;
+                    if (notificationsDrawer.position > 0) {
+                        var tmp = notifications;
+                        tmp.splice(idN, 1);
+                        notifications = tmp;
+                    } else {
+                        removeNotification(idN);
+                    }
+                }
+            }
+
+            BasicUI.CustomButton {
+                buttonText: qsTr(actionlabel) + translateHandler.emptyString
+                visible: action !== "" ? true : false
+                mouseArea.onClicked:  {
+                    notification.opacity = 0;
+                    if (notificationsDrawer.position > 0) {
+                        var tmp = notifications;
+                        tmp.splice(idN, 1);
+                        notifications = tmp;
+                    } else {
+                        removeNotification(idN);
+                    }
+                    notification.action();
+                }
+            }
+        }
+
+    }
+
     Image {
         id: icon
         asynchronous: true
@@ -189,7 +288,8 @@ Rectangle {
         source: type == "normal" ? "qrc:/images/notification/icon-notification-normal.png" : "qrc:/images/notification/icon-notification-error.png"
         anchors.left: parent.left
         anchors.leftMargin: 30
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 20
 
         ColorOverlay {
             visible: !darkMode
@@ -213,7 +313,7 @@ Rectangle {
 
         onTriggered: {
             notification.state = "hidden";
-            dismissNotification();
+            dismissNotification(idN);
         }
     }
 }

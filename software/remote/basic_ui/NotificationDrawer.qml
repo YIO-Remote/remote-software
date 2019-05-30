@@ -37,6 +37,7 @@ Item {
             type: notifications[index].type
             text: notifications[index].text
             action: notifications[index].action
+            actionlabel: notifications[index].actionlabel
             timestamp: notifications[index].timestamp
             idN: index
         }

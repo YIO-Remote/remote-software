@@ -341,9 +341,8 @@ ApplicationWindow {
                              loadingScreen.state = "connected";
 
                              //TEST
-                             addNotification("normal", "Everything is good. This is a test notification.", "");
-                             addNotification("error", "Warning. This is a test notification.", "");
-                             addNotification("normal", "Everything is good. This is a test notification.", "");
+                             addNotification("normal", "Everything is good. This is a test notification.", function() { console.debug("TEST")}, "Reboot");
+//                             addNotification("error", "Warning! This is a test notification.", "");
                              //
                          }
     }
@@ -398,12 +397,12 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pops up when battery level is under 20%
     onBattery_levelChanged: {
-        if (battery_level < 0.2 && !wasBatteryWarning) {
+        if (battery_level < 0.1 && !wasBatteryWarning) {
             lowBatteryNotification.item.open();
             wasBatteryWarning = true;
             standbyControl.touchDetected = true;
         }
-        if (battery_level > 0.3) {
+        if (battery_level > 0.2) {
             wasBatteryWarning = false;
         }
     }
@@ -441,12 +440,13 @@ ApplicationWindow {
     //
     // type can be "normal" or "error"
 
-    function addNotification(type, text, action) {
+    function addNotification(type, text, action, actionlabel) {
         var json = {};
         json.type = type;
         json.text = text;
         json.action = action;
-        json.timestamp = new Date().getTime();
+        json.actionlabel = actionlabel;
+        json.timestamp = new Date();
 
         var tmp = notifications;
         tmp.push(json);
@@ -454,31 +454,38 @@ ApplicationWindow {
 
         // show notification
         var comp = Qt.createComponent("qrc:/basic_ui/Notification.qml");
-        notificationObj = comp.createObject(applicationWindow, {type: json.type, text: json.text, action: json.action, timestamp: json.timestamp, id: notifications.length-1});
-        notificationObj.removeNotification.connect(removeNotification);
-        notificationObj.dismissNotification.connect(dismissNotification);
+        notificationObj[notifications.length-1] = comp.createObject(notificationsRow, {type: json.type, text: json.text, actionlabel: json.actionlabel, action: json.action, timestamp: json.timestamp, idN: notifications.length-1, state: "visible"});
+        notificationObj[notifications.length-1].removeNotification.connect(removeNotification);
+        notificationObj[notifications.length-1].dismissNotification.connect(dismissNotification);
     }
 
-    function removeNotification() {
-        notificationObj.destroy(400);
+    function removeNotification(idN) {
+        notificationObj[idN].destroy(400);
         var tmp = notifications;
-        tmp.splice(notificationObj.id, 1);
+        tmp.splice(notificationObj[idN].idN, 1);
         notifications = tmp;
     }
 
-    function dismissNotification() {
-        notificationObj.destroy(400);
+    function dismissNotification(idN) {
+        notificationObj[idN].destroy(400);
     }
 
 
     property var notifications: [] // json array that holds all the active notifications
-    property var notificationObj
+    property var notificationObj: []
 
     // close the notification drawer when there is no notification left to show
     onNotificationsChanged: {
         if (notifications.length == 0) {
             notificationsDrawer.close();
         }
+    }
+
+    Column {
+        id: notificationsRow
+        anchors.fill: parent
+        spacing: 10
+        topPadding: 20
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
