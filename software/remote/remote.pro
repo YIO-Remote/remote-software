@@ -58,6 +58,7 @@ SOURCES = main.qml \
           basic_ui/settings/*.qml \
           components/light/*.qml \
           integrations/*.qml \
+          sources/proximity_gesture_control.h
 }
 TRANSLATIONS = translations/bg_BG.ts \
                translations/cs_CZ.ts \

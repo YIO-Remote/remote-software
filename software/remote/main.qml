@@ -24,8 +24,6 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BATTERY
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,15 +78,12 @@ ApplicationWindow {
 
         onTriggered: {
             var tmp = {};
-            tmp.timestamp = new Date().getTime();
-            tmp.datestamp = new Date().getDate();
+            tmp.timestamp = new Date();
             tmp.level = battery_level;
             tmp.power = battery.getAveragePower();
             tmp.voltage = battery_voltage;
 
             battery_data.push(tmp);
-
-            console.debug(JSON.stringify(battery_data));
         }
     }
 
@@ -168,7 +163,9 @@ ApplicationWindow {
 
     onUpdateAvailableChanged: {
         if (updateAvailable) {
-            addNotification("normal", "New software version is available!", function() { var command = "/usr/bin/remote/updater.sh " + obj.assets[0].browser_download_url; mainLauncher.launch(command); }, "Update");
+            //: Notification text when new software update is available
+            //~ "Update" is a label for the button
+            addNotification("normal", qsTr("New software version is available!") + translateHandler.emptyString, function() { var command = "/usr/bin/remote/updater.sh " + obj.assets[0].browser_download_url; mainLauncher.launch(command); }, qsTr("Update") + translateHandler.emptyString);
         }
     }
 
@@ -257,6 +254,7 @@ ApplicationWindow {
     // SUPPORTED COMPONENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var supported_entities: ["light","blind"]
+    //: names of the entities. Shows up in menu on the bottom. Always plural
     property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString]
 
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded

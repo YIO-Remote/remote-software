@@ -137,13 +137,15 @@ public:
         if ( !apds.init() )
         {
             qDebug() << "Cannot initialize the proximity sensor";
-            m_apds9960Error = "Cannot initialize the proximity sensor. Please restart the remote.";
+            //: Error message that shows up as notification when the proximity sensor cannot be initialized
+            m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
             emit apds9960Notify();
         }
 
         if ( !apds.enableLightSensor(false) ) {
             qDebug() << "Cannot initialize the light sensor";
-            m_apds9960Error = "Cannot initialize the light sensor. Please restart the remote.";
+            //: Error message that shows up as notification when the light sensor cannot be initialized
+            m_apds9960Error = tr("Cannot initialize the light sensor. Please restart the remote.");
             emit apds9960Notify();
         }
 
@@ -151,7 +153,8 @@ public:
 
         // read the ambient light when it's on first
         if ( !apds.readAmbientLight(m_ambientLight)) {
-            m_apds9960Error = "Error reading light values.";
+            //: Error message that shows up as notification when light value cannot be read
+            m_apds9960Error = tr("Error reading light values.");
             emit apds9960Notify();
         } else {
             apds.disableLightSensor();

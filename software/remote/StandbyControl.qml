@@ -57,8 +57,8 @@ Item {
         }
 
         onApds9960Notify: {
-            console.debug("Error while initializing the Proximity sensor. Please restart.")
-            addNotification("error", proximity.apds9960Error, "");
+            console.debug(proximity.apds9960Error);
+            addNotification("error", proximity.apds9960Error, "", "Restart");
         }
 
 //        onGestureEvent: {
