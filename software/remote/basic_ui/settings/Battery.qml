@@ -194,7 +194,7 @@ Item {
 
                     Rectangle {
                         width: 6
-                        height: 96 * battery_data[index].level / 100
+                        height: 96 * battery_data[index].level
                         color: colorText
                     }
                 }
