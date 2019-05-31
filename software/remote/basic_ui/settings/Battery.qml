@@ -1,5 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
+import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 
 import Launcher 1.0
 
@@ -16,6 +18,14 @@ Item {
     Component.onCompleted: {
         screenOnTimeTextData.text = Qt.binding( function() { return JSHelper.secondsToHours(Math.round(standbyControl.screenOnTime/1000)) } )
         screenOffTimeTextData.text = Qt.binding( function () { return JSHelper.secondsToHours(Math.round(standbyControl.screenOffTime/1000)) } )
+
+        currentHour = Qt.binding( function() { return (new Date().getHours()) } )
+    }
+
+    property int currentHour
+
+    onCurrentHourChanged: {
+        console.debug("Update graphs");
     }
 
     Text {
@@ -129,6 +139,116 @@ Item {
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
+        }
+
+        Rectangle {
+            id: line2
+            width: parent.width
+            height: 2
+            color: colorBackground
+            anchors.top: screenOnTimeTextData.bottom
+            anchors.topMargin: 20
+        }
+
+        Text {
+            id: batteryLevelText
+            color: colorHighlight
+            text: qsTr("Battery level") + translateHandler.emptyString
+            wrapMode: Text.WordWrap
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: line2.bottom
+            anchors.topMargin: 10
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 20
+            lineHeight: 1
+        }
+
+        Image {
+            id: batteryLevelBG
+            asynchronous: true
+            width: 420
+            height: 120
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/images/settings/battery-level.png"
+            anchors.top: batteryLevelText.bottom
+            anchors.topMargin: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            ColorOverlay {
+                visible: !darkMode
+                anchors.fill: parent
+                source: parent
+                color: colorText
+                antialiasing: true
+            }
+        }
+
+        Text {
+            id: averagePowerText
+            color: colorHighlight
+            text: qsTr("Average power") + translateHandler.emptyString
+            wrapMode: Text.WordWrap
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: batteryLevelBG.bottom
+            anchors.topMargin: 10
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 20
+            lineHeight: 1
+        }
+
+        Image {
+            id: averagePowerBG
+            asynchronous: true
+            width: 420
+            height: 120
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/images/settings/average-power.png"
+            anchors.top: averagePowerText.bottom
+            anchors.topMargin: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            ColorOverlay {
+                visible: !darkMode
+                anchors.fill: parent
+                source: parent
+                color: colorText
+                antialiasing: true
+            }
+        }
+
+        Item {
+            width: 360
+            height: 20
+            anchors.top: averagePowerBG.bottom
+            anchors.topMargin: 20
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+
+            RowLayout {
+                layoutDirection: Qt.RightToLeft
+                Layout.fillWidth: false
+                spacing: 35
+                anchors.left: parent.left
+
+                Repeater {
+                    model: battery_data.length > 7 ? 8 : (battery_data.length === 0 ? 1 : battery_data.length)
+
+                    delegate: Text {
+                        //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
+                        text: battery_data.length === 0 ? qsTr("No data available yet") + translateHandler.emptyString : battery_data[battery_data.length-1-index].timestamp.getHours()
+                        color: colorHighlight
+                        font.family: "Open Sans"
+                        font.weight: Font.Normal
+                        font.pixelSize: 16
+                        lineHeight: 1
+                    }
+                }
+            }
+
         }
     }
 

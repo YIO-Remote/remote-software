@@ -18,6 +18,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: true}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
+            //: loading screen text while it loads
             PropertyChanges {target: text_small; text: qsTr("Wait for it ...") + translateHandler.emptyString}
         },
         State {
@@ -28,6 +29,7 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 0}
             PropertyChanges {target: buttonTryAgain; opacity: 0}
             PropertyChanges {target: loadingIconAnim; running: false}
+            //: loading screen text when it is done loading
             PropertyChanges {target: text_small; text: qsTr("Done") + translateHandler.emptyString}
         },
         State {
@@ -37,7 +39,8 @@ Rectangle {
             PropertyChanges {target: loadingIconX; opacity: 1}
             PropertyChanges {target: loadingIconAnim; running: false}
             PropertyChanges {target: buttonTryAgain; opacity: 1}
-            PropertyChanges {target: text_small; text: qsTr("Something went wrong. Please reboot") + translateHandler.emptyString}
+            //: loading screen text when something went wrong.
+            PropertyChanges {target: text_small; text: qsTr("Something went wrong. Please restart the remote") + translateHandler.emptyString}
         }
     ]
 
@@ -149,7 +152,8 @@ Rectangle {
     CustomButton {
         id: buttonTryAgain
         opacity: 0
-        buttonText: qsTr("Reboot") + translateHandler.emptyString
+        //: loading screen button if it failes to load
+        buttonText: qsTr("Restart") + translateHandler.emptyString
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 60
@@ -164,6 +168,7 @@ Rectangle {
     Text {
         id: text_hello
         color: colorText
+        //: greating at the loadin screen
         text: qsTr("Hello") + translateHandler.emptyString
         opacity: 1
         anchors.horizontalCenter: parent.horizontalCenter

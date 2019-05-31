@@ -33,6 +33,7 @@ ApplicationWindow {
     property real battery_time: (new Date()).getTime()
     property bool wasBatteryWarning: false
 
+//    property var battery_data: [{"timestamp":1559309480619,"datestamp":31,"level":0.98,"power":-1653,"voltage":4.144},{"timestamp":1559310080617,"datestamp":31,"level":0.96,"power":-1655,"voltage":4.128},{"timestamp":1559310680622,"datestamp":31,"level":0.93,"power":-1653,"voltage":4.113},{"timestamp":1559311280624,"datestamp":31,"level":0.91,"power":-1652,"voltage":4.099},{"timestamp":1559311880624,"datestamp":31,"level":0.89,"power":-1562,"voltage":4.088},{"timestamp":1559312480617,"datestamp":31,"level":0.87,"power":-1570,"voltage":4.077},{"timestamp":1559313080622,"datestamp":31,"level":0.85,"power":-1562,"voltage":4.067}]
     property var battery_data: []
 
     Battery {
@@ -78,8 +79,7 @@ ApplicationWindow {
 
         onTriggered: {
             var tmp = {};
-            tmp.timestamp = new Date().getTime();
-            tmp.datestamp = new Date().getDate();
+            tmp.timestamp = new Date();
             tmp.level = battery_level;
             tmp.power = battery.getAveragePower();
             tmp.voltage = battery_voltage;

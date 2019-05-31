@@ -21,5 +21,7 @@
         <file>images/notification/icon-notification-dismiss.png</file>
         <file>images/notification/icon-notification-error.png</file>
         <file>images/notification/icon-notification-normal.png</file>
+        <file>images/settings/battery-level.png</file>
+        <file>images/settings/average-power.png</file>
     </qresource>
 </RCC>
