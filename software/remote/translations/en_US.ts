@@ -4,22 +4,38 @@
 <context>
     <name>Battery</name>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="24"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="26"/>
         <source>Battery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="81"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="83"/>
         <source>Screen on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="109"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="111"/>
         <source>Screen off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="45"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="148"/>
+        <source>Battery level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Battery.qml" line="207"/>
+        <source>Average power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Battery.qml" line="282"/>
+        <source>No data available yet</source>
+        <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Battery.qml" line="47"/>
         <source>Battery health</source>
         <translation type="unfinished"></translation>
     </message>
@@ -110,50 +126,53 @@
 <context>
     <name>LoadingScreen</name>
     <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="21"/>
+        <location filename="../basic_ui/LoadingScreen.qml" line="22"/>
         <source>Wait for it ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="31"/>
+        <location filename="../basic_ui/LoadingScreen.qml" line="33"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="40"/>
-        <source>Something went wrong. Please reboot</source>
+        <location filename="../basic_ui/LoadingScreen.qml" line="43"/>
+        <source>Something went wrong. Please restart the remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="152"/>
-        <source>Reboot</source>
+        <location filename="../basic_ui/LoadingScreen.qml" line="156"/>
+        <source>Restart</source>
+        <extracomment>loading screen button if it failes to load</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="167"/>
+        <location filename="../basic_ui/LoadingScreen.qml" line="172"/>
         <source>Hello</source>
+        <extracomment>greating at the loadin screen</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainNavigation</name>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="46"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="47"/>
         <source>Favorites</source>
+        <extracomment>menu items that are in the bottom menu</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="46"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="47"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="47"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="48"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="47"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="48"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
@@ -255,6 +274,27 @@
     </message>
 </context>
 <context>
+    <name>ProximityGestureControl</name>
+    <message>
+        <location filename="../sources/proximity_gesture_control.h" line="141"/>
+        <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
+        <extracomment>Error message that shows up as notification when the proximity sensor cannot be initialized</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/proximity_gesture_control.h" line="148"/>
+        <source>Cannot initialize the light sensor. Please restart the remote.</source>
+        <extracomment>Error message that shows up as notification when the light sensor cannot be initialized</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/proximity_gesture_control.h" line="157"/>
+        <source>Error reading light values.</source>
+        <extracomment>Error message that shows up as notification when light value cannot be read</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Softwareupdate</name>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
@@ -303,12 +343,25 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="260"/>
-        <source>Lights</source>
+        <location filename="../main.qml" line="168"/>
+        <source>New software version is available!</source>
+        <extracomment>Notification text when new software update is available</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-"Update">is a label for the button</extra-"Update">
+    </message>
+    <message>
+        <location filename="../main.qml" line="168"/>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="260"/>
+        <location filename="../main.qml" line="258"/>
+        <source>Lights</source>
+        <extracomment>names of the entities. Shows up in menu on the bottom. Always plural</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="258"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
