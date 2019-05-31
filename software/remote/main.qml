@@ -35,6 +35,8 @@ ApplicationWindow {
 
     property var battery_data: []
 
+    signal batteryDataUpdated()
+
     Battery {
         id: battery
         capacity: 2500
@@ -53,7 +55,6 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
-            console.debug("Battery voltage: " + battery_voltage)
 
             if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
                 // set turn on button to low
@@ -77,13 +78,18 @@ ApplicationWindow {
         interval: 600000
 
         onTriggered: {
+            var tmpA = battery_data;
+
             var tmp = {};
             tmp.timestamp = new Date();
             tmp.level = battery_level;
             tmp.power = battery.getAveragePower();
             tmp.voltage = battery_voltage;
 
-            battery_data.push(tmp);
+            tmpA.push(tmp);
+            battery_data = tmpA;
+
+            applicationWindow.batteryDataUpdated();
         }
     }
 
@@ -174,7 +180,7 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var config: jsonConfig.read();
-    property var integration: ({}) // holds the integration qmls
+    property var integration: ({}) // holds the integrations
     property var integrationObj: []
 
     property var device: ({}) // holds the standalone device integration qmls
@@ -189,12 +195,15 @@ ApplicationWindow {
         var comp;
 
         for (var i=0; i<config.integration.length; i++) {
+            integration[config.integration[i].type] = config.integration[i];
+
             comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
-            integration[config.integration[i].type] = comp.createObject(applicationWindow, {integrationId: i});
+            integration[config.integration[i].type].obj = comp.createObject(applicationWindow, {integrationId: i});
+
             if (comp.status !== Component.Ready) {
                 console.debug("Error: " + comp.errorString() );
             }
-            integrationObj[i] = config.integration[i];
+            //            integrationObj[i] = config.integration[i];
 
         }
 
@@ -210,6 +219,7 @@ ApplicationWindow {
     function loadEntities() {
         var comp;
         var obj;
+        var tmp = {};
 
         // load the entities from the config file that are supported
         for (var i=0; i<config.entities.length; i++) {
@@ -223,9 +233,11 @@ ApplicationWindow {
                     loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
                     loaded_components[supported_entities[k]].entities = config.entities[i].data;
 
-                    // store which entity type was loaded. Not app supported entities are loaded.
-                    loaded_entities.push(supported_entities[k]);
-                    loaded_entities_id.push(k)
+                    // store which entity type was loaded. Not all supported entities are loaded.
+                    tmp = {};
+                    tmp.obj = supported_entities[k];
+                    tmp.id = k;
+                    loaded_entities.push(tmp);
                 }
             }
         }
@@ -258,7 +270,6 @@ ApplicationWindow {
     property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString]
 
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
-    property var loaded_entities_id: [] // holds the loaded entity ids
 
     property var loaded_components: ({}) // holds the loaded component, for example it has the Main.qml file from lights
 
@@ -346,7 +357,7 @@ ApplicationWindow {
 
                              //TEST
                              addNotification("normal", "Everything is good. This is a test notification.", function() { console.debug("TEST")}, "Reboot");
-//                             addNotification("error", "Warning! This is a test notification.", "");
+                             //                             addNotification("error", "Warning! This is a test notification.", "");
                              //
                          }
     }

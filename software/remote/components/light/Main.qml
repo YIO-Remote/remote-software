@@ -8,8 +8,9 @@ Item {
 
     Component.onCompleted: {
         // load the hub integrations
+        var comp;
         for (var i=0; i<config.integration.length; i++) {
-            var comp = Qt.createComponent("qrc:/components/light/"+ config.integration[i].type +".qml");
+            comp = Qt.createComponent("qrc:/components/light/"+ config.integration[i].type +".qml");
             lightComponentIntegration[config.integration[i].type] = comp.createObject(applicationWindow);
         }
     }

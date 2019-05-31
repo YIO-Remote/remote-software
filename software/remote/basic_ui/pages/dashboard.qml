@@ -26,10 +26,10 @@ Flickable {
 
         Component.onCompleted: {
             for (var i=0; i<loaded_entities.length; i++) {
-                for (var j=0; j<loaded_components[loaded_entities[i]].entities.length; j++) {
-                    if (loaded_components[loaded_entities[i]].entities[j].favorite) {
+                for (var j=0; j<loaded_components[loaded_entities[i].obj].entities.length; j++) {
+                    if (loaded_components[loaded_entities[i].obj].entities[j].favorite) {
                         // load entity button
-                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i] +"/Button.qml");
+                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i].obj +"/Button.qml");
                         if (comp.status != Component.Ready) {
                             console.debug("Error: " + comp.errorString() );
                         }

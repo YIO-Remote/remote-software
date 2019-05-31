@@ -10,7 +10,8 @@
                     "integration": "homeassistant",
                     "area": "Entrance",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 },
                 {
                     "brightness": "0",
@@ -20,7 +21,8 @@
                     "integration": "homeassistant",
                     "area": "Entrance",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 },
                 {
                     "brightness": "0",
@@ -30,7 +32,8 @@
                     "integration": "homeassistant",
                     "area": "Kitchen",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 },
                 {
                     "brightness": "0",
@@ -40,7 +43,8 @@
                     "integration": "homeassistant",
                     "area": "Kitchen",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 },
                 {
                     "brightness": "0",
@@ -50,7 +54,8 @@
                     "integration": "homeassistant",
                     "area": "Kitchen",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 },
                 {
                     "brightness": "0",
@@ -60,7 +65,8 @@
                     "integration": "homeassistant",
                     "area": "Living room",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 },
                 {
                     "brightness": "0",
@@ -70,7 +76,8 @@
                     "integration": "homeassistant",
                     "area": "Living room",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 },
                 {
                     "brightness": "0",
@@ -80,7 +87,8 @@
                     "integration": "homeassistant",
                     "area": "Bedroom",
                     "state": "off",
-                    "type": "light"
+                    "type": "light",
+                    "supported_features": 0
                 }
             ],
             "type": "light"
@@ -112,6 +120,7 @@
         }
     ],
     "integration": [
+
     ],
     "language": "en_US",
     "areas": [
@@ -152,6 +161,7 @@
                     "display_name": "Settings",
                     "show": true
                     }
-        ]}
+                    ]
+        }
     }
 }

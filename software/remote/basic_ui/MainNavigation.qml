@@ -84,7 +84,7 @@ Item {
 
     function addDeviceTypes() {
         for (var i=0; i<loaded_entities.length; i++) {
-            menuConfig.append({"name": loaded_entities[i], "display_name": supported_entities_translation[loaded_entities_id[i]],"show": true});
+            menuConfig.append({"name": loaded_entities[i].obj, "display_name": supported_entities_translation[loaded_entities[i].id],"show": true});
         }
     }
 

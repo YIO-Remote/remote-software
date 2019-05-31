@@ -20,6 +20,33 @@ Item {
         screenOffTimeTextData.text = Qt.binding( function () { return JSHelper.secondsToHours(Math.round(standbyControl.screenOffTime/1000)) } )
     }
 
+    property var hours: []
+
+    function getHours() {
+        if (hours === [] ) {
+            hours.push(battery_data[battery_data.length-1].timestamp.getHours());
+        }
+
+        var tmp;
+        tmp = hours;
+
+        for (var i=battery_data.length-1; i>0; i--) {
+            if (battery_data[i].timestamp.getHours() !== hours[0]) {
+                tmp.push(battery_data[i].timestamp.getHours());
+            }
+        }
+        hours = tmp;
+    }
+
+    Connections {
+        target: applicationWindow
+
+        onBatteryDataUpdated: {
+            getHours();
+        }
+
+    }
+
     Text {
         id: header
         color: colorText
@@ -277,11 +304,11 @@ Item {
                 anchors.left: parent.left
 
                 Repeater {
-                    model: battery_data.length > 7 ? 8 : (battery_data.length === 0 ? 1 : battery_data.length)
+                    model: hours.length > 7 ? 8 : (hours.length === 0 ? 1 : hours.length)
 
                     delegate: Text {
                         //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
-                        text: battery_data.length === 0 ? qsTr("No data available yet") + translateHandler.emptyString : battery_data[battery_data.length-1-index].timestamp.getHours()
+                        text: hours.length === 0 ? qsTr("No data available yet") + translateHandler.emptyString : hours[hours.length-1-index]
                         color: colorHighlight
                         font.family: "Open Sans"
                         font.weight: Font.Normal

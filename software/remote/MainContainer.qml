@@ -14,8 +14,10 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        for (var i=0; i<integrationObj.length; i++) {
-            integration[config.integration[i].type].connectionOpen = true
+        for (var key in integration) {
+            if (integration.hasOwnProperty(key)) {
+                integration[key].obj.connectionOpen = true;
+            }
         }
     }
 
