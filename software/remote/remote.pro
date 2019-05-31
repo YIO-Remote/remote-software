@@ -35,14 +35,15 @@ SOURCES += \
     sources/drv2605.cpp \
     sources/bq27441.cpp
 
-Q_PROCESSOR_ARM {
+CONFIG += MQ_ARM -r
+
+MQ_ARM {
     HEADERS += \
         sources/apds9960.h \
         sources/mcp23017.h \
 
     SOURCES += \
         sources/apds9960.cpp \
-
 }
 
 RESOURCES += qml.qrc \
