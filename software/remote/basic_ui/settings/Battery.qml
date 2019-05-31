@@ -185,6 +185,30 @@ Item {
             }
         }
 
+        Item {
+            width: batteryLevelBG.width
+            height: batteryLevelBG.height
+            anchors.centerIn: batteryLevelBG
+
+            Row {
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 13
+
+                spacing: 4
+
+                Repeater {
+                    model: battery_data.length > 7 ? 8 : battery_data.length
+
+                    Rectangle {
+                        width: 6
+                        height: 96 * battery_data[index].level / 100
+                        color: colorText
+                    }
+                }
+            }
+        }
+
         Text {
             id: averagePowerText
             color: colorHighlight
@@ -221,6 +245,30 @@ Item {
         }
 
         Item {
+            width: averagePowerBG.width
+            height: averagePowerBG.height
+            anchors.centerIn: averagePowerBG
+
+            Row {
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 13
+
+                spacing: 4
+
+                Repeater {
+                    model: battery_data.length > 7 ? 8 : battery_data.length
+
+                    Rectangle {
+                        width: 6
+                        height: 96 * (Math.abs(battery_data[index].power) / 4000)
+                        color: battery_data[index].power < 0 ? colorText : colorGreen
+                    }
+                }
+            }
+        }
+
+        Item {
             width: 360
             height: 20
             anchors.top: averagePowerBG.bottom
@@ -231,7 +279,7 @@ Item {
             RowLayout {
                 layoutDirection: Qt.RightToLeft
                 Layout.fillWidth: false
-                spacing: 35
+                spacing: 30
                 anchors.left: parent.left
 
                 Repeater {
@@ -245,6 +293,7 @@ Item {
                         font.weight: Font.Normal
                         font.pixelSize: 16
                         lineHeight: 1
+                        horizontalAlignment: Text.AlignHCenter
                     }
                 }
             }
