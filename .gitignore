@@ -21,5 +21,6 @@ software/remote/translations/.DS_Store
 software/build-*
 
 #Translation files
-software/remote/translations/*
+software/remote/translations/*.ts
+software/remote/translations/*.qm
 !software/remote/translations/en_US.ts
