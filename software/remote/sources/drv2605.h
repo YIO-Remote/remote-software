@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#ifdef __linux__
+#ifdef __arm__
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #endif
@@ -68,7 +68,7 @@ public:
     drv2605();
 
     bool init();
-#ifdef __linux__
+#ifdef __arm__
     void writeRegister8(uint8_t reg, uint8_t val);
     int readRegister8(uint8_t reg);
     void setWaveform(uint8_t slot, uint8_t w);

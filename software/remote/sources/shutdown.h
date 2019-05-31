@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include <stdio.h>
-#ifdef __linux__
+#ifdef __arm__
 #include <wiringPi.h>
 #include <mcp23017.h>
 #endif
@@ -17,7 +17,7 @@ public:
 
     Q_INVOKABLE void shutdown()
     {
-#ifdef __linux__
+#ifdef __arm__
         wiringPiSetup () ;
         mcp23017Setup (100, 0x20);
 

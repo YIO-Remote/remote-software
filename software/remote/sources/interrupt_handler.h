@@ -5,7 +5,7 @@
 #include <QFile>
 #include <QSocketNotifier>
 
-#ifdef __linux__
+#ifdef __arm__
 #include "mcp23017.h"
 #endif
 
@@ -13,7 +13,7 @@ class InterruptHandler : public QObject
 {
     Q_OBJECT
 
-#ifdef __linux__
+#ifdef __arm__
     QSocketNotifier *notifier;
     QFile *file;
 #endif
@@ -23,7 +23,7 @@ public:
 
     Q_INVOKABLE void shutdown()
     {
-#ifdef __linux__
+#ifdef __arm__
         mcp.shutdown();
 #endif
     }
@@ -43,7 +43,7 @@ public:
 
     void setupGPIO()
     {
-#ifdef __linux__
+#ifdef __arm__
         QFile exportFile("/sys/class/gpio/export");
         exportFile.open(QIODevice::WriteOnly);
         exportFile.write("18");
@@ -69,7 +69,7 @@ public:
 
     void interruptHandler()
     {
-#ifdef __linux__
+#ifdef __arm__
         QFile file("/sys/class/gpio/gpio18/value");
         file.open(QIODevice::ReadOnly);
 
@@ -91,7 +91,7 @@ public:
 
 private:
     QString m_button;
-#ifdef __linux__
+#ifdef __arm__
     MCP23017 mcp = MCP23017();
 #endif
 
