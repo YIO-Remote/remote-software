@@ -35,9 +35,7 @@ SOURCES += \
     sources/drv2605.cpp \
     sources/bq27441.cpp
 
-CONFIG += MQ_ARM -r
-
-MQ_ARM {
+equals(QT_ARCH, arm): {
     HEADERS += \
         sources/apds9960.h \
         sources/mcp23017.h \

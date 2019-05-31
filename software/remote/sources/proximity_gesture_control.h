@@ -76,22 +76,28 @@ public:
 
             // read the value
             apds.readProximity(m_proximity);
-            qDebug() << "Proximity reading:" << m_proximity;
-            delay(200);
-            apds.enableLightSensor(false);
+            if (m_proximity > 150) {
+                qDebug() << "Proximity reading:" << m_proximity;
+                delay(200);
+                apds.enableLightSensor(false);
 
-            // read the ambient light
-            apds.readAmbientLight(m_ambientLight);
+                // read the ambient light
+                apds.readAmbientLight(m_ambientLight);
 
-            // let qml know
-            emit proximityEvent();
+                // let qml know
+                emit proximityEvent();
 
-            // turn off proximity detection
-            proximityDetection(false);
+                // turn off proximity detection
+                proximityDetection(false);
 
-            // clear the interrupt
-            apds.clearProximityInt();
-            delay(100);
+                // clear the interrupt
+                apds.clearProximityInt();
+                delay(100);
+            } else {
+                proximityDetection(false);
+                delay(200);
+                proximityDetection(true);
+            }
 
 
             //            delay(1000);
