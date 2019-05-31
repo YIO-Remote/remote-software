@@ -18,14 +18,6 @@ Item {
     Component.onCompleted: {
         screenOnTimeTextData.text = Qt.binding( function() { return JSHelper.secondsToHours(Math.round(standbyControl.screenOnTime/1000)) } )
         screenOffTimeTextData.text = Qt.binding( function () { return JSHelper.secondsToHours(Math.round(standbyControl.screenOffTime/1000)) } )
-
-        currentHour = Qt.binding( function() { return (new Date().getHours()) } )
-    }
-
-    property int currentHour
-
-    onCurrentHourChanged: {
-        console.debug("Update graphs");
     }
 
     Text {
