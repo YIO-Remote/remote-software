@@ -2,7 +2,7 @@
 
 drv2605::drv2605()
 {
-#ifdef __linux__
+#ifdef __arm__
     if (init()) {
         selectLibrary(1);
         setMode(DRV2605_MODE_INTTRIG);
@@ -12,7 +12,7 @@ drv2605::drv2605()
 
 void drv2605::playEffect(QString effect)
 {
-#ifdef __linux__
+#ifdef __arm__
     if (effect == "click") {
         setWaveform(0, 5);
         go();
@@ -30,7 +30,7 @@ void drv2605::playEffect(QString effect)
 
 bool drv2605::init()
 {
-#ifdef __linux__
+#ifdef __arm__
     wiringPiSetup();
     bus = wiringPiI2CSetupInterface("/dev/i2c-3", DRV2605_ADDR);
 
@@ -60,7 +60,7 @@ bool drv2605::init()
     return true;
 #endif
 }
-#ifdef __linux__
+#ifdef __arm__
 void drv2605::setWaveform(uint8_t slot, uint8_t w)
 {
     writeRegister8(DRV2605_REG_WAVESEQ1+slot, w);

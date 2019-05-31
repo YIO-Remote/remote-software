@@ -12,7 +12,7 @@ DisplayControl::DisplayControl()
 
 void DisplayControl::setup(void)
 {
-#ifdef __linux__
+#ifdef __arm__
     wiringPiSetup () ;
     mcp23017Setup (100, 0x21);
 #endif
@@ -20,7 +20,7 @@ void DisplayControl::setup(void)
 
 void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1)
 {
-#ifdef __linux__
+#ifdef __arm__
     int32_t i;
     int32_t control_bit;
 
@@ -114,7 +114,7 @@ void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data
 bool DisplayControl::setmode(const QString &mode)
 {
     if (mode == "standbyon") {
-#ifdef __linux__
+#ifdef __arm__
         spi_screenreg_set(0x10, 0xffff, 0xffff);
         delay(120);
         spi_screenreg_set(0x28, 0xffff, 0xffff);
@@ -122,7 +122,7 @@ bool DisplayControl::setmode(const QString &mode)
         return true;
     }
     if (mode == "standbyoff") {
-#ifdef __linux__
+#ifdef __arm__
         spi_screenreg_set(0x29, 0xffff, 0xffff);
         spi_screenreg_set(0x11, 0xffff, 0xffff);
 #endif
@@ -132,7 +132,7 @@ bool DisplayControl::setmode(const QString &mode)
 
 void DisplayControl::setBrightness(int value)
 {
-#ifdef __linux__
+#ifdef __arm__
     pwmWrite(1, value);
     delay(10);
 #endif

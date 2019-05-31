@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#ifdef __linux__
+#ifdef __arm__
     #include <wiringPi.h>
     #include <mcp23017.h>
 #endif

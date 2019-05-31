@@ -5,7 +5,7 @@
 #include <QtDebug>
 #include <QThread>
 
-#ifdef __linux__
+#ifdef __arm__
 #include "apds9960.h"
 #endif
 
@@ -36,7 +36,7 @@ public:
     Q_INVOKABLE void proximityDetection(bool state)
     {
         m_proximityDetection = state;
-#ifdef __linux__
+#ifdef __arm__
         if (state) {
             // turn on
             apds.setProximityGain(2);
@@ -56,7 +56,7 @@ public:
     Q_INVOKABLE void gestureDetection(bool state)
     {
         m_gestureDetection = state;
-#ifdef __linux__
+#ifdef __arm__
         if (state) {
             // turn on
             apds.setGestureGain(0);
@@ -71,7 +71,7 @@ public:
     }
 
     Q_INVOKABLE void readInterrupt() {
-#ifdef __linux__
+#ifdef __arm__
         if (m_proximityDetection) {
 
             // read the value
@@ -133,7 +133,7 @@ public:
 public:
     ProximityGestureControl()
     {
-#ifdef __linux__
+#ifdef __arm__
         if ( !apds.init() )
         {
             qDebug() << "Cannot initialize the proximity sensor";
@@ -175,7 +175,7 @@ signals:
     void apds9960Notify();
 
 private:
-#ifdef __linux__
+#ifdef __arm__
     APDS9960 apds = APDS9960();
 #endif
     uint16_t m_ambientLight;

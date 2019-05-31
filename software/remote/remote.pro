@@ -35,7 +35,7 @@ SOURCES += \
     sources/drv2605.cpp \
     sources/bq27441.cpp
 
-linux {
+Q_PROCESSOR_ARM {
     HEADERS += \
         sources/apds9960.h \
         sources/mcp23017.h \

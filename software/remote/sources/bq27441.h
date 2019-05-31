@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtDebug>
 
-#ifdef __linux__
+#ifdef __arm__
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #endif
@@ -89,7 +89,7 @@ public:
     Q_INVOKABLE int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
     Q_INVOKABLE int getStateOfHealth();
 
-#ifdef __linux__
+#ifdef __arm__
     int32_t  getTemperatureC();                 // Result in 1 Celsius
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();

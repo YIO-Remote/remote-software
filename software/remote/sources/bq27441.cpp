@@ -2,7 +2,7 @@
 
 BQ27441::BQ27441()
 {
-#ifdef __linux__
+#ifdef __arm__
     /* Initialize I2C */
     bus = wiringPiI2CSetupInterface("/dev/i2c-3", BQ27441_I2C_ADDRESS);
 
@@ -23,7 +23,7 @@ BQ27441::~BQ27441() {}
 
 void BQ27441::begin()
 {
-#ifdef __linux__
+#ifdef __arm__
     if (getDesignCapacity() != ((uint16_t) m_capacity)) {
         // change the designcapacity if it doesn't match
         qDebug() << "Setting charge capacity to:" << m_capacity;
@@ -32,7 +32,7 @@ void BQ27441::begin()
 #endif
 }
 
-#ifdef __linux__
+#ifdef __arm__
 void BQ27441::changeCapacity(uint16_t capacity)
 {
     // unseal the device
@@ -159,7 +159,7 @@ int32_t BQ27441::getTemperatureC() {  // Result in 1 Celcius
 #endif
 
 int BQ27441::getVoltage() {
-#ifdef __linux__
+#ifdef __arm__
     int result;
     result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_VOLTAGE);
     return result;
@@ -168,7 +168,7 @@ int BQ27441::getVoltage() {
 #endif
 }
 
-#ifdef __linux__
+#ifdef __arm__
 uint16_t BQ27441::getFlags() {
     uint16_t result;
 
@@ -199,7 +199,7 @@ uint16_t BQ27441::getRemainingCapacity() {
 #endif
 
 int BQ27441::getFullChargeCapacity() {
-#ifdef __linux__
+#ifdef __arm__
     int result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_FULL_CAPACITY);
@@ -210,7 +210,7 @@ int BQ27441::getFullChargeCapacity() {
 }
 
 int16_t  BQ27441::getAverageCurrent() {
-#ifdef __linux__
+#ifdef __arm__
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_CURRENT);
@@ -220,7 +220,7 @@ int16_t  BQ27441::getAverageCurrent() {
 #endif
 }
 
-#ifdef __linux__
+#ifdef __arm__
 int16_t  BQ27441::getStandbyCurrent() {
     uint16_t result;
 
@@ -237,7 +237,7 @@ int16_t  BQ27441::getMaxLoadCurrent() {
 #endif
 
 int BQ27441::getAveragePower() {
-#ifdef __linux__
+#ifdef __arm__
     int16_t result;
 
     result = (int16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_POWER);
@@ -248,7 +248,7 @@ int BQ27441::getAveragePower() {
 }
 
 int BQ27441::getStateOfCharge() {
-#ifdef __linux__
+#ifdef __arm__
     int result;
 
     result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
@@ -259,7 +259,7 @@ int BQ27441::getStateOfCharge() {
 }
 
 int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
-#ifdef __linux__
+#ifdef __arm__
     int16_t result;
     uint16_t raw;
 
@@ -273,7 +273,7 @@ int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
 }
 
 int BQ27441::getStateOfHealth() {
-    #ifdef __linux__
+    #ifdef __arm__
     uint8_t result;
 
     uint16_t raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOH);
@@ -284,7 +284,7 @@ int BQ27441::getStateOfHealth() {
 #endif
 }
 
-#ifdef __linux__
+#ifdef __arm__
 uint16_t BQ27441::getRemainingCapacityUnfiltered() {
     uint16_t result;
 
