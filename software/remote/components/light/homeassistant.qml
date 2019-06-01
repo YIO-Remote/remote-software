@@ -5,6 +5,15 @@ import "qrc:/scripts/helper.js" as JSHelper
 Item {
     id: lightComponent_homeassistant
 
+    //  Bitfield of features supported by the light entity FROM HOME ASSISTANT
+    property int _SUPPORT_BRIGHTNESS: 1
+    property int _SUPPORT_COLOR_TEMP: 2
+    property int _SUPPORT_EFFECT: 4
+    property int _SUPPORT_FLASH: 8
+    property int _SUPPORT_COLOR: 16
+    property int _SUPPORT_TRANSITION: 32
+    property int _SUPPORT_WHITE_VALUE: 128
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SIGNALS
@@ -34,7 +43,20 @@ Item {
 
                         tmp[k].friendly_name = json.result[i].attributes.friendly_name;
 
-                        tmp[k].supported_features = json.result[i].attributes.supported_features;
+                        // Brightness
+                        if (json.result[i].attributes.supported_features & _SUPPORT_BRIGHTNESS) {
+                            tmp[k].supported_features.push("BRIGHTNESS");
+                        }
+
+                        // Color
+                        if (json.result[i].attributes.supported_features & _SUPPORT_COLOR) {
+                            tmp[k].supported_features.push("COLOR");
+                        }
+
+                        // Color temperature
+                        if (json.result[i].attributes.supported_features & _SUPPORT_COLOR_TEMP) {
+                            tmp[k].supported_features.push("COLOR_TEMP");
+                        }
                     }
                 }
             }

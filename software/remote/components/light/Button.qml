@@ -15,7 +15,7 @@ Rectangle {
     property int brightness:            loaded_components.light.entities[entityID].brightness
     property string integrationType:    loaded_components.light.entities[entityID].integration
     property string area:               loaded_components.light.entities[entityID].area
-    property int supported_features:    loaded_components.light.entities[entityID].supported_features
+    property var supported_features:    loaded_components.light.entities[entityID].supported_features
 
     property bool favorite:             loaded_components.light.entities[entityID].favorite
 
@@ -32,7 +32,6 @@ Rectangle {
             lightButton.state = "closed"
         }
     }
-
 
     property var originParent: lightButton.parent
 
@@ -451,7 +450,7 @@ Rectangle {
         height: lightButton.height
         asynchronous: true
         active: lightButton.state == "open"
-        source: lightButton.state != "open" ? "" : "qrc:/components/light/CardDimmable.qml"
+        source: lightButton.state != "open" ? "" : (supported_features.indexOf("BRIGHTNESS") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {

@@ -11,6 +11,9 @@ Item {
         var comp;
         for (var i=0; i<config.integration.length; i++) {
             comp = Qt.createComponent("qrc:/components/light/"+ config.integration[i].type +".qml");
+            if (comp.status != Component.Ready) {
+                console.debug("Error: " + comp.errorString() );
+            }
             lightComponentIntegration[config.integration[i].type] = comp.createObject(applicationWindow);
         }
     }
