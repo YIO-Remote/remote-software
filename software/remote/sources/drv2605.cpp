@@ -25,6 +25,10 @@ void drv2605::playEffect(QString effect)
         setWaveform(0, 111);
         go();
     }
+    if (effect == "buzz") {
+        setWaveform(0, 48);
+        go();
+    }
 #endif
 }
 

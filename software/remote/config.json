@@ -142,6 +142,7 @@
         }
     ],
     "settings": {
+	"proximity": 100,
         "autobrightness": true,
         "darkmode": true,
         "shutdowntime": 7200,

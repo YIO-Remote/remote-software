@@ -246,6 +246,7 @@ ApplicationWindow {
         // change dark mode to the configured value
         darkMode = Qt.binding(function () { return config.settings.darkmode});
         standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
+        standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
         // load the hub integrations
         if (loadHubIntegrations()) {
