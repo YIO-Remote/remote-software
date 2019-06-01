@@ -50,7 +50,7 @@ public:
             // turn on
             apds.setProximityGain(2);
             apds.setProximityIntLowThreshold(0);
-            apds.setProximityIntHighThreshold(m_proximitySetting);
+            apds.setProximityIntHighThreshold(uint8_t(m_proximitySetting));
             apds.clearProximityInt();
             apds.setLEDBoost(0);
             if ( !apds.enableProximitySensor(true) ){
@@ -92,10 +92,11 @@ public:
 
             // read the value
             apds.readProximity(m_proximity);
-            delay(200);
+            delay(100);
 
             // clear the interrupt
             apds.clearProximityInt();
+            delay(100);
 
             // turn off proximity detection
             proximityDetection(false);
@@ -111,13 +112,13 @@ public:
 
                 // let qml know
                 emit proximityEvent();
-
                 delay(100);
 
             } else {
                 qDebug() << "Restarting proximity detection";
-                delay(100);
-                proximityDetection(true);
+//                delay(200);
+//                proximityDetection(true);
+                restart();
             }
 
             //            delay(1000);
@@ -201,6 +202,24 @@ signals:
     void apds9960Notify();
 
 private:
+    void restart()
+    {
+#ifdef __arm__
+        apds.disablePower();
+        delay(200);
+        apds.enablePower();
+        if ( !apds.init() )
+        {
+            qDebug() << "Cannot initialize the proximity sensor";
+            //: Error message that shows up as notification when the proximity sensor cannot be initialized
+            m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
+            emit apds9960Notify();
+        }
+        delay(200);
+        proximityDetection(true);
+#endif
+    }
+
 #ifdef __arm__
     APDS9960 apds = APDS9960();
 #endif
