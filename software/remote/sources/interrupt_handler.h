@@ -48,9 +48,13 @@ public:
         exportFile.open(QIODevice::WriteOnly);
         exportFile.write("18");
 
+        delay(200);
+
         QFile directionFile("/sys/class/gpio/gpio18/direction");
         directionFile.open(QIODevice::WriteOnly);
         directionFile.write("in");
+
+        delay(200);
 
         QFile edgeFile("/sys/class/gpio/gpio18/edge");
         edgeFile.open(QIODevice::WriteOnly);

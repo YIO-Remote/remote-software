@@ -14,7 +14,6 @@
 #include "drv2605.h"
 #include "bq27441.h"
 #include "proximity_gesture_control.h"
-#include "shutdown.h"
 
 int main(int argc, char *argv[])
 {
@@ -58,7 +57,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
-    qmlRegisterType<Shutdown>("Shutdown", 1, 0, "Shutdown");
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);

@@ -22,6 +22,48 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: buttonHandler
+        enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
+
+        onButtonPress: {
+            switch (button) {
+            case "dpad right":
+                if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
+                    loader_main.item.mainNavigationSwipeview.currentIndex += 1;
+                } else {
+                    haptic.playEffect("buzz");
+                }
+                break;
+            case "dpad left":
+                if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
+                    loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
+                } else {
+                    haptic.playEffect("buzz");
+                }
+                break;
+            case "dpad up":
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY -= 200;
+                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY <= 0) {
+                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = 0;
+                    haptic.playEffect("buzz");
+                }
+                break;
+            case "dpad down":
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY += 200;
+                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
+                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
+                    haptic.playEffect("buzz");
+                }
+                break;
+            }
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN CONTAINER CONTENT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

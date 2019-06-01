@@ -12,6 +12,13 @@ Flickable {
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
 
+    Behavior on contentY {
+        PropertyAnimation {
+            duration: 300
+            easing.type: Easing.OutExpo
+        }
+    }
+
     ScrollBar.vertical: ScrollBar {
         opacity: 0.5
     }

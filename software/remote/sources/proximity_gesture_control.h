@@ -18,6 +18,7 @@ public:
     Q_PROPERTY(int proximity NOTIFY proximityEvent)
     Q_PROPERTY(QString gesture READ getgesture NOTIFY gestureEvent)
     Q_PROPERTY(QString apds9960Error READ getapds9960Error NOTIFY apds9960Notify)
+    Q_PROPERTY(int proximitySetting READ getproximitySetting WRITE setproximitySetting)
 
     int getambientLight() {
         return int(m_ambientLight);
@@ -33,6 +34,14 @@ public:
         return m_apds9960Error;
     }
 
+    int getproximitySetting() {
+        return m_proximitySetting;
+    }
+
+    void setproximitySetting(int proximity) {
+        m_proximitySetting = proximity;
+    }
+
     Q_INVOKABLE void proximityDetection(bool state)
     {
         m_proximityDetection = state;
@@ -41,10 +50,15 @@ public:
             // turn on
             apds.setProximityGain(2);
             apds.setProximityIntLowThreshold(0);
-            apds.setProximityIntHighThreshold(150);
+            apds.setProximityIntHighThreshold(m_proximitySetting);
             apds.clearProximityInt();
             apds.setLEDBoost(0);
-            apds.enableProximitySensor(true);
+            if ( !apds.enableProximitySensor(true) ){
+                qDebug() << "Cannot initialize the proximity sensor";
+                //: Error message that shows up as notification when the proximity sensor cannot be initialized
+                m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
+                emit apds9960Notify();
+            }
 
         } else {
             // turn off
@@ -74,31 +88,37 @@ public:
 #ifdef __arm__
         if (m_proximityDetection) {
 
+            qDebug() << "Proximity Interrupt";
+
             // read the value
             apds.readProximity(m_proximity);
-            if (m_proximity > 150) {
-                qDebug() << "Proximity reading:" << m_proximity;
-                delay(200);
-                apds.enableLightSensor(false);
+            delay(200);
 
+            // clear the interrupt
+            apds.clearProximityInt();
+
+            // turn off proximity detection
+            proximityDetection(false);
+
+            qDebug() << "Proximity reading:" << m_proximity;
+
+            if (m_proximity > m_proximitySetting) {
+                qDebug() << "Proximity reading OK";
+
+                apds.enableLightSensor(false);
                 // read the ambient light
                 apds.readAmbientLight(m_ambientLight);
 
                 // let qml know
                 emit proximityEvent();
 
-                // turn off proximity detection
-                proximityDetection(false);
-
-                // clear the interrupt
-                apds.clearProximityInt();
                 delay(100);
+
             } else {
-                proximityDetection(false);
-                delay(200);
+                qDebug() << "Restarting proximity detection";
+                delay(100);
                 proximityDetection(true);
             }
-
 
             //            delay(1000);
 
@@ -190,6 +210,7 @@ private:
     QString m_apds9960Error;
     bool m_proximityDetection = false;
     bool m_gestureDetection = false;
+    int m_proximitySetting = 100;
 };
 
 #endif // PROXIMITY_GESTURE_CONTROL_H
