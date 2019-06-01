@@ -23,8 +23,7 @@ HEADERS += \
     sources/interrupt_handler.h \
 #    sources/mcp23017.h \
     sources/drv2605.h \
-    sources/bq27441.h \
-    sources/shutdown.h
+    sources/bq27441.h
 
 SOURCES += \
     sources/main.cpp \
