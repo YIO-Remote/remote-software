@@ -41,7 +41,7 @@ public:
             // turn on
             apds.setProximityGain(2);
             apds.setProximityIntLowThreshold(0);
-            apds.setProximityIntHighThreshold(150);
+            apds.setProximityIntHighThreshold(100);
             apds.clearProximityInt();
             apds.setLEDBoost(0);
             apds.enableProximitySensor(true);
@@ -74,13 +74,14 @@ public:
 #ifdef __arm__
         if (m_proximityDetection) {
 
+            qDebug() << "Proximity Interrupt";
             // read the value
             apds.readProximity(m_proximity);
-            if (m_proximity > 150) {
-                qDebug() << "Proximity reading:" << m_proximity;
-                delay(200);
-                apds.enableLightSensor(false);
+            delay(200);
+            qDebug() << "Proximity reading:" << m_proximity;
+            if (m_proximity > 100) {
 
+                apds.enableLightSensor(false);
                 // read the ambient light
                 apds.readAmbientLight(m_ambientLight);
 
