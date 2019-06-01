@@ -1,4 +1,4 @@
-import QtQuick 2.11
+ import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtWebSockets 1.0
 
@@ -55,7 +55,6 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
-            console.debug("Average Power in mW: " + battery.getAveragePower());
 
             if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
                 // set turn on button to low
