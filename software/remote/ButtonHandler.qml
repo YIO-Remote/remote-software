@@ -5,8 +5,9 @@ import InterruptHandler 1.0
 Item {
 
     property bool wasPressed: false;
-
     property alias interruptHandler: interruptHandler
+
+    signal buttonPress(string button)
 
     InterruptHandler {
         id: interruptHandler
@@ -20,24 +21,7 @@ Item {
                     standbyControl.proximity.readInterrupt()
                 } else {
                     standbyControl.buttonPressDetected = true;
-                }
-
-                if (standbyControl.mode == "on") {
-                    // do button stuff here
-                    /////////////////////////////////////////////////////////////////////////////////////////////////
-                    // MAIN SCREEN
-                    /////////////////////////////////////////////////////////////////////////////////////////////////
-                    if (loader_main.state == "visible") {
-                        switch (interruptHandler.button) {
-                        case "dpad right":
-                            loader_main.item.mainNavigationSwipeview.currentIndex += 1;
-                            break;
-                        case "dpad left":
-                            loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
-                            break;
-                        }
-                    }
-
+                    buttonPress(interruptHandler.button);
                 }
             }
         }

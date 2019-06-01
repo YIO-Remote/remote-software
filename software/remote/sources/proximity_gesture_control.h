@@ -41,7 +41,7 @@ public:
             // turn on
             apds.setProximityGain(2);
             apds.setProximityIntLowThreshold(0);
-            apds.setProximityIntHighThreshold(100);
+            apds.setProximityIntHighThreshold(70);
             apds.clearProximityInt();
             apds.setLEDBoost(0);
             apds.enableProximitySensor(true);
@@ -79,7 +79,7 @@ public:
             apds.readProximity(m_proximity);
             delay(200);
             qDebug() << "Proximity reading:" << m_proximity;
-            if (m_proximity > 100) {
+            if (m_proximity > 70) {
 
                 apds.enableLightSensor(false);
                 // read the ambient light
@@ -95,6 +95,7 @@ public:
                 apds.clearProximityInt();
                 delay(100);
             } else {
+                qDebug() << "Restarting proximity sensor becasue of 0 value";
                 proximityDetection(false);
                 delay(200);
                 proximityDetection(true);
