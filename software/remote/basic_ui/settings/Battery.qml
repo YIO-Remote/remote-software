@@ -31,7 +31,7 @@ Item {
         tmp = hours;
 
         for (var i=battery_data.length-1; i>0; i--) {
-            if (battery_data[i].timestamp.getHours() !== hours[0]) {
+            if ( hours.indexOf(battery_data[i].timestamp.getHours()) == -1 ) {
                 tmp.push(battery_data[i].timestamp.getHours());
             }
         }
