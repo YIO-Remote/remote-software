@@ -76,6 +76,7 @@ public:
 
             // read the value
             apds.readProximity(m_proximity);
+            //            if (m_proximity > 150) {
             qDebug() << "Proximity reading:" << m_proximity;
             delay(200);
             apds.enableLightSensor(false);
@@ -92,6 +93,11 @@ public:
             // clear the interrupt
             apds.clearProximityInt();
             delay(100);
+            //            } else {
+            //                proximityDetection(false);
+            //                delay(200);
+            //                proximityDetection(true);
+            //            }
 
 
             //            delay(1000);

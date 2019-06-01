@@ -162,11 +162,8 @@ Item {
 //                connectionState = "failed"
                 console.debug("Failed to connect");
 
-                var tmp = {};
-                tmp.type = "error";
-                tmp.text = "Failed to connect to Home Assistant."
-                tmp.action = "";
-                notifications.push(tmp);
+                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, "", "");
+                connecting = false;
 
                 tries = 0
             } else {

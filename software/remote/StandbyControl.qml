@@ -58,7 +58,8 @@ Item {
 
         onApds9960Notify: {
             console.debug(proximity.apds9960Error);
-            addNotification("error", proximity.apds9960Error, "", "Restart");
+            applicationWindow.addNotification("error", proximity.apds9960Error, "", "Restart");
+
         }
 
 //        onGestureEvent: {

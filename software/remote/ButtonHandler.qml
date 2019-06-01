@@ -18,9 +18,9 @@ Item {
 
                 if (interruptHandler.button == "apds9960") {
                     standbyControl.proximity.readInterrupt()
+                } else {
+                    standbyControl.buttonPressDetected = true;
                 }
-
-                standbyControl.buttonPressDetected = true;
 
                 if (standbyControl.mode == "on") {
                     // do button stuff here
@@ -30,10 +30,10 @@ Item {
                     if (loader_main.state == "visible") {
                         switch (interruptHandler.button) {
                         case "dpad right":
-                                loader_main.item.mainNavigationSwipeview.currentIndex += 1;
+                            loader_main.item.mainNavigationSwipeview.currentIndex += 1;
                             break;
                         case "dpad left":
-                                loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
+                            loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
                             break;
                         }
                     }

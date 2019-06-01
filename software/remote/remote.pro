@@ -35,14 +35,13 @@ SOURCES += \
     sources/drv2605.cpp \
     sources/bq27441.cpp
 
-Q_PROCESSOR_ARM {
+equals(QT_ARCH, arm): {
     HEADERS += \
         sources/apds9960.h \
         sources/mcp23017.h \
 
     SOURCES += \
         sources/apds9960.cpp \
-
 }
 
 RESOURCES += qml.qrc \
