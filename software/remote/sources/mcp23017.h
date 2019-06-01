@@ -56,7 +56,7 @@ public:
         bus = wiringPiI2CSetupInterface("/dev/i2c-3", MCP23017_ADDRESS);
 
         // set up all inputs on both ports
-        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0xff); //0b00111111
+        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0x3f); //0b00111111
         wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0xff);
 
         // set up interrupts
@@ -74,13 +74,13 @@ public:
 
         // setup pin for interrupt
         wiringPiI2CWriteReg8(bus, MCP23017_INTCONA, 0x00);
-        wiringPiI2CWriteReg8(bus, MCP23017_GPPUA, 0xff);
+        wiringPiI2CWriteReg8(bus, MCP23017_GPPUA, 0x3f);
 
         wiringPiI2CWriteReg8(bus, MCP23017_INTCONB, 0x00);
         wiringPiI2CWriteReg8(bus, MCP23017_GPPUB, 0xff);
 
         // enable pin for interrupt
-        wiringPiI2CWriteReg8(bus, MCP23017_GPINTENA, 0xff);
+        wiringPiI2CWriteReg8(bus, MCP23017_GPINTENA, 0x3f);
         wiringPiI2CWriteReg8(bus, MCP23017_GPINTENB, 0xff);
 
         wiringPiI2CReadReg8(bus, MCP23017_INTCAPA);
