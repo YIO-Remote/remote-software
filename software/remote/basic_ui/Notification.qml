@@ -94,12 +94,17 @@ Rectangle {
     property string actionlabel
     property var timestamp
     property int idN
+    property string _state
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     state: "hidden"
+
+    Component.onCompleted: {
+        notification.state = _state
+    }
 
     states: [
         State {
@@ -131,7 +136,7 @@ Rectangle {
     transitions: [
         Transition {
             to: "visible"
-            PropertyAnimation { target: notification; properties: "opacity, y"; easing.type: Easing.InExpo; duration: 300 }
+            PropertyAnimation { target: notification; properties: "opacity, y"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: timestampText; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
             PropertyAnimation { target: buttons; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
         },

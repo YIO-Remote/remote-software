@@ -1,4 +1,4 @@
-import QtQuick 2.11
+ import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtWebSockets 1.0
 
@@ -353,11 +353,6 @@ ApplicationWindow {
         onStatusChanged: if (loader_main.status == Loader.Ready) {
                              loader_main.visible = true;
                              loadingScreen.state = "connected";
-
-                             //TEST
-                             addNotification("normal", "Everything is good. This is a test notification.", function() { console.debug("TEST")}, "Reboot");
-                             //                             addNotification("error", "Warning! This is a test notification.", "");
-                             //
                          }
     }
 
@@ -468,7 +463,7 @@ ApplicationWindow {
 
         // show notification
         var comp = Qt.createComponent("qrc:/basic_ui/Notification.qml");
-        notificationObj[notifications.length-1] = comp.createObject(notificationsRow, {type: json.type, text: json.text, actionlabel: json.actionlabel, action: json.action, timestamp: json.timestamp, idN: notifications.length-1, state: "visible"});
+        notificationObj[notifications.length-1] = comp.createObject(notificationsRow, {type: json.type, text: json.text, actionlabel: json.actionlabel, action: json.action, timestamp: json.timestamp, idN: notifications.length-1, _state: "visible"});
         notificationObj[notifications.length-1].removeNotification.connect(removeNotification);
         notificationObj[notifications.length-1].dismissNotification.connect(dismissNotification);
     }

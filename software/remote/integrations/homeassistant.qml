@@ -85,7 +85,7 @@ Item {
             connecting = false;
             webSocketConnection = true;
             console.debug("Subscribed to state changes");
-            console.debug("Command successful");
+            addNotification("normal", "Connected to Home Assistant.", "", "");
         }
 
         if (json.success == true && json.id == webSocketId) {
