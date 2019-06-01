@@ -33,7 +33,7 @@ Item {
         id: notificationDelegate
 
         BasicUI.Notification {
-            state: "permanent"
+            _state: "permanent"
             type: notifications[index].type
             text: notifications[index].text
             action: notifications[index].action
