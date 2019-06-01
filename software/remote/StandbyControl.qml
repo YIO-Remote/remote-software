@@ -205,7 +205,6 @@ Item {
     onTouchDetectedChanged: {
         // if there was a touch event, reset the timers
         if (touchDetected) {
-            console.debug("Touch wakeup");
             wakeUp();
             touchDetected = false;
         }
@@ -214,7 +213,6 @@ Item {
     onProximityDetectedChanged: {
         // if there was a proximity event, reset the timers
         if (proximityDetected) {
-            console.debug("Proximity wakeup");
             wakeUp();
             proximityDetected = false;
         }
@@ -223,7 +221,6 @@ Item {
     onButtonPressDetectedChanged: {
         // if there was a button press event, reset the timers
         if (buttonPressDetected) {
-            console.debug("Button wakeup");
             wakeUp();
             buttonPressDetected = false;
         }
