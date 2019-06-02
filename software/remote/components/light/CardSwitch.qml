@@ -21,6 +21,7 @@ Rectangle {
         buttonState: lstate == "off" ? false : true
 
         mouseArea.onClicked: {
+            haptic.playEffect("click");
             loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
     }
@@ -111,6 +112,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
+                    haptic.playEffect("click");
                     loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
                 }
             }
@@ -164,6 +166,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
+                haptic.playEffect("click");
                 lightButton.state = "closed"
                 loader_main.state = "visible"
                 var tmp = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY;
