@@ -86,8 +86,7 @@ public:
 
     Q_INVOKABLE void readInterrupt() {
 #ifdef __arm__
-        if (m_proximityDetection) {
-
+        if (m_proximityDetection) {           
             qDebug() << "Proximity Interrupt";
 
             // read the value
