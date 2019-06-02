@@ -13,13 +13,13 @@ Item {
         id: interruptHandler
 
         onButtonPressed: {
-            if (!wasPressed) {
-                wasPressed = true;
-                buttonTimeout.start()
+            if (interruptHandler.button == "apds9960") {
+                standbyControl.proximity.readInterrupt()
+            } else {
+                if (!wasPressed) {
+                    wasPressed = true;
+                    buttonTimeout.start()
 
-                if (interruptHandler.button == "apds9960") {
-                    standbyControl.proximity.readInterrupt()
-                } else {
                     standbyControl.buttonPressDetected = true;
                     buttonPress(interruptHandler.button);
                 }
