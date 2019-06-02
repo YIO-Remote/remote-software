@@ -26,6 +26,16 @@ APDS9960::~APDS9960()
 
 }
 
+bool APDS9960::initi2c()
+{
+    /* Initialize I2C */
+    fd_ = wiringPiI2CSetupInterface("/dev/i2c-3", APDS9960_I2C_ADDR);
+    if(fd_ == -1) {
+        return false;
+    }
+    return true;
+}
+
 /**
 * @brief Configures I2C communications and initializes registers to defaults
 *
@@ -34,12 +44,6 @@ APDS9960::~APDS9960()
 bool APDS9960::init()
 {
     uint8_t id;
-
-    /* Initialize I2C */
-    fd_ = wiringPiI2CSetupInterface("/dev/i2c-3", APDS9960_I2C_ADDR);
-    if(fd_ == -1) {
-        return false;
-    }
 
     /* Read ID register and check against known values for APDS-9960 */
     if( !wireReadDataByte(APDS9960_ID, id) ) {
@@ -444,8 +448,8 @@ int APDS9960::readGesture()
             /* If there's stuff in the FIFO, read it into our data block */
             if( fifo_level > 0) {
                 bytes_read = wireReadDataBlock(  APDS9960_GFIFO_U,
-                (uint8_t*)fifo_data,
-                (fifo_level * 4) );
+                                                 (uint8_t*)fifo_data,
+                                                 (fifo_level * 4) );
                 if( bytes_read == -1 ) {
                     return ERROR;
                 }
@@ -454,13 +458,13 @@ int APDS9960::readGesture()
                 if( bytes_read >= 4 ) {
                     for( i = 0; i < bytes_read; i += 4 ) {
                         gesture_data_.u_data[gesture_data_.index] = \
-                        fifo_data[i + 0];
+                                fifo_data[i + 0];
                         gesture_data_.d_data[gesture_data_.index] = \
-                        fifo_data[i + 1];
+                                fifo_data[i + 1];
                         gesture_data_.l_data[gesture_data_.index] = \
-                        fifo_data[i + 2];
+                                fifo_data[i + 2];
                         gesture_data_.r_data[gesture_data_.index] = \
-                        fifo_data[i + 3];
+                                fifo_data[i + 3];
                         gesture_data_.index++;
                         gesture_data_.total_gestures++;
                     }
@@ -1991,8 +1995,8 @@ bool APDS9960::wireWriteDataByte(uint8_t reg, uint8_t val)
 * @return True if successful write operation. False otherwise.
 */
 bool APDS9960::wireWriteDataBlock(  uint8_t reg,
-uint8_t *val,
-unsigned int len)
+                                    uint8_t *val,
+                                    unsigned int len)
 {
     if(wiringPiI2CWrite(fd_, reg) < 0) {
         return false;
@@ -2029,8 +2033,8 @@ bool APDS9960::wireReadDataByte(uint8_t reg, uint8_t &val)
 * @return Number of bytes read. -1 on read error.
 */
 int APDS9960::wireReadDataBlock(   uint8_t reg,
-uint8_t *val,
-unsigned int len)
+                                   uint8_t *val,
+                                   unsigned int len)
 {
     if(wiringPiI2CWrite(fd_, reg) < 0) {
         return -1;

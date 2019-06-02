@@ -2,7 +2,6 @@
 #define PROXIMITY_GESTURE_CONTROL_H
 
 #include <QObject>
-#include <QtDebug>
 #include <QThread>
 
 #ifdef __arm__
@@ -54,7 +53,6 @@ public:
             apds.clearProximityInt();
             apds.setLEDBoost(0);
             if ( !apds.enableProximitySensor(true) ){
-                qDebug() << "Cannot initialize the proximity sensor";
                 //: Error message that shows up as notification when the proximity sensor cannot be initialized
                 m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
                 emit apds9960Notify();
@@ -86,10 +84,7 @@ public:
 
     Q_INVOKABLE void readInterrupt() {
 #ifdef __arm__
-        if (m_proximityDetection) {
-
-            qDebug() << "Proximity Interrupt";
-
+        if (m_proximityDetection) {           
             // read the value
             apds.readProximity(m_proximity);
             delay(100);
@@ -101,12 +96,12 @@ public:
             // turn off proximity detection
             proximityDetection(false);
 
-            qDebug() << "Proximity reading:" << m_proximity;
-
             if (m_proximity > m_proximitySetting) {
-                qDebug() << "Proximity reading OK";
 
+                // enable the light sensor
                 apds.enableLightSensor(false);
+                delay(100);
+
                 // read the ambient light
                 apds.readAmbientLight(m_ambientLight);
 
@@ -115,16 +110,10 @@ public:
                 delay(100);
 
             } else {
-                qDebug() << "Restarting proximity detection";
-//                delay(200);
-//                proximityDetection(true);
+                // if the reading is smaller than the threshold, restart the sensor
+                // this needed as a workaround for some weird issue of reporting continous interrupts
                 restart();
             }
-
-            //            delay(1000);
-
-            // enable gesture detection
-            //            gestureDetection(true);
 
         } else if (m_gestureDetection) {
 
@@ -161,22 +150,27 @@ public:
     ProximityGestureControl()
     {
 #ifdef __arm__
+        if ( !apds.initi2c() )
+        {
+            //: Error message that shows up as notification when the i2c interface cannot be initialized
+            m_apds9960Error = tr("Cannot initialize the i2c interface. Please restart the remote.");
+            emit apds9960Notify();
+        }
+
         if ( !apds.init() )
         {
-            qDebug() << "Cannot initialize the proximity sensor";
             //: Error message that shows up as notification when the proximity sensor cannot be initialized
             m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
             emit apds9960Notify();
         }
 
         if ( !apds.enableLightSensor(false) ) {
-            qDebug() << "Cannot initialize the light sensor";
             //: Error message that shows up as notification when the light sensor cannot be initialized
             m_apds9960Error = tr("Cannot initialize the light sensor. Please restart the remote.");
             emit apds9960Notify();
         }
 
-        delay(500);
+        delay(100);
 
         // read the ambient light when it's on first
         if ( !apds.readAmbientLight(m_ambientLight)) {
@@ -186,7 +180,6 @@ public:
         } else {
             apds.disableLightSensor();
             delay(200);
-            //            gestureDetection(true);
         }
 #endif
     }
@@ -205,17 +198,21 @@ private:
     void restart()
     {
 #ifdef __arm__
+        // power cycle the sensor
         apds.disablePower();
         delay(200);
         apds.enablePower();
+
+        // initalise the sensor again
         if ( !apds.init() )
         {
-            qDebug() << "Cannot initialize the proximity sensor";
             //: Error message that shows up as notification when the proximity sensor cannot be initialized
             m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
             emit apds9960Notify();
         }
         delay(200);
+
+        // turn on proximity detection
         proximityDetection(true);
 #endif
     }
@@ -229,7 +226,7 @@ private:
     QString m_apds9960Error;
     bool m_proximityDetection = false;
     bool m_gestureDetection = false;
-    int m_proximitySetting = 100;
+    int m_proximitySetting = 100; // default value
 };
 
 #endif // PROXIMITY_GESTURE_CONTROL_H

@@ -28,7 +28,7 @@ Rectangle {
     Text {
         id: title
         color: colorText
-        text: friendly_name
+        text: friendly_name + "SWITCH"
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideNone

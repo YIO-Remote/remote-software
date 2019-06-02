@@ -214,6 +214,7 @@ public:
     /* Initialization methods */
     APDS9960();
     ~APDS9960();
+    bool initi2c();
     bool init();
     uint8_t getMode();
     bool setMode(uint8_t mode, uint8_t enable);
