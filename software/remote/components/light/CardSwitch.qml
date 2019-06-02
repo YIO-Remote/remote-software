@@ -28,14 +28,14 @@ Rectangle {
     Text {
         id: title
         color: colorText
-        text: friendly_name + "SWITCH"
+        text: friendly_name
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideNone
         wrapMode: Text.WordWrap
         width: parent.width-40
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: brightnessSettings.bottom
+        anchors.top: toggleSettings.bottom
         anchors.topMargin: 120
         font.family: "Open Sans"
         font.weight: Font.Normal
@@ -62,14 +62,11 @@ Rectangle {
         lineHeight: 1
     }
 
-
     Item {
-        id: brightnessSettings
+        id: toggleSettings
         width: 340
         height: 340
         anchors.horizontalCenter: parent.horizontalCenter
-
-        property bool moving: false
 
         Rectangle {
             width: 340
@@ -78,125 +75,45 @@ Rectangle {
             color: "#00000000"
             border.color: colorBackground
             border.width: 20
-            anchors.centerIn: progressCircle_purple
-        }
-
-        BasicUI.ProgressCircle {
-            id: progressCircle_purple
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: 100
-            rotation: 180
-
-            size: 330
-            colorCircle: colorHighlight
-            colorCircleGrad: colorHighlight
-            colorBackground: colorBackground
-            showBackground: false
-            arcBegin: 40
-            arcEnd: (40+280*Math.round(dial.position*100)/100)
-            animationDuration: !brightnessSettings.moving ? 1000 : 0
-            lineWidth: 10
-        }
-
-        BasicUI.ProgressCircle {
-            id: progressCircle_white
-            anchors.horizontalCenter: progressCircle_purple.horizontalCenter
-            anchors.verticalCenter: progressCircle_purple.verticalCenter
-            rotation: 180
-
-            size: 321
-            colorCircle: colorLine
-            colorCircleGrad: colorBackgroundTransparent
-            showBackground: false
-            arcBegin: progressCircle_purple.arcEnd > 140 ? progressCircle_purple.arcEnd - 90 : 40
-            arcEnd: progressCircle_purple.arcEnd
-            animationDuration: 0
-            lineWidth: 2
-        }
-
-        Dial {
-            id: dial
             anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Rectangle {
+            id: circleButton
+            width: 300
+            height: width
+            color: lstate == "off" ? "#00000000" : colorHighlight
+            radius: width/2
             anchors.top: parent.top
-            anchors.topMargin: 100
+            anchors.topMargin: 120
+            anchors.horizontalCenter: parent.horizontalCenter
 
-            from: 0
-            to: 100
-            enabled: true
-            spacing: 10
-
-            width: 340
-            height: 340
-
-            value: brightness
-
-            onMoved: {
-                brightnessSettings.moving = true
-                change_brightness_timer.running = true
-            }
-
-            Timer { // this timer changes the light brightness
-                id: change_brightness_timer
-                interval: 1000
-                repeat: false
-                running: false
-
-                onTriggered: {
-                    change_brightness_timer.running = false;
-                    brightnessSettings.moving = false;
-                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, Math.round(dial.position*100));
+            states: State {
+                name: "pressed"
+                when: mouseAreaCircle.pressed === true
+                PropertyChanges {
+                    target: circleButton
+                    color: colorText
                 }
             }
 
-            background: Rectangle {
-                x: dial.width / 2 - width / 2
-                y: dial.height / 2 - height / 2
-                width: Math.max(64, Math.min(dial.width, dial.height))
-                height: width
-                color: "transparent"
-            }
+            transitions: [
+              Transition {
+                  from: ""; to: "pressed"; reversible: true
+                  PropertyAnimation { target: circleButton
+                                      properties: "color"; duration: 400 }
+              }]
 
-            handle: Rectangle {
-                id: handleItem
-                x: dial.background.x + dial.background.width / 2 - width / 2
-                y: dial.background.y + dial.background.height / 2 - height / 2
-                width: 32
-                height: 32
+            MouseArea {
+                id: mouseAreaCircle
+                anchors.fill: parent
 
-                gradient: Gradient {
-                    GradientStop { position: 1.0; color: colorBackground }
-                    GradientStop { position: 0.0; color: colorButton }
+                onClicked: {
+                    loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
                 }
-
-                radius: 16
-                antialiasing: true
-                transform: [
-                    Translate {
-                        y: -Math.min(dial.background.width, dial.background.height) * 0.4 + handleItem.height / 2
-                    },
-                    Rotation {
-                        angle: dial.angle
-                        origin.x: handleItem.width / 2
-                        origin.y: handleItem.height / 2
-                    }
-                ]
             }
-        }
-
-        Text {
-            id: percentText
-            color: colorText
-            text: Math.round(dial.position*100) + "%"
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.NoWrap
-            anchors.horizontalCenter: progressCircle_purple.horizontalCenter
-            anchors.verticalCenter: progressCircle_purple.verticalCenter
-            anchors.verticalCenterOffset: -40
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 80
-            lineHeight: 1
         }
 
         Image {
@@ -206,9 +123,9 @@ Rectangle {
             height: 80
             fillMode: Image.PreserveAspectFit
             source: "qrc:/components/light/images/icon-light.png"
-            anchors.horizontalCenter: progressCircle_purple.horizontalCenter
-            anchors.top: percentText.bottom
-//            anchors.topMargin: 10
+            anchors.horizontalCenter: toggleSettings.horizontalCenter
+            anchors.verticalCenterOffset: 100
+            anchors.verticalCenter: toggleSettings.verticalCenter
 
             ColorOverlay {
                 visible: !darkMode

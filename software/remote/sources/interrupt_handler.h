@@ -45,20 +45,25 @@ public:
     {
 #ifdef __arm__
         QFile exportFile("/sys/class/gpio/export");
-        exportFile.open(QIODevice::WriteOnly);
+        if (!exportFile.open(QIODevice::WriteOnly)) {
+            return;
+        }
         exportFile.write("18");
-
-        delay(200);
+        exportFile.close();
 
         QFile directionFile("/sys/class/gpio/gpio18/direction");
-        directionFile.open(QIODevice::WriteOnly);
+        if (!directionFile.open(QIODevice::WriteOnly)) {
+            return;
+        }
         directionFile.write("in");
-
-        delay(200);
+        directionFile.close();
 
         QFile edgeFile("/sys/class/gpio/gpio18/edge");
-        edgeFile.open(QIODevice::WriteOnly);
+        if (!edgeFile.open(QIODevice::WriteOnly)) {
+            return;
+        }
         edgeFile.write("falling");
+        edgeFile.close();
 
         // GPIO to look at; This is connected to the MCP23017 INTA&INTB ports
         file = new QFile("/sys/class/gpio/gpio18/value");
