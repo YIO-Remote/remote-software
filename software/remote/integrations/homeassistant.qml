@@ -5,7 +5,7 @@ import "qrc:/scripts/helper.js" as JSHelper
 
 Item {
     id: homeassistant
-    property bool webSocketConnection: false
+    property bool connected: false
     property int webSocketId: 4
 
     property int integrationId
@@ -83,7 +83,7 @@ Item {
 
         if (json.success == true && json.id == 3) {
             connecting = false;
-            webSocketConnection = true;
+            connected = true;
             console.debug("Subscribed to state changes");
             addNotification("normal", "Connected to Home Assistant.", "", "");
         }
@@ -134,15 +134,15 @@ Item {
         onStatusChanged: if (socket.status == WebSocket.Error) {
                              console.debug("Error: " + socket.errorString)
                              socket.active = false
-                             webSocketConnection = false
-                             console.debug("Websocket connection error: " + webSocketConnection)
+                             connected = false
+                             console.debug("Websocket connection error: " + connected)
                              websocketReconnect.start()
                          } else if (socket.status == WebSocket.Open) {
                              // open
                          } else if (socket.status == WebSocket.Closed) {
                              socket.active = false
-                             webSocketConnection = false
-                             console.debug("Websocket connection closed: " + webSocketConnection);
+                             connected = false
+                             console.debug("Websocket connection closed: " + connected);
                              websocketReconnect.start()
                          }
         active: false

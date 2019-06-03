@@ -19,6 +19,9 @@ Rectangle {
 
     property bool favorite:             loaded_components.light.entities[entityID].favorite
 
+    opacity: integration[integrationType].obj.connected ? 1 : 0.5
+    enabled: integration[integrationType].obj.connected
+
     width: parent.width
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
