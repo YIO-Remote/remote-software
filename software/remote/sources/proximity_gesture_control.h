@@ -54,7 +54,7 @@ public:
             apds.setLEDBoost(0);
             if ( !apds.enableProximitySensor(true) ){
                 //: Error message that shows up as notification when the proximity sensor cannot be initialized
-                m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
+                m_apds9960Error = tr("Cannot initialize the proximity sensor.");
                 emit apds9960Notify();
             }
             delay(200);
@@ -89,7 +89,7 @@ public:
         // enable the light sensor
         if ( !apds.enableLightSensor(false) ) {
             //: Error message that shows up as notification when the light sensor cannot be initialized
-            m_apds9960Error = tr("Cannot initialize the light sensor. Please restart the remote.");
+            m_apds9960Error = tr("Cannot initialize the light sensor.");
             emit apds9960Notify();
         }
 
@@ -128,9 +128,9 @@ public:
                 //                // read the ambient light
                 //                apds.readAmbientLight(m_ambientLight);
 
+                delay(200);
                 // let qml know
                 emit proximityEvent();
-                delay(100);
 
             } else {
                 // if the reading is smaller than the threshold, restart the sensor
@@ -183,7 +183,7 @@ public:
         if ( !apds.init() )
         {
             //: Error message that shows up as notification when the proximity sensor cannot be initialized
-            m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
+            m_apds9960Error = tr("Cannot initialize the proximity sensor.");
             emit apds9960Notify();
         }
 
@@ -191,7 +191,7 @@ public:
 
         if ( !apds.enableLightSensor(false) ) {
             //: Error message that shows up as notification when the light sensor cannot be initialized
-            m_apds9960Error = tr("Cannot initialize the light sensor. Please restart the remote.");
+            m_apds9960Error = tr("Cannot initialize the light sensor.");
             emit apds9960Notify();
         }
 
@@ -233,7 +233,7 @@ private:
         if ( !apds.init() )
         {
             //: Error message that shows up as notification when the proximity sensor cannot be initialized
-            m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
+            m_apds9960Error = tr("Cannot initialize the proximity sensor.");
             emit apds9960Notify();
         }
         delay(200);
