@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFile>
 #include <QSocketNotifier>
+#include <QtDebug>
 
 #ifdef __arm__
 #include "mcp23017.h"
@@ -46,6 +47,7 @@ public:
 #ifdef __arm__
         QFile exportFile("/sys/class/gpio/export");
         if (!exportFile.open(QIODevice::WriteOnly)) {
+            qDebug() << "Error opening: /sys/class/gpio/export";
             return;
         }
         exportFile.write("18");
@@ -53,6 +55,7 @@ public:
 
         QFile directionFile("/sys/class/gpio/gpio18/direction");
         if (!directionFile.open(QIODevice::WriteOnly)) {
+            qDebug() << "Error opening: /sys/class/gpio/gpio18/direction";
             return;
         }
         directionFile.write("in");
@@ -60,6 +63,7 @@ public:
 
         QFile edgeFile("/sys/class/gpio/gpio18/edge");
         if (!edgeFile.open(QIODevice::WriteOnly)) {
+            qDebug() << "Error opening: /sys/class/gpio/gpio18/edge";
             return;
         }
         edgeFile.write("falling");
@@ -80,7 +84,10 @@ public:
     {
 #ifdef __arm__
         QFile file("/sys/class/gpio/gpio18/value");
-        file.open(QIODevice::ReadOnly);
+        if (!file.open(QIODevice::ReadOnly)) {
+            qDebug() << "Error opening: /sys/class/gpio/gpio18/value";
+            return;
+        }
 
         int gpioVal = file.readAll().toInt();
 

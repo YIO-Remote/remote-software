@@ -344,9 +344,7 @@ ApplicationWindow {
         ]
         transitions: [
             Transition {to: "hidden"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 800 }},
-            Transition {to: "visible"; SequentialAnimation {
-                    PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.InExpo; duration: 300 }
-                }}
+            Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.InExpo; duration: 300 }}
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready) {
@@ -554,6 +552,12 @@ ApplicationWindow {
         id: touchEventCatcher
         anchors.fill: parent
         enabled: true
+        pressAndHoldInterval: 5000
+
+        onPressAndHold: {
+            console.debug("Disabling touch even catcher");
+            touchEventCatcher.enabled = false;
+        }
     }
 
     Timer {
