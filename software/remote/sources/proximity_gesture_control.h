@@ -54,18 +54,19 @@ public:
             }
 
             // turn on
-            apds.setProximityGain(2);
-            apds.setProximityIntLowThreshold(0);
-            apds.setProximityIntHighThreshold(uint8_t(m_proximitySetting));
-            apds.clearProximityInt();
-            apds.setLEDBoost(0);
-            if ( !apds.enableProximitySensor(true) ){
+            if ( !apds.enableProximitySensor(false) ){
                 //: Error message that shows up as notification when the proximity sensor cannot be initialized
                 m_apds9960Error = tr("Cannot initialize the proximity sensor.");
                 emit apds9960Notify();
                 return;
             }
             delay(200);
+            apds.setProximityGain(2);
+            apds.setProximityIntLowThreshold(0);
+            apds.setProximityIntHighThreshold(uint8_t(m_proximitySetting));
+            apds.clearProximityInt();
+            apds.setLEDBoost(0);
+            apds.setProximityIntEnable(1);
 
         } else {
             // turn off
@@ -239,7 +240,7 @@ private:
         // power cycle the sensor
         apds.disablePower();
         delay(200);
-        apds.enablePower();
+//        apds.enablePower();
 
         // initalise the sensor again
         if ( !apds.init() )
