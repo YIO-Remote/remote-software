@@ -55,7 +55,7 @@ Item {
             standbyControl.proximityDetected = true;
 //            standbyControl.display_brightness_ambient = JSHelper.mapValues(ambientLight,0,450,15,100);
             // read the ambient light a bit later, so your hand doesn't cover the sensor
-            ambientLightReadTimer.start();
+//            ambientLightReadTimer.start();
         }
 
         onApds9960Notify: {
@@ -73,10 +73,10 @@ Item {
         id: ambientLightReadTimer
         running: false
         repeat: false
-        interval: 500
+        interval: 300
 
         onTriggered: {
-            standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,400,15,100);
+            standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,15,15,100);
             // set the display brightness
             if (standbyControl.display_autobrightness) {
                 standbyControl.display_brightness = standbyControl.display_brightness_ambient;
@@ -139,11 +139,12 @@ Item {
 
         case "dim":
             // set the display brightness
-            if (standbyControl.display_autobrightness) {
-                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-            } else {
-                standbyControl.display_brightness = standbyControl.display_brightness_set;
-            }
+            ambientLightReadTimer.start();
+//            if (standbyControl.display_autobrightness) {
+//                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+//            } else {
+//                standbyControl.display_brightness = standbyControl.display_brightness_set;
+//            }
 
             // set the mode
             mode = "on";
@@ -213,17 +214,19 @@ Item {
         interval: 300
 
         onTriggered: {
-            if (standbyControl.display_autobrightness) {
-                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-            } else {
-                standbyControl.display_brightness = standbyControl.display_brightness_set;
-            }
+            ambientLightReadTimer.start();
+//            if (standbyControl.display_autobrightness) {
+//                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+//            } else {
+//                standbyControl.display_brightness = standbyControl.display_brightness_set;
+//            }
         }
     }
 
     onTouchDetectedChanged: {
         // if there was a touch event, reset the timers
         if (touchDetected) {
+            proximity.proximityDetection(false);
             wakeUp();
             touchDetected = false;
         }
@@ -240,6 +243,7 @@ Item {
     onButtonPressDetectedChanged: {
         // if there was a button press event, reset the timers
         if (buttonPressDetected) {
+            proximity.proximityDetection(false);
             wakeUp();
             buttonPressDetected = false;
         }

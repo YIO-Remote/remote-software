@@ -1,5 +1,3 @@
-// https://github.com/leon-anavi/rpi-examples/tree/master/APDS-9960
-
 #ifndef APDS9960_H
 #define APDS9960_H
 
@@ -8,335 +6,496 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/* Debug */
-#define DEBUG                   0
+#define APDS9960_ADDRESS (0x39)
 
-/* APDS-9960 I2C address */
-#define APDS9960_I2C_ADDR       0x39
-
-/* Gesture parameters */
-#define GESTURE_THRESHOLD_OUT   10
-#define GESTURE_SENSITIVITY_1   50
-#define GESTURE_SENSITIVITY_2   20
-
-/* Error code for returned values */
-#define ERROR                   0xFF
-
-/* Acceptable device IDs */
-#define APDS9960_ID_1           0xAB
-#define APDS9960_ID_2           0x9C
-
-/* Misc parameters */
-#define FIFO_PAUSE_TIME         30      // Wait period (ms) between FIFO reads
-
-/* APDS-9960 register addresses */
-#define APDS9960_ENABLE         0x80
-#define APDS9960_ATIME          0x81
-#define APDS9960_WTIME          0x83
-#define APDS9960_AILTL          0x84
-#define APDS9960_AILTH          0x85
-#define APDS9960_AIHTL          0x86
-#define APDS9960_AIHTH          0x87
-#define APDS9960_PILT           0x89
-#define APDS9960_PIHT           0x8B
-#define APDS9960_PERS           0x8C
-#define APDS9960_CONFIG1        0x8D
-#define APDS9960_PPULSE         0x8E
-#define APDS9960_CONTROL        0x8F
-#define APDS9960_CONFIG2        0x90
-#define APDS9960_ID             0x92
-#define APDS9960_STATUS         0x93
-#define APDS9960_CDATAL         0x94
-#define APDS9960_CDATAH         0x95
-#define APDS9960_RDATAL         0x96
-#define APDS9960_RDATAH         0x97
-#define APDS9960_GDATAL         0x98
-#define APDS9960_GDATAH         0x99
-#define APDS9960_BDATAL         0x9A
-#define APDS9960_BDATAH         0x9B
-#define APDS9960_PDATA          0x9C
-#define APDS9960_POFFSET_UR     0x9D
-#define APDS9960_POFFSET_DL     0x9E
-#define APDS9960_CONFIG3        0x9F
-#define APDS9960_GPENTH         0xA0
-#define APDS9960_GEXTH          0xA1
-#define APDS9960_GCONF1         0xA2
-#define APDS9960_GCONF2         0xA3
-#define APDS9960_GOFFSET_U      0xA4
-#define APDS9960_GOFFSET_D      0xA5
-#define APDS9960_GOFFSET_L      0xA7
-#define APDS9960_GOFFSET_R      0xA9
-#define APDS9960_GPULSE         0xA6
-#define APDS9960_GCONF3         0xAA
-#define APDS9960_GCONF4         0xAB
-#define APDS9960_GFLVL          0xAE
-#define APDS9960_GSTATUS        0xAF
-#define APDS9960_IFORCE         0xE4
-#define APDS9960_PICLEAR        0xE5
-#define APDS9960_CICLEAR        0xE6
-#define APDS9960_AICLEAR        0xE7
-#define APDS9960_GFIFO_U        0xFC
-#define APDS9960_GFIFO_D        0xFD
-#define APDS9960_GFIFO_L        0xFE
-#define APDS9960_GFIFO_R        0xFF
-
-/* Bit fields */
-#define APDS9960_PON            0b00000001
-#define APDS9960_AEN            0b00000010
-#define APDS9960_PEN            0b00000100
-#define APDS9960_WEN            0b00001000
-#define APSD9960_AIEN           0b00010000
-#define APDS9960_PIEN           0b00100000
-#define APDS9960_GEN            0b01000000
-#define APDS9960_GVALID         0b00000001
-
-/* On/Off definitions */
-#define OFF                     0
-#define ON                      1
-
-/* Acceptable parameters for setMode */
-#define POWER                   0
-#define AMBIENT_LIGHT           1
-#define PROXIMITY               2
-#define WAIT                    3
-#define AMBIENT_LIGHT_INT       4
-#define PROXIMITY_INT           5
-#define GESTURE                 6
-#define ALL                     7
-
-/* LED Drive values */
-#define LED_DRIVE_100MA         0
-#define LED_DRIVE_50MA          1
-#define LED_DRIVE_25MA          2
-#define LED_DRIVE_12_5MA        3
-
-/* Proximity Gain (PGAIN) values */
-#define PGAIN_1X                0
-#define PGAIN_2X                1
-#define PGAIN_4X                2
-#define PGAIN_8X                3
-
-/* ALS Gain (AGAIN) values */
-#define AGAIN_1X                0
-#define AGAIN_4X                1
-#define AGAIN_16X               2
-#define AGAIN_64X               3
-
-/* Gesture Gain (GGAIN) values */
-#define GGAIN_1X                0
-#define GGAIN_2X                1
-#define GGAIN_4X                2
-#define GGAIN_8X                3
-
-/* LED Boost values */
-#define LED_BOOST_100           0
-#define LED_BOOST_150           1
-#define LED_BOOST_200           2
-#define LED_BOOST_300           3
-
-/* Gesture wait time values */
-#define GWTIME_0MS              0
-#define GWTIME_2_8MS            1
-#define GWTIME_5_6MS            2
-#define GWTIME_8_4MS            3
-#define GWTIME_14_0MS           4
-#define GWTIME_22_4MS           5
-#define GWTIME_30_8MS           6
-#define GWTIME_39_2MS           7
-
-/* Default values */
-#define DEFAULT_ATIME           219     // 103ms
-#define DEFAULT_WTIME           246     // 27ms
-#define DEFAULT_PROX_PPULSE     0x87    // 16us, 8 pulses
-#define DEFAULT_GESTURE_PPULSE  0x89    // 16us, 10 pulses
-#define DEFAULT_POFFSET_UR      0       // 0 offset
-#define DEFAULT_POFFSET_DL      0       // 0 offset
-#define DEFAULT_CONFIG1         0x60    // No 12x wait (WTIME) factor
-#define DEFAULT_LDRIVE          LED_DRIVE_100MA
-#define DEFAULT_PGAIN           PGAIN_4X
-#define DEFAULT_AGAIN           AGAIN_4X
-#define DEFAULT_PILT            0       // Low proximity threshold
-#define DEFAULT_PIHT            50      // High proximity threshold
-#define DEFAULT_AILT            0xFFFF  // Force interrupt for calibration
-#define DEFAULT_AIHT            0
-#define DEFAULT_PERS            0x11    // 2 consecutive prox or ALS for int.
-#define DEFAULT_CONFIG2         0x01    // No saturation interrupts or LED boost
-#define DEFAULT_CONFIG3         0       // Enable all photodiodes, no SAI
-#define DEFAULT_GPENTH          40      // Threshold for entering gesture mode
-#define DEFAULT_GEXTH           30      // Threshold for exiting gesture mode
-#define DEFAULT_GCONF1          0x40    // 4 gesture events for int., 1 for exit
-#define DEFAULT_GGAIN           GGAIN_4X
-#define DEFAULT_GLDRIVE         LED_DRIVE_100MA
-#define DEFAULT_GWTIME          GWTIME_2_8MS
-#define DEFAULT_GOFFSET         0       // No offset scaling for gesture mode
-#define DEFAULT_GPULSE          0xC9    // 32us, 10 pulses
-#define DEFAULT_GCONF3          0       // All photodiodes active during gesture
-#define DEFAULT_GIEN            0       // Disable gesture interrupts
-
-/* Direction definitions */
+/** I2C Registers */
 enum {
-    DIR_NONE,
-    DIR_LEFT,
-    DIR_RIGHT,
-    DIR_UP,
-    DIR_DOWN,
-    DIR_NEAR,
-    DIR_FAR,
-    DIR_ALL
+    APDS9960_RAM = 0x00,
+    APDS9960_ENABLE = 0x80,
+    APDS9960_ATIME = 0x81,
+    APDS9960_WTIME = 0x83,
+    APDS9960_AILTIL = 0x84,
+    APDS9960_AILTH = 0x85,
+    APDS9960_AIHTL = 0x86,
+    APDS9960_AIHTH = 0x87,
+    APDS9960_PILT = 0x89,
+    APDS9960_PIHT = 0x8B,
+    APDS9960_PERS = 0x8C,
+    APDS9960_CONFIG1 = 0x8D,
+    APDS9960_PPULSE = 0x8E,
+    APDS9960_CONTROL = 0x8F,
+    APDS9960_CONFIG2 = 0x90,
+    APDS9960_ID = 0x92,
+    APDS9960_STATUS = 0x93,
+    APDS9960_CDATAL = 0x94,
+    APDS9960_CDATAH = 0x95,
+    APDS9960_RDATAL = 0x96,
+    APDS9960_RDATAH = 0x97,
+    APDS9960_GDATAL = 0x98,
+    APDS9960_GDATAH = 0x99,
+    APDS9960_BDATAL = 0x9A,
+    APDS9960_BDATAH = 0x9B,
+    APDS9960_PDATA = 0x9C,
+    APDS9960_POFFSET_UR = 0x9D,
+    APDS9960_POFFSET_DL = 0x9E,
+    APDS9960_CONFIG3 = 0x9F,
+    APDS9960_GPENTH = 0xA0,
+    APDS9960_GEXTH = 0xA1,
+    APDS9960_GCONF1 = 0xA2,
+    APDS9960_GCONF2 = 0xA3,
+    APDS9960_GOFFSET_U = 0xA4,
+    APDS9960_GOFFSET_D = 0xA5,
+    APDS9960_GOFFSET_L = 0xA7,
+    APDS9960_GOFFSET_R = 0xA9,
+    APDS9960_GPULSE = 0xA6,
+    APDS9960_GCONF3 = 0xAA,
+    APDS9960_GCONF4 = 0xAB,
+    APDS9960_GFLVL = 0xAE,
+    APDS9960_GSTATUS = 0xAF,
+    APDS9960_IFORCE = 0xE4,
+    APDS9960_PICLEAR = 0xE5,
+    APDS9960_CICLEAR = 0xE6,
+    APDS9960_AICLEAR = 0xE7,
+    APDS9960_GFIFO_U = 0xFC,
+    APDS9960_GFIFO_D = 0xFD,
+    APDS9960_GFIFO_L = 0xFE,
+    APDS9960_GFIFO_R = 0xFF,
 };
 
-/* State definitions */
+/** ADC gain settings */
+typedef enum {
+    APDS9960_AGAIN_1X = 0x00,  /**< No gain */
+    APDS9960_AGAIN_4X = 0x01,  /**< 2x gain */
+    APDS9960_AGAIN_16X = 0x02, /**< 16x gain */
+    APDS9960_AGAIN_64X = 0x03  /**< 64x gain */
+} apds9960AGain_t;
+
+/** Proxmity gain settings */
+typedef enum {
+    APDS9960_PGAIN_1X = 0x00, /**< 1x gain */
+    APDS9960_PGAIN_2X = 0x04, /**< 2x gain */
+    APDS9960_PGAIN_4X = 0x08, /**< 4x gain */
+    APDS9960_PGAIN_8X = 0x0C  /**< 8x gain */
+} apds9960PGain_t;
+
+/** Pulse length settings */
+typedef enum {
+    APDS9960_PPULSELEN_4US = 0x00,  /**< 4uS */
+    APDS9960_PPULSELEN_8US = 0x40,  /**< 8uS */
+    APDS9960_PPULSELEN_16US = 0x80, /**< 16uS */
+    APDS9960_PPULSELEN_32US = 0xC0  /**< 32uS */
+} apds9960PPulseLen_t;
+
+/** LED drive settings */
+typedef enum {
+    APDS9960_LEDDRIVE_100MA = 0x00, /**< 100mA */
+    APDS9960_LEDDRIVE_50MA = 0x40,  /**< 50mA */
+    APDS9960_LEDDRIVE_25MA = 0x80,  /**< 25mA */
+    APDS9960_LEDDRIVE_12MA = 0xC0   /**< 12.5mA */
+} apds9960LedDrive_t;
+
+/** LED boost settings */
+typedef enum {
+    APDS9960_LEDBOOST_100PCNT = 0x00, /**< 100% */
+    APDS9960_LEDBOOST_150PCNT = 0x10, /**< 150% */
+    APDS9960_LEDBOOST_200PCNT = 0x20, /**< 200% */
+    APDS9960_LEDBOOST_300PCNT = 0x30  /**< 300% */
+} apds9960LedBoost_t;
+
+/** Dimensions */
 enum {
-    NA_STATE,
-    NEAR_STATE,
-    FAR_STATE,
-    ALL_STATE
+    APDS9960_DIMENSIONS_ALL = 0x00,        // All dimensions
+    APDS9960_DIMENSIONS_UP_DOWN = 0x01,    // Up/Down dimensions
+    APGS9960_DIMENSIONS_LEFT_RIGHT = 0x02, // Left/Right dimensions
 };
 
-/* Container for gesture data */
-typedef struct gesture_data_type {
-    uint8_t u_data[32];
-    uint8_t d_data[32];
-    uint8_t l_data[32];
-    uint8_t r_data[32];
-    uint8_t index;
-    uint8_t total_gestures;
-    uint8_t in_threshold;
-    uint8_t out_threshold;
-} gesture_data_type;
+/** FIFO Interrupts */
+enum {
+    APDS9960_GFIFO_1 = 0x00,  // Generate interrupt after 1 dataset in FIFO
+    APDS9960_GFIFO_4 = 0x01,  // Generate interrupt after 2 datasets in FIFO
+    APDS9960_GFIFO_8 = 0x02,  // Generate interrupt after 3 datasets in FIFO
+    APDS9960_GFIFO_16 = 0x03, // Generate interrupt after 4 datasets in FIFO
+};
 
-/* APDS9960 Class */
+/** Gesture Gain */
+enum {
+    APDS9960_GGAIN_1 = 0x00, // Gain 1x
+    APDS9960_GGAIN_2 = 0x01, // Gain 2x
+    APDS9960_GGAIN_4 = 0x02, // Gain 4x
+    APDS9960_GGAIN_8 = 0x03, // Gain 8x
+};
+
+/** Pulse Lenghts */
+enum {
+    APDS9960_GPULSE_4US = 0x00,  // Pulse 4us
+    APDS9960_GPULSE_8US = 0x01,  // Pulse 8us
+    APDS9960_GPULSE_16US = 0x02, // Pulse 16us
+    APDS9960_GPULSE_32US = 0x03, // Pulse 32us
+};
+
+#define APDS9960_UP 0x01    /**< Gesture Up */
+#define APDS9960_DOWN 0x02  /**< Gesture Down */
+#define APDS9960_LEFT 0x03  /**< Gesture Left */
+#define APDS9960_RIGHT 0x04 /**< Gesture Right */
+
+typedef unsigned char byte;
+
 class APDS9960
 {
-
 public:
-
-    /* Initialization methods */
     APDS9960();
     ~APDS9960();
-    bool initi2c();
-    bool init();
-    uint8_t getMode();
-    bool setMode(uint8_t mode, uint8_t enable);
 
-    /* Turn the APDS-9960 on and off */
-    bool enablePower();
-    bool disablePower();
+    bool begin(uint16_t iTimeMS = 10, apds9960AGain_t = APDS9960_AGAIN_4X);
+    void setADCIntegrationTime(uint16_t iTimeMS);
+    float getADCIntegrationTime();
+    void setADCGain(apds9960AGain_t gain);
+    apds9960AGain_t getADCGain();
+    void setLED(apds9960LedDrive_t drive, apds9960LedBoost_t boost);
 
-    /* Enable or disable specific sensors */
-    bool enableLightSensor(bool interrupts = false);
-    bool disableLightSensor();
-    bool enableProximitySensor(bool interrupts = false);
-    bool disableProximitySensor();
-    bool enableGestureSensor(bool interrupts = true);
-    bool disableGestureSensor();
+    // proximity
+    void enableProximity(bool en = true);
+    void setProxGain(apds9960PGain_t gain);
+    apds9960PGain_t getProxGain();
+    void setProxPulse(apds9960PPulseLen_t pLen, uint8_t pulses);
+    void enableProximityInterrupt();
+    void disableProximityInterrupt();
+    uint8_t readProximity();
+    void setProximityInterruptThreshold(uint8_t low, uint8_t high,
+                                        uint8_t persistance = 4);
+    bool getProximityInterrupt();
 
-    /* LED drive strength control */
-    uint8_t getLEDDrive();
-    bool setLEDDrive(uint8_t drive);
-    uint8_t getGestureLEDDrive();
-    bool setGestureLEDDrive(uint8_t drive);
+    // gesture
+    void enableGesture(bool en = true);
+    bool gestureValid();
+    void setGestureDimensions(uint8_t dims);
+    void setGestureFIFOThreshold(uint8_t thresh);
+    void setGestureGain(uint8_t gain);
+    void setGestureProximityThreshold(uint8_t thresh);
+    void setGestureOffset(uint8_t offset_up, uint8_t offset_down,
+                          uint8_t offset_left, uint8_t offset_right);
+//    uint8_t readGesture();
+    void resetCounts();
 
-    /* Gain control */
-    uint8_t getAmbientLightGain();
-    bool setAmbientLightGain(uint8_t gain);
-    uint8_t getProximityGain();
-    bool setProximityGain(uint8_t gain);
-    uint8_t getGestureGain();
-    bool setGestureGain(uint8_t gain);
+    // light & color
+    void enableColor(bool en = true);
+    bool colorDataReady();
+    void getColorData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c);
+    uint16_t calculateLux(uint16_t r, uint16_t g, uint16_t b);
+    void enableColorInterrupt();
+    void disableColorInterrupt();
+    void clearInterrupt();
+    void getAmbientLight(uint16_t &val);
+    void setIntLimits(uint16_t l, uint16_t h);
 
-    /* Get and set light interrupt thresholds */
-    bool getLightIntLowThreshold(uint16_t &threshold);
-    bool setLightIntLowThreshold(uint16_t threshold);
-    bool getLightIntHighThreshold(uint16_t &threshold);
-    bool setLightIntHighThreshold(uint16_t threshold);
-
-    /* Get and set proximity interrupt thresholds */
-    bool getProximityIntLowThreshold(uint8_t &threshold);
-    bool setProximityIntLowThreshold(uint8_t threshold);
-    bool getProximityIntHighThreshold(uint8_t &threshold);
-    bool setProximityIntHighThreshold(uint8_t threshold);
-
-    /* Get and set interrupt enables */
-    uint8_t getAmbientLightIntEnable();
-    bool setAmbientLightIntEnable(uint8_t enable);
-    uint8_t getProximityIntEnable();
-    bool setProximityIntEnable(uint8_t enable);
-    uint8_t getGestureIntEnable();
-    bool setGestureIntEnable(uint8_t enable);
-
-    /* Clear interrupts */
-    bool clearAmbientLightInt();
-    bool clearProximityInt();
-
-    /* Ambient light methods */
-    bool readAmbientLight(uint16_t &val);
-    bool readRedLight(uint16_t &val);
-    bool readGreenLight(uint16_t &val);
-    bool readBlueLight(uint16_t &val);
-
-    /* Proximity methods */
-    bool readProximity(uint8_t &val);
-
-    /* Gesture methods */
-    bool isGestureAvailable();
-    int readGesture();
-
-    /* LED Boost Control */
-    uint8_t getLEDBoost();
-    bool setLEDBoost(uint8_t boost);
+    // turn on/off elements
+    void enable(bool en = true);
 
 private:
+  uint8_t _i2caddr;
+  int _fd;
 
-    /* Gesture processing */
-    void resetGestureParameters();
-    bool processGestureData();
-    bool decodeGesture();
+  uint32_t read32(uint8_t reg);
+  uint16_t read16(uint8_t reg);
+  uint16_t read16R(uint8_t reg);
 
-    /* Proximity Interrupt Threshold */
-    uint8_t getProxIntLowThresh();
-    bool setProxIntLowThresh(uint8_t threshold);
-    uint8_t getProxIntHighThresh();
-    bool setProxIntHighThresh(uint8_t threshold);
+  void write8(byte reg, byte value);
+  uint8_t read8(byte reg);
 
-    /* Proximity photodiode select */
-    uint8_t getProxGainCompEnable();
-    bool setProxGainCompEnable(uint8_t enable);
-    uint8_t getProxPhotoMask();
-    bool setProxPhotoMask(uint8_t mask);
+  uint8_t gestCnt;
 
-    /* Gesture threshold control */
-    uint8_t getGestureEnterThresh();
-    bool setGestureEnterThresh(uint8_t threshold);
-    uint8_t getGestureExitThresh();
-    bool setGestureExitThresh(uint8_t threshold);
+  uint8_t UCount;
+  uint8_t DCount;
 
-    /* Gesture LED, gain, and time control */
-    uint8_t getGestureWaitTime();
-    bool setGestureWaitTime(uint8_t time);
+  uint8_t LCount;
+  uint8_t RCount;
 
-    /* Gesture mode */
-    uint8_t getGestureMode();
-    bool setGestureMode(uint8_t mode);
+  uint8_t read(uint8_t reg, uint8_t *buf, uint8_t num);
+  void write(uint8_t reg, uint8_t *buf, uint8_t num);
+  void _i2c_init();
 
-    /* Raw I2C Commands */
-    bool wireWriteByte(uint8_t val);
-    bool wireWriteDataByte(uint8_t reg, uint8_t val);
-    bool wireWriteDataBlock(uint8_t reg, uint8_t *val, unsigned int len);
-    bool wireReadDataByte(uint8_t reg, uint8_t &val);
-    int wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len);
+  struct enable {
 
-    /* Members */
-    gesture_data_type gesture_data_;
-    int gesture_ud_delta_;
-    int gesture_lr_delta_;
-    int gesture_ud_count_;
-    int gesture_lr_count_;
-    int gesture_near_count_;
-    int gesture_far_count_;
-    int gesture_state_;
-    int gesture_motion_;
-    int fd_;
+    // power on
+    uint8_t PON : 1;
+
+    // ALS enable
+    uint8_t AEN : 1;
+
+    // Proximity detect enable
+    uint8_t PEN : 1;
+
+    // wait timer enable
+    uint8_t WEN : 1;
+
+    // ALS interrupt enable
+    uint8_t AIEN : 1;
+
+    // proximity interrupt enable
+    uint8_t PIEN : 1;
+
+    // gesture enable
+    uint8_t GEN : 1;
+
+    uint8_t get() {
+      return (GEN << 6) | (PIEN << 5) | (AIEN << 4) | (WEN << 3) | (PEN << 2) |
+             (AEN << 1) | PON;
+    };
+  };
+  struct enable _enable;
+
+  struct pers {
+    // ALS Interrupt Persistence. Controls rate of Clear channel interrupt to
+    // the host processor
+    uint8_t APERS : 4;
+
+    // proximity interrupt persistence, controls rate of prox interrupt to host
+    // processor
+    uint8_t PPERS : 4;
+
+    uint8_t get() { return (PPERS << 4) | APERS; };
+  };
+  pers _pers;
+
+  struct config1 {
+    uint8_t WLONG : 1;
+
+    uint8_t get() { return WLONG << 1; };
+  };
+  config1 _config1;
+
+  struct ppulse {
+
+    /*Proximity Pulse Count. Specifies the number of proximity pulses to be
+    generated on LDR. Number of pulses is set by PPULSE value plus 1.
+    */
+    uint8_t PPULSE : 6;
+
+    // Proximity Pulse Length. Sets the LED-ON pulse width during a proximity
+    // LDR pulse.
+    uint8_t PPLEN : 2;
+
+    uint8_t get() { return (PPLEN << 6) | PPULSE; }
+  };
+  ppulse _ppulse;
+
+  struct control {
+    // ALS and Color gain control
+    uint8_t AGAIN : 2;
+
+    // proximity gain control
+    uint8_t PGAIN : 2;
+
+    // led drive strength
+    uint8_t LDRIVE : 2;
+
+    uint8_t get() { return (LDRIVE << 6) | (PGAIN << 2) | AGAIN; }
+  };
+  control _control;
+
+  struct config2 {
+    /* Additional LDR current during proximity and gesture LED pulses. Current
+    value, set by LDRIVE, is increased by the percentage of LED_BOOST.
+    */
+    uint8_t LED_BOOST : 2;
+
+    // clear photodiode saturation int enable
+    uint8_t CPSIEN : 1;
+
+    // proximity saturation interrupt enable
+    uint8_t PSIEN : 1;
+
+    uint8_t get() {
+      return (PSIEN << 7) | (CPSIEN << 6) | (LED_BOOST << 4) | 1;
+    }
+  };
+  config2 _config2;
+
+  struct status {
+    /* ALS Valid. Indicates that an ALS cycle has completed since AEN was
+    asserted or since a read from any of the ALS/Color data registers.
+    */
+    uint8_t AVALID : 1;
+
+    /* Proximity Valid. Indicates that a proximity cycle has completed since PEN
+    was asserted or since PDATA was last read. A read of PDATA automatically
+    clears PVALID.
+    */
+    uint8_t PVALID : 1;
+
+    /* Gesture Interrupt. GINT is asserted when GFVLV becomes greater than
+    GFIFOTH or if GVALID has become asserted when GMODE transitioned to zero.
+    The bit is reset when FIFO is completely emptied (read).
+    */
+    uint8_t GINT : 1;
+
+    // ALS Interrupt. This bit triggers an interrupt if AIEN in ENABLE is set.
+    uint8_t AINT : 1;
+
+    // Proximity Interrupt. This bit triggers an interrupt if PIEN in ENABLE is
+    // set.
+    uint8_t PINT : 1;
+
+    /* Indicates that an analog saturation event occurred during a previous
+    proximity or gesture cycle. Once set, this bit remains set until cleared by
+    clear proximity interrupt special function command (0xE5 PICLEAR) or by
+    disabling Prox (PEN=0). This bit triggers an interrupt if PSIEN is set.
+    */
+    uint8_t PGSAT : 1;
+
+    /* Clear Photodiode Saturation. When asserted, the analog sensor was at the
+    upper end of its dynamic range. The bit can be de-asserted by sending a
+    Clear channel interrupt command (0xE6 CICLEAR) or by disabling the ADC
+    (AEN=0). This bit triggers an interrupt if CPSIEN is set.
+    */
+    uint8_t CPSAT : 1;
+
+    void set(uint8_t data) {
+      AVALID = data & 0x01;
+      PVALID = (data >> 1) & 0x01;
+      GINT = (data >> 2) & 0x01;
+      AINT = (data >> 4) & 0x01;
+      PINT = (data >> 5) & 0x01;
+      PGSAT = (data >> 6) & 0x01;
+      CPSAT = (data >> 7) & 0x01;
+    }
+  };
+  status _status;
+
+  struct config3 {
+    // proximity mask
+    uint8_t PMASK_R : 1;
+    uint8_t PMASK_L : 1;
+    uint8_t PMASK_D : 1;
+    uint8_t PMASK_U : 1;
+
+    /* Sleep After Interrupt. When enabled, the device will automatically enter
+    low power mode when the INT pin is asserted and the state machine has
+    progressed to the SAI decision block. Normal operation is resumed when INT
+    pin is cleared over I2C.
+    */
+    uint8_t SAI : 1;
+
+    /* Proximity Gain Compensation Enable. This bit provides gain compensation
+    when proximity photodiode signal is reduced as a result of sensor masking.
+    If only one diode of the diode pair is contributing, then only half of the
+    signal is available at the ADC; this results in a maximum ADC value of 127.
+    Enabling PCMP enables an additional gain of 2X, resulting in a maximum ADC
+    value of 255.
+    */
+    uint8_t PCMP : 1;
+
+    uint8_t get() {
+      return (PCMP << 5) | (SAI << 4) | (PMASK_U << 3) | (PMASK_D << 2) |
+             (PMASK_L << 1) | PMASK_R;
+    }
+  };
+  config3 _config3;
+
+  struct gconf1 {
+    /* Gesture Exit Persistence. When a number of consecutive gesture end
+    occurrences become equal or greater to the GEPERS value, the Gesture state
+    machine is exited.
+    */
+    uint8_t GEXPERS : 2;
+
+    /* Gesture Exit Mask. Controls which of the gesture detector photodiodes
+    (UDLR) will be included to determine a gesture end and subsequent exit
+    of the gesture state machine. Unmasked UDLR data will be compared with the
+    value in GTHR_OUT. Field value bits correspond to UDLR detectors.
+    */
+    uint8_t GEXMSK : 4;
+
+    /* Gesture FIFO Threshold. This value is compared with the FIFO Level (i.e.
+    the number of UDLR datasets) to generate an interrupt (if enabled).
+    */
+    uint8_t GFIFOTH : 2;
+
+    uint8_t get() { return (GFIFOTH << 6) | (GEXMSK << 2) | GEXPERS; }
+  };
+  gconf1 _gconf1;
+
+  struct gconf2 {
+    /* Gesture Wait Time. The GWTIME controls the amount of time in a low power
+    mode between gesture detection cycles.
+    */
+    uint8_t GWTIME : 3;
+
+    // Gesture LED Drive Strength. Sets LED Drive Strength in gesture mode.
+    uint8_t GLDRIVE : 2;
+
+    // Gesture Gain Control. Sets the gain of the proximity receiver in gesture
+    // mode.
+    uint8_t GGAIN : 2;
+
+    uint8_t get() { return (GGAIN << 5) | (GLDRIVE << 3) | GWTIME; }
+  };
+  gconf2 _gconf2;
+
+  struct gpulse {
+    /* Number of Gesture Pulses. Specifies the number of pulses to be generated
+    on LDR. Number of pulses is set by GPULSE value plus 1.
+    */
+    uint8_t GPULSE : 6;
+
+    // Gesture Pulse Length. Sets the LED_ON pulse width during a Gesture LDR
+    // Pulse.
+    uint8_t GPLEN : 2;
+
+    uint8_t get() { return (GPLEN << 6) | GPULSE; }
+  };
+  gpulse _gpulse;
+
+  struct gconf3 {
+    /* Gesture Dimension Select. Selects which gesture photodiode pairs are
+    enabled to gather results during gesture.
+    */
+    uint8_t GDIMS : 2;
+
+    uint8_t get() { return GDIMS; }
+  };
+  gconf3 _gconf3;
+
+  struct gconf4 {
+    /* Gesture Mode. Reading this bit reports if the gesture state machine is
+    actively running, 1 = Gesture, 0= ALS, Proximity, Color. Writing a 1 to this
+    bit causes immediate entry in to the gesture state machine (as if GPENTH had
+    been exceeded). Writing a 0 to this bit causes exit of gesture when current
+    analog conversion has finished (as if GEXTH had been exceeded).
+    */
+    uint8_t GMODE : 1;
+
+    /* Gesture interrupt enable. Gesture Interrupt Enable. When asserted, all
+    gesture related interrupts are unmasked.
+    */
+    uint8_t GIEN : 2;
+
+    uint8_t get() { return (GIEN << 1) | GMODE; }
+    void set(uint8_t data) {
+      GIEN = (data >> 1) & 0x01;
+      GMODE = data & 0x01;
+    }
+  };
+  gconf4 _gconf4;
+
+  struct gstatus {
+    /* Gesture FIFO Data. GVALID bit is sent when GFLVL becomes greater than
+    GFIFOTH (i.e. FIFO has enough data to set GINT). GFIFOD is reset when GMODE
+    = 0 and the GFLVL=0 (i.e. All FIFO data has been read).
+    */
+    uint8_t GVALID : 1;
+
+    /* Gesture FIFO Overflow. A setting of 1 indicates that the FIFO has filled
+    to capacity and that new gesture detector data has been lost.
+    */
+    uint8_t GFOV : 1;
+
+    void set(uint8_t data) {
+      GFOV = (data >> 1) & 0x01;
+      GVALID = data & 0x01;
+    }
+  };
+  gstatus _gstatus;
 };
 
 #endif // APDS9960_H
