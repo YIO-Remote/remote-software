@@ -52,7 +52,9 @@ public:
             apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 2);
 
             //set the proximity gain
-            apds.setProxGain(APDS9960_PGAIN_4X);
+            apds.setProxGain(APDS9960_PGAIN_8X);
+
+            apds.setLED(APDS9960_LEDDRIVE_25MA, APDS9960_LEDBOOST_150PCNT);
 
             // enable interrupt
             apds.enableProximityInterrupt();
@@ -84,11 +86,11 @@ public:
         {
             delay(5);
         }
+
         apds.getAmbientLight(m_ambientLight);
         qDebug() << "Lux:" << m_ambientLight;
-
-        return int(m_ambientLight);
 #endif
+        return int(m_ambientLight);
     }
 
     Q_INVOKABLE void readInterrupt()
@@ -108,15 +110,15 @@ public:
                 // let qml know
                 emit proximityEvent();
 
-            } else if (m_proximity == 0) {
+            } /*else if (m_proximity == 0) {
                 // reset interrupt
                 qDebug() << "Turning proximity interrupt on-off";
-                proximityDetection(false);
-//                apds.enableProximity(false);
-//                delay(100);
-//                apds.enableProximity(true);
-                proximityDetection(true);
-            }
+//                proximityDetection(false);
+                //                apds.enableProximity(false);
+                //                delay(100);
+                //                apds.enableProximity(true);
+//                proximityDetection(true);
+            }*/
         }
 
         // clear the interrupt
@@ -137,11 +139,13 @@ public:
             return;
         }
 
-        // turn on proximity sensor
-        apds.enableProximity(true);
+        delay(100);
 
         // turn on the light sensor
         apds.enableColor(true);
+
+        // turn on proximity sensor
+        apds.enableProximity(true);
 
         // read ambient light
         readAmbientLight();

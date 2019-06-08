@@ -26,10 +26,17 @@ bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain)
     setADCIntegrationTime(iTimeMS);
     setADCGain(aGain);
 
+//    wiringPiI2CWriteReg8(_fd, APDS9960_ATIME, 219);
+//    wiringPiI2CWriteReg8(_fd, APDS9960_WTIME, 246);
+
     // disable everything to start
     enableGesture(false);
     enableProximity(false);
     enableColor(false);
+
+    // proximity offset
+    wiringPiI2CWriteReg8(_fd, APDS9960_POFFSET_UR, 0);
+    wiringPiI2CWriteReg8(_fd, APDS9960_POFFSET_DL, 0);
 
     disableColorInterrupt();
     disableProximityInterrupt();
