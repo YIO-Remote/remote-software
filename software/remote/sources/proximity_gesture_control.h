@@ -55,18 +55,20 @@ public:
 
             // turn on
             if ( !apds.enableProximitySensor(false) ){
+                qDebug() << "Cannot turn on the proximity sensor";
                 //: Error message that shows up as notification when the proximity sensor cannot be initialized
                 m_apds9960Error = tr("Cannot initialize the proximity sensor.");
                 emit apds9960Notify();
                 return;
             }
             delay(200);
-            apds.setProximityGain(2);
+            apds.setProximityGain(PGAIN_2X);
             apds.setProximityIntLowThreshold(0);
             apds.setProximityIntHighThreshold(uint8_t(m_proximitySetting));
-            apds.clearProximityInt();
             apds.setLEDBoost(0);
+            //            delay(100);
             apds.setProximityIntEnable(1);
+            apds.clearProximityInt();
 
         } else {
             // turn off
@@ -96,18 +98,22 @@ public:
     {
 #ifdef __arm__
         // enable the light sensor
-        if ( !apds.enableLightSensor(false) ) {
-            qDebug() << "Cannot initialize the light sensor. Cannot read the light value.";
-            return int(m_ambientLight);
-        }
+        //        if ( !apds.enableLightSensor(false) ) {
+        //            qDebug() << "Cannot initialize the light sensor. Cannot read the light value.";
+        //            return int(m_ambientLight);
+        //        }
 
-        delay(200);
+        //        delay(200);
 
         // read the ambient light
-        apds.readAmbientLight(m_ambientLight);
+        if ( !apds.readAmbientLight(m_ambientLight) ) {
+            qDebug() << "Cannot read the light value.";
+            return int(m_ambientLight);
+        }
+        qDebug() << "Ambient light:" << m_ambientLight;
 
         //disable light sensor
-        apds.disableLightSensor();
+        //        apds.disableLightSensor();
 #endif
 
         return int(m_ambientLight);
@@ -119,10 +125,7 @@ public:
             // read the value
             apds.readProximity(m_proximity);
             delay(100);
-
-            // clear the interrupt
-            apds.clearProximityInt();
-            delay(100);
+            qDebug() << "Proximity detected:" << m_proximity;
 
             // turn off proximity detection
             proximityDetection(false);
@@ -132,7 +135,6 @@ public:
                 delay(200);
                 // let qml know
                 emit proximityEvent();
-                qDebug() << "Proximity detected:" << m_proximity;
 
             } else {
                 // if the reading is smaller than the threshold, restart the sensor
@@ -146,6 +148,10 @@ public:
                     qDebug() << "Tried restarting too many times. Will wait until a new standby cycle.";
                 }
             }
+
+            // clear the interrupt
+            apds.clearProximityInt();
+            delay(100);
 
         } else if (m_gestureDetection) {
 
@@ -198,7 +204,19 @@ public:
             return;
         }
 
-        delay(100);
+        apds.disableGestureSensor();
+        apds.disableProximitySensor();
+        apds.disableLightSensor();
+
+        apds.setAmbientLightIntEnable(0);
+        apds.setProximityIntEnable(0);
+        apds.clearAmbientLightInt();
+        apds.clearProximityInt();
+
+        apds.disablePower();
+        delay(10);
+        apds.enablePower();
+        delay(10);
 
         if ( !apds.enableLightSensor(false) ) {
             //: Error message that shows up as notification when the light sensor cannot be initialized
@@ -217,9 +235,9 @@ public:
             return;
         }
 
-        delay(100);
+        //        delay(100);
         // disable the light sensor
-        apds.disableLightSensor();
+        //        apds.disableLightSensor();
 #endif
     }
 
@@ -237,18 +255,27 @@ private:
     void restart()
     {
 #ifdef __arm__
-        // power cycle the sensor
-        apds.disablePower();
-        delay(200);
-//        apds.enablePower();
-
-        // initalise the sensor again
+        //        // initalise the sensor again
         if ( !apds.init() )
         {
             qDebug() << "Cannot initialize the proximity sensor.";
             return;
         }
         delay(200);
+
+        apds.disableGestureSensor();
+        apds.disableProximitySensor();
+
+        apds.setAmbientLightIntEnable(0);
+        apds.setProximityIntEnable(0);
+        apds.clearAmbientLightInt();
+        apds.clearProximityInt();
+
+        // power cycle the sensor
+        apds.disablePower();
+        delay(10);
+        apds.enablePower();
+        delay(10);
 
         // turn on proximity detection
         proximityDetection(true, false);
