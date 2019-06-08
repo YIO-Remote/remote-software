@@ -23,16 +23,20 @@ bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain)
     }
 
     /* Set default integration time and gain */
-    setADCIntegrationTime(iTimeMS);
+//    setADCIntegrationTime(iTimeMS);
     setADCGain(aGain);
 
-//    wiringPiI2CWriteReg8(_fd, APDS9960_ATIME, 219);
-//    wiringPiI2CWriteReg8(_fd, APDS9960_WTIME, 246);
+    wiringPiI2CWriteReg8(_fd, APDS9960_ATIME, 219);
+    wiringPiI2CWriteReg8(_fd, APDS9960_WTIME, 246);
 
     // disable everything to start
     enableGesture(false);
     enableProximity(false);
     enableColor(false);
+
+    // proximity pulse
+    wiringPiI2CWriteReg8(_fd, APDS9960_PPULSE, 0x87);
+
 
     // proximity offset
     wiringPiI2CWriteReg8(_fd, APDS9960_POFFSET_UR, 0);
@@ -41,6 +45,10 @@ bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain)
     disableColorInterrupt();
     disableProximityInterrupt();
     clearInterrupt();
+
+    wiringPiI2CWriteReg8(_fd, APDS9960_CONFIG1, _config1.get());
+    wiringPiI2CWriteReg8(_fd, APDS9960_CONFIG2, _config2.get());
+    wiringPiI2CWriteReg8(_fd, APDS9960_CONFIG3, _config3.get());
 
     /* Note: by default, the device is in power down mode on bootup */
     enable(false);

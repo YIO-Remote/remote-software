@@ -73,10 +73,10 @@ Item {
         id: ambientLightReadTimer
         running: false
         repeat: false
-        interval: 300
+        interval: 400
 
         onTriggered: {
-            standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,15,15,100);
+            standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,30,15,100);
             // set the display brightness
             if (standbyControl.display_autobrightness) {
                 standbyControl.display_brightness = standbyControl.display_brightness_ambient;
