@@ -49,7 +49,10 @@ public:
         if (state) {
             // turn on
             // set the proximity threshold
-            apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting));
+            apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 2);
+
+            //set the proximity gain
+            apds.setProxGain(APDS9960_PGAIN_4X);
 
             // enable interrupt
             apds.enableProximityInterrupt();
@@ -109,9 +112,9 @@ public:
                 // reset interrupt
                 qDebug() << "Turning proximity interrupt on-off";
                 proximityDetection(false);
-                apds.enableProximity(false);
-                delay(100);
-                apds.enableProximity(true);
+//                apds.enableProximity(false);
+//                delay(100);
+//                apds.enableProximity(true);
                 proximityDetection(true);
             }
         }
@@ -134,11 +137,11 @@ public:
             return;
         }
 
-        // turn on the light sensor
-        apds.enableColor(true);
-
         // turn on proximity sensor
         apds.enableProximity(true);
+
+        // turn on the light sensor
+        apds.enableColor(true);
 
         // read ambient light
         readAmbientLight();
@@ -166,7 +169,7 @@ private:
     QString m_apds9960Error;
     bool m_proximityDetection = false;
     bool m_gestureDetection = false;
-    int m_proximitySetting = 100; // default value
+    int m_proximitySetting = 70; // default value
 };
 
 #endif // PROXIMITY_GESTURE_CONTROL_H

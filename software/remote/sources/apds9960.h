@@ -253,14 +253,14 @@ private:
     // processor
     uint8_t PPERS : 4;
 
-    uint8_t get() { return (PPERS << 4) | APERS; };
+    uint8_t get() { return (PPERS << 4) | APERS; }
   };
   pers _pers;
 
   struct config1 {
     uint8_t WLONG : 1;
 
-    uint8_t get() { return WLONG << 1; };
+    uint8_t get() { return WLONG << 1; }
   };
   config1 _config1;
 
@@ -309,6 +309,7 @@ private:
       return (PSIEN << 7) | (CPSIEN << 6) | (LED_BOOST << 4) | 1;
     }
   };
+
   config2 _config2;
 
   struct status {
