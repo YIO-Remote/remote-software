@@ -42,35 +42,26 @@ public:
         m_proximitySetting = proximity;
     }
 
-    Q_INVOKABLE void proximityDetection(bool state, bool qml=true)
+    Q_INVOKABLE void proximityDetection(bool state)
     {
         m_proximityDetection = state;
 #ifdef __arm__
         if (state) {
-
-            if (qml) {
-                qDebug() << "Proximity turn on from QML, resetting retry count";
-                retry_count = 0;
-            }
-
             // turn on
-            if ( !apds.enableProximitySensor(false) ){
-                //: Error message that shows up as notification when the proximity sensor cannot be initialized
-                m_apds9960Error = tr("Cannot initialize the proximity sensor.");
-                emit apds9960Notify();
-                return;
-            }
-            delay(200);
-            apds.setProximityGain(2);
-            apds.setProximityIntLowThreshold(0);
-            apds.setProximityIntHighThreshold(uint8_t(m_proximitySetting));
-            apds.clearProximityInt();
-            apds.setLEDBoost(0);
-            apds.setProximityIntEnable(1);
+            // set the proximity threshold
+            apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 1);
+
+            //set the proximity gain
+            apds.setProxGain(APDS9960_PGAIN_2X);
+
+            apds.setLED(APDS9960_LEDDRIVE_50MA, APDS9960_LEDBOOST_200PCNT);
+
+            // enable interrupt
+            apds.enableProximityInterrupt();
 
         } else {
             // turn off
-            apds.disableProximitySensor();
+            apds.disableProximityInterrupt();
         }
 #endif
     }
@@ -81,13 +72,9 @@ public:
 #ifdef __arm__
         if (state) {
             // turn on
-            apds.setGestureGain(0);
-            apds.setLEDBoost(0);
-            apds.enableGestureSensor(true);
 
         } else {
             // turn off
-            apds.disableGestureSensor();
         }
 #endif
     }
@@ -95,86 +82,47 @@ public:
     Q_INVOKABLE int readAmbientLight()
     {
 #ifdef __arm__
-        // enable the light sensor
-        if ( !apds.enableLightSensor(false) ) {
-            qDebug() << "Cannot initialize the light sensor. Cannot read the light value.";
-            return int(m_ambientLight);
+        while (!apds.colorDataReady())
+        {
+            delay(5);
         }
 
-        delay(200);
-
-        // read the ambient light
-        apds.readAmbientLight(m_ambientLight);
-
-        //disable light sensor
-        apds.disableLightSensor();
+        apds.getAmbientLight(m_ambientLight);
+        qDebug() << "Lux:" << m_ambientLight;
 #endif
-
         return int(m_ambientLight);
     }
 
-    Q_INVOKABLE void readInterrupt() {
+    Q_INVOKABLE void readInterrupt()
+    {
 #ifdef __arm__
+        m_proximity = apds.readProximity();
+        qDebug() << "Proximity" << m_proximity;
+
         if (m_proximityDetection) {
-            // read the value
-            apds.readProximity(m_proximity);
-            delay(100);
-
-            // clear the interrupt
-            apds.clearProximityInt();
-            delay(100);
-
-            // turn off proximity detection
-            proximityDetection(false);
 
             if (m_proximity > m_proximitySetting) {
 
-                delay(200);
+                // turn of proximity detection
+                qDebug() << "Proximity detected, turning detection off";
+                proximityDetection(false);
+
                 // let qml know
                 emit proximityEvent();
-                qDebug() << "Proximity detected:" << m_proximity;
 
-            } else {
-                // if the reading is smaller than the threshold, restart the sensor
-                // this needed as a workaround for some weird issue of reporting continous interrupts
-                if (retry_count < 4) {
-                    delay(200);
-                    restart();
-                    retry_count++;
-                    qDebug() << "Restarting the proximity sensor" << retry_count;
-                } else {
-                    qDebug() << "Tried restarting too many times. Will wait until a new standby cycle.";
-                }
-            }
-
-        } else if (m_gestureDetection) {
-
-            // read the gesture
-            if ( false == apds.isGestureAvailable() )
-            {
-                return;
-            }
-
-            switch ( apds.readGesture() )
-            {
-            case DIR_UP:
-                m_gesture = "right";
-                emit gestureEvent();
-                break;
-            case DIR_DOWN:
-                emit gestureEvent();
-                m_gesture = "left";
-                break;
-            case DIR_LEFT:
-                emit gestureEvent();
-                m_gesture = "up";
-                break;
-            case DIR_RIGHT:
-                emit gestureEvent();
-                m_gesture = "down";
-                break;
-            }
+            } /*else if (m_proximity == 0) {
+                // reset interrupt
+                qDebug() << "Turning proximity interrupt on-off";
+//                proximityDetection(false);
+                //                apds.enableProximity(false);
+                //                delay(100);
+                //                apds.enableProximity(true);
+//                proximityDetection(true);
+            }*/
         }
+
+        // clear the interrupt
+        apds.clearInterrupt();
 #endif
     }
 
@@ -182,17 +130,10 @@ public:
     ProximityGestureControl()
     {
 #ifdef __arm__
-        if ( !apds.initi2c() )
-        {
-            //: Error message that shows up as notification when the i2c interface cannot be initialized
-            m_apds9960Error = tr("Cannot initialize the i2c interface. Please restart the remote.");
-            emit apds9960Notify();
-            return;
-        }
-
-        if ( !apds.init() )
-        {
-            //: Error message that shows up as notification when the proximity sensor cannot be initialized
+        // intialize the sensor
+        if (!apds.begin()) {
+            qDebug() << "Cannot initialise the APDS9960 sensor";
+            //: Error message that shows up as notification when light value cannot be read
             m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
             emit apds9960Notify();
             return;
@@ -200,26 +141,14 @@ public:
 
         delay(100);
 
-        if ( !apds.enableLightSensor(false) ) {
-            //: Error message that shows up as notification when the light sensor cannot be initialized
-            m_apds9960Error = tr("Cannot initialize the light sensor.");
-            emit apds9960Notify();
-            return;
-        }
+        // turn on the light sensor
+        apds.enableColor(true);
 
-        delay(100);
+        // turn on proximity sensor
+        apds.enableProximity(true);
 
-        // read the ambient light when it's on first
-        if ( !apds.readAmbientLight(m_ambientLight)) {
-            //: Error message that shows up as notification when light value cannot be read
-            m_apds9960Error = tr("Error reading light values.");
-            emit apds9960Notify();
-            return;
-        }
-
-        delay(100);
-        // disable the light sensor
-        apds.disableLightSensor();
+        // read ambient light
+        readAmbientLight();
 #endif
     }
 
@@ -234,26 +163,6 @@ signals:
     void apds9960Notify();
 
 private:
-    void restart()
-    {
-#ifdef __arm__
-        // power cycle the sensor
-        apds.disablePower();
-        delay(200);
-//        apds.enablePower();
-
-        // initalise the sensor again
-        if ( !apds.init() )
-        {
-            qDebug() << "Cannot initialize the proximity sensor.";
-            return;
-        }
-        delay(200);
-
-        // turn on proximity detection
-        proximityDetection(true, false);
-#endif
-    }
 
 #ifdef __arm__
     APDS9960 apds = APDS9960();
@@ -264,8 +173,7 @@ private:
     QString m_apds9960Error;
     bool m_proximityDetection = false;
     bool m_gestureDetection = false;
-    int m_proximitySetting = 100; // default value
-    int retry_count = 0;
+    int m_proximitySetting = 70; // default value
 };
 
 #endif // PROXIMITY_GESTURE_CONTROL_H
