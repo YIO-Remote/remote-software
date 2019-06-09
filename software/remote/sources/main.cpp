@@ -44,8 +44,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("configPath", configPath);
 
     // LOADING FONTS
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Light.ttf"));
+    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-SemiBold.ttf"));
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Bold.ttf"));
 
     // LOADING CUSTOM COMPONENTS

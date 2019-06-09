@@ -35,7 +35,7 @@ Item {
 
                         tmp[k].state = json.result[i].state;
 
-                        if (json.result[i].attributes.brightness === null) {
+                        if (json.result[i].attributes.brightness === null || !json.result[i].attributes.brightness) {
                             tmp[k].brightness = "0";
                         } else {
                             tmp[k].brightness = JSHelper.convertToPercentage(json.result[i].attributes.brightness); // converting the brightness to percentage
@@ -77,7 +77,7 @@ Item {
 
                     tmp[k].state = state;
 
-                    if (brightness === null) {
+                    if (brightness === null || !brightness) {
                         tmp[k].brightness = "0";
                     } else {
                         tmp[k].brightness = JSHelper.convertToPercentage(brightness); // converting the brightness to percentage
