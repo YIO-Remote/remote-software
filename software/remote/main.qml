@@ -63,7 +63,7 @@ ApplicationWindow {
                 mainLauncher.launch("halt");
             }
 
-            if (battery.getAveragePower() > 0 ) {
+            if (battery.getAveragePower() >= 0 ) {
                 chargingScreen.item.state = "visible";
             } else {
                 chargingScreen.item.state = "hidden";

@@ -5,43 +5,70 @@ import QtGraphicalEffects 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
+    id: cardDimmable
     width: parent.width
     height: parent.height
     color: colorMedium
 
     MouseArea {
+        id: dragger
         anchors.fill: parent
-    }
 
-    BasicUI.CustomButtonState {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 60
-        buttonText: lstate == "off" ? "Turn on" : "Turn off"
-        buttonState: lstate == "off" ? false : true
-
-        mouseArea.onClicked: {
+        onClicked: {
             haptic.playEffect("click");
             loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
+    }
+
+    Rectangle {
+        id: percentageBG
+        color: lstate == "on" ? colorHighlight : colorBackgroundTransparent
+        width: parent.width
+        height: parent.height
+        radius: cornerRadius
+        anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
+
+        Behavior on color {
+            PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
+        }
+    }
+
+    Image {
+        id: icon
+        asynchronous: true
+        width: 85
+        height: 85
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/components/light/images/icon-light.png"
+        anchors {top: parent.top; topMargin: 30; left: parent.left; leftMargin: 30}
+
+        ColorOverlay {
+            visible: !darkMode
+            anchors.fill: parent
+            source: parent
+            color: colorText
+            antialiasing: true
+        }
+    }
+
+    Text {
+        id: percentage
+        color: colorText
+        text: lstate == "on" ? "On" : "Off"
+        horizontalAlignment: Text.AlignLeft
+        anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
+        font {family: "Open Sans Light"; pixelSize: 180 }
     }
 
     Text {
         id: title
         color: colorText
         text: friendly_name
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        elide: Text.ElideNone
         wrapMode: Text.WordWrap
-        width: parent.width-40
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: toggleSettings.bottom
-        anchors.topMargin: 120
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 30
-        lineHeight: 1
+        width: parent.width-60
+        anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
+        font {family: "Open Sans SemiBold"; pixelSize: 60 }
+        lineHeight: 0.9
     }
 
     Text {
@@ -49,93 +76,22 @@ Rectangle {
         color: colorText
         opacity: 0.5
         text: area
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
-        width: parent.width-100
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: title.bottom
-        anchors.topMargin: 10
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 24
-        lineHeight: 1
+        width: parent.width-60
+        anchors { top: title.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
+        font {family: "Open Sans Regular"; pixelSize: 24 }
     }
 
-    Item {
-        id: toggleSettings
-        width: 340
-        height: 340
-        anchors.horizontalCenter: parent.horizontalCenter
+    BasicUI.CustomButton {
+        anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
+        color: colorText
+        buttonTextColor: colorBackground
+        buttonText: lstate == "off" ? "Turn on" : "Turn off"
 
-        Rectangle {
-            width: 340
-            height: width
-            radius: 170
-            color: "#00000000"
-            border.color: colorBackground
-            border.width: 20
-            anchors.top: parent.top
-            anchors.topMargin: 100
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-
-        Rectangle {
-            id: circleButton
-            width: 300
-            height: width
-            color: lstate == "off" ? "#00000000" : colorHighlight
-            radius: width/2
-            anchors.top: parent.top
-            anchors.topMargin: 120
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            states: State {
-                name: "pressed"
-                when: mouseAreaCircle.pressed === true
-                PropertyChanges {
-                    target: circleButton
-                    color: colorText
-                }
-            }
-
-            transitions: [
-              Transition {
-                  from: ""; to: "pressed"; reversible: true
-                  PropertyAnimation { target: circleButton
-                                      properties: "color"; duration: 400 }
-              }]
-
-            MouseArea {
-                id: mouseAreaCircle
-                anchors.fill: parent
-
-                onClicked: {
-                    haptic.playEffect("click");
-                    loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
-                }
-            }
-        }
-
-        Image {
-            id: icon
-            asynchronous: true
-            width: 80
-            height: 80
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/components/light/images/icon-light.png"
-            anchors.horizontalCenter: toggleSettings.horizontalCenter
-            anchors.verticalCenterOffset: 100
-            anchors.verticalCenter: toggleSettings.verticalCenter
-
-            ColorOverlay {
-                visible: !darkMode
-                anchors.fill: parent
-                source: parent
-                color: colorText
-                antialiasing: true
-            }
+        mouseArea.onClicked: {
+            haptic.playEffect("click");
+            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
     }
 

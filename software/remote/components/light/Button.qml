@@ -13,6 +13,7 @@ Rectangle {
     property var friendly_name:         loaded_components.light.entities[entityID].friendly_name
     property var lstate:                loaded_components.light.entities[entityID].state
     property int brightness:            loaded_components.light.entities[entityID].brightness
+    property var _color:                loaded_components.light.entities[entityID].color
     property string integrationType:    loaded_components.light.entities[entityID].integration
     property string area:               loaded_components.light.entities[entityID].area
     property var supported_features:    loaded_components.light.entities[entityID].supported_features
@@ -37,6 +38,37 @@ Rectangle {
     }
 
     property var originParent: lightButton.parent
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: buttonHandler
+        enabled: state == "open" ? true : false
+
+        onButtonPress: {
+            var tmp;
+
+            switch (button) {
+            case "dpad up":
+                tmp = brightness+10;
+                if (tmp > 100) {
+                    tmp = 100;
+                }
+                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
+                break;
+            case "dpad down":
+                tmp = brightness-10;
+                if (tmp < 0) {
+                    tmp = 0;
+                }
+                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
+                break;
+            case "dpad middle":
+                loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+                break;
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
@@ -447,13 +479,25 @@ Rectangle {
     // OPEN STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    function getSource() {
+        if (lightButton.state != "open") {
+            return "";
+        } else if (supported_features.indexOf("COLOR") > -1) {
+            return "qrc:/components/light/CardColor.qml";
+        } else if (supported_features.indexOf("BRIGHTNESS") > -1) {
+            return "qrc:/components/light/CardDimmable.qml";
+        } else {
+            return "qrc:/components/light/CardSwitch.qml";
+        }
+    }
+
     Loader {
         id: cardLoader
         width: lightButton.width
         height: lightButton.height
         asynchronous: true
         active: lightButton.state == "open"
-        source: lightButton.state != "open" ? "" : (supported_features.indexOf("BRIGHTNESS") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
+        source: getSource() //lightButton.state != "open" ? "" : (supported_features.indexOf("BRIGHTNESS") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {

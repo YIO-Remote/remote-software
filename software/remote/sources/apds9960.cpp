@@ -10,6 +10,16 @@ void APDS9960::enable(bool en)
     wiringPiI2CWriteReg8(_fd, APDS9960_ENABLE,_enable.get());
 }
 
+bool APDS9960::check()
+{
+    // Check if the sensor is still there on the I2C bus
+    uint8_t x = uint8_t(wiringPiI2CReadReg8(_fd, APDS9960_ID));
+    if (x != 0xAB) {
+        return false;
+    }
+    return true;
+}
+
 bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain)
 {
     _fd = wiringPiI2CSetupInterface("/dev/i2c-3", APDS9960_ADDRESS);

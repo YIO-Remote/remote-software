@@ -5,43 +5,134 @@ import QtGraphicalEffects 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
+    id: cardDimmable
     width: parent.width
     height: parent.height
     color: colorMedium
 
+    property int _brightness: brightness
+
+    signal updateBrightness()
+
     MouseArea {
+        id: dragger
         anchors.fill: parent
+        drag.target: draggerTarget
+        drag.axis: Drag.YAxis
+        drag.minimumY: 0
+        drag.maximumY: parent.height-10
+
+        property int percent
+
+        onPositionChanged: {
+            haptic.playEffect("bump");
+            dragger.percent = Math.round((parent.height - 10 - mouse.y)/(parent.height-10)*100);
+            if (dragger.percent < 0) dragger.percent = 0;
+            if (dragger.percent > 100) dragger.percent = 100;
+            if (dragger.percent > brightness) {
+                percentageBG2.height = parent.height*dragger.percent/100
+            } else {
+                percentageBG.height = parent.height*dragger.percent/100
+            }
+            percentage.text = dragger.percent;
+        }
+
+        onReleased: {
+            loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
+        }
     }
 
-    BasicUI.CustomButtonState {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 60
-        buttonText: lstate == "off" ? "Turn on" : "Turn off"
-        buttonState: lstate == "off" ? false : true
+    Connections {
+        target: cardDimmable
 
-        mouseArea.onClicked: {
-            haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+        onUpdateBrightness: {
+            percentageBG.height = parent.height*brightness/100;
+            percentageBG2.height = parent.height*brightness/100;
+            percentage.text = brightness;
         }
+    }
+
+    on_BrightnessChanged: {
+        updateBrightness()
+    }
+
+    Rectangle {
+        id: draggerTarget
+        width: parent.width
+        height: 30
+        color: "#00000000"
+        y: parent.height - percentageBG.height
+    }
+
+    Rectangle {
+        id: percentageBG2
+        color: colorSwitch
+        width: parent.width
+        height: 0
+        radius: cornerRadius
+        anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
+
+        Behavior on height {
+            PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
+        }
+    }
+
+    Rectangle {
+        id: percentageBG
+        color: colorHighlight
+        width: parent.width
+        height: parent.height*brightness/100
+        radius: cornerRadius
+        anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
+
+        Behavior on height {
+            PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
+        }
+    }
+
+    Image {
+        id: icon
+        asynchronous: true
+        width: 85
+        height: 85
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/components/light/images/icon-light.png"
+        anchors {top: parent.top; topMargin: 30; left: parent.left; leftMargin: 30}
+
+        ColorOverlay {
+            visible: !darkMode
+            anchors.fill: parent
+            source: parent
+            color: colorText
+            antialiasing: true
+        }
+    }
+
+    Text {
+        id: percentage
+        color: colorText
+        text: brightness
+        horizontalAlignment: Text.AlignLeft
+        anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
+        font {family: "Open Sans Light"; pixelSize: 180 }
+    }
+
+    Text {
+        color: colorText
+        text: "%"
+        anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
+        font {family: "Open Sans Light"; pixelSize: 100 }
     }
 
     Text {
         id: title
         color: colorText
         text: friendly_name
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        elide: Text.ElideNone
         wrapMode: Text.WordWrap
-        width: parent.width-40
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: brightnessSettings.bottom
-        anchors.topMargin: 120
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 30
-        lineHeight: 1
+        width: parent.width-60
+        anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
+        font {family: "Open Sans SemiBold"; pixelSize: 60 }
+        lineHeight: 0.9
     }
 
     Text {
@@ -49,176 +140,22 @@ Rectangle {
         color: colorText
         opacity: 0.5
         text: area
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
-        width: parent.width-100
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: title.bottom
-        anchors.topMargin: 10
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 24
-        lineHeight: 1
+        width: parent.width-60
+        anchors { top: title.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
+        font {family: "Open Sans Regular"; pixelSize: 24 }
     }
 
+    BasicUI.CustomButton {
+        anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
+        color: colorText
+        buttonTextColor: colorBackground
+        buttonText: lstate == "off" ? "Turn on" : "Turn off"
 
-    Item {
-        id: brightnessSettings
-        width: 340
-        height: 340
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        property bool moving: false
-
-        Rectangle {
-            width: 340
-            height: width
-            radius: 170
-            color: "#00000000"
-            border.color: colorBackground
-            border.width: 20
-            anchors.centerIn: progressCircle_purple
-        }
-
-        BasicUI.ProgressCircle {
-            id: progressCircle_purple
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            anchors.topMargin: 100
-            rotation: 180
-
-            size: 330
-            colorCircle: colorHighlight
-            colorCircleGrad: colorHighlight
-            colorBackground: colorBackground
-            showBackground: false
-            arcBegin: 40
-            arcEnd: (40+280*Math.round(dial.position*100)/100)
-            animationDuration: !brightnessSettings.moving ? 1000 : 0
-            lineWidth: 10
-        }
-
-        BasicUI.ProgressCircle {
-            id: progressCircle_white
-            anchors.horizontalCenter: progressCircle_purple.horizontalCenter
-            anchors.verticalCenter: progressCircle_purple.verticalCenter
-            rotation: 180
-
-            size: 321
-            colorCircle: colorLine
-            colorCircleGrad: colorBackgroundTransparent
-            showBackground: false
-            arcBegin: progressCircle_purple.arcEnd > 140 ? progressCircle_purple.arcEnd - 90 : 40
-            arcEnd: progressCircle_purple.arcEnd
-            animationDuration: 0
-            lineWidth: 2
-        }
-
-        Dial {
-            id: dial
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            anchors.topMargin: 100
-
-            from: 0
-            to: 100
-            enabled: true
-            spacing: 10
-
-            width: 340
-            height: 340
-
-            value: brightness
-
-            onMoved: {
-                haptic.playEffect("bump");
-                brightnessSettings.moving = true
-                change_brightness_timer.running = true
-            }
-
-            Timer { // this timer changes the light brightness
-                id: change_brightness_timer
-                interval: 1000
-                repeat: false
-                running: false
-
-                onTriggered: {
-                    change_brightness_timer.running = false;
-                    brightnessSettings.moving = false;
-                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, Math.round(dial.position*100));
-                }
-            }
-
-            background: Rectangle {
-                x: dial.width / 2 - width / 2
-                y: dial.height / 2 - height / 2
-                width: Math.max(64, Math.min(dial.width, dial.height))
-                height: width
-                color: "transparent"
-            }
-
-            handle: Rectangle {
-                id: handleItem
-                x: dial.background.x + dial.background.width / 2 - width / 2
-                y: dial.background.y + dial.background.height / 2 - height / 2
-                width: 32
-                height: 32
-
-                gradient: Gradient {
-                    GradientStop { position: 1.0; color: colorBackground }
-                    GradientStop { position: 0.0; color: colorButton }
-                }
-
-                radius: 16
-                antialiasing: true
-                transform: [
-                    Translate {
-                        y: -Math.min(dial.background.width, dial.background.height) * 0.4 + handleItem.height / 2
-                    },
-                    Rotation {
-                        angle: dial.angle
-                        origin.x: handleItem.width / 2
-                        origin.y: handleItem.height / 2
-                    }
-                ]
-            }
-        }
-
-        Text {
-            id: percentText
-            color: colorText
-            text: Math.round(dial.position*100) + "%"
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.NoWrap
-            anchors.horizontalCenter: progressCircle_purple.horizontalCenter
-            anchors.verticalCenter: progressCircle_purple.verticalCenter
-            anchors.verticalCenterOffset: -40
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 80
-            lineHeight: 1
-        }
-
-        Image {
-            id: icon
-            asynchronous: true
-            width: 80
-            height: 80
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/components/light/images/icon-light.png"
-            anchors.horizontalCenter: progressCircle_purple.horizontalCenter
-            anchors.top: percentText.bottom
-//            anchors.topMargin: 10
-
-            ColorOverlay {
-                visible: !darkMode
-                anchors.fill: parent
-                source: parent
-                color: colorText
-                antialiasing: true
-            }
+        mouseArea.onClicked: {
+            haptic.playEffect("click");
+            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
         }
     }
 

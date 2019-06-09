@@ -152,6 +152,7 @@ public:
     void setADCGain(apds9960AGain_t gain);
     apds9960AGain_t getADCGain();
     void setLED(apds9960LedDrive_t drive, apds9960LedBoost_t boost);
+    bool check();
 
     // proximity
     void enableProximity(bool en = true);

@@ -5,6 +5,7 @@ Rectangle {
 
     property alias mouseArea: mouseArea
     property alias buttonText: buttonText.text
+    property alias buttonTextColor: buttonText.color
 
     id: button
     width: buttonText.implicitWidth+60
@@ -37,9 +38,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 27
+        font { family: "Open Sans Regular"; pixelSize: 27 }
         lineHeight: 0.8
     }
 
