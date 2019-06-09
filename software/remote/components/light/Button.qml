@@ -46,12 +46,25 @@ Rectangle {
         enabled: state == "open" ? true : false
 
         onButtonPress: {
+            var tmp;
+
             switch (button) {
             case "dpad up":
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, brightness+10);
+                tmp = brightness+10;
+                if (tmp > 100) {
+                    tmp = 100;
+                }
+                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
                 break;
             case "dpad down":
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, brightness-10);
+                tmp = brightness-10;
+                if (tmp < 0) {
+                    tmp = 0;
+                }
+                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
+                break;
+            case "dpad middle":
+                loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
                 break;
             }
         }

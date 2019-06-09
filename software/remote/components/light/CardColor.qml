@@ -142,7 +142,7 @@ Rectangle {
                 color: colorText
                 text: brightness
                 horizontalAlignment: Text.AlignLeft
-                anchors { top: parent.top; topMargin: 120; left: parent.left; leftMargin: 30 }
+                anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
                 font {family: "Open Sans Light"; pixelSize: 180 }
             }
 
