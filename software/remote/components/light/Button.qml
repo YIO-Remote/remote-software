@@ -13,6 +13,7 @@ Rectangle {
     property var friendly_name:         loaded_components.light.entities[entityID].friendly_name
     property var lstate:                loaded_components.light.entities[entityID].state
     property int brightness:            loaded_components.light.entities[entityID].brightness
+    property var _color:                loaded_components.light.entities[entityID].color
     property string integrationType:    loaded_components.light.entities[entityID].integration
     property string area:               loaded_components.light.entities[entityID].area
     property var supported_features:    loaded_components.light.entities[entityID].supported_features
@@ -447,13 +448,25 @@ Rectangle {
     // OPEN STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    function getSource() {
+        if (lightButton.state != "open") {
+            return "";
+        } else if (supported_features.indexOf("COLOR") > -1) {
+            return "qrc:/components/light/CardColor.qml";
+        } else if (supported_features.indexOf("BRIGHTNESS") > -1) {
+            return "qrc:/components/light/CardDimmable.qml";
+        } else {
+            return "qrc:/components/light/CardSwitch.qml";
+        }
+    }
+
     Loader {
         id: cardLoader
         width: lightButton.width
         height: lightButton.height
         asynchronous: true
         active: lightButton.state == "open"
-        source: lightButton.state != "open" ? "" : (supported_features.indexOf("BRIGHTNESS") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
+        source: getSource() //lightButton.state != "open" ? "" : (supported_features.indexOf("BRIGHTNESS") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {

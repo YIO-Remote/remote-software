@@ -5,6 +5,7 @@ Rectangle {
 
     property alias mouseArea: mouseArea
     property alias buttonText: buttonText.text
+    property alias buttonTextColor: buttonText.color
 
     id: button
     width: buttonText.implicitWidth+60
