@@ -52,12 +52,13 @@ Rectangle {
                 drag.target: draggerTarget
                 drag.axis: Drag.YAxis
                 drag.minimumY: 0
-                drag.maximumY: parent.height
+                drag.maximumY: parent.height-10
 
                 property int percent
 
                 onPositionChanged: {
-                    dragger.percent = Math.round((parent.height - mouse.y)/parent.height*100);
+                    haptic.playEffect("bump");
+                    dragger.percent = Math.round((parent.height - 10 - mouse.y)/(parent.height-10)*100);
                     if (dragger.percent < 0) dragger.percent = 0;
                     if (dragger.percent > 100) dragger.percent = 100;
                     if (dragger.percent > brightness) {
@@ -69,7 +70,6 @@ Rectangle {
                 }
 
                 onReleased: {
-                    haptic.playEffect("bump");
                     loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
                 }
             }
@@ -80,6 +80,7 @@ Rectangle {
                 onUpdateBrightness: {
                     percentageBG.height = parent.height*brightness/100;
                     percentageBG2.height = parent.height*brightness/100;
+                    percentage.text = brightness;
                 }
             }
 
@@ -142,14 +143,14 @@ Rectangle {
                 text: brightness
                 horizontalAlignment: Text.AlignLeft
                 anchors { top: parent.top; topMargin: 120; left: parent.left; leftMargin: 30 }
-                font {family: "Open Sans"; weight: Font.Light; styleName: "Light"; pixelSize: 180 }
+                font {family: "Open Sans Light"; pixelSize: 180 }
             }
 
             Text {
                 color: colorText
                 text: "%"
                 anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
-                font {family: "Open Sans"; weight: Font.Light; styleName: "Light"; pixelSize: 100 }
+                font {family: "Open Sans Light"; pixelSize: 100 }
             }
 
             Text {
@@ -159,7 +160,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 width: parent.width-60
                 anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-                font {family: "Open Sans"; weight: Font.DemiBold; styleName: "SemiBold"; pixelSize: 60 }
+                font {family: "Open Sans SemiBold"; pixelSize: 60 }
                 lineHeight: 0.9
             }
 
@@ -172,7 +173,7 @@ Rectangle {
                 wrapMode: Text.NoWrap
                 width: parent.width-60
                 anchors { top: title.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-                font {family: "Open Sans"; weight: Font.Normal; pixelSize: 24 }
+                font {family: "Open Sans Regular"; pixelSize: 24 }
             }
 
             BasicUI.CustomButton {
@@ -344,7 +345,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 width: parent.width-60
                 anchors { top: icon_b.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-                font {family: "Open Sans"; weight: Font.Normal; pixelSize: 50 }
+                font {family: "Open Sans Regular"; pixelSize: 50 }
                 lineHeight: 0.9
 
                 Behavior on opacity {
@@ -359,7 +360,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 width: parent.width-60
                 anchors { top: color_b.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-                font {family: "Open Sans"; weight: Font.DemiBold; styleName: "SemiBold"; pixelSize: 60 }
+                font {family: "Open Sans SemiBold"; pixelSize: 60 }
                 lineHeight: 0.9
 
                 Behavior on opacity {
@@ -376,7 +377,7 @@ Rectangle {
                 wrapMode: Text.NoWrap
                 width: parent.width-60
                 anchors { top: title_b.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-                font {family: "Open Sans"; weight: Font.Normal; pixelSize: 24 }
+                font {family: "Open Sans Regular"; pixelSize: 24 }
 
                 Behavior on opacity {
                     PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }

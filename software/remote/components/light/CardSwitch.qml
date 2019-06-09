@@ -57,7 +57,7 @@ Rectangle {
         text: lstate == "on" ? "On" : "Off"
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans"; weight: Font.Light; styleName: "Light"; pixelSize: 180 }
+        font {family: "Open Sans Light"; pixelSize: 180 }
     }
 
     Text {
@@ -67,7 +67,7 @@ Rectangle {
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans"; weight: Font.DemiBold; styleName: "SemiBold"; pixelSize: 60 }
+        font {family: "Open Sans SemiBold"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
@@ -80,7 +80,7 @@ Rectangle {
         wrapMode: Text.NoWrap
         width: parent.width-60
         anchors { top: title.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans"; weight: Font.Normal; pixelSize: 24 }
+        font {family: "Open Sans Regular"; pixelSize: 24 }
     }
 
     BasicUI.CustomButton {

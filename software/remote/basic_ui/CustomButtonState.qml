@@ -37,9 +37,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.family: "Neuzeit Grotesk"
-        font.weight: Font.Normal
-        font.pixelSize: 28
+        font { family: "Open Sans Regular"; pixelSize: 27 }
         lineHeight: 0.8
     }
 

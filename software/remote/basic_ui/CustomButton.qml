@@ -38,9 +38,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 27
+        font { family: "Open Sans Regular"; pixelSize: 27 }
         lineHeight: 0.8
     }
 

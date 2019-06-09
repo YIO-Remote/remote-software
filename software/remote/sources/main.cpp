@@ -4,6 +4,7 @@
 #include <QQmlContext>
 #include <QFile>
 #include <QFileInfo>
+#include <QtDebug>
 
 #include "launcher.h"
 #include "jsonfile.h"
