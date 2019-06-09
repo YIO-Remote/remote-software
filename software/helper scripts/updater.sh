@@ -12,7 +12,7 @@ fi
 #--------------------
 # TODO: Rework based on path?
 #--------------------
-fbv -d 1 /usr/bin/yio-remote/update.png
+fbv -d 1 /usr/bin/yio-remote/images/update.png
 
 
 #--------------------
@@ -52,7 +52,6 @@ mv "/usr/bin/yio-remote" "/usr/bin/yio-remote-backup"
 # 6. Kill python and remote by pid
 #    - todo/improvement: Only kill based on PiD to prevent killing other apps?
 #--------------------
-killall -9 python
 killall -9 remote
 sleep 2
 
