@@ -43,6 +43,10 @@ Item {
 
                         tmp[k].friendly_name = json.result[i].attributes.friendly_name;
 
+                        if (json.result[i].attributes.rgb_color) {
+                            tmp[k].color = json.result[i].attributes.rgb_color;
+                        }
+
                         // Brightness
                         if (json.result[i].attributes.supported_features & _SUPPORT_BRIGHTNESS) {
                             tmp[k].supported_features.push("BRIGHTNESS");
@@ -57,6 +61,7 @@ Item {
                         if (json.result[i].attributes.supported_features & _SUPPORT_COLOR_TEMP) {
                             tmp[k].supported_features.push("COLOR_TEMP");
                         }
+
                     }
                 }
             }
@@ -83,6 +88,10 @@ Item {
                         tmp[k].brightness = JSHelper.convertToPercentage(brightness); // converting the brightness to percentage
                     }
 
+                    if (json.event.data.new_state.attributes.rgb_color) {
+                        tmp[k].color = json.event.data.new_state.attributes.rgb_color;
+                    }
+
                     loaded_components.light.entities = tmp;
                 }
             }
@@ -100,6 +109,11 @@ Item {
 
     function setBrightness(entity_id, brightness) {
         var data = {"brightness_pct": brightness}
+        integration.homeassistant.obj.webSocketSendCommand("light","turn_on",entity_id, data);
+    }
+
+    function setColor(entity_id, color) {
+        var data = {"rgb_color": [color.r, color.g, color.b]}
         integration.homeassistant.obj.webSocketSendCommand("light","turn_on",entity_id, data);
     }
 

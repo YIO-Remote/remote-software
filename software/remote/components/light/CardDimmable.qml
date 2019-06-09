@@ -112,7 +112,7 @@ Rectangle {
         color: colorText
         text: brightness
         horizontalAlignment: Text.AlignLeft
-        anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
+        anchors { top: parent.top; topMargin: 120; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans"; weight: Font.Light; styleName: "Light"; pixelSize: 180 }
     }
 

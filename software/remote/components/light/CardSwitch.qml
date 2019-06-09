@@ -13,10 +13,6 @@ Rectangle {
     MouseArea {
         id: dragger
         anchors.fill: parent
-        drag.target: draggerTarget
-        drag.axis: Drag.YAxis
-        drag.minimumY: 0
-        drag.maximumY: parent.height
 
         onClicked: {
             haptic.playEffect("click");
