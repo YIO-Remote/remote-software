@@ -18,6 +18,7 @@ Item {
     Component.onCompleted: {
         screenOnTimeTextData.text = Qt.binding( function() { return JSHelper.secondsToHours(Math.round(standbyControl.screenOnTime/1000)) } )
         screenOffTimeTextData.text = Qt.binding( function () { return JSHelper.secondsToHours(Math.round(standbyControl.screenOffTime/1000)) } )
+        getHours();
     }
 
     property var hours: []
@@ -217,7 +218,7 @@ Item {
                 spacing: 4
 
                 Repeater {
-                    model: battery_data.length > 7 ? 8 : battery_data.length
+                    model: battery_data.length > 47 ? 48 : battery_data.length
 
                     Rectangle {
                         width: 6
@@ -277,7 +278,7 @@ Item {
                 spacing: 4
 
                 Repeater {
-                    model: battery_data.length > 7 ? 8 : battery_data.length
+                    model: battery_data.length > 47 ? 48 : battery_data.length
 
                     Rectangle {
                         width: 6
@@ -304,11 +305,11 @@ Item {
                 anchors.left: parent.left
 
                 Repeater {
-                    model: hours.length > 7 ? 8 : (hours.length === 0 ? 1 : hours.length)
+                    model: hours.length > 7 ? 8 : (hours.length == 0 ? 1 : hours.length)
 
                     delegate: Text {
                         //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
-                        text: hours.length === 0 ? qsTr("No data available yet") + translateHandler.emptyString : hours[hours.length-1-index]
+                        text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[hours.length-1-index]
                         color: colorHighlight
                         font.family: "Open Sans"
                         font.weight: Font.Normal
