@@ -32,6 +32,7 @@ Item {
             websocketReconnect.tries = 0;
             socket.active = true;
         } else {
+            connecting = false;
             socket.active = false;
             websocketReconnect.running = false;
         }
@@ -179,13 +180,13 @@ Item {
         property int tries: 0
 
         onTriggered: {
-            if (tries == 4) {
+            if (tries == 1) {
                 websocketReconnect.running = false;
                 //                connectionState = "failed"
                 console.debug("Failed to connect");
 
-                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, "", "");
-                connecting = false;
+                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, function () { integration.homeassistant.obj.connectionOpen = true; }, "Reconnect");
+                connectionOpen = false;
 
                 tries = 0
             } else {
