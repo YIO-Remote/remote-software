@@ -116,14 +116,14 @@ ApplicationWindow {
     property string colorHighlight: "#918682"
 
     property string colorLight: darkMode ? "#2E373D" : "#CBCBCB"
-    property string colorMedium: darkMode ? "#121519" : "#D4D4D4"
+    property string colorMedium: darkMode ? "#262626" : "#D4D4D4"
     property string colorDark: darkMode ? "#16191E" : "#ffffff"
     property string colorDarkest: darkMode ? "#0E0F12" : "#0E0F12"
 
     property string colorGreen: "#19D37B"
     property string colorRed: "#EA003C"
 
-    property string colorSwitch: darkMode ? "#1E242C" : "#B9B9B9"
+    property string colorSwitch: darkMode ? "#373737" : "#B9B9B9"
     property string colorSwitchOn : darkMode ? "#ffffff" : "#ffffff"
     property string colorSwitchBackground: darkMode ? "#000000" : "#ffffff"
 
@@ -323,14 +323,12 @@ ApplicationWindow {
     Loader {
         id: loader_main
         asynchronous: true
-        visible: false
         width: 480
         height: 800
         x: 0
         y: 0
         active: false
         state: "visible"
-        //        source: "qrc:/MainContainer.qml"
 
         transform: Scale {
             id: scale
@@ -339,16 +337,15 @@ ApplicationWindow {
         }
 
         states: [
-            State { name: "hidden"; PropertyChanges {target: loader_main; y: -60; scale: 0.8; opacity: 0.4; enabled: false}},
-            State { name: "visible"; PropertyChanges {target: loader_main; scale: 1; opacity: 1; visible: true; enabled: true}}
+            State { name: "hidden"; PropertyChanges {target: loader_main; y: -60; scale: 0.8; opacity: 0.4}},
+            State { name: "visible"; PropertyChanges {target: loader_main; scale: 1; opacity: 1}}
         ]
         transitions: [
             Transition {to: "hidden"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 800 }},
-            Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.InExpo; duration: 300 }}
+            Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready) {
-                             loader_main.visible = true;
                              loadingScreen.state = "connected";
                          }
     }

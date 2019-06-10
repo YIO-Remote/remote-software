@@ -223,7 +223,7 @@ Item {
                     Rectangle {
                         width: 6
                         height: 96 * battery_data[index].level
-                        color: colorText
+                        color: battery_data[index].power < 0 ? colorText : colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }
