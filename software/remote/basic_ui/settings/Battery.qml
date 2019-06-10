@@ -299,7 +299,7 @@ Item {
             anchors.leftMargin: 20
 
             RowLayout {
-                layoutDirection: Qt.RightToLeft
+//                layoutDirection: Qt.RightToLeft
                 Layout.fillWidth: false
                 spacing: 30
                 anchors.left: parent.left

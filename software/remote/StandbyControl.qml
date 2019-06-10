@@ -316,12 +316,13 @@ Item {
         onTriggered: {
             if (mode == "standby") {
                 wifiOffTimer.stop();
-                // turn off wifi
-                wifiHandler("off")
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.connectionOpen = false;
                 }
+                // turn off wifi
+                wifiHandler("off")
+
                 mode = "wifi_off";
             }
         }

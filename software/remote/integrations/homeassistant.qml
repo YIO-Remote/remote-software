@@ -32,9 +32,22 @@ Item {
             websocketReconnect.tries = 0;
             socket.active = true;
         } else {
-            connecting = false;
-            socket.active = false;
             websocketReconnect.running = false;
+            socket.active = false;
+            connecting = false;
+        }
+    }
+
+    onConnectedChanged: {
+        if (connected) {
+            // remove notifications that say couldn't connec to Home Assistant
+            var tmp = notifications;
+            tmp.forEach(function(entry, index, object) {
+                if (entry.text === "Failed to connect to Home Assistant.") {
+                    tmp.splice(index, 1);
+                }
+            });
+            notifications = tmp;
         }
     }
 
