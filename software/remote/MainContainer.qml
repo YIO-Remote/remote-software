@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
+import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -75,7 +76,7 @@ Item {
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width-20
-        height: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
+        height: parent.height-statusBar.height-/*mainNavigation.height-*/miniMediaPlayer.height
         anchors.top: statusBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         clip: true
@@ -180,6 +181,29 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Rectangle {
+        anchors.fill: fastBlur
+        color: colorBackground
+    }
+
+    FastBlur {
+        id: fastBlur
+
+        anchors.centerIn: mainNavigation
+
+        height: mainNavigation.height
+        width: parent.width
+
+        radius: 40
+        opacity: 0.5
+
+        source: ShaderEffectSource {
+            sourceItem: mainNavigationSwipeview
+            sourceRect: Qt.rect(0, 0, mainNavigation.width, mainNavigation.height)
+        }
+    }
+
+
     property alias mainNavigation: mainNavigation
 
     BasicUI.MainNavigation {
