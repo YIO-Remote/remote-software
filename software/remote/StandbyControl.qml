@@ -226,9 +226,9 @@ Item {
     onTouchDetectedChanged: {
         // if there was a touch event, reset the timers
         if (touchDetected) {
-            proximity.proximityDetection(false);
             wakeUp();
             touchDetected = false;
+            proximity.proximityDetection(false);
         }
     }
 
@@ -243,23 +243,23 @@ Item {
     onButtonPressDetectedChanged: {
         // if there was a button press event, reset the timers
         if (buttonPressDetected) {
-            proximity.proximityDetection(false);
             wakeUp();
             buttonPressDetected = false;
+            proximity.proximityDetection(false);
         }
     }
 
     onModeChanged: {
         // if mode is on change processor to ondemand
         if (mode == "on") {
-            //var cmd = "echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-            //mainLauncher.launch(cmd);
+            var cmd = "echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+            mainLauncher.launch(cmd);
             startTime = new Date().getTime()
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
-            //cmd = "echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-            //mainLauncher.launch(cmd);
+            cmd = "echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+            mainLauncher.launch(cmd);
             // add screen on time
             screenOnTime += new Date().getTime() - startTime
             screenOffTime = new Date().getTime() - baseTime - screenOnTime

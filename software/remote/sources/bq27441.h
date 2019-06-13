@@ -93,7 +93,7 @@ public:
     int32_t  getTemperatureC();                 // Result in 1 Celsius
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
-    uint16_t getFullAvailableCapacity();
+    Q_INVOKABLE int getFullAvailableCapacity();
     uint16_t getRemainingCapacity();
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
@@ -106,7 +106,7 @@ public:
     uint16_t getStateOfChargeUnfiltered();
     // Extended Data Commands
     uint16_t getOpConfig();
-    uint16_t getDesignCapacity();
+    Q_INVOKABLE int getDesignCapacity();
     // Control Subcommands
     uint16_t getControlStatus();
     uint16_t getDeviceType();
