@@ -51,6 +51,7 @@ public:
         } else {
             m_init_success = false;
         }
+        qDebug() << "APDS check:" << m_init_success;
 
         if (m_init_success) {
 

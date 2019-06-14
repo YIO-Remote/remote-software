@@ -4,11 +4,45 @@ import QtWebSockets 1.0
 import "qrc:/scripts/helper.js" as JSHelper
 
 Item {
+    id: integration
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT AND DISCONNECT FUNCTIONS
+    // Must be the same function name for every integration
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function connect()
+    {
+        // write connect function here
+
+        // set the status bar loading icon to visible
+        connecting = true;
+
+        // reset the reconnnect trial variable
+        websocketReconnect.tries = 0;
+
+        // turn on the websocket connection
+        socket.active = true;
+    }
+
+    function disconnect()
+    {
+        // write disconnect function here
+
+        // turn of the reconnect try
+        websocketReconnect.running = false;
+
+        // turn off the socket
+        socket.active = false;
+
+        // disable the status bar loading icon
+        connecting = false;
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COMMON VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    id: homeassistant
 
     property bool connected: false  // reports the state if the connection is succesful or not. Update his variable when handling the connection
     property bool connectionOpen: false // this varialbe controls the connection. If set to [true], the connection should start, if set to [false] the connection to the hub should be terminated
@@ -66,13 +100,13 @@ Item {
     signal sendFetchJson(var json)
 
     onFetch_jsonChanged: {
-        homeassistant.sendFetchJson(fetch_json)
+        integration.sendFetchJson(fetch_json)
     }
 
     signal sendEventJson(var json)
 
     onEvent_jsonChanged: {
-        homeassistant.sendEventJson(event_json)
+        integration.sendEventJson(event_json)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,7 +232,7 @@ Item {
                 //                connectionState = "failed"
                 console.debug("Failed to connect");
 
-                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, function () { integration.homeassistant.obj.connectionOpen = true; }, "Reconnect");
+                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, function () { integration.integration.obj.connectionOpen = true; }, "Reconnect");
                 connectionOpen = false;
 
                 tries = 0

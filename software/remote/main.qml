@@ -1,4 +1,4 @@
- import QtQuick 2.11
+import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtWebSockets 1.0
 
@@ -70,10 +70,10 @@ ApplicationWindow {
             }
 
             // debug
-            console.debug("Battery voltage: " + battery_voltage);
-            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
-            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
-            console.debug("Battery design capacity: " + battery.getDesignCapacity());
+            //            console.debug("Battery voltage: " + battery_voltage);
+            //            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
+            //            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
+            //            console.debug("Battery design capacity: " + battery.getDesignCapacity());
         }
     }
 
@@ -483,7 +483,7 @@ ApplicationWindow {
     property var notifications: [] // json array that holds all the active notifications
     property var notificationObj: []
 
-    // close the notification drawer when there is no notification left to show
+    //     close the notification drawer when there is no notification left to show
     onNotificationsChanged: {
         if (notifications.length == 0) {
             notificationsDrawer.close();

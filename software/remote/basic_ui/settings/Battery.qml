@@ -218,7 +218,7 @@ Item {
                 spacing: 4
 
                 Repeater {
-                    model: battery_data.length > 47 ? 48 : battery_data.length
+                    model: battery_data.length > 35 ? 36 : battery_data.length
 
                     Rectangle {
                         width: 6
@@ -278,11 +278,11 @@ Item {
                 spacing: 4
 
                 Repeater {
-                    model: battery_data.length > 47 ? 48 : battery_data.length
+                    model: battery_data.length > 35 ? 36 : battery_data.length
 
                     Rectangle {
                         width: 6
-                        height: 96 * (Math.abs(battery_data[index].power) / 5200)
+                        height: 96 * (Math.abs(battery_data[index].power) / 5400)
                         color: battery_data[index].power < 0 ? colorText : colorGreen
                         anchors.bottom: parent.bottom
                     }
@@ -299,7 +299,7 @@ Item {
             anchors.leftMargin: 20
 
             RowLayout {
-//                layoutDirection: Qt.RightToLeft
+                layoutDirection: Qt.RightToLeft
                 Layout.fillWidth: false
                 spacing: 30
                 anchors.left: parent.left
