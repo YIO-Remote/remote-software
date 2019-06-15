@@ -264,8 +264,6 @@ ApplicationWindow {
         // when everything is loaded, load the main UI
         loader_main.setSource("qrc:/MainContainer.qml");
         loader_main.active = true;
-
-        addNotification("normal", qsTr("Test notification text") + translateHandler.emptyString, "", qsTr("Update") + translateHandler.emptyString);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

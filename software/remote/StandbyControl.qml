@@ -184,7 +184,7 @@ Item {
             wifiHandler("on")
             // integration socket on
             for (var i=0; i<config.integration.length; i++) {
-                integration[config.integration[i].type].obj.connectionOpen = true;
+                integration[config.integration[i].type].obj.connect();
             }
             // turn off standby
             if (displayControl.setmode("standbyoff")) {
@@ -318,7 +318,7 @@ Item {
                 wifiOffTimer.stop();
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
-                    integration[config.integration[i].type].obj.connectionOpen = false;
+                    integration[config.integration[i].type].obj.disconnect();
                 }
                 // turn off wifi
                 wifiHandler("off")

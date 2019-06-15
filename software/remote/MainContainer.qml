@@ -18,7 +18,7 @@ Item {
     Component.onCompleted: {
         for (var key in integration) {
             if (integration.hasOwnProperty(key)) {
-                integration[key].obj.connectionOpen = true;
+                integration[key].obj.connect();
             }
         }
     }

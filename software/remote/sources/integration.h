@@ -2,23 +2,22 @@
 #define INTEGRATION_H
 
 #include <QObject>
-#include <QJsonArray>
-#include <QJsonValue>
-#include <QJsonObject>
-#include <QtDebug>
+#include <QQuickItem>
 
 // Integration base class
 
-class Integration : public QObject
+class Integration : public QQuickItem
 {
     Q_OBJECT
 
+public:
     Q_PROPERTY(bool         connected       READ connected      WRITE setConnected      NOTIFY connectedChanged)
-    Q_PROPERTY(int          integrationId   READ integrationId  WRITE setIntegrationId)
+    Q_PROPERTY(int          integrationId   READ integrationId  WRITE setIntegrationId  NOTIFY integrationIdChanged)
     Q_PROPERTY(QString      type            READ type           WRITE setType)
     Q_PROPERTY(QString      friendlyName    READ friendlyName   WRITE setFriendlyName)
 
-public:
+    Integration() {}
+    ~Integration() {}
 
     // get the if the integration is connected
     bool connected() { return m_connected; }
@@ -34,7 +33,11 @@ public:
     int integrationId() { return m_integrationId; }
 
     // set the id of the integration
-    void setIntegrationId(int value) { m_integrationId = value; }
+    void setIntegrationId(int value) {
+
+        m_integrationId = value;
+        emit integrationIdChanged();
+    }
 
     // get the type of the integration
     QString type() { return m_type; }
@@ -56,6 +59,7 @@ private:
 
 signals:
     void connectedChanged();
+    void integrationIdChanged();
 
 };
 

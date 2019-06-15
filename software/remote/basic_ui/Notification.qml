@@ -67,7 +67,7 @@ Rectangle {
     }
 
     onXChanged: {
-        if (x > 40 && x <= 120) {
+        if (x > 40 && x <= 240) {
             notification.x = 100;
             notificationRemoverTimer.stop();
         } else if (x > 240 && !dragged) {
