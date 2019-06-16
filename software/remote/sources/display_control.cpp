@@ -128,12 +128,28 @@ bool DisplayControl::setmode(const QString &mode)
 #endif
         return true;
     }
+    return false;
 }
 
-void DisplayControl::setBrightness(int value)
+void DisplayControl::setBrightness(int from, int to)
 {
+    QFuture<void> future = QtConcurrent::run([=]() {
 #ifdef __arm__
-    pwmWrite(1, value);
-    delay(10);
+        if (from >= to) {
+            // dim down
+            for (int i=from; i>to-1; i--)
+            {
+                pwmWrite(1, i);
+                delay(8);
+            }
+        } else {
+            // dim up
+            for (int i=from; i<to+1; i++)
+            {
+                pwmWrite(1, i);
+                delay(8);
+            }
+        }
 #endif
+    });
 }

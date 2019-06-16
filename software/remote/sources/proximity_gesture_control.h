@@ -2,7 +2,6 @@
 #define PROXIMITY_GESTURE_CONTROL_H
 
 #include <QObject>
-#include <QThread>
 #include <QtDebug>
 
 #ifdef __arm__
@@ -20,55 +19,45 @@ public:
     Q_PROPERTY(QString apds9960Error READ getapds9960Error NOTIFY apds9960Notify)
     Q_PROPERTY(int proximitySetting READ getproximitySetting WRITE setproximitySetting)
 
-    int getambientLight() {
-        return int(m_ambientLight);
-    }
+    int getambientLight() { return int(m_ambientLight); }
 
-    QString getgesture()
-    {
-        return m_gesture;
-    }
+    QString getgesture() { return m_gesture; }
 
-    QString getapds9960Error()
-    {
-        return m_apds9960Error;
-    }
+    QString getapds9960Error() { return m_apds9960Error; }
 
-    int getproximitySetting() {
-        return m_proximitySetting;
-    }
+    int getproximitySetting() { return m_proximitySetting; }
 
-    void setproximitySetting(int proximity) {
-        m_proximitySetting = proximity;
-    }
+    void setproximitySetting(int proximity) { m_proximitySetting = proximity; }
 
     Q_INVOKABLE void proximityDetection(bool state)
     {
 #ifdef __arm__
-        if (state != m_proximityDetection) {
-//            if (apds.check()) {
-//                m_init_success = true;
-//            } else {
-//                m_init_success = false;
-//            }
-//            qDebug() << "APDS check:" << m_init_success;
+        if (m_init_success) {
+            if (state != m_proximityDetection) {
+                //            if (apds.check()) {
+                //                m_init_success = true;
+                //            } else {
+                //                m_init_success = false;
+                //            }
+                //            qDebug() << "APDS check:" << m_init_success;
 
-            if (state) {
-                // turn on
-                // set the proximity threshold
-                apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 1);
+                if (state) {
+                    // turn on
+                    // set the proximity threshold
+                    apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 1);
 
-                //set the proximity gain
-                apds.setProxGain(APDS9960_PGAIN_4X);
+                    //set the proximity gain
+                    apds.setProxGain(APDS9960_PGAIN_4X);
 
-                apds.setLED(APDS9960_LEDDRIVE_50MA, APDS9960_LEDBOOST_200PCNT);
+                    apds.setLED(APDS9960_LEDDRIVE_50MA, APDS9960_LEDBOOST_200PCNT);
 
-                // enable interrupt
-                apds.enableProximityInterrupt();
+                    // enable interrupt
+                    apds.enableProximityInterrupt();
 
-            } else {
-                // turn off
-                apds.disableProximityInterrupt();
+                } else {
+                    // turn off
+                    apds.disableProximityInterrupt();
+                }
             }
         }
 #endif
@@ -92,10 +81,10 @@ public:
     {
 #ifdef __arm__
         if (m_init_success) {
-            //            while (!apds.colorDataReady())
-            //            {
-            //                delay(5);
-            //            }
+            while (!apds.colorDataReady())
+            {
+                delay(5);
+            }
 
             apds.getAmbientLight(m_ambientLight);
             qDebug() << "Lux:" << m_ambientLight;
