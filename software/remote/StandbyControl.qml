@@ -109,17 +109,7 @@ Item {
 
     // change the display brightness
     onDisplay_brightnessChanged: {
-        if (display_brightness_old >= display_brightness) {
-            // dim down
-            for (var i=display_brightness_old; i>display_brightness-1; i--) {
-                displayControl.setBrightness(i);
-            }
-        } else {
-            // dim up
-            for (var j=display_brightness_old; j<display_brightness+1; j++) {
-                displayControl.setBrightness(j);
-            }
-        }
+        displayControl.setBrightness(display_brightness_old, display_brightness);
         standbyControl.display_brightness_old = standbyControl.display_brightness;
     }
 

@@ -70,10 +70,10 @@ ApplicationWindow {
             }
 
             // debug
-            //            console.debug("Battery voltage: " + battery_voltage);
-            //            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
-            //            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
-            //            console.debug("Battery design capacity: " + battery.getDesignCapacity());
+//            console.debug("Battery voltage: " + battery_voltage);
+//            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
+//            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
+//            console.debug("Battery design capacity: " + battery.getDesignCapacity());
         }
     }
 

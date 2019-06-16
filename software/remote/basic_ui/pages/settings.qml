@@ -8,8 +8,8 @@ Flickable {
 
     width: parent.width
     height: parent.height
-    maximumFlickVelocity: 4000
-    flickDeceleration: 2000
+    maximumFlickVelocity: 6000
+    flickDeceleration: 1000
     clip: true
     contentHeight: settingsPage.height
     boundsBehavior: Flickable.DragAndOvershootBounds
