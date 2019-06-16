@@ -32,7 +32,7 @@ Flickable {
 
         Component.onCompleted: {
             for (var i=0; i<loaded_components[type].entities.length; i++) {
-                var comp = Qt.createComponent("qrc:/components/"+ type +"/Button.qml");
+                var comp = Qt.createComponent("qrc:/components/"+ type +"/ui/Button.qml");
                 if (comp.status != Component.Ready) {
                     console.debug("Error: " + comp.errorString() );
                 }

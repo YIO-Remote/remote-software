@@ -66,17 +66,17 @@ Rectangle {
                     if (tmp > 100) {
                         tmp = 100;
                     }
-                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, tmp);
                     break;
                 case "dpad down":
                     tmp = brightness-10;
                     if (tmp < 0) {
                         tmp = 0;
                     }
-                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, tmp);
                     break;
                 case "dpad middle":
-                    loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+                    loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
                     break;
                 }
             }
@@ -265,7 +265,7 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
         }
 
     }
@@ -342,7 +342,7 @@ Rectangle {
 
         onValueChanged: {
             if (sliderMovedByUser) {
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
+                loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
                 sliderMovedByUser = false;
             }
         }
@@ -509,11 +509,11 @@ Rectangle {
         if (lightButton.state != "open") {
             return "";
         } else if (supported_features.indexOf("COLOR") > -1) {
-            return "qrc:/components/light/CardColor.qml";
+            return "qrc:/components/light/ui/CardColor.qml";
         } else if (supported_features.indexOf("BRIGHTNESS") > -1) {
-            return "qrc:/components/light/CardDimmable.qml";
+            return "qrc:/components/light/ui/CardDimmable.qml";
         } else {
-            return "qrc:/components/light/CardSwitch.qml";
+            return "qrc:/components/light/ui/CardSwitch.qml";
         }
     }
 
