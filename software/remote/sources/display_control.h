@@ -34,5 +34,4 @@ public:
     void setup(void);
 };
 
-
 #endif // DISPLAY_CONTROL_H

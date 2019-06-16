@@ -133,7 +133,7 @@ bool DisplayControl::setmode(const QString &mode)
 
 void DisplayControl::setBrightness(int from, int to)
 {
-    QFuture<void> future = QtConcurrent::run([=]() {
+    QFuture<void> future = QtConcurrent::run([=](int from, int to) {
 #ifdef __arm__
         if (from >= to) {
             // dim down
@@ -151,5 +151,5 @@ void DisplayControl::setBrightness(int from, int to)
             }
         }
 #endif
-    });
+    }, from, to);
 }
