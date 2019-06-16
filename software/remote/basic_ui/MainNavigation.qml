@@ -32,6 +32,11 @@ Item {
         }
     ]
 
+    Rectangle {
+        anchors.fill: parent
+        color: colorBackground
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MENU CONFIGURATION
@@ -117,7 +122,10 @@ Item {
             drag.target: held ? content : undefined
             drag.axis: Drag.XAxis
 
-            onPressAndHold: held = true
+            onPressAndHold: {
+                held = true;
+                haptic.playEffect("click");
+            }
             onReleased: {
                 if (held) {
                     saveMenuConfig()

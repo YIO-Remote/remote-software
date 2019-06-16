@@ -34,7 +34,7 @@ Rectangle {
         }
     }
 
-    width: parent.width
+    width: parent.width-20
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
     color: colorMedium
@@ -59,24 +59,26 @@ Rectangle {
         onButtonPress: {
             var tmp;
 
-            switch (button) {
-            case "dpad up":
-                tmp = brightness+10;
-                if (tmp > 100) {
-                    tmp = 100;
+            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
+                switch (button) {
+                case "dpad up":
+                    tmp = brightness+10;
+                    if (tmp > 100) {
+                        tmp = 100;
+                    }
+                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    break;
+                case "dpad down":
+                    tmp = brightness-10;
+                    if (tmp < 0) {
+                        tmp = 0;
+                    }
+                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    break;
+                case "dpad middle":
+                    loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+                    break;
                 }
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
-                break;
-            case "dpad down":
-                tmp = brightness-10;
-                if (tmp < 0) {
-                    tmp = 0;
-                }
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
-                break;
-            case "dpad middle":
-                loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
-                break;
             }
         }
     }
@@ -106,13 +108,13 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: lightButton; width: parent.width; height: 125}
+            PropertyChanges {target: lightButton; width: parent.width-20; height: 125}
             PropertyChanges {target: brightnessSlider; opacity: 0}
             ParentChange { target: lightButton; parent: originParent }
         },
         State {
             name: "on"
-            PropertyChanges {target: lightButton; width: parent.width; height: 160}
+            PropertyChanges {target: lightButton; width: parent.width-20; height: 160}
             PropertyChanges {target: brightnessSlider; opacity: 1}
         },
         State {
@@ -290,11 +292,11 @@ Rectangle {
 
         background: Rectangle {
             id: sliderBG
-//            x: brightnessSlider.leftPadding
+            //            x: brightnessSlider.leftPadding
             y: (brightnessSlider.height - height) / 2
-//            width: brightnessSlider.availableWidth
+            //            width: brightnessSlider.availableWidth
             height: cornerRadius * 2
-//            radius: cornerRadius
+            //            radius: cornerRadius
             color: colorBackground
             radius: cornerRadius
 
@@ -313,19 +315,19 @@ Rectangle {
             Rectangle {
                 width: brightnessSlider.visualPosition * parent.width
                 height: parent.height
-//                                radius: cornerRadius
+                //                                radius: cornerRadius
                 color: colorHighlight //colorBackgroundTransparent
 
-//                Rectangle {
-//                    width: parent.height
-//                    height: parent.width
-//                    anchors.centerIn: parent
-//                    rotation: -90
-//                    gradient: Gradient {
-//                        GradientStop { position: 0.0; color: colorMedium }
-//                        GradientStop { position: 1.0; color: colorHighlight }
-//                    }
-//                }
+                //                Rectangle {
+                //                    width: parent.height
+                //                    height: parent.width
+                //                    anchors.centerIn: parent
+                //                    rotation: -90
+                //                    gradient: Gradient {
+                //                        GradientStop { position: 0.0; color: colorMedium }
+                //                        GradientStop { position: 1.0; color: colorHighlight }
+                //                    }
+                //                }
             }
         }
 

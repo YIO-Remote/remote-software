@@ -69,20 +69,9 @@ Integration {
     // SIGNALS
     // Signals to push the data to the components
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var fetch_json
-    property var event_json
-
     signal sendFetchJson(var json)
-
-    onFetch_jsonChanged: {
-        integration.sendFetchJson(fetch_json)
-    }
-
     signal sendEventJson(var json)
 
-    onEvent_jsonChanged: {
-        integration.sendEventJson(event_json)
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SIGNALS END
@@ -119,7 +108,8 @@ Integration {
 
         if (json.success == true && json.id == 2) {
 
-            fetch_json = json;
+//            fetch_json = json;
+            integration.sendFetchJson(json);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // SUBSCRIBE TO EVENTS IN HOME ASSISTANT
@@ -141,7 +131,8 @@ Integration {
         }
 
         if (json.type == "event" && json.id == 3) {
-            event_json = json;
+//            event_json = json;
+            integration.sendEventJson(json);
         }
     }
 
