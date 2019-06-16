@@ -271,8 +271,8 @@ Item {
         width: parent.width
         height: parent.height
         anchors.bottom: parent.bottom
-        maximumFlickVelocity: 2000
-        flickDeceleration: 400
+//        maximumFlickVelocity: 2000
+//        flickDeceleration: 400
         clip: true
         boundsBehavior: Flickable.DragAndOvershootBounds
         flickableDirection: Flickable.HorizontalFlick

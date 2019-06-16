@@ -9,7 +9,8 @@ Integration {
     id: integration
 
     // PROPERTIES OF THE INTEGRATION
-    // bool connected - tells if the integration is connected. Set connected to true on succesfull connection. Set connected to false when disconnected.
+    // enum state - tells if the integration is connected. Set connected to true on succesfull connection. Set connected to false when disconnected.
+    // CONNECTED, CONNECTING, DISCONNECTED
     // int integrationId - the id of the integration
     // string type - type of the integration, for example: homeassistant
     // string friendlyName - friendly name of the integration
@@ -21,27 +22,31 @@ Integration {
 
     function connect()
     {
+        state = Integration.CONNECTING
         // write connect function here
     }
 
     function disconnect()
     {
-        // write disconnect function here
+        state = Integration.DISCONNECTED
+        // write disconnect functioen here
     }
 
-    onConnectedChanged: {
+    onConnected: {
         // when the connection state changes this signal triggered
-        if (connected) {
-            // remove notifications that say couldn't connec to Home Assistant
-            var tmp = notifications;
-            tmp.forEach(function(entry, index, object) {
-                if (entry.text === "Failed to connect to " + friendlyName + ".") {
-                    tmp.splice(index, 1);
-                }
-            });
-            notifications = tmp;
-        }
+        // remove notifications that say couldn't connec to Home Assistant
+        var tmp = notifications;
+        tmp.forEach(function(entry, index, object) {
+            if (entry.text === "Failed to connect to " + friendlyName + ".") {
+                tmp.splice(index, 1);
+            }
+        });
+        notifications = tmp;
     }
+
+    onConnecting: {}
+
+    onDisconnected: {}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

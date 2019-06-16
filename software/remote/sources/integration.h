@@ -11,7 +11,16 @@ class Integration : public QQuickItem
     Q_OBJECT
 
 public:
-    Q_PROPERTY(bool         connected       READ connected      WRITE setConnected      NOTIFY connectedChanged)
+
+    enum states {
+        CONNECTED=0,
+        CONNECTING=1,
+        DISCONNECTED=2
+    };
+
+    Q_ENUM(states)
+
+    Q_PROPERTY(states       state           READ state          WRITE setState)
     Q_PROPERTY(int          integrationId   READ integrationId  WRITE setIntegrationId  NOTIFY integrationIdChanged)
     Q_PROPERTY(QString      type            READ type           WRITE setType)
     Q_PROPERTY(QString      friendlyName    READ friendlyName   WRITE setFriendlyName)
@@ -19,14 +28,20 @@ public:
     Integration() {}
     ~Integration() {}
 
-    // get the if the integration is connected
-    bool connected() { return m_connected; }
+    // get the if the state
+    enum states state() { return m_state; }
 
-    // set the connected state of the integration
-    void setConnected(bool value)
+    // set the state
+    void setState(states value)
     {
-        m_connected = value;
-        emit connectedChanged();
+        m_state = value;
+        if (m_state == CONNECTED) {
+            emit connected();
+        } else if (m_state == CONNECTING){
+            emit connecting();
+        } else {
+            emit disconnected();
+        }
     }
 
     // get the id of the integration
@@ -52,14 +67,16 @@ public:
     void setFriendlyName(QString value) { m_friendlyName = value; }
 
 private:
-    bool        m_connected = false;
+    states      m_state = CONNECTED;
     int         m_integrationId;
     QString     m_type;
     QString     m_friendlyName;
 
 signals:
-    void connectedChanged();
     void integrationIdChanged();
+    void connected();
+    void connecting();
+    void disconnected();
 
 };
 

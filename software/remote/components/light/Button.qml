@@ -20,8 +20,19 @@ Rectangle {
 
     property bool favorite:             loaded_components.light.entities[entityID].favorite
 
-    opacity: integration[integrationType].obj.connected ? 1 : 0.5
-    enabled: integration[integrationType].obj.connected
+    Connections {
+        target: integration[integrationType].obj
+
+        onConnected: {
+            lightButton.opacity = 1
+            lightButton.enabled = true
+        }
+
+        onDisconnected: {
+            lightButton.opacity = 0.3
+            lightButton.enabled = false
+        }
+    }
 
     width: parent.width
     height: 125

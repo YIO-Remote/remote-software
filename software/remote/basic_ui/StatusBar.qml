@@ -92,12 +92,33 @@ Item {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // LOADING ICON
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    function loadingIconON() {
+        loadingIcon.opacity = 1;
+        loadingIcon.visible = true;
+    }
+
+    function loadingIconOFF() {
+        loadingIcon.opacity = 0;
+        loadingIcon.visible = false;
+    }
+
+    Component.onCompleted: {
+        for (var key in integration) {
+            if (integration.hasOwnProperty(key)) {
+                integration[key].obj.connecting.connect(loadingIconON);
+                integration[key].obj.disconnected.connect(loadingIconOFF);
+                integration[key].obj.connected.connect(loadingIconOFF);
+            }
+        }
+    }
+
     Image {
         asynchronous: true
         id: loadingIcon
         width: 26
         height: 26
-        opacity: connecting ? 1 : 0
+        opacity: 0
+        visible: false
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: batteryIcon.left
         anchors.rightMargin: 20
@@ -106,7 +127,7 @@ Item {
 
         RotationAnimator on rotation {
             id: loadingIconAnim
-            running: connecting
+            running: loadingIcon.visible
             loops: Animation.Infinite
             from: 0
             to: 360
