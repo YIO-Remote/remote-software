@@ -1,46 +1,74 @@
 import QtQuick 2.11
 import QtWebSockets 1.0
+import Integration 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 
-Item {
+Integration {
+    id: integration
+
+    // PROPERTIES OF THE INTEGRATION
+    // bool connected - tells if the integration is connected. Set connected to true on succesfull connection. Set connected to false when disconnected.
+    // int integrationId - the id of the integration
+    // string type - type of the integration, for example: homeassistant
+    // string friendlyName - friendly name of the integration
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // COMMON VARIABLES
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    id: homeassistant
-
-    property bool connected: false  // reports the state if the connection is succesful or not. Update his variable when handling the connection
-    property bool connectionOpen: false // this varialbe controls the connection. If set to [true], the connection should start, if set to [false] the connection to the hub should be terminated
-
-    property int integrationId // id of the integration
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // COMMON VARIABLES END
+    // CONNECT AND DISCONNECT FUNCTIONS
+    // Must be the same function name for every integration
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    function connect()
+    {
+        // write connect function here
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECTION CONTROL
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // set the status bar loading icon to visible
+        connecting = true;
 
-    property int webSocketId: 4
+        // reset the reconnnect trial variable
+        websocketReconnect.tries = 0;
 
-    onConnectionOpenChanged: {
-        if (connectionOpen) {
-            connecting = true;
-            websocketReconnect.tries = 0;
-            socket.active = true;
-        } else {
-            socket.active = false;
-            websocketReconnect.running = false;
+        // turn on the websocket connection
+        socket.active = true;
+    }
+
+    function disconnect()
+    {
+        // write disconnect function here
+
+        // turn of the reconnect try
+        websocketReconnect.running = false;
+
+        // turn off the socket
+        socket.active = false;
+
+        // disable the status bar loading icon
+        connecting = false;
+    }
+
+
+    onConnectedChanged: {
+        // when the connection state changes this signal triggered
+        if (connected) {
+            // remove notifications that say couldn't connec to Home Assistant
+            var tmp = notifications;
+            tmp.forEach(function(entry, index, object) {
+                if (entry.text === "Failed to connect to " + friendlyName + ".") {
+                    tmp.splice(index, 1);
+                }
+            });
+            notifications = tmp;
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECTION CONTROL END
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // rest of the code starts here
+    property int webSocketId: 4
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SIGNALS
@@ -52,13 +80,13 @@ Item {
     signal sendFetchJson(var json)
 
     onFetch_jsonChanged: {
-        homeassistant.sendFetchJson(fetch_json)
+        integration.sendFetchJson(fetch_json)
     }
 
     signal sendEventJson(var json)
 
     onEvent_jsonChanged: {
-        homeassistant.sendEventJson(event_json)
+        integration.sendEventJson(event_json)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,13 +207,13 @@ Item {
         property int tries: 0
 
         onTriggered: {
-            if (tries == 4) {
+            if (tries == 1) {
                 websocketReconnect.running = false;
                 //                connectionState = "failed"
                 console.debug("Failed to connect");
 
-                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, "", "");
-                connecting = false;
+                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, function () { integration.integration.obj.connectionOpen = true; }, "Reconnect");
+                disconnect();
 
                 tries = 0
             } else {

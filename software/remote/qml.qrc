@@ -42,5 +42,6 @@
         <file>ButtonHandler.qml</file>
         <file>basic_ui/Notification.qml</file>
         <file>basic_ui/NotificationDrawer.qml</file>
+        <file>integrations/integration.qml</file>
     </qresource>
 </RCC>

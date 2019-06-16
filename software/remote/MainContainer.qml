@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
+import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -8,6 +9,7 @@ Item {
     width: parent.width
     height: parent.height
     clip: true
+    enabled: loader_main.state === "visible" ? true : false
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO ALL INTEGRATIONS ONCE THE UI IS LOADED
@@ -16,7 +18,7 @@ Item {
     Component.onCompleted: {
         for (var key in integration) {
             if (integration.hasOwnProperty(key)) {
-                integration[key].obj.connectionOpen = true;
+                integration[key].obj.connect();
             }
         }
     }

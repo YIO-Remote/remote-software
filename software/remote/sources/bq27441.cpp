@@ -183,11 +183,11 @@ uint16_t BQ27441::getNominalAvailableCapacity() {
     return result;
 }
 
-uint16_t BQ27441::getFullAvailableCapacity() {
+int BQ27441::getFullAvailableCapacity() {
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVAIL_CAPACITY);
-    return result;
+    return int(result);
 }
 
 uint16_t BQ27441::getRemainingCapacity() {
@@ -331,11 +331,11 @@ uint16_t BQ27441::getOpConfig() {
     return result;
 }
 
-uint16_t BQ27441::getDesignCapacity() {
+int BQ27441::getDesignCapacity() {
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_EXTENDED_CAPACITY);
-    return result;
+    return int(result);
 }
 
 uint16_t BQ27441::getControlStatus() {

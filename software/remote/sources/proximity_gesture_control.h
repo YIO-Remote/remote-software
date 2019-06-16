@@ -44,26 +44,35 @@ public:
 
     Q_INVOKABLE void proximityDetection(bool state)
     {
-        m_proximityDetection = state;
 #ifdef __arm__
-        if (state) {
-            // turn on
-            // set the proximity threshold
-            apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 1);
+        if (state != m_proximityDetection) {
+//            if (apds.check()) {
+//                m_init_success = true;
+//            } else {
+//                m_init_success = false;
+//            }
+//            qDebug() << "APDS check:" << m_init_success;
 
-            //set the proximity gain
-            apds.setProxGain(APDS9960_PGAIN_2X);
+            if (state) {
+                // turn on
+                // set the proximity threshold
+                apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 1);
 
-            apds.setLED(APDS9960_LEDDRIVE_50MA, APDS9960_LEDBOOST_200PCNT);
+                //set the proximity gain
+                apds.setProxGain(APDS9960_PGAIN_4X);
 
-            // enable interrupt
-            apds.enableProximityInterrupt();
+                apds.setLED(APDS9960_LEDDRIVE_50MA, APDS9960_LEDBOOST_200PCNT);
 
-        } else {
-            // turn off
-            apds.disableProximityInterrupt();
+                // enable interrupt
+                apds.enableProximityInterrupt();
+
+            } else {
+                // turn off
+                apds.disableProximityInterrupt();
+            }
         }
 #endif
+        m_proximityDetection = state;
     }
 
     Q_INVOKABLE void gestureDetection(bool state)
@@ -82,13 +91,15 @@ public:
     Q_INVOKABLE int readAmbientLight()
     {
 #ifdef __arm__
-        while (!apds.colorDataReady())
-        {
-            delay(5);
-        }
+        if (m_init_success) {
+            //            while (!apds.colorDataReady())
+            //            {
+            //                delay(5);
+            //            }
 
-        apds.getAmbientLight(m_ambientLight);
-        qDebug() << "Lux:" << m_ambientLight;
+            apds.getAmbientLight(m_ambientLight);
+            qDebug() << "Lux:" << m_ambientLight;
+        }
 #endif
         return int(m_ambientLight);
     }
@@ -96,21 +107,22 @@ public:
     Q_INVOKABLE void readInterrupt()
     {
 #ifdef __arm__
-        m_proximity = apds.readProximity();
-        qDebug() << "Proximity" << m_proximity;
+        if (m_init_success) {
+            m_proximity = apds.readProximity();
+            qDebug() << "Proximity" << m_proximity;
 
-        if (m_proximityDetection) {
+            if (m_proximityDetection) {
 
-            if (m_proximity > m_proximitySetting) {
+                if (m_proximity > m_proximitySetting) {
 
-                // turn of proximity detection
-                qDebug() << "Proximity detected, turning detection off";
-                proximityDetection(false);
+                    // turn of proximity detection
+                    qDebug() << "Proximity detected, turning detection off";
+                    proximityDetection(false);
 
-                // let qml know
-                emit proximityEvent();
+                    // let qml know
+                    emit proximityEvent();
 
-            } /*else if (m_proximity == 0) {
+                } /*else if (m_proximity == 0) {
                 // reset interrupt
                 qDebug() << "Turning proximity interrupt on-off";
 //                proximityDetection(false);
@@ -119,10 +131,11 @@ public:
                 //                apds.enableProximity(true);
 //                proximityDetection(true);
             }*/
-        }
+            }
 
-        // clear the interrupt
-        apds.clearInterrupt();
+            // clear the interrupt
+            apds.clearInterrupt();
+        }
 #endif
     }
 
@@ -137,18 +150,21 @@ public:
             m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
             emit apds9960Notify();
             return;
+        } else {
+
+            m_init_success = true;
+
+            delay(100);
+
+            // turn on the light sensor
+            apds.enableColor(true);
+
+            // turn on proximity sensor
+            apds.enableProximity(true);
+
+            // read ambient light
+            readAmbientLight();
         }
-
-        delay(100);
-
-        // turn on the light sensor
-        apds.enableColor(true);
-
-        // turn on proximity sensor
-        apds.enableProximity(true);
-
-        // read ambient light
-        readAmbientLight();
 #endif
     }
 
@@ -167,7 +183,8 @@ private:
 #ifdef __arm__
     APDS9960 apds = APDS9960();
 #endif
-    uint16_t m_ambientLight;
+    bool m_init_success = false;
+    uint16_t m_ambientLight = 100;
     uint8_t m_proximity;
     QString m_gesture;
     QString m_apds9960Error;
