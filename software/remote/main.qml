@@ -269,9 +269,9 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SUPPORTED COMPONENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var supported_entities: ["light","blind"]
+    property var supported_entities: ["light"]
     //: names of the entities. Shows up in menu on the bottom. Always plural
-    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString]
+    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
 
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
 

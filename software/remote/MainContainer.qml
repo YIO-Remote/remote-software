@@ -89,7 +89,7 @@ Item {
 
             Loader {
                 id: mainNavigationLoader
-//                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+                //                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
                 property alias mainNavigationLoader: mainNavigationLoader
 
@@ -124,9 +124,9 @@ Item {
             }
 
             if (itemsLoaded >= 3) {
-                if (!mainNavigation.mainNavigationListView.currentItem.held) {
+                if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-                    //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+//                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
         }
