@@ -10,6 +10,7 @@ Item {
     height: parent.height
     clip: true
     enabled: loader_main.state === "visible" ? true : false
+    layer.enabled: true
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO ALL INTEGRATIONS ONCE THE UI IS LOADED
@@ -75,11 +76,10 @@ Item {
 
     SwipeView {
         id: mainNavigationSwipeview
-        width: parent.width-20
+        width: parent.width
         height: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
         anchors.top: statusBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        clip: true
 
         currentIndex: 0 //mainNavigation.menuConfig.count-1
 
