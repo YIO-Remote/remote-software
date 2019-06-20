@@ -3,7 +3,7 @@ import QtQuick 2.0
 import "qrc:/scripts/helper.js" as JSHelper
 
 Item {
-    id: lightComponent_homeassistant
+    id: componentIntegration
 
     //  Bitfield of features supported by the light entity FROM HOME ASSISTANT
     property int _SUPPORT_BRIGHTNESS: 1
@@ -17,8 +17,10 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SIGNALS
-    // Connections to receive data from the integration
+    // Connections to send and receive data from the integration
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    signal updateEntity(var entity)
 
     Connections {
         id: connectionToHub
@@ -61,7 +63,6 @@ Item {
                         if (json.result[i].attributes.supported_features & _SUPPORT_COLOR_TEMP) {
                             tmp[k].supported_features.push("COLOR_TEMP");
                         }
-
                     }
                 }
             }
@@ -93,6 +94,9 @@ Item {
                     }
 
                     loaded_components.light.entities = tmp;
+
+                    // send a signal to update the entity
+                    componentIntegration.updateEntity(loaded_components.light.entities[k].entity_id);
                 }
             }
         }
