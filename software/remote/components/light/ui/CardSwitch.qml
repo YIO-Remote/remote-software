@@ -16,7 +16,7 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
         }
     }
 
@@ -91,7 +91,7 @@ Rectangle {
 
         mouseArea.onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
         }
     }
 

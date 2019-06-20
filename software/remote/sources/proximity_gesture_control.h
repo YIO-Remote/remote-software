@@ -43,14 +43,6 @@ public:
 
                 if (state) {
                     // turn on
-                    // set the proximity threshold
-                    apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 1);
-
-                    //set the proximity gain
-                    apds.setProxGain(APDS9960_PGAIN_4X);
-
-                    apds.setLED(APDS9960_LEDDRIVE_50MA, APDS9960_LEDBOOST_200PCNT);
-
                     // enable interrupt
                     apds.enableProximityInterrupt();
 
@@ -151,7 +143,20 @@ public:
             // turn on proximity sensor
             apds.enableProximity(true);
 
+            // set the proximity threshold
+            apds.setProximityInterruptThreshold(0, uint8_t(m_proximitySetting), 1);
+
+            //set the proximity gain
+            apds.setProxGain(APDS9960_PGAIN_1X);
+
+            apds.setLED(APDS9960_LEDDRIVE_100MA, APDS9960_LEDBOOST_200PCNT);
+
             // read ambient light
+            while (!apds.colorDataReady())
+            {
+                delay(5);
+            }
+
             readAmbientLight();
         }
 #endif

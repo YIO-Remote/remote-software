@@ -33,7 +33,7 @@ bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain)
     }
 
     /* Set default integration time and gain */
-//    setADCIntegrationTime(iTimeMS);
+    setADCIntegrationTime(iTimeMS);
     setADCGain(aGain);
 
     wiringPiI2CWriteReg8(_fd, APDS9960_ATIME, 219);

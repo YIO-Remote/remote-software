@@ -21,7 +21,7 @@ Rectangle {
         buttonState: lstate == "off" ? false : true
 
         mouseArea.onClicked: {
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
         }
     }
 
@@ -145,7 +145,7 @@ Rectangle {
                 onTriggered: {
                     change_brightness_timer.running = false;
                     brightnessSettings.moving = false;
-                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, Math.round(dial.position*100));
+                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, Math.round(dial.position*100));
                 }
             }
 
