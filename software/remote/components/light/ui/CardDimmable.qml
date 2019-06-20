@@ -38,7 +38,7 @@ Rectangle {
         }
 
         onReleased: {
-            loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
+            loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
         }
     }
 
@@ -155,7 +155,7 @@ Rectangle {
 
         mouseArea.onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
         }
     }
 

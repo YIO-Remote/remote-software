@@ -70,7 +70,7 @@ Rectangle {
                 }
 
                 onReleased: {
-                    loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
+                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
                 }
             }
 
@@ -185,7 +185,7 @@ Rectangle {
 
                 mouseArea.onClicked: {
                     haptic.playEffect("click");
-                    loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+                    loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
                 }
             }
 
@@ -303,7 +303,7 @@ Rectangle {
                     }
 
                     onReleased: {
-                        loaded_components.light.lightComponentIntegration[integrationType].setColor(entity_id, picker.color);
+                        loaded_components.light.componentIntegration[integrationType].setColor(entity_id, picker.color);
 
                         icon_b.opacity = 1;
                         color_b.opacity = 1;

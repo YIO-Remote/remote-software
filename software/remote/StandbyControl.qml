@@ -15,7 +15,7 @@ Item {
     property string mode: "on" // on, dim, standby, wifi_off
 
     property int displayDimTime: 20 // seconds
-    property int standbyTime: 40 // seconds
+    property int standbyTime: 30 // seconds
     property int wifiOffTime: 0 // seconds
     property int shutdownTime: 0 // seconds
 
@@ -240,6 +240,7 @@ Item {
     }
 
     onModeChanged: {
+        console.debug("Mode: " + mode);
         // if mode is on change processor to ondemand
         if (mode == "on") {
             var cmd = "echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
