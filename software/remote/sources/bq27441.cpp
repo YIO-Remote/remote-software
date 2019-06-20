@@ -1,3 +1,4 @@
+#include "QFile"
 #include "bq27441.h"
 
 BQ27441::BQ27441()
@@ -24,10 +25,14 @@ BQ27441::~BQ27441() {}
 void BQ27441::begin()
 {
 #ifdef __arm__
-    if (getDesignCapacity() != ((uint16_t) m_capacity)) {
-        // change the designcapacity if it doesn't match
-        qDebug() << "Setting charge capacity to:" << m_capacity;
-        changeCapacity(((uint16_t) m_capacity));
+    QFile poweronFile("/usr/bin/yio-remote/poweron");
+    if (poweronFile.exists()) {
+        // remove the file, so on a reboot we won't calibare the gauge again
+        poweronFile.remove();
+
+        // calibrate the gauge
+        qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+        changeCapacity((uint16_t(m_capacity)));
     }
 #endif
 }
@@ -183,11 +188,11 @@ uint16_t BQ27441::getNominalAvailableCapacity() {
     return result;
 }
 
-uint16_t BQ27441::getFullAvailableCapacity() {
+int BQ27441::getFullAvailableCapacity() {
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVAIL_CAPACITY);
-    return result;
+    return int(result);
 }
 
 uint16_t BQ27441::getRemainingCapacity() {
@@ -273,7 +278,7 @@ int16_t  BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
 }
 
 int BQ27441::getStateOfHealth() {
-    #ifdef __arm__
+#ifdef __arm__
     uint8_t result;
 
     uint16_t raw = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOH);
@@ -331,11 +336,11 @@ uint16_t BQ27441::getOpConfig() {
     return result;
 }
 
-uint16_t BQ27441::getDesignCapacity() {
+int BQ27441::getDesignCapacity() {
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_EXTENDED_CAPACITY);
-    return result;
+    return int(result);
 }
 
 uint16_t BQ27441::getControlStatus() {

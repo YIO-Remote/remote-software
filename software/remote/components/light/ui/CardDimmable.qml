@@ -10,25 +10,82 @@ Rectangle {
     height: parent.height
     color: colorMedium
 
+    property int _brightness: brightness
+
+    signal updateBrightness()
+
     MouseArea {
         id: dragger
         anchors.fill: parent
+        drag.target: draggerTarget
+        drag.axis: Drag.YAxis
+        drag.minimumY: 0
+        drag.maximumY: parent.height-10
 
-        onClicked: {
-            haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+        property int percent
+
+        onPositionChanged: {
+            haptic.playEffect("bump");
+            dragger.percent = Math.round((parent.height - 10 - mouse.y)/(parent.height-10)*100);
+            if (dragger.percent < 0) dragger.percent = 0;
+            if (dragger.percent > 100) dragger.percent = 100;
+            if (dragger.percent > brightness) {
+                percentageBG2.height = parent.height*dragger.percent/100
+            } else {
+                percentageBG.height = parent.height*dragger.percent/100
+            }
+            percentage.text = dragger.percent;
+        }
+
+        onReleased: {
+            loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
+        }
+    }
+
+    Connections {
+        target: cardDimmable
+
+        onUpdateBrightness: {
+            percentageBG.height = parent.height*brightness/100;
+            percentageBG2.height = parent.height*brightness/100;
+            percentage.text = brightness;
+        }
+    }
+
+    on_BrightnessChanged: {
+        updateBrightness()
+    }
+
+    Rectangle {
+        id: draggerTarget
+        width: parent.width
+        height: 30
+        color: "#00000000"
+        y: parent.height - percentageBG.height
+    }
+
+    Rectangle {
+        id: percentageBG2
+        color: colorSwitch
+        width: parent.width
+        height: 0
+        radius: cornerRadius
+        anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
+
+        Behavior on height {
+            PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
         }
     }
 
     Rectangle {
         id: percentageBG
-        color: lstate == "on" ? colorHighlight : colorBackgroundTransparent
+        color: colorHighlight
         width: parent.width
-        height: parent.height
+        height: parent.height*brightness/100
         radius: cornerRadius
         anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
 
-        Behavior on color {
+        Behavior on height {
             PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
         }
     }
@@ -54,10 +111,17 @@ Rectangle {
     Text {
         id: percentage
         color: colorText
-        text: lstate == "on" ? "On" : "Off"
+        text: brightness
         horizontalAlignment: Text.AlignLeft
-        anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
+        anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 180 }
+    }
+
+    Text {
+        color: colorText
+        text: "%"
+        anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
+        font {family: "Open Sans Light"; pixelSize: 100 }
     }
 
     Text {
@@ -91,7 +155,7 @@ Rectangle {
 
         mouseArea.onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
         }
     }
 

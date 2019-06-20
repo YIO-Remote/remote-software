@@ -18,19 +18,17 @@ HEADERS += \
     sources/display_control.h \
     sources/translation.h \
     sources/touchdetect.h \
-#    sources/apds9960.h \
     sources/proximity_gesture_control.h \
     sources/interrupt_handler.h \
-#    sources/mcp23017.h \
     sources/drv2605.h \
-    sources/bq27441.h
+    sources/bq27441.h \
+    sources/integration.h
 
 SOURCES += \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
     sources/display_control.cpp \
-#    sources/apds9960.cpp \
     sources/drv2605.cpp \
     sources/bq27441.cpp
 
@@ -54,7 +52,7 @@ SOURCES = main.qml \
           StandbyControl.qml \
           basic_ui/*.qml \
           basic_ui/settings/*.qml \
-          components/light/*.qml \
+          components/light/ui/*.qml \
           integrations/*.qml \
           sources/proximity_gesture_control.h
 }

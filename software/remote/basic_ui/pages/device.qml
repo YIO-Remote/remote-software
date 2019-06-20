@@ -7,9 +7,8 @@ Flickable {
 
     width: parent.width
     height: parent.height
-    maximumFlickVelocity: 4000
-    flickDeceleration: 2000
-    clip: true
+    maximumFlickVelocity: 6000
+    flickDeceleration: 1000
     contentHeight: iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
@@ -33,7 +32,7 @@ Flickable {
 
         Component.onCompleted: {
             for (var i=0; i<loaded_components[type].entities.length; i++) {
-                var comp = Qt.createComponent("qrc:/components/"+ type +"/Button.qml");
+                var comp = Qt.createComponent("qrc:/components/"+ type +"/ui/Button.qml");
                 if (comp.status != Component.Ready) {
                     console.debug("Error: " + comp.errorString() );
                 }

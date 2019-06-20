@@ -5,9 +5,8 @@ Flickable {
     id: itemFlickable
     width: parent.width
     height: parent.height
-    maximumFlickVelocity: 4000
-    flickDeceleration: 2000
-    clip: true
+    maximumFlickVelocity: 6000
+    flickDeceleration: 1000
     contentHeight: iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
@@ -36,7 +35,7 @@ Flickable {
                 for (var j=0; j<loaded_components[loaded_entities[i].obj].entities.length; j++) {
                     if (loaded_components[loaded_entities[i].obj].entities[j].favorite) {
                         // load entity button
-                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i].obj +"/Button.qml");
+                        var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[i].obj +"/ui/Button.qml");
                         if (comp.status != Component.Ready) {
                             console.debug("Error: " + comp.errorString() );
                         }

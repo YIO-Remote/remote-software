@@ -87,7 +87,7 @@ Rectangle {
 
     Text {
         color: colorText
-        text: battery_level * 100 + qsTr("% Charged") + translateHandler.emptyString
+        text: battery.getAveragePower() !== 0 && Math.round(battery_level * 100) >= 99 ? qsTr("99% Charged") + translateHandler.emptyString : Math.round(battery_level * 100) + qsTr("% Charged") + translateHandler.emptyString
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 80
         anchors.horizontalCenter: parent.horizontalCenter

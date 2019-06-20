@@ -20,10 +20,21 @@ Rectangle {
 
     property bool favorite:             loaded_components.light.entities[entityID].favorite
 
-    opacity: integration[integrationType].obj.connected ? 1 : 0.5
-    enabled: integration[integrationType].obj.connected
+    Connections {
+        target: integration[integrationType].obj
 
-    width: parent.width
+        onConnected: {
+            lightButton.opacity = 1
+            lightButton.enabled = true
+        }
+
+        onDisconnected: {
+            lightButton.opacity = 0.3
+            lightButton.enabled = false
+        }
+    }
+
+    width: parent.width-20
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
     color: colorMedium
@@ -48,24 +59,26 @@ Rectangle {
         onButtonPress: {
             var tmp;
 
-            switch (button) {
-            case "dpad up":
-                tmp = brightness+10;
-                if (tmp > 100) {
-                    tmp = 100;
+            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
+                switch (button) {
+                case "dpad up":
+                    tmp = brightness+10;
+                    if (tmp > 100) {
+                        tmp = 100;
+                    }
+                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    break;
+                case "dpad down":
+                    tmp = brightness-10;
+                    if (tmp < 0) {
+                        tmp = 0;
+                    }
+                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    break;
+                case "dpad middle":
+                    loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
+                    break;
                 }
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
-                break;
-            case "dpad down":
-                tmp = brightness-10;
-                if (tmp < 0) {
-                    tmp = 0;
-                }
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, tmp);
-                break;
-            case "dpad middle":
-                loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
-                break;
             }
         }
     }
@@ -95,13 +108,13 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: lightButton; width: parent.width; height: 125}
+            PropertyChanges {target: lightButton; width: parent.width-20; height: 125}
             PropertyChanges {target: brightnessSlider; opacity: 0}
             ParentChange { target: lightButton; parent: originParent }
         },
         State {
             name: "on"
-            PropertyChanges {target: lightButton; width: parent.width; height: 160}
+            PropertyChanges {target: lightButton; width: parent.width-20; height: 160}
             PropertyChanges {target: brightnessSlider; opacity: 1}
         },
         State {
@@ -252,7 +265,7 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.lightComponentIntegration[integrationType].toggle(entity_id);
+            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
         }
 
     }
@@ -272,51 +285,64 @@ Rectangle {
 
         visible: opacity > 0 ? true : false
 
-        width: parent.width-40
+        width: parent.width
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 12
         anchors.horizontalCenter: parent.horizontalCenter
 
         background: Rectangle {
-            x: brightnessSlider.leftPadding
-            y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
-            implicitWidth: 200
-            implicitHeight: 4
-            width: brightnessSlider.availableWidth
-            height: implicitHeight
-            radius: 4
+            id: sliderBG
+            //            x: brightnessSlider.leftPadding
+            y: (brightnessSlider.height - height) / 2
+            //            width: brightnessSlider.availableWidth
+            height: cornerRadius * 2
+            //            radius: cornerRadius
             color: colorBackground
+            radius: cornerRadius
+
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Item {
+                    width: sliderBG.width
+                    height: sliderBG.height
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: cornerRadius
+                    }
+                }
+            }
 
             Rectangle {
                 width: brightnessSlider.visualPosition * parent.width
-                height: 4
-                radius: 2
-                color: colorBackgroundTransparent
+                height: parent.height
+                //                                radius: cornerRadius
+                color: colorHighlight //colorBackgroundTransparent
 
-                Rectangle {
-                    width: parent.height
-                    height: parent.width
-                    anchors.centerIn: parent
-                    rotation: -90
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: colorMedium }
-                        GradientStop { position: 1.0; color: colorHighlight }
-                    }
-                }
+                //                Rectangle {
+                //                    width: parent.height
+                //                    height: parent.width
+                //                    anchors.centerIn: parent
+                //                    rotation: -90
+                //                    gradient: Gradient {
+                //                        GradientStop { position: 0.0; color: colorMedium }
+                //                        GradientStop { position: 1.0; color: colorHighlight }
+                //                    }
+                //                }
             }
         }
 
         handle: Rectangle {
-            x: brightnessSlider.leftPadding + brightnessSlider.visualPosition * (brightnessSlider.availableWidth - width)
-            y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
-            implicitWidth: cornerRadius*2
-            implicitHeight: cornerRadius*2
+            x: brightnessSlider.visualPosition * (brightnessSlider.width - width)
+            y: (brightnessSlider.height - height) / 2
+            width: cornerRadius*2
+            height: cornerRadius*2
             radius: cornerRadius
             color: colorLine
         }
 
         onValueChanged: {
             if (sliderMovedByUser) {
-                loaded_components.light.lightComponentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
+                loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
                 sliderMovedByUser = false;
             }
         }
@@ -483,11 +509,11 @@ Rectangle {
         if (lightButton.state != "open") {
             return "";
         } else if (supported_features.indexOf("COLOR") > -1) {
-            return "qrc:/components/light/CardColor.qml";
+            return "qrc:/components/light/ui/CardColor.qml";
         } else if (supported_features.indexOf("BRIGHTNESS") > -1) {
-            return "qrc:/components/light/CardDimmable.qml";
+            return "qrc:/components/light/ui/CardDimmable.qml";
         } else {
-            return "qrc:/components/light/CardSwitch.qml";
+            return "qrc:/components/light/ui/CardSwitch.qml";
         }
     }
 

@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
+import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -8,6 +9,8 @@ Item {
     width: parent.width
     height: parent.height
     clip: true
+    enabled: loader_main.state === "visible" ? true : false
+    layer.enabled: true
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO ALL INTEGRATIONS ONCE THE UI IS LOADED
@@ -16,7 +19,7 @@ Item {
     Component.onCompleted: {
         for (var key in integration) {
             if (integration.hasOwnProperty(key)) {
-                integration[key].obj.connectionOpen = true;
+                integration[key].obj.connect();
             }
         }
     }
@@ -33,6 +36,7 @@ Item {
             case "dpad right":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
                     loader_main.item.mainNavigationSwipeview.currentIndex += 1;
+                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
                     haptic.playEffect("buzz");
                 }
@@ -40,6 +44,7 @@ Item {
             case "dpad left":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
                     loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
+                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
                     haptic.playEffect("buzz");
                 }
@@ -73,11 +78,10 @@ Item {
 
     SwipeView {
         id: mainNavigationSwipeview
-        width: parent.width-20
+        width: parent.width
         height: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
         anchors.top: statusBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        clip: true
 
         currentIndex: 0 //mainNavigation.menuConfig.count-1
 
@@ -87,7 +91,7 @@ Item {
 
             Loader {
                 id: mainNavigationLoader
-                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+                //                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
 
                 property alias mainNavigationLoader: mainNavigationLoader
 
@@ -122,9 +126,9 @@ Item {
             }
 
             if (itemsLoaded >= 3) {
-                if (!mainNavigation.mainNavigationListView.currentItem.held) {
+                if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-                    //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+//                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
         }

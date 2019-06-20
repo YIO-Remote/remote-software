@@ -2,6 +2,8 @@
 #define DISPLAY_CONTROL_H
 
 #include <QObject>
+#include <QFuture>
+#include <QtConcurrent/QtConcurrentRun>
 
 #include <stdio.h>
 #include <stdint.h>
@@ -24,14 +26,12 @@ class DisplayControl : public QObject
 public:
     Q_INVOKABLE bool setmode(const QString &mode);
 
-    Q_INVOKABLE void setBrightness(int value);
+    Q_INVOKABLE void setBrightness(int from, int to);
 
     DisplayControl();
 
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
     void setup(void);
-
 };
-
 
 #endif // DISPLAY_CONTROL_H

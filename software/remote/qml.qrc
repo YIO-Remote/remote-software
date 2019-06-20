@@ -13,13 +13,13 @@
         <file>basic_ui/StatusBar.qml</file>
         <file>basic_ui/MainNavigation.qml</file>
         <file>components/light/Main.qml</file>
-        <file>components/light/homeassistant.qml</file>
-        <file>components/light/Button.qml</file>
+        <file>components/light/integrations/homeassistant.qml</file>
+        <file>components/light/ui/Button.qml</file>
         <file>components/blind/Button.qml</file>
         <file>components/blind/homeassistant.qml</file>
         <file>components/blind/Main.qml</file>
         <file>integrations/homey.qml</file>
-        <file>components/light/homey.qml</file>
+        <file>components/light/integrations/homey.qml</file>
         <file>StandbyControl.qml</file>
         <file>basic_ui/Settings.qml</file>
         <file>basic_ui/settings/Display.qml</file>
@@ -34,13 +34,14 @@
         <file>basic_ui/pages/device.qml</file>
         <file>basic_ui/pages/settings.qml</file>
         <file>basic_ui/pages/area.qml</file>
-        <file>components/light/CardDimmable.qml</file>
-        <file>components/light/CardColor.qml</file>
-        <file>components/light/CardSwitch.qml</file>
+        <file>components/light/ui/CardDimmable.qml</file>
+        <file>components/light/ui/CardColor.qml</file>
+        <file>components/light/ui/CardSwitch.qml</file>
         <file>basic_ui/settings/Softwareupdate.qml</file>
         <file>basic_ui/CustomButtonState.qml</file>
         <file>ButtonHandler.qml</file>
         <file>basic_ui/Notification.qml</file>
         <file>basic_ui/NotificationDrawer.qml</file>
+        <file>integrations/integration.qml</file>
     </qresource>
 </RCC>

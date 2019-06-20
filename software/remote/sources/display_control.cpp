@@ -115,9 +115,12 @@ bool DisplayControl::setmode(const QString &mode)
 {
     if (mode == "standbyon") {
 #ifdef __arm__
-        spi_screenreg_set(0x10, 0xffff, 0xffff);
-        delay(120);
-        spi_screenreg_set(0x28, 0xffff, 0xffff);
+        QFuture<void> future = QtConcurrent::run([=](){
+            delay(500); // wait until dimming of the display is done
+            spi_screenreg_set(0x10, 0xffff, 0xffff);
+            delay(120);
+            spi_screenreg_set(0x28, 0xffff, 0xffff);
+        });
 #endif
         return true;
     }
@@ -128,12 +131,28 @@ bool DisplayControl::setmode(const QString &mode)
 #endif
         return true;
     }
+    return false;
 }
 
-void DisplayControl::setBrightness(int value)
+void DisplayControl::setBrightness(int from, int to)
 {
+    QFuture<void> future = QtConcurrent::run([=](int from, int to) {
 #ifdef __arm__
-    pwmWrite(1, value);
-    delay(10);
+        if (from >= to) {
+            // dim down
+            for (int i=from; i>to-1; i--)
+            {
+                pwmWrite(1, i);
+                delay(8);
+            }
+        } else {
+            // dim up
+            for (int i=from; i<to+1; i++)
+            {
+                pwmWrite(1, i);
+                delay(8);
+            }
+        }
 #endif
+    }, from, to);
 }
