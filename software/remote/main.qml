@@ -202,7 +202,7 @@ ApplicationWindow {
         for (var i=0; i<config.integration.length; i++) {
             integration[config.integration[i].type] = config.integration[i];
 
-            comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
+            comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type + "/" + config.integration[i].type +".qml");
             if (comp.status !== Component.Ready) {
                 console.debug("Error: " + comp.errorString() );
             }

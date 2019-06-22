@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>integrations/homeassistant.qml</file>
+        <file>integrations/homeassistant/homeassistant.qml</file>
         <file>scripts/softwareupdate.js</file>
         <file>basic_ui/ChargingScreen.qml</file>
         <file>scripts/helper.js</file>
@@ -18,8 +18,7 @@
         <file>components/blind/Button.qml</file>
         <file>components/blind/homeassistant.qml</file>
         <file>components/blind/Main.qml</file>
-        <file>integrations/homey.qml</file>
-        <file>components/light/integrations/homey.qml</file>
+        <file>integrations/homey/homey.qml</file>
         <file>StandbyControl.qml</file>
         <file>basic_ui/Settings.qml</file>
         <file>basic_ui/settings/Display.qml</file>
