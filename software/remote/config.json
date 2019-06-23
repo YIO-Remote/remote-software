@@ -3,92 +3,116 @@
         {
             "data": [
                 {
-                    "brightness": "0",
                     "entity_id": "light.backdoor_lamp",
                     "favorite": false,
                     "friendly_name": "Backdoor lamp",
                     "integration": "homeassistant",
                     "area": "Entrance",
-                    "state": "off",
                     "type": "light",
-                    "supported_features": 0
+		    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
+                    "supported_features": []
                 },
                 {
-                    "brightness": "0",
                     "entity_id": "light.entrance_lamp_level",
                     "favorite": false,
                     "friendly_name": "Entrance lamp",
                     "integration": "homeassistant",
                     "area": "Entrance",
-                    "state": "off",
+                    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
                     "type": "light",
-                    "supported_features": 0
+                    "supported_features": []
                 },
                 {
-                    "brightness": "0",
                     "entity_id": "light.kitchen_lamp_level",
                     "favorite": true,
                     "friendly_name": "Kitchen lamp",
                     "integration": "homeassistant",
                     "area": "Kitchen",
-                    "state": "off",
+                    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
                     "type": "light",
-                    "supported_features": 0
+                    "supported_features": []
                 },
                 {
-                    "brightness": "0",
                     "entity_id": "light.kitchen_table_lamp_level",
                     "favorite": true,
                     "friendly_name": "Kitchen table lamp",
                     "integration": "homeassistant",
                     "area": "Kitchen",
-                    "state": "off",
+                    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
                     "type": "light",
-                    "supported_features": 0
+                    "supported_features": []
                 },
                 {
-                    "brightness": "0",
                     "entity_id": "light.kitchen_sink_lamp",
                     "favorite": false,
                     "friendly_name": "Kitchen sink lamp",
                     "integration": "homeassistant",
                     "area": "Kitchen",
-                    "state": "off",
+                    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
                     "type": "light",
-                    "supported_features": 0
+                    "supported_features": []
                 },
                 {
-                    "brightness": "0",
                     "entity_id": "light.living_room_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room lamp",
                     "integration": "homeassistant",
                     "area": "Living room",
-                    "state": "off",
+                    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
                     "type": "light",
-                    "supported_features": 0
+                    "supported_features": [BRIGHTNESS]
                 },
                 {
-                    "brightness": "0",
                     "entity_id": "light.living_room_corner_lamp_level",
                     "favorite": true,
                     "friendly_name": "Living room corner lamp",
                     "integration": "homeassistant",
                     "area": "Living room",
-                    "state": "off",
+                    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
                     "type": "light",
-                    "supported_features": 0
+                    "supported_features": [BRIGHTNESS,COLOR]
                 },
                 {
-                    "brightness": "0",
                     "entity_id": "light.bedroom_lamp_level",
                     "favorite": false,
                     "friendly_name": "Bedroom lamp",
                     "integration": "homeassistant",
                     "area": "Bedroom",
-                    "state": "off",
+                    "attributes": 
+                    {
+                        "state": "off",
+                        "brightness": 0
+                    },
                     "type": "light",
-                    "supported_features": 0
+                    "supported_features": []
                 }
             ],
             "type": "light"
