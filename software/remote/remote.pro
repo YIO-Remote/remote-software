@@ -22,7 +22,9 @@ HEADERS += \
     sources/interrupt_handler.h \
     sources/drv2605.h \
     sources/bq27441.h \
-    sources/integration.h
+    sources/integration.h \
+    sources/entities/entities.h \
+    sources/entities/entity.h
 
 SOURCES += \
     sources/main.cpp \
@@ -30,7 +32,9 @@ SOURCES += \
     sources/launcher.cpp \
     sources/display_control.cpp \
     sources/drv2605.cpp \
-    sources/bq27441.cpp
+    sources/bq27441.cpp \
+    sources/entities/entities.cpp \
+    sources/entities/entity.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \

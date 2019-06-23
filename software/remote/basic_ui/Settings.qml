@@ -6,8 +6,9 @@ import Launcher 1.0
 import "settings" as Settings
 
 Item {
-    width: parent.width
+    width: parent.width-20
     height: settingsFlow.height
+    anchors.horizontalCenter: parent.horizontalCenter
 
     Launcher {
         id: settingsLauncher

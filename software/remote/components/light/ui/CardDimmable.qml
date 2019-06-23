@@ -10,7 +10,7 @@ Rectangle {
     height: parent.height
     color: colorMedium
 
-    property int _brightness: brightness
+    property int brightness: obj.attributes.brightness
 
     signal updateBrightness()
 
@@ -38,7 +38,7 @@ Rectangle {
         }
 
         onReleased: {
-            loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
+            integration[obj.integration].obj.light.setBrightness(obj.entity_id, dragger.percent);
         }
     }
 
@@ -46,13 +46,13 @@ Rectangle {
         target: cardDimmable
 
         onUpdateBrightness: {
-            percentageBG.height = parent.height*brightness/100;
-            percentageBG2.height = parent.height*brightness/100;
-            percentage.text = brightness;
+            percentageBG.height = parent.height*obj.attributes.brightness/100;
+            percentageBG2.height = parent.height*obj.attributes.brightness/100;
+            percentage.text = obj.attributes.brightness;
         }
     }
 
-    on_BrightnessChanged: {
+    onBrightnessChanged: {
         updateBrightness()
     }
 
@@ -81,7 +81,7 @@ Rectangle {
         id: percentageBG
         color: colorHighlight
         width: parent.width
-        height: parent.height*brightness/100
+        height: parent.height*obj.attributes.brightness/100
         radius: cornerRadius
         anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
 
@@ -111,7 +111,7 @@ Rectangle {
     Text {
         id: percentage
         color: colorText
-        text: brightness
+        text: obj.attributes.brightness
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 180 }
@@ -127,7 +127,7 @@ Rectangle {
     Text {
         id: title
         color: colorText
-        text: friendly_name
+        text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
@@ -139,7 +139,7 @@ Rectangle {
         id: areaText
         color: colorText
         opacity: 0.5
-        text: area
+        text: obj.area
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-60
@@ -151,11 +151,11 @@ Rectangle {
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonTextColor: colorBackground
-        buttonText: lstate == "off" ? "Turn on" : "Turn off"
+        buttonText: obj.attributes.state == "off" ? "Turn on" : "Turn off"
 
         mouseArea.onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
+            integration[obj.integration].obj.light.toggle(obj.entity_id);
         }
     }
 

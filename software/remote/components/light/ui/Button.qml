@@ -7,24 +7,13 @@ import "qrc:/scripts/helper.js" as JSHelper
 Rectangle {
     id: lightButton
 
-    property int entityID
-
-    property var entity_id:             loaded_components.light.entities[entityID].entity_id
-    property var friendly_name:         loaded_components.light.entities[entityID].friendly_name
-    property var lstate:                loaded_components.light.entities[entityID].state
-    property int brightness:            loaded_components.light.entities[entityID].brightness
-    property var _color:                loaded_components.light.entities[entityID].color
-    property string integrationType:    loaded_components.light.entities[entityID].integration
-    property string area:               loaded_components.light.entities[entityID].area
-    property var supported_features:    loaded_components.light.entities[entityID].supported_features
-
-    property bool favorite:             loaded_components.light.entities[entityID].favorite
+    property var obj
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: integration[integrationType].obj
+        target: integration[obj.integration].obj
 
         onConnected: {
             lightButton.opacity = 1
@@ -37,14 +26,8 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: loaded_components.light.componentIntegration[integrationType]
-
-        onUpdateEntity: {
-            if (entity === entity_id) {
-                console.debug("Entity update: " + entity);
-            }
-        }
+    Behavior on opacity {
+        PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,21 +43,21 @@ Rectangle {
             if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
                 switch (button) {
                 case "dpad up":
-                    tmp = brightness+10;
+                    tmp = obj.attributes.brightness+10;
                     if (tmp > 100) {
                         tmp = 100;
                     }
-                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    integration[obj.integration].obj.light.setBrightness(obj.entity_id, tmp);
                     break;
                 case "dpad down":
-                    tmp = brightness-10;
+                    tmp = obj.attributes.brightness-10;
                     if (tmp < 0) {
                         tmp = 0;
                     }
-                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, tmp);
+                    integration[obj.integration].obj.light.setBrightness(obj.entity_id, tmp);
                     break;
                 case "dpad middle":
-                    loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
+                    integration[obj.integration].obj.light.toggle(obj.entity_id);
                     break;
                 }
             }
@@ -90,6 +73,16 @@ Rectangle {
     anchors.horizontalCenter: parent.horizontalCenter
     color: colorMedium
     radius: cornerRadius
+
+    property int brightness: obj.attributes.brightness
+
+    onBrightnessChanged: {
+        if (brightness > 0 && lightButton.state != "open") {
+            lightButton.state = "on"
+        } else if (lightButton.state != "open") {
+            lightButton.state = "closed"
+        }
+    }
 
     property var originParent: lightButton.parent
 
@@ -207,7 +200,7 @@ Rectangle {
         Text {
             id: title
             color: colorText
-            text: friendly_name
+            text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
@@ -251,7 +244,7 @@ Rectangle {
         implicitWidth: 66
         anchors.right: parent.right
         anchors.rightMargin: 20
-        checked: lstate === "off" ? false : true
+        checked: obj.attributes.state === "off" ? false : true
         enabled: lightButton.state == "open" ? false: true
 
         indicator: Rectangle {
@@ -275,7 +268,7 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
+            integration[obj.integration].obj.light.toggle(obj.entity_id);
         }
 
     }
@@ -288,7 +281,7 @@ Rectangle {
     Slider {
         id: brightnessSlider
         from: 0
-        value: brightness
+        value: obj.attributes.brightness
         to: 100
         stepSize: 1
         live: false
@@ -302,9 +295,9 @@ Rectangle {
 
         background: Rectangle {
             id: sliderBG
-            //            x: brightnessSlider.leftPadding
+            //            x: obj.attributes.brightnessSlider.leftPadding
             y: (brightnessSlider.height - height) / 2
-            //            width: brightnessSlider.availableWidth
+            //            width: obj.attributes.brightnessSlider.availableWidth
             height: cornerRadius * 2
             //            radius: cornerRadius
             color: colorBackground
@@ -352,7 +345,7 @@ Rectangle {
 
         onValueChanged: {
             if (sliderMovedByUser) {
-                loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, brightnessSlider.value);
+                integration[obj.integration].obj.light.setBrightness(obj.entity_id, brightnessSlider.value);
                 sliderMovedByUser = false;
             }
         }
@@ -460,7 +453,7 @@ Rectangle {
                 width: 80
                 height: 80
                 fillMode: Image.PreserveAspectFit
-                source: favorite ? "qrc:/images/components/fav-minus.png" : "qrc:/images/components/fav-plus.png"
+                source: obj.favorite ? "qrc:/images/components/fav-minus.png" : "qrc:/images/components/fav-plus.png"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -479,11 +472,10 @@ Rectangle {
 
                 onClicked: {
                     addToFavButton.state = "closed";
-                    var tmp = loaded_components.light.entities;
-                    tmp[entityID].favorite = !tmp[entityID].favorite;
-                    loaded_components.light.entities = tmp;
+                    obj.favorite = !obj.favorite;
+
                     for (var i=0; i<mainNavigationSwipeview.count; i++) {
-                        if (mainNavigationSwipeview.itemAt(i).mainNavigationLoader.source === "qrc:/basic_ui/pages/dashboard.qml") {
+                        if (mainNavigationSwipeview.itemAt(i).mainNavigationLoader.source == "qrc:/basic_ui/pages/dashboard.qml") {
                             mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = false;
                             mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = true;
                         }
@@ -496,7 +488,7 @@ Rectangle {
         Text {
             id: addToFavButtonText
             color: colorText
-            text: favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
+            text: obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.verticalCenter: addToFavButtonCircle.verticalCenter
             anchors.left: addToFavButtonCircle.right
@@ -518,9 +510,9 @@ Rectangle {
     function getSource() {
         if (lightButton.state != "open") {
             return "";
-        } else if (supported_features.indexOf("COLOR") > -1) {
+        } else if (obj.supported_features.indexOf("COLOR") > -1) {
             return "qrc:/components/light/ui/CardColor.qml";
-        } else if (supported_features.indexOf("BRIGHTNESS") > -1) {
+        } else if (obj.supported_features.indexOf("BRIGHTNESS") > -1) {
             return "qrc:/components/light/ui/CardDimmable.qml";
         } else {
             return "qrc:/components/light/ui/CardSwitch.qml";
@@ -533,7 +525,7 @@ Rectangle {
         height: lightButton.height
         asynchronous: true
         active: lightButton.state == "open"
-        source: getSource() //lightButton.state != "open" ? "" : (supported_features.indexOf("BRIGHTNESS") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
+        source: getSource() //lightButton.state != "open" ? "" : (obj.supported_features.indexOf("obj.attributes.brightness") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
