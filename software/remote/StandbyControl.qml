@@ -53,20 +53,12 @@ Item {
 
         onProximityEvent: {
             standbyControl.proximityDetected = true;
-//            standbyControl.display_brightness_ambient = JSHelper.mapValues(ambientLight,0,450,15,100);
-            // read the ambient light a bit later, so your hand doesn't cover the sensor
-//            ambientLightReadTimer.start();
         }
 
         onApds9960Notify: {
             console.debug(proximity.apds9960Error);
             applicationWindow.addNotification("error", proximity.apds9960Error, "", "Restart");
-
         }
-
-//        onGestureEvent: {
-//            console.debug(proximity.gesture);
-//        }
     }
 
     Timer {
@@ -79,9 +71,9 @@ Item {
             standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,30,15,100);
             // set the display brightness
             if (standbyControl.display_autobrightness) {
-                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+                setBrightness(display_brightness_ambient);
             } else {
-                standbyControl.display_brightness = standbyControl.display_brightness_set;
+                setBrightness(display_brightness_set);
             }
         }
     }
@@ -91,6 +83,12 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     DisplayControl {
         id: displayControl
+    }
+
+    function setBrightness(brightness) {
+        displayControl.setBrightness(display_brightness_old, brightness);
+        display_brightness_old = brightness;
+        display_brightness = brightness;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,12 +103,6 @@ Item {
             cmd = "systemctl stop wpa_supplicant@wlan0.service"
         }
         mainLauncher.launch(cmd);
-    }
-
-    // change the display brightness
-    onDisplay_brightnessChanged: {
-        displayControl.setBrightness(display_brightness_old, display_brightness);
-        standbyControl.display_brightness_old = standbyControl.display_brightness;
     }
 
     function wakeUp() {
@@ -130,11 +122,6 @@ Item {
         case "dim":
             // set the display brightness
             ambientLightReadTimer.start();
-//            if (standbyControl.display_autobrightness) {
-//                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-//            } else {
-//                standbyControl.display_brightness = standbyControl.display_brightness_set;
-//            }
 
             // set the mode
             mode = "on";
@@ -205,11 +192,6 @@ Item {
 
         onTriggered: {
             ambientLightReadTimer.start();
-//            if (standbyControl.display_autobrightness) {
-//                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-//            } else {
-//                standbyControl.display_brightness = standbyControl.display_brightness_set;
-//            }
         }
     }
 
@@ -243,14 +225,13 @@ Item {
         console.debug("Mode: " + mode);
         // if mode is on change processor to ondemand
         if (mode == "on") {
-            var cmd = "echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-            mainLauncher.launch(cmd);
+            mainLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
             startTime = new Date().getTime()
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
-            cmd = "echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-            mainLauncher.launch(cmd);
+            mainLauncher.launch("/usr/bin/yio-remote/powersave.sh");
+
             // add screen on time
             screenOnTime += new Date().getTime() - startTime
             screenOffTime = new Date().getTime() - baseTime - screenOnTime
@@ -267,8 +248,8 @@ Item {
         onTriggered: {
             if (mode != "dim") {
                 displayDimTimer.stop();
-                // set brightness to 20
-                standbyControl.display_brightness = 10;
+                // set brightness to 10
+                setBrightness(10);
                 mode = "dim";
                 standbyTimer.start();
             }
@@ -286,10 +267,11 @@ Item {
             if (mode == "dim") {
                 standbyTimer.stop()
                 // turn off gesture detection
-//                proximity.gestureDetection(false);
                 proximity.proximityDetection(true);
+
                 // turn off the backlight
-                display_brightness = 0;
+                setBrightness(0);
+
                 // put display to standby
                 displayControl.setmode("standbyon");
                 mode = "standby";

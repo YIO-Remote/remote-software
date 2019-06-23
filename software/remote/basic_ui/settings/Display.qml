@@ -137,8 +137,8 @@ Item {
             }
 
             onValueChanged: {
-                standbyControl.display_brightness = brightnessSlider.value
                 if (setbyUser) {
+                    standbyControl.setBrightness(brightnessSlider.value);
                     standbyControl.display_brightness_set = brightnessSlider.value
                     setbyUser = false;
                 }

@@ -1,5 +1,7 @@
 #include "display_control.h"
 
+#include <QtDebug>
+
 #define CLK 107
 #define MOSI 106
 #define CS 105
@@ -143,14 +145,14 @@ void DisplayControl::setBrightness(int from, int to)
             for (int i=from; i>to-1; i--)
             {
                 pwmWrite(1, i);
-                delay(8);
+                delay(10);
             }
         } else {
             // dim up
             for (int i=from; i<to+1; i++)
             {
                 pwmWrite(1, i);
-                delay(8);
+                delay(10);
             }
         }
 #endif
