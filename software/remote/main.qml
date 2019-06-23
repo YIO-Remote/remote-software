@@ -70,10 +70,10 @@ ApplicationWindow {
             }
 
             // debug
-//            console.debug("Battery voltage: " + battery_voltage);
-//            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
-//            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
-//            console.debug("Battery design capacity: " + battery.getDesignCapacity());
+            //            console.debug("Battery voltage: " + battery_voltage);
+            //            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
+            //            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
+            //            console.debug("Battery design capacity: " + battery.getDesignCapacity());
         }
     }
 
@@ -228,13 +228,10 @@ ApplicationWindow {
             for (var k=0; k<supported_entities.length; k++) {
                 if (supported_entities[k] === config.entities[i].type) {
 
-                    // load the supported component
-                    comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    if (comp.status !== Component.Ready) {
-                        console.debug("Error: " + comp.errorString() );
+                    for (var j=0; j < config.entities[i].data.length; j++) {
+                        const en = config.entities[i].data[j];
+                        entities.add(en, integration[en.integration].obj);
                     }
-                    loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
-                    loaded_components[supported_entities[k]].entities = config.entities[i].data;
 
                     // store which entity type was loaded. Not all supported entities are loaded.
                     tmp = {};
@@ -272,10 +269,7 @@ ApplicationWindow {
     property var supported_entities: ["light"]
     //: names of the entities. Shows up in menu on the bottom. Always plural
     property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
-
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
-
-    property var loaded_components: ({}) // holds the loaded component, for example it has the Main.qml file from lights
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES

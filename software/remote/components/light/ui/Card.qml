@@ -17,8 +17,8 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 60
-        buttonText: lstate == "off" ? "Turn on" : "Turn off"
-        buttonState: lstate == "off" ? false : true
+        buttonText: obj.state == "off" ? "Turn on" : "Turn off"
+        buttonState: obj.state == "off" ? false : true
 
         mouseArea.onClicked: {
             loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
@@ -28,7 +28,7 @@ Rectangle {
     Text {
         id: title
         color: colorText
-        text: friendly_name
+        text: obj.friendly_name
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideNone
@@ -47,7 +47,7 @@ Rectangle {
         id: areaText
         color: colorText
         opacity: 0.5
-        text: area
+        text: obj.area
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight

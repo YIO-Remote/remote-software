@@ -16,6 +16,7 @@
 #include "bq27441.h"
 #include "proximity_gesture_control.h"
 #include "integration.h"
+#include "entities/entities.h"
 
 int main(int argc, char *argv[])
 {
@@ -65,6 +66,10 @@ int main(int argc, char *argv[])
     // TRANSLATION
     TranslationHandler transHndl(&engine);
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
+
+    // ENTITIES
+    Entities entities;
+    engine.rootContext()->setContextProperty("entities", &entities);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
