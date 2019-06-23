@@ -109,14 +109,7 @@ Item {
         switch (mode) {
         case "on":
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
 
         case "dim":
@@ -127,14 +120,7 @@ Item {
             mode = "on";
 
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
 
         case "standby":
@@ -147,14 +133,7 @@ Item {
             mode = "on";
 
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
 
         case "wifi_off":
@@ -172,14 +151,7 @@ Item {
             mode = "on";
 
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
         }
     }
@@ -238,57 +210,39 @@ Item {
         }
     }
 
-    // dim timer
-    Timer {
-        id: displayDimTimer
-        repeat: false
-        running: true
-        interval: displayDimTime * 1000
-
-        onTriggered: {
-            if (mode != "dim") {
-                displayDimTimer.stop();
-                // set brightness to 10
-                setBrightness(10);
-                mode = "dim";
-                standbyTimer.start();
-            }
-        }
-    }
-
     // standby timer
+    property int secondsPassed: 0
     Timer {
         id: standbyTimer
-        repeat: false
-        running: false
-        interval: (standbyTime - displayDimTime) * 1000
+        repeat: true
+        running: true
+        interval: 1000
 
         onTriggered: {
-            if (mode == "dim") {
-                standbyTimer.stop()
-                // turn off gesture detection
+            secondsPassed += 1000;
+
+            // mode = dim
+            if (secondsPassed == displayDimTime * 1000) {
+                // dim the display
+                setBrightness(10);
+                mode = "dim";
+            }
+
+            // mode = standby
+            if (secondsPassed == standbyTime * 1000) {
+                // turn on proximity detection
                 proximity.proximityDetection(true);
 
                 // turn off the backlight
                 setBrightness(0);
 
-                // put display to standby
+                // put the display to standby mode
                 displayControl.setmode("standbyon");
                 mode = "standby";
             }
-        }
-    }
 
-    // wifi_off timer
-    Timer {
-        id: wifiOffTimer
-        repeat: false
-        running: wifiOffTime != 0 ? true : false
-        interval: wifiOffTime * 1000
-
-        onTriggered: {
-            if (mode == "standby") {
-                wifiOffTimer.stop();
+            // mode = wifi_off
+            if (secondsPassed == wifiOffTime * 1000) {
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
@@ -298,23 +252,14 @@ Item {
 
                 mode = "wifi_off";
             }
-        }
-    }
 
-    // shutdown timer
-    Timer {
-        id: shutdownTimer
-        repeat: false
-        running: shutdownTime != 0 ? true : false
-        interval: shutdownTime * 1000
-        triggeredOnStart: false
-
-        onTriggered: {
-            shutdownTimer.stop();
-            // set turn on button to low
-            buttonHandler.interruptHandler.shutdown();
-            // halt
-            mainLauncher.launch("halt");
+            // mode = shutdown
+            if (secondsPassed == shutdownTime * 1000) {
+                // set turn on button to low
+                buttonHandler.interruptHandler.shutdown();
+                // halt
+                mainLauncher.launch("halt");
+            }
         }
     }
 }
