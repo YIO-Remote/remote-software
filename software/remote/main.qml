@@ -31,6 +31,9 @@ ApplicationWindow {
     property real battery_level: 1
     property real battery_health: 100
     property real battery_time: (new Date()).getTime()
+    property int  battery_design_capacity: 0
+    property int  battery_full_charge_capacity: 0
+    property int  battery_full_available_capacity: 0
     property bool wasBatteryWarning: false
 
     property var battery_data: []
@@ -55,6 +58,9 @@ ApplicationWindow {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
+            battery_design_capacity = battery.getDesignCapacity()
+            battery_full_available_capacity = battery.getFullAvailableCapacity()
+            battery_full_charge_capacity = battery.getFullChargeCapacity()
 
             if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
                 // set turn on button to low
@@ -68,12 +74,6 @@ ApplicationWindow {
             } else {
                 chargingScreen.item.state = "hidden";
             }
-
-            // debug
-//            console.debug("Battery voltage: " + battery_voltage);
-//            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
-//            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
-//            console.debug("Battery design capacity: " + battery.getDesignCapacity());
         }
     }
 

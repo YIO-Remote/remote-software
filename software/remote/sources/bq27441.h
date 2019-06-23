@@ -114,6 +114,7 @@ public:
     //    uint16_t getDMCode();
     //    uint16_t getPrevMacwrite();
     uint16_t getChemID();
+    void reset();
 
     Q_INVOKABLE void changeCapacity(uint16_t capacity);
 #endif
