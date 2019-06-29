@@ -21,6 +21,12 @@ public:
     // get entites by type
     Q_INVOKABLE QList<QObject *>    getByType   (const QString type);
 
+    // get entites by area
+    Q_INVOKABLE QList<QObject *>    getByArea   (const QString area);
+
+    // get entities by integration
+    Q_INVOKABLE QList<QObject *>    getByIntegration (const QString integration);
+
     // get entity by entity_id
     Q_INVOKABLE QObject*            get         (const QString &entity_id);
 

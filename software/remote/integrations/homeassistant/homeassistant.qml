@@ -201,12 +201,12 @@ Integration {
         property int tries: 0
 
         onTriggered: {
-            if (tries == 1) {
+            if (tries == 2) {
                 websocketReconnect.running = false;
                 //                connectionState = "failed"
                 console.debug("Failed to connect");
 
-                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, function () { integration.integration.obj.connect(); }, "Reconnect");
+                addNotification("error", qsTr("Failed to connect to Home Assistant.") + translateHandler.emptyString, function () { integration.connect(); }, "Reconnect");
                 disconnect();
 
                 tries = 0

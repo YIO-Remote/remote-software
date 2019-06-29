@@ -24,6 +24,30 @@ QList<QObject *> Entities::getByType(const QString type)
     return e;
 }
 
+QList<QObject *> Entities::getByArea(const QString area)
+{
+    QList<QObject *> e;
+    foreach (QObject *value, m_entities)
+    {
+        if (value->property("area") == area) {
+            e.append(m_entities.value(value->property("entity_id").toString()));
+        }
+    }
+    return e;
+}
+
+QList<QObject *> Entities::getByIntegration(const QString integration)
+{
+    QList<QObject *> e;
+    foreach (QObject *value, m_entities)
+    {
+        if (value->property("integration") == integration) {
+            e.append(m_entities.value(value->property("entity_id").toString()));
+        }
+    }
+    return e;
+}
+
 QObject *Entities::get(const QString &entity_id)
 {
     return m_entities.value(entity_id);

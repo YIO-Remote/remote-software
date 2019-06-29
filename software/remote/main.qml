@@ -52,7 +52,7 @@ ApplicationWindow {
     Timer {
         running: true
         repeat: true
-        interval: standbyControl.mode == "on" ? 4000 : 10000
+        interval: standbyControl.mode == "on" ? 4000 : 120000
 
         onTriggered: {
             battery_voltage = battery.getVoltage() / 1000
@@ -74,6 +74,12 @@ ApplicationWindow {
             } else {
                 chargingScreen.item.state = "hidden";
             }
+
+            // debug
+            console.debug("Battery voltage: " + battery_voltage);
+            console.debug("Battery design capacity: " + battery_design_capacity);
+            console.debug("Battery full available capacity: " + battery_full_available_capacity);
+            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
         }
     }
 
