@@ -214,12 +214,12 @@ int BQ27441::getFullChargeCapacity() {
 #endif
 }
 
-int16_t  BQ27441::getAverageCurrent() {
+int BQ27441::getAverageCurrent() {
 #ifdef __arm__
-    uint16_t result;
+    int16_t result;
 
-    result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_CURRENT);
-    return (int16_t) result;
+    result = int16_t(wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_CURRENT));
+    return int(result);
 #else
     return -1600;
 #endif

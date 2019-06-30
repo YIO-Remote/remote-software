@@ -149,7 +149,8 @@ public:
             //set the proximity gain
             apds.setProxGain(APDS9960_PGAIN_1X);
 
-            apds.setLED(APDS9960_LEDDRIVE_100MA, APDS9960_LEDBOOST_200PCNT);
+//            apds.setLED(APDS9960_LEDDRIVE_100MA, APDS9960_LEDBOOST_200PCNT);
+            apds.setLED(APDS9960_LEDDRIVE_12MA, APDS9960_LEDBOOST_100PCNT);
 
             // read ambient light
             while (!apds.colorDataReady())

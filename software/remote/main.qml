@@ -77,9 +77,11 @@ ApplicationWindow {
 
             // debug
             console.debug("Battery voltage: " + battery_voltage);
-            console.debug("Battery design capacity: " + battery_design_capacity);
+//            console.debug("Battery design capacity: " + battery_design_capacity);
             console.debug("Battery full available capacity: " + battery_full_available_capacity);
             console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
+            console.debug("Average power: " + battery.getAveragePower() + "mW");
+            console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -90,6 +92,10 @@ ApplicationWindow {
         interval: 600000
 
         onTriggered: {
+            if (battery_data.length > 35) {
+                battery_data.splice(0, 1);
+            }
+
             var tmpA = battery_data;
 
             var tmp = {};
