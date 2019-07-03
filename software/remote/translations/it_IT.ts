@@ -6,22 +6,22 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="24"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>Batteria</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="81"/>
       <source>Screen on</source>
-      <translation type="unfinished">Screen on</translation>
+      <translation>Accendi schermo</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="109"/>
       <source>Screen off</source>
-      <translation type="unfinished">Screen off</translation>
+      <translation>Spegni schermo</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="45"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Salute della batteria</translation>
     </message>
   </context>
   <context>
@@ -29,12 +29,12 @@
     <message>
       <location filename="../components/light/Button.qml" line="429"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Rimuovere dai preferiti</translation>
     </message>
     <message>
       <location filename="../components/light/Button.qml" line="429"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Aggiungi ai Preferiti</translation>
     </message>
   </context>
   <context>
@@ -42,7 +42,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>Charging</source>
-      <translation type="unfinished">Charging</translation>
+      <translation>In Carica</translation>
     </message>
   </context>
   <context>
@@ -55,7 +55,7 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Aggiungi nuovo</translation>
     </message>
   </context>
   <context>
@@ -68,12 +68,12 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="38"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Luminosità automatica</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="164"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Dark Mode</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
@@ -96,7 +96,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Aggiungi nuovo</translation>
     </message>
   </context>
   <context>
@@ -104,7 +104,7 @@
     <message>
       <location filename="../basic_ui/settings/Languages.qml" line="25"/>
       <source>Languages</source>
-      <translation type="unfinished">Languages</translation>
+      <translation>Lingua</translation>
     </message>
   </context>
   <context>
@@ -117,22 +117,22 @@
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="31"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Fatto</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="40"/>
       <source>Something went wrong. Please reboot</source>
-      <translation type="unfinished">Something went wrong. Please reboot</translation>
+      <translation>Qualcosa è andato storto. Per favore, riavvia il dispositivo</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="152"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Riavvia</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="167"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Ciao</translation>
     </message>
   </context>
   <context>
@@ -140,12 +140,12 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Favorites</source>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Preferiti</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="46"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Impostazioni</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
@@ -155,7 +155,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="47"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Luci</translation>
     </message>
   </context>
   <context>
@@ -163,7 +163,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="34"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Wireless e Reti</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="55"/>
