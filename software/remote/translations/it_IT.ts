@@ -50,7 +50,7 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Dispositivi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
@@ -63,7 +63,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="17"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Schermo</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="38"/>
@@ -78,12 +78,12 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="224"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Blocco schermo</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="239"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Tocca il display per 10 secondi per disattivare il blocco schermo.</translation>
     </message>
   </context>
   <context>
@@ -112,7 +112,7 @@
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="21"/>
       <source>Wait for it ...</source>
-      <translation type="unfinished">Wait for it ...</translation>
+      <translation>Attendi...</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="31"/>
