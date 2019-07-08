@@ -31,13 +31,16 @@ Flickable {
         spacing: 10
 
         Component.onCompleted: {
-            for (var i=0; i<loaded_components[type].entities.length; i++) {
+            var e = entities.getByType(type);
+
+            for (var i=0; i<e.length; i++) {
                 var comp = Qt.createComponent("qrc:/components/"+ type +"/ui/Button.qml");
                 if (comp.status != Component.Ready) {
                     console.debug("Error: " + comp.errorString() );
                 }
-                var obj = comp.createObject(iconFlow, {entityID: i});
+                var obj = comp.createObject(iconFlow, {obj: e[i]});
             }
+
         }
     }
 }

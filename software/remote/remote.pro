@@ -15,30 +15,34 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
-    sources/display_control.h \
+    sources/hardware/display_control.h \
     sources/translation.h \
-    sources/touchdetect.h \
-    sources/proximity_gesture_control.h \
-    sources/interrupt_handler.h \
-    sources/drv2605.h \
-    sources/bq27441.h \
-    sources/integration.h
+    sources/hardware/touchdetect.h \
+    sources/hardware/proximity_gesture_control.h \
+    sources/hardware/interrupt_handler.h \
+    sources/hardware/drv2605.h \
+    sources/hardware/bq27441.h \
+    sources/integrations/integration.h \
+    sources/entities/entities.h \
+    sources/entities/entity.h
 
 SOURCES += \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
-    sources/display_control.cpp \
-    sources/drv2605.cpp \
-    sources/bq27441.cpp
+    sources/hardware/display_control.cpp \
+    sources/hardware/drv2605.cpp \
+    sources/hardware/bq27441.cpp \
+    sources/entities/entities.cpp \
+    sources/entities/entity.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \
-        sources/apds9960.h \
-        sources/mcp23017.h \
+        sources/hardware/apds9960.h \
+        sources/hardware/mcp23017.h \
 
     SOURCES += \
-        sources/apds9960.cpp \
+        sources/hardware/apds9960.cpp \
 }
 
 RESOURCES += qml.qrc \
@@ -53,7 +57,6 @@ SOURCES = main.qml \
           basic_ui/*.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
-          integrations/*.qml \
           sources/proximity_gesture_control.h
 }
 TRANSLATIONS = translations/bg_BG.ts \

@@ -83,7 +83,7 @@ public:
     Q_INVOKABLE void begin();
     Q_INVOKABLE int getVoltage();
     Q_INVOKABLE int getFullChargeCapacity();
-    Q_INVOKABLE int16_t  getAverageCurrent();
+    Q_INVOKABLE int getAverageCurrent();
     Q_INVOKABLE int getAveragePower();
     Q_INVOKABLE int getStateOfCharge();
     Q_INVOKABLE int16_t  getInternalTemperatureC();           // Result in 0.1 Celsius
@@ -114,6 +114,7 @@ public:
     //    uint16_t getDMCode();
     //    uint16_t getPrevMacwrite();
     uint16_t getChemID();
+    void reset();
 
     Q_INVOKABLE void changeCapacity(uint16_t capacity);
 #endif

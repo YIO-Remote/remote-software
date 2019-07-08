@@ -47,8 +47,12 @@ function saveConfig() {
     //entities
     for (var i=0; i<loaded_entities.length; i++) {
         for (var k=0; k<config.entities.length; k++) {
-            if (config.entities[k].type == loaded_entities[i]) {
-                config.entities[k].data = loaded_components[loaded_entities[i]].entities;
+            if (config.entities[k].type == loaded_entities[i].obj) {
+
+                for (var x=0; x<config.entities[k].data.length; x++) {
+                    var e = entities.get(config.entities[k].data[x].entity_id);
+                    config.entities[k].data[x] = e.getDataToSave();
+                }
             }
         }
     }

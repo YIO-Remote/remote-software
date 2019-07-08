@@ -31,6 +31,9 @@ ApplicationWindow {
     property real battery_level: 1
     property real battery_health: 100
     property real battery_time: (new Date()).getTime()
+    property int  battery_design_capacity: 0
+    property int  battery_full_charge_capacity: 0
+    property int  battery_full_available_capacity: 0
     property bool wasBatteryWarning: false
 
     property var battery_data: []
@@ -49,12 +52,15 @@ ApplicationWindow {
     Timer {
         running: true
         repeat: true
-        interval: standbyControl.mode == "on" ? 4000 : 10000
+        interval: standbyControl.mode == "on" ? 4000 : 120000
 
         onTriggered: {
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
+            battery_design_capacity = battery.getDesignCapacity()
+            battery_full_available_capacity = battery.getFullAvailableCapacity()
+            battery_full_charge_capacity = battery.getFullChargeCapacity()
 
             if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
                 // set turn on button to low
@@ -70,10 +76,12 @@ ApplicationWindow {
             }
 
             // debug
-//            console.debug("Battery voltage: " + battery_voltage);
-//            console.debug("Battery full charge capacity: " + battery.getFullChargeCapacity());
-//            console.debug("Battery full available capacity: " + battery.getFullAvailableCapacity());
-//            console.debug("Battery design capacity: " + battery.getDesignCapacity());
+            console.debug("Battery voltage: " + battery_voltage);
+            console.debug("Battery design capacity: " + battery_design_capacity);
+            console.debug("Battery full available capacity: " + battery_full_available_capacity);
+            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
+            console.debug("Average power: " + battery.getAveragePower() + "mW");
+            console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -84,6 +92,10 @@ ApplicationWindow {
         interval: 600000
 
         onTriggered: {
+            if (battery_data.length > 35) {
+                battery_data.splice(0, 1);
+            }
+
             var tmpA = battery_data;
 
             var tmp = {};
@@ -202,7 +214,7 @@ ApplicationWindow {
         for (var i=0; i<config.integration.length; i++) {
             integration[config.integration[i].type] = config.integration[i];
 
-            comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type +".qml");
+            comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type + "/" + config.integration[i].type +".qml");
             if (comp.status !== Component.Ready) {
                 console.debug("Error: " + comp.errorString() );
             }
@@ -228,13 +240,10 @@ ApplicationWindow {
             for (var k=0; k<supported_entities.length; k++) {
                 if (supported_entities[k] === config.entities[i].type) {
 
-                    // load the supported component
-                    comp = Qt.createComponent("qrc:/components/" + supported_entities[k] + "/Main.qml");
-                    if (comp.status !== Component.Ready) {
-                        console.debug("Error: " + comp.errorString() );
+                    for (var j=0; j < config.entities[i].data.length; j++) {
+                        const en = config.entities[i].data[j];
+                        entities.add(en, integration[en.integration].obj);
                     }
-                    loaded_components[supported_entities[k]] = comp.createObject(applicationWindow);
-                    loaded_components[supported_entities[k]].entities = config.entities[i].data;
 
                     // store which entity type was loaded. Not all supported entities are loaded.
                     tmp = {};
@@ -272,10 +281,7 @@ ApplicationWindow {
     property var supported_entities: ["light"]
     //: names of the entities. Shows up in menu on the bottom. Always plural
     property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
-
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
-
-    property var loaded_components: ({}) // holds the loaded component, for example it has the Main.qml file from lights
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES

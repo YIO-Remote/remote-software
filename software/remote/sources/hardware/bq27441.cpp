@@ -33,6 +33,12 @@ void BQ27441::begin()
         // calibrate the gauge
         qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
         changeCapacity((uint16_t(m_capacity)));
+    } else if (getDesignCapacity() != m_capacity) {
+        qDebug() << "Design capacity does not match.";
+
+        // calibrate the gauge
+        qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+        changeCapacity((uint16_t(m_capacity)));
     }
 #endif
 }
@@ -214,12 +220,12 @@ int BQ27441::getFullChargeCapacity() {
 #endif
 }
 
-int16_t  BQ27441::getAverageCurrent() {
+int BQ27441::getAverageCurrent() {
 #ifdef __arm__
-    uint16_t result;
+    int16_t result;
 
-    result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_CURRENT);
-    return (int16_t) result;
+    result = int16_t(wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVG_CURRENT));
+    return int(result);
 #else
     return -1600;
 #endif
@@ -367,6 +373,21 @@ uint16_t BQ27441::getChemID() {
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_CONTROL);
 
     return result;
+}
+
+void BQ27441::reset()
+{
+    // unseal the device
+    wiringPiI2CWriteReg8(bus, 0x00, 0x00);
+    wiringPiI2CWriteReg8(bus, 0x01, 0x80);
+    wiringPiI2CWriteReg8(bus, 0x00, 0x00);
+    wiringPiI2CWriteReg8(bus, 0x01, 0x80);
+    delay(5);
+
+    // send reset command
+    wiringPiI2CWriteReg8(bus, 0x00, 0x41);
+    wiringPiI2CWriteReg8(bus, 0x01, 0x00);
+    delay(200);
 }
 #endif
 

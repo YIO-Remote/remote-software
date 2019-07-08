@@ -8,14 +8,15 @@
 
 #include "launcher.h"
 #include "jsonfile.h"
-#include "display_control.h"
+#include "hardware/display_control.h"
 #include "translation.h"
-#include "touchdetect.h"
-#include "interrupt_handler.h"
-#include "drv2605.h"
-#include "bq27441.h"
-#include "proximity_gesture_control.h"
-#include "integration.h"
+#include "hardware/touchdetect.h"
+#include "hardware/interrupt_handler.h"
+#include "hardware/drv2605.h"
+#include "hardware/bq27441.h"
+#include "hardware/proximity_gesture_control.h"
+#include "integrations/integration.h"
+#include "entities/entities.h"
 
 int main(int argc, char *argv[])
 {
@@ -65,6 +66,10 @@ int main(int argc, char *argv[])
     // TRANSLATION
     TranslationHandler transHndl(&engine);
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
+
+    // ENTITIES
+    Entities entities;
+    engine.rootContext()->setContextProperty("entities", &entities);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

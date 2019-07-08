@@ -91,7 +91,8 @@ Item {
 
             Loader {
                 id: mainNavigationLoader
-                //                active: SwipeView.isCurrentItem || SwipeView.isNextItem || SwipeView.isPreviousItem
+                asynchronous: true
+                //active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
 
                 property alias mainNavigationLoader: mainNavigationLoader
 

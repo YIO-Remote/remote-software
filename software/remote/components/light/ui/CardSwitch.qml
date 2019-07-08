@@ -16,13 +16,13 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
+            integration[obj.integration].obj.light.toggle(obj.entity_id);
         }
     }
 
     Rectangle {
         id: percentageBG
-        color: lstate == "on" ? colorHighlight : colorBackgroundTransparent
+        color: obj.attributes.state == "on" ? colorHighlight : colorBackgroundTransparent
         width: parent.width
         height: parent.height
         radius: cornerRadius
@@ -54,7 +54,7 @@ Rectangle {
     Text {
         id: percentage
         color: colorText
-        text: lstate == "on" ? "On" : "Off"
+        text: obj.attributes.state == "on" ? "On" : "Off"
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 180 }
@@ -63,7 +63,7 @@ Rectangle {
     Text {
         id: title
         color: colorText
-        text: friendly_name
+        text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
@@ -75,7 +75,7 @@ Rectangle {
         id: areaText
         color: colorText
         opacity: 0.5
-        text: area
+        text: obj.area
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-60
@@ -87,11 +87,11 @@ Rectangle {
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonTextColor: colorBackground
-        buttonText: lstate == "off" ? "Turn on" : "Turn off"
+        buttonText: obj.attributes.state == "off" ? "Turn on" : "Turn off"
 
         mouseArea.onClicked: {
             haptic.playEffect("click");
-            loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
+            integration[obj.integration].obj.light.toggle(obj.entity_id);
         }
     }
 

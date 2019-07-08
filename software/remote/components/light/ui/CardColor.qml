@@ -10,7 +10,7 @@ Rectangle {
     height: parent.height
     color: colorMedium
 
-    property int _brightness: brightness
+    property int _brightness: obj.attributes.brightness
 
     signal updateBrightness()
 
@@ -70,7 +70,7 @@ Rectangle {
                 }
 
                 onReleased: {
-                    loaded_components.light.componentIntegration[integrationType].setBrightness(entity_id, dragger.percent);
+                    integration[obj.integration].obj.light.setBrightness(obj.entity_id, dragger.percent);
                 }
             }
 
@@ -156,7 +156,7 @@ Rectangle {
             Text {
                 id: title
                 color: colorText
-                text: friendly_name
+                text: obj.friendly_name
                 wrapMode: Text.WordWrap
                 width: parent.width-60
                 anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
@@ -168,7 +168,7 @@ Rectangle {
                 id: areaText
                 color: colorText
                 opacity: 0.5
-                text: area
+                text: obj.area
                 elide: Text.ElideRight
                 wrapMode: Text.NoWrap
                 width: parent.width-60
@@ -181,17 +181,17 @@ Rectangle {
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
                 color: colorText
                 buttonTextColor: colorBackground
-                buttonText: lstate == "off" ? "Turn on" : "Turn off"
+                buttonText: obj.attributes.state == "off" ? "Turn on" : "Turn off"
 
                 mouseArea.onClicked: {
                     haptic.playEffect("click");
-                    loaded_components.light.componentIntegration[integrationType].toggle(entity_id);
+                    integration[obj.integration].obj.light.toggle(obj.entity_id);
                 }
             }
 
             BasicUI.CustomButton {
                 anchors { left:toggleButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: _color ? Qt.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1) : colorText
+                color: obj.attributes.color ? Qt.rgba(obj.attributes.color[0]/255, obj.attributes.color[1]/255, obj.attributes.color[2]/255, 1) : colorText
                 buttonTextColor: colorBackground
                 buttonText: "Color"
 
@@ -303,7 +303,7 @@ Rectangle {
                     }
 
                     onReleased: {
-                        loaded_components.light.componentIntegration[integrationType].setColor(entity_id, picker.color);
+                        integration[obj.integration].obj.light.setColor(obj.entity_id, picker.color);
 
                         icon_b.opacity = 1;
                         color_b.opacity = 1;
@@ -356,7 +356,7 @@ Rectangle {
             Text {
                 id: title_b
                 color: colorText
-                text: friendly_name
+                text: obj.friendly_name
                 wrapMode: Text.WordWrap
                 width: parent.width-60
                 anchors { top: color_b.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
@@ -372,7 +372,7 @@ Rectangle {
                 id: areaText_b
                 color: colorText
                 opacity: 0.5
-                text: area
+                text: obj.area
                 elide: Text.ElideRight
                 wrapMode: Text.NoWrap
                 width: parent.width-60
@@ -396,7 +396,7 @@ Rectangle {
             BasicUI.CustomButton {
                 id: button_b
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: _color ? Qt.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1) : colorText
+                color: obj.attributes.color ? Qt.rgba(obj.attributes.color[0]/255, obj.attributes.color[1]/255, obj.attributes.color[2]/255, 1) : colorText
                 buttonTextColor: colorBackground
                 buttonText: "OK"
 

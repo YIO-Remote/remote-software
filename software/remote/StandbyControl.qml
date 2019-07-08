@@ -53,20 +53,12 @@ Item {
 
         onProximityEvent: {
             standbyControl.proximityDetected = true;
-//            standbyControl.display_brightness_ambient = JSHelper.mapValues(ambientLight,0,450,15,100);
-            // read the ambient light a bit later, so your hand doesn't cover the sensor
-//            ambientLightReadTimer.start();
         }
 
         onApds9960Notify: {
             console.debug(proximity.apds9960Error);
             applicationWindow.addNotification("error", proximity.apds9960Error, "", "Restart");
-
         }
-
-//        onGestureEvent: {
-//            console.debug(proximity.gesture);
-//        }
     }
 
     Timer {
@@ -79,9 +71,9 @@ Item {
             standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,30,15,100);
             // set the display brightness
             if (standbyControl.display_autobrightness) {
-                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
+                setBrightness(display_brightness_ambient);
             } else {
-                standbyControl.display_brightness = standbyControl.display_brightness_set;
+                setBrightness(display_brightness_set);
             }
         }
     }
@@ -91,6 +83,12 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     DisplayControl {
         id: displayControl
+    }
+
+    function setBrightness(brightness) {
+        displayControl.setBrightness(display_brightness_old, brightness);
+        display_brightness_old = brightness;
+        display_brightness = brightness;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,47 +105,43 @@ Item {
         mainLauncher.launch(cmd);
     }
 
-    // change the display brightness
-    onDisplay_brightnessChanged: {
-        displayControl.setBrightness(display_brightness_old, display_brightness);
-        standbyControl.display_brightness_old = standbyControl.display_brightness;
-    }
-
     function wakeUp() {
+        // get battery readings
+        battery_voltage = battery.getVoltage() / 1000
+        battery_level = battery.getStateOfCharge() / 100
+        battery_health = battery.getStateOfHealth()
+        battery_design_capacity = battery.getDesignCapacity()
+        battery_full_available_capacity = battery.getFullAvailableCapacity()
+        battery_full_charge_capacity = battery.getFullChargeCapacity()
+
+        if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
+            // set turn on button to low
+            buttonHandler.interruptHandler.shutdown();
+            // halt
+            mainLauncher.launch("halt");
+        }
+
+        if (battery.getAveragePower() >= 0 ) {
+            chargingScreen.item.state = "visible";
+        } else {
+            chargingScreen.item.state = "hidden";
+        }
+
         switch (mode) {
         case "on":
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
 
         case "dim":
             // set the display brightness
             ambientLightReadTimer.start();
-//            if (standbyControl.display_autobrightness) {
-//                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-//            } else {
-//                standbyControl.display_brightness = standbyControl.display_brightness_set;
-//            }
 
             // set the mode
             mode = "on";
 
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
 
         case "standby":
@@ -160,14 +154,7 @@ Item {
             mode = "on";
 
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
 
         case "wifi_off":
@@ -185,14 +172,7 @@ Item {
             mode = "on";
 
             // reset timers
-            displayDimTimer.restart();
-            standbyTimer.stop();
-            if (wifiOffTime != 0) {
-                wifiOffTimer.restart();
-            }
-            if (shutdownTime != 0) {
-                shutdownTimer.restart();
-            }
+            secondsPassed = 0;
             break;
         }
     }
@@ -205,11 +185,6 @@ Item {
 
         onTriggered: {
             ambientLightReadTimer.start();
-//            if (standbyControl.display_autobrightness) {
-//                standbyControl.display_brightness = standbyControl.display_brightness_ambient;
-//            } else {
-//                standbyControl.display_brightness = standbyControl.display_brightness_set;
-//            }
         }
     }
 
@@ -243,70 +218,52 @@ Item {
         console.debug("Mode: " + mode);
         // if mode is on change processor to ondemand
         if (mode == "on") {
-            var cmd = "echo -e ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-            mainLauncher.launch(cmd);
+            mainLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
             startTime = new Date().getTime()
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
-            cmd = "echo -e powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"
-            mainLauncher.launch(cmd);
+            mainLauncher.launch("/usr/bin/yio-remote/powersave.sh");
+
             // add screen on time
             screenOnTime += new Date().getTime() - startTime
             screenOffTime = new Date().getTime() - baseTime - screenOnTime
         }
     }
 
-    // dim timer
-    Timer {
-        id: displayDimTimer
-        repeat: false
-        running: true
-        interval: displayDimTime * 1000
-
-        onTriggered: {
-            if (mode != "dim") {
-                displayDimTimer.stop();
-                // set brightness to 20
-                standbyControl.display_brightness = 10;
-                mode = "dim";
-                standbyTimer.start();
-            }
-        }
-    }
-
     // standby timer
+    property int secondsPassed: 0
     Timer {
         id: standbyTimer
-        repeat: false
-        running: false
-        interval: (standbyTime - displayDimTime) * 1000
+        repeat: true
+        running: true
+        interval: 1000
 
         onTriggered: {
-            if (mode == "dim") {
-                standbyTimer.stop()
-                // turn off gesture detection
-//                proximity.gestureDetection(false);
+            secondsPassed += 1000;
+
+            // mode = dim
+            if (secondsPassed == displayDimTime * 1000) {
+                // dim the display
+                setBrightness(10);
+                mode = "dim";
+            }
+
+            // mode = standby
+            if (secondsPassed == standbyTime * 1000) {
+                // turn on proximity detection
                 proximity.proximityDetection(true);
+
                 // turn off the backlight
-                display_brightness = 0;
-                // put display to standby
+                setBrightness(0);
+
+                // put the display to standby mode
                 displayControl.setmode("standbyon");
                 mode = "standby";
             }
-        }
-    }
 
-    // wifi_off timer
-    Timer {
-        id: wifiOffTimer
-        repeat: false
-        running: wifiOffTime != 0 ? true : false
-        interval: wifiOffTime * 1000
-
-        onTriggered: {
-            if (mode == "standby") {
-                wifiOffTimer.stop();
+            // mode = wifi_off
+            if (secondsPassed == wifiOffTime * 1000) {
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
@@ -316,23 +273,14 @@ Item {
 
                 mode = "wifi_off";
             }
-        }
-    }
 
-    // shutdown timer
-    Timer {
-        id: shutdownTimer
-        repeat: false
-        running: shutdownTime != 0 ? true : false
-        interval: shutdownTime * 1000
-        triggeredOnStart: false
-
-        onTriggered: {
-            shutdownTimer.stop();
-            // set turn on button to low
-            buttonHandler.interruptHandler.shutdown();
-            // halt
-            mainLauncher.launch("halt");
+            // mode = shutdown
+            if (secondsPassed == shutdownTime * 1000) {
+                // set turn on button to low
+                buttonHandler.interruptHandler.shutdown();
+                // halt
+                mainLauncher.launch("halt");
+            }
         }
     }
 }
