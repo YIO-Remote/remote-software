@@ -86,7 +86,6 @@ Item {
     }
 
     function setBrightness(brightness) {
-        console.debug("Setting brightness");
         displayControl.setBrightness(display_brightness_old, brightness);
         display_brightness_old = brightness;
         display_brightness = brightness;

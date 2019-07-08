@@ -292,9 +292,9 @@ void APDS9960::disableColorInterrupt() {
 
 void APDS9960::clearInterrupt() {
 //  write(APDS9960_AICLEAR, NULL, 0);
-  wiringPiI2CWrite(_fd, APDS9960_AICLEAR);
-  wiringPiI2CWrite(_fd, APDS9960_PICLEAR);
-  wiringPiI2CWrite(_fd, APDS9960_CICLEAR);
+  wiringPiI2CWriteReg8(_fd, APDS9960_AICLEAR, 0x00);
+  wiringPiI2CWriteReg8(_fd, APDS9960_PICLEAR, 0x00);
+  wiringPiI2CWriteReg8(_fd, APDS9960_CICLEAR, 0x00);
 }
 
 void APDS9960::setIntLimits(uint16_t low, uint16_t high) {

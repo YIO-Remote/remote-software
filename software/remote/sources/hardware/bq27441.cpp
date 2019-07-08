@@ -33,6 +33,12 @@ void BQ27441::begin()
         // calibrate the gauge
         qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
         changeCapacity((uint16_t(m_capacity)));
+    } else if (getDesignCapacity() != m_capacity) {
+        qDebug() << "Design capacity does not match.";
+
+        // calibrate the gauge
+        qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+        changeCapacity((uint16_t(m_capacity)));
     }
 #endif
 }

@@ -77,7 +77,7 @@ ApplicationWindow {
 
             // debug
             console.debug("Battery voltage: " + battery_voltage);
-//            console.debug("Battery design capacity: " + battery_design_capacity);
+            console.debug("Battery design capacity: " + battery_design_capacity);
             console.debug("Battery full available capacity: " + battery_full_available_capacity);
             console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
             console.debug("Average power: " + battery.getAveragePower() + "mW");

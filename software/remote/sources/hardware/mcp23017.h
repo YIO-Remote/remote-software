@@ -56,7 +56,7 @@ public:
         bus = wiringPiI2CSetupInterface("/dev/i2c-3", MCP23017_ADDRESS);
 
         // set up all inputs on both ports
-        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0x3f); //0b00111111
+        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0x3f); //0x3f 0b00111111
         wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0xff);
 
         // set up interrupts
