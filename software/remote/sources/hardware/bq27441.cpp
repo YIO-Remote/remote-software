@@ -32,7 +32,7 @@ void BQ27441::begin()
 
         // calibrate the gauge
         qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
-        changeCapacity((uint16_t(m_capacity)));
+        // changeCapacity((uint16_t(m_capacity)));
     } else if (getDesignCapacity() != m_capacity) {
         qDebug() << "Design capacity does not match.";
 
@@ -201,11 +201,11 @@ int BQ27441::getFullAvailableCapacity() {
     return int(result);
 }
 
-uint16_t BQ27441::getRemainingCapacity() {
+int BQ27441::getRemainingCapacity() {
     uint16_t result;
 
     result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_REM_CAPACITY);
-    return result;
+    return int(result);
 }
 #endif
 

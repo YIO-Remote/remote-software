@@ -24,7 +24,8 @@ HEADERS += \
     sources/hardware/bq27441.h \
     sources/integrations/integration.h \
     sources/entities/entities.h \
-    sources/entities/entity.h
+    sources/entities/entity.h \
+    sources/integrations/integrationinterface.h
 
 SOURCES += \
     sources/main.cpp \

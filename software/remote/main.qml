@@ -32,8 +32,9 @@ ApplicationWindow {
     property real battery_health: 100
     property real battery_time: (new Date()).getTime()
     property int  battery_design_capacity: 0
-    property int  battery_full_charge_capacity: 0
-    property int  battery_full_available_capacity: 0
+    property int  battery_remaining_capacity: 0
+    property int  battery_averagepower: 0
+    property int  battery_averagecurrent: 0
     property bool wasBatteryWarning: false
 
     property var battery_data: []
@@ -47,41 +48,71 @@ ApplicationWindow {
         Component.onCompleted: {
             battery.begin();
         }
-    }
 
-    Timer {
-        running: true
-        repeat: true
-        interval: standbyControl.mode == "on" ? 4000 : 120000
-
-        onTriggered: {
+        function checkBattery() {
+            // read battery data
             battery_voltage = battery.getVoltage() / 1000
             battery_level = battery.getStateOfCharge() / 100
             battery_health = battery.getStateOfHealth()
             battery_design_capacity = battery.getDesignCapacity()
-            battery_full_available_capacity = battery.getFullAvailableCapacity()
-            battery_full_charge_capacity = battery.getFullChargeCapacity()
+            battery_remaining_capacity = battery.getRemainingCapacity()
+            battery_averagepower = battery.getAveragePower()
+            battery_averagecurrent = battery.getAverageCurrent()
 
-            if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
+            // if the designcapacity is off correct it
+            if (battery_design_capacity != battery.capacity) {
+                console.debug("Design capacity doesn't match. Recalibrating battery.");
+                battery.changeCapacity(battery.capacity);
+            }
+
+            // if voltage is too low and we are sourcing power turn off the remote after timeout
+            if (battery_voltage <= 3.4 && battery_averagepower < 0) {
+                shutdownDelayTimer.start();
+            }
+
+            // hide and show the charging screen
+            if (battery_averagepower >= 0 ) {
+                chargingScreen.item.state = "visible";
+                // cancel shutdown when started charging
+                if (shutdownDelayTimer.running) {
+                    shutdownDelayTimer.stop();
+                }
+            } else {
+                chargingScreen.item.state = "hidden";
+            }
+        }
+
+        Timer {
+            id: shutdownDelayTimer
+            running: false
+            repeat: false
+            interval: 20000
+
+            onTriggered: {
                 // set turn on button to low
                 buttonHandler.interruptHandler.shutdown();
                 // halt
                 mainLauncher.launch("halt");
             }
+        }
+    }
 
-            if (battery.getAveragePower() >= 0 ) {
-                chargingScreen.item.state = "visible";
-            } else {
-                chargingScreen.item.state = "hidden";
-            }
+    Timer {
+        running: true
+        repeat: true
+        interval: standbyControl.mode == "on" ? 3000 : 120000
+
+        onTriggered: {
+
+            battery.checkBattery();
 
             // debug
-            console.debug("Battery voltage: " + battery_voltage);
-            console.debug("Battery design capacity: " + battery_design_capacity);
-            console.debug("Battery full available capacity: " + battery_full_available_capacity);
-            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
-            console.debug("Average power: " + battery.getAveragePower() + "mW");
-            console.debug("Average current: " + battery.getAverageCurrent() + "mA");
+//            console.debug("Battery voltage: " + battery_voltage);
+//            console.debug("Battery design capacity: " + battery_design_capacity);
+//            console.debug("Battery full available capacity: " + battery_full_available_capacity);
+//            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
+//            console.debug("Average power: " + battery.getAveragePower() + "mW");
+//            console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -214,11 +245,19 @@ ApplicationWindow {
         for (var i=0; i<config.integration.length; i++) {
             integration[config.integration[i].type] = config.integration[i];
 
-            comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type + "/" + config.integration[i].type +".qml");
-            if (comp.status !== Component.Ready) {
-                console.debug("Error: " + comp.errorString() );
+            // if plugin integration exists, load that
+            if (config.integration[i].plugin) {
+                comp = mainLauncher.loadIntegration(configPath, config.integration[i].plugin, i, config.integration[i]);
+                integration[config.integration[i].type].obj = comp;
+
+                // otherwise load qml based integration
+            } else {
+                comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type + "/" + config.integration[i].type +".qml");
+                if (comp.status !== Component.Ready) {
+                    console.debug("Error: " + comp.errorString() );
+                }
+                integration[config.integration[i].type].obj = comp.createObject(applicationWindow, {integrationId: i});
             }
-            integration[config.integration[i].type].obj = comp.createObject(applicationWindow, {integrationId: i});
         }
 
         // must be at least one integration for this to be successful
@@ -246,10 +285,7 @@ ApplicationWindow {
                     }
 
                     // store which entity type was loaded. Not all supported entities are loaded.
-                    tmp = {};
-                    tmp.obj = supported_entities[k];
-                    tmp.id = k;
-                    loaded_entities.push(tmp);
+                    loaded_entities.push({ obj: supported_entities[k], id : k });
                 }
             }
         }
