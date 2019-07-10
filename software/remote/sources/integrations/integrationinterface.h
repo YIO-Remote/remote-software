@@ -4,6 +4,9 @@
 #include <QString>
 #include <QVariantMap>
 
+#include "../entities/entities.h"
+#include "../entities/entity.h"
+
 // This interface is implemented by the integration .so files, it is used by the entities to operate the integration
 class IntegrationInterface
 {
@@ -11,7 +14,7 @@ public:
     virtual ~IntegrationInterface() {}
 
     // initialize integration hub with data and entities
-    virtual void    initialize	    (int integrationId, const QVariantMap& configurations) = 0;
+    virtual void    initialize	    (int integrationId, const QVariantMap& configurations, QObject *entities) = 0;
 
     // connects the integration Hub
     virtual void    connect	    () = 0;

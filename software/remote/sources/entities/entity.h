@@ -6,6 +6,8 @@
 #include <QStringList>
 #include <QVariant>
 
+//#include "../integrations/integrationinterface.h"
+
 class Entity : public QObject
 {
     Q_OBJECT
@@ -49,14 +51,15 @@ signals:
     void attributesChanged();
 
 protected:
-    QObject*		m_integrationObj;
-    QString			m_type;
-    QString			m_area;
-    QString			m_friendly_name;
-    QString			m_integration;
-    bool			m_favorite;
-    QStringList		m_supported_features;
-    QVariant        m_attributes;
+//    IntegrationInterface*   m_integrationIf;
+    QObject*                m_integrationObj;
+    QString                 m_type;
+    QString                 m_area;
+    QString                 m_friendly_name;
+    QString                 m_integration;
+    bool                    m_favorite;
+    QStringList             m_supported_features;
+    QVariant                m_attributes;
 };
 
 #endif // ENTITY_H

@@ -81,19 +81,19 @@ ApplicationWindow {
                 chargingScreen.item.state = "hidden";
             }
         }
+    }
 
-        Timer {
-            id: shutdownDelayTimer
-            running: false
-            repeat: false
-            interval: 20000
+    Timer {
+        id: shutdownDelayTimer
+        running: false
+        repeat: false
+        interval: 20000
 
-            onTriggered: {
-                // set turn on button to low
-                buttonHandler.interruptHandler.shutdown();
-                // halt
-                mainLauncher.launch("halt");
-            }
+        onTriggered: {
+            // set turn on button to low
+            buttonHandler.interruptHandler.shutdown();
+            // halt
+            mainLauncher.launch("halt");
         }
     }
 
@@ -107,12 +107,12 @@ ApplicationWindow {
             battery.checkBattery();
 
             // debug
-//            console.debug("Battery voltage: " + battery_voltage);
-//            console.debug("Battery design capacity: " + battery_design_capacity);
-//            console.debug("Battery full available capacity: " + battery_full_available_capacity);
-//            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
-//            console.debug("Average power: " + battery.getAveragePower() + "mW");
-//            console.debug("Average current: " + battery.getAverageCurrent() + "mA");
+            //            console.debug("Battery voltage: " + battery_voltage);
+            //            console.debug("Battery design capacity: " + battery_design_capacity);
+            //            console.debug("Battery full available capacity: " + battery_full_available_capacity);
+            //            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
+            //            console.debug("Average power: " + battery.getAveragePower() + "mW");
+            //            console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -247,7 +247,7 @@ ApplicationWindow {
 
             // if plugin integration exists, load that
             if (config.integration[i].plugin) {
-                comp = mainLauncher.loadIntegration(configPath, config.integration[i].plugin, i, config.integration[i]);
+                comp = mainLauncher.loadIntegration(appPath, config.integration[i].plugin, i, config.integration[i], entities);
                 integration[config.integration[i].type].obj = comp;
 
                 // otherwise load qml based integration

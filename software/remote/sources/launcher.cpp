@@ -1,7 +1,7 @@
 #include <QPluginLoader>
+#include <QtDebug>
 
 #include "launcher.h"
-#include "./integrations/integrationinterface.h"
 
 Launcher::Launcher(QObject *parent) :
     QObject(parent),
@@ -26,13 +26,13 @@ QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
     return plugin;
 }
 
-QObject* Launcher::loadIntegration(const QString& path, const QString &pluginName, int integrationId, const QVariantMap& config)
+QObject* Launcher::loadIntegration(const QString& path, const QString &pluginName, int integrationId, const QVariantMap& config, QObject* entities)
 {
     QObject *plugin = loadPlugin(path, pluginName);
-    if (plugin != NULL) {
-        IntegrationInterface* interface = qobject_cast<IntegrationInterface *>(plugin);
-        if (interface != NULL) {
-            interface->initialize (integrationId, config);
+    if (plugin) {
+        IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(plugin);
+        if (interface) {
+            interface->initialize (integrationId, config, entities);
         }
     }
     return plugin;
