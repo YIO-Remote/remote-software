@@ -15,6 +15,7 @@
 #include "hardware/drv2605.h"
 #include "hardware/bq27441.h"
 #include "hardware/proximity_gesture_control.h"
+
 #include "integrations/integration.h"
 #include "entities/entities.h"
 

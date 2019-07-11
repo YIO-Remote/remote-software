@@ -1,19 +1,17 @@
 TEMPLATE        = lib
 CONFIG         += plugin
-QT             += core quick
+QT             += websockets core quick
 HEADERS         = homeassistant.h \
                   ../integration.h \
-                  ../integrationinterface.h \
-                  ../../entities/entitiesinterface.h \
-                  ../../entities/entity.h
-SOURCES         = homeassistant.cpp \
-                  ../../entities/entity.cpp
+                  ../integrationinterface.h
+SOURCES         = homeassistant.cpp
 TARGET          = homeassistant
 DESTDIR         = ../../../plugins
 
-DISTFILES += homeassistant.json
+#DISTFILES += homeassistant.json
 
 # install
-target.path = /usr/bin/yio-remote/plugins/
-INSTALLS += target
-
+unix {
+    target.path = /usr/lib
+    INSTALLS += target
+}

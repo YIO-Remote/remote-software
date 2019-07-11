@@ -112,7 +112,7 @@ ApplicationWindow {
             //            console.debug("Battery full available capacity: " + battery_full_available_capacity);
             //            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
             //            console.debug("Average power: " + battery.getAveragePower() + "mW");
-            //            console.debug("Average current: " + battery.getAverageCurrent() + "mA");
+//                        console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -276,8 +276,8 @@ ApplicationWindow {
 
         // load the entities from the config file that are supported
         for (var i=0; i<config.entities.length; i++) {
-            for (var k=0; k<supported_entities.length; k++) {
-                if (supported_entities[k] === config.entities[i].type) {
+            for (var k=0; k<entities.supported_entities.length; k++) {
+                if (entities.supported_entities[k] === config.entities[i].type) {
 
                     for (var j=0; j < config.entities[i].data.length; j++) {
                         const en = config.entities[i].data[j];
@@ -285,7 +285,7 @@ ApplicationWindow {
                     }
 
                     // store which entity type was loaded. Not all supported entities are loaded.
-                    loaded_entities.push({ obj: supported_entities[k], id : k });
+                    loaded_entities.push({ obj: entities.supported_entities[k], id : k });
                 }
             }
         }
@@ -314,7 +314,6 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SUPPORTED COMPONENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var supported_entities: ["light"]
     //: names of the entities. Shows up in menu on the bottom. Always plural
     property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded

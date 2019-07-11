@@ -10,7 +10,7 @@ Rectangle {
     height: parent.height
     color: colorMedium
 
-    property int _brightness: obj.attributes.brightness
+    property int _brightness: obj.brightness
 
     signal updateBrightness()
 
@@ -181,7 +181,7 @@ Rectangle {
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
                 color: colorText
                 buttonTextColor: colorBackground
-                buttonText: obj.attributes.state == "off" ? "Turn on" : "Turn off"
+                buttonText: obj.state ? "Turn on" : "Turn off"
 
                 mouseArea.onClicked: {
                     haptic.playEffect("click");
@@ -191,7 +191,7 @@ Rectangle {
 
             BasicUI.CustomButton {
                 anchors { left:toggleButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: obj.attributes.color ? Qt.rgba(obj.attributes.color[0]/255, obj.attributes.color[1]/255, obj.attributes.color[2]/255, 1) : colorText
+                color: obj.color ? Qt.rgba(obj.color[0]/255, obj.color[1]/255, obj.color[2]/255, 1) : colorText
                 buttonTextColor: colorBackground
                 buttonText: "Color"
 
@@ -396,7 +396,7 @@ Rectangle {
             BasicUI.CustomButton {
                 id: button_b
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: obj.attributes.color ? Qt.rgba(obj.attributes.color[0]/255, obj.attributes.color[1]/255, obj.attributes.color[2]/255, 1) : colorText
+                color: obj.color ? Qt.rgba(obj.color[0]/255, obj.color[1]/255, obj.color[2]/255, 1) : colorText
                 buttonTextColor: colorBackground
                 buttonText: "OK"
 

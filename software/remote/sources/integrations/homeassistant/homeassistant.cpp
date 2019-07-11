@@ -3,6 +3,8 @@
 #include <QJsonArray>
 
 #include "homeassistant.h"
+#include "../../entities/entity.h"
+#include "math.h"
 
 HomeAssistant::HomeAssistant()
 {
@@ -62,7 +64,6 @@ void HomeAssistant::disconnect()
 
 bool HomeAssistant::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
 {
-    qDebug() << "SEND COMMAND : " << type << entity_id;
     if (type == "light") {
         if (command == "TOGGLE")
             webSocketSendCommand(type, "toggle", entity_id, NULL);
@@ -128,7 +129,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
         QVariantList list = map.value("result").toJsonArray().toVariantList();
         for (int i = 0; i < list.size(); i++) {
             QVariantMap result = list.value(i).toMap();
-            updateEntity(result.value("entity_id").toString(), result.value("state").toString(), result.value("attributes").toMap());
+            updateEntity(result.value("entity_id").toString(), result);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +150,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
     if (type == "event" && id == 3) {
         QVariantMap data = map.value("event").toMap().value("data").toMap();
         QVariantMap newState = data.value("new_state").toMap();
-        updateEntity(data.value("entity_id").toString(), newState.value("state").toString(), newState.value("attributes").toMap());
+        updateEntity(data.value("entity_id").toString(), newState);
     }
 }
 
@@ -216,10 +217,55 @@ void HomeAssistant::webSocketSendCommand(const QString& domain, const QString& s
 
 }
 
-void HomeAssistant::updateEntity(const QString& entity_id, const QString& state, const QVariantMap& attr)
+int HomeAssistant::convertBrightnessToPercentage(float value)
+{
+    return int(round(value/255*100));
+}
+
+void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& attr)
 {
     Entity* entity = (Entity*)m_entities->get(entity_id);
     if (entity) {
-        entity->setAttributes(attr);
+        if (entity->type() == "light") {
+            updateLight(entity, attr);
+        }
+        //m_entities->update(entity_id, attr);
     }
+}
+
+void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
+{
+    QVariantMap attributes;
+
+    // state
+    if (attr.value("state").toString() == "on") {
+        attributes.insert("state", true);
+    } else {
+        attributes.insert("state", false);
+    }
+
+    // brightness
+    if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
+        if (attr.value("attributes").toMap().value("brightness").toInt()) {
+            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
+        } else {
+            attributes.insert("brightness", 0);
+        }
+    }
+
+    // color
+    if (entity->supported_features().indexOf("COLOR") > -1) {
+        QVariant color = attr.value("attributes").toMap().value("rgb_color");
+        QVariantList cl(color.toList());
+        char buffer[10];
+        sprintf(buffer, "#%02X%02X%02X", cl.value(0).toInt(), cl.value(1).toInt(), cl.value(2).toInt());
+        attributes.insert("color", buffer);
+    }
+
+    // color temp
+    if (entity->supported_features().indexOf("COLORTEMP") > -1) {
+
+    }
+
+    m_entities->update(entity->entity_id(), attributes);
 }

@@ -22,7 +22,7 @@ Rectangle {
 
     Rectangle {
         id: percentageBG
-        color: obj.attributes.state == "on" ? colorHighlight : colorBackgroundTransparent
+        color: obj.state ? colorHighlight : colorBackgroundTransparent
         width: parent.width
         height: parent.height
         radius: cornerRadius
@@ -54,7 +54,7 @@ Rectangle {
     Text {
         id: percentage
         color: colorText
-        text: obj.attributes.state == "on" ? "On" : "Off"
+        text: obj.state ? "On" : "Off"
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 180 }
@@ -87,7 +87,7 @@ Rectangle {
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonTextColor: colorBackground
-        buttonText: obj.attributes.state == "off" ? "Turn on" : "Turn off"
+        buttonText: obj.state ? "Turn on" : "Turn off"
 
         mouseArea.onClicked: {
             haptic.playEffect("click");

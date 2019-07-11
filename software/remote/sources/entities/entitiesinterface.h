@@ -22,6 +22,8 @@ public:
 
     // get entity by entity_id
     virtual QObject*            get         (const QString& entity_id) = 0;
+
+    virtual void                update      (const QString& entity_id, const QVariantMap& attributes) = 0;
 };
 
 QT_BEGIN_NAMESPACE

@@ -10,7 +10,7 @@ Rectangle {
     height: parent.height
     color: colorMedium
 
-    property int brightness: obj.attributes.brightness
+    property int brightness: obj.brightness
 
     signal updateBrightness()
 
@@ -46,9 +46,9 @@ Rectangle {
         target: cardDimmable
 
         onUpdateBrightness: {
-            percentageBG.height = parent.height*obj.attributes.brightness/100;
-            percentageBG2.height = parent.height*obj.attributes.brightness/100;
-            percentage.text = obj.attributes.brightness;
+            percentageBG.height = parent.height*obj.brightness/100;
+            percentageBG2.height = parent.height*obj.brightness/100;
+            percentage.text = obj.brightness;
         }
     }
 
@@ -81,7 +81,7 @@ Rectangle {
         id: percentageBG
         color: colorHighlight
         width: parent.width
-        height: parent.height*obj.attributes.brightness/100
+        height: parent.height*obj.brightness/100
         radius: cornerRadius
         anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
 
@@ -111,7 +111,7 @@ Rectangle {
     Text {
         id: percentage
         color: colorText
-        text: obj.attributes.brightness
+        text: obj.brightness
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 180 }
@@ -151,7 +151,7 @@ Rectangle {
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonTextColor: colorBackground
-        buttonText: obj.attributes.state == "off" ? "Turn on" : "Turn off"
+        buttonText: obj.state ? "Turn on" : "Turn off"
 
         mouseArea.onClicked: {
             haptic.playEffect("click");

@@ -11,6 +11,8 @@ class Integration : public QQuickItem
 
 public:
 
+    Integration() {}
+
     enum states {
         CONNECTED=0,
         CONNECTING=1,
@@ -24,7 +26,6 @@ public:
     Q_PROPERTY(QString      type            READ type           WRITE setType)
     Q_PROPERTY(QString      friendlyName    READ friendlyName   WRITE setFriendlyName)
 
-    Integration() {}
     ~Integration() {}
 
     // get the if the state

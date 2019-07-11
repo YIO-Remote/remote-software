@@ -27,7 +27,8 @@ HEADERS += \
     sources/entities/entity.h \
     sources/integrations/integrationinterface.h \
 #    sources/integrations/homeassistant/homeassistant.h \
-    sources/entities/entitiesinterface.h
+    sources/entities/entitiesinterface.h \
+    sources/entities/light.h
 
 SOURCES += \
     sources/main.cpp \
@@ -39,6 +40,7 @@ SOURCES += \
     sources/entities/entities.cpp \
     sources/entities/entity.cpp \
 #    sources/integrations/homeassistant/homeassistant.cpp
+    sources/entities/light.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \

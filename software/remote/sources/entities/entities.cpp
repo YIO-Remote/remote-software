@@ -1,7 +1,13 @@
 #include "entities.h"
 #include "entity.h"
 
-Entities::Entities(QObject *parent) : QObject(parent) {}
+#include "light.h"
+
+Entities::Entities(QObject *parent) : QObject(parent) {
+
+    //    qmlRegisterType<Light>("Light", 1, 0, "Light");
+
+}
 
 Entities::~Entities() {}
 
@@ -54,6 +60,16 @@ QObject *Entities::get(const QString& entity_id)
 void Entities::add(const QVariantMap& config, QObject *integrationObj)
 {
     Entity *entity;
-    entity = new Entity(config.value("type").toString(), config, integrationObj);
+    // Light entity
+    if (config.value("type").toString() == "light") {
+        entity = new Light(config, integrationObj);
+    }
+    // Blind entity
     m_entities.insert(entity->entity_id(), entity);
+}
+
+void Entities::update(const QString &entity_id, const QVariantMap& attributes)
+{
+    Entity *e = (Entity*)m_entities.value(entity_id);
+    e->update(attributes);
 }

@@ -37,8 +37,13 @@ public slots:
     void onTimeout                  ();
 
 private:
-    void updateEntity               (const QString& entity_id, const QString& state, const QVariantMap& attributes);
     void webSocketSendCommand	    (const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data);
+    int  convertBrightnessToPercentage (float value);
+
+
+    void updateEntity               (const QString& entity_id, const QVariantMap& attr);
+    void updateLight                (Entity* entity, const QVariantMap& attr);
+    void updateBlind                (Entity* entity, const QVariantMap& attr);
 
     EntitiesInterface*  m_entities;
 

@@ -1,7 +1,8 @@
-#ifndef ENTITIES_H
+﻿#ifndef ENTITIES_H
 #define ENTITIES_H
 
 #include <QObject>
+#include <QQmlComponent>
 #include <QtPlugin>
 #include <QList>
 #include <QString>
@@ -11,39 +12,46 @@
 
 #include "entitiesinterface.h"
 
-class Entities : public QObject, EntitiesInterface
+class Entities : public QObject , EntitiesInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "YIO.EntitiesInterface" FILE "entities.json")
+    Q_PLUGIN_METADATA(IID "YIO.EntitiesInterface")
     Q_INTERFACES(EntitiesInterface)
 
     // list of all entities
-    Q_PROPERTY  (QList<QObject *>    list    READ    list    CONSTANT)
+    Q_PROPERTY  (QList<QObject *>    list                   READ    list                    CONSTANT)
+    Q_PROPERTY  (QStringList         supported_entities     READ    supported_entities      CONSTANT)
 
 public:
     // get all entities
-    QList<QObject *>                list        ();
+    QList<QObject *>                list                ();
 
     // get entites by type
-    Q_INVOKABLE QList<QObject *>    getByType   (const QString& type);
+    Q_INVOKABLE QList<QObject *>    getByType           (const QString& type);
 
     // get entites by area
-    Q_INVOKABLE QList<QObject *>    getByArea   (const QString& area);
+    Q_INVOKABLE QList<QObject *>    getByArea           (const QString& area);
 
     // get entities by integration
-    Q_INVOKABLE QList<QObject *>    getByIntegration (const QString& integration);
+    Q_INVOKABLE QList<QObject *>    getByIntegration    (const QString& integration);
 
     // get entity by entity_id
-    Q_INVOKABLE QObject*            get         (const QString& entity_id);
+    Q_INVOKABLE QObject*            get                 (const QString& entity_id);
 
     // add an entity
-    Q_INVOKABLE void                add         (const QVariantMap& config, QObject *integrationObj);
+    Q_INVOKABLE void                add                 (const QVariantMap& config, QObject *integrationObj);
+
+    // update an entity
+    Q_INVOKABLE void                update              (const QString& entity_id, const QVariantMap& attributes);
+
+    QStringList                     supported_entities  () { return m_supported_entities; }
 
     explicit Entities               (QObject *parent = nullptr);
     virtual ~Entities();
 
 private:
-    QMap<QString, QObject*>         m_entities;
+    QMap<QString, QObject*>     m_entities;
+    QStringList                 m_supported_entities = {"light"};
 };
 
 #endif // ENTITIES_H
