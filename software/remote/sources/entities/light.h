@@ -20,6 +20,8 @@ public:
 
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
 
+    // light commands
+    // called from ui like: obj.toggle()
     Q_INVOKABLE void            toggle();
     Q_INVOKABLE void            turnOn();
     Q_INVOKABLE void            turnOff();
@@ -45,7 +47,6 @@ signals:
 
 public:
     static QString Type;
-
 
 private:
     bool            m_state;

@@ -1,7 +1,7 @@
 #ifndef HOMEASSISTANT_H
 #define HOMEASSISTANT_H
 
-#include <QtPlugin>
+//#include <QtPlugin>
 #include <QObject>
 #include <QString>
 #include <QColor>
@@ -35,14 +35,14 @@ public slots:
 
     void onTimeout                  ();
 
-    void sendCommand                (const QString& type, const QString& id, const QString& command, const QVariant& param);
+    void sendCommand                (const QString& type, const QString& id, const QString& command, const QVariant& param) override;
 
 private:
     void webSocketSendCommand	    (const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data);
     int  convertBrightnessToPercentage (float value);
 
 
-    void updateEntity               (const QString& entity_id, const QVariantMap& attr);
+    void updateEntity               (const QString& entity_id, const QVariantMap& attr) override;
     void updateLight                (Entity* entity, const QVariantMap& attr);
     void updateBlind                (Entity* entity, const QVariantMap& attr);
 
