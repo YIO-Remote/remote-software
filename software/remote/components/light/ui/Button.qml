@@ -43,14 +43,14 @@ Rectangle {
             if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
                 switch (button) {
                 case "dpad up":
-                    tmp = obj.attributes.brightness+10;
+                    tmp = obj.brightness+10;
                     if (tmp > 100) {
                         tmp = 100;
                     }
                     integration[obj.integration].obj.light.setBrightness(obj.entity_id, tmp);
                     break;
                 case "dpad down":
-                    tmp = obj.attributes.brightness-10;
+                    tmp = obj.brightness-10;
                     if (tmp < 0) {
                         tmp = 0;
                     }
@@ -74,7 +74,7 @@ Rectangle {
     color: colorMedium
     radius: cornerRadius
 
-    property int brightness: obj.attributes.brightness
+    property int brightness: obj.brightness
 
     onBrightnessChanged: {
         if (brightness > 0 && lightButton.state != "open") {
@@ -244,7 +244,7 @@ Rectangle {
         implicitWidth: 66
         anchors.right: parent.right
         anchors.rightMargin: 20
-        checked: obj.attributes.state === "off" ? false : true
+        checked: obj.state// === "off" ? false : true
         enabled: lightButton.state == "open" ? false: true
 
         indicator: Rectangle {
@@ -268,7 +268,7 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-            integration[obj.integration].obj.light.toggle(obj.entity_id);
+            obj.toggle();
         }
 
     }
@@ -281,7 +281,7 @@ Rectangle {
     Slider {
         id: brightnessSlider
         from: 0
-        value: obj.attributes.brightness
+        value: obj.brightness
         to: 100
         stepSize: 1
         live: false
@@ -295,9 +295,9 @@ Rectangle {
 
         background: Rectangle {
             id: sliderBG
-            //            x: obj.attributes.brightnessSlider.leftPadding
+            //            x: obj.brightnessSlider.leftPadding
             y: (brightnessSlider.height - height) / 2
-            //            width: obj.attributes.brightnessSlider.availableWidth
+            //            width: obj.brightnessSlider.availableWidth
             height: cornerRadius * 2
             //            radius: cornerRadius
             color: colorBackground
@@ -525,7 +525,7 @@ Rectangle {
         height: lightButton.height
         asynchronous: true
         active: lightButton.state == "open"
-        source: getSource() //lightButton.state != "open" ? "" : (obj.supported_features.indexOf("obj.attributes.brightness") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
+        source: getSource() //lightButton.state != "open" ? "" : (obj.supported_features.indexOf("obj.brightness") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {

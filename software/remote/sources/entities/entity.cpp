@@ -1,4 +1,5 @@
 #include "entity.h"
+
 #include <QtDebug>
 
 Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj) :
@@ -18,13 +19,14 @@ Entity::~Entity()
 {
 }
 
-bool Entity::command(const QString &command, const QVariant& param)
+void Entity::command(const QString &command, const QVariant& param)
 {
     QVariant returnedValue;
-    QMetaObject::invokeMethod(m_integrationObj, "sendCommand",
-        Q_RETURN_ARG(QVariant, returnedValue),
-        Q_ARG(QVariant, QVariant(m_type)), Q_ARG(QVariant, QVariant(entity_id())), Q_ARG(QVariant, QVariant(command)), Q_ARG(QVariant, param));
-    return returnedValue.toBool();
+    QMetaObject::invokeMethod(m_integrationObj, "sendCommand", Qt::AutoConnection,
+                              Q_ARG(QString, m_type),
+                              Q_ARG(QString, QString(entity_id())),
+                              Q_ARG(QString, command),
+                              Q_ARG(QVariant, param));
 }
 
 QVariantMap Entity::getDataToSave()
@@ -43,27 +45,14 @@ QVariantMap Entity::getDataToSave()
     return map;
 }
 
+bool Entity::update(const QVariantMap &attributes)
+{
+}
+
 void Entity::setFavorite(bool value)
 {
     if (m_favorite != value) {
         m_favorite = value;
         emit favoriteChanged();
-    }
-}
-
-void Entity::setSupported_features(QStringList supported_features)
-{
-    if (m_supported_features != supported_features) {
-        m_supported_features = supported_features;
-        emit featureChanged();
-    }
-}
-
-void Entity::setAttributes(QVariant attributes)
-{
-    if (attributes != m_attributes)
-    {
-        m_attributes = attributes;
-        emit attributesChanged();
     }
 }

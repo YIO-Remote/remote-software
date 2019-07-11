@@ -107,25 +107,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-        battery_voltage = battery.getVoltage() / 1000
-        battery_level = battery.getStateOfCharge() / 100
-        battery_health = battery.getStateOfHealth()
-        battery_design_capacity = battery.getDesignCapacity()
-        battery_full_available_capacity = battery.getFullAvailableCapacity()
-        battery_full_charge_capacity = battery.getFullChargeCapacity()
-
-        if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
-            // set turn on button to low
-            buttonHandler.interruptHandler.shutdown();
-            // halt
-            mainLauncher.launch("halt");
-        }
-
-        if (battery.getAveragePower() >= 0 ) {
-            chargingScreen.item.state = "visible";
-        } else {
-            chargingScreen.item.state = "hidden";
-        }
+        battery.checkBattery();
 
         switch (mode) {
         case "on":

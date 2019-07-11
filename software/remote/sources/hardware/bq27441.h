@@ -94,7 +94,7 @@ public:
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
     Q_INVOKABLE int getFullAvailableCapacity();
-    uint16_t getRemainingCapacity();
+    Q_INVOKABLE int getRemainingCapacity();
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
     uint16_t getInternalTemperature();            // Result in 0.1 Kelvins
