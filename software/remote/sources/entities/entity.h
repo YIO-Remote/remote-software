@@ -23,7 +23,7 @@ public:
     Q_PROPERTY  (QVariant       attributes READ attributes NOTIFY attributesChanged)		// all dynamic attributes component type specific, for example: state, brightness, etc.
 
     // send command to the integration
-    Q_INVOKABLE	bool		command		(const QString &command, const QVariant& param);
+    Q_INVOKABLE	void		command		(const QString &command, const QVariant& param);
 
     // get the data of an entity to save in config.json
     Q_INVOKABLE QVariantMap getDataToSave   ();

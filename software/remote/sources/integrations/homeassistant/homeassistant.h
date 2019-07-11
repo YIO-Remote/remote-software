@@ -24,7 +24,6 @@ public:
     Q_INVOKABLE void initialize	    (int integrationId, const QVariantMap& config, QObject *entities) override;
     Q_INVOKABLE void connect	    () override;
     Q_INVOKABLE void disconnect	    () override;
-    Q_INVOKABLE bool sendCommand    (const QString& type, const QString& id, const QString& command, const QVariant& param) override;
 
 signals:
     void notify();
@@ -35,6 +34,8 @@ public slots:
     void onError                    (QAbstractSocket::SocketError error);
 
     void onTimeout                  ();
+
+    void sendCommand                (const QString& type, const QString& id, const QString& command, const QVariant& param);
 
 private:
     void webSocketSendCommand	    (const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data);

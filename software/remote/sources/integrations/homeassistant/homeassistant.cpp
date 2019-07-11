@@ -62,7 +62,7 @@ void HomeAssistant::disconnect()
 
 }
 
-bool HomeAssistant::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
+void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
 {
     if (type == "light") {
         if (command == "TOGGLE")
@@ -89,7 +89,6 @@ bool HomeAssistant::sendCommand(const QString& type, const QString& entity_id, c
     }
     if (type == "blind") {
     }
-    return true;
 }
 
 void HomeAssistant::onTextMessageReceived(const QString &message)

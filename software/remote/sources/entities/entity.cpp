@@ -19,13 +19,14 @@ Entity::~Entity()
 {
 }
 
-bool Entity::command(const QString &command, const QVariant& param)
+void Entity::command(const QString &command, const QVariant& param)
 {
     QVariant returnedValue;
-    QMetaObject::invokeMethod(m_integrationObj, "sendCommand",
-                              Q_RETURN_ARG(QVariant, returnedValue),
-                              Q_ARG(QVariant, QVariant(m_type)), Q_ARG(QVariant, QVariant(entity_id())), Q_ARG(QVariant, QVariant(command)), Q_ARG(QVariant, param));
-    return returnedValue.toBool();
+    QMetaObject::invokeMethod(m_integrationObj, "sendCommand", Qt::AutoConnection,
+                              Q_ARG(QString, m_type),
+                              Q_ARG(QString, QString(entity_id())),
+                              Q_ARG(QString, command),
+                              Q_ARG(QVariant, param));
 }
 
 QVariantMap Entity::getDataToSave()

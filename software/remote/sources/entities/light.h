@@ -23,9 +23,9 @@ public:
     Q_INVOKABLE void            toggle();
     Q_INVOKABLE void            turnOn();
     Q_INVOKABLE void            turnOff();
-    Q_INVOKABLE void            setBrightness(int value) {}
-    Q_INVOKABLE void            setColor(QColor value) {}
-    Q_INVOKABLE void            setColorTemp(int value) {}
+    Q_INVOKABLE void            setBrightness(int value);
+    Q_INVOKABLE void            setColor(QColor value);
+    Q_INVOKABLE void            setColorTemp(int value);
 
     explicit Light();
     Light(const QVariantMap& config, QObject* integrationObj);

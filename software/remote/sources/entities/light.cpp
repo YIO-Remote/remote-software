@@ -30,16 +30,32 @@ bool Light::update(const QVariantMap &attributes)
 
 void Light::toggle()
 {
+    command("TOGGLE", "");
 }
 
 void Light::turnOn()
 {
-
+    command("ON", "");
 }
 
 void Light::turnOff()
 {
+    command("OFF", "");
+}
 
+void Light::setBrightness(int value)
+{
+    command("BRIGHTNESS", value);
+}
+
+void Light::setColor(QColor value)
+{
+    command("COLOR", QVariant(value));
+}
+
+void Light::setColorTemp(int value)
+{
+    command("COLORTEMP", value);
 }
 
 Light::Light() :

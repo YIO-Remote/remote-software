@@ -38,7 +38,7 @@ Rectangle {
         }
 
         onReleased: {
-            integration[obj.integration].obj.light.setBrightness(obj.entity_id, dragger.percent);
+            obj.setBrightness(dragger.percent);
         }
     }
 
@@ -151,11 +151,11 @@ Rectangle {
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonTextColor: colorBackground
-        buttonText: obj.state ? "Turn on" : "Turn off"
+        buttonText: obj.state ? "Turn off" : "Turn on"
 
         mouseArea.onClicked: {
             haptic.playEffect("click");
-            integration[obj.integration].obj.light.toggle(obj.entity_id);
+            obj.toggle();
         }
     }
 

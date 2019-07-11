@@ -21,9 +21,6 @@ public:
 
     // disconnects the integration Hub
     virtual void    disconnect() = 0;
-
-    // send a command to the integration hub
-    virtual bool    sendCommand	(const QString& type, const QString& entity_id, const QString& command, const QVariant& param) = 0;
 };
 
 QT_BEGIN_NAMESPACE
