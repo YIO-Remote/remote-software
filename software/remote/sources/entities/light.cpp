@@ -1,10 +1,7 @@
 #include <QtDebug>
-
 #include "light.h"
 
-
 QString Light::Type = "light";
-
 
 bool Light::update(const QVariantMap &attributes)
 {

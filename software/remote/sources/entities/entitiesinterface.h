@@ -23,6 +23,7 @@ public:
     // get entity by entity_id
     virtual QObject*            get         (const QString& entity_id) = 0;
 
+    // update an entity's attributes
     virtual void                update      (const QString& entity_id, const QVariantMap& attributes) = 0;
 };
 

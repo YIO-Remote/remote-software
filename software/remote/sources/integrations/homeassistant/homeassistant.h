@@ -1,7 +1,7 @@
 #ifndef HOMEASSISTANT_H
 #define HOMEASSISTANT_H
 
-#include <QtPlugin>
+//#include <QtPlugin>
 #include <QObject>
 #include <QString>
 #include <QColor>
