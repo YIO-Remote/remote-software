@@ -23,11 +23,15 @@ void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* 
             setFriendlyName(iter.value().toString());
     }
     m_entities = qobject_cast<EntitiesInterface *>(entities);
+
+    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
+    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), m_manager, SLOT(deleteLater()));
 }
 
 void OpenHAB::connect()
 {
     setState(CONNECTING);
+    getRequest(m_ip + QString("/rest"));
 
 }
 
@@ -61,4 +65,22 @@ void OpenHAB::updateLight(Entity* entity, const QVariantMap& attr)
     QVariantMap attributes;
 
     m_entities->update(entity->entity_id(), attributes);
+}
+
+void OpenHAB::getRequest(const QString &url)
+{
+    m_request.setUrl(QUrl(url));
+    m_manager->get(m_request);
+}
+
+void OpenHAB::managerFinished(QNetworkReply *reply)
+{
+    if (reply->error()) {
+        qDebug() << reply->errorString();
+    }
+
+    QByteArray response = reply->readAll();
+    QJsonDocument json = QJsonDocument::fromJson(response);
+
+    qDebug() << json;
 }

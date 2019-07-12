@@ -7,6 +7,8 @@
 #include <QColor>
 #include <QVariant>
 #include <QTimer>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 #include "../integration.h"
 #include "../integrationinterface.h"
@@ -29,11 +31,16 @@ signals:
 
 public slots:
      void sendCommand                (const QString& type, const QString& id, const QString& command, const QVariant& param) override;
+     void processResponse            (QNetworkReply* reply);
 
 private:
     void updateEntity               (const QString& entity_id, const QVariantMap& attr) override;
     void updateLight                (Entity* entity, const QVariantMap& attr);
     void updateBlind                (Entity* entity, const QVariantMap& attr);
+
+    void getRequest                 (const QString& url);
+    QNetworkAccessManager*          m_manager = new QNetworkAccessManager();
+    QNetworkRequest                 m_request;
 
     EntitiesInterface*  m_entities;
 

@@ -1,6 +1,6 @@
 TEMPLATE        = lib
 CONFIG         += plugin
-QT             += core quick
+QT             += core quick network
 HEADERS         = openhab.h \
                   ../integration.h \
                   ../integrationinterface.h

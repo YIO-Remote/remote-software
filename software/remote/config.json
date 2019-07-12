@@ -144,6 +144,16 @@
         }
     ],
     "integration": [
+	{
+            "data": {
+                "ip": "localhost:8080",
+             },
+            "friendly_name": "OpenHAB",
+            "id": 2,
+            "obj": null,
+            "plugin": "openhab",
+            "type": "openhab"
+        }
 
     ],
     "language": "en_US",
