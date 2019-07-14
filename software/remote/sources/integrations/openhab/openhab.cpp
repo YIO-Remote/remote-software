@@ -7,6 +7,8 @@
 
 OpenHAB::OpenHAB()
 {
+    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(processResponse(QNetworkReply*)));
+    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), m_manager, SLOT(deleteLater()));
 }
 
 void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* entities)
@@ -23,23 +25,18 @@ void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* 
             setFriendlyName(iter.value().toString());
     }
     m_entities = qobject_cast<EntitiesInterface *>(entities);
-
-    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
-    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), m_manager, SLOT(deleteLater()));
 }
 
 void OpenHAB::connect()
 {
     setState(CONNECTING);
-    getRequest(m_ip + QString("/rest"));
-
+    // check if the api can be accessed
+    getRequest(QString(""));
 }
 
 void OpenHAB::disconnect()
 {
-
     setState(DISCONNECTED);
-
 }
 
 void OpenHAB::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
@@ -69,18 +66,30 @@ void OpenHAB::updateLight(Entity* entity, const QVariantMap& attr)
 
 void OpenHAB::getRequest(const QString &url)
 {
-    m_request.setUrl(QUrl(url));
+    QUrl fullUrl = QUrl(QString("http://" + m_ip + "/rest" + url));
+
+    m_request.setRawHeader("Content-Type", "application/json");
+    m_request.setUrl(fullUrl);
+
     m_manager->get(m_request);
 }
 
-void OpenHAB::managerFinished(QNetworkReply *reply)
+void OpenHAB::processResponse(QNetworkReply *reply)
 {
     if (reply->error()) {
         qDebug() << reply->errorString();
     }
 
     QByteArray response = reply->readAll();
-    QJsonDocument json = QJsonDocument::fromJson(response);
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(response);
+    QVariantMap json = jsonDoc.toVariant().toMap();
 
-    qDebug() << json;
+    // check if api is up
+    if (json.value("version").toString() != "0") {
+        setState(CONNECTED);
+        qDebug() << "OpenHAB connected.";
+
+        // get a list of items
+        getRequest("/items");
+    }
 }
