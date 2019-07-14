@@ -24,3 +24,4 @@ software/build-*
 software/remote/translations/*.ts
 software/remote/translations/*.qm
 !software/remote/translations/en_US.ts
+*.user
