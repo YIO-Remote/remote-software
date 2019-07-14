@@ -9,6 +9,12 @@ OpenHAB::OpenHAB()
 {
     QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(processResponse(QNetworkReply*)));
     QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), m_manager, SLOT(deleteLater()));
+
+    m_polling_timer.setSingleShot(false);
+    m_polling_timer.setInterval(1000);
+    m_polling_timer.stop();
+
+    QObject::connect(&m_polling_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
 void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* entities)
@@ -18,6 +24,9 @@ void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* 
         if (iter.key() == "data") {
             QVariantMap map = iter.value().toMap();
             m_ip = map.value("ip").toString();
+            if (map.value("polling_interval").toBool()) {
+                m_polling_interval = map.value("polling_interval").toInt();
+            }
         }
         else if (iter.key() == "type")
             setType(iter.value().toString());
@@ -36,6 +45,7 @@ void OpenHAB::connect()
 
 void OpenHAB::disconnect()
 {
+    m_polling_timer.stop();
     setState(DISCONNECTED);
 }
 
@@ -74,6 +84,12 @@ void OpenHAB::getRequest(const QString &url)
     m_manager->get(m_request);
 }
 
+void OpenHAB::onTimeout()
+{
+    // get a list of items
+    getRequest("/items");
+}
+
 void OpenHAB::processResponse(QNetworkReply *reply)
 {
     if (reply->error()) {
@@ -89,7 +105,10 @@ void OpenHAB::processResponse(QNetworkReply *reply)
         setState(CONNECTED);
         qDebug() << "OpenHAB connected.";
 
-        // get a list of items
-        getRequest("/items");
+        // start polling
+        m_polling_timer.start();
     }
+
+    // process the list of items
+
 }

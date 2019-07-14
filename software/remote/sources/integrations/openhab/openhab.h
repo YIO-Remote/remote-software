@@ -42,9 +42,13 @@ private:
     QNetworkAccessManager*          m_manager = new QNetworkAccessManager();
     QNetworkRequest                 m_request;
 
+    QTimer                          m_polling_timer;
+    void onTimeout                  ();
+
     EntitiesInterface*  m_entities;
 
     QString 			m_ip;
+    int                 m_polling_interval=1000; // default 1 second
 
 };
 
