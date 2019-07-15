@@ -52,11 +52,11 @@ void HomeAssistant::connect()
 
 void HomeAssistant::disconnect()
 {
-    // turn off the socket
-    m_socket.close();
-
     // turn of the reconnect try
     m_websocketReconnect.stop();
+
+    // turn off the socket
+    m_socket.close();
 
     setState(DISCONNECTED);
 

@@ -129,7 +129,7 @@ Item {
             if (itemsLoaded >= 3) {
                 if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-//                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+                    //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
         }
@@ -159,13 +159,15 @@ Item {
     // BOTTOM GRADIENT FADE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
+    Image {
         id: bottomGradient
-        width: parent.width
-        height: mainNavigation.state == "closed" ? 80 : 160
+        width: 480
+        height: 80
         anchors.bottom: mainNavigation.top
-
-        opacity: 1 //mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd ? 0 : 1
+        asynchronous: true
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/images/navigation/bottom_gradient.png"
+        opacity: 1
 
         Behavior on opacity {
             NumberAnimation {
@@ -173,13 +175,7 @@ Item {
                 easing.type: Easing.OutExpo
             }
         }
-
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: colorBackgroundTransparent }
-            GradientStop { position: 0.9; color: colorBackground }
-        }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION

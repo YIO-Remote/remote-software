@@ -23,5 +23,6 @@
         <file>images/notification/icon-notification-normal.png</file>
         <file>images/settings/battery-level.png</file>
         <file>images/settings/average-power.png</file>
+        <file>images/navigation/bottom_gradient.png</file>
     </qresource>
 </RCC>

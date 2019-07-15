@@ -112,7 +112,7 @@ ApplicationWindow {
             //            console.debug("Battery full available capacity: " + battery_full_available_capacity);
             //            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
             //            console.debug("Average power: " + battery.getAveragePower() + "mW");
-//                        console.debug("Average current: " + battery.getAverageCurrent() + "mA");
+            //                        console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -157,28 +157,34 @@ ApplicationWindow {
 
     property bool darkMode: true
 
-    property string colorBackground: darkMode ? "#000000" : "#ffffff"
-    property string colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
-
-    property string colorText: darkMode ? "#ffffff" : "#000000"
-    property string colorLine: darkMode ? "#ffffff" : "#000000"
-    property string colorHighlight: "#918682"
 
     property string colorLight: darkMode ? "#2E373D" : "#CBCBCB"
     property string colorMedium: darkMode ? "#262626" : "#D4D4D4"
     property string colorDark: darkMode ? "#16191E" : "#ffffff"
     property string colorDarkest: darkMode ? "#0E0F12" : "#0E0F12"
 
+    property string colorSwitchOff: darkMode ? "#484848" : "#000000"
+    property string colorSwitchOn : darkMode ? "#ffffff" : "#000000"
+
+    property string colorButton: darkMode ? "#121519" : "#EAEAEA"
+    property string colorButtonFav: darkMode ? "#1A1D23" : "#1A1D23"
+    property string colorButtonPressed :darkMode ? "#282828" : "#000000"
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // good colors come here
     property string colorGreen: "#19D37B"
     property string colorRed: "#EA003C"
 
-    property string colorSwitch: darkMode ? "#373737" : "#B9B9B9"
-    property string colorSwitchOn : darkMode ? "#ffffff" : "#ffffff"
-    property string colorSwitchBackground: darkMode ? "#000000" : "#ffffff"
+    property string colorBackground: darkMode ? "#000000" : "#ffffff"
+    property string colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
 
-    property string colorButton: darkMode ? "#121519" : "#EAEAEA"
-    property string colorButtonPressed :darkMode ? "#16191E" : "#D7D7D7"
-    property string colorButtonFav: darkMode ? "#1A1D23" : "#1A1D23"
+    property string colorText: darkMode ? "#ffffff" : "#000000"
+    property string colorLine: darkMode ? "#ffffff" : "#000000"
+    property string colorHighlight: "#918682"
+    property string colorHighlight2: "#313247"
+
+    property string colorButtonMedium: darkMode ? "#282828" : "#000000"
+    property string colorButtonBackground: darkMode ? "#1C1C1C" : "#000000"
 
     //    property string colorRoundButton: "#1A1D23"
 

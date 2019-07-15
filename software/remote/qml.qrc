@@ -9,6 +9,7 @@
         <file>basic_ui/ProgressCircle.qml</file>
         <file>basic_ui/LoadingScreen.qml</file>
         <file>basic_ui/CustomButton.qml</file>
+        <file>basic_ui/CustomSwitch.qml</file>
         <file>MainContainer.qml</file>
         <file>basic_ui/StatusBar.qml</file>
         <file>basic_ui/MainNavigation.qml</file>

@@ -13,11 +13,11 @@ Item {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: mainNavigation; height: 60}
+            PropertyChanges {target: mainNavigation; height: 80}
         },
         State {
             name: "open"
-            PropertyChanges {target: mainNavigation; height: 130}
+            PropertyChanges {target: mainNavigation; height: 150}
         }
     ]
 
@@ -227,11 +227,12 @@ Item {
                 Text {
                     id: buttonText
                     color: colorText
+                    height: 30
                     text: qsTr(display_name) + translateHandler.emptyString
                     horizontalAlignment: Text.AlignHCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 20
+                    anchors.bottomMargin: 25
                     font.family: "Open Sans"
                     font.weight: Font.Normal
                     font.pixelSize: 27
