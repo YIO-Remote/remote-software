@@ -19,12 +19,14 @@ Rectangle {
 
         PauseAnimation {duration: 1000}
         ParallelAnimation {
-            SequentialAnimation {
-                PropertyAnimation { target: yio_Y; properties: "x"; to: -150; easing.type: Easing.OutExpo; duration: 600 }
-            }
+            PropertyAnimation { target: yio_Y; properties: "x"; to: -150; easing.type: Easing.OutExpo; duration: 600 }
+            PropertyAnimation { target: yio_Y; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 600 }
             SequentialAnimation {
                 PauseAnimation {duration: 100}
-                PropertyAnimation { target: yio_I; properties: "x"; to: -50; easing.type: Easing.OutExpo; duration: 600 }
+                ParallelAnimation {
+                    PropertyAnimation { target: yio_I; properties: "x"; to: -50; easing.type: Easing.OutExpo; duration: 600 }
+                    PropertyAnimation { target: yio_I; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 600 }
+                }
             }
             SequentialAnimation {
                 PauseAnimation {duration: 100}
@@ -61,8 +63,8 @@ Rectangle {
     Connections {
         target: endAnim
         onFinished: {
-            parent.source = "";
-            parent.active = false;
+            loadingScreen.source = "";
+            loadingScreen.active = false;
         }
     }
 

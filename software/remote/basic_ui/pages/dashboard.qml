@@ -3,13 +3,32 @@ import QtQuick.Controls 2.4
 
 Flickable {
     id: itemFlickable
+
+    //: Name of the settings page
+    property string title: qsTr("Favorites") + translateHandler.emptyString
+
+    signal scrolledUp()
+    signal scrolledDown()
+
+    onContentYChanged: {
+        if (contentY > 130) {
+            scrolledUp();
+        } else {
+            scrolledDown();
+        }
+    }
+
     width: parent.width
     height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
+    contentHeight: iconFlow.height + 40 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
+
+    onFlickStarted: {
+        loader_main.item.mainNavigation.y = 800;
+    }
 
     Behavior on contentY {
         PropertyAnimation {

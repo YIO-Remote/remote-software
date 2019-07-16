@@ -7,33 +7,9 @@ import "qrc:/scripts/helper.js" as JSHelper
 Item {
     id: mainNavigation
     width: parent.width
+    height: 150
 
     state: "open"
-
-    property int closedHeight: 70
-    property int openHeight: 150
-
-    states: [
-        State {
-            name: "closed"
-            PropertyChanges {target: mainNavigation; height: closedHeight}
-        },
-        State {
-            name: "open"
-            PropertyChanges {target: mainNavigation; height: openHeight}
-        }
-    ]
-
-    transitions: [
-        Transition {
-            to: "closed"
-            PropertyAnimation { target: mainNavigation; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
-        },
-        Transition {
-            to: "open"
-            PropertyAnimation { target: mainNavigation; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
-        }
-    ]
 
     Rectangle {
         anchors.fill: parent
@@ -197,7 +173,7 @@ Item {
                 }
 
                 width: buttonText.implicitWidth+30
-                height: mainNavigation.state == "open" ? openHeight : closedHeight
+                height: 150
                 color: colorBackgroundTransparent
                 opacity: selected ? 1 : 0.3
 

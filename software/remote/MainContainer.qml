@@ -79,7 +79,7 @@ Item {
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
-        height: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
+        height: parent.height-statusBar.height-miniMediaPlayer.height
         anchors.top: statusBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -137,14 +137,6 @@ Item {
 
     onItemsLoadedChanged: {
         if (itemsLoaded >= 2) {
-            mainNavigation.state = Qt.binding(function() {
-                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
-                    return "open"
-                } else {
-                    return "closed"
-                }
-            })
-
             bottomGradient.opacity = Qt.binding(function() {
                 if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd) {
                     return 0
@@ -155,6 +147,13 @@ Item {
         }
     }
 
+//    Connections {
+//        target: mainNavigationSwipeview.currentItem.mainNavigationLoader.item
+//        onFlickStarted: {
+//            mainNavigation.y = parent.height;
+//        }
+//    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BOTTOM GRADIENT FADE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,11 +162,10 @@ Item {
         id: bottomGradient
         width: 480
         height: 80
-        anchors.bottom: mainNavigation.top
+        anchors.bottom: miniMediaPlayer.top
         asynchronous: true
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.Stretch
         source: "qrc:/images/navigation/bottom_gradient.png"
-        opacity: 1
 
         Behavior on opacity {
             NumberAnimation {
@@ -178,18 +176,83 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // PAGE INDICATOR
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    PageIndicator {
+        id: indicator
+
+        count: mainNavigationSwipeview.count
+        currentIndex: mainNavigationSwipeview.currentIndex
+
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        delegate: Rectangle {
+            width: 8
+            height: 8
+            radius: height/2
+            color: colorText
+            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias mainNavigation: mainNavigation
 
     BasicUI.MainNavigation {
         id: mainNavigation
-        anchors.bottom: miniMediaPlayer.top
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: 0
+        y: parent.height - mainNavigation.height
         anchors.horizontalCenter: parent.horizontalCenter
-        state: "open" // mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning ? "open" : "closed"
 
+        Behavior on y {
+            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
+        }
     }
 
+    MouseArea {
+        width: parent.width
+        height: 100
+        anchors.bottom: parent.bottom
+        enabled: mainNavigation.y == 800 ? true : false
+        propagateComposedEvents: true
+
+        property real velocity: 0.0
+        property int yStart: 0
+        property int yPrev: 0
+        property bool tracing: false
+
+        onPressed: {
+            yStart = mouse.y;
+            yPrev = mouse.y;
+            velocity = 0;
+            tracing = true;
+        }
+
+        onPositionChanged: {
+            if (!tracing) return
+            var currVel = (mouse.y-yPrev);
+            velocity = (velocity-currVel)/2.0
+            yPrev = mouse.y
+
+            if (velocity < 15 && mouse.y < parent.height*0.4) {
+                tracing = false;
+                mainNavigation.y = 800 - mainNavigation.height;
+            }
+        }
+
+        onReleased: {
+            tracing = false;
+//            if (velocity < 15 && mouse.y < parent.height*0.2) {
+//                console.debug("Swipe detected 2");
+//            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MINI MEDIA PLAYER
@@ -198,7 +261,7 @@ Item {
         id: miniMediaPlayer
         width: parent.width
         height: 0
-        anchors.bottom: parent.bottom
+        anchors.bottom: mainNavigation.top
     }
 
 
