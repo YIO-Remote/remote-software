@@ -10,14 +10,17 @@ Item {
 
     state: "open"
 
+    property int closedHeight: 70
+    property int openHeight: 150
+
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: mainNavigation; height: 80}
+            PropertyChanges {target: mainNavigation; height: closedHeight}
         },
         State {
             name: "open"
-            PropertyChanges {target: mainNavigation; height: 150}
+            PropertyChanges {target: mainNavigation; height: openHeight}
         }
     ]
 
@@ -190,11 +193,11 @@ Item {
 
                 anchors {
                     horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
+                    bottom: parent.bottom
                 }
 
                 width: buttonText.implicitWidth+30
-                height: mainNavigation.state == "open" ? 130 : 60
+                height: mainNavigation.state == "open" ? openHeight : closedHeight
                 color: colorBackgroundTransparent
                 opacity: selected ? 1 : 0.3
 
@@ -227,12 +230,11 @@ Item {
                 Text {
                     id: buttonText
                     color: colorText
-                    height: 30
                     text: qsTr(display_name) + translateHandler.emptyString
                     horizontalAlignment: Text.AlignHCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 25
+                    anchors.bottomMargin: 20
                     font.family: "Open Sans"
                     font.weight: Font.Normal
                     font.pixelSize: 27
@@ -247,7 +249,7 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     anchors.horizontalCenter: buttonText.horizontalCenter
                     anchors.bottom: buttonText.top
-                    anchors.bottomMargin: 10
+                    anchors.bottomMargin: 15
                     source: name == "area" ? "qrc:/images/navigation/icon-area-" + Math.floor(Math.random() * (3 - 0)) + ".png" : "qrc:/images/navigation/icon-" + name + ".png"
 
                     ColorOverlay {

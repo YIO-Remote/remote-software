@@ -27,7 +27,8 @@ HEADERS += \
     sources/entities/entity.h \
     sources/integrations/integrationinterface.h \
     sources/entities/entitiesinterface.h \
-    sources/entities/light.h
+    sources/entities/light.h \
+    sources/entities/blind.h
 
 SOURCES += \
     sources/main.cpp \
@@ -38,7 +39,8 @@ SOURCES += \
     sources/hardware/bq27441.cpp \
     sources/entities/entities.cpp \
     sources/entities/entity.cpp \
-    sources/entities/light.cpp
+    sources/entities/light.cpp \
+    sources/entities/blind.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \
