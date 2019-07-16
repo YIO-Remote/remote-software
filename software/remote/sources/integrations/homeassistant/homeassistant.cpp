@@ -88,6 +88,17 @@ void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, c
         }
     }
     if (type == "blind") {
+        if (command == "OPEN")
+            webSocketSendCommand("cover", "open_cover", entity_id, NULL);
+        else if (command == "CLOSE")
+            webSocketSendCommand("cover", "close_cover", entity_id, NULL);
+        else if (command == "STOP")
+            webSocketSendCommand("cover", "stop_cover", entity_id, NULL);
+        else if (command == "POSITION") {
+            QVariantMap data;
+            data.insert("position", param);
+            webSocketSendCommand("cover", "set_cover_position", entity_id, &data);
+        }
     }
 }
 
@@ -229,7 +240,9 @@ void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& at
         if (entity->type() == "light") {
             updateLight(entity, attr);
         }
-        //m_entities->update(entity_id, attr);
+        if (entity->type() == "blind") {
+            updateBlind(entity, attr);
+        }
     }
 }
 
@@ -266,6 +279,23 @@ void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
     if (entity->supported_features().indexOf("COLORTEMP") > -1) {
 
     }
+
+    m_entities->update(entity->entity_id(), attributes);
+}
+
+void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
+{
+    QVariantMap attributes;
+
+    // state
+    if (attr.value("state").toString() == "open") {
+        attributes.insert("state", true);
+    } else {
+        attributes.insert("state", false);
+    }
+
+    // position
+    attributes.insert("current_position", attr.value("attributes").toMap().value("current_position").toInt());
 
     m_entities->update(entity->entity_id(), attributes);
 }
