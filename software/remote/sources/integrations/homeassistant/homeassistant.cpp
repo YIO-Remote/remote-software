@@ -156,6 +156,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
 void HomeAssistant::onStateChanged(QAbstractSocket::SocketState state)
 {
     if (state == QAbstractSocket::UnconnectedState) {
+        m_socket.close();
         setState(DISCONNECTED);
         m_websocketReconnect.start();
     }
@@ -170,7 +171,7 @@ void HomeAssistant::onError(QAbstractSocket::SocketError error)
 
 void HomeAssistant::onTimeout()
 {
-    if (m_tries == 1) {
+    if (m_tries == 3) {
         m_websocketReconnect.stop();
 
         emit notify();

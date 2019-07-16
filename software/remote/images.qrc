@@ -2,9 +2,6 @@
     <qresource prefix="/">
         <file>images/chargingscreen/icon-battery-lightning.png</file>
         <file>images/popuplowbattery/icon-lowbattery.png</file>
-        <file>images/loading/icon-loading-ok.png</file>
-        <file>images/loading/icon-loading-x.png</file>
-        <file>images/loading/icon-loading.png</file>
         <file>images/navigation/icon-area-0.png</file>
         <file>images/navigation/icon-area-1.png</file>
         <file>images/navigation/icon-area-2.png</file>
@@ -24,5 +21,8 @@
         <file>images/settings/battery-level.png</file>
         <file>images/settings/average-power.png</file>
         <file>images/navigation/bottom_gradient.png</file>
+        <file>images/loading/I.png</file>
+        <file>images/loading/O.png</file>
+        <file>images/loading/Y.png</file>
     </qresource>
 </RCC>
