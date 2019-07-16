@@ -259,10 +259,12 @@ Item {
 
             // mode = shutdown
             if (secondsPassed == shutdownTime * 1000) {
-                // set turn on button to low
-                buttonHandler.interruptHandler.shutdown();
-                // halt
-                mainLauncher.launch("halt");
+                loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
+                loadingScreen.active = true;
+//                // set turn on button to low
+//                buttonHandler.interruptHandler.shutdown();
+//                // halt
+//                mainLauncher.launch("halt");
             }
         }
     }

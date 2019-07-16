@@ -134,4 +134,5 @@ macx {
     extraData.path = $$DESTDIR
 }
 
-DISTFILES +=
+DISTFILES += \
+    basic_ui/ClosingScreen.qml

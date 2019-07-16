@@ -150,10 +150,12 @@ Item {
             anchors.leftMargin: 40
 
             mouseArea.onClicked: {
-                settingsLauncher.launch("fbv -d 1 /bye.png")
-                console.debug("now shutdown")
-                buttonHandler.interruptHandler.shutdown();
-                settingsLauncher.launch("halt");
+                loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
+                loadingScreen.active = true;
+                //                settingsLauncher.launch("fbv -d 1 /bye.png")
+                //                console.debug("now shutdown")
+                //                buttonHandler.interruptHandler.shutdown();
+                //                settingsLauncher.launch("halt");
             }
         }
     }

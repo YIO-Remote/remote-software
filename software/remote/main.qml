@@ -90,10 +90,12 @@ ApplicationWindow {
         interval: 20000
 
         onTriggered: {
-            // set turn on button to low
-            buttonHandler.interruptHandler.shutdown();
-            // halt
-            mainLauncher.launch("halt");
+            loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
+            loadingScreen.active = true;
+//            // set turn on button to low
+//            buttonHandler.interruptHandler.shutdown();
+//            // halt
+//            mainLauncher.launch("halt");
         }
     }
 
