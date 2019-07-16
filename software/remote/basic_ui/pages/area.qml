@@ -42,10 +42,29 @@ Flickable {
         opacity: 0.5
     }
 
+    Rectangle {
+        id: titleContainer
+        width: parent.width
+        height: 200
+        color: colorBackground
+
+        Text {
+            id: titleText
+            color: colorText
+            text: qsTr(area) + translateHandler.emptyString
+            anchors.centerIn: parent
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 60
+            lineHeight: 1
+        }
+    }
+
     Column {
         id: iconFlow
         width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: titleContainer.bottom
         spacing: 10
 
         Component.onCompleted: {

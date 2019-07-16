@@ -50,36 +50,36 @@ ApplicationWindow {
         }
 
         function checkBattery() {
-            // read battery data
-            battery_voltage = battery.getVoltage() / 1000
-            battery_level = battery.getStateOfCharge() / 100
-            battery_health = battery.getStateOfHealth()
-            battery_design_capacity = battery.getDesignCapacity()
-            battery_remaining_capacity = battery.getRemainingCapacity()
-            battery_averagepower = battery.getAveragePower()
-            battery_averagecurrent = battery.getAverageCurrent()
+//            // read battery data
+//            battery_voltage = battery.getVoltage() / 1000
+//            battery_level = battery.getStateOfCharge() / 100
+//            battery_health = battery.getStateOfHealth()
+//            battery_design_capacity = battery.getDesignCapacity()
+//            battery_remaining_capacity = battery.getRemainingCapacity()
+//            battery_averagepower = battery.getAveragePower()
+//            battery_averagecurrent = battery.getAverageCurrent()
 
-            // if the designcapacity is off correct it
-            if (battery_design_capacity != battery.capacity) {
-                console.debug("Design capacity doesn't match. Recalibrating battery.");
-                battery.changeCapacity(battery.capacity);
-            }
+//            // if the designcapacity is off correct it
+//            if (battery_design_capacity != battery.capacity) {
+//                console.debug("Design capacity doesn't match. Recalibrating battery.");
+//                battery.changeCapacity(battery.capacity);
+//            }
 
-            // if voltage is too low and we are sourcing power turn off the remote after timeout
-            if (battery_voltage <= 3.4 && battery_averagepower < 0) {
-                shutdownDelayTimer.start();
-            }
+//            // if voltage is too low and we are sourcing power turn off the remote after timeout
+//            if (battery_voltage <= 3.4 && battery_averagepower < 0) {
+//                shutdownDelayTimer.start();
+//            }
 
-            // hide and show the charging screen
-            if (battery_averagepower >= 0 ) {
-                chargingScreen.item.state = "visible";
-                // cancel shutdown when started charging
-                if (shutdownDelayTimer.running) {
-                    shutdownDelayTimer.stop();
-                }
-            } else {
-                chargingScreen.item.state = "hidden";
-            }
+//            // hide and show the charging screen
+//            if (battery_averagepower >= 0 ) {
+//                chargingScreen.item.state = "visible";
+//                // cancel shutdown when started charging
+//                if (shutdownDelayTimer.running) {
+//                    shutdownDelayTimer.stop();
+//                }
+//            } else {
+//                chargingScreen.item.state = "hidden";
+//            }
         }
     }
 

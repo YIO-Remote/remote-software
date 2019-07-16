@@ -1,7 +1,7 @@
 import QtQuick 2.11
 
 Rectangle {
-    id: connectionLoader
+    id: loadingScreenComp
     anchors.fill: parent
     color: "#00000000"
 
@@ -37,6 +37,7 @@ Rectangle {
             }
         }
         PauseAnimation {duration: 500}
+        PropertyAction { target: loadingScreenComp; property: "startAnimFinished"; value: true }
     }
 
     SequentialAnimation {
@@ -48,21 +49,24 @@ Rectangle {
         PropertyAnimation { target: yio_O; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
         PauseAnimation {duration: 500}
         ParallelAnimation {
-            PropertyAnimation { target: left; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 1000 }
-            PropertyAnimation { target: right; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 1000 }
+            PropertyAnimation { target: left; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 800 }
+            PropertyAnimation { target: right; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 800 }
         }
+        PropertyAction { target: loadingScreenComp; property: "endAnimFinished"; value: true }
     }
 
-    Connections {
-        target: startAnim
-        onFinished: {
+    property bool startAnimFinished: false;
+
+    onStartAnimFinishedChanged: {
+        if (startAnimFinished) {
             loader_main.active = true;
         }
     }
 
-    Connections {
-        target: endAnim
-        onFinished: {
+    property bool endAnimFinished: false;
+
+    onEndAnimFinishedChanged: {
+        if (endAnimFinished) {
             loadingScreen.source = "";
             loadingScreen.active = false;
         }

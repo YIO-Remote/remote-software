@@ -76,6 +76,8 @@ Item {
     property int itemsLoaded: 0
     property bool startUp: false
 
+    property int prevIndex: 0
+
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
@@ -121,9 +123,14 @@ Item {
         }
 
         onCurrentIndexChanged: {
+            // change navigation index after startup
             if (mainNavigationSwipeview.count == mainNavigation.menuConfig.count && !startUp) {
                 startUp = true
                 mainNavigationSwipeview.currentIndex = 0
+            }
+
+            if (startUp) {
+                mainNavigation.mainNavigationListView.currentIndex = currentIndex;
             }
 
             if (itemsLoaded >= 3) {
@@ -131,6 +138,13 @@ Item {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
                     //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
+            }
+
+            // change the statusbar title
+            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
+               statusBar.title = "";
+            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+                statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
             }
         }
     }
