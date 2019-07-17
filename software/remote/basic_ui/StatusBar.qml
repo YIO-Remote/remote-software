@@ -128,7 +128,7 @@ Item {
         width: 26
         height: width
         radius: width/2
-        color: isThereAnError() ? colorRed : colorHighlight
+        color: isThereAnError() ? colorRed : colorHighlight1
         visible: notifications.length > 0 ? true : false
         anchors.right: timeText.left
         anchors.rightMargin: 10

@@ -127,6 +127,11 @@ macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
+
+#    INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
+#    INTEGRATIONS.path = Contents/Resources/plugins
+#    QMAKE_BUNDLE_DATA += INTEGRATIONS
+
 } else {
     CONFIG += file_copies
     COPIES += extraData

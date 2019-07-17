@@ -85,7 +85,7 @@ Flickable {
                             var spacerObj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', iconFlow, '')
                         }
                         if (hasTitle) {
-                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 60; x:10; text: "'+ supported_entities_translation[loaded_entities[k].id] +'";}', iconFlow, "");
+                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 60; x:10; text: "'+ entities.supported_entities_translation[loaded_entities[k].id] +'";}', iconFlow, "");
                         }
                         hasTitle = false;
 

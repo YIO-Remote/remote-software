@@ -21,18 +21,19 @@ Rectangle {
                 PropertyAnimation { target: right; properties: "width"; to: 240; easing.type: Easing.Linear; duration: 1000 }
             }
         }
+        PropertyAction { target: closingScreen; property: "startAnimFinished"; value: true }
     }
 
-    Connections {
-        target: startAnim
-        onFinished: {
+    property bool startAnimFinished: false
+
+    onStartAnimFinishedChanged: {
+        if (startAnimFinished) {
             console.debug("NOW SHUTDOWN");
             launcher.launch("fbv -d 1 /bye.png")
             buttonHandler.interruptHandler.shutdown();
             launcher.launch("halt");
         }
     }
-
 
     Rectangle {
         id: left

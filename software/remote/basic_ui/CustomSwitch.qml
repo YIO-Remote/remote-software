@@ -20,7 +20,7 @@ Item {
             width: 26
             height: 26
             radius: cornerRadius
-            color: button.checked ? colorSwitchOn : colorSwitchOff
+            color: button.checked ? colorText : colorLight
 
             Behavior on x {
                 enabled: !button.pressed
@@ -30,9 +30,9 @@ Item {
 
         background: Rectangle {
             radius: cornerRadius+2
-            color: button.checked ? colorHighlight : colorButtonBackground
+            color: button.checked ? colorHighlight1 : colorDark
             border.width: 2
-            border.color: button.checked ? colorHighlight : colorSwitchOff
+            border.color: button.checked ? colorHighlight1 : colorLight
         }
     }
 

@@ -9,16 +9,16 @@ Rectangle {
     id: button
     width: buttonText.implicitWidth+60
     height: 60
-    color: buttonState ? colorHighlight : colorBackgroundTransparent
+    color: buttonState ? colorHighlight1 : colorBackgroundTransparent
     radius: 40
-    border.color: buttonState ? colorHighlight : colorLine
+    border.color: buttonState ? colorHighlight1 : colorLine
 
     states: State {
         name: "pressed"
         when: mouseArea.pressed === true
         PropertyChanges {
             target: button
-            color: buttonState ? colorBackgroundTransparent : colorHighlight
+            color: buttonState ? colorBackgroundTransparent : colorHighlight1
             border.color: buttonState ? colorLine : colorBackgroundTransparent
         }
     }

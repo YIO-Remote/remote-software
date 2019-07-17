@@ -2,6 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.4
 
 import "qrc:/scripts/helper.js" as JSHelper
+import "qrc:/basic_ui" as BasicUI
 
 Item {
     width: parent.width
@@ -27,7 +28,7 @@ Item {
         width: parent.width
         height: childrenRect.height + 40
         radius: cornerRadius
-        color: colorMedium
+        color: colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
@@ -46,41 +47,20 @@ Item {
             lineHeight: 1
         }
 
-        Switch {
+        BasicUI.CustomSwitch {
             id: autobrightnessButton
-            implicitHeight: 36
-            implicitWidth: 66
+
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: autobrightnessText.verticalCenter
+
             checked: standbyControl.display_autobrightness
-
-            indicator: Rectangle {
-                x: autobrightnessButton.visualPosition * (autobrightnessButton.width - width)
-                y: (autobrightnessButton.height - height) / 2
-                width: 36
-                height: 36
-                radius: cornerRadius
-                color: autobrightnessButton.checked ? colorSwitchOn : colorSwitch
-
-                Behavior on x {
-                    enabled: !autobrightnessButton.pressed
-                    SmoothedAnimation { velocity: 150 }
-                }
-            }
-
-            background: Rectangle {
-                radius: cornerRadius+2
-                color: autobrightnessButton.checked ? colorHighlight : colorSwitchBackground
-            }
-
-            onClicked: {
+            mouseArea.onClicked: {
                 var tmp = config;
                 tmp.settings.autobrightness = !tmp.settings.autobrightness
                 config = tmp;
                 JSHelper.saveConfig();
             }
-
         }
 
         Slider {
@@ -121,7 +101,7 @@ Item {
                         rotation: -90
                         gradient: Gradient {
                             GradientStop { position: 0.0; color: colorMedium }
-                            GradientStop { position: 1.0; color: colorHighlight }
+                            GradientStop { position: 1.0; color: colorHighlight1 }
                         }
                     }
                 }
@@ -130,8 +110,8 @@ Item {
             handle: Rectangle {
                 x: brightnessSlider.leftPadding + brightnessSlider.visualPosition * (brightnessSlider.availableWidth - width)
                 y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
-                implicitWidth: cornerRadius*2
-                implicitHeight: cornerRadius*2
+                implicitWidth: 28
+                implicitHeight: 28
                 radius: cornerRadius
                 color: colorLine
             }
@@ -172,36 +152,15 @@ Item {
             lineHeight: 1
         }
 
-        Switch {
+        BasicUI.CustomSwitch {
             id: darkmodeButton
-            implicitHeight: 36
-            implicitWidth: 66
+
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: darkmodeText.verticalCenter
+
             checked: darkMode
-
-            indicator: Rectangle {
-                x: darkmodeButton.visualPosition * (darkmodeButton.width - width)
-                y: (darkmodeButton.height - height) / 2
-                width: 36
-                height: 36
-                radius: cornerRadius
-                color: darkmodeButton.checked ? colorSwitchOn : colorSwitch
-
-                Behavior on x {
-                    enabled: !darkmodeButton.pressed
-                    SmoothedAnimation { velocity: 150 }
-                }
-            }
-
-            background: Rectangle {
-                radius: cornerRadius+2
-                color: darkmodeButton.checked ? colorHighlight : colorSwitchBackground
-            }
-
-            onClicked: {
-//                darkMode = !darkMode
+            mouseArea.onClicked: {
                 var tmp = config;
                 tmp.settings.darkmode = !tmp.settings.darkmode
                 config = tmp;
@@ -249,37 +208,16 @@ Item {
             lineHeight: 1
         }
 
-        Switch {
+        BasicUI.CustomSwitch {
             id: cleaningmodeButton
-            implicitHeight: 36
-            implicitWidth: 66
+
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: cleaningText.verticalCenter
+
             checked: false
-
-            indicator: Rectangle {
-                x: cleaningmodeButton.visualPosition * (cleaningmodeButton.width - width)
-                y: (cleaningmodeButton.height - height) / 2
-                width: 36
-                height: 36
-                radius: cornerRadius
-                color: cleaningmodeButton.checked ? colorSwitchOn : colorSwitch
-
-                Behavior on x {
-                    enabled: !cleaningmodeButton.pressed
-                    SmoothedAnimation { velocity: 150 }
-                }
-            }
-
-            background: Rectangle {
-                radius: cornerRadius+2
-                color: cleaningmodeButton.checked ? colorHighlight : colorSwitchBackground
-            }
-
-            onClicked: {
-                // cleaning mode
-                this.checked = true
+            mouseArea.onClicked: {
+                cleaningmodeButton.checked = true
             }
         }
     }

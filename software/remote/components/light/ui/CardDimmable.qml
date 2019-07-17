@@ -8,7 +8,7 @@ Rectangle {
     id: cardDimmable
     width: parent.width
     height: parent.height
-    color: colorMedium
+    color: colorDark
 
     property int brightness: obj.brightness
 
@@ -46,9 +46,9 @@ Rectangle {
         target: cardDimmable
 
         onUpdateBrightness: {
-            percentageBG.height = parent.height*obj.brightness/100;
-            percentageBG2.height = parent.height*obj.brightness/100;
-            percentage.text = obj.brightness;
+            percentageBG.height = parent.height*brightness/100;
+            percentageBG2.height = parent.height*brightness/100;
+            percentage.text = brightness;
         }
     }
 
@@ -66,7 +66,7 @@ Rectangle {
 
     Rectangle {
         id: percentageBG2
-        color: colorSwitch
+        color: colorMedium
         width: parent.width
         height: 0
         radius: cornerRadius
@@ -79,7 +79,7 @@ Rectangle {
 
     Rectangle {
         id: percentageBG
-        color: colorHighlight
+        color: colorHighlight2
         width: parent.width
         height: parent.height*obj.brightness/100
         radius: cornerRadius

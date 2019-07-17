@@ -68,7 +68,7 @@ Item {
 
     function addDeviceTypes() {
         for (var i=0; i<loaded_entities.length; i++) {
-            menuConfig.append({"name": loaded_entities[i].obj, "display_name": supported_entities_translation[loaded_entities[i].id],"show": true});
+            menuConfig.append({"name": loaded_entities[i].obj, "display_name": entities.supported_entities_translation[loaded_entities[i].id],"show": true});
         }
     }
 
@@ -194,7 +194,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height
-                    color: dragArea.held ? colorHighlight : colorBackgroundTransparent
+                    color: dragArea.held ? colorHighlight1 : colorBackgroundTransparent
                     radius: cornerRadius * 2
 //                    opacity: 0.5
 

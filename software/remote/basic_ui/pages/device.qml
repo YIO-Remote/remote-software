@@ -45,7 +45,7 @@ Flickable {
     function findType(type) {
         for (var i=0; i<entities.supported_entities.length; i++) {
             if (type == entities.supported_entities[i]) {
-                return supported_entities_translation[i];
+                return entities.supported_entities_translation[i];
             }
         }
     }

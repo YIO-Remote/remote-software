@@ -159,21 +159,6 @@ ApplicationWindow {
 
     property bool darkMode: true
 
-
-    property string colorLight: darkMode ? "#2E373D" : "#CBCBCB"
-    property string colorMedium: darkMode ? "#262626" : "#D4D4D4"
-    property string colorDark: darkMode ? "#16191E" : "#ffffff"
-    property string colorDarkest: darkMode ? "#0E0F12" : "#0E0F12"
-
-    property string colorSwitchOff: darkMode ? "#484848" : "#000000"
-    property string colorSwitchOn : darkMode ? "#ffffff" : "#000000"
-
-    property string colorButton: darkMode ? "#121519" : "#EAEAEA"
-    property string colorButtonFav: darkMode ? "#1A1D23" : "#1A1D23"
-    property string colorButtonPressed :darkMode ? "#282828" : "#000000"
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    // good colors come here
     property string colorGreen: "#19D37B"
     property string colorRed: "#EA003C"
 
@@ -182,13 +167,13 @@ ApplicationWindow {
 
     property string colorText: darkMode ? "#ffffff" : "#000000"
     property string colorLine: darkMode ? "#ffffff" : "#000000"
-    property string colorHighlight: "#918682"
+
+    property string colorHighlight1: "#918682"
     property string colorHighlight2: "#313247"
 
-    property string colorButtonMedium: darkMode ? "#282828" : "#000000"
-    property string colorButtonBackground: darkMode ? "#1C1C1C" : "#000000"
-
-    //    property string colorRoundButton: "#1A1D23"
+    property string colorLight: darkMode ? "#484848" : "#CBCBCB"
+    property string colorMedium: darkMode ? "#282828" : "#D4D4D4"
+    property string colorDark: darkMode ? "#1C1C1C" : "#ffffff"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
@@ -323,7 +308,7 @@ ApplicationWindow {
     // SUPPORTED COMPONENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //: names of the entities. Shows up in menu on the bottom. Always plural
-    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
+//    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

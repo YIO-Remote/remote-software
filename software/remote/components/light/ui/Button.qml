@@ -72,7 +72,7 @@ Rectangle {
     width: parent.width-20
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
-    color: colorButtonBackground
+    color: colorDark
     radius: cornerRadius
 
     property var originParent: lightButton.parent
@@ -234,20 +234,20 @@ Rectangle {
         radius: 200
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        color: colorHighlight
+        color: colorHighlight1
 
         state: "closed"
 
         states: [
             State {
                 name: "closed"
-                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: colorHighlight}
+                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: colorHighlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 0}
                 PropertyChanges {target: addToFavButtonText; opacity: 0}
             },
             State {
                 name: "open"
-                PropertyChanges {target: addToFavButton; width:500; height: 500; color: colorHighlight}
+                PropertyChanges {target: addToFavButton; width:500; height: 500; color: colorHighlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 1}
                 PropertyChanges {target: addToFavButtonText; opacity: 1}
             }
@@ -293,7 +293,7 @@ Rectangle {
             width: 80
             height: width
             radius: width/2
-            color: colorButtonBackground
+            color: colorDark
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 40
@@ -304,7 +304,7 @@ Rectangle {
                 when: mouseAreaFav.pressed === true
                 PropertyChanges {
                     target: addToFavButtonCircle
-                    color: colorHighlight
+                    color: colorHighlight1
                 }
             }
 
