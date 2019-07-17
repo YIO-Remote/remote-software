@@ -52,11 +52,11 @@ void HomeAssistant::connect()
 
 void HomeAssistant::disconnect()
 {
-    // turn off the socket
-    m_socket.close();
-
     // turn of the reconnect try
     m_websocketReconnect.stop();
+
+    // turn off the socket
+    m_socket.close();
 
     setState(DISCONNECTED);
 
@@ -88,6 +88,17 @@ void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, c
         }
     }
     if (type == "blind") {
+        if (command == "OPEN")
+            webSocketSendCommand("cover", "open_cover", entity_id, NULL);
+        else if (command == "CLOSE")
+            webSocketSendCommand("cover", "close_cover", entity_id, NULL);
+        else if (command == "STOP")
+            webSocketSendCommand("cover", "stop_cover", entity_id, NULL);
+        else if (command == "POSITION") {
+            QVariantMap data;
+            data.insert("position", param);
+            webSocketSendCommand("cover", "set_cover_position", entity_id, &data);
+        }
     }
 }
 
@@ -156,6 +167,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
 void HomeAssistant::onStateChanged(QAbstractSocket::SocketState state)
 {
     if (state == QAbstractSocket::UnconnectedState) {
+        m_socket.close();
         setState(DISCONNECTED);
         m_websocketReconnect.start();
     }
@@ -170,7 +182,7 @@ void HomeAssistant::onError(QAbstractSocket::SocketError error)
 
 void HomeAssistant::onTimeout()
 {
-    if (m_tries == 1) {
+    if (m_tries == 3) {
         m_websocketReconnect.stop();
 
         emit notify();
@@ -228,7 +240,9 @@ void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& at
         if (entity->type() == "light") {
             updateLight(entity, attr);
         }
-        //m_entities->update(entity_id, attr);
+        if (entity->type() == "blind") {
+            updateBlind(entity, attr);
+        }
     }
 }
 
@@ -264,6 +278,25 @@ void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
     // color temp
     if (entity->supported_features().indexOf("COLORTEMP") > -1) {
 
+    }
+
+    m_entities->update(entity->entity_id(), attributes);
+}
+
+void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
+{
+    QVariantMap attributes;
+
+    // state
+    if (attr.value("state").toString() == "open") {
+        attributes.insert("state", true);
+    } else {
+        attributes.insert("state", false);
+    }
+
+    // position
+    if (entity->supported_features().indexOf("POSITION") > -1) {
+        attributes.insert("position", attr.value("attributes").toMap().value("current_position").toInt());
     }
 
     m_entities->update(entity->entity_id(), attributes);

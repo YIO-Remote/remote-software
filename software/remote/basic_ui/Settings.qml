@@ -23,6 +23,23 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 40
 
+        Rectangle {
+            width: parent.width
+            height: 200
+            color: colorBackground
+
+            Text {
+                id: titleText
+                color: colorText
+                text: qsTr("Settings") + translateHandler.emptyString
+                anchors.centerIn: parent
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 60
+                lineHeight: 1
+            }
+        }
+
         Settings.Display {}
 
         Settings.Softwareupdate {}

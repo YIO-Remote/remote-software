@@ -2,6 +2,7 @@
 #include "entity.h"
 
 #include "light.h"
+#include "blind.h"
 
 Entities::Entities(QObject *parent) : QObject(parent) {
 
@@ -65,6 +66,9 @@ void Entities::add(const QVariantMap& config, QObject *integrationObj)
         entity = new Light(config, integrationObj);
     }
     // Blind entity
+    if (config.value("type").toString() == "blind") {
+        entity = new Blind(config, integrationObj);
+    }
     m_entities.insert(entity->entity_id(), entity);
 }
 

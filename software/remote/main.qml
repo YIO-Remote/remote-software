@@ -90,10 +90,12 @@ ApplicationWindow {
         interval: 20000
 
         onTriggered: {
-            // set turn on button to low
-            buttonHandler.interruptHandler.shutdown();
-            // halt
-            mainLauncher.launch("halt");
+            loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
+            loadingScreen.active = true;
+            //            // set turn on button to low
+            //            buttonHandler.interruptHandler.shutdown();
+            //            // halt
+            //            mainLauncher.launch("halt");
         }
     }
 
@@ -112,7 +114,7 @@ ApplicationWindow {
             //            console.debug("Battery full available capacity: " + battery_full_available_capacity);
             //            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
             //            console.debug("Average power: " + battery.getAveragePower() + "mW");
-//                        console.debug("Average current: " + battery.getAverageCurrent() + "mA");
+            //                        console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -157,30 +159,21 @@ ApplicationWindow {
 
     property bool darkMode: true
 
+    property string colorGreen: "#19D37B"
+    property string colorRed: "#EA003C"
+
     property string colorBackground: darkMode ? "#000000" : "#ffffff"
     property string colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
 
     property string colorText: darkMode ? "#ffffff" : "#000000"
     property string colorLine: darkMode ? "#ffffff" : "#000000"
-    property string colorHighlight: "#918682"
 
-    property string colorLight: darkMode ? "#2E373D" : "#CBCBCB"
-    property string colorMedium: darkMode ? "#262626" : "#D4D4D4"
-    property string colorDark: darkMode ? "#16191E" : "#ffffff"
-    property string colorDarkest: darkMode ? "#0E0F12" : "#0E0F12"
+    property string colorHighlight1: "#918682"
+    property string colorHighlight2: "#313247"
 
-    property string colorGreen: "#19D37B"
-    property string colorRed: "#EA003C"
-
-    property string colorSwitch: darkMode ? "#373737" : "#B9B9B9"
-    property string colorSwitchOn : darkMode ? "#ffffff" : "#ffffff"
-    property string colorSwitchBackground: darkMode ? "#000000" : "#ffffff"
-
-    property string colorButton: darkMode ? "#121519" : "#EAEAEA"
-    property string colorButtonPressed :darkMode ? "#16191E" : "#D7D7D7"
-    property string colorButtonFav: darkMode ? "#1A1D23" : "#1A1D23"
-
-    //    property string colorRoundButton: "#1A1D23"
+    property string colorLight: darkMode ? "#484848" : "#CBCBCB"
+    property string colorMedium: darkMode ? "#282828" : "#D4D4D4"
+    property string colorDark: darkMode ? "#1C1C1C" : "#ffffff"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
@@ -308,14 +301,14 @@ ApplicationWindow {
 
         // when everything is loaded, load the main UI
         loader_main.setSource("qrc:/MainContainer.qml");
-        loader_main.active = true;
+        //        loader_main.active = true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SUPPORTED COMPONENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //: names of the entities. Shows up in menu on the bottom. Always plural
-    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
+    //    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -393,7 +386,7 @@ ApplicationWindow {
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready) {
-                             loadingScreen.state = "connected";
+                             loadingScreen.item.state = "loaded";
                          }
     }
 
@@ -469,14 +462,6 @@ ApplicationWindow {
         source: "qrc:/basic_ui/PopupLowBattery.qml"
     }
 
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // LOADING SCREEN
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    BasicUI.LoadingScreen {
-        id: loadingScreen
-        state: "connecting"
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATIONS
@@ -587,6 +572,25 @@ ApplicationWindow {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LOADING SCREEN
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias loadingScreen: loadingScreen
+    Loader {
+        id: loadingScreen
+        width: parent.width
+        height: parent.height
+
+        asynchronous: true
+        active: true
+        source: "qrc:/basic_ui/LoadingScreen.qml"
+
+        onSourceChanged: {
+            if (source == "") {
+                console.debug("Now load the rest off stuff");
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY MODE TOUCHEVENT OVERLAY

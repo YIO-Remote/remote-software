@@ -8,7 +8,7 @@ Rectangle {
     id: cardDimmable
     width: parent.width
     height: parent.height
-    color: colorMedium
+    color: colorDark
 
     MouseArea {
         id: dragger
@@ -22,7 +22,7 @@ Rectangle {
 
     Rectangle {
         id: percentageBG
-        color: obj.state ? colorHighlight : colorBackgroundTransparent
+        color: obj.state ? colorHighlight1 : colorBackgroundTransparent
         width: parent.width
         height: parent.height
         radius: cornerRadius

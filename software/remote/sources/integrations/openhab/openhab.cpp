@@ -7,8 +7,11 @@
 
 OpenHAB::OpenHAB()
 {
-    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(processResponse(QNetworkReply*)));
-    QObject::connect(m_manager, SIGNAL(finished(QNetworkReply*)), m_manager, SLOT(deleteLater()));
+    m_polling_timer.setSingleShot(false);
+    m_polling_timer.setInterval(1000);
+    m_polling_timer.stop();
+
+    QObject::connect(&m_polling_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
 void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* entities)
@@ -18,6 +21,9 @@ void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* 
         if (iter.key() == "data") {
             QVariantMap map = iter.value().toMap();
             m_ip = map.value("ip").toString();
+            if (map.value("polling_interval").toBool()) {
+                m_polling_interval = map.value("polling_interval").toInt();
+            }
         }
         else if (iter.key() == "type")
             setType(iter.value().toString());
@@ -36,6 +42,7 @@ void OpenHAB::connect()
 
 void OpenHAB::disconnect()
 {
+    m_polling_timer.stop();
     setState(DISCONNECTED);
 }
 
@@ -66,15 +73,27 @@ void OpenHAB::updateLight(Entity* entity, const QVariantMap& attr)
 
 void OpenHAB::getRequest(const QString &url)
 {
+    QNetworkAccessManager manager;
+    QNetworkRequest request;
+
+    QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(processResponse(QNetworkReply*)));
+//    QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), &manager, SLOT(deleteLater()));
+
     QUrl fullUrl = QUrl(QString("http://" + m_ip + "/rest" + url));
 
-    m_request.setRawHeader("Content-Type", "application/json");
-    m_request.setUrl(fullUrl);
+    request.setRawHeader("Content-Type", "application/json");
+    request.setUrl(fullUrl);
 
-    m_manager->get(m_request);
+    manager.get(request);
 }
 
-void OpenHAB::processResponse(QNetworkReply *reply)
+void OpenHAB::onTimeout()
+{
+    // get a list of items
+    getRequest("/items");
+}
+
+void OpenHAB::processResponse(QNetworkReply* reply)
 {
     if (reply->error()) {
         qDebug() << reply->errorString();
@@ -82,14 +101,24 @@ void OpenHAB::processResponse(QNetworkReply *reply)
 
     QByteArray response = reply->readAll();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(response);
-    QVariantMap json = jsonDoc.toVariant().toMap();
+    QVariantMap map = jsonDoc.toVariant().toMap();
 
     // check if api is up
-    if (json.value("version").toString() != "0") {
+    if (map.value("version").toString() != "0") {
         setState(CONNECTED);
         qDebug() << "OpenHAB connected.";
 
-        // get a list of items
-        getRequest("/items");
+        // start polling
+        m_polling_timer.start();
     }
+
+    reply->deleteLater();
+
+    // process the list of items
+//    if (map.count() > 0) {
+//        // we have items
+//        qDebug() << "Found" << map.count() << "items";
+//    } else {
+//        qDebug() << "Nothing found";
+//    }
 }

@@ -26,9 +26,9 @@ HEADERS += \
     sources/entities/entities.h \
     sources/entities/entity.h \
     sources/integrations/integrationinterface.h \
-#    sources/integrations/homeassistant/homeassistant.h \
     sources/entities/entitiesinterface.h \
-    sources/entities/light.h
+    sources/entities/light.h \
+    sources/entities/blind.h
 
 SOURCES += \
     sources/main.cpp \
@@ -39,8 +39,8 @@ SOURCES += \
     sources/hardware/bq27441.cpp \
     sources/entities/entities.cpp \
     sources/entities/entity.cpp \
-#    sources/integrations/homeassistant/homeassistant.cpp
-    sources/entities/light.cpp
+    sources/entities/light.cpp \
+    sources/entities/blind.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \
@@ -63,6 +63,7 @@ SOURCES = main.qml \
           basic_ui/*.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
+          components/blind/ui/*.qml \
           sources/proximity_gesture_control.h
 }
 TRANSLATIONS = translations/bg_BG.ts \
@@ -127,6 +128,11 @@ macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
+
+#    INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
+#    INTEGRATIONS.path = Contents/Resources/plugins
+#    QMAKE_BUNDLE_DATA += INTEGRATIONS
+
 } else {
     CONFIG += file_copies
     COPIES += extraData

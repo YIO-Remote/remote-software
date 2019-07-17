@@ -8,13 +8,13 @@ Rectangle {
     id: cardColor
     width: parent.width
     height: parent.height
-    color: colorMedium
+    color: colorDark
 
-    property int _brightness: obj.brightness
+    property int brightness: obj.brightness
 
     signal updateBrightness()
 
-    on_BrightnessChanged: {
+    onBrightnessChanged: {
         updateBrightness()
     }
 
@@ -95,7 +95,7 @@ Rectangle {
 
             Rectangle {
                 id: percentageBG2
-                color: colorSwitch
+                color: colorMedium
                 width: parent.width
                 height: 0
                 radius: cornerRadius
@@ -108,7 +108,7 @@ Rectangle {
 
             Rectangle {
                 id: percentageBG
-                color: colorHighlight
+                color: colorHighlight2
                 width: parent.width
                 height: parent.height*brightness/100
                 radius: cornerRadius

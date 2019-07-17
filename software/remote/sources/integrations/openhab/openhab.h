@@ -32,6 +32,7 @@ signals:
 public slots:
      void sendCommand                (const QString& type, const QString& id, const QString& command, const QVariant& param) override;
      void processResponse            (QNetworkReply* reply);
+     void onTimeout                  ();
 
 private:
     void updateEntity               (const QString& entity_id, const QVariantMap& attr) override;
@@ -39,12 +40,13 @@ private:
     void updateBlind                (Entity* entity, const QVariantMap& attr);
 
     void getRequest                 (const QString& url);
-    QNetworkAccessManager*          m_manager = new QNetworkAccessManager();
-    QNetworkRequest                 m_request;
+
+    QTimer                          m_polling_timer;
 
     EntitiesInterface*  m_entities;
 
     QString 			m_ip;
+    int                 m_polling_interval=1000; // default 1 second
 
 };
 

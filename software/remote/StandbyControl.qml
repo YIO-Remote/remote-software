@@ -141,6 +141,7 @@ Item {
 
         case "wifi_off":
             wifiHandler("on")
+
             // integration socket on
             for (var i=0; i<config.integration.length; i++) {
                 integration[config.integration[i].type].obj.connect();
@@ -258,10 +259,12 @@ Item {
 
             // mode = shutdown
             if (secondsPassed == shutdownTime * 1000) {
-                // set turn on button to low
-                buttonHandler.interruptHandler.shutdown();
-                // halt
-                mainLauncher.launch("halt");
+                loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
+                loadingScreen.active = true;
+//                // set turn on button to low
+//                buttonHandler.interruptHandler.shutdown();
+//                // halt
+//                mainLauncher.launch("halt");
             }
         }
     }

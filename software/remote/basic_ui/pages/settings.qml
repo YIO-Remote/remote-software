@@ -6,13 +6,31 @@ import "qrc:/basic_ui" as BasicUI
 Flickable {
     id: itemFlickable
 
+    //: Name of the settings page
+    property string title: qsTr("Settings") + translateHandler.emptyString
+
+    signal scrolledUp()
+    signal scrolledDown()
+
+    onContentYChanged: {
+        if (contentY > 130) {
+            scrolledUp();
+        } else {
+            scrolledDown();
+        }
+    }
+
     width: parent.width
     height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: settingsPage.height
+    contentHeight: settingsPage.height + 40
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
+
+    onFlickStarted: {
+        loader_main.item.mainNavigation.y = 800;
+    }
 
     Behavior on contentY {
         PropertyAnimation {

@@ -35,7 +35,7 @@ Item {
         width: parent.width
         height: 74
         radius: cornerRadius
-        color: colorMedium
+        color: colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
@@ -98,7 +98,7 @@ Item {
                 }
             }
 
-            highlight: Rectangle { color: section.height == 300 ? colorHighlight : colorBackgroundTransparent ; radius: cornerRadius }
+            highlight: Rectangle { color: section.height == 300 ? colorHighlight1 : colorBackgroundTransparent ; radius: cornerRadius }
         }
     }
 }
