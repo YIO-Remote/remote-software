@@ -22,6 +22,7 @@ class Entities : public QObject , EntitiesInterface
     Q_PROPERTY  (QList<QObject *>    list                   READ    list                    CONSTANT)
     Q_PROPERTY  (QStringList         supported_entities     READ    supported_entities      CONSTANT)
     Q_PROPERTY  (QStringList         supported_entities_translation READ  supported_entities_translation    CONSTANT)
+    Q_PROPERTY  (QStringList         loaded_entities        READ    loaded_entities         CONSTANT)
 
 public:
     // get all entities
@@ -47,6 +48,10 @@ public:
 
     QStringList                     supported_entities  () { return m_supported_entities; }
     QStringList                     supported_entities_translation () { return m_supported_entities_translation; }
+    QStringList                     loaded_entities     () { return m_loaded_entities; }
+
+    Q_INVOKABLE void                addLoadedEntity     (const QString& entity);
+    Q_INVOKABLE QString             getSupportedEntityTranslation (const QString& type);
 
     explicit Entities               (QObject *parent = nullptr);
     virtual ~Entities();
@@ -55,6 +60,7 @@ private:
     QMap<QString, QObject*>     m_entities;
     QStringList                 m_supported_entities = {"light","blind"};
     QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds")};
+    QStringList                 m_loaded_entities;
 };
 
 #endif // ENTITIES_H

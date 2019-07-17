@@ -92,10 +92,6 @@ ApplicationWindow {
         onTriggered: {
             loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
             loadingScreen.active = true;
-            //            // set turn on button to low
-            //            buttonHandler.interruptHandler.shutdown();
-            //            // halt
-            //            mainLauncher.launch("halt");
         }
     }
 
@@ -278,7 +274,8 @@ ApplicationWindow {
                     }
 
                     // store which entity type was loaded. Not all supported entities are loaded.
-                    loaded_entities.push({ obj: entities.supported_entities[k], id : k });
+//                    loaded_entities.push({ obj: entities.supported_entities[k], id : k });
+                    entities.addLoadedEntity(entities.supported_entities[k]);
                 }
             }
         }
@@ -303,13 +300,6 @@ ApplicationWindow {
         loader_main.setSource("qrc:/MainContainer.qml");
         //        loader_main.active = true;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // SUPPORTED COMPONENTS
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //: names of the entities. Shows up in menu on the bottom. Always plural
-    //    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
-    property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES
