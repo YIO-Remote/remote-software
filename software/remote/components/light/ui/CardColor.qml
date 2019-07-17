@@ -8,13 +8,13 @@ Rectangle {
     id: cardColor
     width: parent.width
     height: parent.height
-    color: colorMedium
+    color: colorDark
 
-    property int _brightness: obj.attributes.brightness
+    property int brightness: obj.brightness
 
     signal updateBrightness()
 
-    on_BrightnessChanged: {
+    onBrightnessChanged: {
         updateBrightness()
     }
 
@@ -70,7 +70,7 @@ Rectangle {
                 }
 
                 onReleased: {
-                    integration[obj.integration].obj.light.setBrightness(obj.entity_id, dragger.percent);
+                    obj.setBrightness(dragger.percent);
                 }
             }
 
@@ -95,7 +95,7 @@ Rectangle {
 
             Rectangle {
                 id: percentageBG2
-                color: colorSwitch
+                color: colorMedium
                 width: parent.width
                 height: 0
                 radius: cornerRadius
@@ -108,7 +108,7 @@ Rectangle {
 
             Rectangle {
                 id: percentageBG
-                color: colorHighlight
+                color: colorHighlight2
                 width: parent.width
                 height: parent.height*brightness/100
                 radius: cornerRadius
@@ -181,17 +181,17 @@ Rectangle {
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
                 color: colorText
                 buttonTextColor: colorBackground
-                buttonText: obj.attributes.state == "off" ? "Turn on" : "Turn off"
+                buttonText: obj.state ? "Turn off" : "Turn on"
 
                 mouseArea.onClicked: {
                     haptic.playEffect("click");
-                    integration[obj.integration].obj.light.toggle(obj.entity_id);
+                    obj.toggle();
                 }
             }
 
             BasicUI.CustomButton {
                 anchors { left:toggleButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: obj.attributes.color ? Qt.rgba(obj.attributes.color[0]/255, obj.attributes.color[1]/255, obj.attributes.color[2]/255, 1) : colorText
+                color: obj.color ? Qt.rgba(obj.color[0]/255, obj.color[1]/255, obj.color[2]/255, 1) : colorText
                 buttonTextColor: colorBackground
                 buttonText: "Color"
 
@@ -303,7 +303,7 @@ Rectangle {
                     }
 
                     onReleased: {
-                        integration[obj.integration].obj.light.setColor(obj.entity_id, picker.color);
+                        obj.setColor(picker.color);
 
                         icon_b.opacity = 1;
                         color_b.opacity = 1;
@@ -396,7 +396,7 @@ Rectangle {
             BasicUI.CustomButton {
                 id: button_b
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: obj.attributes.color ? Qt.rgba(obj.attributes.color[0]/255, obj.attributes.color[1]/255, obj.attributes.color[2]/255, 1) : colorText
+                color: obj.color ? Qt.rgba(obj.color[0]/255, obj.color[1]/255, obj.color[2]/255, 1) : colorText
                 buttonTextColor: colorBackground
                 buttonText: "OK"
 

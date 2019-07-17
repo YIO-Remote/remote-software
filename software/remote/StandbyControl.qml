@@ -107,25 +107,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-        battery_voltage = battery.getVoltage() / 1000
-        battery_level = battery.getStateOfCharge() / 100
-        battery_health = battery.getStateOfHealth()
-        battery_design_capacity = battery.getDesignCapacity()
-        battery_full_available_capacity = battery.getFullAvailableCapacity()
-        battery_full_charge_capacity = battery.getFullChargeCapacity()
-
-        if (battery_voltage <= 3.4 && battery.getAveragePower() < 0) {
-            // set turn on button to low
-            buttonHandler.interruptHandler.shutdown();
-            // halt
-            mainLauncher.launch("halt");
-        }
-
-        if (battery.getAveragePower() >= 0 ) {
-            chargingScreen.item.state = "visible";
-        } else {
-            chargingScreen.item.state = "hidden";
-        }
+        battery.checkBattery();
 
         switch (mode) {
         case "on":
@@ -159,6 +141,7 @@ Item {
 
         case "wifi_off":
             wifiHandler("on")
+
             // integration socket on
             for (var i=0; i<config.integration.length; i++) {
                 integration[config.integration[i].type].obj.connect();
@@ -276,10 +259,12 @@ Item {
 
             // mode = shutdown
             if (secondsPassed == shutdownTime * 1000) {
-                // set turn on button to low
-                buttonHandler.interruptHandler.shutdown();
-                // halt
-                mainLauncher.launch("halt");
+                loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
+                loadingScreen.active = true;
+//                // set turn on button to low
+//                buttonHandler.interruptHandler.shutdown();
+//                // halt
+//                mainLauncher.launch("halt");
             }
         }
     }

@@ -10,7 +10,7 @@ Rectangle {
     height: 104 // 244
     x: 10
     radius: 52
-    color: type == "normal" ? colorHighlight : colorRed
+    color: type == "normal" ? colorHighlight1 : colorRed
 
     Behavior on opacity {
         NumberAnimation {

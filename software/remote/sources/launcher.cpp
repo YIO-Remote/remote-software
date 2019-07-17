@@ -1,3 +1,6 @@
+#include <QPluginLoader>
+#include <QtDebug>
+
 #include "launcher.h"
 
 Launcher::Launcher(QObject *parent) :
@@ -13,4 +16,25 @@ QString Launcher::launch(const QString &program)
     QByteArray bytes = m_process->readAllStandardOutput();
     QString output = QString::fromLocal8Bit(bytes);
     return output;
+}
+
+QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
+{
+    QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName);
+    QObject *plugin = pluginLoader.instance();
+    QString err = pluginLoader.errorString();
+    qDebug() << err;
+    return plugin;
+}
+
+QObject* Launcher::loadIntegration(const QString& path, const QString &pluginName, int integrationId, const QVariantMap& config, QObject* entities)
+{
+    QObject *plugin = loadPlugin(path, pluginName);
+    if (plugin) {
+        IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(plugin);
+        if (interface) {
+            interface->initialize (integrationId, config, entities);
+        }
+    }
+    return plugin;
 }

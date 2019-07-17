@@ -7,30 +7,9 @@ import "qrc:/scripts/helper.js" as JSHelper
 Item {
     id: mainNavigation
     width: parent.width
+    height: 150
 
     state: "open"
-
-    states: [
-        State {
-            name: "closed"
-            PropertyChanges {target: mainNavigation; height: 60}
-        },
-        State {
-            name: "open"
-            PropertyChanges {target: mainNavigation; height: 130}
-        }
-    ]
-
-    transitions: [
-        Transition {
-            to: "closed"
-            PropertyAnimation { target: mainNavigation; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
-        },
-        Transition {
-            to: "open"
-            PropertyAnimation { target: mainNavigation; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
-        }
-    ]
 
     Rectangle {
         anchors.fill: parent
@@ -89,7 +68,7 @@ Item {
 
     function addDeviceTypes() {
         for (var i=0; i<loaded_entities.length; i++) {
-            menuConfig.append({"name": loaded_entities[i].obj, "display_name": supported_entities_translation[loaded_entities[i].id],"show": true});
+            menuConfig.append({"name": loaded_entities[i].obj, "display_name": entities.supported_entities_translation[loaded_entities[i].id],"show": true});
         }
     }
 
@@ -190,11 +169,11 @@ Item {
 
                 anchors {
                     horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
+                    bottom: parent.bottom
                 }
 
                 width: buttonText.implicitWidth+30
-                height: mainNavigation.state == "open" ? 130 : 60
+                height: 150
                 color: colorBackgroundTransparent
                 opacity: selected ? 1 : 0.3
 
@@ -215,7 +194,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height
-                    color: dragArea.held ? colorHighlight : colorBackgroundTransparent
+                    color: dragArea.held ? colorHighlight1 : colorBackgroundTransparent
                     radius: cornerRadius * 2
 //                    opacity: 0.5
 
@@ -246,7 +225,7 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     anchors.horizontalCenter: buttonText.horizontalCenter
                     anchors.bottom: buttonText.top
-                    anchors.bottomMargin: 10
+                    anchors.bottomMargin: 15
                     source: name == "area" ? "qrc:/images/navigation/icon-area-" + Math.floor(Math.random() * (3 - 0)) + ".png" : "qrc:/images/navigation/icon-" + name + ".png"
 
                     ColorOverlay {

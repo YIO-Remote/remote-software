@@ -44,7 +44,7 @@ Item {
         width: parent.width
         height: childrenRect.height + 40
         radius: cornerRadius
-        color: colorMedium
+        color: colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20

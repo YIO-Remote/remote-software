@@ -5,12 +5,13 @@
 #include <QQuickItem>
 
 // Integration base class
-
 class Integration : public QQuickItem
 {
     Q_OBJECT
 
 public:
+
+    Integration() {}
 
     enum states {
         CONNECTED=0,
@@ -25,7 +26,6 @@ public:
     Q_PROPERTY(QString      type            READ type           WRITE setType)
     Q_PROPERTY(QString      friendlyName    READ friendlyName   WRITE setFriendlyName)
 
-    Integration() {}
     ~Integration() {}
 
     // get the if the state
@@ -35,10 +35,10 @@ public:
     void setState(states value)
     {
         m_state = value;
-        if (m_state == CONNECTED) {
-            emit connected();
-        } else if (m_state == CONNECTING){
+        if (m_state == CONNECTING) {
             emit connecting();
+        } else if (m_state == CONNECTED){
+            emit connected();
         } else {
             emit disconnected();
         }

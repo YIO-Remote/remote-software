@@ -36,7 +36,7 @@ Item {
             case "dpad right":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
                     loader_main.item.mainNavigationSwipeview.currentIndex += 1;
-                    mainNavigation.mainNavigationListView.currentIndex += 1;
+//                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
                     haptic.playEffect("buzz");
                 }
@@ -44,7 +44,7 @@ Item {
             case "dpad left":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
                     loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
-                    mainNavigation.mainNavigationListView.currentIndex -= 1;
+//                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
                     haptic.playEffect("buzz");
                 }
@@ -76,10 +76,12 @@ Item {
     property int itemsLoaded: 0
     property bool startUp: false
 
+    property int prevIndex: 0
+
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
-        height: parent.height-statusBar.height-mainNavigation.height-miniMediaPlayer.height
+        height: parent.height-statusBar.height-miniMediaPlayer.height
         anchors.top: statusBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -121,30 +123,34 @@ Item {
         }
 
         onCurrentIndexChanged: {
+            // change navigation index after startup
             if (mainNavigationSwipeview.count == mainNavigation.menuConfig.count && !startUp) {
                 startUp = true
                 mainNavigationSwipeview.currentIndex = 0
             }
 
+            if (startUp) {
+                mainNavigation.mainNavigationListView.currentIndex = currentIndex;
+            }
+
             if (itemsLoaded >= 3) {
                 if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-//                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+                    //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
+            }
+
+            // change the statusbar title
+            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
+               statusBar.title = "";
+            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+                statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
             }
         }
     }
 
     onItemsLoadedChanged: {
         if (itemsLoaded >= 2) {
-            mainNavigation.state = Qt.binding(function() {
-                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
-                    return "open"
-                } else {
-                    return "closed"
-                }
-            })
-
             bottomGradient.opacity = Qt.binding(function() {
                 if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd) {
                     return 0
@@ -155,17 +161,25 @@ Item {
         }
     }
 
+//    Connections {
+//        target: mainNavigationSwipeview.currentItem.mainNavigationLoader.item
+//        onFlickStarted: {
+//            mainNavigation.y = parent.height;
+//        }
+//    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BOTTOM GRADIENT FADE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
+    Image {
         id: bottomGradient
-        width: parent.width
-        height: mainNavigation.state == "closed" ? 80 : 160
-        anchors.bottom: mainNavigation.top
-
-        opacity: 1 //mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd ? 0 : 1
+        width: 480
+        height: 80
+        anchors.bottom: miniMediaPlayer.top
+        asynchronous: true
+        fillMode: Image.Stretch
+        source: "qrc:/images/navigation/bottom_gradient.png"
 
         Behavior on opacity {
             NumberAnimation {
@@ -173,13 +187,30 @@ Item {
                 easing.type: Easing.OutExpo
             }
         }
-
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: colorBackgroundTransparent }
-            GradientStop { position: 0.9; color: colorBackground }
-        }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // PAGE INDICATOR
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    PageIndicator {
+        id: indicator
+
+        count: mainNavigationSwipeview.count
+        currentIndex: mainNavigationSwipeview.currentIndex
+
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        delegate: Rectangle {
+            width: 8
+            height: 8
+            radius: height/2
+            color: colorText
+            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
@@ -188,12 +219,54 @@ Item {
 
     BasicUI.MainNavigation {
         id: mainNavigation
-        anchors.bottom: miniMediaPlayer.top
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: 0
+        y: parent.height - mainNavigation.height
         anchors.horizontalCenter: parent.horizontalCenter
-        state: "open" // mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning ? "open" : "closed"
 
+        Behavior on y {
+            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
+        }
     }
 
+    MouseArea {
+        width: parent.width
+        height: 100
+        anchors.bottom: parent.bottom
+        enabled: mainNavigation.y == 800 ? true : false
+        propagateComposedEvents: true
+
+        property real velocity: 0.0
+        property int yStart: 0
+        property int yPrev: 0
+        property bool tracing: false
+
+        onPressed: {
+            yStart = mouse.y;
+            yPrev = mouse.y;
+            velocity = 0;
+            tracing = true;
+        }
+
+        onPositionChanged: {
+            if (!tracing) return
+            var currVel = (mouse.y-yPrev);
+            velocity = (velocity-currVel)/2.0
+            yPrev = mouse.y
+
+            if (velocity < 15 && mouse.y < parent.height*0.4) {
+                tracing = false;
+                mainNavigation.y = 800 - mainNavigation.height;
+            }
+        }
+
+        onReleased: {
+            tracing = false;
+//            if (velocity < 15 && mouse.y < parent.height*0.2) {
+//                console.debug("Swipe detected 2");
+//            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MINI MEDIA PLAYER
@@ -202,7 +275,7 @@ Item {
         id: miniMediaPlayer
         width: parent.width
         height: 0
-        anchors.bottom: parent.bottom
+        anchors.bottom: mainNavigation.top
     }
 
 

@@ -15,6 +15,7 @@
 #include "hardware/drv2605.h"
 #include "hardware/bq27441.h"
 #include "hardware/proximity_gesture_control.h"
+
 #include "integrations/integration.h"
 #include "entities/entities.h"
 
@@ -70,6 +71,8 @@ int main(int argc, char *argv[])
     // ENTITIES
     Entities entities;
     engine.rootContext()->setContextProperty("entities", &entities);
+
+    engine.addImportPath("qrc:/");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

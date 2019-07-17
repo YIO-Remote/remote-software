@@ -64,7 +64,7 @@ Item {
         width: parent.width
         height: childrenRect.height + 40
         radius: cornerRadius
-        color: colorMedium
+        color: colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
@@ -107,7 +107,7 @@ Item {
 
         Text {
             id: screenOnTimeText
-            color: colorHighlight
+            color: colorHighlight1
             text: qsTr("Screen on") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -135,7 +135,7 @@ Item {
 
         Text {
             id: screenOffTimeText
-            color: colorHighlight
+            color: colorHighlight1
             text: qsTr("Screen off") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -172,7 +172,7 @@ Item {
 
         Text {
             id: batteryLevelText
-            color: colorHighlight
+            color: colorHighlight1
             text: qsTr("Battery level") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -232,7 +232,7 @@ Item {
 
         Text {
             id: averagePowerText
-            color: colorHighlight
+            color: colorHighlight1
             text: qsTr("Average power") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -310,7 +310,7 @@ Item {
                     delegate: Text {
                         //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
                         text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[hours.length-1-index]
-                        color: colorHighlight
+                        color: colorHighlight1
                         font.family: "Open Sans"
                         font.weight: Font.Normal
                         font.pixelSize: 16

@@ -28,7 +28,7 @@ Item {
         width: parent.width
         height: childrenRect.height + 40
         radius: cornerRadius
-        color: colorMedium
+        color: colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
@@ -85,7 +85,7 @@ Item {
                         rotation: -90
                         gradient: Gradient {
                             GradientStop { position: 0.0; color: colorMedium }
-                            GradientStop { position: 1.0; color: colorHighlight }
+                            GradientStop { position: 1.0; color: colorHighlight1 }
                         }
                     }
                 }
@@ -94,8 +94,8 @@ Item {
             handle: Rectangle {
                 x: wifioffSlider.leftPadding + wifioffSlider.visualPosition * (wifioffSlider.availableWidth - width)
                 y: wifioffSlider.topPadding + wifioffSlider.availableHeight / 2 - height / 2
-                implicitWidth: cornerRadius*2
-                implicitHeight: cornerRadius*2
+                implicitWidth: 28
+                implicitHeight: 28
                 radius: cornerRadius
                 color: colorLine
             }
@@ -200,7 +200,7 @@ Item {
                         rotation: -90
                         gradient: Gradient {
                             GradientStop { position: 0.0; color: colorMedium }
-                            GradientStop { position: 1.0; color: colorHighlight }
+                            GradientStop { position: 1.0; color: colorHighlight1 }
                         }
                     }
                 }
@@ -209,8 +209,8 @@ Item {
             handle: Rectangle {
                 x: shutdownSlider.leftPadding + shutdownSlider.visualPosition * (shutdownSlider.availableWidth - width)
                 y: shutdownSlider.topPadding + shutdownSlider.availableHeight / 2 - height / 2
-                implicitWidth: cornerRadius*2
-                implicitHeight: cornerRadius*2
+                implicitWidth: 28
+                implicitHeight: 28
                 radius: cornerRadius
                 color: colorLine
             }

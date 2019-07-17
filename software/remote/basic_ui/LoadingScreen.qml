@@ -1,107 +1,131 @@
 import QtQuick 2.11
 
 Rectangle {
-    id: connectionLoader
+    id: loadingScreenComp
     anchors.fill: parent
     color: "#00000000"
 
-    state: "connecting"
+    state: "start"
 
-    property int iconShowDelay: 300
-
-    states: [
-        State {
-            name: "connecting"
-            PropertyChanges {target: connectionLoader; opacity: 1; visible: true}
-            PropertyChanges {target: loadingIcon; opacity: 1}
-            PropertyChanges {target: loadingIconOK; opacity: 0}
-            PropertyChanges {target: loadingIconX; opacity: 0}
-            PropertyChanges {target: loadingIconAnim; running: true}
-            PropertyChanges {target: buttonTryAgain; opacity: 0}
-            //: loading screen text while it loads
-            PropertyChanges {target: text_small; text: qsTr("Wait for it ...") + translateHandler.emptyString}
-        },
-        State {
-            name: "connected"
-            PropertyChanges {target: connectionLoader; opacity: 0; visible: false}
-            PropertyChanges {target: loadingIcon; opacity: 0}
-            PropertyChanges {target: loadingIconOK; opacity: 1}
-            PropertyChanges {target: loadingIconX; opacity: 0}
-            PropertyChanges {target: buttonTryAgain; opacity: 0}
-            PropertyChanges {target: loadingIconAnim; running: false}
-            //: loading screen text when it is done loading
-            PropertyChanges {target: text_small; text: qsTr("Done") + translateHandler.emptyString}
-        },
-        State {
-            name: "failed"
-            PropertyChanges {target: loadingIcon; opacity: 0}
-            PropertyChanges {target: loadingIconOK; opacity: 0}
-            PropertyChanges {target: loadingIconX; opacity: 1}
-            PropertyChanges {target: loadingIconAnim; running: false}
-            PropertyChanges {target: buttonTryAgain; opacity: 1}
-            //: loading screen text when something went wrong.
-            PropertyChanges {target: text_small; text: qsTr("Something went wrong. Please restart the remote") + translateHandler.emptyString}
+    onStateChanged: {
+        if (state == "loaded") {
+            endAnim.start();
         }
-    ]
+    }
 
-    transitions: [
-        Transition {
-            to: "connecting"
+    SequentialAnimation {
+        id: startAnim
+        running: true
+
+        PauseAnimation {duration: 1000}
+        ParallelAnimation {
+            PropertyAnimation { target: yio_Y; properties: "x"; to: -150; easing.type: Easing.OutExpo; duration: 600 }
+            PropertyAnimation { target: yio_Y; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 600 }
             SequentialAnimation {
-                PauseAnimation { duration: connectionLoader.iconShowDelay }
-                PropertyAnimation { target: connectionLoader; properties: "visible"; duration: 0 }
-                PropertyAnimation { target: loadingIcon; properties: "opacity"; duration: 0 }
-                PropertyAnimation { target: loadingIconAnim; properties: "running"; duration: 0 }
-                PropertyAnimation { target: loadingIconOK; properties: "opacity"; duration: 0 }
-                PropertyAnimation { target: loadingIconX; properties: "opacity"; duration: 0 }
-                PropertyAnimation { target: buttonTryAgain; properties: "opacity"; duration: 0 }
-                PropertyAnimation { target: text_small; properties: "text"; duration: 0 }
-                PropertyAnimation { target: connectionLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
-            }},
-        Transition {
-            to: "connected"
-            SequentialAnimation {
+                PauseAnimation {duration: 100}
                 ParallelAnimation {
-                    PropertyAnimation { target: loadingIcon; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
-                    PropertyAnimation { target: loadingIconAnim; properties: "running"; duration: 0 }
-                    PropertyAnimation { target: loadingIconOK; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
-                    PropertyAnimation { target: text_small; properties: "text"; duration: 0 }
+                    PropertyAnimation { target: yio_I; properties: "x"; to: -50; easing.type: Easing.OutExpo; duration: 600 }
+                    PropertyAnimation { target: yio_I; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 600 }
                 }
-                PauseAnimation { duration: 800 }
-                PropertyAnimation { target: connectionLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
-                PropertyAnimation { target: connectionLoader; properties: "visible"; duration: 0 }
-            }},
-        Transition {
-            from: "connecting"
-            to: "failed"
+            }
             SequentialAnimation {
+                PauseAnimation {duration: 100}
                 ParallelAnimation {
-                    PropertyAnimation { target: loadingIcon; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
-                    PropertyAnimation { target: loadingIconAnim; properties: "running"; duration: 0 }
-                    PropertyAnimation { target: loadingIconX; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
-                    PropertyAnimation { target: text_small; properties: "text"; duration: 0 }
+                    PropertyAnimation { target: yio_O; properties: "x";to: 192; easing.type: Easing.OutExpo; duration: 600 }
+                    PropertyAnimation { target: loadingIconAnim; properties: "running";to: true; duration: 0 }
                 }
-                PauseAnimation { duration: 200 }
-                PropertyAnimation { target: buttonTryAgain; properties: "opacity"; easing.type: Easing.InExpo; duration: 600 }
-            }}
-    ]
+            }
+        }
+        PauseAnimation {duration: 500}
+        PropertyAction { target: loadingScreenComp; property: "startAnimFinished"; value: true }
+    }
+
+    SequentialAnimation {
+        id: endAnim
+        running: false
+
+        PauseAnimation {duration: 1000}
+        PropertyAnimation { target: loadingIconAnim; properties: "running";to: false; duration: 0 }
+        PropertyAnimation { target: yio_O; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
+//        PauseAnimation {duration: 500}
+        ParallelAnimation {
+            PropertyAnimation { target: left; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 800 }
+            PropertyAnimation { target: right; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 800 }
+        }
+        PropertyAction { target: loadingScreenComp; property: "endAnimFinished"; value: true }
+    }
+
+    property bool startAnimFinished: false;
+
+    onStartAnimFinishedChanged: {
+        if (startAnimFinished) {
+            loader_main.active = true;
+        }
+    }
+
+    property bool endAnimFinished: false;
+
+    onEndAnimFinishedChanged: {
+        if (endAnimFinished) {
+            loadingScreen.source = "";
+            loadingScreen.active = false;
+        }
+    }
 
     Rectangle {
-        anchors.fill: parent
-        color: colorBackground
-        opacity: 0.96
+        id: left
+        width: 240
+        height: 800
+        color: "#000000"
+
+        anchors {
+            left: parent.left
+        }
+    }
+
+    Rectangle {
+        id: right
+        width: 240
+        height: 800
+        color: "#000000"
+
+        anchors {
+            right: parent.right
+        }
+    }
+
+
+    Image {
+        asynchronous: true
+        id: yio_Y
+        width: 101
+        height: 90
+        x: 112
+        y: 354
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/images/loading/Y.png"
     }
 
     Image {
         asynchronous: true
-        id: loadingIcon
-        width: 160
-        height: 160
-        opacity: 0
-        y: 230
-        anchors.horizontalCenter: parent.horizontalCenter
+        id: yio_I
+        width: 5
+        height: 90
+        x: 237
+        y: 354
         fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/loading/icon-loading.png"
+        source: "qrc:/images/loading/I.png"
+    }
+
+    Image {
+        asynchronous: true
+        id: yio_O
+        width: 96
+        height: 96
+        x: 272
+        y: 351
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/images/loading/O.png"
 
         RotationAnimator on rotation {
             id: loadingIconAnim
@@ -111,106 +135,11 @@ Rectangle {
             to: 360
             duration: 2000
         }
-
-        Behavior on y {
-            NumberAnimation { duration: 400 }
-        }
-    }
-
-    Image {
-        asynchronous: true
-        id: loadingIconOK
-        width: 160
-        height: 160
-        opacity: 0
-        y: 230
-        anchors.horizontalCenter: parent.horizontalCenter
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/loading/icon-loading-ok.png"
-
-        Behavior on y {
-            NumberAnimation { duration: 400 }
-        }
-    }
-
-    Image {
-        asynchronous: true
-        id: loadingIconX
-        width: 160
-        height: 160
-        opacity: 0
-        y: 230
-        anchors.horizontalCenter: parent.horizontalCenter
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/loading/icon-loading-x.png"
-
-        Behavior on y {
-            NumberAnimation { duration: 400 }
-        }
-    }
-
-    CustomButton {
-        id: buttonTryAgain
-        opacity: 0
-        //: loading screen button if it failes to load
-        buttonText: qsTr("Restart") + translateHandler.emptyString
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 60
-
-        mouseArea.onClicked: {
-            settingsLauncher.launch("fbv -d 1 /bye.png")
-            console.debug("now reboot")
-            settingsLauncher.launch("reboot");
-        }
-    }
-
-    Text {
-        id: text_hello
-        color: colorText
-        //: greating at the loadin screen
-        text: qsTr("Hello") + translateHandler.emptyString
-        opacity: 1
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: loadingIcon.bottom
-        anchors.topMargin: 30
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font.family: "Open Sans"
-        font.weight: Font.Light
-        font.styleName: "Light"
-        font.pixelSize: 72
-
-        Behavior on opacity {
-            NumberAnimation { duration: 400 }
-        }
-    }
-
-    Text {
-        id: text_small
-        color: colorText
-        wrapMode: Text.WordWrap
-        horizontalAlignment: Text.AlignHCenter
-        width: parent.width-80
-        opacity: 0.4
-        anchors.top: text_hello.bottom
-        anchors.topMargin: 0
-        anchors.horizontalCenter: text_hello.horizontalCenter
-        verticalAlignment: Text.AlignTop
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 27
-        lineHeight: 0.8
-
-        Behavior on opacity {
-            NumberAnimation { duration: 400 }
-        }
     }
 
     MouseArea {
         anchors.fill: parent
     }
-
 }
 
 

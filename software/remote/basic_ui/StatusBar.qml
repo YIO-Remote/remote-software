@@ -6,10 +6,75 @@ Item {
     id: statusBar
     width: parent.width
     height: 40
+    clip: true
 
     Rectangle {
         anchors.fill: parent
         color: colorBackground
+    }
+
+    Connections {
+        target: loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item
+        onScrolledUp: {
+            title = loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
+        }
+        onScrolledDown: {
+            title = "";
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // TITLE
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    property string title: "Favorites"
+
+    Text { // time in the left corner
+        id: titleText
+        color: colorText
+        text: "Favorites"
+        verticalAlignment: Text.AlignVCenter
+        height: parent.height
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        y: 2
+        font.family: "Open Sans"
+        font.weight: Font.Bold
+        font.styleName: "Bold"
+        font.pixelSize: 22
+        font.capitalization: Font.AllUppercase
+        lineHeight: 1
+    }
+
+    ParallelAnimation {
+        id: showTitle
+        running: false
+
+        PropertyAnimation { target: titleText; properties: "opacity"; to: 1; easing.type: Easing.OutExpo; duration: 400 }
+        PropertyAnimation { target: titleText; properties: "y"; to: 2; easing.type: Easing.OutExpo; duration: 400 }
+    }
+
+    ParallelAnimation {
+        id: hideTitle
+        running: false
+
+        PropertyAnimation { target: titleText; properties: "opacity"; to: 0; easing.type: Easing.InExpo; duration: 400 }
+        PropertyAnimation { target: titleText; properties: "y"; to: 60; easing.type: Easing.InExpo; duration: 400 }
+    }
+
+    Connections {
+        target: hideTitle
+        onFinished: {
+            titleText.text = title;
+        }
+    }
+
+    onTitleChanged: {
+        if (title == "") {
+            hideTitle.start();
+        } else {
+            titleText.text = title;
+            showTitle.start();
+        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,10 +99,9 @@ Item {
         text: "22:00"
         verticalAlignment: Text.AlignVCenter
         height: parent.height
-        anchors.left: parent.left
-        anchors.leftMargin: 10
+        anchors.right: batteryIcon.left
+        anchors.rightMargin: 10
         anchors.verticalCenter: statusBar.verticalCenter
-        anchors.top: parent.top
         font.family: "Open Sans"
         font.weight: Font.Normal
         font.pixelSize: 20
@@ -64,10 +128,10 @@ Item {
         width: 26
         height: width
         radius: width/2
-        color: isThereAnError() ? colorRed : colorHighlight
+        color: isThereAnError() ? colorRed : colorHighlight1
         visible: notifications.length > 0 ? true : false
-        anchors.left: timeText.right
-        anchors.leftMargin: 10
+        anchors.right: timeText.left
+        anchors.rightMargin: 10
         anchors.verticalCenter: statusBar.verticalCenter
 
         Text {
@@ -125,8 +189,8 @@ Item {
         opacity: 0
         visible: false
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: batteryIcon.left
-        anchors.rightMargin: 20
+        anchors.right: notificationCount.visible ? notificationCount.left : timeText.left
+        anchors.rightMargin: 10
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/statusbar/statusbar-loader.png"
 

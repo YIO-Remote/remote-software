@@ -2,6 +2,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.4
 
 import "qrc:/scripts/helper.js" as JSHelper
+import "qrc:/basic_ui" as BasicUI
 
 Item {
     width: parent.width
@@ -27,7 +28,7 @@ Item {
         width: parent.width
         height: childrenRect.height + 40 //softwareUpdateText.height + smallText.height + 60
         radius: cornerRadius
-        color: colorMedium
+        color: colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
@@ -46,35 +47,15 @@ Item {
             lineHeight: 1
         }
 
-        Switch {
+        BasicUI.CustomSwitch {
             id: softwareUpdateButton
-            implicitHeight: 36
-            implicitWidth: 66
+
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: softwareUpdateText.verticalCenter
+
             checked: config.settings.softwareupdate
-
-            indicator: Rectangle {
-                x: softwareUpdateButton.visualPosition * (softwareUpdateButton.width - width)
-                y: (softwareUpdateButton.height - height) / 2
-                width: 36
-                height: 36
-                radius: cornerRadius
-                color: softwareUpdateButton.checked ? colorSwitchOn : colorSwitch
-
-                Behavior on x {
-                    enabled: !softwareUpdateButton.pressed
-                    SmoothedAnimation { velocity: 150 }
-                }
-            }
-
-            background: Rectangle {
-                radius: cornerRadius+2
-                color: softwareUpdateButton.checked ? colorHighlight : colorSwitchBackground
-            }
-
-            onClicked: {
+            mouseArea.onClicked: {
                 var tmp = config;
                 tmp.settings.softwareupdate = !tmp.settings.softwareupdate
                 config = tmp;

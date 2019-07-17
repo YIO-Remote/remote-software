@@ -8,7 +8,9 @@
         <file>basic_ui/PopupLowBattery.qml</file>
         <file>basic_ui/ProgressCircle.qml</file>
         <file>basic_ui/LoadingScreen.qml</file>
+        <file>basic_ui/ClosingScreen.qml</file>
         <file>basic_ui/CustomButton.qml</file>
+        <file>basic_ui/CustomSwitch.qml</file>
         <file>MainContainer.qml</file>
         <file>basic_ui/StatusBar.qml</file>
         <file>basic_ui/MainNavigation.qml</file>
@@ -38,5 +40,7 @@
         <file>basic_ui/NotificationDrawer.qml</file>
         <file>integrations/integration.qml</file>
         <file>integrations/homeassistant/Light.qml</file>
+        <file>components/blind/ui/Button.qml</file>
+        <file>components/blind/ui/Card.qml</file>
     </qresource>
 </RCC>

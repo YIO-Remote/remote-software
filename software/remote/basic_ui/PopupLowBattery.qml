@@ -27,7 +27,7 @@ Popup {
 
     background: Rectangle {
         anchors.fill: parent
-        color: colorHighlight
+        color: colorHighlight1
         radius: 8
     }
 
