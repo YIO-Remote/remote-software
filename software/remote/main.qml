@@ -50,36 +50,36 @@ ApplicationWindow {
         }
 
         function checkBattery() {
-//            // read battery data
-//            battery_voltage = battery.getVoltage() / 1000
-//            battery_level = battery.getStateOfCharge() / 100
-//            battery_health = battery.getStateOfHealth()
-//            battery_design_capacity = battery.getDesignCapacity()
-//            battery_remaining_capacity = battery.getRemainingCapacity()
-//            battery_averagepower = battery.getAveragePower()
-//            battery_averagecurrent = battery.getAverageCurrent()
+            // read battery data
+            battery_voltage = battery.getVoltage() / 1000
+            battery_level = battery.getStateOfCharge() / 100
+            battery_health = battery.getStateOfHealth()
+            battery_design_capacity = battery.getDesignCapacity()
+            battery_remaining_capacity = battery.getRemainingCapacity()
+            battery_averagepower = battery.getAveragePower()
+            battery_averagecurrent = battery.getAverageCurrent()
 
-//            // if the designcapacity is off correct it
-//            if (battery_design_capacity != battery.capacity) {
-//                console.debug("Design capacity doesn't match. Recalibrating battery.");
-//                battery.changeCapacity(battery.capacity);
-//            }
+            // if the designcapacity is off correct it
+            if (battery_design_capacity != battery.capacity) {
+                console.debug("Design capacity doesn't match. Recalibrating battery.");
+                battery.changeCapacity(battery.capacity);
+            }
 
-//            // if voltage is too low and we are sourcing power turn off the remote after timeout
-//            if (battery_voltage <= 3.4 && battery_averagepower < 0) {
-//                shutdownDelayTimer.start();
-//            }
+            // if voltage is too low and we are sourcing power turn off the remote after timeout
+            if (battery_voltage <= 3.4 && battery_averagepower < 0) {
+                shutdownDelayTimer.start();
+            }
 
-//            // hide and show the charging screen
-//            if (battery_averagepower >= 0 ) {
-//                chargingScreen.item.state = "visible";
-//                // cancel shutdown when started charging
-//                if (shutdownDelayTimer.running) {
-//                    shutdownDelayTimer.stop();
-//                }
-//            } else {
-//                chargingScreen.item.state = "hidden";
-//            }
+            // hide and show the charging screen
+            if (battery_averagepower >= 0 ) {
+                chargingScreen.item.state = "visible";
+                // cancel shutdown when started charging
+                if (shutdownDelayTimer.running) {
+                    shutdownDelayTimer.stop();
+                }
+            } else {
+                chargingScreen.item.state = "hidden";
+            }
         }
     }
 
@@ -92,10 +92,10 @@ ApplicationWindow {
         onTriggered: {
             loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
             loadingScreen.active = true;
-//            // set turn on button to low
-//            buttonHandler.interruptHandler.shutdown();
-//            // halt
-//            mainLauncher.launch("halt");
+            //            // set turn on button to low
+            //            buttonHandler.interruptHandler.shutdown();
+            //            // halt
+            //            mainLauncher.launch("halt");
         }
     }
 
@@ -301,14 +301,14 @@ ApplicationWindow {
 
         // when everything is loaded, load the main UI
         loader_main.setSource("qrc:/MainContainer.qml");
-//        loader_main.active = true;
+        //        loader_main.active = true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SUPPORTED COMPONENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //: names of the entities. Shows up in menu on the bottom. Always plural
-//    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
+    //    property var supported_entities_translation: [qsTr("Lights") + translateHandler.emptyString]
     property var loaded_entities: []  // holds the loaded entities. Not all supported entities are loaded
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

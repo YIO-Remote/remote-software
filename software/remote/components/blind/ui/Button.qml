@@ -101,11 +101,13 @@ Rectangle {
         State {
             name: "closed"
             PropertyChanges {target: blindButton; width: parent.width-20; height: 125}
+            PropertyChanges {target: button; _opacity: 1}
             ParentChange { target: blindButton; parent: originParent }
         },
         State {
             name: "open"
             PropertyChanges {target: blindButton; width: 440; height: 720}
+            PropertyChanges {target: button; _opacity: 0}
             ParentChange { target: blindButton; parent: contentWrapper; x: 20; y: 80 }
         }
     ]
@@ -115,12 +117,14 @@ Rectangle {
             to: "closed"
             ParallelAnimation {
                 PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         },
         Transition {
             to: "open"
             ParallelAnimation {
                 PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
                 }

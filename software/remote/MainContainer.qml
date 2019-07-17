@@ -36,7 +36,7 @@ Item {
             case "dpad right":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
                     loader_main.item.mainNavigationSwipeview.currentIndex += 1;
-                    mainNavigation.mainNavigationListView.currentIndex += 1;
+//                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
                     haptic.playEffect("buzz");
                 }
@@ -44,7 +44,7 @@ Item {
             case "dpad left":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
                     loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
-                    mainNavigation.mainNavigationListView.currentIndex -= 1;
+//                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
                     haptic.playEffect("buzz");
                 }

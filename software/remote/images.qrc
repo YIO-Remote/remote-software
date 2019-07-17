@@ -25,5 +25,8 @@
         <file>images/loading/O.png</file>
         <file>images/loading/Y.png</file>
         <file>components/blind/images/icon-blind.png</file>
+        <file>components/blind/images/down-arrow.png</file>
+        <file>components/blind/images/stop.png</file>
+        <file>components/blind/images/up-arrow.png</file>
     </qresource>
 </RCC>

@@ -7,6 +7,7 @@ Item {
 
     property alias checked: button.checked
     property alias mouseArea: mouseArea
+    property alias _opacity: button.opacity
 
     Switch {
         id: button

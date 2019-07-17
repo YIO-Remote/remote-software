@@ -12,7 +12,10 @@ Rectangle {
 
     // blind graphics draggable element
 
+    property int position: obj.position
+
     property var percent
+    property bool userMove: false
 
     Component.onCompleted: {
         percent = obj.position
@@ -30,7 +33,7 @@ Rectangle {
 
             Repeater {
                 id: repeater
-                model: dragger.pressed ? Math.round(percent*36/100) : Math.round(obj.position*36/100)
+                model: userMove ? Math.round(percent*36/100) : Math.round(obj.position*36/100)
 
                 delegate: Rectangle {
                     width: blindAdjust.width
@@ -45,7 +48,7 @@ Rectangle {
             width: parent.width
             height: parent.height
             color: colorBackgroundTransparent
-            y: dragger.pressed ? Math.round(height*percent/100) : Math.round(obj.position/100)
+            y: userMove ? Math.round(height*percent/100) : Math.round(obj.position/100)
         }
 
         MouseArea {
@@ -62,9 +65,21 @@ Rectangle {
                 if (percent > 100) percent = 100
             }
 
+            onPressed: {
+                userMove = true;
+            }
+
             onReleased: {
                 obj.setPosition(percent);
             }
+        }
+    }
+
+    onPositionChanged: {
+        if (userMove && position == percent) {
+            userMove = false;
+        } else {
+            percent = position;
         }
     }
 
@@ -89,7 +104,7 @@ Rectangle {
     Text {
         id: percentage
         color: colorText
-        text: percent
+        text: userMove ? percent : obj.position
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 180 }
@@ -143,6 +158,12 @@ Rectangle {
             haptic.playEffect("click");
             obj.close()
         }
+
+        Image {
+            asynchronous: true
+            anchors.centerIn: parent
+            source: "qrc:/components/blind/images/down-arrow.png"
+        }
     }
 
     BasicUI.CustomButton {
@@ -153,6 +174,12 @@ Rectangle {
         mouseArea.onClicked: {
             haptic.playEffect("click");
             obj.stop()
+        }
+
+        Image {
+            asynchronous: true
+            anchors.centerIn: parent
+            source: "qrc:/components/blind/images/stop.png"
         }
     }
 
@@ -165,6 +192,12 @@ Rectangle {
         mouseArea.onClicked: {
             haptic.playEffect("click");
             obj.open()
+        }
+
+        Image {
+            asynchronous: true
+            anchors.centerIn: parent
+            source: "qrc:/components/blind/images/up-arrow.png"
         }
     }
 
