@@ -23,7 +23,7 @@ Flickable {
     height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: iconFlow.height + 40 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
+    contentHeight: iconFlow.height + titleContainer.height + 40 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
 
@@ -85,7 +85,7 @@ Flickable {
                             var spacerObj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', iconFlow, '')
                         }
                         if (hasTitle) {
-                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 60; x:10; text: "'+ entities.supported_entities_translation[loaded_entities[k].id] +'";}', iconFlow, "");
+                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 32; x:10; text: "'+ entities.supported_entities_translation[loaded_entities[k].id] +'";}', iconFlow, "");
                         }
                         hasTitle = false;
 

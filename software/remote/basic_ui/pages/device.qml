@@ -23,7 +23,7 @@ Flickable {
     height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: iconFlow.height + 200 + 40 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
+    contentHeight: iconFlow.height + titleContainer.height + 40 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
 

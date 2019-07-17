@@ -40,5 +40,7 @@
         <file>basic_ui/NotificationDrawer.qml</file>
         <file>integrations/integration.qml</file>
         <file>integrations/homeassistant/Light.qml</file>
+        <file>components/blind/ui/Button.qml</file>
+        <file>components/blind/ui/Card.qml</file>
     </qresource>
 </RCC>

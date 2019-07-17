@@ -11,8 +11,8 @@ bool Blind::update(const QVariantMap &attributes)
         chg = true;
         emit stateChanged();
     }
-    if (m_position != attributes.value("current_position").toInt()) {
-        m_position = attributes.value("current_position").toInt();
+    if (m_position != attributes.value("position").toInt()) {
+        m_position = attributes.value("position").toInt();
         chg = true;
         emit positionChanged();
     }
@@ -55,6 +55,6 @@ void Blind::init(const QVariantMap &config)
     m_state = config.value("state").toBool();
     emit stateChanged();
 
-    m_position = config.value("current_position").toInt();
+    m_position = config.value("position").toInt();
     emit positionChanged();
 }

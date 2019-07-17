@@ -53,7 +53,7 @@ public:
 
 private:
     QMap<QString, QObject*>     m_entities;
-    QStringList                 m_supported_entities = {"light"};
+    QStringList                 m_supported_entities = {"light","blind"};
     QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds")};
 };
 

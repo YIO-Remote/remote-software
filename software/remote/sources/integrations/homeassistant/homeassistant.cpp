@@ -295,7 +295,9 @@ void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
     }
 
     // position
-    attributes.insert("current_position", attr.value("attributes").toMap().value("current_position").toInt());
+    if (entity->supported_features().indexOf("POSITION") > -1) {
+        attributes.insert("position", attr.value("attributes").toMap().value("current_position").toInt());
+    }
 
     m_entities->update(entity->entity_id(), attributes);
 }

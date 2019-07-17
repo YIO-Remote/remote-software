@@ -1,0 +1,293 @@
+{
+    "areas": [
+        {
+            "area": "Entrance",
+            "bluetooth": "xx:xx:xx:xx:xx"
+        },
+        {
+            "area": "Kitchen",
+            "bluetooth": "xx:xx:xx:xx:xx"
+        },
+        {
+            "area": "Living room",
+            "bluetooth": "xx:xx:xx:xx:xx"
+        },
+        {
+            "area": "Bedroom",
+            "bluetooth": "xx:xx:xx:xx:xx"
+        }
+    ],
+    "entities": [
+        {
+            "data": [
+                {
+                    "area": "Entrance",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.backdoor_lamp",
+                    "favorite": false,
+                    "friendly_name": "Backdoor lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                    ],
+                    "type": "light"
+                },
+                {
+                    "area": "Entrance",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.entrance_lamp_level",
+                    "favorite": false,
+                    "friendly_name": "Entrance lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                        "BRIGHTNESS"
+                    ],
+                    "type": "light"
+                },
+                {
+                    "area": "Kitchen",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.kitchen_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Kitchen lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                        "BRIGHTNESS"
+                    ],
+                    "type": "light"
+                },
+                {
+                    "area": "Kitchen",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.kitchen_table_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Kitchen table lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                        "BRIGHTNESS"
+                    ],
+                    "type": "light"
+                },
+                {
+                    "area": "Kitchen",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.kitchen_sink_lamp",
+                    "favorite": false,
+                    "friendly_name": "Kitchen sink lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                    ],
+                    "type": "light"
+                },
+                {
+                    "area": "Living room",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.living_room_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Living room lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                        "BRIGHTNESS"
+                    ],
+                    "type": "light"
+                },
+                {
+                    "area": "Living room",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.living_room_corner_lamp_level",
+                    "favorite": true,
+                    "friendly_name": "Living room corner lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                        "BRIGHTNESS",
+                        "COLOR"
+                    ],
+                    "type": "light"
+                },
+                {
+                    "area": "Bedroom",
+                    "attributes": {
+                        "brightness": 70,
+                        "color": [
+                            255,
+                            255,
+                            255
+                        ],
+                        "state": "on"
+                    },
+                    "entity_id": "light.bedroom_lamp_level",
+                    "favorite": false,
+                    "friendly_name": "Bedroom lamp",
+                    "integration": "homeassistant",
+                    "supported_features": [
+                        "BRIGHTNESS"
+                    ],
+                    "type": "light"
+                }
+            ],
+            "type": "light"
+        },
+        {
+            "data": [
+                {
+                    "area": "Living room",
+                    "entity_id": "cover.living_room_blinds_level",
+                    "favorite": true,
+                    "friendly_name": "Living room blinds",
+                    "integration": "homeassistant",
+                    "type": "blind",
+                    "attributes": {
+                        "position": 100,
+                        "state": "open"
+                    },
+                    "supported_features": [ "OPEN", "CLOSE", "STOP", "POSITION" ]
+                },
+                {
+                    "area": "Bedroom",
+                    "entity_id": "cover.bedroom_blinds_level",
+                    "favorite": false,
+                    "friendly_name": "Bedroom blinds",
+                    "integration": "homeassistant",
+                    "type": "blind",
+                    "attributes": {
+                        "position": 23,
+                        "state": "open"
+                    },
+                    "supported_features": [ "OPEN", "CLOSE", "STOP", "POSITION" ]
+                }
+            ],
+            "type": "blind"
+        }
+    ],
+    "integration": [
+        {
+            "connectionOpen": true,
+            "data": {
+                "ip": "homeassistant.facan.lan:8123",
+                "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE4NTQwMjU5NjIsImlhdCI6MTUzODY2NTk2MiwiaXNzIjoiNmY3NzVjNThhMDYwNGM3MzgxZTIyZGVlMjAyMjRhOGEifQ.Wai50qqOiakAJVc4buX5LbNBbVeWudjv0tSo7NNfDu4"
+            },
+            "friendly_name": "Home Assistant",
+            "id": 1,
+            "obj": null,
+            "type": "homeassistant"
+        }
+    ],
+    "language": "en_US",
+    "settings": {
+        "autobrightness": false,
+        "darkmode": true,
+        "menu": {
+            "order": [
+                {
+                    "display_name": "Favorites",
+                    "displayname": "Favorites",
+                    "name": "favorites",
+                    "show": true
+                },
+                {
+                    "display_name": "Lights",
+                    "displayname": "Lights",
+                    "name": "light",
+                    "show": true
+                },
+                {
+                    "display_name": "Blinds",
+                    "displayname": "Blinds",
+                    "name": "blind",
+                    "show": true
+                },
+                {
+                    "display_name": "Entrance",
+                    "displayname": "Entrance",
+                    "name": "area",
+                    "show": true
+                },
+                {
+                    "display_name": "Kitchen",
+                    "displayname": "Kitchen",
+                    "name": "area",
+                    "show": true
+                },
+                {
+                    "display_name": "Living room",
+                    "displayname": "Living room",
+                    "name": "area",
+                    "show": true
+                },
+                {
+                    "display_name": "Bedroom",
+                    "displayname": "Bedroom",
+                    "name": "area",
+                    "show": true
+                },
+                {
+                    "display_name": "Settings",
+                    "displayname": "Settings",
+                    "name": "settings",
+                    "show": true
+                }
+            ],
+            "showareas": true,
+            "showdevices": true
+        },
+        "proximity": 40,
+        "shutdowntime": 7200,
+        "softwareupdate": false,
+        "wifitime": 600
+    }
+}
