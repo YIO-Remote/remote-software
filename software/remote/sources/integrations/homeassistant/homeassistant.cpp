@@ -151,6 +151,8 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
     if (success && type == "result" && id == 3) {
         setState(CONNECTED);
         qDebug() << "Subscribed to state changes";
+        // remove notifications that we don't need anymore as the integration is connected
+        m_notifications->remove("Cannot connect to Home Assistant.");
     }
 
     if (success && id == m_webSocketId) {
@@ -185,7 +187,7 @@ void HomeAssistant::onTimeout()
     if (m_tries == 3) {
         m_websocketReconnect.stop();
 
-        m_notifications->add(true,"Cannot connect to Home Assistant.", "Reconnect", "function() { integrations.homeassistant.obj.connect(); }");
+        m_notifications->add(true,tr("Cannot connect to Home Assistant."), tr("Reconnect"), "function() { integrations.homeassistant.obj.connect(); }");
         disconnect();
         m_tries = 0;
     }

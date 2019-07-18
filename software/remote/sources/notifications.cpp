@@ -99,6 +99,18 @@ void Notifications::remove(const int id)
     emit errorChanged();
 }
 
+void Notifications::remove(const QString &text)
+{
+    for (int i=0; i<m_notifications.count(); i++) {
+        QVariantMap map = m_notifications.value(i).toMap();
+        if (map["text"].toString() == text) {
+            m_notifications.removeAt(i);
+        }
+    }
+    emit listChanged();
+    emit errorChanged();
+}
+
 bool Notifications::isThereError()
 {
     bool r = false;
