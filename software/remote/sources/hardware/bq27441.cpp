@@ -55,7 +55,7 @@ void BQ27441::changeCapacity(int newCapacity)
     #ifdef __arm__
     if (m_init) {
 
-        capacity = uint16_t(newCapacity);
+        uint16_t capacity = uint16_t(newCapacity);
         // unseal the device
         wiringPiI2CWriteReg8(bus, 0x00, 0x00);
         wiringPiI2CWriteReg8(bus, 0x01, 0x80);

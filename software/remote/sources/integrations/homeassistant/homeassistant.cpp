@@ -60,7 +60,6 @@ void HomeAssistant::disconnect()
     m_socket.close();
 
     setState(DISCONNECTED);
-
 }
 
 void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
