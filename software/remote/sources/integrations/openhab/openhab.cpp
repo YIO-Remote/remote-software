@@ -14,7 +14,7 @@ OpenHAB::OpenHAB()
     QObject::connect(&m_polling_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
-void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* entities)
+void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications)
 {
     setIntegrationId(integrationId);
     for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
@@ -31,6 +31,7 @@ void OpenHAB::initialize(int integrationId, const QVariantMap& config, QObject* 
             setFriendlyName(iter.value().toString());
     }
     m_entities = qobject_cast<EntitiesInterface *>(entities);
+    m_notifications = qobject_cast<NotificationsInterface *>(notifications);
 }
 
 void OpenHAB::connect()
@@ -97,6 +98,7 @@ void OpenHAB::processResponse(QNetworkReply* reply)
 {
     if (reply->error()) {
         qDebug() << reply->errorString();
+        m_notifications->add(true,"Cannot connect to openHAB.", "Reconnect", "function() { integrations.openhab.obj.connect(); }");
     }
 
     QByteArray response = reply->readAll();

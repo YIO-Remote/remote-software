@@ -22,7 +22,7 @@ class OpenHAB : public Integration, IntegrationInterface
 public:
     explicit OpenHAB();
 
-    Q_INVOKABLE void initialize	    (int integrationId, const QVariantMap& config, QObject *entities) override;
+    Q_INVOKABLE void initialize	    (int integrationId, const QVariantMap& config, QObject *entities, QObject *notifications) override;
     Q_INVOKABLE void connect	    () override;
     Q_INVOKABLE void disconnect	    () override;
 
@@ -44,6 +44,7 @@ private:
     QTimer                          m_polling_timer;
 
     EntitiesInterface*  m_entities;
+    NotificationsInterface*         m_notifications;
 
     QString 			m_ip;
     int                 m_polling_interval=1000; // default 1 second
