@@ -126,8 +126,9 @@ private:
     int bus;
 #ifdef __arm__
     int m_capacity;
-#endif
+#else
     int m_capacity = 2500;
+#endif
     bool m_init = false;
 };
 
