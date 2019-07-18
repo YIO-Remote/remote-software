@@ -59,7 +59,8 @@ SOURCES       = ../remote/sources/main.cpp \
 		../remote/sources/entities/entities.cpp \
 		../remote/sources/entities/entity.cpp \
 		../remote/sources/entities/light.cpp \
-		../remote/sources/entities/blind.cpp qrc_images.cpp \
+		../remote/sources/entities/blind.cpp \
+		../remote/sources/notifications.cpp qrc_images.cpp \
 		qrc_translations.cpp \
 		MainContainer_qml.cpp \
 		ButtonHandler_qml.cpp \
@@ -117,7 +118,8 @@ SOURCES       = ../remote/sources/main.cpp \
 		moc_entities.cpp \
 		moc_entity.cpp \
 		moc_light.cpp \
-		moc_blind.cpp
+		moc_blind.cpp \
+		moc_notifications.cpp
 OBJECTS       = main.o \
 		jsonfile.o \
 		launcher.o \
@@ -128,6 +130,7 @@ OBJECTS       = main.o \
 		entity.o \
 		light.o \
 		blind.o \
+		notifications.o \
 		qrc_images.o \
 		qrc_translations.o \
 		MainContainer_qml.o \
@@ -186,7 +189,8 @@ OBJECTS       = main.o \
 		moc_entities.o \
 		moc_entity.o \
 		moc_light.o \
-		moc_blind.o
+		moc_blind.o \
+		moc_notifications.o
 DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/device_config.prf \
@@ -326,6 +330,7 @@ DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_post.prf \
+		../remote/.qmake.stash \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/toolchain.prf \
@@ -368,7 +373,8 @@ DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../remote/sources/integrations/integrationinterface.h \
 		../remote/sources/entities/entitiesinterface.h \
 		../remote/sources/entities/light.h \
-		../remote/sources/entities/blind.h ../remote/sources/main.cpp \
+		../remote/sources/entities/blind.h \
+		../remote/sources/notifications.h ../remote/sources/main.cpp \
 		../remote/sources/jsonfile.cpp \
 		../remote/sources/launcher.cpp \
 		../remote/sources/hardware/display_control.cpp \
@@ -377,7 +383,8 @@ DIST          = ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_pre.prf \
 		../remote/sources/entities/entities.cpp \
 		../remote/sources/entities/entity.cpp \
 		../remote/sources/entities/light.cpp \
-		../remote/sources/entities/blind.cpp
+		../remote/sources/entities/blind.cpp \
+		../remote/sources/notifications.cpp
 QMAKE_TARGET  = remote
 DESTDIR       = ./
 TARGET        = ./remote.app/Contents/MacOS/remote
@@ -534,6 +541,7 @@ Makefile: ../remote/remote.pro ../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.11.1/clang_64/mkspecs/features/toolchain.prf \
@@ -711,6 +719,7 @@ Makefile: ../remote/remote.pro ../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang
 ../../../../Qt/5.11.1/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.11.1/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.11.1/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.11.1/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.11.1/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.11.1/clang_64/mkspecs/features/toolchain.prf:
@@ -791,8 +800,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../remote/MainContainer.qml ../remote/ButtonHandler.qml ../remote/StandbyControl.qml ../remote/main.qml ../remote/scripts/helper.js ../remote/scripts/softwareupdate.js ../remote/integrations/integration.qml ../remote/integrations/homeassistant/homeassistant.qml ../remote/integrations/homeassistant/Light.qml ../remote/integrations/homey/homey.qml ../remote/components/light/ui/Button.qml ../remote/components/light/ui/CardSwitch.qml ../remote/components/light/ui/CardDimmable.qml ../remote/components/light/ui/CardColor.qml ../remote/components/blind/ui/Button.qml ../remote/components/blind/ui/Card.qml ../remote/basic_ui/ClosingScreen.qml ../remote/basic_ui/PopupLowBattery.qml ../remote/basic_ui/Settings.qml ../remote/basic_ui/CustomButtonState.qml ../remote/basic_ui/Notification.qml ../remote/basic_ui/StatusBar.qml ../remote/basic_ui/ChargingScreen.qml ../remote/basic_ui/ProgressCircle.qml ../remote/basic_ui/CustomSwitch.qml ../remote/basic_ui/LoadingScreen.qml ../remote/basic_ui/NotificationDrawer.qml ../remote/basic_ui/CustomButton.qml ../remote/basic_ui/MainNavigation.qml ../remote/basic_ui/settings/Battery.qml ../remote/basic_ui/settings/Network.qml ../remote/basic_ui/settings/Hubs.qml ../remote/basic_ui/settings/PowerSaving.qml ../remote/basic_ui/settings/Languages.qml ../remote/basic_ui/settings/Display.qml ../remote/basic_ui/settings/System.qml ../remote/basic_ui/settings/Devices.qml ../remote/basic_ui/settings/Softwareupdate.qml ../remote/basic_ui/pages/dashboard.qml ../remote/basic_ui/pages/area.qml ../remote/basic_ui/pages/device.qml ../remote/basic_ui/pages/settings.qml $(DISTDIR)/
 	$(COPY_FILE) --parents ../remote/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../remote/sources/jsonfile.h ../remote/sources/launcher.h ../remote/sources/hardware/display_control.h ../remote/sources/translation.h ../remote/sources/hardware/touchdetect.h ../remote/sources/hardware/proximity_gesture_control.h ../remote/sources/hardware/interrupt_handler.h ../remote/sources/hardware/drv2605.h ../remote/sources/hardware/bq27441.h ../remote/sources/integrations/integration.h ../remote/sources/entities/entities.h ../remote/sources/entities/entity.h ../remote/sources/integrations/integrationinterface.h ../remote/sources/entities/entitiesinterface.h ../remote/sources/entities/light.h ../remote/sources/entities/blind.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../remote/sources/main.cpp ../remote/sources/jsonfile.cpp ../remote/sources/launcher.cpp ../remote/sources/hardware/display_control.cpp ../remote/sources/hardware/drv2605.cpp ../remote/sources/hardware/bq27441.cpp ../remote/sources/entities/entities.cpp ../remote/sources/entities/entity.cpp ../remote/sources/entities/light.cpp ../remote/sources/entities/blind.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../remote/sources/jsonfile.h ../remote/sources/launcher.h ../remote/sources/hardware/display_control.h ../remote/sources/translation.h ../remote/sources/hardware/touchdetect.h ../remote/sources/hardware/proximity_gesture_control.h ../remote/sources/hardware/interrupt_handler.h ../remote/sources/hardware/drv2605.h ../remote/sources/hardware/bq27441.h ../remote/sources/integrations/integration.h ../remote/sources/entities/entities.h ../remote/sources/entities/entity.h ../remote/sources/integrations/integrationinterface.h ../remote/sources/entities/entitiesinterface.h ../remote/sources/entities/light.h ../remote/sources/entities/blind.h ../remote/sources/notifications.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../remote/sources/main.cpp ../remote/sources/jsonfile.cpp ../remote/sources/launcher.cpp ../remote/sources/hardware/display_control.cpp ../remote/sources/hardware/drv2605.cpp ../remote/sources/hardware/bq27441.cpp ../remote/sources/entities/entities.cpp ../remote/sources/entities/entity.cpp ../remote/sources/entities/light.cpp ../remote/sources/entities/blind.cpp ../remote/sources/notifications.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents translations/bg_BG.ts translations/cs_CZ.ts translations/da_DK.ts translations/de_DE.ts translations/el_GR.ts translations/en_US.ts translations/es_ES.ts translations/et_EE.ts translations/fi_FI.ts translations/fr_CA.ts translations/fr_FR.ts translations/ga_IE.ts translations/hr_HR.ts translations/hu_HU.ts translations/it_IT.ts translations/lt_LT.ts translations/lv_LV.ts translations/mt_MT.ts translations/nl_NL.ts translations/no_NO.ts translations/pl_PL.ts translations/pt_BR.ts translations/pt_PT.ts translations/ro_RO.ts translations/sk_SK.ts translations/sl_SI.ts translations/sv_SE.ts $(DISTDIR)/
 
 
@@ -803,6 +812,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r ./remote.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -845,7 +855,10 @@ qrc_images.cpp: ../remote/images.qrc \
 		../remote/images/notification/icon-notification-dismiss.png \
 		../remote/images/notification/icon-notification-error.png \
 		../remote/components/light/images/icon-light.png \
-		../remote/components/blind/images/icon-blind.png
+		../remote/components/blind/images/down-arrow.png \
+		../remote/components/blind/images/icon-blind.png \
+		../remote/components/blind/images/stop.png \
+		../remote/components/blind/images/up-arrow.png
 	/Users/marton/Qt/5.11.1/clang_64/bin/rcc -name images ../remote/images.qrc -o qrc_images.cpp
 
 qrc_translations.cpp: ../remote/translations.qrc \
@@ -1040,9 +1053,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt/5.11.1/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_jsonfile.cpp moc_launcher.cpp moc_display_control.cpp moc_translation.cpp moc_touchdetect.cpp moc_proximity_gesture_control.cpp moc_interrupt_handler.cpp moc_drv2605.cpp moc_bq27441.cpp moc_integration.cpp moc_entities.cpp moc_entity.cpp moc_light.cpp moc_blind.cpp
+compiler_moc_header_make_all: moc_jsonfile.cpp moc_launcher.cpp moc_display_control.cpp moc_translation.cpp moc_touchdetect.cpp moc_proximity_gesture_control.cpp moc_interrupt_handler.cpp moc_drv2605.cpp moc_bq27441.cpp moc_integration.cpp moc_entities.cpp moc_entity.cpp moc_light.cpp moc_blind.cpp moc_notifications.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_jsonfile.cpp moc_launcher.cpp moc_display_control.cpp moc_translation.cpp moc_touchdetect.cpp moc_proximity_gesture_control.cpp moc_interrupt_handler.cpp moc_drv2605.cpp moc_bq27441.cpp moc_integration.cpp moc_entities.cpp moc_entity.cpp moc_light.cpp moc_blind.cpp
+	-$(DEL_FILE) moc_jsonfile.cpp moc_launcher.cpp moc_display_control.cpp moc_translation.cpp moc_touchdetect.cpp moc_proximity_gesture_control.cpp moc_interrupt_handler.cpp moc_drv2605.cpp moc_bq27441.cpp moc_integration.cpp moc_entities.cpp moc_entity.cpp moc_light.cpp moc_blind.cpp moc_notifications.cpp
 moc_jsonfile.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QFile \
@@ -1229,6 +1242,19 @@ moc_blind.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObje
 		../../../../Qt/5.11.1/clang_64/bin/moc
 	/Users/marton/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/marton/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/marton/git/yio-remote/software/remote -I/Users/marton/Qt/5.11.1/clang_64/lib/QtQuickControls2.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtWebSockets.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/marton/Qt/5.11.1/clang_64/lib ../remote/sources/entities/blind.h -o moc_blind.cpp
 
+moc_notifications.cpp: ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers/QQmlApplicationEngine \
+		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers/qqmlapplicationengine.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDateTime \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QMap \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qmap.h \
+		../remote/sources/notifications.h \
+		moc_predefs.h \
+		../../../../Qt/5.11.1/clang_64/bin/moc
+	/Users/marton/Qt/5.11.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/marton/Qt/5.11.1/clang_64/mkspecs/macx-clang -I/Users/marton/git/yio-remote/software/remote -I/Users/marton/Qt/5.11.1/clang_64/lib/QtQuickControls2.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtQuick.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtGui.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtQml.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtWebSockets.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/marton/Qt/5.11.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/marton/Qt/5.11.1/clang_64/lib ../remote/sources/notifications.h -o moc_notifications.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -1303,7 +1329,10 @@ main.o: ../remote/sources/main.cpp ../../../../Qt/5.11.1/clang_64/lib/QtGui.fram
 		../remote/sources/hardware/bq27441.h \
 		../remote/sources/hardware/proximity_gesture_control.h \
 		../remote/sources/hardware/apds9960.h \
-		../remote/sources/integrations/integration.h
+		../remote/sources/integrations/integration.h \
+		../remote/sources/notifications.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDateTime \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../remote/sources/main.cpp
 
 jsonfile.o: ../remote/sources/jsonfile.cpp ../remote/sources/jsonfile.h \
@@ -1358,6 +1387,13 @@ display_control.o: ../remote/sources/hardware/display_control.cpp ../remote/sour
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QFuture \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qfuture.h \
+		../remote/sources/notifications.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers/QQmlApplicationEngine \
+		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers/qqmlapplicationengine.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDateTime \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QMap \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qmap.h \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QtDebug \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o display_control.o ../remote/sources/hardware/display_control.cpp
@@ -1445,6 +1481,19 @@ blind.o: ../remote/sources/entities/blind.cpp ../../../../Qt/5.11.1/clang_64/lib
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QStringList \
 		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qstringlist.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o blind.o ../remote/sources/entities/blind.cpp
+
+notifications.o: ../remote/sources/notifications.cpp ../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QtDebug \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../remote/sources/notifications.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers/QQmlApplicationEngine \
+		../../../../Qt/5.11.1/clang_64/lib/QtQml.framework/Headers/qqmlapplicationengine.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QDateTime \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/QMap \
+		../../../../Qt/5.11.1/clang_64/lib/QtCore.framework/Headers/qmap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o notifications.o ../remote/sources/notifications.cpp
 
 qrc_images.o: qrc_images.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_images.o qrc_images.cpp
@@ -1622,6 +1671,9 @@ moc_light.o: moc_light.cpp
 
 moc_blind.o: moc_blind.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_blind.o moc_blind.cpp
+
+moc_notifications.o: moc_notifications.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_notifications.o moc_notifications.cpp
 
 ####### Install
 

@@ -274,7 +274,7 @@ ApplicationWindow {
                     }
 
                     // store which entity type was loaded. Not all supported entities are loaded.
-//                    loaded_entities.push({ obj: entities.supported_entities[k], id : k });
+                    //                    loaded_entities.push({ obj: entities.supported_entities[k], id : k });
                     entities.addLoadedEntity(entities.supported_entities[k]);
                 }
             }
@@ -456,57 +456,13 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // { "type": "normal",
-    //   "text": "This is the notification text to display",
-    //   "action": "function () { return 1; }",
-    //   "timestamp" : this is added automatically,
-    //   "id": position in the array, assigned automatically
-    // }
-    //
-    // type can be "normal" or "error"
-
-    function addNotification(type, text, action, actionlabel) {
-        var json = {};
-        json.type = type;
-        json.text = text;
-        json.action = action;
-        json.actionlabel = actionlabel;
-        json.timestamp = new Date();
-
-        var tmp = notifications;
-        tmp.push(json);
-        notifications = tmp;
-
-        // show notification
+    function showNotification(data) {
         var comp = Qt.createComponent("qrc:/basic_ui/Notification.qml");
-        notificationObj[notifications.length-1] = comp.createObject(notificationsRow, {type: json.type, text: json.text, actionlabel: json.actionlabel, action: json.action, timestamp: json.timestamp, idN: notifications.length-1, _state: "visible"});
-        notificationObj[notifications.length-1].removeNotification.connect(removeNotification);
-        notificationObj[notifications.length-1].dismissNotification.connect(dismissNotification);
-    }
-
-    function removeNotification(idN) {
-        notificationObj[idN].destroy(400);
-        var tmp = notifications;
-        tmp.splice(notificationObj[idN].idN, 1);
-        notifications = tmp;
-    }
-
-    function dismissNotification(idN) {
-        notificationObj[idN].destroy(400);
-    }
-
-
-    property var notifications: [] // json array that holds all the active notifications
-    property var notificationObj: []
-
-    //     close the notification drawer when there is no notification left to show
-    onNotificationsChanged: {
-        if (notifications.length == 0) {
-            notificationsDrawer.close();
-        }
+        var obj = comp.createObject(notificationsRow, {type: data.error, text: data.text, actionlabel: data.actionlabel, action: data.action, timestamp: data.timestamp, idN: data.id, _state: "visible"});
     }
 
     Column {
+        objectName: "notificationsRow"
         id: notificationsRow
         anchors.fill: parent
         spacing: 10
@@ -520,7 +476,7 @@ ApplicationWindow {
     Drawer {
         id: notificationsDrawer
         width: parent.width
-        height: notifications.length > 5 ? 100 + 5 * 104 : 100 + (notifications.length + 1) * 104
+        height: notifications.list.length > 5 ? 100 + 5 * 104 : 100 + (notifications.list.length + 1) * 104
         edge: Qt.TopEdge
         dragMargin: 40
         interactive: loader_main.state == "visible" ? true : false
@@ -560,6 +516,14 @@ ApplicationWindow {
             active: notificationsDrawer.position > 0 ? true : false
             source: notificationsDrawer.position > 0 ? "qrc:/basic_ui/NotificationDrawer.qml" : ""
         }
+
+        property int n: notifications.list.length
+
+        onNChanged: {
+            if (n==0) {
+                notificationsDrawer.close();
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -578,6 +542,7 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
+                notifications.add(false, "Test notification");
             }
         }
     }

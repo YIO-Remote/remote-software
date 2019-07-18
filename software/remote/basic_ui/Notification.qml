@@ -9,8 +9,8 @@ Rectangle {
     width: parent.width-20
     height: 104 // 244
     x: 10
-    radius: 52
-    color: type == "normal" ? colorHighlight1 : colorRed
+    radius: cornerRadius
+    color: type ? colorRed : colorLight
 
     Behavior on opacity {
         NumberAnimation {
@@ -27,19 +27,11 @@ Rectangle {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    // SIGNAL
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    // signal is emitted when clicked, so the notification is not removed automatically
-
-    signal removeNotification(int idN)
-    signal dismissNotification(int idN)
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
     // MOUSEAREA
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     property bool dragged: false
+    property bool closing: false
 
     MouseArea {
         id: mouseArea
@@ -67,20 +59,19 @@ Rectangle {
     }
 
     onXChanged: {
-        if (x > 40 && x <= 240) {
-            notification.x = 100;
-            notificationRemoverTimer.stop();
-        } else if (x > 240 && !dragged) {
+        if (x > 240 && !dragged) {
             dragged = true;
             notificationRemoverTimer.stop();
             notification.opacity = 0;
             if (state == "permanent") {
-                var tmp = notifications;
-                tmp.splice(idN, 1);
-                notifications = tmp;
+                notifications.remove(idN);
             } else {
-                removeNotification(idN);
+                notification.destroy(400);
+                notifications.remove(idN);
             }
+        } else if (x > 40 && x <= 240 && !closing) {
+            notification.x = 100;
+            notificationRemoverTimer.stop();
         }
     }
 
@@ -89,7 +80,7 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     property alias text: notificationText.text
-    property string type
+    property bool type
     property var action
     property string actionlabel
     property var timestamp
@@ -167,11 +158,9 @@ Rectangle {
         enabled: notification.x == 100 ? true : false
 
         onClicked: {
+            closing = true;
             notification.x = 400;
-
-            var tmp = notifications;
-            tmp.splice(idN, 1);
-            notifications = tmp;
+            notifications.remove(idN);
         }
 
         Image {
@@ -256,26 +245,24 @@ Rectangle {
                 mouseArea.onClicked: {
                     notification.opacity = 0;
                     if (notificationsDrawer.position > 0) {
-                        var tmp = notifications;
-                        tmp.splice(idN, 1);
-                        notifications = tmp;
+                        notifications.remove(idN);
                     } else {
-                        removeNotification(idN);
+                        notification.destroy(400);
+                        notifications.remove(idN);
                     }
                 }
             }
 
             BasicUI.CustomButton {
                 buttonText: qsTr(actionlabel) + translateHandler.emptyString
-                visible: action !== "" ? true : false
+                visible: action != "" ? true : false
                 mouseArea.onClicked:  {
                     notification.opacity = 0;
                     if (notificationsDrawer.position > 0) {
-                        var tmp = notifications;
-                        tmp.splice(idN, 1);
-                        notifications = tmp;
+                        notifications.remove(idN);
                     } else {
-                        removeNotification(idN);
+                        notification.destroy(400);
+                        notifications.remove(idN);
                     }
                     notification.action();
                 }
@@ -290,7 +277,7 @@ Rectangle {
         width: 60
         height: 60
         fillMode: Image.PreserveAspectFit
-        source: type == "normal" ? "qrc:/images/notification/icon-notification-normal.png" : "qrc:/images/notification/icon-notification-error.png"
+        source: type ? "qrc:/images/notification/icon-notification-error.png" : "qrc:/images/notification/icon-notification-normal.png"
         anchors.left: parent.left
         anchors.leftMargin: 30
         anchors.top: parent.top
@@ -318,7 +305,7 @@ Rectangle {
 
         onTriggered: {
             notification.state = "hidden";
-            dismissNotification(idN);
+            notification.destroy(400);
         }
     }
 }

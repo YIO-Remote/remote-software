@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Entities_t {
-    QByteArrayData data[19];
-    char stringdata0[198];
+    QByteArrayData data[23];
+    char stringdata0[267];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,16 +49,23 @@ QT_MOC_LITERAL(12, 103, 6), // "config"
 QT_MOC_LITERAL(13, 110, 14), // "integrationObj"
 QT_MOC_LITERAL(14, 125, 6), // "update"
 QT_MOC_LITERAL(15, 132, 10), // "attributes"
-QT_MOC_LITERAL(16, 143, 4), // "list"
-QT_MOC_LITERAL(17, 148, 18), // "supported_entities"
-QT_MOC_LITERAL(18, 167, 30) // "supported_entities_translation"
+QT_MOC_LITERAL(16, 143, 15), // "addLoadedEntity"
+QT_MOC_LITERAL(17, 159, 6), // "entity"
+QT_MOC_LITERAL(18, 166, 29), // "getSupportedEntityTranslation"
+QT_MOC_LITERAL(19, 196, 4), // "list"
+QT_MOC_LITERAL(20, 201, 18), // "supported_entities"
+QT_MOC_LITERAL(21, 220, 30), // "supported_entities_translation"
+QT_MOC_LITERAL(22, 251, 15) // "loaded_entities"
 
     },
     "Entities\0getByType\0QList<QObject*>\0\0"
     "type\0getByArea\0area\0getByIntegration\0"
     "integration\0get\0entity_id\0add\0config\0"
-    "integrationObj\0update\0attributes\0list\0"
-    "supported_entities\0supported_entities_translation"
+    "integrationObj\0update\0attributes\0"
+    "addLoadedEntity\0entity\0"
+    "getSupportedEntityTranslation\0list\0"
+    "supported_entities\0supported_entities_translation\0"
+    "loaded_entities"
 };
 #undef QT_MOC_LITERAL
 
@@ -68,20 +75,22 @@ static const uint qt_meta_data_Entities[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
-       3,   66, // properties
+       8,   14, // methods
+       4,   82, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
  // methods: name, argc, parameters, tag, flags
-       1,    1,   44,    3, 0x02 /* Public */,
-       5,    1,   47,    3, 0x02 /* Public */,
-       7,    1,   50,    3, 0x02 /* Public */,
-       9,    1,   53,    3, 0x02 /* Public */,
-      11,    2,   56,    3, 0x02 /* Public */,
-      14,    2,   61,    3, 0x02 /* Public */,
+       1,    1,   54,    3, 0x02 /* Public */,
+       5,    1,   57,    3, 0x02 /* Public */,
+       7,    1,   60,    3, 0x02 /* Public */,
+       9,    1,   63,    3, 0x02 /* Public */,
+      11,    2,   66,    3, 0x02 /* Public */,
+      14,    2,   71,    3, 0x02 /* Public */,
+      16,    1,   76,    3, 0x02 /* Public */,
+      18,    1,   79,    3, 0x02 /* Public */,
 
  // methods: parameters
     0x80000000 | 2, QMetaType::QString,    4,
@@ -90,11 +99,14 @@ static const uint qt_meta_data_Entities[] = {
     QMetaType::QObjectStar, QMetaType::QString,   10,
     QMetaType::Void, QMetaType::QVariantMap, QMetaType::QObjectStar,   12,   13,
     QMetaType::Void, QMetaType::QString, QMetaType::QVariantMap,   10,   15,
+    QMetaType::Void, QMetaType::QString,   17,
+    QMetaType::QString, QMetaType::QString,    4,
 
  // properties: name, type, flags
-      16, 0x80000000 | 2, 0x00095409,
-      17, QMetaType::QStringList, 0x00095401,
-      18, QMetaType::QStringList, 0x00095401,
+      19, 0x80000000 | 2, 0x00095409,
+      20, QMetaType::QStringList, 0x00095401,
+      21, QMetaType::QStringList, 0x00095401,
+      22, QMetaType::QStringList, 0x00095401,
 
        0        // eod
 };
@@ -115,6 +127,9 @@ void Entities::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             if (_a[0]) *reinterpret_cast< QObject**>(_a[0]) = std::move(_r); }  break;
         case 4: _t->add((*reinterpret_cast< const QVariantMap(*)>(_a[1])),(*reinterpret_cast< QObject*(*)>(_a[2]))); break;
         case 5: _t->update((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QVariantMap(*)>(_a[2]))); break;
+        case 6: _t->addLoadedEntity((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 7: { QString _r = _t->getSupportedEntityTranslation((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
@@ -134,6 +149,7 @@ void Entities::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 0: *reinterpret_cast< QList<QObject*>*>(_v) = _t->list(); break;
         case 1: *reinterpret_cast< QStringList*>(_v) = _t->supported_entities(); break;
         case 2: *reinterpret_cast< QStringList*>(_v) = _t->supported_entities_translation(); break;
+        case 3: *reinterpret_cast< QStringList*>(_v) = _t->loaded_entities(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -171,29 +187,29 @@ int Entities::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 8;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 3;
+        _id -= 4;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
