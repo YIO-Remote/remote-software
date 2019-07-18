@@ -21,7 +21,7 @@ HomeAssistant::HomeAssistant()
     QObject::connect(&m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
-void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QObject* entities)
+void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications)
 {
     setIntegrationId(integrationId);
     for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
@@ -36,6 +36,7 @@ void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QOb
             setFriendlyName(iter.value().toString());
     }
     m_entities = qobject_cast<EntitiesInterface *>(entities);
+    m_notifications = qobject_cast<NotificationsInterface *>(notifications);
 }
 
 void HomeAssistant::connect()
@@ -185,7 +186,7 @@ void HomeAssistant::onTimeout()
     if (m_tries == 3) {
         m_websocketReconnect.stop();
 
-        emit notify();
+        m_notifications->add(true,"Cannot connect to Home Assistant.", "Reconnect", "function() { integrations.homeassistant.obj.connect(); }");
         disconnect();
         m_tries = 0;
     }

@@ -141,7 +141,7 @@ Item {
             }
 
             // change the statusbar title
-            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYBeginning) {
+            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
                statusBar.title = "";
             } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
@@ -152,7 +152,9 @@ Item {
     onItemsLoadedChanged: {
         if (itemsLoaded >= 2) {
             bottomGradient.opacity = Qt.binding(function() {
-                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd) {
+                if (mainNavigation.y != 800) {
+                    return 1
+                } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd){
                     return 0
                 } else {
                     return 1
@@ -160,13 +162,6 @@ Item {
             })
         }
     }
-
-//    Connections {
-//        target: mainNavigationSwipeview.currentItem.mainNavigationLoader.item
-//        onFlickStarted: {
-//            mainNavigation.y = parent.height;
-//        }
-//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BOTTOM GRADIENT FADE

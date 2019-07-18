@@ -72,8 +72,8 @@ Flickable {
 
             for (var i=0; i<config.areas.length; i++) {
                 if (config.areas[i].area == area) {
-                    for (var k=0; k<loaded_entities.length; k++) {
-                        var e = entities.getByType(loaded_entities[k].obj);
+                    for (var k=0; k<entities.loaded_entities.length; k++) {
+                        var e = entities.getByType(entities.loaded_entities[k]);
 
                         for (var j=0; j<e.length; j++) {
                             if (e[j].area == config.areas[i].area) {
@@ -85,14 +85,14 @@ Flickable {
                             var spacerObj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', iconFlow, '')
                         }
                         if (hasTitle) {
-                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 32; x:10; text: "'+ entities.supported_entities_translation[loaded_entities[k].id] +'";}', iconFlow, "");
+                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 32; x:10; text: "'+ entities.getSupportedEntityTranslation(entities.loaded_entities[k]) +'";}', iconFlow, "");
                         }
                         hasTitle = false;
 
                         for (var j=0; j<e.length; j++) {
                             if (e[j].area == config.areas[i].area) {
                                 // load entity button
-                                var comp = Qt.createComponent("qrc:/components/"+ loaded_entities[k].obj +"/ui/Button.qml");
+                                var comp = Qt.createComponent("qrc:/components/"+ entities.loaded_entities[k] +"/ui/Button.qml");
                                 if (comp.status != Component.Ready) {
                                     console.debug("Error: " + comp.errorString() );
                                 }

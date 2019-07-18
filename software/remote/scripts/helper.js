@@ -45,9 +45,9 @@ function saveConfig() {
     config.language = language;
 
     //entities
-    for (var i=0; i<loaded_entities.length; i++) {
+    for (var i=0; i<entities.loaded_entities.length; i++) {
         for (var k=0; k<config.entities.length; k++) {
-            if (config.entities[k].type == loaded_entities[i].obj) {
+            if (config.entities[k].type == entities.loaded_entities[i]) {
 
                 for (var x=0; x<config.entities[k].data.length; x++) {
                     var e = entities.get(config.entities[k].data[x].entity_id);

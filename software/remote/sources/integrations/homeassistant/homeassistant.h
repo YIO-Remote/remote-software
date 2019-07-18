@@ -21,12 +21,9 @@ class HomeAssistant : public Integration, IntegrationInterface
 public:
     explicit HomeAssistant();
 
-    Q_INVOKABLE void initialize	    (int integrationId, const QVariantMap& config, QObject *entities) override;
+    Q_INVOKABLE void initialize	    (int integrationId, const QVariantMap& config, QObject *entities, QObject *notifications) override;
     Q_INVOKABLE void connect	    () override;
     Q_INVOKABLE void disconnect	    () override;
-
-signals:
-    void notify();
 
 public slots:
     void onTextMessageReceived	    (const QString &message);
@@ -46,14 +43,15 @@ private:
     void updateLight                (Entity* entity, const QVariantMap& attr);
     void updateBlind                (Entity* entity, const QVariantMap& attr);
 
-    EntitiesInterface*  m_entities;
+    EntitiesInterface*              m_entities;
+    NotificationsInterface*         m_notifications;
 
-    QString 			m_ip;
-    QString			    m_token;
-    QWebSocket			m_socket;
-    QTimer			    m_websocketReconnect;
-    int				    m_tries;
-    int				    m_webSocketId;
+    QString                         m_ip;
+    QString                         m_token;
+    QWebSocket                      m_socket;
+    QTimer                          m_websocketReconnect;
+    int                             m_tries;
+    int                             m_webSocketId;
 
 };
 

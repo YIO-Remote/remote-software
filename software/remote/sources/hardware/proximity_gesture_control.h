@@ -8,6 +8,8 @@
 #include "apds9960.h"
 #endif
 
+#include "../notifications.h"
+
 class ProximityGestureControl : public QObject
 {
     Q_OBJECT
@@ -16,14 +18,11 @@ public:
     Q_PROPERTY(int ambientLight READ getambientLight)
     Q_PROPERTY(int proximity NOTIFY proximityEvent)
     Q_PROPERTY(QString gesture READ getgesture NOTIFY gestureEvent)
-    Q_PROPERTY(QString apds9960Error READ getapds9960Error NOTIFY apds9960Notify)
     Q_PROPERTY(int proximitySetting READ getproximitySetting WRITE setproximitySetting)
 
     int getambientLight() { return int(m_ambientLight); }
 
     QString getgesture() { return m_gesture; }
-
-    QString getapds9960Error() { return m_apds9960Error; }
 
     int getproximitySetting() { return m_proximitySetting; }
 
@@ -113,9 +112,10 @@ public:
         if (!apds.begin()) {
             qDebug() << "Cannot initialise the APDS9960 sensor";
             //: Error message that shows up as notification when light value cannot be read
-            m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
+//            m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
             m_init_success = false;
-            emit apds9960Notify();
+//            emit apds9960Notify();
+            Notifications::getInstance()->add(true,tr("Cannot initialize the proximity sensor. Please restart the remote."));
             return;
         }
 
@@ -153,7 +153,6 @@ public:
 signals:
     void proximityEvent();
     void gestureEvent();
-    void apds9960Notify();
 
 private:
 
@@ -164,7 +163,6 @@ private:
     uint16_t m_ambientLight = 100;
     uint8_t m_proximity;
     QString m_gesture;
-    QString m_apds9960Error;
     bool m_proximityDetection = false;
     bool m_gestureDetection = false;
     int m_proximitySetting = 70; // default value

@@ -113,31 +113,21 @@ Item {
     // NOTIFICATION ICON
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function isThereAnError() {
-        var returning = false;
-        for (var i=0; i<notifications.length; i++) {
-            if (notifications[i].type == "error") {
-                returning = true;
-            }
-        }
-        return returning;
-    }
-
     Rectangle {
         id: notificationCount
         width: 26
         height: width
         radius: width/2
-        color: isThereAnError() ? colorRed : colorHighlight1
-        visible: notifications.length > 0 ? true : false
+        color: notifications.isThereError ? colorRed : colorText
+        visible: notifications.list.length > 0 ? true : false
         anchors.right: timeText.left
         anchors.rightMargin: 10
         anchors.verticalCenter: statusBar.verticalCenter
 
         Text {
             id: notificationCountText
-            color: colorText
-            text: notifications.length
+            color: notifications.isThereError ? colorText : colorBackground
+            text: notifications.list.length
             verticalAlignment: Text.AlignVCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
