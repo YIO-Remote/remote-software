@@ -56,13 +56,13 @@ Integration {
 
     onConnected: {
         // remove notifications that say couldn't connec to Home Assistant
-        var tmp = notifications;
-        tmp.forEach(function(entry, index, object) {
-            if (entry.text === "Failed to connect to " + friendlyName + ".") {
-                tmp.splice(index, 1);
-            }
-        });
-        notifications = tmp;
+//        var tmp = notifications;
+//        tmp.forEach(function(entry, index, object) {
+//            if (entry.text === "Failed to connect to " + friendlyName + ".") {
+//                tmp.splice(index, 1);
+//            }
+//        });
+//        notifications = tmp;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

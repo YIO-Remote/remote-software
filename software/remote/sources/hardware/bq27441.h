@@ -122,6 +122,7 @@ public:
 private:
     int bus;
     int m_capacity;
+    bool m_init = false;
 };
 
 #endif // BQ27441_H

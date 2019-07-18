@@ -77,3 +77,21 @@ void Entities::update(const QString &entity_id, const QVariantMap& attributes)
     Entity *e = (Entity*)m_entities.value(entity_id);
     e->update(attributes);
 }
+
+void Entities::addLoadedEntity(const QString &entity)
+{
+    m_loaded_entities.append(entity);
+}
+
+QString Entities::getSupportedEntityTranslation(const QString &type)
+{
+    QString translation;
+
+    for (int i=0; i<m_supported_entities.length(); i++) {
+        if (supported_entities().value(i) == type) {
+            translation = supported_entities_translation().value(i);
+        }
+    }
+
+    return translation;
+}

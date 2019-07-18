@@ -34,12 +34,12 @@ Item {
 
         BasicUI.Notification {
             _state: "permanent"
-            type: notifications[index].type
-            text: notifications[index].text
-            action: notifications[index].action
-            actionlabel: notifications[index].actionlabel
-            timestamp: notifications[index].timestamp
-            idN: index
+            type: notifications.list[index].error
+            text: notifications.list[index].text
+            action: notifications.list[index].action
+            actionlabel: notifications.list[index].actionlabel
+            timestamp: notifications.list[index].timestamp
+            idN: notifications.list[index].id
         }
     }
 
@@ -52,7 +52,7 @@ Item {
         anchors.topMargin: 30
         maximumFlickVelocity: 4000
         flickDeceleration: 2000
-        clip: true
+//        clip: true
         flickableDirection: Flickable.VerticalFlick
         contentHeight: count * notificationDelegate.height
         spacing: 10
@@ -61,7 +61,7 @@ Item {
             opacity: 0.5
         }
 
-        model: notifications
+        model: notifications.list
 
         delegate: notificationDelegate
     }

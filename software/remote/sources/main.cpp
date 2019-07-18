@@ -19,6 +19,8 @@
 #include "integrations/integration.h"
 #include "entities/entities.h"
 
+#include "notifications.h"
+
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -71,6 +73,10 @@ int main(int argc, char *argv[])
     // ENTITIES
     Entities entities;
     engine.rootContext()->setContextProperty("entities", &entities);
+
+    // NOTIFICATIONS
+    Notifications notifications(&engine);
+    engine.rootContext()->setContextProperty("notifications", &notifications);
 
     engine.addImportPath("qrc:/");
 
