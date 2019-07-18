@@ -29,7 +29,8 @@ HEADERS += \
     sources/entities/entitiesinterface.h \
     sources/entities/light.h \
     sources/entities/blind.h \
-    sources/notifications.h
+    sources/notifications.h \
+    sources/notificationsinterface.h
 
 SOURCES += \
     sources/main.cpp \

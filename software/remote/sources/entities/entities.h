@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QQmlComponent>
-#include <QtPlugin>
 #include <QList>
 #include <QString>
 #include <QVariant>
@@ -15,7 +14,7 @@
 class Entities : public QObject , EntitiesInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "YIO.EntitiesInterface")
+//    Q_PLUGIN_METADATA(IID "YIO.EntitiesInterface")
     Q_INTERFACES(EntitiesInterface)
 
     // list of all entities

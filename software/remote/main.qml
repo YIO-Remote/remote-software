@@ -236,7 +236,7 @@ ApplicationWindow {
 
             // if plugin integration exists, load that
             if (config.integration[i].plugin) {
-                comp = mainLauncher.loadIntegration(appPath, config.integration[i].plugin, i, config.integration[i], entities);
+                comp = mainLauncher.loadIntegration(appPath, config.integration[i].plugin, i, config.integration[i], entities, notifications);
                 integration[config.integration[i].type].obj = comp;
 
                 // otherwise load qml based integration
@@ -542,7 +542,6 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
-                notifications.add(false, "Test notification");
             }
         }
     }

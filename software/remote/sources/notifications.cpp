@@ -18,7 +18,7 @@ Notifications::~Notifications()
 void Notifications::show(const int id)
 {
     // get the notification data to show
-    QVariant map = m_notifications.value(id);
+    QVariant map = m_notifications.value(id).toMap();
 
     // let's check if the qml files are loaded first
     if (m_engine->rootObjects().size() > 0) {
@@ -35,12 +35,12 @@ void Notifications::show(const int id)
 
 QVariantList Notifications::list()
 {
-    QVariantList list;
-    for (int i=0; i<m_notifications.count(); i++)
-    {
-        list.append(m_notifications.value(i));
-    }
-    return list;
+//    QVariantList list;
+//    for (int i=0; i<m_notifications.count(); i++)
+//    {
+//        list.append(m_notifications.value(i));
+//    }
+    return m_notifications;
 }
 
 void Notifications::add(const bool &type, const QString &text, const QString &actionlabel, const QVariant &action)
@@ -54,7 +54,7 @@ void Notifications::add(const bool &type, const QString &text, const QString &ac
     map["action"] = action;
     map["timestamp"] = QDateTime::currentDateTime();
 
-    m_notifications.insert(m_id, map);
+    m_notifications.append(map);
 
     emit listChanged();
     emit errorChanged();
@@ -62,7 +62,7 @@ void Notifications::add(const bool &type, const QString &text, const QString &ac
     // show the notification
     show(m_id);
 
-    m_id ++;
+    m_id++;
 }
 
 void Notifications::add(const bool &type, const QString &text)
@@ -76,7 +76,7 @@ void Notifications::add(const bool &type, const QString &text)
     map["action"] = "";
     map["timestamp"] = QDateTime::currentDateTime();
 
-    m_notifications.insert(m_id, map);
+    m_notifications.append(map);
 
     emit listChanged();
     emit errorChanged();
@@ -84,12 +84,17 @@ void Notifications::add(const bool &type, const QString &text)
     // show the notification
     show(m_id);
 
-    m_id ++;
+    m_id++;
 }
 
 void Notifications::remove(const int id)
 {
-    m_notifications.remove(id);
+    for (int i=0; i<m_notifications.count(); i++) {
+        QVariantMap map = m_notifications.value(i).toMap();
+        if (map["id"].toInt() == id) {
+            m_notifications.removeAt(i);
+        }
+    }
     emit listChanged();
     emit errorChanged();
 }
@@ -100,7 +105,7 @@ bool Notifications::isThereError()
 
     for (int i=0; i<m_notifications.count(); i++)
     {
-        QVariantMap map = m_notifications.value(i);
+        QVariantMap map = m_notifications.value(i).toMap();
         if (map["error"].toBool() == true) {
             r = true;
         }

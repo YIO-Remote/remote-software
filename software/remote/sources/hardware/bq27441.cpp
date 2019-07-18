@@ -1,5 +1,6 @@
 #include "QFile"
 #include "bq27441.h"
+#include "../notifications.h"
 
 BQ27441::BQ27441()
 {
@@ -16,6 +17,7 @@ BQ27441::BQ27441()
     if (bq27441_device_id != BQ27441_DEVICE_ID)
     {
         qDebug() << "Error: Unable to communicate with BQ27441.";
+        Notifications::getInstance()->add(true,tr("Cannot initialize the battery sensor. Please restart the remote."));
     }
 #endif
 }

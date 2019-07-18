@@ -6,9 +6,13 @@
 #include <QDateTime>
 #include <QMap>
 
-class Notifications : public QObject
+#include "notificationsinterface.h"
+
+class Notifications : public QObject, NotificationsInterface
 {
     Q_OBJECT
+//    Q_PLUGIN_METADATA(IID "YIO.NotificationsInterface")
+    Q_INTERFACES(NotificationsInterface)
 
     // list of all notifications
     Q_PROPERTY  (QVariantList            list            READ    list           NOTIFY listChanged      CONSTANT)
@@ -43,8 +47,8 @@ signals:
     void errorChanged();
 
 private:
+    QVariantList                m_notifications;
     int                         m_id = 0;
-    QMap<int, QVariantMap>      m_notifications;
 
     static Notifications*       s_instance;
     QQmlApplicationEngine*      m_engine;

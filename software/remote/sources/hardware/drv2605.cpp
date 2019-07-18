@@ -1,4 +1,5 @@
 #include "drv2605.h"
+#include "../notifications.h"
 
 drv2605::drv2605()
 {
@@ -6,6 +7,8 @@ drv2605::drv2605()
     if (init()) {
         selectLibrary(1);
         setMode(DRV2605_MODE_INTTRIG);
+    } else {
+        Notifications::getInstance()->add(true,tr("Cannot initialize the haptic motor. Please restart the remote."));
     }
 #endif
 }
