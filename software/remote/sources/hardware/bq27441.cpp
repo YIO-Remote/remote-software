@@ -38,22 +38,24 @@ void BQ27441::begin()
 
             // calibrate the gauge
             qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
-            // changeCapacity((uint16_t(m_capacity)));
+            // changeCapacity(m_capacity);
         } else if (getDesignCapacity() != m_capacity) {
             qDebug() << "Design capacity does not match.";
 
             // calibrate the gauge
             qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
-            changeCapacity((uint16_t(m_capacity)));
+            changeCapacity(m_capacity);
         }
     }
 #endif
 }
 
-#ifdef __arm__
-void BQ27441::changeCapacity(uint16_t capacity)
+void BQ27441::changeCapacity(int newCapacity)
 {
+    #ifdef __arm__
     if (m_init) {
+
+        capacity = uint16_t(newCapacity);
         // unseal the device
         wiringPiI2CWriteReg8(bus, 0x00, 0x00);
         wiringPiI2CWriteReg8(bus, 0x01, 0x80);
@@ -166,8 +168,10 @@ void BQ27441::changeCapacity(uint16_t capacity)
             }
         }
     }
+    #endif
 }
 
+#ifdef __arm__
 int32_t BQ27441::getTemperatureC() {  // Result in 1 Celcius
     if (m_init) {
         int32_t result;
@@ -210,25 +214,28 @@ uint16_t BQ27441::getNominalAvailableCapacity() {
         return result;
     }
 }
-
+#endif
 int BQ27441::getFullAvailableCapacity() {
+#ifdef __arm__
     if (m_init) {
         uint16_t result;
 
         result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVAIL_CAPACITY);
         return int(result);
     }
+#endif
 }
 
 int BQ27441::getRemainingCapacity() {
+   #ifdef __arm__
     if (m_init) {
         uint16_t result;
 
         result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_REM_CAPACITY);
         return int(result);
     }
-}
 #endif
+}
 
 int BQ27441::getFullChargeCapacity() {
 #ifdef __arm__
@@ -295,6 +302,7 @@ int BQ27441::getStateOfCharge() {
 
         result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
         if (result < 0) {
+            m_init = false;
             Notifications::getInstance()->add(true,tr("Battery sensor communication error. Please restart the remote."));
         }
         return result;
@@ -391,16 +399,19 @@ uint16_t BQ27441::getOpConfig() {
         return result;
     }
 }
-
+#endif
 int BQ27441::getDesignCapacity() {
+#ifdef __arm__
     if (m_init) {
         uint16_t result;
 
         result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_EXTENDED_CAPACITY);
         return int(result);
     }
+#endif
+    return 2500;
 }
-
+#ifdef __arm__
 uint16_t BQ27441::getControlStatus() {
     if (m_init) {
         uint16_t result;

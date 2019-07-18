@@ -12,6 +12,8 @@ software/remote/remote/components/.DS_Store
 software/remote/remote/components/blind/.DS_Store
 software/remote/remote/components/light/.DS_Store
 software/remote/remote/images/.DS_Store
+software/build
+*.DS_Store
 
 # Windows crap
 software/build-*

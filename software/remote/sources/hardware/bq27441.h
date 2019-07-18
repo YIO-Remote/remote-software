@@ -93,8 +93,6 @@ public:
     int32_t  getTemperatureC();                 // Result in 1 Celsius
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
-    Q_INVOKABLE int getFullAvailableCapacity();
-    Q_INVOKABLE int getRemainingCapacity();
     int16_t  getStandbyCurrent();
     int16_t  getMaxLoadCurrent();
     uint16_t getInternalTemperature();            // Result in 0.1 Kelvins
@@ -106,7 +104,13 @@ public:
     uint16_t getStateOfChargeUnfiltered();
     // Extended Data Commands
     uint16_t getOpConfig();
+#endif
+    Q_INVOKABLE int getFullAvailableCapacity();
+    Q_INVOKABLE int getRemainingCapacity();
     Q_INVOKABLE int getDesignCapacity();
+    Q_INVOKABLE void changeCapacity(int newCapacity);
+
+#ifdef __arm__
     // Control Subcommands
     uint16_t getControlStatus();
     uint16_t getDeviceType();
@@ -116,12 +120,14 @@ public:
     uint16_t getChemID();
     void reset();
 
-    Q_INVOKABLE void changeCapacity(uint16_t capacity);
 #endif
 
 private:
     int bus;
+#ifdef __arm__
     int m_capacity;
+#endif
+    int m_capacity = 2500;
     bool m_init = false;
 };
 
