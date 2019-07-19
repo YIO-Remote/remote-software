@@ -215,18 +215,21 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MINI MEDIA PLAYER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias miniMediaPlayer: miniMediaPlayer
     Rectangle {
         id: miniMediaPlayer
         width: parent.width
         height: 0
         anchors.bottom: mainNavigation.top
 
+        property alias miniMediaPlayerLoader: miniMediaPlayerLoader
+
         Loader {
             id: miniMediaPlayerLoader
             active: false
         }
 
-        function handlePlay(entity) {
+        function onPlay(entity) {
             if (!miniMediaPlayerLoader.active) {
                 miniMediaPlayer.height = 100;
                 miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { mainNav: mainNavigation })
@@ -237,7 +240,7 @@ Item {
         Component.onCompleted: {
             var e = entities.getByType("media_player");
             for (var i=0; i<e.length; i++) {
-                e[i].playing.connect(handlePlay);
+                e[i].playing.connect(onPlay);
             }
         }
 

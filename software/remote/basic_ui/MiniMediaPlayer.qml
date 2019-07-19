@@ -6,7 +6,16 @@ Item {
     height: 100
 
     property var players: []
+    property int currPlaying: 0
     property var mainNav
+
+    onCurrPlayingChanged: {
+        if (currPlaying == 0) {
+            loader_main.item.miniMediaPlayer.height = 0;
+            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
+            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO MEDIA PLAYERS
@@ -17,6 +26,7 @@ Item {
         for (var i=0; i<e.length; i++) {
             if (e[i].state == 2 || e[i].state == 3) {
                 players.push(e[i]);
+                currPlaying++;
             }
 
             e[i].playing.connect(handlePlay);
@@ -30,6 +40,7 @@ Item {
         for (var i=0; i<players.length; i++) {
             if (players[i] != entities.get(entity)) {
                 players.push(entities.get(entity));
+                currPlaying++;
             }
         }
         var tmp = players;
@@ -39,7 +50,11 @@ Item {
     function handleStop(entity) {
         for (var i=0; i<players.length; i++) {
             if (players[i] == entities.get(entity)) {
+                var e = entities.get(entity);
+                e.playing.disconnect(handlePlay);
+                e.stopped.disconnect(handleStop);
                 players.splice(i, 1);
+                currPlaying--;
             }
         }
         var tmp = players;
