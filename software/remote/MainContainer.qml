@@ -271,6 +271,28 @@ Item {
         width: parent.width
         height: 0
         anchors.bottom: mainNavigation.top
+
+        Loader {
+            id: miniMediaPlayerLoader
+            active: miniMediaPlayer.height == 0 ? false : true
+            source: miniMediaPlayer.height == 0 ? "" : ""
+        }
+
+        function handlePlay() {
+            console.debug("Something is playing");
+            miniMediaPlayer.height = 100;
+        }
+
+        Component.onCompleted: {
+            var e = entities.getByType("media_player");
+            for (var i=0; i<e.length; i++) {
+                e[i].playing.connect(handlePlay);
+            }
+        }
+
+        Behavior on height {
+            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
+        }
     }
 
 

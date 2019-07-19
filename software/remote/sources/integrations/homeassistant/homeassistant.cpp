@@ -322,5 +322,18 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
         attributes.insert("state", 3);
     }
 
+    // volume
+    if (entity->supported_features().indexOf("VOLUME") > -1) {
+        double v = attr.value("attributes").toMap().value("volume_level").toDouble()*100;
+        attributes.insert("volume", v);
+    }
+
+    // media image
+    if (entity->supported_features().indexOf("MEDIA_IMAGE") > -1) {
+        QString url = attr.value("attributes").toMap().value("entity_picture").toString();
+        QString fullUrl = QString("http://").append(m_ip).append(url);
+        attributes.insert("mediaImage", fullUrl);
+    }
+
     m_entities->update(entity->entity_id(), attributes);
 }

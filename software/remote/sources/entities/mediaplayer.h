@@ -21,19 +21,34 @@ public:
 
     Q_ENUM(states)
 
-    Q_PROPERTY  (states         state       READ    state       NOTIFY stateChanged)
+    // properties
+    Q_PROPERTY  (states         state       READ    state       NOTIFY      stateChanged)
+    Q_PROPERTY  (int            volume      READ    volume      NOTIFY      volumeChanged)
+    Q_PROPERTY  (bool           muted       READ    muted       NOTIFY      mutedChanged)
+    Q_PROPERTY  (QString        mediaImage  READ    mediaImage  NOTIFY      mediaImageChanged)
 
+    int                         volume() { return m_volume; }
+    bool                        muted()  { return m_muted; }
+    QString                     mediaImage() { return m_mediaImage; }
+
+    // methods
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
 
+
+    // constructor
     explicit MediaPlayer();
     MediaPlayer(const QVariantMap& config, QObject* integrationObj);
 
-    enum states                 state() const { return m_state; }
-
     void                        init(const QVariantMap& config);
+
+    enum states                 state() { return m_state; }
 
 signals:
     void stateChanged();
+    void playing();
+    void volumeChanged();
+    void mutedChanged();
+    void mediaImageChanged();
 
 public:
     static QString Type;
@@ -53,6 +68,9 @@ public:
 
 private:
     states                      m_state;
+    int                         m_volume;
+    bool                        m_muted;
+    QString                     m_mediaImage;
 };
 
 #endif // MEDIAPLAYER_H

@@ -11,6 +11,19 @@ bool MediaPlayer::update(const QVariantMap &attributes)
         m_state = static_cast<states>(attributes.value("state").toInt());
         chg = true;
         emit stateChanged();
+        if (m_state == PLAYING || m_state == IDLE) {
+            emit playing();
+        }
+    }
+    if (m_volume != attributes.value("volume").toInt()) {
+        m_volume = attributes.value("volume").toInt();
+        chg = true;
+        emit volumeChanged();
+    }
+    if (m_mediaImage != attributes.value("mediaImage").toString()) {
+        m_mediaImage = attributes.value("mediaImage").toString();
+        chg = true;
+        emit mediaImageChanged();
     }
     return  chg;
 }

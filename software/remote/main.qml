@@ -66,7 +66,7 @@ ApplicationWindow {
             }
 
             // if voltage is too low and we are sourcing power turn off the remote after timeout
-            if (0 < battery_voltage <= 3.4 && battery_averagepower < 0) {
+            if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
                 shutdownDelayTimer.start();
             }
 
