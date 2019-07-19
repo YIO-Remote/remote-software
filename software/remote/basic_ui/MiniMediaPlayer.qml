@@ -5,9 +5,40 @@ Item {
     height: 100
 
     property var obj
+    property var players: []
     property var mainNav
 
     property alias mediaImage: image.source
+
+    onObjChanged: {
+        players.push(obj);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Connections {
+        target: buttonHandler
+        enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
+
+        onButtonPress: {
+            switch (button) {
+            case "volume up":
+                volume.volumePosition = obj.volume
+                volume.state = "visible";
+                obj.setVolume(obj.volume + 0.02);
+                volume.volumePosition  += 0.02;
+                break;
+            case "volume down":
+                volume.volumePosition = obj.volume
+                volume.state = "visible";
+                obj.setVolume(obj.volume - 0.02);
+                volume.volumePosition -= 0.02;
+                break;
+            }
+        }
+    }
 
     Rectangle {
         anchors.fill: parent

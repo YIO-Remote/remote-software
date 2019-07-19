@@ -58,6 +58,14 @@ Rectangle {
                         obj.stop();
                     }
                     break;
+                case "top right":
+                    blindButton.state = "closed"
+                    loader_main.state = "visible"
+                    var tmp = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY;
+                    mainNavigationSwipeview.currentItem.mainNavigationLoader.active = false;
+                    mainNavigationSwipeview.currentItem.mainNavigationLoader.active = true;
+                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = tmp;
+                    break;
                 }
             }
         }

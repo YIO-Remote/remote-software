@@ -15,8 +15,8 @@ bool MediaPlayer::update(const QVariantMap &attributes)
             emit playing(objectName());
         }
     }
-    if (m_volume != attributes.value("volume").toInt()) {
-        m_volume = attributes.value("volume").toInt();
+    if (m_volume != attributes.value("volume").toDouble()) {
+        m_volume = attributes.value("volume").toDouble();
         chg = true;
         emit volumeChanged();
     }
@@ -41,6 +41,11 @@ bool MediaPlayer::update(const QVariantMap &attributes)
         emit mediaImageChanged();
     }
     return  chg;
+}
+
+void MediaPlayer::setVolume(double value)
+{
+    command("VOLUME_SET", value);
 }
 
 MediaPlayer::MediaPlayer() :

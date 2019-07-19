@@ -23,14 +23,14 @@ public:
 
     // properties
     Q_PROPERTY  (states         state       READ    state       NOTIFY      stateChanged)
-    Q_PROPERTY  (int            volume      READ    volume      NOTIFY      volumeChanged)
+    Q_PROPERTY  (double         volume      READ    volume      NOTIFY      volumeChanged)
     Q_PROPERTY  (bool           muted       READ    muted       NOTIFY      mutedChanged)
     Q_PROPERTY  (QString        mediaType   READ    mediaType   NOTIFY      mediaTypeChanged)
     Q_PROPERTY  (QString        mediaTitle  READ    mediaTitle  NOTIFY      mediaTitleChanged)
     Q_PROPERTY  (QString        mediaArtist READ    mediaArtist NOTIFY      mediaArtistChanged)
     Q_PROPERTY  (QString        mediaImage  READ    mediaImage  NOTIFY      mediaImageChanged)
 
-    int                         volume() { return m_volume; }
+    double                      volume() { return m_volume; }
     bool                        muted()  { return m_muted; }
     QString                     mediaType() { return m_mediaType; }
     QString                     mediaImage() { return m_mediaImage; }
@@ -39,7 +39,7 @@ public:
 
     // methods
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
-
+    Q_INVOKABLE void            setVolume(double value);
 
     // constructor
     explicit MediaPlayer();
@@ -77,7 +77,7 @@ public:
 
 private:
     states                      m_state;
-    int                         m_volume;
+    double                      m_volume;
     bool                        m_muted;
     QString                     m_mediaType;
     QString                     m_mediaImage;

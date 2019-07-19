@@ -324,8 +324,7 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
 
     // volume
     if (entity->supported_features().indexOf("VOLUME") > -1) {
-        double v = attr.value("attributes").toMap().value("volume_level").toDouble()*100;
-        attributes.insert("volume", v);
+        attributes.insert("volume", attr.value("attributes").toMap().value("volume_level").toDouble());
     }
 
     // media type
