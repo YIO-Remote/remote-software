@@ -1,4 +1,5 @@
-import QtQuick 2.0
+import QtQuick 2.12
+import QtQuick.Controls 2.4
 
 Item {
     width: 480
@@ -25,16 +26,22 @@ Item {
         onButtonPress: {
             switch (button) {
             case "volume up":
-                volume.volumePosition = obj.volume
-                volume.state = "visible";
-                obj.setVolume(obj.volume + 0.02);
-                volume.volumePosition  += 0.02;
+                if (volume.state != "visible") {
+                    volume.volumePosition = obj.volume;
+                    volume.state = "visible";
+                }
+                var newvolume = obj.volume + 0.02;
+                obj.setVolume(newvolume);
+                volume.volumePosition = newvolume;
                 break;
             case "volume down":
-                volume.volumePosition = obj.volume
-                volume.state = "visible";
-                obj.setVolume(obj.volume - 0.02);
-                volume.volumePosition -= 0.02;
+                if (volume.state != "visible") {
+                    volume.volumePosition = obj.volume;
+                    volume.state = "visible";
+                }
+                var newvolume = obj.volume - 0.02;
+                obj.setVolume(newvolume);
+                volume.volumePosition = newvolume;
                 break;
             }
         }
@@ -43,6 +50,16 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: colorBackground
+    }
+
+    SwipeView {
+        id: mediaPlayers
+        anchors.fill: parent
+
+        Repeater {
+            model: players
+        }
+
     }
 
     Image {

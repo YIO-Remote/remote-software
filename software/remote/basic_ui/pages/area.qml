@@ -1,4 +1,4 @@
-import QtQuick 2.11
+import QtQuick 2.12
 import QtQuick.Controls 2.4
 
 Flickable {
@@ -82,10 +82,10 @@ Flickable {
                         }
 
                         if (k>0) {
-                            var spacerObj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', iconFlow, '')
+                            var spacerObj = Qt.createQmlObject('import QtQuick 2.12; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', iconFlow, '')
                         }
                         if (hasTitle) {
-                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 32; x:10; text: "'+ entities.getSupportedEntityTranslation(entities.loaded_entities[k]) +'";}', iconFlow, "");
+                            var roomObj = Qt.createQmlObject('import QtQuick 2.12; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 32; x:10; text: "'+ entities.getSupportedEntityTranslation(entities.loaded_entities[k]) +'";}', iconFlow, "");
                         }
                         hasTitle = false;
 

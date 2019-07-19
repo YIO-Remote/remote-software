@@ -1,4 +1,4 @@
-import QtQuick 2.11
+import QtQuick 2.12
 import QtWebSockets 1.0
 import Integration 1.0
 

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.12
 
 import "qrc:/scripts/helper.js" as JSHelper
 

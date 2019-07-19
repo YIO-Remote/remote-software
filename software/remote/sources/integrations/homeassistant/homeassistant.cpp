@@ -100,6 +100,13 @@ void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, c
             webSocketSendCommand("cover", "set_cover_position", entity_id, &data);
         }
     }
+    if (type == "media_player") {
+        if (command == "VOLUME_SET") {
+            QVariantMap data;
+            data.insert("volume_level", param);
+            webSocketSendCommand("media_player", "volume_set", entity_id, &data);
+        }
+    }
 }
 
 void HomeAssistant::onTextMessageReceived(const QString &message)
