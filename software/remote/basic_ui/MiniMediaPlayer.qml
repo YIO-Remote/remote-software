@@ -138,7 +138,7 @@ Item {
                         text: players[index].mediaTitle
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
-                        wrapMode: Text.WordWrap
+                        wrapMode: Text.NoWrap
                         width: 304
                         font.family: "Open Sans"
                         font.weight: Font.Normal
@@ -152,7 +152,7 @@ Item {
                         text: players[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
-                        wrapMode: Text.WordWrap
+                        wrapMode: Text.NoWrap
                         width: 304
                         font.family: "Open Sans"
                         font.weight: Font.Normal
