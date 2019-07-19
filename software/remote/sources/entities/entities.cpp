@@ -3,6 +3,7 @@
 
 #include "light.h"
 #include "blind.h"
+#include "mediaplayer.h"
 
 Entities::Entities(QObject *parent) : QObject(parent) {
 
@@ -68,6 +69,10 @@ void Entities::add(const QVariantMap& config, QObject *integrationObj)
     // Blind entity
     if (config.value("type").toString() == "blind") {
         entity = new Blind(config, integrationObj);
+    }
+    // Media player entity
+    if (config.value("type").toString() == "media_player") {
+        entity = new MediaPlayer(config, integrationObj);
     }
     m_entities.insert(entity->entity_id(), entity);
 }

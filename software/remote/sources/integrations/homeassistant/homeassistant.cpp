@@ -245,6 +245,9 @@ void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& at
         if (entity->type() == "blind") {
             updateBlind(entity, attr);
         }
+        if (entity->type() == "media_player") {
+            updateMediaPlayer(entity, attr);
+        }
     }
 }
 
@@ -299,6 +302,24 @@ void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
     // position
     if (entity->supported_features().indexOf("POSITION") > -1) {
         attributes.insert("position", attr.value("attributes").toMap().value("current_position").toInt());
+    }
+
+    m_entities->update(entity->entity_id(), attributes);
+}
+
+void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
+{
+    QVariantMap attributes;
+
+    //state
+    if (attr.value("state").toString() == "off") {
+        attributes.insert("state", 0);
+    } else if (attr.value("state").toString() == "on") {
+        attributes.insert("state", 1);
+    } else if (attr.value("state").toString() == "idle") {
+        attributes.insert("state", 2);
+    } else if (attr.value("state").toString() == "playing") {
+        attributes.insert("state", 3);
     }
 
     m_entities->update(entity->entity_id(), attributes);

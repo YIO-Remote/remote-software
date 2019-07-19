@@ -20,11 +20,19 @@ QString Launcher::launch(const QString &program)
 
 QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
 {
+#ifdef __arm__
     QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName);
     QObject *plugin = pluginLoader.instance();
     QString err = pluginLoader.errorString();
     qDebug() << err;
     return plugin;
+#else
+    QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName + ".dylib");
+    QObject *plugin = pluginLoader.instance();
+    QString err = pluginLoader.errorString();
+    qDebug() << err;
+    return plugin;
+#endif
 }
 
 QObject* Launcher::loadIntegration(const QString& path, const QString &pluginName, int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications)

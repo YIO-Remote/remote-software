@@ -30,7 +30,8 @@ HEADERS += \
     sources/entities/light.h \
     sources/entities/blind.h \
     sources/notifications.h \
-    sources/notificationsinterface.h
+    sources/notificationsinterface.h \
+    sources/entities/mediaplayer.h
 
 SOURCES += \
     sources/main.cpp \
@@ -43,7 +44,8 @@ SOURCES += \
     sources/entities/entity.cpp \
     sources/entities/light.cpp \
     sources/entities/blind.cpp \
-    sources/notifications.cpp
+    sources/notifications.cpp \
+    sources/entities/mediaplayer.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \
@@ -132,9 +134,9 @@ macx {
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
-#    INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
-#    INTEGRATIONS.path = Contents/Resources/plugins
-#    QMAKE_BUNDLE_DATA += INTEGRATIONS
+    INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
+    INTEGRATIONS.path = Contents/Resources/plugins
+    QMAKE_BUNDLE_DATA += INTEGRATIONS
 
 } else {
     CONFIG += file_copies
