@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
+import QtGraphicalEffects 1.0
 
 Item {
     width: 480
@@ -107,9 +108,31 @@ Item {
 
             Item {
                 id: player
+                width: 480
                 property alias player: player
 
                 property var obj: players[index]
+
+                Image {
+                    id: bgImage
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectCrop
+                    asynchronous: true
+                    source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+                }
+
+                GaussianBlur {
+                        anchors.fill: bgImage
+                        source: bgImage
+                        radius: 30
+                        samples: 30
+                    }
+
+                Rectangle {
+                    anchors.fill: bgImage
+                    color: colorBackground
+                    opacity: 0.8
+                }
 
                 Image {
                     id: image
@@ -164,15 +187,15 @@ Item {
                     }
                 }
 
-                Rectangle {
-                    width: parent.width - 30
-                    height: 2
-                    color: colorLight
-                    opacity: (800-mainNav.y)/mainNav.height
+//                Rectangle {
+//                    width: parent.width - 30
+//                    height: 2
+//                    color: colorLight
+//                    opacity: (800-mainNav.y)/mainNav.height
 
-                    anchors.bottom: parent.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
+//                    anchors.bottom: parent.bottom
+//                    anchors.horizontalCenter: parent.horizontalCenter
+//                }
 
                 MouseArea {
                     anchors.fill: parent
