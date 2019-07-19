@@ -14,8 +14,8 @@ Item {
             loader_main.item.miniMediaPlayer.height = 0;
             loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
             loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
+            players = [];
         }
-        players = [];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
