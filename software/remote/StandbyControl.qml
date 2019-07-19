@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.11
 
 import DisplayControl 1.0
 import TouchEventFilter 1.0

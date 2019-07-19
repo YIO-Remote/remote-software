@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.11
 import QtQml 2.2
 
 Item {

@@ -13,6 +13,8 @@ bool MediaPlayer::update(const QVariantMap &attributes)
         emit stateChanged();
         if (m_state == PLAYING || m_state == IDLE) {
             emit playing(objectName());
+        } else if (m_state == OFF) {
+            emit stopped(objectName());
         }
     }
     if (m_volume != attributes.value("volume").toDouble()) {

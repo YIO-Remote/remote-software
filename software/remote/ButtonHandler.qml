@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.11
 
 import InterruptHandler 1.0
 

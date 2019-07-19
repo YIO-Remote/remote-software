@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 
@@ -223,13 +223,15 @@ Item {
 
         Loader {
             id: miniMediaPlayerLoader
-            active: miniMediaPlayer.height == 0 ? false : true
+            active: false
         }
 
         function handlePlay(entity) {
-            var e = entities.get(entity);
-            miniMediaPlayer.height = 100;
-            miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { obj: e, mainNav: mainNavigation })
+            if (!miniMediaPlayerLoader.active) {
+                miniMediaPlayer.height = 100;
+                miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { mainNav: mainNavigation })
+                miniMediaPlayerLoader.active = true;
+            }
         }
 
         Component.onCompleted: {
