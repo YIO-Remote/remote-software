@@ -12,13 +12,28 @@ bool MediaPlayer::update(const QVariantMap &attributes)
         chg = true;
         emit stateChanged();
         if (m_state == PLAYING || m_state == IDLE) {
-            emit playing();
+            emit playing(objectName());
         }
     }
     if (m_volume != attributes.value("volume").toInt()) {
         m_volume = attributes.value("volume").toInt();
         chg = true;
         emit volumeChanged();
+    }
+    if (m_mediaType != attributes.value("mediaType").toString()){
+        m_mediaType = attributes.value("mediaType").toString();
+        chg = true;
+        emit mediaTypeChanged();
+    }
+    if (m_mediaTitle != attributes.value("mediaTitle").toString()){
+        m_mediaTitle = attributes.value("mediaTitle").toString();
+        chg = true;
+        emit mediaTitleChanged();
+    }
+    if (m_mediaArtist != attributes.value("mediaArtist").toString()){
+        m_mediaArtist = attributes.value("mediaArtist").toString();
+        chg = true;
+        emit mediaArtistChanged();
     }
     if (m_mediaImage != attributes.value("mediaImage").toString()) {
         m_mediaImage = attributes.value("mediaImage").toString();

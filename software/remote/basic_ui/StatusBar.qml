@@ -256,5 +256,13 @@ Item {
         font.pixelSize: 20
         lineHeight: 1
     }
-}
 
+    MouseArea {
+        anchors.fill: parent
+
+        onClicked: {
+            loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = 0;
+        }
+    }
+
+}

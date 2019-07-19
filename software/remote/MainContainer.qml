@@ -208,6 +208,38 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MINI MEDIA PLAYER
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Rectangle {
+        id: miniMediaPlayer
+        width: parent.width
+        height: 0
+        anchors.bottom: mainNavigation.top
+
+        Loader {
+            id: miniMediaPlayerLoader
+            active: miniMediaPlayer.height == 0 ? false : true
+        }
+
+        function handlePlay(entity) {
+            var e = entities.get(entity);
+            miniMediaPlayer.height = 100;
+            miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { obj: e, mainNav: mainNavigation })
+        }
+
+        Component.onCompleted: {
+            var e = entities.getByType("media_player");
+            for (var i=0; i<e.length; i++) {
+                e[i].playing.connect(handlePlay);
+            }
+        }
+
+        Behavior on height {
+            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias mainNavigation: mainNavigation
@@ -226,7 +258,7 @@ Item {
 
     MouseArea {
         width: parent.width
-        height: 100
+        height: 50
         anchors.bottom: parent.bottom
         enabled: mainNavigation.y == 800 ? true : false
         propagateComposedEvents: true
@@ -246,55 +278,17 @@ Item {
         onPositionChanged: {
             if (!tracing) return
             var currVel = (mouse.y-yPrev);
-            velocity = (velocity-currVel)/2.0
+            velocity = (velocity-currVel)
             yPrev = mouse.y
-
-            if (velocity < 15 && mouse.y < parent.height*0.4) {
-                tracing = false;
-                mainNavigation.y = 800 - mainNavigation.height;
-            }
         }
 
         onReleased: {
             tracing = false;
-//            if (velocity < 15 && mouse.y < parent.height*0.2) {
-//                console.debug("Swipe detected 2");
-//            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // MINI MEDIA PLAYER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Rectangle {
-        id: miniMediaPlayer
-        width: parent.width
-        height: 0
-        anchors.bottom: mainNavigation.top
-
-        Loader {
-            id: miniMediaPlayerLoader
-            active: miniMediaPlayer.height == 0 ? false : true
-            source: miniMediaPlayer.height == 0 ? "" : ""
-        }
-
-        function handlePlay() {
-            console.debug("Something is playing");
-            miniMediaPlayer.height = 100;
-        }
-
-        Component.onCompleted: {
-            var e = entities.getByType("media_player");
-            for (var i=0; i<e.length; i++) {
-                e[i].playing.connect(handlePlay);
+            if (velocity > 30) {
+                mainNavigation.y = 800 - mainNavigation.height;
             }
         }
-
-        Behavior on height {
-            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
-        }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATUS BAR

@@ -328,11 +328,34 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
         attributes.insert("volume", v);
     }
 
+    // media type
+    if (entity->supported_features().indexOf("MEDIA_TYPE") > -1) {
+        if (attr.value("attributes").toMap().value("media_content_type").toBool()) {
+            attributes.insert("mediaType", attr.value("attributes").toMap().value("media_content_type").toString());
+        }
+    }
+
     // media image
     if (entity->supported_features().indexOf("MEDIA_IMAGE") > -1) {
-        QString url = attr.value("attributes").toMap().value("entity_picture").toString();
-        QString fullUrl = QString("http://").append(m_ip).append(url);
-        attributes.insert("mediaImage", fullUrl);
+        if (attr.value("attributes").toMap().value("entity_picture").toBool()) {
+            QString url = attr.value("attributes").toMap().value("entity_picture").toString();
+            QString fullUrl = QString("http://").append(m_ip).append(url);
+            attributes.insert("mediaImage", fullUrl);
+        }
+    }
+
+    // media title
+    if (entity->supported_features().indexOf("MEDIA_TITLE") > -1) {
+        if (attr.value("attributes").toMap().value("media_title").toBool()) {
+            attributes.insert("mediaTitle", attr.value("attributes").toMap().value("media_title").toString());
+        }
+    }
+
+    // media artist
+    if (entity->supported_features().indexOf("MEDIA_ARTIST") > -1) {
+        if (attr.value("attributes").toMap().value("media_artist").toBool()) {
+            attributes.insert("mediaArtist", attr.value("attributes").toMap().value("media_artist").toString());
+        }
     }
 
     m_entities->update(entity->entity_id(), attributes);

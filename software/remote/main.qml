@@ -478,7 +478,7 @@ ApplicationWindow {
         width: parent.width
         height: notifications.list.length > 5 ? 100 + 5 * 104 : 100 + (notifications.list.length + 1) * 104
         edge: Qt.TopEdge
-        dragMargin: 40
+        dragMargin: 20
         interactive: loader_main.state == "visible" ? true : false
         dim: false
         opacity: position
