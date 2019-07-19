@@ -173,6 +173,10 @@ Item {
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
+
+                MouseArea {
+                    anchors.fill: parent
+                }
             }
         }
 
