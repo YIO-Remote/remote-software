@@ -52,7 +52,6 @@ Item {
 
     Connections {
         target: buttonHandler
-        enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
 
         onButtonPress: {
             switch (button) {
@@ -61,7 +60,7 @@ Item {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = obj.volume + 0.02;
+                var newvolume = mediaPlayers.currentItem.player.obj.volume + 0.02;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
                 break;
@@ -70,7 +69,7 @@ Item {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = obj.volume - 0.02;
+                var newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
                 break;
@@ -92,6 +91,8 @@ Item {
 
             Item {
                 id: player
+                property alias player: player
+
                 property var obj: players[index]
 
                 Image {
@@ -142,7 +143,7 @@ Item {
                         font.pixelSize: 20
                         lineHeight: 1
                         anchors.top: title.bottom
-                        anchors.topMargin: -5
+                        anchors.topMargin: -2
                         opacity: 0.6
                     }
                 }

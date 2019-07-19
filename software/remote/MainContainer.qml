@@ -265,7 +265,7 @@ Item {
 
     MouseArea {
         width: parent.width
-        height: 50
+        height: 30
         anchors.bottom: parent.bottom
         enabled: mainNavigation.y == 800 ? true : false
         propagateComposedEvents: true
@@ -291,7 +291,7 @@ Item {
 
         onReleased: {
             tracing = false;
-            if (velocity > 30) {
+            if (velocity > 20) {
                 mainNavigation.y = 800 - mainNavigation.height;
             }
         }
