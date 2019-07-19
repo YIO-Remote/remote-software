@@ -113,23 +113,43 @@ Item {
 
                 property var obj: players[index]
 
-                Image {
-                    id: bgImage
+                Rectangle {
+                    id: comp
                     anchors.fill: parent
-                    fillMode: Image.PreserveAspectCrop
-                    asynchronous: true
-                    source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
-                }
+                    color: colorBackground
 
-                GaussianBlur {
-                        anchors.fill: bgImage
-                        source: bgImage
-                        radius: 30
-                        samples: 30
+                    Image {
+                        id: bgImage
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectCrop
+                        asynchronous: true
+                        source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
                     }
 
+                    GaussianBlur {
+                        anchors.fill: bgImage
+                        source: bgImage
+                        radius: 10
+                        samples: 10
+                    }
+                }
+
+                Image {
+                    id: noise
+                    anchors.fill: parent
+                    asynchronous: true
+                    source: "qrc:/images/mini-music-player/noise.png"
+                }
+
+                Blend {
+                    anchors.fill: comp
+                    source: comp
+                    foregroundSource: noise
+                    mode: "multiply"
+                }
+
                 Rectangle {
-                    anchors.fill: bgImage
+                    anchors.fill: noise
                     color: colorBackground
                     opacity: 0.8
                 }
@@ -187,15 +207,15 @@ Item {
                     }
                 }
 
-//                Rectangle {
-//                    width: parent.width - 30
-//                    height: 2
-//                    color: colorLight
-//                    opacity: (800-mainNav.y)/mainNav.height
+                //                Rectangle {
+                //                    width: parent.width - 30
+                //                    height: 2
+                //                    color: colorLight
+                //                    opacity: (800-mainNav.y)/mainNav.height
 
-//                    anchors.bottom: parent.bottom
-//                    anchors.horizontalCenter: parent.horizontalCenter
-//                }
+                //                    anchors.bottom: parent.bottom
+                //                    anchors.horizontalCenter: parent.horizontalCenter
+                //                }
 
                 MouseArea {
                     anchors.fill: parent
