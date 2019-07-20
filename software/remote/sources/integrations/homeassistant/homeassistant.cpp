@@ -194,7 +194,7 @@ void HomeAssistant::onTimeout()
     if (m_tries == 3) {
         m_websocketReconnect.stop();
 
-        m_notifications->add(true,tr("Cannot connect to Home Assistant."), tr("Reconnect"), QVariant("function() { integrations.homeassistant.obj.connect(); }"));
+        m_notifications->add(true,tr("Cannot connect to Home Assistant."), tr("Reconnect"), "homeassistant");
         disconnect();
         m_tries = 0;
     }
