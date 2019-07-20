@@ -3,6 +3,7 @@ import QtQuick 2.11
 import DisplayControl 1.0
 import TouchEventFilter 1.0
 import Proximity 1.0
+import Launcher 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 
@@ -89,6 +90,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Launcher { id: standbyLauncher }
+
     function wifiHandler(state) {
         var cmd;
 
@@ -97,7 +100,7 @@ Item {
         } else {
             cmd = "systemctl stop wpa_supplicant@wlan0.service"
         }
-        mainLauncher.launch(cmd);
+        standbyLauncher.launch(cmd);
     }
 
     function wakeUp() {
@@ -186,12 +189,12 @@ Item {
         console.debug("Mode: " + mode);
         // if mode is on change processor to ondemand
         if (mode == "on") {
-            mainLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
+            standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
             startTime = new Date().getTime()
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
-            mainLauncher.launch("/usr/bin/yio-remote/powersave.sh");
+            standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
 
             // add screen on time
             screenOnTime += new Date().getTime() - startTime

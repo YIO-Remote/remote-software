@@ -53,6 +53,7 @@ private:
     QTimer                          m_websocketReconnect;
     int                             m_tries;
     int                             m_webSocketId;
+    bool                            m_userDisconnect = false;
 
 };
 

@@ -41,6 +41,8 @@ void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QOb
 
 void HomeAssistant::connect()
 {
+    m_userDisconnect = false;
+
     setState(CONNECTING);
 
     // reset the reconnnect trial variable
@@ -53,6 +55,8 @@ void HomeAssistant::connect()
 
 void HomeAssistant::disconnect()
 {
+    m_userDisconnect = true;
+
     // turn of the reconnect try
     m_websocketReconnect.stop();
 
@@ -175,7 +179,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
 
 void HomeAssistant::onStateChanged(QAbstractSocket::SocketState state)
 {
-    if (state == QAbstractSocket::UnconnectedState) {
+    if (state == QAbstractSocket::UnconnectedState && !m_userDisconnect) {
         setState(DISCONNECTED);
         m_websocketReconnect.start();
     }
