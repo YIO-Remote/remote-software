@@ -275,7 +275,7 @@ void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
 
     // brightness
     if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
-        if (attr.value("attributes").toMap().value("brightness").toInt()) {
+        if (attr.value("attributes").toMap().contains("brightness")) {
             attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
         } else {
             attributes.insert("brightness", 0);
@@ -335,21 +335,21 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
 
     // volume
     if (entity->supported_features().indexOf("VOLUME") > -1) {
-        if (attr.value("attributes").toMap().value("volume_level").toBool()) {
+        if (attr.value("attributes").toMap().contains("volume_level")) {
             attributes.insert("volume", attr.value("attributes").toMap().value("volume_level").toDouble());
         }
     }
 
     // media type
     if (entity->supported_features().indexOf("MEDIA_TYPE") > -1) {
-        if (attr.value("attributes").toMap().value("media_content_type").toBool()) {
+        if (attr.value("attributes").toMap().contains("media_content_type")) {
             attributes.insert("mediaType", attr.value("attributes").toMap().value("media_content_type").toString());
         }
     }
 
     // media image
     if (entity->supported_features().indexOf("MEDIA_IMAGE") > -1) {
-        if (attr.value("attributes").toMap().value("entity_picture").toBool()) {
+        if (attr.value("attributes").toMap().contains("entity_picture")) {
             QString url = attr.value("attributes").toMap().value("entity_picture").toString();
             QString fullUrl = QString("http://").append(m_ip).append(url);
             attributes.insert("mediaImage", fullUrl);
@@ -358,14 +358,14 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
 
     // media title
     if (entity->supported_features().indexOf("MEDIA_TITLE") > -1) {
-        if (attr.value("attributes").toMap().value("media_title").toBool()) {
+        if (attr.value("attributes").toMap().contains("media_title")) {
             attributes.insert("mediaTitle", attr.value("attributes").toMap().value("media_title").toString());
         }
     }
 
     // media artist
     if (entity->supported_features().indexOf("MEDIA_ARTIST") > -1) {
-        if (attr.value("attributes").toMap().value("media_artist").toBool()) {
+        if (attr.value("attributes").toMap().contains("media_artist")) {
             attributes.insert("mediaArtist", attr.value("attributes").toMap().value("media_artist").toString());
         }
     }
