@@ -66,7 +66,7 @@ void HomeAssistant::disconnect()
     setState(DISCONNECTED);
 }
 
-void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
+void HomeAssistant::sendCommand(QString type, QString entity_id, QString command, QVariant param)
 {
     if (type == "light") {
         if (command == "TOGGLE")
@@ -187,6 +187,7 @@ void HomeAssistant::onStateChanged(QAbstractSocket::SocketState state)
 
 void HomeAssistant::onError(QAbstractSocket::SocketError error)
 {
+    qDebug() << error;
     m_socket.close();
     setState(DISCONNECTED);
     m_websocketReconnect.start();
@@ -214,7 +215,7 @@ void HomeAssistant::onTimeout()
     }
 }
 
-void HomeAssistant::webSocketSendCommand(const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data)
+void HomeAssistant::webSocketSendCommand(QString domain, QString service, QString entity_id, QVariantMap *data)
 {
     // sends a command to home assistant
     m_webSocketId++;
@@ -245,7 +246,7 @@ int HomeAssistant::convertBrightnessToPercentage(float value)
     return int(round(value/255*100));
 }
 
-void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& attr)
+void HomeAssistant::updateEntity(QString entity_id, QVariantMap attr)
 {
     Entity* entity = (Entity*)m_entities->get(entity_id);
     if (entity) {
@@ -261,7 +262,7 @@ void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& at
     }
 }
 
-void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
+void HomeAssistant::updateLight(Entity* entity, QVariantMap& attr)
 {
     QVariantMap attributes;
 
@@ -298,7 +299,7 @@ void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
     m_entities->update(entity->entity_id(), attributes);
 }
 
-void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
+void HomeAssistant::updateBlind(Entity *entity, QVariantMap &attr)
 {
     QVariantMap attributes;
 
@@ -317,7 +318,7 @@ void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
     m_entities->update(entity->entity_id(), attributes);
 }
 
-void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
+void HomeAssistant::updateMediaPlayer(Entity *entity, QVariantMap &attr)
 {
     QVariantMap attributes;
 

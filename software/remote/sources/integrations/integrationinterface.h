@@ -24,10 +24,10 @@ public:
     virtual void    disconnect() = 0;
 
 public slots:
-    virtual void    sendCommand     (const QString& type, const QString& id, const QString& command, const QVariant& param) = 0;
+    virtual void    sendCommand     (QString type, QString id, QString command, QVariant param) = 0;
 
 private:
-    virtual void    updateEntity    (const QString& entity_id, const QVariantMap& attr) = 0;
+    virtual void    updateEntity    (QString entity_id, QVariantMap attr) = 0;
 };
 
 QT_BEGIN_NAMESPACE
