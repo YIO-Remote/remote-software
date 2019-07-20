@@ -6,6 +6,7 @@ Item {
     id: miniMediaPlayer
     width: 480
     height: 100
+    anchors.bottom: parent.bottom
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
@@ -15,27 +16,38 @@ Item {
 
     states: [
         State { name: "closed";
-            PropertyChanges {target: miniMediaPlayer; y: 0; height: 100 }
+            PropertyChanges {target: miniMediaPlayer; height: 100 }
             ParentChange { target: miniMediaPlayer; parent: loader_main.item.miniMediaPlayer }
             PropertyChanges {target: loader_main; state: "visible" }
         },
         State { name: "open";
-            PropertyChanges {target: miniMediaPlayer; y: 130; height: 670 }
+            PropertyChanges {target: miniMediaPlayer; height: 670 }
             ParentChange { target: miniMediaPlayer; parent: contentWrapper }
             PropertyChanges {target: loader_main; state: "hidden" }
+            PropertyChanges {target: loader_main.item.mainNavigation; y: 800 }
         }
     ]
     transitions: [
         Transition {to: "closed";
-            PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
-            ParentAnimation {
-                NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
+            SequentialAnimation {
+                ParallelAnimation {
+                    PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
+                }
+                ParentAnimation {
+                    NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
+                }
             }
         },
         Transition {to: "open";
-            PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
-            ParentAnimation {
-                NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
+            SequentialAnimation {
+                ParallelAnimation {
+                    PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
+                    ParentAnimation {
+                        NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
+                    }
+                }
+                PropertyAnimation { target: loader_main.item.mainNavigation; properties: "y"; duration: 1 }
             }
         }
     ]
@@ -163,17 +175,17 @@ Item {
                 property var obj: players[index]
 
                 states: [State {
-                    name: "open"
-                    when: miniMediaPlayer.state == "open"
-                    PropertyChanges {target: title; opacity: 0 }
-                    PropertyChanges {target: artist; opacity: 0 }
-                },
-                State {
-                    name: "closed"
-                    when: miniMediaPlayer.state == "closed"
-                    PropertyChanges {target: title; opacity: 1 }
-                    PropertyChanges {target: artist; opacity: 1 }
-                }]
+                        name: "open"
+                        when: miniMediaPlayer.state == "open"
+                        PropertyChanges {target: title; opacity: 0 }
+                        PropertyChanges {target: artist; opacity: 0 }
+                    },
+                    State {
+                        name: "closed"
+                        when: miniMediaPlayer.state == "closed"
+                        PropertyChanges {target: title; opacity: 1 }
+                        PropertyChanges {target: artist; opacity: 1 }
+                    }]
 
                 transitions: [
                     Transition {
@@ -200,12 +212,12 @@ Item {
                         asynchronous: true
                         source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
 
-//                        onStatusChanged: {
-//                            if (bgImage.status == Image.Error) {
-//                                bgImage.source = "";
-//                                bgImage.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage;
-//                            }
-//                        }
+                        //                        onStatusChanged: {
+                        //                            if (bgImage.status == Image.Error) {
+                        //                                bgImage.source = "";
+                        //                                bgImage.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage;
+                        //                            }
+                        //                        }
                     }
 
                     GaussianBlur {
@@ -321,6 +333,28 @@ Item {
 
                     onClicked: {
                         miniMediaPlayer.state = "open";
+                    }
+                }
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // OPEN STATE ELEMENTS
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                Item {
+                    id: closeButton
+                    width: 60
+                    height: width
+
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+
+                    MouseArea {
+                        anchors.fill: parent
+                        enabled: miniMediaPlayer.state == "open" ? true : false
+
+                        onClicked: {
+                            miniMediaPlayer.state = "closed";
+                        }
                     }
                 }
             }

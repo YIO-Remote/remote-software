@@ -105,7 +105,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-        //        battery.checkBattery();
+        battery.checkBattery();
 
         switch (mode) {
 
@@ -130,10 +130,10 @@ Item {
         case "wifi_off":
             wifiHandler("on")
 
-            //            // integration socket on
-            //            for (var i=0; i<config.integration.length; i++) {
-            //                integration[config.integration[i].type].obj.connect();
-            //            }
+            // integration socket on
+            for (var i=0; i<config.integration.length; i++) {
+                integration[config.integration[i].type].obj.connect();
+            }
             // turn off standby
             if (displayControl.setmode("standbyoff")) {
                 standbyoffDelay.start();
@@ -142,28 +142,11 @@ Item {
             // set the mode
             mode = "on";
 
-            // reconnect to integrations
-            integrationReconnectTimer.start();
-
             break;
         }
 
         // reset elapsed time
         standbyBaseTime = new Date().getTime()
-    }
-
-    Timer {
-        id: integrationReconnectTimer
-        repeat: false
-        running: false
-        interval: 1000
-
-        onTriggered: {
-            // integration socket on
-            for (var i=0; i<config.integration.length; i++) {
-                integration[config.integration[i].type].obj.connect();
-            }
-        }
     }
 
     Timer {
