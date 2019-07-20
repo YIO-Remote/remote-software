@@ -105,10 +105,6 @@ Item {
         battery.checkBattery();
 
         switch (mode) {
-        case "on":
-            // reset timers
-            secondsPassed = 0;
-            break;
 
         case "dim":
             // set the display brightness
@@ -116,9 +112,6 @@ Item {
 
             // set the mode
             mode = "on";
-
-            // reset timers
-            secondsPassed = 0;
             break;
 
         case "standby":
@@ -129,9 +122,6 @@ Item {
 
             // set the mode
             mode = "on";
-
-            // reset timers
-            secondsPassed = 0;
             break;
 
         case "wifi_off":
@@ -148,11 +138,11 @@ Item {
 
             // set the mode
             mode = "on";
-
-            // reset timers
-            secondsPassed = 0;
             break;
         }
+
+        // reset elapsed time
+        standbyBaseTime = new Date().getTime()
     }
 
     Timer {
@@ -210,7 +200,8 @@ Item {
     }
 
     // standby timer
-    property int secondsPassed: 0
+    property var standbyBaseTime: new Date().getTime()
+
     Timer {
         id: standbyTimer
         repeat: true
@@ -218,17 +209,17 @@ Item {
         interval: 1000
 
         onTriggered: {
-            secondsPassed += 1000;
+            var time = new Date().getTime()
 
             // mode = dim
-            if (secondsPassed == displayDimTime * 1000) {
+            if (time-standbyBaseTime > displayDimTime * 1000 & mode == "on") {
                 // dim the display
                 setBrightness(10);
                 mode = "dim";
             }
 
             // mode = standby
-            if (secondsPassed == standbyTime * 1000) {
+            if (time-standbyBaseTime > standbyTime * 1000 & mode == "dim") {
                 // turn on proximity detection
                 proximity.proximityDetection(true);
 
@@ -241,7 +232,7 @@ Item {
             }
 
             // mode = wifi_off
-            if (secondsPassed == wifiOffTime * 1000) {
+            if (time-standbyBaseTime > wifiOffTime * 1000 & wifiOffTime != 0 && mode == "standby") {
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
@@ -253,13 +244,9 @@ Item {
             }
 
             // mode = shutdown
-            if (secondsPassed == shutdownTime * 1000) {
+            if (time-standbyBaseTime > shutdownTime * 1000 & shutdownTime != 0 && mode == "standby") {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
-//                // set turn on button to low
-//                buttonHandler.interruptHandler.shutdown();
-//                // halt
-//                mainLauncher.launch("halt");
             }
         }
     }
