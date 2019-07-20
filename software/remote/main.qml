@@ -1,6 +1,5 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtGraphicalEffects 1.0
 
 import Launcher 1.0
 import JsonFile 1.0
@@ -367,40 +366,18 @@ ApplicationWindow {
         }
 
         states: [
-            State { name: "hidden";
-                PropertyChanges {target: loader_main; y: -60; scale: 0.8; opacity: 0.4}
-                PropertyChanges {target: loader_mainBlur; radius: 20}
-
-            },
-            State { name: "visible";
-                PropertyChanges {target: loader_main; scale: 1; opacity: 1}
-                PropertyChanges {target: loader_mainBlur; radius: 0}
-            }
+            State { name: "hidden"; PropertyChanges {target: loader_main; y: -60; scale: 0.8; opacity: 0.4}},
+            State { name: "visible"; PropertyChanges {target: loader_main; scale: 1; opacity: 1}}
         ]
         transitions: [
-            Transition {to: "hidden";
-                PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 800 }
-                PropertyAnimation { target: loader_mainBlur; properties: "radius"; easing.type: Easing.OutExpo; duration: 800 }
-            },
-            Transition {to: "visible";
-                PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }
-                PropertyAnimation { target: loader_mainBlur; properties: "radius"; easing.type: Easing.OutExpo; duration: 500 }
-            }
+            Transition {to: "hidden"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 800 }},
+            Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready) {
                              loadingScreen.item.state = "loaded";
                          }
     }
-
-    GaussianBlur {
-        id: loader_mainBlur
-        anchors.fill: loader_main
-        source: loader_main
-        radius: 0
-        samples: 20
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER

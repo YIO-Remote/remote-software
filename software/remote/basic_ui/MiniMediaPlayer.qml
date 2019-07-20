@@ -139,6 +139,7 @@ Item {
                     }
 
                     GaussianBlur {
+                        id: blur
                         anchors.fill: bgImage
                         source: bgImage
                         radius: 10
@@ -235,14 +236,16 @@ Item {
 
                     onClicked: {
                         if (loader_main.state == "visible") {
-                            loader_main.item.miniMediaPlayer.parent = contentWrapper;
+                            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.parent = contentWrapper;
                             loader_main.item.miniMediaPlayer.height = 670;
                             loader_main.item.mainNavigation.y = 800;
                             loader_main.state = "hidden";
+                            blur.radius = 0
                         } else {
-                            loader_main.item.miniMediaPlayer.parent = loader_main.item;
+                            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.parent = loader_main.item.miniMediaPlayer
                             loader_main.item.miniMediaPlayer.height = 100;
                             loader_main.state = "visible";
+                            blur.radius = 10
                         }
 
                     }
