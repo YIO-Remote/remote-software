@@ -156,7 +156,7 @@ Item {
         id: integrationReconnectTimer
         repeat: false
         running: false
-        interval: 1000
+        interval: 500
 
         onTriggered: {
             // integration socket on

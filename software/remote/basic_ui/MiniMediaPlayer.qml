@@ -200,12 +200,12 @@ Item {
                         asynchronous: true
                         source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
 
-                        onStatusChanged: {
-                            if (bgImage.status == Image.Error) {
-                                bgImage.source = "";
-                                bgImage.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage;
-                            }
-                        }
+//                        onStatusChanged: {
+//                            if (bgImage.status == Image.Error) {
+//                                bgImage.source = "";
+//                                bgImage.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage;
+//                            }
+//                        }
                     }
 
                     GaussianBlur {
@@ -253,8 +253,7 @@ Item {
 
                     onStatusChanged: {
                         if (image.status == Image.Error) {
-                            image.source = "";
-                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage;
+                            image.source = "qrc:/images/mini-music-player/no_image.png"
                         }
                     }
 
