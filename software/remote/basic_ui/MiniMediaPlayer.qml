@@ -98,10 +98,10 @@ Item {
         players = tmp;
     }
 
-    function handlePlay(entity) {
+    function handlePlay(name) {
         for (var i=0; i<players.length; i++) {
-            if (players[i] != entities.get(entity)) {
-                players.push(entities.get(entity));
+            if (players[i] != entities.get(name)) {
+                players.push(entities.get(name));
                 currPlaying++;
             }
         }
@@ -109,10 +109,10 @@ Item {
         players = tmp;
     }
 
-    function handleStop(entity) {
+    function handleStop(name) {
         for (var i=0; i<players.length; i++) {
-            if (players[i] == entities.get(entity)) {
-                var e = entities.get(entity);
+            if (players[i] == entities.get(name)) {
+                var e = entities.get(name);
                 e.playing.disconnect(handlePlay);
                 e.stopped.disconnect(handleStop);
                 players.splice(i, 1);

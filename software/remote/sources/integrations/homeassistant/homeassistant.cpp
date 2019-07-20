@@ -331,6 +331,8 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
         attributes.insert("state", 2);
     } else if (attr.value("state").toString() == "playing") {
         attributes.insert("state", 3);
+    } else {
+        attributes.insert("state", 0);
     }
 
     // volume

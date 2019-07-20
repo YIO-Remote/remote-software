@@ -230,7 +230,7 @@ Item {
             anchors.fill: parent
         }
 
-        function onPlay(entity) {
+        function onPlay() {
             if (!miniMediaPlayerLoader.active) {
                 miniMediaPlayer.height = 100;
                 miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { mainNav: mainNavigation })
