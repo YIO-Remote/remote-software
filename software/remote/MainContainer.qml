@@ -216,7 +216,7 @@ Item {
     // MINI MEDIA PLAYER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias miniMediaPlayer: miniMediaPlayer
-    Rectangle {
+    Item {
         id: miniMediaPlayer
         width: parent.width
         height: 0
@@ -227,6 +227,7 @@ Item {
         Loader {
             id: miniMediaPlayerLoader
             active: false
+            anchors.fill: parent
         }
 
         function onPlay(entity) {

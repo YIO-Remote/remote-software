@@ -3,8 +3,20 @@ import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 
 Item {
+    id: miniMediaPlayer
     width: 480
     height: 100
+
+    layer.enabled: true
+    layer.effect: OpacityMask {
+        maskSource:
+            Rectangle {
+            id: opacityMask
+            width: miniMediaPlayer.width
+            height: miniMediaPlayer.height
+            radius: cornerRadius
+        }
+    }
 
     property var players: []
     property int currPlaying: 0
@@ -138,6 +150,7 @@ Item {
                     id: noise
                     anchors.fill: parent
                     asynchronous: true
+                    fillMode: Image.Stretch
                     source: "qrc:/images/mini-music-player/noise.png"
                 }
 
@@ -219,6 +232,20 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
+
+                    onClicked: {
+                        if (loader_main.state == "visible") {
+                            loader_main.item.miniMediaPlayer.parent = contentWrapper;
+                            loader_main.item.miniMediaPlayer.height = 670;
+                            loader_main.item.mainNavigation.y = 800;
+                            loader_main.state = "hidden";
+                        } else {
+                            loader_main.item.miniMediaPlayer.parent = loader_main.item;
+                            loader_main.item.miniMediaPlayer.height = 100;
+                            loader_main.state = "visible";
+                        }
+
+                    }
                 }
             }
         }
