@@ -33,6 +33,7 @@ public slots:
      void sendCommand                (const QString& type, const QString& id, const QString& command, const QVariant& param) override;
      void processResponse            (QNetworkReply* reply);
      void onTimeout                  ();
+     void onNetWorkAccessible        (QNetworkAccessManager::NetworkAccessibility accessibility);
 
 private:
     void updateEntity               (const QString& entity_id, const QVariantMap& attr) override;

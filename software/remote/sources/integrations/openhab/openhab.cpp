@@ -38,7 +38,7 @@ void OpenHAB::connect()
 {
     setState(CONNECTING);
     // check if the api can be accessed
-    getRequest(QString(""));
+    getRequest("");
 }
 
 void OpenHAB::disconnect()
@@ -78,6 +78,7 @@ void OpenHAB::getRequest(const QString &url)
     QNetworkRequest request;
 
     QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(processResponse(QNetworkReply*)));
+    QObject::connect(&manager, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)), this, SLOT(onNetWorkAccessible(QNetworkAccessManager::NetworkAccessibility)));
     QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), &manager, SLOT(deleteLater()));
 
     QUrl fullUrl = QUrl(QString("http://" + m_ip + "/rest" + url));
@@ -94,8 +95,15 @@ void OpenHAB::onTimeout()
     getRequest("/items");
 }
 
+void OpenHAB::onNetWorkAccessible(QNetworkAccessManager::NetworkAccessibility accessibility)
+{
+    qDebug() << accessibility;
+}
+
 void OpenHAB::processResponse(QNetworkReply* reply)
 {
+    qDebug() << "Processing response";
+
     if (reply->error()) {
         qDebug() << reply->errorString();
         m_notifications->add(true,"Cannot connect to openHAB.", "Reconnect", "function() { integrations.openhab.obj.connect(); }");
