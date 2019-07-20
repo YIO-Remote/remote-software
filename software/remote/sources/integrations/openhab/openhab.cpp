@@ -78,7 +78,7 @@ void OpenHAB::getRequest(const QString &url)
     QNetworkRequest request;
 
     QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(processResponse(QNetworkReply*)));
-//    QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), &manager, SLOT(deleteLater()));
+    QObject::connect(&manager, SIGNAL(finished(QNetworkReply*)), &manager, SLOT(deleteLater()));
 
     QUrl fullUrl = QUrl(QString("http://" + m_ip + "/rest" + url));
 
@@ -112,9 +112,11 @@ void OpenHAB::processResponse(QNetworkReply* reply)
 
         // start polling
         m_polling_timer.start();
+    } else {
+        qDebug() << "openHAB ERROR";
     }
 
-    reply->deleteLater();
+//    reply->deleteLater();
 
     // process the list of items
 //    if (map.count() > 0) {

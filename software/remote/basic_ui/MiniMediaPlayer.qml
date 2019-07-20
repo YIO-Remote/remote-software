@@ -151,7 +151,7 @@ Item {
                 Rectangle {
                     anchors.fill: noise
                     color: colorBackground
-                    opacity: 0.8
+                    opacity: 0.7
                 }
 
                 Image {

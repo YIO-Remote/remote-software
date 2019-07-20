@@ -102,7 +102,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-        battery.checkBattery();
+//        battery.checkBattery();
 
         switch (mode) {
 
