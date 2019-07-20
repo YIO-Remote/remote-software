@@ -32,17 +32,17 @@ public slots:
 
     void onTimeout                  ();
 
-    void sendCommand                (QString type, QString id, QString command, QVariant param) override;
+    void sendCommand                (const QString& type, const QString& id, const QString& command, const QVariant& param) override;
 
 private:
-    void webSocketSendCommand	    (QString domain, QString service, QString entity_id, QVariantMap *data);
+    void webSocketSendCommand	    (const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data);
     int  convertBrightnessToPercentage (float value);
 
 
-    void updateEntity               (QString entity_id, QVariantMap attr) override;
-    void updateLight                (Entity* entity, QVariantMap& attr);
-    void updateBlind                (Entity* entity, QVariantMap& attr);
-    void updateMediaPlayer          (Entity* entity, QVariantMap& attr);
+    void updateEntity               (const QString& entity_id, const QVariantMap& attr) override;
+    void updateLight                (Entity* entity, const QVariantMap& attr);
+    void updateBlind                (Entity* entity, const QVariantMap& attr);
+    void updateMediaPlayer          (Entity* entity, const QVariantMap& attr);
 
     EntitiesInterface*              m_entities;
     NotificationsInterface*         m_notifications;

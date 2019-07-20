@@ -66,7 +66,7 @@ void HomeAssistant::disconnect()
     setState(DISCONNECTED);
 }
 
-void HomeAssistant::sendCommand(QString type, QString entity_id, QString command, QVariant param)
+void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
 {
     if (type == "light") {
         if (command == "TOGGLE")
@@ -215,7 +215,7 @@ void HomeAssistant::onTimeout()
     }
 }
 
-void HomeAssistant::webSocketSendCommand(QString domain, QString service, QString entity_id, QVariantMap *data)
+void HomeAssistant::webSocketSendCommand(const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data)
 {
     // sends a command to home assistant
     m_webSocketId++;
@@ -246,7 +246,7 @@ int HomeAssistant::convertBrightnessToPercentage(float value)
     return int(round(value/255*100));
 }
 
-void HomeAssistant::updateEntity(QString entity_id, QVariantMap attr)
+void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& attr)
 {
     Entity* entity = (Entity*)m_entities->get(entity_id);
     if (entity) {
@@ -262,7 +262,7 @@ void HomeAssistant::updateEntity(QString entity_id, QVariantMap attr)
     }
 }
 
-void HomeAssistant::updateLight(Entity* entity, QVariantMap& attr)
+void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
 {
     QVariantMap attributes;
 
@@ -299,7 +299,7 @@ void HomeAssistant::updateLight(Entity* entity, QVariantMap& attr)
     m_entities->update(entity->entity_id(), attributes);
 }
 
-void HomeAssistant::updateBlind(Entity *entity, QVariantMap &attr)
+void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
 {
     QVariantMap attributes;
 
@@ -318,7 +318,7 @@ void HomeAssistant::updateBlind(Entity *entity, QVariantMap &attr)
     m_entities->update(entity->entity_id(), attributes);
 }
 
-void HomeAssistant::updateMediaPlayer(Entity *entity, QVariantMap &attr)
+void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
 {
     QVariantMap attributes;
 
@@ -335,7 +335,9 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, QVariantMap &attr)
 
     // volume
     if (entity->supported_features().indexOf("VOLUME") > -1) {
-        attributes.insert("volume", attr.value("attributes").toMap().value("volume_level").toDouble());
+        if (attr.value("attributes").toMap().value("volume_level").toBool()) {
+            attributes.insert("volume", attr.value("attributes").toMap().value("volume_level").toDouble());
+        }
     }
 
     // media type
