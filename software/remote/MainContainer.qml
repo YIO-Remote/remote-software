@@ -227,7 +227,6 @@ Item {
         Loader {
             id: miniMediaPlayerLoader
             active: false
-            anchors.fill: parent
         }
 
         function onPlay(entity) {

@@ -7,6 +7,42 @@ Item {
     width: 480
     height: 100
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STATES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    state: "closed"
+
+
+    states: [
+        State { name: "closed";
+            PropertyChanges {target: miniMediaPlayer; y: 0; height: 100 }
+            ParentChange { target: miniMediaPlayer; parent: loader_main.item.miniMediaPlayer }
+            PropertyChanges {target: loader_main; state: "visible" }
+        },
+        State { name: "open";
+            PropertyChanges {target: miniMediaPlayer; y: 130; height: 670 }
+            ParentChange { target: miniMediaPlayer; parent: contentWrapper }
+            PropertyChanges {target: loader_main; state: "hidden" }
+        }
+    ]
+    transitions: [
+        Transition {to: "closed";
+            PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
+            ParentAnimation {
+                NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
+            }
+        },
+        Transition {to: "open";
+            PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
+            ParentAnimation {
+                NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
+            }
+        }
+    ]
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     layer.enabled: true
     layer.effect: OpacityMask {
         maskSource:
@@ -14,7 +50,7 @@ Item {
             id: opacityMask
             width: miniMediaPlayer.width
             height: miniMediaPlayer.height
-            radius: cornerRadius
+            radius: miniMediaPlayer.state == "closed" ? 0 : cornerRadius
         }
     }
 
@@ -116,6 +152,7 @@ Item {
         anchors.fill: parent
 
         Repeater {
+            id: mediaPlayersRepeater
             model: players.length
 
             Item {
@@ -124,6 +161,32 @@ Item {
                 property alias player: player
 
                 property var obj: players[index]
+
+                states: [State {
+                    name: "open"
+                    when: miniMediaPlayer.state == "open"
+                    PropertyChanges {target: title; opacity: 0 }
+                    PropertyChanges {target: artist; opacity: 0 }
+                },
+                State {
+                    name: "closed"
+                    when: miniMediaPlayer.state == "closed"
+                    PropertyChanges {target: title; opacity: 1 }
+                    PropertyChanges {target: artist; opacity: 1 }
+                }]
+
+                transitions: [
+                    Transition {
+                        to: "open"
+                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    },
+                    Transition {
+                        to: "closed"
+                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    }
+                ]
 
                 Rectangle {
                     id: comp
@@ -136,6 +199,13 @@ Item {
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
                         source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+
+                        onStatusChanged: {
+                            if (bgImage.status == Image.Error) {
+                                bgImage.source = "";
+                                bgImage.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage;
+                            }
+                        }
                     }
 
                     GaussianBlur {
@@ -180,14 +250,29 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
                     source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+
+                    onStatusChanged: {
+                        if (image.status == Image.Error) {
+                            image.source = "";
+                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage;
+                        }
+                    }
+
+                    opacity: miniMediaPlayer.state == "closed" ? 1 : 0
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+                    }
                 }
 
                 Item {
+                    id: textContainer
                     height: childrenRect.height
 
                     anchors.left: image.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: image.verticalCenter
+                    anchors.topMargin: 290
 
                     Text {
                         id: title
@@ -233,21 +318,10 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
+                    enabled: miniMediaPlayer.state == "closed" ? true : false
 
                     onClicked: {
-                        if (loader_main.state == "visible") {
-                            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.parent = contentWrapper;
-                            loader_main.item.miniMediaPlayer.height = 670;
-                            loader_main.item.mainNavigation.y = 800;
-                            loader_main.state = "hidden";
-                            blur.radius = 0
-                        } else {
-                            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.parent = loader_main.item.miniMediaPlayer
-                            loader_main.item.miniMediaPlayer.height = 100;
-                            loader_main.state = "visible";
-                            blur.radius = 10
-                        }
-
+                        miniMediaPlayer.state = "open";
                     }
                 }
             }
