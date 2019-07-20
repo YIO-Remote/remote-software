@@ -301,7 +301,7 @@ int BQ27441::getStateOfCharge() {
         int result;
 
         result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
-        if (result < 0) {
+        if (result < 0 && m_init) {
             m_init = false;
             Notifications::getInstance()->add(true,tr("Battery sensor communication error. Please restart the remote."));
         }
