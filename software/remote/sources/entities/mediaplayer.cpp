@@ -7,18 +7,7 @@ QString MediaPlayer::Type = "media_player";
 bool MediaPlayer::update(const QVariantMap &attributes)
 {
     bool chg = false;
-//    enum states nst;
-//    if (attributes.value("state").toInt() == 0) {
-//        nst = OFF;
-//    } else if (attributes.value("state").toInt() == 1) {
-//        nst = ON;
-//    } else if (attributes.value("state").toInt() == 2) {
-//        nst = IDLE;
-//    } else if (attributes.value("state").toInt() == 3) {
-//        nst = PLAYING;
-//    }
-
-    if (m_state != static_cast<states>(attributes.value("state").toInt())) { // static_cast<states>(attributes.value("state").toInt())
+    if (m_state != static_cast<states>(attributes.value("state").toInt())) {
         m_state = static_cast<states>(attributes.value("state").toInt());
         if (m_state == PLAYING) {
             emit playing(objectName());
