@@ -35,11 +35,6 @@ void Notifications::show(const int id)
 
 QVariantList Notifications::list()
 {
-//    QVariantList list;
-//    for (int i=0; i<m_notifications.count(); i++)
-//    {
-//        list.append(m_notifications.value(i));
-//    }
     return m_notifications;
 }
 

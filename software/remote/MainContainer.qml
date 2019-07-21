@@ -230,11 +230,19 @@ Item {
             anchors.fill: parent
         }
 
-        function onPlay() {
+        function onPlay(name) {
             if (!miniMediaPlayerLoader.active) {
                 miniMediaPlayer.height = 100;
                 miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { mainNav: mainNavigation })
                 miniMediaPlayerLoader.active = true;
+            } else if (miniMediaPlayerLoader.active) {
+                miniMediaPlayerLoader.item.add(name);
+            }
+        }
+
+        function onStopped(name) {
+            if (miniMediaPlayerLoader.active) {
+                miniMediaPlayerLoader.item.remove(name);
             }
         }
 
@@ -242,6 +250,7 @@ Item {
             var e = entities.getByType("media_player");
             for (var i=0; i<e.length; i++) {
                 e[i].playing.connect(onPlay);
+                e[i].playing.connect(onStopped);
             }
         }
 

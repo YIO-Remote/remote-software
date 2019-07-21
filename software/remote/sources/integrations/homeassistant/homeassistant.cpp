@@ -162,7 +162,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
         setState(CONNECTED);
         qDebug() << "Subscribed to state changes";
         // remove notifications that we don't need anymore as the integration is connected
-        m_notifications->remove("Cannot connect to Home Assistant.");
+//        m_notifications->remove("Cannot connect to Home Assistant.");
     }
 
     if (id == m_webSocketId) {

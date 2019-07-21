@@ -90,15 +90,14 @@ Item {
                 players.push(e[i]);
                 currPlaying++;
             }
-
-            e[i].playing.connect(handlePlay);
-            e[i].stopped.connect(handleStop);
+            //            e[i].playing.connect(handlePlay);
+            //            e[i].stopped.connect(handleStop);
         }
         var tmp = players;
         players = tmp;
     }
 
-    function handlePlay(name) {
+    function add(name) {
         for (var i=0; i<players.length; i++) {
             if (players[i] != entities.get(name)) {
                 players.push(entities.get(name));
@@ -109,12 +108,10 @@ Item {
         players = tmp;
     }
 
-    function handleStop(name) {
+    function remove(name) {
         for (var i=0; i<players.length; i++) {
             if (players[i] == entities.get(name)) {
                 var e = entities.get(name);
-                e.playing.disconnect(handlePlay);
-                e.stopped.disconnect(handleStop);
                 players.splice(i, 1);
                 currPlaying--;
             }
@@ -122,6 +119,31 @@ Item {
         var tmp = players;
         players = tmp;
     }
+
+    //    function handlePlay(name) {
+    //        for (var i=0; i<players.length; i++) {
+    //            if (players[i] != entities.get(name)) {
+    //                players.push(entities.get(name));
+    //                currPlaying++;
+    //            }
+    //        }
+    //        var tmp = players;
+    //        players = tmp;
+    //    }
+
+    //    function handleStop(name) {
+    //        for (var i=0; i<players.length; i++) {
+    //            if (players[i] == entities.get(name)) {
+    //                var e = entities.get(name);
+    //                e.playing.disconnect(handlePlay);
+    //                e.stopped.disconnect(handleStop);
+    //                players.splice(i, 1);
+    //                currPlaying--;
+    //            }
+    //        }
+    //        var tmp = players;
+    //        players = tmp;
+    //    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
