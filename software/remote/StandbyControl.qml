@@ -130,10 +130,6 @@ Item {
         case "wifi_off":
             wifiHandler("on")
 
-            // integration socket on
-            for (var i=0; i<config.integration.length; i++) {
-                integration[config.integration[i].type].obj.connect();
-            }
             // turn off standby
             if (displayControl.setmode("standbyoff")) {
                 standbyoffDelay.start();
@@ -141,6 +137,11 @@ Item {
 
             // set the mode
             mode = "on";
+
+            // integration socket on
+            for (var i=0; i<config.integration.length; i++) {
+                integration[config.integration[i].type].obj.connect();
+            }
 
             break;
         }
