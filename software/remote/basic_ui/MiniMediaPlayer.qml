@@ -174,17 +174,25 @@ Item {
 
                 property var obj: players[index]
 
+                state: "closed"
+
                 states: [State {
                         name: "open"
                         when: miniMediaPlayer.state == "open"
                         PropertyChanges {target: title; opacity: 0 }
                         PropertyChanges {target: artist; opacity: 0 }
+                        PropertyChanges {target: closeButton; opacity: 1 }
+                        PropertyChanges {target: blur; radius: 0 }
+                        PropertyChanges {target: overlay; opacity: 0.3 }
                     },
                     State {
                         name: "closed"
                         when: miniMediaPlayer.state == "closed"
                         PropertyChanges {target: title; opacity: 1 }
                         PropertyChanges {target: artist; opacity: 1 }
+                        PropertyChanges {target: closeButton; opacity: 0 }
+                        PropertyChanges {target: blur; radius: 10 }
+                        PropertyChanges {target: overlay; opacity: 0.7 }
                     }]
 
                 transitions: [
@@ -192,11 +200,15 @@ Item {
                         to: "open"
                         PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        PropertyAnimation { target: overlay; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     },
                     Transition {
                         to: "closed"
                         PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        PropertyAnimation { target: overlay; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     }
                 ]
 
@@ -245,6 +257,7 @@ Item {
                 }
 
                 Rectangle {
+                    id: overlay
                     anchors.fill: noise
                     color: colorBackground
                     opacity: 0.7
@@ -347,6 +360,18 @@ Item {
 
                     anchors.top: parent.top
                     anchors.right: parent.right
+
+                    Image {
+                        asynchronous: true
+                        anchors {
+                            top: parent.top
+                            topMargin: 20
+                            right: parent.right
+                            rightMargin: 20
+                        }
+
+                        source: "qrc:/images/mini-music-player/icon-close.png"
+                    }
 
                     MouseArea {
                         anchors.fill: parent

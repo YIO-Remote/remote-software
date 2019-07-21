@@ -265,8 +265,7 @@ ApplicationWindow {
         // load the entities from the config file that are supported
         for (var i=0; i<config.entities.length; i++) {
             for (var k=0; k<entities.supported_entities.length; k++) {
-                if (entities.supported_entities[k] === config.entities[i].type) {
-
+                if (config.entities[i].type == entities.supported_entities[k]) {
                     for (var j=0; j < config.entities[i].data.length; j++) {
                         const en = config.entities[i].data[j];
                         entities.add(en, integration[en.integration].obj);
