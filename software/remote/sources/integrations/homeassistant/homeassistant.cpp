@@ -93,23 +93,29 @@ void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, c
     }
     if (type == "blind") {
         if (command == "OPEN")
-            webSocketSendCommand("cover", "open_cover", entity_id, NULL);
+            webSocketSendCommand(type, "open_cover", entity_id, NULL);
         else if (command == "CLOSE")
-            webSocketSendCommand("cover", "close_cover", entity_id, NULL);
+            webSocketSendCommand(type, "close_cover", entity_id, NULL);
         else if (command == "STOP")
-            webSocketSendCommand("cover", "stop_cover", entity_id, NULL);
+            webSocketSendCommand(type, "stop_cover", entity_id, NULL);
         else if (command == "POSITION") {
             QVariantMap data;
             data.insert("position", param);
-            webSocketSendCommand("cover", "set_cover_position", entity_id, &data);
+            webSocketSendCommand(type, "set_cover_position", entity_id, &data);
         }
     }
     if (type == "media_player") {
         if (command == "VOLUME_SET") {
             QVariantMap data;
             data.insert("volume_level", param);
-            webSocketSendCommand("media_player", "volume_set", entity_id, &data);
+            webSocketSendCommand(type, "volume_set", entity_id, &data);
         }
+        else if (command == "PLAY")
+            webSocketSendCommand(type, "media_play_pause", entity_id, NULL);
+        else if (command == "PREVIOUS")
+            webSocketSendCommand(type, "media_previous_track", entity_id, NULL);
+        else if (command == "NEXT")
+            webSocketSendCommand(type, "media_next_track", entity_id, NULL);
     }
 }
 
@@ -162,7 +168,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
         setState(CONNECTED);
         qDebug() << "Subscribed to state changes";
         // remove notifications that we don't need anymore as the integration is connected
-//        m_notifications->remove("Cannot connect to Home Assistant.");
+        //        m_notifications->remove("Cannot connect to Home Assistant.");
     }
 
     if (id == m_webSocketId) {
@@ -332,6 +338,11 @@ void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
         attributes.insert("state", 3);
     } else {
         attributes.insert("state", 0);
+    }
+
+    // source
+    if (entity->supported_features().indexOf("SOURCE") > -1 && attr.value("attributes").toMap().contains("source")) {
+        attributes.insert("source", attr.value("attributes").toMap().value("source").toString());
     }
 
     // volume

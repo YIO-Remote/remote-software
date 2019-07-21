@@ -20,13 +20,19 @@ bool MediaPlayer::update(const QVariantMap &attributes)
 
     if (m_state != static_cast<states>(attributes.value("state").toInt())) { // static_cast<states>(attributes.value("state").toInt())
         m_state = static_cast<states>(attributes.value("state").toInt());
-        if (m_state == PLAYING || m_state == IDLE) {
+        if (m_state == PLAYING) {
             emit playing(objectName());
-        } else if (m_state == OFF) {
+        } else {
             emit stopped(objectName());
         }
         chg = true;
         emit stateChanged();
+    }
+
+    if (m_source != attributes.value("source").toString()) {
+        m_source = attributes.value("source").toString();
+        chg = true;
+        emit sourceChanged();
     }
 
     if (m_volume != attributes.value("volume").toDouble()) {
@@ -55,6 +61,21 @@ bool MediaPlayer::update(const QVariantMap &attributes)
         emit mediaImageChanged();
     }
     return  chg;
+}
+
+void MediaPlayer::play()
+{
+    command("PLAY", "");
+}
+
+void MediaPlayer::previous()
+{
+    command("PREVIOUS", "");
+}
+
+void MediaPlayer::next()
+{
+    command("NEXT", "");
 }
 
 void MediaPlayer::setVolume(double value)

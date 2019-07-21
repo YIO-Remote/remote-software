@@ -29,6 +29,7 @@ public:
     Q_PROPERTY  (QString        mediaTitle  READ    mediaTitle  NOTIFY      mediaTitleChanged)
     Q_PROPERTY  (QString        mediaArtist READ    mediaArtist NOTIFY      mediaArtistChanged)
     Q_PROPERTY  (QString        mediaImage  READ    mediaImage  NOTIFY      mediaImageChanged)
+    Q_PROPERTY  (QString        source      READ    source      NOTIFY      sourceChanged)
 
     double                      volume() { return m_volume; }
     bool                        muted()  { return m_muted; }
@@ -36,9 +37,13 @@ public:
     QString                     mediaImage() { return m_mediaImage; }
     QString                     mediaTitle() { return m_mediaTitle; }
     QString                     mediaArtist() { return m_mediaArtist; }
+    QString                     source() { return m_source; }
 
     // methods
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
+    Q_INVOKABLE void            play();
+    Q_INVOKABLE void            previous();
+    Q_INVOKABLE void            next();
     Q_INVOKABLE void            setVolume(double value);
 
     // constructor
@@ -59,6 +64,7 @@ signals:
     void mediaTitleChanged();
     void mediaArtistChanged();
     void mediaImageChanged();
+    void sourceChanged();
 
 public:
     static QString Type;
@@ -84,6 +90,7 @@ private:
     QString                     m_mediaImage;
     QString                     m_mediaTitle;
     QString                     m_mediaArtist;
+    QString                     m_source;
 };
 
 #endif // MEDIAPLAYER_H
