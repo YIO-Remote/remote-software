@@ -235,13 +235,13 @@ Item {
                 miniMediaPlayer.height = 100;
                 miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { mainNav: mainNavigation })
                 miniMediaPlayerLoader.active = true;
-            } else if (miniMediaPlayerLoader.active) {
+            } else if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
                 miniMediaPlayerLoader.item.add(name);
             }
         }
 
         function onStopped(name) {
-            if (miniMediaPlayerLoader.active) {
+            if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
                 miniMediaPlayerLoader.item.remove(name);
             }
         }
@@ -250,7 +250,7 @@ Item {
             var e = entities.getByType("media_player");
             for (var i=0; i<e.length; i++) {
                 e[i].playing.connect(onPlay);
-                e[i].playing.connect(onStopped);
+                e[i].stopped.connect(onStopped);
             }
         }
 
