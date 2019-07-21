@@ -41,6 +41,8 @@ void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QOb
 
 void HomeAssistant::connect()
 {
+    m_userDisconnect = false;
+
     setState(CONNECTING);
 
     // reset the reconnnect trial variable
@@ -53,6 +55,8 @@ void HomeAssistant::connect()
 
 void HomeAssistant::disconnect()
 {
+    m_userDisconnect = true;
+
     // turn of the reconnect try
     m_websocketReconnect.stop();
 
@@ -89,16 +93,29 @@ void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, c
     }
     if (type == "blind") {
         if (command == "OPEN")
-            webSocketSendCommand("cover", "open_cover", entity_id, NULL);
+            webSocketSendCommand(type, "open_cover", entity_id, NULL);
         else if (command == "CLOSE")
-            webSocketSendCommand("cover", "close_cover", entity_id, NULL);
+            webSocketSendCommand(type, "close_cover", entity_id, NULL);
         else if (command == "STOP")
-            webSocketSendCommand("cover", "stop_cover", entity_id, NULL);
+            webSocketSendCommand(type, "stop_cover", entity_id, NULL);
         else if (command == "POSITION") {
             QVariantMap data;
             data.insert("position", param);
-            webSocketSendCommand("cover", "set_cover_position", entity_id, &data);
+            webSocketSendCommand(type, "set_cover_position", entity_id, &data);
         }
+    }
+    if (type == "media_player") {
+        if (command == "VOLUME_SET") {
+            QVariantMap data;
+            data.insert("volume_level", param);
+            webSocketSendCommand(type, "volume_set", entity_id, &data);
+        }
+        else if (command == "PLAY")
+            webSocketSendCommand(type, "media_play_pause", entity_id, NULL);
+        else if (command == "PREVIOUS")
+            webSocketSendCommand(type, "media_previous_track", entity_id, NULL);
+        else if (command == "NEXT")
+            webSocketSendCommand(type, "media_next_track", entity_id, NULL);
     }
 }
 
@@ -119,7 +136,6 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
 
     QString type = map.value("type").toString();
     int id = map.value("id").toInt();
-    bool success = map.value("id").toBool();
 
     if (type == "auth_required") {
         QString auth = QString("{ \"type\": \"auth\", \"access_token\": \"%1\" }\n").arg(m_token);
@@ -135,9 +151,9 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
         m_socket.sendTextMessage("{\"id\": 2, \"type\": \"get_states\"}\n");
     }
 
-    if (success && id == 2) {
+    if (id == 2) {
         QVariantList list = map.value("result").toJsonArray().toVariantList();
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.length(); i++) {
             QVariantMap result = list.value(i).toMap();
             updateEntity(result.value("entity_id").toString(), result);
         }
@@ -148,12 +164,14 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
         m_socket.sendTextMessage("{\"id\": 3, \"type\": \"subscribe_events\", \"event_type\": \"state_changed\"}\n");
     }
 
-    if (success && type == "result" && id == 3) {
+    if (type == "result" && id == 3) {
         setState(CONNECTED);
         qDebug() << "Subscribed to state changes";
+        // remove notifications that we don't need anymore as the integration is connected
+        //        m_notifications->remove("Cannot connect to Home Assistant.");
     }
 
-    if (success && id == m_webSocketId) {
+    if (id == m_webSocketId) {
         qDebug() << "Command successful";
     }
 
@@ -166,8 +184,7 @@ void HomeAssistant::onTextMessageReceived(const QString &message)
 
 void HomeAssistant::onStateChanged(QAbstractSocket::SocketState state)
 {
-    if (state == QAbstractSocket::UnconnectedState) {
-        m_socket.close();
+    if (state == QAbstractSocket::UnconnectedState && !m_userDisconnect) {
         setState(DISCONNECTED);
         m_websocketReconnect.start();
     }
@@ -175,6 +192,7 @@ void HomeAssistant::onStateChanged(QAbstractSocket::SocketState state)
 
 void HomeAssistant::onError(QAbstractSocket::SocketError error)
 {
+    qDebug() << error;
     m_socket.close();
     setState(DISCONNECTED);
     m_websocketReconnect.start();
@@ -185,7 +203,7 @@ void HomeAssistant::onTimeout()
     if (m_tries == 3) {
         m_websocketReconnect.stop();
 
-        m_notifications->add(true,"Cannot connect to Home Assistant.", "Reconnect", "function() { integrations.homeassistant.obj.connect(); }");
+        m_notifications->add(true,tr("Cannot connect to Home Assistant."), tr("Reconnect"), "homeassistant");
         disconnect();
         m_tries = 0;
     }
@@ -243,6 +261,9 @@ void HomeAssistant::updateEntity(const QString& entity_id, const QVariantMap& at
         if (entity->type() == "blind") {
             updateBlind(entity, attr);
         }
+        if (entity->type() == "media_player") {
+            updateMediaPlayer(entity, attr);
+        }
     }
 }
 
@@ -259,7 +280,7 @@ void HomeAssistant::updateLight(Entity* entity, const QVariantMap& attr)
 
     // brightness
     if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
-        if (attr.value("attributes").toMap().value("brightness").toInt()) {
+        if (attr.value("attributes").toMap().contains("brightness")) {
             attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
         } else {
             attributes.insert("brightness", 0);
@@ -297,6 +318,58 @@ void HomeAssistant::updateBlind(Entity *entity, const QVariantMap &attr)
     // position
     if (entity->supported_features().indexOf("POSITION") > -1) {
         attributes.insert("position", attr.value("attributes").toMap().value("current_position").toInt());
+    }
+
+    m_entities->update(entity->entity_id(), attributes);
+}
+
+void HomeAssistant::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
+{
+    QVariantMap attributes;
+
+    //state
+    if (attr.value("state").toString() == "off") {
+        attributes.insert("state", 0);
+    } else if (attr.value("state").toString() == "on") {
+        attributes.insert("state", 1);
+    } else if (attr.value("state").toString() == "idle") {
+        attributes.insert("state", 2);
+    } else if (attr.value("state").toString() == "playing") {
+        attributes.insert("state", 3);
+    } else {
+        attributes.insert("state", 0);
+    }
+
+    // source
+    if (entity->supported_features().indexOf("SOURCE") > -1 && attr.value("attributes").toMap().contains("source")) {
+        attributes.insert("source", attr.value("attributes").toMap().value("source").toString());
+    }
+
+    // volume
+    if (entity->supported_features().indexOf("VOLUME") > -1 && attr.value("attributes").toMap().contains("volume_level")) {
+        attributes.insert("volume", attr.value("attributes").toMap().value("volume_level").toDouble());
+    }
+
+    // media type
+    if (entity->supported_features().indexOf("MEDIA_TYPE") > -1 && attr.value("attributes").toMap().contains("media_content_type")) {
+        attributes.insert("mediaType", attr.value("attributes").toMap().value("media_content_type").toString());
+    }
+
+    // media image
+    if (entity->supported_features().indexOf("MEDIA_IMAGE") > -1 && attr.value("attributes").toMap().contains("entity_picture")) {
+        QString url = attr.value("attributes").toMap().value("entity_picture").toString();
+        QString fullUrl = QString("http://").append(m_ip).append(url);
+        attributes.insert("mediaImage", fullUrl);
+    }
+
+    // media title
+    if (entity->supported_features().indexOf("MEDIA_TITLE") > -1 && attr.value("attributes").toMap().contains("media_title")) {
+        attributes.insert("mediaTitle", attr.value("attributes").toMap().value("media_title").toString());
+    }
+
+    // media artist
+    if (entity->supported_features().indexOf("MEDIA_ARTIST") > -1 && attr.value("attributes").toMap().contains("media_artist")) {
+        attributes.insert("mediaArtist", attr.value("attributes").toMap().value("media_artist").toString());
     }
 
     m_entities->update(entity->entity_id(), attributes);

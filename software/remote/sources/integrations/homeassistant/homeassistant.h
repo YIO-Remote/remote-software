@@ -42,6 +42,7 @@ private:
     void updateEntity               (const QString& entity_id, const QVariantMap& attr) override;
     void updateLight                (Entity* entity, const QVariantMap& attr);
     void updateBlind                (Entity* entity, const QVariantMap& attr);
+    void updateMediaPlayer          (Entity* entity, const QVariantMap& attr);
 
     EntitiesInterface*              m_entities;
     NotificationsInterface*         m_notifications;
@@ -52,6 +53,7 @@ private:
     QTimer                          m_websocketReconnect;
     int                             m_tries;
     int                             m_webSocketId;
+    bool                            m_userDisconnect = false;
 
 };
 

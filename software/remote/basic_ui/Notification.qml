@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.11
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
@@ -264,7 +264,9 @@ Rectangle {
                         notification.destroy(400);
                         notifications.remove(idN);
                     }
-                    notification.action();
+                    if (notification.actionlabel == "Reconnect") {
+                        integration[notification.action].obj.connect();
+                    }
                 }
             }
         }

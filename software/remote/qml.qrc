@@ -42,5 +42,8 @@
         <file>integrations/homeassistant/Light.qml</file>
         <file>components/blind/ui/Button.qml</file>
         <file>components/blind/ui/Card.qml</file>
+        <file>basic_ui/MiniMediaPlayer.qml</file>
+        <file>basic_ui/Volume.qml</file>
+        <file>components/media_player/ui/Button.qml</file>
     </qresource>
 </RCC>

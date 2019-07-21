@@ -6,7 +6,7 @@ import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: blindButton
+    id: mediaButton
 
     property var obj
 
@@ -17,13 +17,13 @@ Rectangle {
         target: integration[obj.integration].obj
 
         onConnected: {
-            blindButton.opacity = 1
-            blindButton.enabled = true
+            mediaButton.opacity = 1
+            mediaButton.enabled = true
         }
 
         onDisconnected: {
-            blindButton.opacity = 0.3
-            blindButton.enabled = false
+            mediaButton.opacity = 0.3
+            mediaButton.enabled = false
         }
     }
 
@@ -39,35 +39,6 @@ Rectangle {
         enabled: state == "open" ? true : false
 
         onButtonPress: {
-            var tmp;
-
-            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
-                switch (button) {
-                case "dpad up":
-                    if (obj.supported_features.indexOf("OPEN") > -1) {
-                        obj.open();
-                    }
-                    break;
-                case "dpad down":
-                    if (obj.supported_features.indexOf("CLOSE") > -1) {
-                        obj.close();
-                    }
-                    break;
-                case "dpad middle":
-                    if (obj.supported_features.indexOf("STOP") > -1) {
-                        obj.stop();
-                    }
-                    break;
-                case "top right":
-                    blindButton.state = "closed"
-                    loader_main.state = "visible"
-                    var tmp = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY;
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.active = false;
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.active = true;
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = tmp;
-                    break;
-                }
-            }
         }
     }
 
@@ -81,7 +52,7 @@ Rectangle {
     color: colorDark
     radius: cornerRadius
 
-    property var originParent: blindButton.parent
+    property var originParent: mediaButton.parent
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
@@ -90,8 +61,8 @@ Rectangle {
     layer.enabled: true
     layer.effect: OpacityMask {
         maskSource: Item {
-            width: blindButton.width
-            height: blindButton.height
+            width: mediaButton.width
+            height: mediaButton.height
             Rectangle {
                 anchors.fill: parent
                 radius: cornerRadius
@@ -108,15 +79,15 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: blindButton; width: parent.width-20; height: 125}
+            PropertyChanges {target: mediaButton; width: parent.width-20; height: 125}
             PropertyChanges {target: button; _opacity: 1}
-            ParentChange { target: blindButton; parent: originParent }
+            ParentChange { target: mediaButton; parent: originParent }
         },
         State {
             name: "open"
-            PropertyChanges {target: blindButton; width: 440; height: 720}
+            PropertyChanges {target: mediaButton; width: 440; height: 720}
             PropertyChanges {target: button; _opacity: 0}
-            ParentChange { target: blindButton; parent: contentWrapper; x: 20; y: 80 }
+            ParentChange { target: mediaButton; parent: contentWrapper; x: 20; y: 80 }
         }
     ]
 
@@ -124,14 +95,14 @@ Rectangle {
         Transition {
             to: "closed"
             ParallelAnimation {
-                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: mediaButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         },
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: mediaButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
@@ -152,7 +123,7 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        enabled: blindButton.state == "open" ? false : true
+        enabled: mediaButton.state == "open" ? false : true
 
         onPressAndHold: {
             haptic.playEffect("press");
@@ -163,10 +134,10 @@ Rectangle {
         onClicked: {
             haptic.playEffect("click");
 
-            originParent = blindButton.parent
+            originParent = mediaButton.parent
 
             loader_main.state = "hidden"
-            blindButton.state = "open"
+            mediaButton.state = "open"
         }
     }
 
@@ -227,7 +198,7 @@ Rectangle {
         anchors.rightMargin: 20
 
         checked: obj.state
-        mouseArea.enabled: blindButton.state == "open" ? false: true
+        mouseArea.enabled: mediaButton.state == "open" ? false: true
         mouseArea.onClicked: {
             if (obj.state) {
                 obj.close();
@@ -390,10 +361,10 @@ Rectangle {
 
     Loader {
         id: cardLoader
-        width: blindButton.width
-        height: blindButton.height
+        width: mediaButton.width
+        height: mediaButton.height
         asynchronous: true
-        active: blindButton.state == "open"
+        active: mediaButton.state == "open"
         source: "qrc:/components/blind/ui/Card.qml"
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 

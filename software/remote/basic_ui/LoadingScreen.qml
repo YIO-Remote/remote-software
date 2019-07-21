@@ -17,7 +17,7 @@ Rectangle {
         id: startAnim
         running: true
 
-        PauseAnimation {duration: 1000}
+        PauseAnimation {duration: 200}
         ParallelAnimation {
             PropertyAnimation { target: yio_Y; properties: "x"; to: -150; easing.type: Easing.OutExpo; duration: 600 }
             PropertyAnimation { target: yio_Y; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 600 }
@@ -36,7 +36,7 @@ Rectangle {
                 }
             }
         }
-        PauseAnimation {duration: 500}
+        PauseAnimation {duration: 300}
         PropertyAction { target: loadingScreenComp; property: "startAnimFinished"; value: true }
     }
 
@@ -44,7 +44,7 @@ Rectangle {
         id: endAnim
         running: false
 
-        PauseAnimation {duration: 1000}
+        PauseAnimation {duration: 800}
         PropertyAnimation { target: loadingIconAnim; properties: "running";to: false; duration: 0 }
         PropertyAnimation { target: yio_O; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
 //        PauseAnimation {duration: 500}

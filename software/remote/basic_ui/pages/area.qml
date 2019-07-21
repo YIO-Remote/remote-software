@@ -76,21 +76,22 @@ Flickable {
                         var e = entities.getByType(entities.loaded_entities[k]);
 
                         for (var j=0; j<e.length; j++) {
-                            if (e[j].area == config.areas[i].area) {
+                            e[j].friendly_name;
+                            if (e[j].area == area) {
                                 hasTitle = true;
                             }
                         }
 
                         if (k>0) {
-                            var spacerObj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', iconFlow, '')
+                            var spacerObj = Qt.createQmlObject('import QtQuick 2.11; Rectangle {color: colorBackgroundTransparent; width: parent.width; height: 40;}', iconFlow, '')
                         }
                         if (hasTitle) {
-                            var roomObj = Qt.createQmlObject('import QtQuick 2.0; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 32; x:10; text: "'+ entities.getSupportedEntityTranslation(entities.loaded_entities[k]) +'";}', iconFlow, "");
+                            var roomObj = Qt.createQmlObject('import QtQuick 2.11; Text {color: colorText; font.family: "Open Sans"; font.weight: Font.Normal; font.pixelSize: 32; x:10; text: "'+ entities.getSupportedEntityTranslation(entities.loaded_entities[k]) +'";}', iconFlow, "");
                         }
                         hasTitle = false;
 
                         for (var j=0; j<e.length; j++) {
-                            if (e[j].area == config.areas[i].area) {
+                            if (e[j].area == area) {
                                 // load entity button
                                 var comp = Qt.createComponent("qrc:/components/"+ entities.loaded_entities[k] +"/ui/Button.qml");
                                 if (comp.status != Component.Ready) {

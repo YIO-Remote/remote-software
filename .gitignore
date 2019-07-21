@@ -27,3 +27,5 @@ software/remote/translations/*.ts
 software/remote/translations/*.qm
 !software/remote/translations/en_US.ts
 *.user
+software/remote/sources/integrations/openhab/openhab.pro.user
+software/remote/sources/integrations/homeassistant/homeassistant.pro.user

@@ -35,11 +35,6 @@ void Notifications::show(const int id)
 
 QVariantList Notifications::list()
 {
-//    QVariantList list;
-//    for (int i=0; i<m_notifications.count(); i++)
-//    {
-//        list.append(m_notifications.value(i));
-//    }
     return m_notifications;
 }
 
@@ -92,6 +87,18 @@ void Notifications::remove(const int id)
     for (int i=0; i<m_notifications.count(); i++) {
         QVariantMap map = m_notifications.value(i).toMap();
         if (map["id"].toInt() == id) {
+            m_notifications.removeAt(i);
+        }
+    }
+    emit listChanged();
+    emit errorChanged();
+}
+
+void Notifications::remove(const QString &text)
+{
+    for (int i=0; i<m_notifications.count(); i++) {
+        QVariantMap map = m_notifications.value(i).toMap();
+        if (map["text"].toString() == text) {
             m_notifications.removeAt(i);
         }
     }

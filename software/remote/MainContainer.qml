@@ -36,7 +36,7 @@ Item {
             case "dpad right":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
                     loader_main.item.mainNavigationSwipeview.currentIndex += 1;
-//                    mainNavigation.mainNavigationListView.currentIndex += 1;
+                    //                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
                     haptic.playEffect("buzz");
                 }
@@ -44,7 +44,7 @@ Item {
             case "dpad left":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
                     loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
-//                    mainNavigation.mainNavigationListView.currentIndex -= 1;
+                    //                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
                     haptic.playEffect("buzz");
                 }
@@ -142,7 +142,7 @@ Item {
 
             // change the statusbar title
             if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
-               statusBar.title = "";
+                statusBar.title = "";
             } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
             }
@@ -194,9 +194,14 @@ Item {
         count: mainNavigationSwipeview.count
         currentIndex: mainNavigationSwipeview.currentIndex
 
-        anchors.bottom: parent.bottom
+        anchors.bottom: miniMediaPlayer.top
         anchors.bottomMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
+        opacity: mainNavigation.y == 800 ? 1 : 0
+
+        Behavior on opacity {
+            NumberAnimation { duration: 300; easing.type: Easing.InOutExpo }
+        }
 
         delegate: Rectangle {
             width: 8
@@ -208,14 +213,61 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MINI MEDIA PLAYER
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias miniMediaPlayer: miniMediaPlayer
+    Item {
+        id: miniMediaPlayer
+        width: parent.width
+        height: 0
+        anchors.bottom: mainNavigation.top
+
+        property alias miniMediaPlayerLoader: miniMediaPlayerLoader
+
+        Loader {
+            id: miniMediaPlayerLoader
+            active: false
+            anchors.fill: parent
+        }
+
+        function onPlay(name) {
+            if (!miniMediaPlayerLoader.active) {
+                miniMediaPlayer.height = 100;
+                miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { mainNav: mainNavigation })
+                miniMediaPlayerLoader.active = true;
+            } else if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
+                miniMediaPlayerLoader.item.add(name);
+            }
+        }
+
+        function onStopped(name) {
+            if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
+                miniMediaPlayerLoader.item.remove(name);
+            }
+        }
+
+        Component.onCompleted: {
+            var e = entities.getByType("media_player");
+            for (var i=0; i<e.length; i++) {
+                e[i].playing.connect(onPlay);
+                e[i].stopped.connect(onStopped);
+            }
+        }
+
+        Behavior on height {
+            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias mainNavigation: mainNavigation
 
     BasicUI.MainNavigation {
         id: mainNavigation
-//        anchors.bottom: parent.bottom
-//        anchors.bottomMargin: 0
+        //        anchors.bottom: parent.bottom
+        //        anchors.bottomMargin: 0
         y: parent.height - mainNavigation.height
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -226,7 +278,7 @@ Item {
 
     MouseArea {
         width: parent.width
-        height: 100
+        height: 30
         anchors.bottom: parent.bottom
         enabled: mainNavigation.y == 800 ? true : false
         propagateComposedEvents: true
@@ -246,33 +298,17 @@ Item {
         onPositionChanged: {
             if (!tracing) return
             var currVel = (mouse.y-yPrev);
-            velocity = (velocity-currVel)/2.0
+            velocity = (velocity-currVel)
             yPrev = mouse.y
-
-            if (velocity < 15 && mouse.y < parent.height*0.4) {
-                tracing = false;
-                mainNavigation.y = 800 - mainNavigation.height;
-            }
         }
 
         onReleased: {
             tracing = false;
-//            if (velocity < 15 && mouse.y < parent.height*0.2) {
-//                console.debug("Swipe detected 2");
-//            }
+            if (velocity > 20) {
+                mainNavigation.y = 800 - mainNavigation.height;
+            }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // MINI MEDIA PLAYER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Rectangle {
-        id: miniMediaPlayer
-        width: parent.width
-        height: 0
-        anchors.bottom: mainNavigation.top
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATUS BAR

@@ -57,8 +57,8 @@ public:
 
 private:
     QMap<QString, QObject*>     m_entities;
-    QStringList                 m_supported_entities = {"light","blind"};
-    QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds")};
+    QStringList                 m_supported_entities = {"light","blind","media_player"};
+    QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds"), tr("Media")};
     QStringList                 m_loaded_entities;
 };
 

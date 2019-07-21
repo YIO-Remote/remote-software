@@ -3,6 +3,7 @@ import QtQuick 2.11
 import DisplayControl 1.0
 import TouchEventFilter 1.0
 import Proximity 1.0
+import Launcher 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 
@@ -89,15 +90,19 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Launcher { id: standbyLauncher }
+    Launcher { id: wifiLauncher }
+
     function wifiHandler(state) {
         var cmd;
 
         if (state == "on") {
             cmd = "systemctl start wpa_supplicant@wlan0.service"
+            wifiLauncher.launch(cmd);
         } else {
             cmd = "systemctl stop wpa_supplicant@wlan0.service"
+            wifiLauncher.launch(cmd);
         }
-        mainLauncher.launch(cmd);
     }
 
     function wakeUp() {
@@ -105,10 +110,6 @@ Item {
         battery.checkBattery();
 
         switch (mode) {
-        case "on":
-            // reset timers
-            secondsPassed = 0;
-            break;
 
         case "dim":
             // set the display brightness
@@ -116,9 +117,6 @@ Item {
 
             // set the mode
             mode = "on";
-
-            // reset timers
-            secondsPassed = 0;
             break;
 
         case "standby":
@@ -129,18 +127,11 @@ Item {
 
             // set the mode
             mode = "on";
-
-            // reset timers
-            secondsPassed = 0;
             break;
 
         case "wifi_off":
             wifiHandler("on")
 
-            // integration socket on
-            for (var i=0; i<config.integration.length; i++) {
-                integration[config.integration[i].type].obj.connect();
-            }
             // turn off standby
             if (displayControl.setmode("standbyoff")) {
                 standbyoffDelay.start();
@@ -149,10 +140,16 @@ Item {
             // set the mode
             mode = "on";
 
-            // reset timers
-            secondsPassed = 0;
+            // integration socket on
+            for (var i=0; i<config.integration.length; i++) {
+                integration[config.integration[i].type].obj.connect();
+            }
+
             break;
         }
+
+        // reset elapsed time
+        standbyBaseTime = new Date().getTime()
     }
 
     Timer {
@@ -196,12 +193,12 @@ Item {
         console.debug("Mode: " + mode);
         // if mode is on change processor to ondemand
         if (mode == "on") {
-            mainLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
+            standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
             startTime = new Date().getTime()
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
-            mainLauncher.launch("/usr/bin/yio-remote/powersave.sh");
+            standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
 
             // add screen on time
             screenOnTime += new Date().getTime() - startTime
@@ -210,7 +207,8 @@ Item {
     }
 
     // standby timer
-    property int secondsPassed: 0
+    property var standbyBaseTime: new Date().getTime()
+
     Timer {
         id: standbyTimer
         repeat: true
@@ -218,17 +216,17 @@ Item {
         interval: 1000
 
         onTriggered: {
-            secondsPassed += 1000;
+            var time = new Date().getTime()
 
             // mode = dim
-            if (secondsPassed == displayDimTime * 1000) {
+            if (time-standbyBaseTime > displayDimTime * 1000 & mode == "on") {
                 // dim the display
                 setBrightness(10);
                 mode = "dim";
             }
 
             // mode = standby
-            if (secondsPassed == standbyTime * 1000) {
+            if (time-standbyBaseTime > standbyTime * 1000 & mode == "dim") {
                 // turn on proximity detection
                 proximity.proximityDetection(true);
 
@@ -241,7 +239,7 @@ Item {
             }
 
             // mode = wifi_off
-            if (secondsPassed == wifiOffTime * 1000) {
+            if (time-standbyBaseTime > wifiOffTime * 1000 & wifiOffTime != 0 && mode == "standby") {
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
@@ -253,13 +251,9 @@ Item {
             }
 
             // mode = shutdown
-            if (secondsPassed == shutdownTime * 1000) {
+            if (time-standbyBaseTime > shutdownTime * 1000 & shutdownTime != 0 && mode == "standby") {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
-//                // set turn on button to low
-//                buttonHandler.interruptHandler.shutdown();
-//                // halt
-//                mainLauncher.launch("halt");
             }
         }
     }

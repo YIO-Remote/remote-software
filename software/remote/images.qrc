@@ -28,5 +28,12 @@
         <file>components/blind/images/down-arrow.png</file>
         <file>components/blind/images/stop.png</file>
         <file>components/blind/images/up-arrow.png</file>
+        <file>images/mini-music-player/no_image.png</file>
+        <file>images/volume/icon-speaker.png</file>
+        <file>images/mini-music-player/noise.png</file>
+        <file>images/mini-music-player/icon-close.png</file>
+        <file>images/mini-music-player/icon-speaker.png</file>
+        <file>images/mini-music-player/icon-next.png</file>
+        <file>images/mini-music-player/icon-prev.png</file>
     </qresource>
 </RCC>

@@ -31,6 +31,7 @@ public:
 
     // remove notification
     Q_INVOKABLE void            remove          (const int id);
+    Q_INVOKABLE void            remove          (const QString &text);
 
     // check if there's an error notification
 //    Q_INVOKABLE bool            isThereError    ();

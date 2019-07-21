@@ -1,6 +1,5 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import QtWebSockets 1.0
 
 import Launcher 1.0
 import JsonFile 1.0
@@ -66,7 +65,7 @@ ApplicationWindow {
             }
 
             // if voltage is too low and we are sourcing power turn off the remote after timeout
-            if (0 < battery_voltage <= 3.4 && battery_averagepower < 0) {
+            if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
                 shutdownDelayTimer.start();
             }
 
@@ -266,8 +265,7 @@ ApplicationWindow {
         // load the entities from the config file that are supported
         for (var i=0; i<config.entities.length; i++) {
             for (var k=0; k<entities.supported_entities.length; k++) {
-                if (entities.supported_entities[k] === config.entities[i].type) {
-
+                if (config.entities[i].type == entities.supported_entities[k]) {
                     for (var j=0; j < config.entities[i].data.length; j++) {
                         const en = config.entities[i].data[j];
                         entities.add(en, integration[en.integration].obj);
@@ -380,7 +378,6 @@ ApplicationWindow {
                          }
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -406,6 +403,19 @@ ApplicationWindow {
         height: 800
         x: 0
         y: 0
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VOLUME
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias volume: volume
+
+    BasicUI.Volume {
+        id: volume
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -478,7 +488,7 @@ ApplicationWindow {
         width: parent.width
         height: notifications.list.length > 5 ? 100 + 5 * 104 : 100 + (notifications.list.length + 1) * 104
         edge: Qt.TopEdge
-        dragMargin: 40
+        dragMargin: 20
         interactive: loader_main.state == "visible" ? true : false
         dim: false
         opacity: position
