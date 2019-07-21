@@ -165,6 +165,36 @@ Item {
 
     Connections {
         target: buttonHandler
+        enabled: miniMediaPlayer.state == "open"
+
+        onButtonPress: {
+            switch (button) {
+            case "dpad middle":
+                players[mediaPlayers.currentIndex].play();
+                break;
+            case "dpad right":
+                if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
+                    mediaPlayers.currentIndex += 1;
+                } else {
+                    haptic.playEffect("buzz");
+                }
+                break;
+            case "dpad left":
+                if (mediaPlayers.currentIndex > 0) {
+                    mediaPlayers.currentIndex -= 1;
+                } else {
+                    haptic.playEffect("buzz");
+                }
+                break;
+            case "top right":
+                miniMediaPlayer.state = "closed";
+                break;
+            }
+        }
+    }
+
+    Connections {
+        target: buttonHandler
 
         onButtonPress: {
             switch (button) {
