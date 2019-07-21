@@ -31,5 +31,6 @@
         <file>images/mini-music-player/no_image.png</file>
         <file>images/volume/icon-speaker.png</file>
         <file>images/mini-music-player/noise.png</file>
+        <file>images/mini-music-player/icon-close.png</file>
     </qresource>
 </RCC>
