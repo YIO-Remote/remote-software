@@ -362,6 +362,12 @@ Item {
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
                         source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+
+                        onStatusChanged: {
+                            if (image.status == Image.Error) {
+                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+                            }
+                        }
                     }
 
                     GaussianBlur {
@@ -410,7 +416,7 @@ Item {
 
                     onStatusChanged: {
                         if (image.status == Image.Error) {
-                            image.source = "qrc:/images/mini-music-player/no_image.png"
+                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
                         }
                     }
 
