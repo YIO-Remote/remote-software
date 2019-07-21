@@ -91,16 +91,18 @@ Item {
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Launcher { id: standbyLauncher }
+    Launcher { id: wifiLauncher }
 
     function wifiHandler(state) {
         var cmd;
 
         if (state == "on") {
             cmd = "systemctl start wpa_supplicant@wlan0.service"
+            wifiLauncher.launch(cmd);
         } else {
             cmd = "systemctl stop wpa_supplicant@wlan0.service"
+            wifiLauncher.launch(cmd);
         }
-        standbyLauncher.launch(cmd);
     }
 
     function wakeUp() {

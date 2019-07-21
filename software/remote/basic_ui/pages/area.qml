@@ -76,7 +76,8 @@ Flickable {
                         var e = entities.getByType(entities.loaded_entities[k]);
 
                         for (var j=0; j<e.length; j++) {
-                            if (e[j].area == config.areas[i].area) {
+                            e[j].friendly_name;
+                            if (e[j].area == area) {
                                 hasTitle = true;
                             }
                         }
@@ -90,7 +91,7 @@ Flickable {
                         hasTitle = false;
 
                         for (var j=0; j<e.length; j++) {
-                            if (e[j].area == config.areas[i].area) {
+                            if (e[j].area == area) {
                                 // load entity button
                                 var comp = Qt.createComponent("qrc:/components/"+ entities.loaded_entities[k] +"/ui/Button.qml");
                                 if (comp.status != Component.Ready) {
