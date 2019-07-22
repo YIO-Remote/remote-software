@@ -251,7 +251,7 @@ Item {
             }
 
             // mode = shutdown
-            if (time-standbyBaseTime > shutdownTime * 1000 & shutdownTime != 0 && mode == "standby") {
+            if (time-standbyBaseTime > shutdownTime * 1000 & shutdownTime != 0) {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
             }

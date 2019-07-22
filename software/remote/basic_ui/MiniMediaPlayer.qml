@@ -87,7 +87,7 @@ Item {
     Component.onCompleted: {
         var e = entities.getByType("media_player");
         for (var i=0; i<e.length; i++) {
-            if (e[i].state == 2 || e[i].state == 3) {
+            if (e[i].state == 3) {
                 players.push(e[i]);
                 currPlaying++;
             }
@@ -601,6 +601,7 @@ Item {
             enabled: miniMediaPlayer.state == "open" ? true : false
 
             onClicked: {
+                haptic.playEffect("click");
                 miniMediaPlayer.state = "closed";
             }
         }
