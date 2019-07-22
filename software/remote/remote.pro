@@ -1,4 +1,4 @@
-QT += qml quick websockets quickcontrols2
+QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++11 disable-desktop qtquickcompiler
 
 # The following define makes your compiler emit warnings if you use
