@@ -195,6 +195,9 @@ Item {
         if (mode == "on") {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
             startTime = new Date().getTime()
+
+            // start bluetooth scanning
+            if (config.settings.bluetootharea) bluetoothArea.startScan();
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
@@ -203,6 +206,9 @@ Item {
             // add screen on time
             screenOnTime += new Date().getTime() - startTime
             screenOffTime = new Date().getTime() - baseTime - screenOnTime
+
+            // stop bluetooth scanning
+            if (config.settings.bluetootharea) bluetoothArea.stopScan();
         }
     }
 
