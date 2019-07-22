@@ -31,7 +31,8 @@ HEADERS += \
     sources/entities/blind.h \
     sources/notifications.h \
     sources/notificationsinterface.h \
-    sources/entities/mediaplayer.h
+    sources/entities/mediaplayer.h \
+    sources/bluetootharea.h
 
 SOURCES += \
     sources/main.cpp \
@@ -45,7 +46,8 @@ SOURCES += \
     sources/entities/light.cpp \
     sources/entities/blind.cpp \
     sources/notifications.cpp \
-    sources/entities/mediaplayer.cpp
+    sources/entities/mediaplayer.cpp \
+    sources/bluetootharea.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \
