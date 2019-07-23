@@ -150,6 +150,9 @@ Item {
 
         // reset elapsed time
         standbyBaseTime = new Date().getTime()
+
+        // start bluetooth scanning
+        if (config.settings.bluetootharea) bluetoothArea.startScan();
     }
 
     Timer {
@@ -207,26 +210,27 @@ Item {
     }
 
     // standby timer
-    property var standbyBaseTime: new Date().getTime()
+    property var standbyBaseTime
+    property alias standbyTimer: standbyTimer
 
     Timer {
         id: standbyTimer
         repeat: true
-        running: true
+        running: false
         interval: 1000
 
         onTriggered: {
             var time = new Date().getTime()
 
             // mode = dim
-            if (time-standbyBaseTime > displayDimTime * 1000 & mode == "on") {
+            if (time-standbyBaseTime > displayDimTime * 1000 && mode == "on") {
                 // dim the display
                 setBrightness(10);
                 mode = "dim";
             }
 
             // mode = standby
-            if (time-standbyBaseTime > standbyTime * 1000 & mode == "dim") {
+            if (time-standbyBaseTime > standbyTime * 1000 && mode == "dim") {
                 // turn on proximity detection
                 proximity.proximityDetection(true);
 
@@ -235,11 +239,21 @@ Item {
 
                 // put the display to standby mode
                 displayControl.setmode("standbyon");
+
+                // stop bluetooth scanning
+                if (config.settings.bluetootharea) bluetoothArea.stopScan();
+
                 mode = "standby";
             }
 
+            // bluetooth turn off
+            if (time-standbyBaseTime > (standbyTime+20)* 1000) {
+                // turn off bluetooth
+                bluetoothArea.turnOff()
+            }
+
             // mode = wifi_off
-            if (time-standbyBaseTime > wifiOffTime * 1000 & wifiOffTime != 0 && mode == "standby") {
+            if (time-standbyBaseTime > wifiOffTime * 1000 && wifiOffTime != 0 && mode == "standby") {
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
@@ -251,10 +265,21 @@ Item {
             }
 
             // mode = shutdown
-            if (time-standbyBaseTime > shutdownTime * 1000 & shutdownTime != 0) {
+            if (time-standbyBaseTime > shutdownTime * 1000 && shutdownTime != 0 && (mode == "standby" || mode =="wifi_off")) {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
             }
+        }
+    }
+
+    Timer {
+        running: true
+        repeat: false
+        interval: 20000
+
+        onTriggered: {
+            standbyBaseTime = new Date().getTime()
+            standbyTimer.start()
         }
     }
 }

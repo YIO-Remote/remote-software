@@ -20,6 +20,7 @@
 #include "entities/entities.h"
 
 #include "notifications.h"
+#include "bluetootharea.h"
 
 int main(int argc, char *argv[])
 {
@@ -65,6 +66,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
+
+    // BLUETOOTH AREA
+    BluetoothArea bluetoothArea;
+    engine.rootContext()->setContextProperty("bluetoothArea", &bluetoothArea);
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);
