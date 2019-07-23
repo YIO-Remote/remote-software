@@ -60,6 +60,7 @@ Rectangle {
             drag.maximumY: dragger_target.height
 
             onPositionChanged: {
+                haptic.playEffect("bump");
                 percent = Math.round(mouse.y/parent.height*100)
                 if (percent < 0) percent = 0
                 if (percent > 100) percent = 100

@@ -72,6 +72,7 @@ Item {
 
     onCurrPlayingChanged: {
         if (currPlaying == 0) {
+            loader_main.state = "visible";
             loader_main.item.miniMediaPlayer.height = 0;
             loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
             loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
@@ -86,7 +87,7 @@ Item {
     Component.onCompleted: {
         var e = entities.getByType("media_player");
         for (var i=0; i<e.length; i++) {
-            if (e[i].state == 2 || e[i].state == 3) {
+            if (e[i].state == 3) {
                 players.push(e[i]);
                 currPlaying++;
             }
@@ -96,8 +97,16 @@ Item {
     }
 
     function add(name) {
-        removalTimer.stop();
+        // check if we are runnig timers to kill players
+        for (var t=0; t<runningTimers.length; t++) {
+            if (runningTimers[t].name == name) {
+                runningTimers[t].stop();
+                runningTimers[t].destroy();
+                runningTimers.splice(t, 1);
+            }
+        }
 
+        // add new players
         var e = entities.get(name)
         var chg = false;
 
@@ -130,32 +139,45 @@ Item {
         }
     }
 
-    function remove(name) {
-        // if stopped playing, remove the player after 10 seconds
-        removalTimer.start();
-        removeName = name;
+    Component {
+        id: singleShot
+        Timer {
+            id: singleShotTimer
+            running: true
+            repeat: false
+
+            property var action
+            property var name
+
+            onTriggered: {
+                action()
+                for (var i=0; i<runningTimers.length; i++) {
+                    if (runningTimers[i].name == name) {
+                        runningTimers.splice(i,1);
+                    }
+                }
+                this.destroy(200)
+            }
+        }
     }
 
-    property var removeName
+    property var runningTimers: []
 
-    Timer {
-        id: removalTimer
-        repeat: false
-        running: false
-        interval: 30000
+    function remove(name) {
+        // if stopped playing, remove the player after 30 seconds
+        var obj = singleShot.createObject(miniMediaPlayer, { name: name, action: function() { removePlayer(name) }, interval: 30000 });
+        runningTimers.push(obj);
+    }
 
-        onTriggered: {
-            for (var i=0; i<players.length; i++) {
-                if (players[i] == entities.get(removeName)) {
-                    var e = entities.get(removeName);
-                    players.splice(i, 1);
-                    currPlaying--;
-                    console.debug("remove player: " + removeName)
-                    var tmp = players;
-                    players = tmp;
-                }
+    function removePlayer(name) {
+        for (var i=0; i<players.length; i++) {
+            if (players[i] == entities.get(name)) {
+                var e = entities.get(name);
+                players.splice(i, 1);
+                currPlaying--;
+                var tmp = players;
+                players = tmp;
             }
-
         }
     }
 
@@ -340,6 +362,12 @@ Item {
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
                         source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+
+                        onStatusChanged: {
+                            if (image.status == Image.Error) {
+                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+                            }
+                        }
                     }
 
                     GaussianBlur {
@@ -355,7 +383,7 @@ Item {
                     id: noise
                     anchors.fill: parent
                     asynchronous: true
-                    fillMode: Image.Stretch
+                    fillMode: Image.PreserveAspectCrop
                     source: "qrc:/images/mini-music-player/noise.png"
                 }
 
@@ -388,7 +416,7 @@ Item {
 
                     onStatusChanged: {
                         if (image.status == Image.Error) {
-                            image.source = "qrc:/images/mini-music-player/no_image.png"
+                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
                         }
                     }
 
@@ -573,6 +601,7 @@ Item {
             enabled: miniMediaPlayer.state == "open" ? true : false
 
             onClicked: {
+                haptic.playEffect("click");
                 miniMediaPlayer.state = "closed";
             }
         }

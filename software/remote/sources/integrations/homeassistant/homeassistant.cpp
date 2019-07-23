@@ -93,15 +93,15 @@ void HomeAssistant::sendCommand(const QString& type, const QString& entity_id, c
     }
     if (type == "blind") {
         if (command == "OPEN")
-            webSocketSendCommand(type, "open_cover", entity_id, NULL);
+            webSocketSendCommand("cover", "open_cover", entity_id, NULL);
         else if (command == "CLOSE")
-            webSocketSendCommand(type, "close_cover", entity_id, NULL);
+            webSocketSendCommand("cover", "close_cover", entity_id, NULL);
         else if (command == "STOP")
-            webSocketSendCommand(type, "stop_cover", entity_id, NULL);
+            webSocketSendCommand("cover", "stop_cover", entity_id, NULL);
         else if (command == "POSITION") {
             QVariantMap data;
             data.insert("position", param);
-            webSocketSendCommand(type, "set_cover_position", entity_id, &data);
+            webSocketSendCommand("cover", "set_cover_position", entity_id, &data);
         }
     }
     if (type == "media_player") {

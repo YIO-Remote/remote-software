@@ -64,7 +64,7 @@ ApplicationWindow {
                 battery.changeCapacity(battery.capacity);
             }
 
-            // if voltage is too low and we are sourcing power turn off the remote after timeout
+            // if voltage is too low and we are sourcing power, turn off the remote after timeout
             if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
                 shutdownDelayTimer.start();
             }
@@ -212,7 +212,6 @@ ApplicationWindow {
         }
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -297,6 +296,10 @@ ApplicationWindow {
         // when everything is loaded, load the main UI
         loader_main.setSource("qrc:/MainContainer.qml");
         //        loader_main.active = true;
+
+        // load bluetooth
+        bluetoothArea.init(config);
+        bluetoothArea.startScan();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
