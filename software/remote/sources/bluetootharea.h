@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QMap>
 #include <QTimer>
+#include <QThread>
 #include <QBluetoothAddress>
 #include <QBluetoothDeviceInfo>
 #include <QBluetoothDeviceDiscoveryAgent>
@@ -20,7 +21,7 @@ class BluetoothArea : public QObject
 
 public:
     // the current area
-    Q_PROPERTY  (QString currentArea    READ currentArea    NOTIFY currentAreaChanged CONSTANT)
+    Q_PROPERTY  (QString currentArea    READ currentArea                            NOTIFY currentAreaChanged CONSTANT)
     Q_PROPERTY  (int     interval       READ interval       WRITE setInterval       NOTIFY intervalChanged)
 
     QString currentArea ()              { return m_currentArea; }
@@ -48,12 +49,45 @@ signals:
     void currentAreaChanged();
     void intervalChanged();
 
+    void startScanSignal();
+    void stopScanSignal();
+    void turnOffSignal();
+
 public slots:
+    void deviceDiscovered(const QString &);
+
+
+private:
+    QString                             m_currentArea;
+    QMap<QString, QString>              m_areas; // "Living room", "xx:xx:xx:xx:xx:"
+    int                                 m_timerInterval=5000;
+
+    QThread                             m_thread;
+
+};
+
+
+class BluetoothThread : public QObject
+{
+    Q_OBJECT
+
+public:
+    bool running = false;
+
+    BluetoothThread(QMap<QString, QString> areas, int interval);
+
+signals:
+    void foundRoom(const QString &area);
+
+
+public slots:
+    void startScan();
+    void stopScan();
+    void turnOff();
     void deviceDiscovered(const QBluetoothDeviceInfo &device);
     void discoveryFinished();
 
-    void onRestartTimeout();
-
+    void onTimeout();
 
 private:
     QString                             m_currentArea;
@@ -65,10 +99,7 @@ private:
     QString                             m_localDeviceName;
     QBluetoothAddress                   m_localDeviceAddr;
 
-    QTimer                              m_restartTimer;
-    int                                 m_timerInterval = 10000;
-    bool                                running = false;
-
+    QTimer*                             m_timer = new QTimer(this);
 };
 
 #endif // BLUETOOTHAREA_H

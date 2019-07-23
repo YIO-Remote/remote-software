@@ -4,15 +4,12 @@
 
 BluetoothArea::BluetoothArea(QObject *parent) : QObject(parent)
 {
-    m_restartTimer.setSingleShot(true);
-    m_restartTimer.setInterval(m_timerInterval);
-    m_restartTimer.stop();
 }
 
 void BluetoothArea::init(const QVariantMap &config)
 {
-    // init code
-    if (config.value("settings").toMap().value("bluetootharea").toBool() && m_localDevice.isValid())  {
+    // read from config.json
+    if (config.value("settings").toMap().value("bluetootharea").toBool())  {
 
         // load the areas
         QVariantList areas = config.value("areas").toList();
@@ -23,23 +20,79 @@ void BluetoothArea::init(const QVariantMap &config)
             m_areas.insert(m["bluetooth"].toString(), m["area"].toString());
         }
 
-        connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)), this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
-        connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+        // create a bluetooth class
+        BluetoothThread *blThread = new BluetoothThread(m_areas, m_timerInterval);
 
-        connect(&m_restartTimer, SIGNAL(timeout()), this, SLOT(onRestartTimeout()));
-    } else {
-        Notifications::getInstance()->add(true, tr("Bluetooth device was not found."));
+        // move it to a thread
+        blThread->moveToThread(&m_thread);
+
+        // connect signals and slots
+        connect(&m_thread, &QThread::finished, blThread, &QObject::deleteLater);
+
+        // connect signals from bluetootharea to object in thread
+        connect(this, &BluetoothArea::startScanSignal, blThread, &BluetoothThread::startScan);
+        connect(this, &BluetoothArea::stopScanSignal, blThread, &BluetoothThread::stopScan);
+        connect(this, &BluetoothArea::turnOffSignal, blThread, &BluetoothThread::turnOff);
+
+        // connect signals from objet in thread to bluetootharea
+        connect(blThread, &BluetoothThread::foundRoom, this, &BluetoothArea::deviceDiscovered);
+
+        // start thread
+        m_thread.start();
     }
 }
 
 void BluetoothArea::turnOff()
 {
-    // power off
-    m_localDevice.setHostMode(QBluetoothLocalDevice::HostPoweredOff);
+    emit turnOffSignal();
 }
 
 void BluetoothArea::startScan()
-{   
+{
+    emit startScanSignal();
+}
+
+void BluetoothArea::stopScan()
+{
+    emit stopScanSignal();
+}
+
+void BluetoothArea::deviceDiscovered(const QString &area)
+{
+    m_currentArea = area;
+    emit currentAreaChanged();
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//// BLUETOOTHTHREAD CLASS
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+BluetoothThread::BluetoothThread(QMap<QString, QString> areas, int interval)
+{
+    m_areas = areas;
+
+    m_timer->setInterval(interval);
+    m_timer->setSingleShot(true);
+    m_timer->stop();
+
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+
+    // if there is a bluetooth device, let's set up some things
+    if (m_localDevice.isValid()) {
+
+        connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)), this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
+        connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+
+        qDebug() << "Bluetooth init OK";
+
+    } else {
+        Notifications::getInstance()->add(true,"Bluetooth device was not found.");
+    }
+}
+
+void BluetoothThread::startScan()
+{
     if (!running) {
 
         running = true;
@@ -61,29 +114,38 @@ void BluetoothArea::startScan()
     }
 }
 
-void BluetoothArea::stopScan()
+void BluetoothThread::stopScan()
 {
     if (running) {
 
         running = false;
 
-        qDebug() << "Stop bluetooth scan and poweroff";
+        qDebug() << "Stop bluetooth scan";
 
         // stop scan
         m_discoveryAgent->stop();
     }
+
+        m_timer->stop();
 }
 
-void BluetoothArea::deviceDiscovered(const QBluetoothDeviceInfo &device)
+void BluetoothThread::turnOff()
+{
+    // power off
+    m_localDevice.setHostMode(QBluetoothLocalDevice::HostPoweredOff);
+
+}
+
+void BluetoothThread::deviceDiscovered(const QBluetoothDeviceInfo &device)
 {
     if (m_areas.contains(device.address().toString()) && device.rssi() != 0) {
 
         int rssi = int(device.rssi())*-1;
         m_rssi.insert(m_areas.value(device.address().toString()), rssi);
 
-        //qDebug() << "Found" << m_areas.value(device.address().toString()) << rssi;
+//        qDebug() << "Found" << m_areas.value(device.address().toString()) << rssi;
 
-        // this mapp will be sorted by default
+        // this map will be sorted by default
         QMap<int, QString> sortedMap;
 
         for (QMap<QString, int>::iterator i = m_rssi.begin(); i != m_rssi.end(); ++i) {
@@ -92,20 +154,20 @@ void BluetoothArea::deviceDiscovered(const QBluetoothDeviceInfo &device)
 
         // qmap ordered by key, so now we get the first key to get the closest beacon
         m_currentArea = sortedMap.value(sortedMap.firstKey());
-        emit currentAreaChanged();
+        emit foundRoom(m_currentArea);
 
         //qDebug() << "Current area" << m_currentArea;
     }
 }
 
-void BluetoothArea::discoveryFinished()
+void BluetoothThread::discoveryFinished()
 {
     // restart scan after delay
-    m_restartTimer.start();
+    running = false;
+    m_timer->start();
 }
 
-void BluetoothArea::onRestartTimeout()
+void BluetoothThread::onTimeout()
 {
-    qDebug() << "Restarting discovery";
     m_discoveryAgent->start();
 }
