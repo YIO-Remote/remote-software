@@ -11,12 +11,12 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="81"/>
       <source>Screen on</source>
-      <translation type="unfinished">Screen on</translation>
+      <translation>Scherm aan</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="109"/>
       <source>Screen off</source>
-      <translation type="unfinished">Screen off</translation>
+      <translation>Scherm uit</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="45"/>
@@ -112,27 +112,27 @@
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="21"/>
       <source>Wait for it ...</source>
-      <translation type="unfinished">Wait for it ...</translation>
+      <translation>Even wachten ...</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="31"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Gereed</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="40"/>
       <source>Something went wrong. Please reboot</source>
-      <translation type="unfinished">Something went wrong. Please reboot</translation>
+      <translation>Er ging iets mis. Een herstart is nodig</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="152"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Herstarten</translation>
     </message>
     <message>
       <location filename="../basic_ui/LoadingScreen.qml" line="167"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Hallo</translation>
     </message>
   </context>
   <context>
@@ -186,7 +186,7 @@
     <message>
       <location filename="../basic_ui/Notification.qml" line="250"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Negeren</translation>
     </message>
   </context>
   <context>
@@ -194,7 +194,7 @@
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="16"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Notificaties</translation>
     </message>
   </context>
   <context>
