@@ -62,6 +62,7 @@ Above you see how far the translation process is done, if you like you can help 
 Currently available Languages are (marked when 100% done only):
 
 - [ ] 🇧🇬 Bulgarian
+- [x] 🇨🇳 Chinese Simplified
 - [ ] 🇭🇷 Croatian
 - [x] 🇨🇿 Czech
 - [x] 🇩🇰 Danish
@@ -69,18 +70,18 @@ Currently available Languages are (marked when 100% done only):
 - [ ] 🇪🇪 Estonian
 - [x] 🇺🇸 English, US
 - [ ] 🇫🇮 Finnish
-- [ ] 🇫🇷 French
+- [x] 🇫🇷 French
 - [x] 🇩🇪 German
 - [ ] 🇬🇷 Greek
 - [x] 🇭🇺 Hungarian
 - [ ] 🇮🇪 Irish
-- [ ] 🇮🇹 Italian
+- [x] 🇮🇹 Italian
 - [ ] 🇱🇻 Latvian
 - [ ] 🇱🇹 Lithuanian
 - [ ] 🇲🇹 Maltese
-- [ ] 🇳🇴 Norwegian
-- [ ] 🇵🇱 Polish
-- [ ] 🇵🇹 Portuguese
+- [x] 🇳🇴 Norwegian
+- [x] 🇵🇱 Polish
+- [x] 🇵🇹 Portuguese
 - [x] 🇧🇷 Portuguese, Brazilian
 - [ ] 🇷🇴 Romanian
 - [ ] 🇸🇰 Slovak
