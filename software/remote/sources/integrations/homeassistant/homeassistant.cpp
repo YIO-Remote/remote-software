@@ -61,6 +61,42 @@ void HomeAssistant::stateHandler(int state)
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//// HOME ASSISTANT THREAD CLASS
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *entities, QObject *notifications)
+{
+    for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
+        if (iter.key() == "data") {
+            QVariantMap map = iter.value().toMap();
+            m_ip = map.value("ip").toString();
+            m_token = map.value("token").toString();
+        }
+    }
+    m_entities = qobject_cast<EntitiesInterface *>(entities);
+    m_notifications = qobject_cast<NotificationsInterface *>(notifications);
+
+    m_webSocketId = 4;
+
+    m_websocketReconnect.setSingleShot(true);
+    m_websocketReconnect.setInterval(2000);
+    m_websocketReconnect.stop();
+
+    m_socket = new QWebSocket;
+    m_socket->setParent(this);
+
+    QObject::connect(m_socket, &QWebSocket::textMessageReceived, this, &HomeAssistantThread::onTextMessageReceived);
+    ////    QObject::connect(&m_socket, &QWebSocket::error, this, &HomeAssistantThread::onError);
+    QObject::connect(m_socket, &QWebSocket::stateChanged, this, &HomeAssistantThread::onStateChanged);
+
+    QObject::connect(&m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
+
+    qDebug() << "Home Assistant init";
+}
+
+
+
 void HomeAssistantThread::onTextMessageReceived(const QString &message)
 {
     QJsonParseError parseerror;
@@ -321,36 +357,6 @@ void HomeAssistantThread::setState(int state)
 {
     m_state = state;
     emit stateChanged(state);
-}
-
-HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *entities, QObject *notifications)
-{
-    for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
-        if (iter.key() == "data") {
-            QVariantMap map = iter.value().toMap();
-            m_ip = map.value("ip").toString();
-            m_token = map.value("token").toString();
-        }
-    }
-    m_entities = qobject_cast<EntitiesInterface *>(entities);
-    m_notifications = qobject_cast<NotificationsInterface *>(notifications);
-
-    m_webSocketId = 4;
-
-    m_websocketReconnect.setSingleShot(true);
-    m_websocketReconnect.setInterval(2000);
-    m_websocketReconnect.stop();
-
-    m_socket = new QWebSocket;
-    m_socket->setParent(this);
-
-    QObject::connect(m_socket, &QWebSocket::textMessageReceived, this, &HomeAssistantThread::onTextMessageReceived);
-    ////    QObject::connect(&m_socket, &QWebSocket::error, this, &HomeAssistantThread::onError);
-    QObject::connect(m_socket, &QWebSocket::stateChanged, this, &HomeAssistantThread::onStateChanged);
-
-    QObject::connect(&m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
-
-    qDebug() << "Home Assistant init";
 }
 
 void HomeAssistantThread::connect()
