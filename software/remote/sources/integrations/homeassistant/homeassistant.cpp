@@ -79,18 +79,20 @@ HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *ent
 
     m_webSocketId = 4;
 
-    m_websocketReconnect.setSingleShot(true);
-    m_websocketReconnect.setInterval(2000);
-    m_websocketReconnect.stop();
+    m_websocketReconnect = new QTimer(this);
+
+    m_websocketReconnect->setSingleShot(true);
+    m_websocketReconnect->setInterval(2000);
+    m_websocketReconnect->stop();
 
     m_socket = new QWebSocket;
     m_socket->setParent(this);
 
-    QObject::connect(m_socket, &QWebSocket::textMessageReceived, this, &HomeAssistantThread::onTextMessageReceived);
-    ////    QObject::connect(&m_socket, &QWebSocket::error, this, &HomeAssistantThread::onError);
-    QObject::connect(m_socket, &QWebSocket::stateChanged, this, &HomeAssistantThread::onStateChanged);
+    QObject::connect(m_socket, SIGNAL(textMessageReceived(const QString &)), this, SLOT(onTextMessageReceived(const QString &)));
+    QObject::connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onError(QAbstractSocket::SocketError)));
+    QObject::connect(m_socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onStateChanged(QAbstractSocket::SocketState)));
 
-    QObject::connect(&m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
+    QObject::connect(m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
     qDebug() << "Home Assistant init";
 }
@@ -164,7 +166,7 @@ void HomeAssistantThread::onStateChanged(QAbstractSocket::SocketState state)
 {
     if (state == QAbstractSocket::UnconnectedState && !m_userDisconnect) {
         setState(2);
-        m_websocketReconnect.start();
+        m_websocketReconnect->start();
     }
 }
 
@@ -173,13 +175,13 @@ void HomeAssistantThread::onError(QAbstractSocket::SocketError error)
     qDebug() << error;
     m_socket->close();
     setState(2);
-    m_websocketReconnect.start();
+    m_websocketReconnect->start();
 }
 
 void HomeAssistantThread::onTimeout()
 {
     if (m_tries == 3) {
-        m_websocketReconnect.stop();
+        m_websocketReconnect->stop();
 
         m_notifications->add(true,tr("Cannot connect to Home Assistant."), tr("Reconnect"), "homeassistant");
         disconnect();
@@ -378,7 +380,7 @@ void HomeAssistantThread::disconnect()
     m_userDisconnect = true;
 
     // turn of the reconnect try
-    m_websocketReconnect.stop();
+    m_websocketReconnect->stop();
 
     // turn off the socket
     m_socket->close();

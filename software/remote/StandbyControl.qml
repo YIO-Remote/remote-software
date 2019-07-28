@@ -247,7 +247,7 @@ Item {
             }
 
             // bluetooth turn off
-            if (time-standbyBaseTime > (standbyTime+20)* 1000) {
+            if (time-standbyBaseTime > (standbyTime+20)* 1000 && config.settings.bluetootharea) {
                 // turn off bluetooth
                 bluetoothArea.turnOff()
             }

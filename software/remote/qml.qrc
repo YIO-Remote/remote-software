@@ -45,5 +45,7 @@
         <file>basic_ui/MiniMediaPlayer.qml</file>
         <file>basic_ui/Volume.qml</file>
         <file>components/media_player/ui/Button.qml</file>
+        <file>basic_ui/settings/Bluetooth.qml</file>
+        <file>basic_ui/settings/RemoteConfig.qml</file>
     </qresource>
 </RCC>

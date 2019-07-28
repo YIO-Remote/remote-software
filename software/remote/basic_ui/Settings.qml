@@ -58,7 +58,11 @@ Item {
 
         Settings.Battery {}
 
+        Settings.Bluetooth {}
+
         Settings.Network {}
+
+        Settings.RemoteConfig {}
 
         Settings.System {}
 

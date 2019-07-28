@@ -82,7 +82,7 @@ private:
     QString                         m_ip;
     QString                         m_token;
     QWebSocket*                     m_socket;
-    QTimer                          m_websocketReconnect;
+    QTimer*                         m_websocketReconnect;
     int                             m_tries;
     int                             m_webSocketId;
     bool                            m_userDisconnect = false;
