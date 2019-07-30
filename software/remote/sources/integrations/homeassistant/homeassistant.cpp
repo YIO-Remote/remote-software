@@ -93,8 +93,6 @@ HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *ent
     QObject::connect(m_socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onStateChanged(QAbstractSocket::SocketState)));
 
     QObject::connect(m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
-
-    qDebug() << "Home Assistant init";
 }
 
 
