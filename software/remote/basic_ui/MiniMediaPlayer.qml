@@ -189,7 +189,7 @@ Item {
         target: buttonHandler
         enabled: miniMediaPlayer.state == "open"
 
-        onButtonPress: {
+        onButtonRelease: {
             switch (button) {
             case "dpad middle":
                 players[mediaPlayers.currentIndex].play();
@@ -215,12 +215,86 @@ Item {
         }
     }
 
+    property bool longPress: false
+
     Connections {
         target: buttonHandler
 
         onButtonPress: {
             switch (button) {
             case "volume up":
+                buttonTimeout.stop();
+                buttonTimeout.volumeUp = true;
+                longpresTimeout.start();
+                break;
+            case "volume down":
+                buttonTimeout.stop();
+                buttonTimeout.volumeUp = false;
+                longpresTimeout.start();
+                break;
+            }
+        }
+
+        onButtonRelease: {
+            switch (button) {
+            case "volume up":
+                if (!longPress) {
+                    longpresTimeout.stop();
+
+                    if (volume.state != "visible") {
+                        volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
+                        volume.state = "visible";
+                    }
+                    var newvolume = mediaPlayers.currentItem.player.obj.volume + 0.02;
+                    mediaPlayers.currentItem.player.obj.setVolume(newvolume);
+                    volume.volumePosition = newvolume;
+                } else {
+                    buttonTimeout.stop();
+                    longPress = false;
+                }
+                break;
+            case "volume down":
+                if (!longPress) {
+                    longpresTimeout.stop();
+
+                    if (volume.state != "visible") {
+                        volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
+                        volume.state = "visible";
+                    }
+                    newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
+                    mediaPlayers.currentItem.player.obj.setVolume(newvolume);
+                    volume.volumePosition = newvolume;
+                } else {
+                    buttonTimeout.stop();
+                    longPress = false;
+                }
+                break;
+            }
+        }
+    }
+    Timer {
+        id: longpresTimeout
+        interval: 200
+        repeat: false
+        running: false
+
+        onTriggered: {
+            longPress = true;
+            buttonTimeout.start();
+        }
+    }
+
+    Timer {
+        id: buttonTimeout
+        interval: 500
+        repeat: true
+        running: false
+        triggeredOnStart: true
+
+        property bool volumeUp: false
+
+        onTriggered: {
+            if (volumeUp) {
                 if (volume.state != "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
@@ -228,16 +302,14 @@ Item {
                 var newvolume = mediaPlayers.currentItem.player.obj.volume + 0.02;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
-                break;
-            case "volume down":
+            } else {
                 if (volume.state != "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
+                newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
-                break;
             }
         }
     }

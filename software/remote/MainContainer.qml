@@ -31,7 +31,7 @@ Item {
         target: buttonHandler
         enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
 
-        onButtonPress: {
+        onButtonRelease: {
             switch (button) {
             case "dpad right":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {

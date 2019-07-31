@@ -38,7 +38,7 @@ Rectangle {
         target: buttonHandler
         enabled: state == "open" ? true : false
 
-        onButtonPress: {
+        onButtonRelease: {
         }
     }
 
@@ -201,9 +201,9 @@ Rectangle {
         mouseArea.enabled: mediaButton.state == "open" ? false: true
         mouseArea.onClicked: {
             if (obj.state) {
-                obj.close();
+                obj.turnOff();
             } else {
-                obj.open();
+                obj.turnOn();
             }
         }
     }

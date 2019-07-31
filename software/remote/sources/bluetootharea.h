@@ -21,7 +21,7 @@ class BluetoothArea : public QObject
 
 public:
     // the current area
-    Q_PROPERTY  (QString currentArea    READ currentArea                            NOTIFY currentAreaChanged CONSTANT)
+    Q_PROPERTY  (QString currentArea    READ currentArea                            NOTIFY currentAreaChanged)
     Q_PROPERTY  (int     interval       READ interval       WRITE setInterval       NOTIFY intervalChanged)
 
     QString currentArea ()              { return m_currentArea; }

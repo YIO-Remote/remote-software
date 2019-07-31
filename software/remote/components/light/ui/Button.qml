@@ -38,7 +38,7 @@ Rectangle {
         target: buttonHandler
         enabled: state == "open" ? true : false
 
-        onButtonPress: {
+        onButtonRelease: {
             var tmp;
 
             if (standbyControl.mode == "on" || standbyControl.mode == "dim") {

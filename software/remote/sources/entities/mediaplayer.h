@@ -41,6 +41,8 @@ public:
 
     // methods
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
+    Q_INVOKABLE void            turnOn();
+    Q_INVOKABLE void            turnOff();
     Q_INVOKABLE void            play();
     Q_INVOKABLE void            previous();
     Q_INVOKABLE void            next();

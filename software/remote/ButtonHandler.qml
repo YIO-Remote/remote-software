@@ -4,13 +4,16 @@ import InterruptHandler 1.0
 
 Item {
 
-    property bool wasPressed: false;
+    property bool wasPressed: false
     property alias interruptHandler: interruptHandler
 
     signal buttonPress(string button)
+    signal buttonRelease(string button)
 
     InterruptHandler {
         id: interruptHandler
+
+        property string buttonName
 
         onButtonPressed: {
             if (interruptHandler.button == "apds9960") {
@@ -18,24 +21,15 @@ Item {
             } else {
                 if (!wasPressed) {
                     wasPressed = true;
-                    buttonTimeout.start()
-
+                    buttonName = interruptHandler.button;
                     standbyControl.buttonPressDetected = true;
-                    buttonPress(interruptHandler.button);
+                    buttonPress(buttonName);
+                } else if (wasPressed){
+                    wasPressed = false;
+                    standbyControl.buttonPressDetected = true;
+                    buttonRelease(buttonName);
                 }
             }
-        }
-    }
-
-    // timer is needed to avoid false double clicks
-    Timer {
-        id: buttonTimeout
-        repeat: false
-        interval: 200
-        running: false
-
-        onTriggered: {
-            wasPressed = false;
         }
     }
 }
