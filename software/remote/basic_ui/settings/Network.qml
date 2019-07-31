@@ -49,13 +49,30 @@ Item {
         anchors.top: header.bottom
         anchors.topMargin: 20
 
+        Item {
+            id: wifiSSID
+            width: parent.width
+            height: 50
+            anchors.top: parent.top
+            anchors.topMargin: 20
+        }
+
+        Rectangle {
+            id: line0
+            width: parent.width
+            height: 2
+            color: colorBackground
+            anchors.top: wifiSSID.bottom
+            anchors.topMargin: 20
+        }
+
         Text {
             id: wifiSignalText
             color: colorText
             text: qsTr("Wi-Fi signal strength") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
-            anchors.top: parent.top
+            anchors.top: line0.bottom
             anchors.topMargin: 20
             font.family: "Open Sans"
             font.weight: Font.Normal
