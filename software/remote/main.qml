@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 
 import Launcher 1.0
 import JsonFile 1.0
@@ -91,25 +91,6 @@ ApplicationWindow {
         onTriggered: {
             loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
             loadingScreen.active = true;
-        }
-    }
-
-    Timer {
-        running: true
-        repeat: true
-        interval: standbyControl.mode == "on" ? 3000 : 120000
-
-        onTriggered: {
-
-            battery.checkBattery();
-
-            // debug
-            //            console.debug("Battery voltage: " + battery_voltage);
-            //            console.debug("Battery design capacity: " + battery_design_capacity);
-            //            console.debug("Battery full available capacity: " + battery_full_available_capacity);
-            //            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
-            //            console.debug("Average power: " + battery.getAveragePower() + "mW");
-            //                        console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 

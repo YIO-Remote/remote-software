@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 
 import Launcher 1.0
 
@@ -20,6 +20,12 @@ Item {
 
         onTriggered: {
             wifiSignalValue.text = settingsLauncher.launch("/usr/bin/yio-remote/wifi_rssi.sh").trim();
+            var ssid = settingsLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();
+            if (ssid == "") {
+                wifiSSIDText.text = "Select WiFi network";
+            } else {
+                wifiSSIDText.text = ssid;
+            }
         }
     }
 
@@ -55,6 +61,29 @@ Item {
             height: 50
             anchors.top: parent.top
             anchors.topMargin: 20
+
+            Text {
+                id: wifiSSIDText
+                color: colorText
+                text: ""
+                anchors.left: parent.left
+                anchors.leftMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 27
+                lineHeight: 1
+            }
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    haptic.playEffect("click");
+                    console.debug("Select wifi network");
+                }
+            }
+
         }
 
         Rectangle {

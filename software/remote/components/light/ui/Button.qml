@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -38,7 +38,7 @@ Rectangle {
         target: buttonHandler
         enabled: state == "open" ? true : false
 
-        onButtonRelease: {
+        onButtonPress: {
             var tmp;
 
             if (standbyControl.mode == "on" || standbyControl.mode == "dim") {

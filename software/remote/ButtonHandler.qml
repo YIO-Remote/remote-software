@@ -17,17 +17,29 @@ Item {
 
         onButtonPressed: {
             if (interruptHandler.button == "apds9960") {
-                standbyControl.proximity.readInterrupt()
+                standbyControl.proximity.readInterrupt();
+            } else if (interruptHandler.button == "battery") {
+                battery.checkBattery();
             } else {
+                console.debug(interruptHandler.button);
                 if (!wasPressed) {
-                    wasPressed = true;
                     buttonName = interruptHandler.button;
-                    standbyControl.buttonPressDetected = true;
                     buttonPress(buttonName);
+                    console.debug("Press: " + buttonName);
+                    wasPressed = true;
+                    standbyControl.buttonPressDetected = true;
+
                 } else if (wasPressed){
+                    if (buttonName != interruptHandler.button) {
+                        buttonRelease(interruptHandler.button);
+                        buttonRelease(buttonName);
+                        console.debug("Release: " + interruptHandler.button + " & " + buttonName);
+                    } else {
+                        buttonRelease(buttonName);
+                        console.debug("Release: " + buttonName);
+                    }
                     wasPressed = false;
                     standbyControl.buttonPressDetected = true;
-                    buttonRelease(buttonName);
                 }
             }
         }

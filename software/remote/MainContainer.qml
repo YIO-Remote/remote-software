@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -31,7 +31,7 @@ Item {
         target: buttonHandler
         enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
 
-        onButtonRelease: {
+        onButtonPress: {
             switch (button) {
             case "dpad right":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {

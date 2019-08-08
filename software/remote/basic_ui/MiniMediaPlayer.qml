@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
 Item {
@@ -165,7 +165,7 @@ Item {
 
     function remove(name) {
         // if stopped playing, remove the player after 30 seconds
-        var obj = singleShot.createObject(miniMediaPlayer, { name: name, action: function() { removePlayer(name) }, interval: 30000 });
+        var obj = singleShot.createObject(miniMediaPlayer, { name: name, action: function() { removePlayer(name) }, interval: 60000 });
         runningTimers.push(obj);
     }
 
@@ -189,7 +189,7 @@ Item {
         target: buttonHandler
         enabled: miniMediaPlayer.state == "open"
 
-        onButtonRelease: {
+        onButtonPress: {
             switch (button) {
             case "dpad middle":
                 players[mediaPlayers.currentIndex].play();
@@ -215,8 +215,6 @@ Item {
         }
     }
 
-    property bool longPress: false
-
     Connections {
         target: buttonHandler
 
@@ -225,12 +223,12 @@ Item {
             case "volume up":
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = true;
-                longpresTimeout.start();
+                buttonTimeout.start();
                 break;
             case "volume down":
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = false;
-                longpresTimeout.start();
+                buttonTimeout.start();
                 break;
             }
         }
@@ -238,49 +236,12 @@ Item {
         onButtonRelease: {
             switch (button) {
             case "volume up":
-                if (!longPress) {
-                    longpresTimeout.stop();
-
-                    if (volume.state != "visible") {
-                        volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
-                        volume.state = "visible";
-                    }
-                    var newvolume = mediaPlayers.currentItem.player.obj.volume + 0.02;
-                    mediaPlayers.currentItem.player.obj.setVolume(newvolume);
-                    volume.volumePosition = newvolume;
-                } else {
-                    buttonTimeout.stop();
-                    longPress = false;
-                }
+                buttonTimeout.stop();
                 break;
             case "volume down":
-                if (!longPress) {
-                    longpresTimeout.stop();
-
-                    if (volume.state != "visible") {
-                        volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
-                        volume.state = "visible";
-                    }
-                    newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
-                    mediaPlayers.currentItem.player.obj.setVolume(newvolume);
-                    volume.volumePosition = newvolume;
-                } else {
-                    buttonTimeout.stop();
-                    longPress = false;
-                }
+                buttonTimeout.stop();
                 break;
             }
-        }
-    }
-    Timer {
-        id: longpresTimeout
-        interval: 200
-        repeat: false
-        running: false
-
-        onTriggered: {
-            longPress = true;
-            buttonTimeout.start();
         }
     }
 
@@ -343,7 +304,7 @@ Item {
                         PropertyChanges {target: artist; opacity: 0 }
                         PropertyChanges {target: closeButton; opacity: 1 }
                         PropertyChanges {target: blur; radius: 0 }
-                        PropertyChanges {target: overlay; opacity: 0.3 }
+                        PropertyChanges {target: overlay; opacity: 0.5 }
                         PropertyChanges {target: titleOpen; y: 200; opacity: 1 }
                         PropertyChanges {target: artistOpen; opacity: 0.8 }
                         PropertyChanges {target: indicator; opacity: 1 }
