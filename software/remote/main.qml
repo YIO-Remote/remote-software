@@ -192,7 +192,7 @@ ApplicationWindow {
         if (updateAvailable) {
             //: Notification text when new software update is available
             //~ "Update" is a label for the button
-            addNotification("normal", qsTr("New software version is available!") + translateHandler.emptyString, function() { var command = "/usr/bin/remote/updater.sh " + obj.assets[0].browser_download_url; mainLauncher.launch(command); }, qsTr("Update") + translateHandler.emptyString);
+            notifications.add(false, qsTr("New software version is available!") + translateHandler.emptyString);
         }
     }
 
@@ -539,6 +539,7 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
+                battery.checkBattery();
             }
         }
     }

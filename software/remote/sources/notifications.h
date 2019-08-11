@@ -28,6 +28,7 @@ public:
     // add notification
     Q_INVOKABLE void            add             (const bool &type, const QString &text, const QString &actionlabel, const QVariant &action);
     Q_INVOKABLE void            add             (const bool &type, const QString &text);
+    Q_INVOKABLE void            add             (const QString &text);
 
     // remove notification
     Q_INVOKABLE void            remove          (const int id);

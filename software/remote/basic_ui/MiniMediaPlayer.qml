@@ -187,7 +187,7 @@ Item {
 
     Connections {
         target: buttonHandler
-        enabled: miniMediaPlayer.state == "open"
+        enabled: miniMediaPlayer.state == "open" && (standbyControl.mode == "on" || standbyControl.mode == "dim")
 
         onButtonPress: {
             switch (button) {

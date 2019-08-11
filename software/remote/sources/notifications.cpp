@@ -82,6 +82,28 @@ void Notifications::add(const bool &type, const QString &text)
     m_id++;
 }
 
+void Notifications::add(const QString &text)
+{
+    QVariantMap map;
+
+    map["id"] = m_id;
+    map["error"] = false;
+    map["text"] = text;
+    map["actionlabel"] = "";
+    map["action"] = "";
+    map["timestamp"] = QDateTime::currentDateTime();
+
+    m_notifications.append(map);
+
+    emit listChanged();
+    emit errorChanged();
+
+    // show the notification
+    show(m_id);
+
+    m_id++;
+}
+
 void Notifications::remove(const int id)
 {
     for (int i=0; i<m_notifications.count(); i++) {

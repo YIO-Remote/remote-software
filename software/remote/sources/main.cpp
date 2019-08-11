@@ -22,6 +22,8 @@
 #include "notifications.h"
 #include "bluetootharea.h"
 
+#include "fileio.h"
+
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -82,6 +84,10 @@ int main(int argc, char *argv[])
     // NOTIFICATIONS
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
+
+    // FILE IO
+    FileIO fileIO;
+    engine.rootContext()->setContextProperty("fileio", &fileIO);
 
     engine.addImportPath("qrc:/");
 

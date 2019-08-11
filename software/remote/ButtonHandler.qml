@@ -21,24 +21,26 @@ Item {
             } else if (interruptHandler.button == "battery") {
                 battery.checkBattery();
             } else {
-                console.debug(interruptHandler.button);
                 if (!wasPressed) {
                     buttonName = interruptHandler.button;
                     buttonPress(buttonName);
-                    console.debug("Press: " + buttonName);
                     wasPressed = true;
                     standbyControl.buttonPressDetected = true;
 
                 } else if (wasPressed){
                     if (buttonName != interruptHandler.button) {
-                        buttonRelease(interruptHandler.button);
+                        // if it's not the same buttn, then release the old one
                         buttonRelease(buttonName);
-                        console.debug("Release: " + interruptHandler.button + " & " + buttonName);
+
+                        // and create a press event for the new one
+                        buttonName = interruptHandler.button;
+                        buttonPress(buttonName);
+                        standbyControl.buttonPressDetected = true;
+
                     } else {
                         buttonRelease(buttonName);
-                        console.debug("Release: " + buttonName);
+                        wasPressed = false;
                     }
-                    wasPressed = false;
                     standbyControl.buttonPressDetected = true;
                 }
             }
