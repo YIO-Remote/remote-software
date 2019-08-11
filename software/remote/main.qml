@@ -79,6 +79,9 @@ ApplicationWindow {
             } else {
                 chargingScreen.item.state = "hidden";
             }
+
+            console.debug("Average power:" + battery_averagepower + "mW");
+            console.debug("Average current:" + battery_averagecurrent + "mA");
         }
     }
 
