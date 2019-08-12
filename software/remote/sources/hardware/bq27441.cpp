@@ -31,7 +31,7 @@ void BQ27441::begin()
 {
 #ifdef __arm__
     if (m_init) {
-        QFile poweronFile("/usr/bin/yio-remote/poweron");
+        /*        QFile poweronFile("/usr/bin/yio-remote/poweron");
         if (poweronFile.exists()) {
             // remove the file, so on a reboot we won't calibare the gauge again
             poweronFile.remove();
@@ -39,7 +39,8 @@ void BQ27441::begin()
             // calibrate the gauge
             qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
             // changeCapacity(m_capacity);
-        } else if (getDesignCapacity() != m_capacity) {
+        } else */
+        if (getDesignCapacity() != m_capacity) {
             qDebug() << "Design capacity does not match.";
 
             // calibrate the gauge
@@ -52,7 +53,7 @@ void BQ27441::begin()
 
 void BQ27441::changeCapacity(int newCapacity)
 {
-    #ifdef __arm__
+#ifdef __arm__
     if (m_init) {
 
         uint16_t capacity = uint16_t(newCapacity);
@@ -168,7 +169,7 @@ void BQ27441::changeCapacity(int newCapacity)
             }
         }
     }
-    #endif
+#endif
 }
 
 #ifdef __arm__
@@ -227,7 +228,7 @@ int BQ27441::getFullAvailableCapacity() {
 }
 
 int BQ27441::getRemainingCapacity() {
-   #ifdef __arm__
+#ifdef __arm__
     if (m_init) {
         uint16_t result;
 
@@ -298,14 +299,14 @@ int BQ27441::getAveragePower() {
 
 int BQ27441::getStateOfCharge() {
 #ifdef __arm__
-        int result;
+    int result;
 
-        result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
-        if (result < 0 && m_init) {
-            m_init = false;
-            Notifications::getInstance()->add(true,tr("Battery sensor communication error. Please restart the remote."));
-        }
-        return result;
+    result = wiringPiI2CReadReg16(bus,BQ27441_COMMAND_SOC);
+    if (result < 0 && m_init) {
+        m_init = false;
+        Notifications::getInstance()->add(true,tr("Battery sensor communication error. Please restart the remote."));
+    }
+    return result;
 #else
     return 100;
 #endif
