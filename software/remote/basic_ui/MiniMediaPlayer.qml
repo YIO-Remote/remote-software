@@ -247,7 +247,7 @@ Item {
 
     Timer {
         id: buttonTimeout
-        interval: 500
+        interval: 250
         repeat: true
         running: false
         triggeredOnStart: true
