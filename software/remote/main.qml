@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.4
 
 import Launcher 1.0
 import JsonFile 1.0
@@ -70,7 +70,7 @@ ApplicationWindow {
             }
 
             // hide and show the charging screen
-            if (battery_averagepower >= 0 ) {
+            if (battery_averagepower >= 0) {
                 chargingScreen.item.state = "visible";
                 // cancel shutdown when started charging
                 if (shutdownDelayTimer.running) {
@@ -176,12 +176,21 @@ ApplicationWindow {
     Timer {
         repeat: true
         running: true
-        interval: 7200000
+        interval: 3600000
         triggeredOnStart: true
 
         onTriggered: {
             if (config.settings.softwareupdate) {
                 JSUpdate.checkForUpdate();
+
+                if (updateAvailable) {
+                    var hour = new Date().getHours();
+                    if (hour >= 3 && hour <= 5) {
+                        fileio.write("/usr/bin/updateURL", updateURL);
+                        mainLauncher.launch("systemctl restart update.service");
+                        Qt.quit();
+                    }
+                }
             }
         }
     }
@@ -192,7 +201,7 @@ ApplicationWindow {
         if (updateAvailable) {
             //: Notification text when new software update is available
             //~ "Update" is a label for the button
-            notifications.add(false, qsTr("New software version is available!") + translateHandler.emptyString);
+            notifications.add(qsTr("New software version is available!") + translateHandler.emptyString);
         }
     }
 
