@@ -26,7 +26,10 @@
 
 int main(int argc, char *argv[])
 {
+    qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
+    qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
 
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

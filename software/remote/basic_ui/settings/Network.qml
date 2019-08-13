@@ -25,7 +25,6 @@ Item {
                 wifiSSIDText.text = "Select WiFi network";
             } else {
                 wifiSSIDText.text = ssid;
-                wifiNetworkSelected = ssid;
             }
         }
     }
@@ -38,11 +37,18 @@ Item {
     property var wifiNetworkSelectedRSSI
 
     function addNetworks() {
-        var comp = Qt.createComponent("qrc:/WifiNetworkListElement.qml");
+        var comp = Qt.createComponent("qrc:/basic_ui/settings/WifiNetworkListElement.qml");
 
         for (var i=0; i<wifiNetworks.length; i++) {
             var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i], rssi: wifiNetworksRSSI[i], buttonId: i});
+            obj.clicked.connect(buttonClicked)
         }
+    }
+
+    function buttonClicked(buttonId) {
+        wifiNetworkSelected = wifiNetworks[buttonId];
+        wifiSwipeview.currentIndex += 1;
+        popup.height = 200;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,6 +102,14 @@ Item {
                     haptic.playEffect("click");
 
                     // Start wifi network scan
+                    wifiNetworks = [];
+                    wifiNetworksRSSI = [];
+
+                    // clear list
+                    for (var k = flowWifiList.children.length; k>0; k--) {
+                        flowWifiList.children[k-1].destroy();
+                    }
+
                     var tmp = mainLauncher.launch("/usr/bin/yio-remote/wifi_network_list.sh");
                     tmp = tmp.split('\n');
                     for (var i=0; i<tmp.length-1; i++) {
@@ -104,10 +118,11 @@ Item {
                         wifiNetworksRSSI[i] = wifitmp[0]
                     }
 
+                    // add wifi networks to the list
+                    addNetworks();
+
                     // open popup that displays the list
                     popup.open();
-
-
                 }
             }
 
@@ -123,7 +138,7 @@ Item {
             modal: true
             focus: true
             clip: true
-            closePolicy: Popup.CloseOnPressOutside
+            closePolicy: Popup.NoAutoClose
 
             enter: Transition {
                 NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutExpo; duration: 300 }
@@ -143,32 +158,80 @@ Item {
                 radius: cornerRadius
             }
 
-            Flickable {
-                id: flickableWifiList
-                anchors.top: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width
-                height: parent.height
-                maximumFlickVelocity: 4000
-                flickDeceleration: 1000
-                clip: true
-                contentHeight: flowWifiList.height
-                boundsBehavior: Flickable.DragAndOvershootBounds
-                flickableDirection: Flickable.VerticalFlick
+            SwipeView {
+                id: wifiSwipeview
+                anchors.fill: parent
+                interactive: false
 
-                ScrollBar.vertical: ScrollBar {
-                    opacity: 0.5
+                Item {
+                    id: page1
+
+                    Flickable {
+                        id: flickableWifiList
+                        anchors.top: parent.top
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width
+                        height: parent.height
+                        maximumFlickVelocity: 4000
+                        flickDeceleration: 1000
+                        contentHeight: flowWifiList.height
+                        boundsBehavior: Flickable.DragAndOvershootBounds
+                        flickableDirection: Flickable.VerticalFlick
+
+                        ScrollBar.vertical: ScrollBar {
+                            opacity: 0.5
+                        }
+
+                        Flow {
+                            id: flowWifiList
+                            width: parent.width
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.top: parent.top
+                            spacing: 0
+                        }
+                    }
                 }
 
-                Flow {
-                    id: flowWifiList
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    spacing: 0
+                Item {
+                    id: page2
+
+                    Text {
+                        color: colorBackground
+                        text: wifiNetworkSelected
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        anchors.top: parent.top
+                        anchors.topMargin: 20
+                        font.family: "Open Sans"
+                        font.weight: Font.Normal
+                        font.pixelSize: 27
+                        lineHeight: 1
+                    }
+
+                    TextField {
+                            id: textfieldWifiPassword
+                            width: parent.width-40
+                            anchors.top: parent.top
+                            anchors.topMargin: 100
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            height: 60
+                            echoMode: TextInput.PasswordEchoOnEdit
+                            placeholderText: "Password"
+                            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase | Qt.ImhSensitiveData | Qt.ImhNoPredictiveText
+
+                            font.family: "Neuzeit Grotesk"
+                            font.weight: Font.Normal
+                            font.pixelSize: 28
+                            color: "#000000"
+
+                            background: Rectangle {
+                                implicitWidth: parent.width-40
+                                implicitHeight: 60
+                                color: colorHighlight1
+                            }
+                        }
                 }
             }
-
         }
 
 

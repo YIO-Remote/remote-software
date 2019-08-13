@@ -4,7 +4,7 @@ import QtQuick.Controls 2.4
 Rectangle {
     id: element
     width: parent.width
-    height: 56
+    height: 80
     color: selected ? colorHighlight : colorLine
     radius: cornerRadius
 
@@ -36,13 +36,13 @@ Rectangle {
         lineHeight: 1
     }
 
-    Image {
-        asynchronous: true
-        source: rssi > -60 ? "qrc:/images/icon-wifi-3.png" : ( rssi < -60 && rssi > -80 ? "qrc:/images/icon-wifi-2.png" : "qrc:/images/icon-wifi-1.png")
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
-    }
+//    Image {
+//        asynchronous: true
+//        source: rssi > -60 ? "qrc:/images/icon-wifi-3.png" : ( rssi < -60 && rssi > -80 ? "qrc:/images/icon-wifi-2.png" : "qrc:/images/icon-wifi-1.png")
+//        anchors.right: parent.right
+//        anchors.rightMargin: 10
+//        anchors.verticalCenter: parent.verticalCenter
+//    }
 
     Rectangle {
         id: line

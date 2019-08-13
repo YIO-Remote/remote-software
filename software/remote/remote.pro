@@ -61,6 +61,7 @@ equals(QT_ARCH, arm): {
 
 RESOURCES += qml.qrc \
     images.qrc \
+    keyboard.qrc \
     translations.qrc
 
 # TRANSLATION

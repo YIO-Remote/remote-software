@@ -1,5 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import QtQuick.VirtualKeyboard 2.2
+import QtQuick.VirtualKeyboard.Settings 2.2
 
 import Launcher 1.0
 import JsonFile 1.0
@@ -583,4 +585,36 @@ ApplicationWindow {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // KEYBOARD
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    InputPanel {
+            id: inputPanel
+            width: parent.width
+            y: applicationWindow.height
+
+            states: State {
+                name: "visible"
+                when: inputPanel.active
+                PropertyChanges {
+                    target: inputPanel
+                    y: applicationWindow.height - inputPanel.height
+                }
+            }
+            transitions: Transition {
+                id: inputPanelTransition
+                from: ""
+                to: "visible"
+                reversible: true
+                ParallelAnimation {
+                    NumberAnimation {
+                        properties: "y"
+                        duration: 300
+                        easing.type: Easing.InOutExpo
+                    }
+                }
+            }
+        }
 }
