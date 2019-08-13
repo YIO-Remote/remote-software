@@ -25,11 +25,25 @@ Item {
                 wifiSSIDText.text = "Select WiFi network";
             } else {
                 wifiSSIDText.text = ssid;
+                wifiNetworkSelected = ssid;
             }
         }
     }
 
     Component.onCompleted: timer.start()
+
+    property var wifiNetworks: []
+    property var wifiNetworksRSSI: []
+    property var wifiNetworkSelected
+    property var wifiNetworkSelectedRSSI
+
+    function addNetworks() {
+        var comp = Qt.createComponent("qrc:/WifiNetworkListElement.qml");
+
+        for (var i=0; i<wifiNetworks.length; i++) {
+            var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i], rssi: wifiNetworksRSSI[i], buttonId: i});
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NETWORK
@@ -80,11 +94,83 @@ Item {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    console.debug("Select wifi network");
+
+                    // Start wifi network scan
+                    var tmp = mainLauncher.launch("/usr/bin/yio-remote/wifi_network_list.sh");
+                    tmp = tmp.split('\n');
+                    for (var i=0; i<tmp.length-1; i++) {
+                        var wifitmp = tmp[i].split(',')
+                        wifiNetworks[i] = wifitmp[1];
+                        wifiNetworksRSSI[i] = wifitmp[0]
+                    }
+
+                    // open popup that displays the list
+                    popup.open();
+
+
                 }
             }
 
         }
+
+
+        Popup {
+            id: popup
+            x: 0
+            y: 0
+            width: section.width
+            height: 400
+            modal: true
+            focus: true
+            clip: true
+            closePolicy: Popup.CloseOnPressOutside
+
+            enter: Transition {
+                NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutExpo; duration: 300 }
+                NumberAnimation { property: "width"; from: 0; to: section.width; easing.type: Easing.OutBack; duration: 300 }
+                NumberAnimation { property: "height"; from: 0; to: 400; easing.type: Easing.OutBack; duration: 300 }
+            }
+
+            exit: Transition {
+                NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; easing.type: Easing.InExpo; duration: 300 }
+                NumberAnimation { property: "width"; from: section.width; to: 0; easing.type: Easing.InExpo; duration: 300 }
+                NumberAnimation { property: "height"; from: 400; to: 0; easing.type: Easing.InExpo; duration: 300 }
+            }
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: colorLine
+                radius: cornerRadius
+            }
+
+            Flickable {
+                id: flickableWifiList
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width
+                height: parent.height
+                maximumFlickVelocity: 4000
+                flickDeceleration: 1000
+                clip: true
+                contentHeight: flowWifiList.height
+                boundsBehavior: Flickable.DragAndOvershootBounds
+                flickableDirection: Flickable.VerticalFlick
+
+                ScrollBar.vertical: ScrollBar {
+                    opacity: 0.5
+                }
+
+                Flow {
+                    id: flowWifiList
+                    width: parent.width
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    spacing: 0
+                }
+            }
+
+        }
+
 
         Rectangle {
             id: line0

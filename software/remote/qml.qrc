@@ -47,5 +47,6 @@
         <file>components/media_player/ui/Button.qml</file>
         <file>basic_ui/settings/Bluetooth.qml</file>
         <file>basic_ui/settings/RemoteConfig.qml</file>
+        <file>basic_ui/settings/WifiNetworkListElement.qml</file>
     </qresource>
 </RCC>
