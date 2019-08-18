@@ -253,7 +253,7 @@ Item {
             }
 
             // mode = wifi_off
-            if (time-standbyBaseTime > wifiOffTime * 1000 && wifiOffTime != 0 && mode == "standby" && battery_averagepower < 0) {
+            if (time-standbyBaseTime > wifiOffTime * 1000 && wifiOffTime != 0 && mode == "standby" && battery_averagepower <= 0) {
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
@@ -265,7 +265,7 @@ Item {
             }
 
             // mode = shutdown
-            if (time-standbyBaseTime > shutdownTime * 1000 && shutdownTime != 0 && (mode == "standby" || mode =="wifi_off") && battery_averagepower < 0) {
+            if (time-standbyBaseTime > shutdownTime * 1000 && shutdownTime != 0 && (mode == "standby" || mode =="wifi_off") && battery_averagepower <= 0) {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
             }

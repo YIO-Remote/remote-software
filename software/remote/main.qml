@@ -60,30 +60,33 @@ ApplicationWindow {
             battery_averagepower = battery.getAveragePower()
             battery_averagecurrent = battery.getAverageCurrent()
 
-            // if the designcapacity is off correct it
-            if (battery_design_capacity != battery.capacity) {
-                console.debug("Design capacity doesn't match. Recalibrating battery.");
-                battery.changeCapacity(battery.capacity);
-            }
+            if (battery_level != -1) {
 
-            // if voltage is too low and we are sourcing power, turn off the remote after timeout
-            if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
-                shutdownDelayTimer.start();
-            }
-
-            // hide and show the charging screen
-            if (battery_averagepower >= 0) {
-                chargingScreen.item.state = "visible";
-                // cancel shutdown when started charging
-                if (shutdownDelayTimer.running) {
-                    shutdownDelayTimer.stop();
+                // if the designcapacity is off correct it
+                if (battery_design_capacity != battery.capacity) {
+                    console.debug("Design capacity doesn't match. Recalibrating battery.");
+                    battery.changeCapacity(battery.capacity);
                 }
-            } else {
-                chargingScreen.item.state = "hidden";
-            }
 
-            console.debug("Average power:" + battery_averagepower + "mW");
-            console.debug("Average current:" + battery_averagecurrent + "mA");
+                // if voltage is too low and we are sourcing power, turn off the remote after timeout
+                if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
+                    shutdownDelayTimer.start();
+                }
+
+                // hide and show the charging screen
+                if (battery_averagepower >= 0) {
+                    chargingScreen.item.state = "visible";
+                    // cancel shutdown when started charging
+                    if (shutdownDelayTimer.running) {
+                        shutdownDelayTimer.stop();
+                    }
+                } else {
+                    chargingScreen.item.state = "hidden";
+                }
+
+                console.debug("Average power:" + battery_averagepower + "mW");
+                console.debug("Average current:" + battery_averagecurrent + "mA");
+            }
         }
     }
 
@@ -289,7 +292,11 @@ ApplicationWindow {
         translateHandler.selectLanguage(language);
 
         // when everything is loaded, load the main UI
-        loader_main.setSource("qrc:/MainContainer.qml");
+        if (fileio.exists("/wifisetup")) {
+            loader_main.setSource("qrc:/wifiSetup.qml");
+        } else {
+            loader_main.setSource("qrc:/MainContainer.qml");
+        }
         //        loader_main.active = true;
 
         // load bluetooth
@@ -591,30 +598,30 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     InputPanel {
-            id: inputPanel
-            width: parent.width
-            y: applicationWindow.height
+        id: inputPanel
+        width: parent.width
+        y: applicationWindow.height
 
-            states: State {
-                name: "visible"
-                when: inputPanel.active
-                PropertyChanges {
-                    target: inputPanel
-                    y: applicationWindow.height - inputPanel.height
-                }
+        states: State {
+            name: "visible"
+            when: inputPanel.active
+            PropertyChanges {
+                target: inputPanel
+                y: applicationWindow.height - inputPanel.height
             }
-            transitions: Transition {
-                id: inputPanelTransition
-                from: ""
-                to: "visible"
-                reversible: true
-                ParallelAnimation {
-                    NumberAnimation {
-                        properties: "y"
-                        duration: 300
-                        easing.type: Easing.InOutExpo
-                    }
+        }
+        transitions: Transition {
+            id: inputPanelTransition
+            from: ""
+            to: "visible"
+            reversible: true
+            ParallelAnimation {
+                NumberAnimation {
+                    properties: "y"
+                    duration: 300
+                    easing.type: Easing.InOutExpo
                 }
             }
         }
+    }
 }

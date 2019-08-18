@@ -25,6 +25,34 @@ public slots:
         return true;
     }
 
+    QString read(const QString& source)
+    {
+        QString returnText;
+
+        QFile file(source);
+        if (!file.exists()) {
+            return QString("");
+        }
+
+        if (file.open(QFile::ReadOnly)) {
+            QTextStream stream(&file);
+            returnText = stream.readAll();
+        }
+
+        return returnText;
+    }
+
+    bool exists(const QString& source)
+    {
+        QFile file(source);
+
+        if (file.exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 public:
     FileIO() {}
 };
