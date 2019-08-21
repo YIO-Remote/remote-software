@@ -194,7 +194,7 @@
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="16"/>
       <source>Notifications</source>
-      <translation>Meldingen</translation>
+      <translation>Notificaties</translation>
     </message>
   </context>
   <context>
