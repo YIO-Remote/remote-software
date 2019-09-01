@@ -52,8 +52,7 @@ public:
             {
                 Serial.println("PRONTO");
             }
-            else if (protocol == decode_type_t::UNKNOWN)
-            {
+            else {
                 Serial.println("UNKNOWN");
                 uint16_t *raw_array = resultToRawArray(&results);
                 size = getCorrectedRawLength(&results);
@@ -110,7 +109,22 @@ public:
         return result;
     }
 
-    // Sending pronto codes
+    // Parse a Pronto Hex String/code and send it.
+    // Args:
+    //   irsend: A ptr to the IRsend object to transmit via.
+    //   str: A comma-separated String of nr. of repeats, then hexadecimal numbers.
+    //        e.g. "R1,0000,0067,0000,0015,0060,0018,0018,0018,0030,0018,0030,0018,
+    //              0030,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,
+    //              0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0018,0018,
+    //              0030,0018,0018,0018,0018,0018,0030,0018,0018,03f6"
+    //              or
+    //              "0000,0067,0000,0015,0060,0018". i.e. without the Repeat value
+    //        Requires at least kProntoMinLength comma-separated values.
+    //        sendPronto() only supports raw pronto code types, thus so does this.
+    //   repeats:  Nr. of times the message is to be repeated.
+    //             This value is ignored if an embeddd repeat is found in str.
+    // Returns:
+    //   bool: Successfully sent or not.
     bool send(const String str, uint16_t repeats)
     {
         uint16_t count;
@@ -158,7 +172,15 @@ public:
         return false;    // We probably didn't.
     }
 
-    // Send RAW codes
+    // Parse an IRremote Raw Hex String/code and send it.
+    // Args:
+    //   irsend: A ptr to the IRsend object to transmit via.
+    //   str: A comma-separated String containing the freq and raw IR data.
+    //        e.g. "38000,9000,4500,600,1450,600,900,650,1500,..."
+    //        Requires at least two comma-separated values.
+    //        First value is the transmission frequency in Hz or kHz.
+    // Returns:
+    //   bool: Successfully sent or not.
     bool send(const String str)
     {
         uint16_t count;
