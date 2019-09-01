@@ -5,6 +5,8 @@
 #include <Preferences.h>
 #include <ESPmDNS.h>
 
+#include <service_ir.h>
+
 StaticJsonDocument<200> doc;
 bool needsSetup = true;
 
@@ -60,8 +62,7 @@ void setCharging() {
 ////////////////////////////////////////////////////////////////
 // IR SETUP
 ////////////////////////////////////////////////////////////////
-#define IR_RECV 22;
-#define IR_SEND 19;
+InfraredService irservice;
 
 ////////////////////////////////////////////////////////////////
 // FUNCTIONS
@@ -216,7 +217,8 @@ void setup() {
     Serial.println("TCP server started");
 
     // Add mDNS service
-    MDNS.addService("http", "tcp", 80);
+    MDNS.addService("yio-dock-http", "tcp", 80);
+    MDNS.addService("yio-dock-telnet", "tcp", 23);
 
     // Blink the LED 3 times to indicate successful connection
     for (int i=0; i<4; i++) {
@@ -226,6 +228,10 @@ void setup() {
       delay(100);
     }
   }
+
+  // initialize the IR service
+  irservice.init();
+
 }
 
 ////////////////////////////////////////////////////////////////
@@ -246,5 +252,9 @@ void loop() {
     if (recordmessage) {
       message += String(incomingChar);
     }
+  }
+  // IR Receive
+  if (irservice.recordIrLoop){
+    irservice.recordIr();    
   }
 }
