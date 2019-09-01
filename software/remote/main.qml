@@ -557,7 +557,7 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
-                battery.checkBattery();
+//                battery.checkBattery();
             }
         }
     }

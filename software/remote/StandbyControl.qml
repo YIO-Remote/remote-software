@@ -107,7 +107,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-//        battery.checkBattery();
+        //        battery.checkBattery();
 
         switch (mode) {
 
@@ -279,7 +279,9 @@ Item {
 
         onTriggered: {
             standbyBaseTime = new Date().getTime()
-            standbyTimer.start()
+            if (loader_main.source != "qrc:/wifiSetup.qml") {
+                standbyTimer.start()
+            }
         }
     }
 }

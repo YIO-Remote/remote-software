@@ -218,7 +218,9 @@ Item {
 
                     mouseArea.onClicked: {
                         swipeView.currentIndex = 0;
+                        mainLauncher.launch("rm /networklist");
                         mainLauncher.launch("rm /firstsetup");
+                        mainLauncher.launch("rm /apssid");
                         mainLauncher.launch("touch /wifisetup");
                         mainLauncher.launch("/usr/bin/yio-remote/first-time-setup/firstrun.sh")
                     }

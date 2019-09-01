@@ -69,6 +69,7 @@ lupdate_only{
 SOURCES = main.qml \
           MainContainer.qml \
           StandbyControl.qml \
+          wifiSetup.qml \
           basic_ui/*.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
