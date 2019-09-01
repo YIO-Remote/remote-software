@@ -566,8 +566,8 @@
 #define TIMER_ENABLE_INTR    
 #define TIMER_DISABLE_INTR   
 #define TIMER_INTR_NAME    
-#define TIMER_PWM_PIN  5  
-#define LEDCHANNEL 0
+#define TIMER_PWM_PIN  19  
+#define LEDCHANNEL 19
 
 //---------------------------------------------------------
 // Unknown Timer

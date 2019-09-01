@@ -6,6 +6,9 @@
 #include <ESPmDNS.h>
 
 #include <service_ir.h>
+#include <service_tcp.h>
+
+TCPService tcpservice;
 
 StaticJsonDocument<200> doc;
 bool needsSetup = true;
@@ -24,7 +27,6 @@ bool recordmessage = false;     // if true, bluetooth will start recording messa
 char hostString[16] = {0};      // stores the hostname
 String ssid;                    // ssid
 String passwd;                  // password
-WiFiServer server(80);
 
 ////////////////////////////////////////////////////////////////
 // LED SETUP
@@ -68,6 +70,9 @@ InfraredService irservice;
 // FUNCTIONS
 ////////////////////////////////////////////////////////////////
 void ledHandleTask(void * pvParameters) {
+  // LED setup
+  pinMode(LED, OUTPUT);
+
   ledcSetup(ledChannel, freq, resolution);
   ledcAttachPin(LED, ledChannel);
 
@@ -144,9 +149,6 @@ void setup() {
   // Generate a name for the network
   sprintf(hostString, "YIO-Dock-%06X", ESP.getEfuseMac());
    
-  // LED setup
-  pinMode(LED, OUTPUT);
-
   // CHARGING PIN setup
   pinMode(CHG_PIN, INPUT);
   attachInterrupt(CHG_PIN, setCharging, CHANGE);
@@ -212,9 +214,8 @@ void setup() {
     }
     Serial.println("mDNS started");
 
-    // Start HTTP server
-    server.begin();
-    Serial.println("TCP server started");
+    // start server
+    tcpservice.setupTCP();
 
     // Add mDNS service
     MDNS.addService("yio-dock-http", "tcp", 80);
@@ -253,6 +254,7 @@ void loop() {
       message += String(incomingChar);
     }
   }
+  tcpservice.handleTCP();
   // IR Receive
   if (irservice.recordIrLoop){
     irservice.recordIr();    

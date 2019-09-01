@@ -2,6 +2,7 @@
 #define SERVICE_IR_H
 
 #include <IRremote.h>
+#include <ProntoHex.h>
 
 #define IR_RECV 22
 #define IR_SEND 19
@@ -9,12 +10,34 @@
 IRrecv irrecv(IR_RECV);
 IRsend irsend(IR_SEND);
 
+ProntoHex ph = ProntoHex();
+
 class InfraredService
 {
 public:
     void init()
-    {
+    {   
         irrecv.enableIRIn();
+    }
+
+    bool handlePronto(String line)
+    {
+        line.trim();
+        if (line.startsWith("0000 ")) // Then we assume it is Pronto Hex
+        {
+            Serial.println("Convert PRONTO");
+            ph.convert(line);
+            Serial.print("Received PRONTO: ");
+            Serial.println(line);
+            Serial.print("Len:");
+            Serial.println(ph.length);
+            irsend.sendRaw(ph.convertedRaw, ph.length, ph.frequency);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void recordIrStart()
