@@ -6,9 +6,9 @@
 #include <ESPmDNS.h>
 
 #include <service_ir.h>
-#include <service_tcp.h>
+// #include <service_tcp.h>
 
-TCPService tcpservice;
+// TCPService tcpservice;
 
 StaticJsonDocument<200> doc;
 bool needsSetup = true;
@@ -99,9 +99,9 @@ void ledHandleTask(void * pvParameters) {
     } 
     if (needsSetup) {
       ledcWrite(ledChannel, 255);
-      delay(600);
+      delay(800);
       ledcWrite(ledChannel, 0);
-      delay(600);
+      delay(800);
     }  
   }
 }
@@ -148,7 +148,7 @@ void setup() {
 
   // Generate a name for the network
   sprintf(hostString, "YIO-Dock-%06X", ESP.getEfuseMac());
-   
+
   // CHARGING PIN setup
   pinMode(CHG_PIN, INPUT);
   attachInterrupt(CHG_PIN, setCharging, CHANGE);
@@ -188,7 +188,10 @@ void setup() {
 
     while (WiFi.status() != WL_CONNECTED)
     {
-      delay(500);
+      ledcWrite(ledChannel, 255);
+      delay(300);
+      ledcWrite(ledChannel, 0);
+      delay(300);
       Serial.print(".");
       connCounter += 1;
 
@@ -215,7 +218,7 @@ void setup() {
     Serial.println("mDNS started");
 
     // start server
-    tcpservice.setupTCP();
+    // tcpservice.setupTCP();
 
     // Add mDNS service
     MDNS.addService("yio-dock-http", "tcp", 80);
@@ -228,11 +231,10 @@ void setup() {
       ledcWrite(ledChannel, 0);
       delay(100);
     }
+
+    // initialize the IR service
+    irservice.init();
   }
-
-  // initialize the IR service
-  irservice.init();
-
 }
 
 ////////////////////////////////////////////////////////////////
@@ -240,7 +242,7 @@ void setup() {
 ////////////////////////////////////////////////////////////////
 void loop() {
   // look for wifi credidentials on bluetooth when in setup mode
-  if (DOCK_BT.available() && needsSetup) {
+  if (DOCK_BT.available()) {
     char incomingChar = DOCK_BT.read();
     if (String(incomingChar) == "{") {
       recordmessage = true;
@@ -254,9 +256,9 @@ void loop() {
       message += String(incomingChar);
     }
   }
-  tcpservice.handleTCP();
+  // tcpservice.handleTCP();
   // IR Receive
-  if (irservice.recordIrLoop){
-    irservice.recordIr();    
+  if (irservice.receiving){
+    irservice.receive();    
   }
 }
