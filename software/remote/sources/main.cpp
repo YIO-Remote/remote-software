@@ -8,8 +8,9 @@
 
 #include "launcher.h"
 #include "jsonfile.h"
-#include "hardware/display_control.h"
 #include "translation.h"
+
+#include "hardware/display_control.h"
 #include "hardware/touchdetect.h"
 #include "hardware/interrupt_handler.h"
 #include "hardware/drv2605.h"
