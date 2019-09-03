@@ -10,6 +10,8 @@ Item {
     height: 800
     visible: true
 
+    property string msg
+
     SwipeView {
         id: swipeView
         width: 480
@@ -253,6 +255,7 @@ Item {
             swipeView.currentIndex = 1;
             var wifiSuccess = mainLauncher.launch("cat /sys/class/net/wlan0/operstate");
             if (wifiSuccess == "up\n") {
+                msg = fileio.read("/wificred");
                 failurePage.visible = false;
                 successPage.visible = true;
             } else {
@@ -262,27 +265,19 @@ Item {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BLUETOOTH CONNECTION TO THE DOCK
-    BluetoothDiscoveryModel {
-        id: btModel
-        running: true
-        discoveryMode: BluetoothDiscoveryModel.DeviceDiscovery
-        onDiscoveryModeChanged: console.log("Discovery mode: " + discoveryMode)
-        onServiceDiscovered: console.log("Found new service " + service.deviceAddress + " " + service.deviceName + " " + service.serviceName);
-        onDeviceDiscovered: console.log("New device: " + device)
-        onErrorChanged: {
-            switch (btModel.error) {
-            case BluetoothDiscoveryModel.PoweredOffError:
-                console.log("Error: Bluetooth device not turned on"); break;
-            case BluetoothDiscoveryModel.InputOutputError:
-                console.log("Error: Bluetooth I/O Error"); break;
-            case BluetoothDiscoveryModel.InvalidBluetoothAdapterError:
-                console.log("Error: Invalid Bluetooth Adapter Error"); break;
-            case BluetoothDiscoveryModel.NoError:
-                break;
-            default:
-                console.log("Error: Unknown Error"); break;
-            }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Component.onCompleted: {
+        bluetoothArea.init(config);
+        bluetoothArea.lookForDock();
+    }
+
+    Connections {
+        target: bluetoothArea
+        onDockFound: {
+            // show dock page
+            bluetoothArea.sendInfoToDock(msg);
         }
     }
 
