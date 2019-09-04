@@ -134,6 +134,15 @@ void saveConfig(String data) {
     preferences.end();
   }
 
+  if (DOCK_BT.available()) {
+    String stringData = "ok";
+    
+    for (int i = 0; i < stringData.length(); i++)
+    {
+      DOCK_BT.write(stringData[i]);   // Push each char 1 by 1 on each loop pass
+    }
+  }
+
   ESP.restart();
 }
 
@@ -171,10 +180,12 @@ void setup() {
 
   preferences.end();
 
+DOCK_BT.begin(hostString);
+
 // if need setup start the bluetooth server
  if (needsSetup) {
     // Bluetooth begin
-    DOCK_BT.begin(hostString);
+    //DOCK_BT.begin(hostString);
 
   } else { // otherwsie connec to the Wifi network
     Serial.println("Connecting to wifi");

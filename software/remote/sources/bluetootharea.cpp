@@ -237,7 +237,7 @@ void BluetoothThread::receiveInfoForDock(const QString &msg)
 
     m_socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this);
     connect(m_socket, &QBluetoothSocket::connected, this, &BluetoothThread::dockConnected);
-    connect(m_socket, &QBluetoothSocket::stateChanged, this, &BluetoothThread::dockError);
+    connect(m_socket, &QBluetoothSocket::stateChanged, this, &BluetoothThread::dockStateChanged);
     m_socket->connectToService(QBluetoothAddress(m_dock_address), QBluetoothUuid(QStringLiteral("00001101-0000-1000-8000-00805f9b34fb")));
 }
 
@@ -257,7 +257,7 @@ void BluetoothThread::dockConnected()
 //    m_socket = nullptr;
 }
 
-void BluetoothThread::dockError(QBluetoothSocket::SocketState state)
+void BluetoothThread::dockStateChanged(QBluetoothSocket::SocketState state)
 {
     qDebug() << state;
 }

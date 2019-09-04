@@ -104,7 +104,7 @@ public slots:
     void lookForDock();
     void receiveInfoForDock(const QString &msg);
     void dockConnected();
-    void dockError(QBluetoothSocket::SocketState state);
+    void dockStateChanged(QBluetoothSocket::SocketState state);
 
     void onTimeout();
 
