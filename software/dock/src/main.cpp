@@ -6,9 +6,9 @@
 #include <ESPmDNS.h>
 
 #include <service_ir.h>
-// #include <service_tcp.h>
+#include <service_ota.h>
 
-// TCPService tcpservice;
+OTA ota;
 
 StaticJsonDocument<200> doc;
 bool needsSetup = true;
@@ -80,7 +80,7 @@ void ledHandleTask(void * pvParameters) {
     vTaskDelay(2 / portTICK_PERIOD_MS);
 
     //if the remote is charging, pulsate the LED
-    if (charging && !led_setup) {
+    if (!needsSetup && charging) {
       for (int dutyCycle = 0; dutyCycle <= max_brightness; dutyCycle++) {
         // changing the LED brightness with PWM
         ledcWrite(ledChannel, dutyCycle);
@@ -96,13 +96,12 @@ void ledHandleTask(void * pvParameters) {
         delay(led_delay);
       }
       delay(1000);
-    } 
-    if (needsSetup) {
+    } else if (needsSetup) {
       ledcWrite(ledChannel, 255);
       delay(800);
       ledcWrite(ledChannel, 0);
       delay(800);
-    }  
+    } 
   }
 }
 
@@ -110,7 +109,7 @@ void saveConfig(String data) {
   DeserializationError error = deserializeJson(doc, data);
 
   if (error) {
-    Serial.print(F("deserializeJson() failed: "));
+    Serial.print(("deserializeJson() failed: "));
     Serial.println(error.c_str());
     return;  
   }
@@ -132,15 +131,6 @@ void saveConfig(String data) {
     preferences.begin("Wifi", false);
     preferences.clear();
     preferences.end();
-  }
-
-  if (DOCK_BT.available()) {
-    String stringData = "ok";
-    
-    for (int i = 0; i < stringData.length(); i++)
-    {
-      DOCK_BT.write(stringData[i]);   // Push each char 1 by 1 on each loop pass
-    }
   }
 
   ESP.restart();
@@ -180,12 +170,10 @@ void setup() {
 
   preferences.end();
 
-DOCK_BT.begin(hostString);
-
 // if need setup start the bluetooth server
  if (needsSetup) {
     // Bluetooth begin
-    //DOCK_BT.begin(hostString);
+    DOCK_BT.begin(hostString);
 
   } else { // otherwsie connec to the Wifi network
     Serial.println("Connecting to wifi");
@@ -228,12 +216,8 @@ DOCK_BT.begin(hostString);
     }
     Serial.println("mDNS started");
 
-    // start server
-    // tcpservice.setupTCP();
-
     // Add mDNS service
-    MDNS.addService("yio-dock-http", "tcp", 80);
-    MDNS.addService("yio-dock-telnet", "tcp", 23);
+    MDNS.addService("yio-dock-ota", "tcp", 80);
 
     // Blink the LED 3 times to indicate successful connection
     for (int i=0; i<4; i++) {
@@ -242,6 +226,8 @@ DOCK_BT.begin(hostString);
       ledcWrite(ledChannel, 0);
       delay(100);
     }
+
+    ota.init();
 
     // initialize the IR service
     irservice.init();
@@ -253,7 +239,7 @@ DOCK_BT.begin(hostString);
 ////////////////////////////////////////////////////////////////
 void loop() {
   // look for wifi credidentials on bluetooth when in setup mode
-  if (DOCK_BT.available()) {
+  if (DOCK_BT.available() && needsSetup) {
     char incomingChar = DOCK_BT.read();
     if (String(incomingChar) == "{") {
       recordmessage = true;
@@ -272,4 +258,9 @@ void loop() {
   if (irservice.receiving){
     irservice.receive();    
   }
+
+  // OTA update
+  ota.handle();
+
+  delay(100);
 }
