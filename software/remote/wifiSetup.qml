@@ -1,7 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-
-import QtBluetooth 5.2
+import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -77,7 +76,7 @@ Item {
                 id: buttonShutdown
                 buttonText: qsTr("Shutdown") + translateHandler.emptyString
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 30
+                anchors.bottomMargin: 60
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 mouseArea.onClicked: {
@@ -104,7 +103,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     anchors {
                         top: parent.top
-                        topMargin: 210
+                        topMargin: 300
                         horizontalCenter: parent.horizontalCenter
                     }
                     font.family: "Open Sans"
@@ -130,31 +129,14 @@ Item {
                     lineHeight: 1
                 }
 
-                Text {
-                    id: smallText2
-                    color: colorText
-                    opacity: 0.5
-                    text: qsTr("To continue the configuration,\nopen a web browser\nand navigate to\nhttp://yioremote.local") + translateHandler.emptyString
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors {
-                        top: smallText.bottom
-                        topMargin: 30
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                    font.family: "Open Sans"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
-                    lineHeight: 1
-                }
-
                 BasicUI.CustomButton {
-                    buttonText: qsTr("Reboot") + translateHandler.emptyString
+                    buttonText: qsTr("Next") + translateHandler.emptyString
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 30
+                    anchors.bottomMargin: 60
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     mouseArea.onClicked: {
-                        mainLauncher.launch("reboot");
+                        swipeView.currentIndex = 2;
                     }
                 }
             }
@@ -217,17 +199,135 @@ Item {
                 BasicUI.CustomButton {
                     buttonText: qsTr("Try again") + translateHandler.emptyString
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 30
+                    anchors.bottomMargin: 60
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     mouseArea.onClicked: {
+                        mainLauncher.launch("/usr/bin/yio-remote/reset-wifi.sh")
                         swipeView.currentIndex = 0;
-                        mainLauncher.launch("rm /networklist");
-                        mainLauncher.launch("rm /firstsetup");
-                        mainLauncher.launch("rm /apssid");
-                        mainLauncher.launch("touch /wifisetup");
-                        mainLauncher.launch("/usr/bin/yio-remote/first-time-setup/firstrun.sh")
                     }
+                }
+            }
+        }
+
+        Item {
+            width: 480
+            height: 800
+
+            Image {
+                id: dockLed
+                asynchronous: true
+                source: "qrc:/images/settings/setup-dock-led.png"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 320
+            }
+
+            Image {
+                id: dockIllustration
+                asynchronous: true
+                source: "qrc:/images/settings/setup-dock.png"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 150
+            }
+
+            Timer {
+                running: true
+                repeat: true
+                interval: 800
+
+                onTriggered: {
+                    if (dockLed.opacity == 1) {
+                        dockLed.opacity = 0
+                    } else {
+                        dockLed.opacity = 1
+                    }
+                }
+            }
+
+            Text {
+                id: smallTextDock
+                color: colorText
+                opacity: 0.5
+                text: qsTr("Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.") + translateHandler.emptyString
+                wrapMode: Text.WordWrap
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                width: 420
+                anchors {
+                    top: dockLed.bottom
+                    topMargin: 80
+                    horizontalCenter: parent.horizontalCenter
+                }
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 27
+                lineHeight: 1
+            }
+
+            BasicUI.CustomButton {
+                buttonText: qsTr("Next") + translateHandler.emptyString
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 60
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                mouseArea.onClicked: {
+                    bluetoothArea.lookForDock();
+                }
+            }
+        }
+
+        Item {
+            width: 480
+            height: 800
+
+            Text {
+                id: dockSuccessTitle
+                color: colorText
+                text: qsTr("Wi-Fi setup completed") + translateHandler.emptyString
+                width: 420
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                anchors {
+                    top: parent.top
+                    topMargin: 210
+                    horizontalCenter: parent.horizontalCenter
+                }
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 60
+                lineHeight: 1
+            }
+
+            Text {
+                id: dockSuccessText
+                color: colorText
+                opacity: 0.5
+                text: qsTr("YIO Dock has successfully connected to your Wi-Fi network.\n\nTo continue the configuration, open a web browser on your computer and navigate to\nhttp://yioremote.local") + translateHandler.emptyString
+                width: 420
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                anchors {
+                    top: dockSuccessTitle.bottom
+                    topMargin: 10
+                    horizontalCenter: parent.horizontalCenter
+                }
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 27
+                lineHeight: 1
+            }
+
+            BasicUI.CustomButton {
+                buttonText: qsTr("Reboot") + translateHandler.emptyString
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 60
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                mouseArea.onClicked: {
+                    mainLauncher.launch("fbv -d 1 /bye.png")
+                    mainLauncher.launch("reboot");
                 }
             }
         }
@@ -249,12 +349,12 @@ Item {
     Timer {
         id: checkWifi
         repeat: false
-        interval: 4000
+        interval: 6000
 
         onTriggered: {
-            swipeView.currentIndex = 1;
-            var wifiSuccess = mainLauncher.launch("cat /sys/class/net/wlan0/operstate");
-            if (wifiSuccess == "up\n") {
+            var wifiSuccess = mainLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();
+            var ssid = fileio.read("/ssid").trim();
+            if (wifiSuccess == ssid) {
                 msg = fileio.read("/wificred");
                 failurePage.visible = false;
                 successPage.visible = true;
@@ -262,22 +362,19 @@ Item {
                 failurePage.visible = true;
                 successPage.visible = false;
             }
+            swipeView.currentIndex = 1;
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BLUETOOTH CONNECTION TO THE DOCK
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Component.onCompleted: {
-        bluetoothArea.init(config);
-        bluetoothArea.lookForDock();
-    }
-
     Connections {
         target: bluetoothArea
         onDockFound: {
             // show dock page
             bluetoothArea.sendInfoToDock(msg);
+            swipeView.currentIndex = 3;
         }
     }
 

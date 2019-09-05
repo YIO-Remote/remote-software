@@ -63,6 +63,7 @@ signals:
     void sendInfoToDockSignal(const QString &msg);
 
     void dockFound();
+    void dockMessage(const QString &message);
 
 public slots:
     void deviceDiscovered(const QString &);
@@ -91,7 +92,6 @@ public:
 signals:
     void foundRoom(const QString &area);
     void foundDock();
-
 
 public slots:
     void startScan();

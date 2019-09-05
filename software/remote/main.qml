@@ -297,7 +297,6 @@ ApplicationWindow {
         } else {
             loader_main.setSource("qrc:/MainContainer.qml");
         }
-        //        loader_main.active = true;
 
         // load bluetooth
         bluetoothArea.init(config);

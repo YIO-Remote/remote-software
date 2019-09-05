@@ -35,5 +35,7 @@
         <file>images/mini-music-player/icon-speaker.png</file>
         <file>images/mini-music-player/icon-next.png</file>
         <file>images/mini-music-player/icon-prev.png</file>
+        <file>images/settings/setup-dock.png</file>
+        <file>images/settings/setup-dock-led.png</file>
     </qresource>
 </RCC>
