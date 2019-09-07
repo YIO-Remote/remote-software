@@ -11,7 +11,7 @@
 
 InfraredService irservice;
 OTA ota;
-WebSocket ws;
+WebSocketAPI wsservice;
 
 StaticJsonDocument<200> doc;
 bool needsSetup = true;
@@ -30,6 +30,7 @@ bool recordmessage = false;     // if true, bluetooth will start recording messa
 char hostString[16] = {0};      // stores the hostname
 String ssid;                    // ssid
 String passwd;                  // password
+bool connected = false;
 
 ////////////////////////////////////////////////////////////////
 // LED SETUP
@@ -225,7 +226,10 @@ void setup() {
       delay(100);
     }
 
+    // initialize the OTA service
     ota.init();
+
+    connected = true;
 
     // initialize the IR service
     irservice.init();
@@ -257,8 +261,13 @@ void loop() {
     irservice.receive();    
   }
 
-  // OTA update
-  ota.handle();
+  if (connected) {
+    // OTA update
+    ota.handle();
+
+    // Websocket loop
+    wsservice.loop();
+  }
 
   delay(100);
 }

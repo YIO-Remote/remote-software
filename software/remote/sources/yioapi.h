@@ -6,6 +6,8 @@
 #include <QtWebSockets/QWebSocket>
 #include <QtWebSockets/QWebSocketServer>
 
+#include "qzeroconf.h"
+
 class YioAPI : public QObject
 {
     Q_OBJECT
@@ -48,6 +50,8 @@ private:
     QQmlApplicationEngine*      m_engine;
 
     QString                     m_token = "0";
+
+    QZeroConf                   m_qzero_conf;
 };
 
 #endif // YIOAPI_H
