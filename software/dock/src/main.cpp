@@ -7,8 +7,11 @@
 
 #include <service_ir.h>
 #include <service_ota.h>
+#include <service_websocket.h>
 
+InfraredService irservice;
 OTA ota;
+WebSocket ws;
 
 StaticJsonDocument<200> doc;
 bool needsSetup = true;
@@ -60,11 +63,6 @@ void setCharging() {
     charging = false;
   }
 }
-
-////////////////////////////////////////////////////////////////
-// IR SETUP
-////////////////////////////////////////////////////////////////
-InfraredService irservice;
 
 ////////////////////////////////////////////////////////////////
 // FUNCTIONS

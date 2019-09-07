@@ -24,6 +24,7 @@
 #include "bluetootharea.h"
 
 #include "fileio.h"
+#include "yioapi.h"
 
 int main(int argc, char *argv[])
 {
@@ -92,6 +93,10 @@ int main(int argc, char *argv[])
     // FILE IO
     FileIO fileIO;
     engine.rootContext()->setContextProperty("fileio", &fileIO);
+
+    // YIO API
+    YioAPI yioapi(&engine);
+    engine.rootContext()->setContextProperty("api", &yioapi);
 
     engine.addImportPath("qrc:/");
 

@@ -65,9 +65,11 @@ Item {
                 if (remoteConfigButton.checked) {
                     remoteConfigLauncher.launch("systemctl start lighttpd.service");
                     remoteConfigButton.checked = true;
+                    api.start();
                 } else {
                     remoteConfigLauncher.launch("systemctl stop lighttpd.service");
                     remoteConfigButton.checked = false;
+                    api.stop();
                 }
             }
         }
