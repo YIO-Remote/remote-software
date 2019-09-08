@@ -4,6 +4,7 @@
 
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QNetworkInterface>
 
 YioAPI* YioAPI::s_instance = nullptr;
 
@@ -29,6 +30,18 @@ void YioAPI::start()
         m_running = true;
         emit runningChanged();
     }
+
+    // zeroconf
+    // get mac address and generate a name
+    QString name;
+    QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
+
+    name = list.last().hardwareAddress();
+    name.remove(":");
+    name.remove(0, 6);
+    name.prepend("YIO-Remote-");
+
+    m_qzero_conf.startServicePublish(name.toUtf8(), "_yio-remote._tcp", "local", 946);
 }
 
 void YioAPI::stop()
@@ -36,6 +49,7 @@ void YioAPI::stop()
     m_server->close();
     m_clients.clear();
     m_running = false;
+    m_qzero_conf.stopServicePublish();
     emit runningChanged();
 }
 
@@ -114,6 +128,14 @@ void YioAPI::processMessage(QString message)
 
                 client->sendTextMessage(r_message);
             }
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // EMIT MESSAGES OF AUTHENTICATED CLIENTS
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (type != "auth" && m_clients[client]) {
+            emit messageReceived(map);
         }
     }
 }

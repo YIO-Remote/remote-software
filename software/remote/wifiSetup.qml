@@ -274,6 +274,7 @@ Item {
 
                 mouseArea.onClicked: {
                     bluetoothArea.lookForDock();
+                    // show loader here
                 }
             }
         }
@@ -374,7 +375,18 @@ Item {
         onDockFound: {
             // show dock page
             bluetoothArea.sendInfoToDock(msg);
-            swipeView.currentIndex = 3;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECTION TO THE API
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: api
+        onMessageReceived: {
+            if (message["type"] == "dock" && message["message"] == "connected") {
+                swipeView.currentIndex = 3;
+            }
         }
     }
 

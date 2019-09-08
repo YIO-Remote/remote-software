@@ -145,6 +145,9 @@ Item {
                 integration[config.integration[i].type].obj.connect();
             }
 
+            // turn on API
+            api.start();
+
             break;
         }
 
@@ -258,6 +261,9 @@ Item {
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
                 }
+                // turn off API
+                api.stop();
+
                 // turn off wifi
                 wifiHandler("off")
 

@@ -11,34 +11,45 @@
 
 InfraredService irservice;
 OTA ota;
-WebSocket ws;
+WebSocketAPI wsservice;
 
 StaticJsonDocument<200> doc;
 bool needsSetup = true;
+////////////////////////////////////////////////////////////////
+// STATE MACHINE
+////////////////////////////////////////////////////////////////
+int dockState = 0;
+
+// 0 - needs setup
+// 1 - connecting to wifi, turning on OTA, connecting to websocket
+// 2 - succesful connection
+// 3 - normal operation, LED off, turns on when charging
 
 ////////////////////////////////////////////////////////////////
 // BLUETOOTH SETUP
 ////////////////////////////////////////////////////////////////
-BluetoothSerial DOCK_BT;        
-String message = "";            // the message
-bool recordmessage = false;     // if true, bluetooth will start recording messages
+BluetoothSerial DOCK_BT;
+String message = "";        // the message
+bool recordmessage = false; // if true, bluetooth will start recording messages
 
 ////////////////////////////////////////////////////////////////
 // WIFI SETUP
 ////////////////////////////////////////////////////////////////
-#define CONN_TIMEOUT 10         // wifi timeout
-char hostString[16] = {0};      // stores the hostname
-String ssid;                    // ssid
-String passwd;                  // password
+#define CONN_TIMEOUT 10    // wifi timeout
+char hostString[16] = {0}; // stores the hostname
+String ssid;               // ssid
+String passwd;             // password
+bool connected = false;
+unsigned long WIFI_CHECK = 30000;
 
 ////////////////////////////////////////////////////////////////
 // LED SETUP
 ////////////////////////////////////////////////////////////////
 #define LED 23
 
-bool led_setup = false;         // if the LED brightness is adjusted from the remote, this is true
+bool led_setup = false; // if the LED brightness is adjusted from the remote, this is true
 
-int max_brightness = 50;        // this updates from the remote settings screen
+int max_brightness = 50; // this updates from the remote settings screen
 
 int led_delay = map(max_brightness, 5, 255, 30, 5);
 int led_pause = map(max_brightness, 5, 255, 800, 0);
@@ -48,7 +59,7 @@ const int freq = 5000;
 const int ledChannel = 0;
 const int resolution = 10; //Resolution 8, 10, 12, 15
 
-TaskHandle_t LedTask;           // core 0 task for handling LED stuff
+TaskHandle_t LedTask; // core 0 task for handling LED stuff
 
 ////////////////////////////////////////////////////////////////
 // CHARGING INDICATOR PIN
@@ -56,10 +67,14 @@ TaskHandle_t LedTask;           // core 0 task for handling LED stuff
 #define CHG_PIN 13
 bool charging = false;
 
-void setCharging() {
-  if (digitalRead(CHG_PIN) == LOW) {
-    charging = true;  
-  } else {
+void setCharging()
+{
+  if (digitalRead(CHG_PIN) == LOW)
+  {
+    charging = true;
+  }
+  else
+  {
     charging = false;
   }
 }
@@ -67,19 +82,23 @@ void setCharging() {
 ////////////////////////////////////////////////////////////////
 // FUNCTIONS
 ////////////////////////////////////////////////////////////////
-void ledHandleTask(void * pvParameters) {
+void ledHandleTask(void *pvParameters)
+{
   // LED setup
   pinMode(LED, OUTPUT);
 
   ledcSetup(ledChannel, freq, resolution);
   ledcAttachPin(LED, ledChannel);
 
-  while(1) {
+  while (1)
+  {
     vTaskDelay(2 / portTICK_PERIOD_MS);
 
     //if the remote is charging, pulsate the LED
-    if (!needsSetup && charging) {
-      for (int dutyCycle = 0; dutyCycle <= max_brightness; dutyCycle++) {
+    if (dockState == 3 && charging)
+    {
+      for (int dutyCycle = 0; dutyCycle <= max_brightness; dutyCycle++)
+      {
         // changing the LED brightness with PWM
         ledcWrite(ledChannel, dutyCycle);
         delay(led_delay);
@@ -88,32 +107,57 @@ void ledHandleTask(void * pvParameters) {
       delay(led_pause);
 
       // decrease the LED brightness
-      for (int dutyCycle = max_brightness; dutyCycle >= 0; dutyCycle--) {
+      for (int dutyCycle = max_brightness; dutyCycle >= 0; dutyCycle--)
+      {
         // changing the LED brightness with PWM
         ledcWrite(ledChannel, dutyCycle);
         delay(led_delay);
       }
       delay(1000);
-    } else if (needsSetup) {
+    }
+    else if (dockState == 0)
+    {
       ledcWrite(ledChannel, 255);
       delay(800);
       ledcWrite(ledChannel, 0);
       delay(800);
-    } 
+    }
+    else if (dockState == 1)
+    {
+      ledcWrite(ledChannel, 255);
+      delay(300);
+      ledcWrite(ledChannel, 0);
+      delay(300);
+    }
+    else if (dockState == 2)
+    {
+      // Blink the LED 3 times to indicate successful connection
+      for (int i = 0; i < 4; i++)
+      {
+        ledcWrite(ledChannel, 255);
+        delay(100);
+        ledcWrite(ledChannel, 0);
+        delay(100);
+      }
+      dockState = 3;
+    }
   }
 }
 
-void saveConfig(String data) {
+void saveConfig(String data)
+{
   DeserializationError error = deserializeJson(doc, data);
 
-  if (error) {
+  if (error)
+  {
     Serial.print(("deserializeJson() failed: "));
     Serial.println(error.c_str());
-    return;  
+    return;
   }
 
   // check if there is an SSID and password
-  if (doc.containsKey("ssid") && doc.containsKey("password")) {
+  if (doc.containsKey("ssid") && doc.containsKey("password"))
+  {
     ssid = doc["ssid"].as<String>();
     passwd = doc["password"].as<String>();
 
@@ -123,8 +167,9 @@ void saveConfig(String data) {
     preferences.putString("passwd", passwd);
     preferences.putBool("valid", true);
     preferences.end();
-
-  } else if (doc.containsKey("erase")) { // or erease the preferences
+  }
+  else if (doc.containsKey("erase"))
+  { // or erease the preferences
     Preferences preferences;
     preferences.begin("Wifi", false);
     preferences.clear();
@@ -137,7 +182,8 @@ void saveConfig(String data) {
 ////////////////////////////////////////////////////////////////
 // SETUP
 ////////////////////////////////////////////////////////////////
-void setup() {
+void setup()
+{
   Serial.begin(115200);
 
   // run LED handling on other core
@@ -155,45 +201,53 @@ void setup() {
   preferences.begin("Wifi", false);
   bool hasPref = preferences.getBool("valid", false);
 
-  if (hasPref) {
+  if (hasPref)
+  {
     ssid = preferences.getString("ssid", "");
     passwd = preferences.getString("passwd", "");
 
-    if (ssid.equals("") || passwd.equals("")) {
+    if (ssid.equals("") || passwd.equals(""))
+    {
       Serial.println("Invalid credidentials");
-    } else {
+    }
+    else
+    {
       needsSetup = false;
+      dockState = 1;
     }
   }
 
   preferences.end();
 
-// if need setup start the bluetooth server
- if (needsSetup) {
+  // if need setup start the bluetooth server
+  if (dockState == 0)
+  {
     // Bluetooth begin
     DOCK_BT.begin(hostString);
-
-  } else { // otherwsie connec to the Wifi network
+  }
+  else
+  { // otherwsie connec to the Wifi network
     Serial.println("Connecting to wifi");
 
-    WiFi.disconnect(true);
-    WiFi.enableSTA(true);
-    WiFi.mode(WIFI_STA);
+    WiFi.disconnect();
+    // WiFi.enableSTA(true);
+    // WiFi.mode(WIFI_STA);
     WiFi.begin(ssid.c_str(), passwd.c_str());
 
     int connCounter = 0;
 
     while (WiFi.status() != WL_CONNECTED)
     {
-      ledcWrite(ledChannel, 255);
-      delay(300);
-      ledcWrite(ledChannel, 0);
+      // ledcWrite(ledChannel, 255);
+      // delay(300);
+      // ledcWrite(ledChannel, 0);
       delay(300);
       Serial.print(".");
       connCounter += 1;
 
       // if cannot connect, go back to bluetooth server mode
-      if (connCounter >= CONN_TIMEOUT) {
+      if (connCounter >= CONN_TIMEOUT)
+      {
         Serial.println("Connection timeout");
         Preferences preferences;
         preferences.begin("Wifi", false);
@@ -205,60 +259,91 @@ void setup() {
     }
 
     Serial.println("Successful connection");
+    Serial.print("Got ip: ");
+    Serial.println(WiFi.localIP());
+    Serial.print("DNS: ");
+    Serial.println(WiFi.dnsIP());
 
-    if (!MDNS.begin(hostString)) {
-        Serial.println("Error setting up MDNS responder!");
-        while(1) {
-            delay(1000);
-        }
+    if (!MDNS.begin(hostString))
+    {
+      Serial.println("Error setting up MDNS responder!");
+      while (1)
+      {
+        delay(1000);
+      }
     }
     Serial.println("mDNS started");
 
     // Add mDNS service
     MDNS.addService("yio-dock-ota", "tcp", 80);
 
-    // Blink the LED 3 times to indicate successful connection
-    for (int i=0; i<4; i++) {
-      ledcWrite(ledChannel, 255);
-      delay(100);
-      ledcWrite(ledChannel, 0);
-      delay(100);
-    }
-
+    // initialize the OTA service
     ota.init();
+
+    // connected = true;
+
+    // Blink the LED 3 times to indicate successful connection
+    // for (int i = 0; i < 4; i++)
+    // {
+    //   ledcWrite(ledChannel, 255);
+    //   delay(100);
+    //   ledcWrite(ledChannel, 0);
+    //   delay(100);
+    // }
 
     // initialize the IR service
     irservice.init();
+
+    // connect to remote websocket API
+    wsservice.connect();
   }
 }
 
 ////////////////////////////////////////////////////////////////
 // LOOP
 ////////////////////////////////////////////////////////////////
-void loop() {
+void loop()
+{
   // look for wifi credidentials on bluetooth when in setup mode
-  if (DOCK_BT.available() && needsSetup) {
+  if (DOCK_BT.available() && dockState == 0)
+  {
     char incomingChar = DOCK_BT.read();
-    if (String(incomingChar) == "{") {
+    if (String(incomingChar) == "{")
+    {
       recordmessage = true;
       message = "";
-    } else if (String(incomingChar) == "}") {
+    }
+    else if (String(incomingChar) == "}")
+    {
       recordmessage = false;
       message += "}";
       saveConfig(message);
     }
-    if (recordmessage) {
+    if (recordmessage)
+    {
       message += String(incomingChar);
     }
   }
-  // tcpservice.handleTCP();
+
   // IR Receive
-  if (irservice.receiving){
-    irservice.receive();    
+  if (irservice.receiving)
+  {
+    irservice.receive();
   }
 
-  // OTA update
-  ota.handle();
+  if (wsservice.connected && dockState == 1)
+  {
+    dockState = 2; //succesful connection
+  }
+
+  if (dockState > 0)
+  {
+    // OTA update
+    ota.handle();
+
+    // Websocket loop
+    wsservice.loop();
+  }
 
   delay(100);
 }

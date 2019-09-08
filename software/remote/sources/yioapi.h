@@ -6,6 +6,8 @@
 #include <QtWebSockets/QWebSocket>
 #include <QtWebSockets/QWebSocketServer>
 
+#include "qzeroconf.h"
+
 class YioAPI : public QObject
 {
     Q_OBJECT
@@ -30,7 +32,7 @@ public:
 
 signals:
     void closed();
-    void messageReceived(QString message);
+    void messageReceived(QVariantMap message);
     void runningChanged();
 
 public slots:
@@ -48,6 +50,8 @@ private:
     QQmlApplicationEngine*      m_engine;
 
     QString                     m_token = "0";
+
+    QZeroConf                   m_qzero_conf;
 };
 
 #endif // YIOAPI_H

@@ -106,11 +106,9 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
-# Additional import path used to resolve QML modules in Qt Creator's code model
-#QML_IMPORT_PATH =
-
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-#QML_DESIGNER_IMPORT_PATH =
+# include zeroconf
+include(qtzeroconf/qtzeroconf.pri)
+DEFINES= QZEROCONF_STATIC
 
 # Wiringpi config
 linux {
@@ -118,6 +116,7 @@ linux {
 
     LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
     LIBS += -lwiringPi
+#    LIBS += -llibavahi
 }
 
 # Default rules for deployment.

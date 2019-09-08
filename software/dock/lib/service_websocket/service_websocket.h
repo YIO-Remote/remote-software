@@ -2,16 +2,25 @@
 #define SERVICE_WEBSOCKET_H
 
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <WebSocketsClient.h>
 
-WebSocketsClient webSocket;
-
-class WebSocket {
-    public:
+class WebSocketAPI
+{
+public:
     void connect();
     void disconnect();
-    void sendMessage();
-    void eventHandler();
+    void sendMessage(StaticJsonDocument<200> responseDoc);
+    void loop();
+    IPAddress findRemoteIP();
+
+    bool connected = false;
+
+private:
+    WebSocketsClient webSocket;
+    bool remotefound = false;
+    StaticJsonDocument<200> wsdoc;
+    String token = "0";
 };
 
 #endif
