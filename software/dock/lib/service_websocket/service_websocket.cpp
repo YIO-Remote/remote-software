@@ -1,86 +1,104 @@
 #include "service_websocket.h"
 #include <ESPmDNS.h>
-#include <ArduinoJson.h>
 
-void WebSocketAPI::eventHandler(WStype_t type, uint8_t *payload, size_t length)
+void WebSocketAPI::connect()
 {
-    switch (type)
-    {
-    case WStype_DISCONNECTED:
-        Serial.printf("[WSc] Disconnected!\n");
-        break;
-    case WStype_CONNECTED:
-        Serial.printf("[WSc] Connected to url: %s\n", payload);
-
-        // send message to server when Connected
-        // webSocket.sendTXT("Connected");
-        break;
-    case WStype_TEXT:
-        Serial.printf("[WSc] get text: %s\n", payload);
-
-        // send message to server
-        // webSocket.sendTXT("message here");
-        break;
-
-    case WStype_ERROR:
-    case WStype_FRAGMENT_TEXT_START:
-    case WStype_FRAGMENT_BIN_START:
-    case WStype_FRAGMENT:
-    case WStype_FRAGMENT_FIN:
-        break;
-    }
-}
-
-void WebSocketAPI::connect(IPAddress ip)
-{
-    webSocket.begin(ip, 496, "/");
-    webSocket.onEvent(WebSocketAPI::eventHandler);
+    IPAddress serverip = findRemoteIP();
+    webSocket.begin(serverip, 946, "/");
     webSocket.setReconnectInterval(5000);
+    webSocket.onEvent([&](WStype_t type, uint8_t *payload, size_t length) {
+        switch (type)
+        {
+        case WStype_DISCONNECTED:
+            Serial.printf("[WSc] Disconnected!\n");
+            connected = false;
+            break;
+        case WStype_CONNECTED:
+            Serial.printf("[WSc] Connected to url: %s\n", payload);
+            break;
+        case WStype_TEXT:
+            Serial.printf("[WSc] get text: %s\n", payload);
+
+            deserializeJson(wsdoc, payload);
+
+            if (wsdoc.containsKey("type") && wsdoc["type"].as<String>() == "auth_required") {
+                StaticJsonDocument<200> responseDoc;
+                responseDoc["type"] = "auth";
+                responseDoc["token"] = token;
+                String message;
+                serializeJson(responseDoc, message);
+                webSocket.sendTXT(message);
+            }
+            if (wsdoc.containsKey("type") && wsdoc["type"].as<String>() == "auth_ok") {
+                StaticJsonDocument<200> responseDoc;
+                responseDoc["type"] = "dock";
+                responseDoc["message"] = "connected";
+                String message;
+                serializeJson(responseDoc, message);
+                webSocket.sendTXT(message);
+                Serial.println("OK");
+                connected = true;
+            }
+            break;
+
+        case WStype_ERROR:
+        case WStype_FRAGMENT_TEXT_START:
+        case WStype_FRAGMENT_BIN_START:
+        case WStype_FRAGMENT:
+        case WStype_FRAGMENT_FIN:
+            break;
+        }
+    });
 }
 
 void WebSocketAPI::disconnect()
 {
+    webSocket.disconnect();
 }
 
-void WebSocketAPI::sendMessage()
+void WebSocketAPI::sendMessage(StaticJsonDocument<200> responseDoc)
 {
+    String message;
+    serializeJson(responseDoc, message);
+    webSocket.sendTXT(message);
 }
 
 void WebSocketAPI::loop()
 {
-    IPAddress serverIp;
+    webSocket.loop();
+}
+
+IPAddress WebSocketAPI::findRemoteIP()
+{
     String hostname;
 
-    // find the dock
-    if (!remotefound)
+    Serial.println("Finding YIO Remote host");
+
+    while (!remotefound)
     {
-        Serial.println("Looking for a remote");
+        delay(100);
+        Serial.println("Finding YIO Remote host");
+
         int n = MDNS.queryService("yio-remote", "tcp");
-        if (n == 0)
-        {
-            Serial.println("No remote api found");
-        }
-        else
+        if (n != 0)
         {
             hostname = MDNS.hostname(0);
-            serverIp = MDNS.queryHost(hostname);
-
-            Serial.println("Found: ");
-            Serial.println(hostname);
-            // Serial.println(MDNS.IP(0));
             remotefound = true;
         }
     }
-    else
+
+    IPAddress serverip = MDNS.queryHost(hostname);
+
+    while (serverip.toString() == "0.0.0.0")
     {
-        while (serverIp.toString() == "0.0.0.0")
-        {
-            Serial.println("Trying again to resolve mDNS");
-            delay(250);
-            serverIp = MDNS.queryHost(hostname);
-        }
-        Serial.print("IP address of server: ");
-        Serial.println(serverIp.toString());
+        Serial.println("Trying again to resolve mDNS");
+        delay(250);
+        serverip = MDNS.queryHost(hostname);
     }
-    webSocket.loop();
+
+    Serial.print("IP address of server: ");
+    Serial.println(hostname);
+    Serial.println(serverip.toString());
+
+    return serverip;
 }
