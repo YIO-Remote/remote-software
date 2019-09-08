@@ -32,7 +32,7 @@ public:
 
 signals:
     void closed();
-    void messageReceived(QString message);
+    void messageReceived(QVariantMap message);
     void runningChanged();
 
 public slots:

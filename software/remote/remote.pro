@@ -116,6 +116,7 @@ linux {
 
     LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
     LIBS += -lwiringPi
+#    LIBS += -llibavahi
 }
 
 # Default rules for deployment.
