@@ -357,6 +357,7 @@ Item {
             var ssid = fileio.read("/ssid").trim();
             if (wifiSuccess == ssid) {
                 msg = fileio.read("/wificred");
+                msg += "\"remote_id\":\"" + api.hostname + "\"}";
                 failurePage.visible = false;
                 successPage.visible = true;
             } else {
