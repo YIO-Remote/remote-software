@@ -3,6 +3,9 @@
 
 void WebSocketAPI::connect()
 {
+    // initialize the IR service
+    irservice.init();
+
     IPAddress serverip = findRemoteIP();
     webSocket.begin(serverip, 946, "/");
     webSocket.setReconnectInterval(5000);
@@ -21,6 +24,7 @@ void WebSocketAPI::connect()
 
             deserializeJson(wsdoc, payload);
 
+            // YIO API AUTHENTICATION
             if (wsdoc.containsKey("type") && wsdoc["type"].as<String>() == "auth_required") {
                 StaticJsonDocument<200> responseDoc;
                 responseDoc["type"] = "auth";
@@ -38,6 +42,26 @@ void WebSocketAPI::connect()
                 webSocket.sendTXT(message);
                 Serial.println("OK");
                 connected = true;
+            }
+            // RECEIVE IR CODE FROM REMOTE AND EMIT IT
+            // {"type": "dock",
+            //  "command": "ir_send",
+            //  "code": "0000,0067,0000,0015,0060,0018"
+            // }
+            if (wsdoc.containsKey("type") && wsdoc["type"].as<String>() == "dock") {
+                if (wsdoc["command"].as<String>() == "ir_send") {
+                    irservice.send(wsdoc["code"].as<String>());
+                }
+
+                // Turn on IR receiving
+                    if (wsdoc["command"].as<String>() == "ir_receive_on") {
+                    irservice.receiving = true;    
+                }
+
+                // Turn on IR receiving
+                if (wsdoc["command"].as<String>() == "ir_receive_off") {
+                    irservice.receiving = false;    
+                }
             }
             break;
 
@@ -66,6 +90,25 @@ void WebSocketAPI::sendMessage(StaticJsonDocument<200> responseDoc)
 void WebSocketAPI::loop()
 {
     webSocket.loop();
+
+    //IR Receive
+    if (irservice.receiving)
+    {
+        String code_received = irservice.receive();
+
+        if (code_received != "") {
+        StaticJsonDocument<500> responseDoc;
+        responseDoc["type"] = "dock";
+        responseDoc["command"] = "ir_receive";
+        responseDoc["code"] = code_received;
+
+        String message;
+        serializeJson(responseDoc, message);
+        webSocket.sendTXT(message);
+        Serial.println(message);
+        Serial.println("OK");    
+        }
+    }
 }
 
 IPAddress WebSocketAPI::findRemoteIP()

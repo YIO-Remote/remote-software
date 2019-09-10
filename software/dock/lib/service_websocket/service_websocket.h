@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <WebSocketsClient.h>
+#include <service_ir.h>
 
 class WebSocketAPI
 {
@@ -17,6 +18,8 @@ public:
     bool connected = false;
 
 private:
+    InfraredService irservice;
+
     WebSocketsClient webSocket;
     bool remotefound = false;
     StaticJsonDocument<200> wsdoc;

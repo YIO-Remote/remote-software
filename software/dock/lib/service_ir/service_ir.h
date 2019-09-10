@@ -2,23 +2,12 @@
 #define SERVICE_IR_H
 
 #include <Arduino.h>
-#include <IRrecv.h>
-#include <IRsend.h>
-#include <IRremoteESP8266.h> // https://platformio.org/lib/show/1089/IRremoteESP8266
+#include "IRrecv.h"
+#include "IRsend.h"
+#include "IRremoteESP8266.h" // https://platformio.org/lib/show/1089/IRremoteESP8266
 #include <IRac.h>
 #include <IRutils.h>
 #include <IRtimer.h>
-
-const uint16_t kRecvPin = 22;
-const uint16_t kIrLedPin = 19;
-const uint32_t kBaudRate = 115200;
-const uint16_t kCaptureBufferSize = 1024; // 1024 == ~511 bits
-const uint8_t kTimeout = 50;              // Milli-Seconds
-const uint16_t kFrequency = 38000;        // in Hz. e.g. 38kHz.
-const uint16_t kMinUnknownSize = 12;
-
-IRrecv irrecv(kRecvPin, kCaptureBufferSize, kTimeout, true);
-IRsend irsend(kIrLedPin);
 
 class InfraredService
 {
@@ -36,40 +25,31 @@ public:
         delay(5000); // Enough time to ensure we don't return.
     }
 
-    void receive()
+    String receive()
     {
+        String code = "";
+
         if (irrecv.decode(&results))
         {
-            decode_type_t protocol = results.decode_type;
-            uint16_t size = results.bits;
-            bool success = true;
-
-            if (protocol == decode_type_t::RAW)
-            {
-                Serial.println("RAW");
+            for (uint16_t i = 1; i < results.rawlen; i++) {
+                uint32_t usecs;
+                for (usecs = results.rawbuf[i] * kRawTick; usecs > UINT16_MAX;
+                    usecs -= UINT16_MAX) {
+                code += uint64ToString(UINT16_MAX);
+                if (i % 2)
+                    code += F(", 0,  ");
+                else
+                    code += F(",  0, ");
+                }
+                code += uint64ToString(usecs, 10);
+                if (i < results.rawlen - 1)
+                code += F(", ");            // ',' not needed on the last one
+                if (i % 2 == 0) code += ' ';  // Extra if it was even.
             }
-            else if (protocol == decode_type_t::PRONTO)
-            {
-                Serial.println("PRONTO");
-            }
-            else {
-                Serial.println("UNKNOWN");
-                uint16_t *raw_array = resultToRawArray(&results);
-                size = getCorrectedRawLength(&results);
-                delete[] raw_array;
-            }
-
-            Serial.print(resultToHumanReadableBasic(&results));
-            String description = IRAcUtils::resultAcToString(&results);
-            if (description.length())
-                Serial.println("Mesg Desc.: " + description);
             yield(); // Feed the WDT (again)
-            // Output the results as source code
-            Serial.println(resultToSourceCode(&results));
-            Serial.println(); // Blank line between entries
-            yield();          // Feed the WDT (again)
             irrecv.resume();
         }
+        return code;
     }
 
     // Count how many values are in the String.
@@ -224,6 +204,18 @@ public:
 public:
     decode_results results;
     bool receiving = true;
+
+private:
+    const uint16_t kRecvPin = 22;
+    const uint16_t kIrLedPin = 19;
+    const uint32_t kBaudRate = 115200;
+    const uint16_t kCaptureBufferSize = 1024; // 1024 == ~511 bits
+    const uint8_t kTimeout = 50;              // Milli-Seconds
+    const uint16_t kFrequency = 38000;        // in Hz. e.g. 38kHz.
+    const uint16_t kMinUnknownSize = 12;
+
+    IRsend irsend = IRsend(kIrLedPin);
+    IRrecv irrecv = IRrecv(kRecvPin, kCaptureBufferSize, kTimeout, true);
 };
 
 #endif

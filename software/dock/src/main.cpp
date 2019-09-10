@@ -5,11 +5,11 @@
 #include <Preferences.h>
 #include <ESPmDNS.h>
 
-#include <service_ir.h>
+// #include <service_ir.h>
 #include <service_ota.h>
 #include <service_websocket.h>
 
-InfraredService irservice;
+// InfraredService irservice;
 OTA ota;
 WebSocketAPI wsservice;
 
@@ -24,6 +24,7 @@ int dockState = 0;
 // 1 - connecting to wifi, turning on OTA, connecting to websocket
 // 2 - succesful connection
 // 3 - normal operation, LED off, turns on when charging
+// 4 - error
 
 ////////////////////////////////////////////////////////////////
 // BLUETOOTH SETUP
@@ -238,9 +239,6 @@ void setup()
 
     while (WiFi.status() != WL_CONNECTED)
     {
-      // ledcWrite(ledChannel, 255);
-      // delay(300);
-      // ledcWrite(ledChannel, 0);
       delay(300);
       Serial.print(".");
       connCounter += 1;
@@ -280,19 +278,8 @@ void setup()
     // initialize the OTA service
     ota.init();
 
-    // connected = true;
-
-    // Blink the LED 3 times to indicate successful connection
-    // for (int i = 0; i < 4; i++)
-    // {
-    //   ledcWrite(ledChannel, 255);
-    //   delay(100);
-    //   ledcWrite(ledChannel, 0);
-    //   delay(100);
-    // }
-
     // initialize the IR service
-    irservice.init();
+    // irservice.init();
 
     // connect to remote websocket API
     wsservice.connect();
@@ -325,11 +312,11 @@ void loop()
     }
   }
 
-  // IR Receive
-  if (irservice.receiving)
-  {
-    irservice.receive();
-  }
+  // // IR Receive
+  // if (irservice.receiving)
+  // {
+  //   irservice.receive();
+  // }
 
   if (wsservice.connected && dockState == 1)
   {
