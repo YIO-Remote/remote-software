@@ -1,12 +1,13 @@
 #include "service_websocket.h"
 #include <ESPmDNS.h>
+#include <Preferences.h>
 
-void WebSocketAPI::connect()
+void WebSocketAPI::connect(String hostname)
 {
     // initialize the IR service
     irservice.init();
 
-    IPAddress serverip = findRemoteIP();
+    IPAddress serverip = findRemoteIP(hostname);
     webSocket.begin(serverip, 946, "/");
     webSocket.setReconnectInterval(5000);
     webSocket.onEvent([&](WStype_t type, uint8_t *payload, size_t length) {
@@ -49,6 +50,7 @@ void WebSocketAPI::connect()
             //  "code": "0000,0067,0000,0015,0060,0018"
             // }
             if (wsdoc.containsKey("type") && wsdoc["type"].as<String>() == "dock") {
+                // Send IR code
                 if (wsdoc["command"].as<String>() == "ir_send") {
                     irservice.send(wsdoc["code"].as<String>());
                 }
@@ -61,6 +63,16 @@ void WebSocketAPI::connect()
                 // Turn on IR receiving
                 if (wsdoc["command"].as<String>() == "ir_receive_off") {
                     irservice.receiving = false;    
+                }
+
+                // Erase and reset the dock
+                if (wsdoc["command"].as<String>() == "erase") {
+                    Preferences preferences;
+                    preferences.begin("Wifi", false);
+                    preferences.clear();
+                    preferences.end();   
+                    delay(500);
+                    ESP.restart();
                 }
             }
             break;
@@ -111,25 +123,8 @@ void WebSocketAPI::loop()
     }
 }
 
-IPAddress WebSocketAPI::findRemoteIP()
+IPAddress WebSocketAPI::findRemoteIP(String hostname)
 {
-    String hostname;
-
-    Serial.println("Finding YIO Remote host");
-
-    while (!remotefound)
-    {
-        delay(100);
-        Serial.println("Finding YIO Remote host");
-
-        int n = MDNS.queryService("yio-remote", "tcp");
-        if (n != 0)
-        {
-            hostname = MDNS.hostname(0);
-            remotefound = true;
-        }
-    }
-
     IPAddress serverip = MDNS.queryHost(hostname);
 
     while (serverip.toString() == "0.0.0.0")
@@ -145,3 +140,38 @@ IPAddress WebSocketAPI::findRemoteIP()
 
     return serverip;
 }
+
+// IPAddress WebSocketAPI::findRemoteIP()
+// {
+//     String hostname;
+
+//     Serial.println("Finding YIO Remote host");
+
+//     while (!remotefound)
+//     {
+//         delay(100);
+//         Serial.println("Finding YIO Remote host");
+
+//         int n = MDNS.queryService("yio-remote", "tcp");
+//         if (n != 0)
+//         {
+//             hostname = MDNS.hostname(0);
+//             remotefound = true;
+//         }
+//     }
+
+//     IPAddress serverip = MDNS.queryHost(hostname);
+
+//     while (serverip.toString() == "0.0.0.0")
+//     {
+//         Serial.println("Trying again to resolve mDNS");
+//         delay(250);
+//         serverip = MDNS.queryHost(hostname);
+//     }
+
+//     Serial.print("IP address of server: ");
+//     Serial.println(hostname);
+//     Serial.println(serverip.toString());
+
+//     return serverip;
+// }

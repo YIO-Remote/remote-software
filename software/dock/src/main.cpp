@@ -5,11 +5,9 @@
 #include <Preferences.h>
 #include <ESPmDNS.h>
 
-// #include <service_ir.h>
 #include <service_ota.h>
 #include <service_websocket.h>
 
-// InfraredService irservice;
 OTA ota;
 WebSocketAPI wsservice;
 
@@ -40,6 +38,7 @@ bool recordmessage = false; // if true, bluetooth will start recording messages
 char hostString[16] = {0}; // stores the hostname
 String ssid;               // ssid
 String passwd;             // password
+String remote_id;          // hostname of the remote
 bool connected = false;
 unsigned long WIFI_CHECK = 30000;
 
@@ -157,15 +156,17 @@ void saveConfig(String data)
   }
 
   // check if there is an SSID and password
-  if (doc.containsKey("ssid") && doc.containsKey("password"))
+  if (doc.containsKey("ssid") && doc.containsKey("password") && doc.containsKey("remote_id"))
   {
     ssid = doc["ssid"].as<String>();
     passwd = doc["password"].as<String>();
+    remote_id = doc["remote_id"].as<String>();
 
     Preferences preferences;
     preferences.begin("Wifi", false);
     preferences.putString("ssid", ssid);
     preferences.putString("passwd", passwd);
+    preferences.putString("remote", remote_id);
     preferences.putBool("valid", true);
     preferences.end();
   }
@@ -206,8 +207,9 @@ void setup()
   {
     ssid = preferences.getString("ssid", "");
     passwd = preferences.getString("passwd", "");
+    remote_id = preferences.getString("remote", "");
 
-    if (ssid.equals("") || passwd.equals(""))
+    if (ssid.equals("") || passwd.equals("") || remote_id.equals(""))
     {
       Serial.println("Invalid credidentials");
     }
@@ -278,11 +280,8 @@ void setup()
     // initialize the OTA service
     ota.init();
 
-    // initialize the IR service
-    // irservice.init();
-
     // connect to remote websocket API
-    wsservice.connect();
+    wsservice.connect(remote_id);
   }
 }
 
@@ -311,12 +310,6 @@ void loop()
       message += String(incomingChar);
     }
   }
-
-  // // IR Receive
-  // if (irservice.receiving)
-  // {
-  //   irservice.receive();
-  // }
 
   if (wsservice.connected && dockState == 1)
   {

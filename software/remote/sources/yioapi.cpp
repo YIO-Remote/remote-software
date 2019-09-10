@@ -41,6 +41,9 @@ void YioAPI::start()
     name.remove(0, 6);
     name.prepend("YIO-Remote-");
 
+    m_hostname = name;
+    emit hostnameChanged();
+
     m_qzero_conf.startServicePublish(name.toUtf8(), "_yio-remote._tcp", "local", 946);
 }
 

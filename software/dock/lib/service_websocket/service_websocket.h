@@ -9,11 +9,12 @@
 class WebSocketAPI
 {
 public:
-    void connect();
+    void connect(String hostname);
     void disconnect();
     void sendMessage(StaticJsonDocument<200> responseDoc);
     void loop();
-    IPAddress findRemoteIP();
+    // IPAddress findRemoteIP();
+    IPAddress findRemoteIP(String hostname);
 
     bool connected = false;
 
