@@ -16,15 +16,17 @@ public:
     // IPAddress findRemoteIP();
     IPAddress findRemoteIP(String hostname);
 
-    bool connected = false;
+    bool                        connected = false;
+    bool                        led_setup = false;
+    int                         led_brightness = 0;
 
 private:
-    InfraredService irservice;
+    InfraredService             irservice;
+    WebSocketsClient            webSocket;
 
-    WebSocketsClient webSocket;
-    bool remotefound = false;
-    StaticJsonDocument<200> wsdoc;
-    String token = "0";
+    bool                        remotefound = false;
+    StaticJsonDocument<200>     wsdoc;
+    String                      token = "0";
 };
 
 #endif

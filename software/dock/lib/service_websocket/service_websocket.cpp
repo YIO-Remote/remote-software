@@ -1,6 +1,8 @@
 #include "service_websocket.h"
 #include <ESPmDNS.h>
 #include <Preferences.h>
+#include <nvs.h>
+#include <nvs_flash.h>
 
 void WebSocketAPI::connect(String hostname)
 {
@@ -50,6 +52,15 @@ void WebSocketAPI::connect(String hostname)
             //  "code": "0000,0067,0000,0015,0060,0018"
             // }
             if (wsdoc.containsKey("type") && wsdoc["type"].as<String>() == "dock") {
+                // Change LED brightness
+                if (wsdoc["command"].as<String>() == "led_brightness_start") {
+                    led_setup = true;
+                    led_brightness = wsdoc["brightness"].as<int>();
+                }
+                if (wsdoc["command"].as<String>() == "led_brightness_stop") {
+                    led_setup = false;
+                }
+
                 // Send IR code
                 if (wsdoc["command"].as<String>() == "ir_send") {
                     irservice.send(wsdoc["code"].as<String>());
@@ -71,6 +82,19 @@ void WebSocketAPI::connect(String hostname)
                     preferences.begin("Wifi", false);
                     preferences.clear();
                     preferences.end();   
+
+                    delay(500);
+                    
+                    preferences.begin("LED", false);
+                    preferences.clear();
+                    preferences.end();
+
+                    int err;
+                    err=nvs_flash_init();
+                    Serial.println("nvs_flash_init: " + err);
+                    err=nvs_flash_erase();
+                    Serial.println("nvs_flash_erase: " + err);
+
                     delay(500);
                     ESP.restart();
                 }
@@ -82,6 +106,9 @@ void WebSocketAPI::connect(String hostname)
         case WStype_FRAGMENT_BIN_START:
         case WStype_FRAGMENT:
         case WStype_FRAGMENT_FIN:
+        case WStype_BIN:
+        case WStype_PING:
+        case WStype_PONG:
             break;
         }
     });

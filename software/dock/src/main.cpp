@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include <nvs.h>
+#include <nvs_flash.h>
 #include <ArduinoJson.h>
 #include "BluetoothSerial.h"
 #include <Preferences.h>
@@ -23,6 +25,7 @@ int dockState = 0;
 // 2 - succesful connection
 // 3 - normal operation, LED off, turns on when charging
 // 4 - error
+// 5 - LED brightness setup
 
 ////////////////////////////////////////////////////////////////
 // BLUETOOTH SETUP
@@ -35,7 +38,7 @@ bool recordmessage = false; // if true, bluetooth will start recording messages
 // WIFI SETUP
 ////////////////////////////////////////////////////////////////
 #define CONN_TIMEOUT 10    // wifi timeout
-char hostString[16] = {0}; // stores the hostname
+char hostString[] = "YIO-Dock-xxxxxxxxxxxx"; // stores the hostname
 String ssid;               // ssid
 String passwd;             // password
 String remote_id;          // hostname of the remote
@@ -141,6 +144,10 @@ void ledHandleTask(void *pvParameters)
       }
       dockState = 3;
     }
+    else if (dockState == 5) {
+        ledcWrite(ledChannel, max_brightness);
+        delay(100);
+    }
   }
 }
 
@@ -176,6 +183,12 @@ void saveConfig(String data)
     preferences.begin("Wifi", false);
     preferences.clear();
     preferences.end();
+
+    int err;
+    err=nvs_flash_init();
+    Serial.println("nvs_flash_init: " + err);
+    err=nvs_flash_erase();
+    Serial.println("nvs_flash_erase: " + err);
   }
 
   ESP.restart();
@@ -191,8 +204,10 @@ void setup()
   // run LED handling on other core
   xTaskCreatePinnedToCore(ledHandleTask, "LedTask", 10000, NULL, 1, &LedTask, 0);
 
-  // Generate a name for the network
-  sprintf(hostString, "YIO-Dock-%06X", ESP.getEfuseMac());
+  uint8_t baseMac[6];
+  esp_read_mac(baseMac, ESP_MAC_WIFI_STA);
+  sprintf(hostString, "YIO-Dock-%02X%02X%02X%02X%02X%02X", baseMac[0], baseMac[1], baseMac[2], baseMac[3], baseMac[4], baseMac[5]);
+  Serial.println(String(hostString));
 
   // CHARGING PIN setup
   pinMode(CHG_PIN, INPUT);
@@ -218,6 +233,24 @@ void setup()
       needsSetup = false;
       dockState = 1;
     }
+  }
+
+  preferences.end();
+
+  delay(200);
+
+  // Getting LED brightness
+  preferences.begin("LED", false);
+  int led_brightness = preferences.getInt("brightness", 0);
+
+  if (led_brightness == 0) {
+    // no settings stored yet. Setting default
+    Serial.println("No LED brightness stored, setting default");
+    preferences.putInt("brightness", max_brightness);
+  } else {
+    Serial.println("LED brightness setting found:");
+    Serial.print(led_brightness);
+    max_brightness = led_brightness;
   }
 
   preferences.end();
@@ -291,7 +324,7 @@ void setup()
 void loop()
 {
   // look for wifi credidentials on bluetooth when in setup mode
-  if (DOCK_BT.available() && dockState == 0)
+  if (DOCK_BT.available() != 0 && dockState == 0)
   {
     char incomingChar = DOCK_BT.read();
     if (String(incomingChar) == "{")
@@ -323,6 +356,22 @@ void loop()
 
     // Websocket loop
     wsservice.loop();
+
+    // Check if LED brightness is changed
+    if (wsservice.led_setup) {
+      dockState = 5;
+      max_brightness = wsservice.led_brightness;
+    } else if (dockState == 5 && !wsservice.led_setup) {
+      Serial.println("LED brightness setup ended. Saving.");
+      dockState = 3;
+      ledcWrite(ledChannel, 0);
+
+      // save settings
+      Preferences preferences;
+      preferences.begin("LED", false);
+      preferences.putInt("brightness", max_brightness);
+      preferences.end();
+    }
   }
 
   delay(100);
