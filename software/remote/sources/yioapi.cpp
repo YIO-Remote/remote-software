@@ -1,6 +1,7 @@
 #include <QtDebug>
 
 #include "yioapi.h"
+#include "fileio.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -33,18 +34,20 @@ void YioAPI::start()
 
     // zeroconf
     // get mac address and generate a name
-    QString name;
-    QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
+//    QString name;
+//    QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
 
-    name = list.last().hardwareAddress();
-    name.remove(":");
-    name.remove(0, 6);
-    name.prepend("YIO-Remote-");
+//    name = list.last().hardwareAddress();
+//    name.remove(":");
+//    name.remove(0, 6);
+//    name.prepend("YIO-Remote-");
 
-    m_hostname = name;
+    FileIO fileIO;
+    m_hostname = fileIO.read("/apssid").trimmed();
+
     emit hostnameChanged();
 
-    m_qzero_conf.startServicePublish(name.toUtf8(), "_yio-remote._tcp", "local", 946);
+    m_qzero_conf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
 }
 
 void YioAPI::stop()
