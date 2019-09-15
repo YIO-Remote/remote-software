@@ -172,3 +172,21 @@ void DisplayControl::setBrightness(int from, int to)
 #endif
     }, from, to);
 }
+
+void DisplayControl::batteryChargingOn()
+{
+#ifdef __arm__
+    pinMode(108, OUTPUT);
+    digitalWrite(108, LOW);
+    qDebug() << "Turning battery charging on";
+#endif
+}
+
+void DisplayControl::batteryChargingOff()
+{
+#ifdef __arm__
+    pinMode(108, OUTPUT);
+    digitalWrite(108, HIGH);
+    qDebug() << "Turning battery charging off";
+#endif
+}
