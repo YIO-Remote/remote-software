@@ -157,6 +157,7 @@ IPAddress WebSocketAPI::findRemoteIP(String hostname)
     while (serverip.toString() == "0.0.0.0")
     {
         Serial.println("Trying again to resolve mDNS");
+        Serial.println(hostname);
         delay(250);
         serverip = MDNS.queryHost(hostname);
     }
