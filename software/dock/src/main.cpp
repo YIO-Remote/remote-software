@@ -72,6 +72,8 @@ bool charging = false;
 
 void setCharging()
 {
+  Serial.print("CHG pin is: ");
+  Serial.println(digitalRead(CHG_PIN));
   if (digitalRead(CHG_PIN) == LOW)
   {
     charging = true;
@@ -248,18 +250,20 @@ void setup()
     Serial.println("No LED brightness stored, setting default");
     preferences.putInt("brightness", max_brightness);
   } else {
-    Serial.println("LED brightness setting found:");
-    Serial.print(led_brightness);
+    Serial.print("LED brightness setting found: ");
+    Serial.println(led_brightness);
     max_brightness = led_brightness;
   }
 
   preferences.end();
 
+  DOCK_BT.begin(hostString);
+
   // if need setup start the bluetooth server
   if (dockState == 0)
   {
     // Bluetooth begin
-    DOCK_BT.begin(hostString);
+    //DOCK_BT.begin(hostString);
   }
   else
   { // otherwsie connec to the Wifi network
