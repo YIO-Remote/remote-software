@@ -102,11 +102,10 @@ include(qtzeroconf/qtzeroconf.pri)
 DEFINES = QZEROCONF_STATIC
 
 # Wiringpi config, only on raspberry pi
-unix:arm {
-        INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
-
-        LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
-        LIBS += -lwiringPi
+unix {
+    INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
+    LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+    LIBS += -lwiringPi
 }
 
 # Default rules for deployment.
