@@ -224,6 +224,8 @@ int BQ27441::getFullAvailableCapacity() {
         result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_AVAIL_CAPACITY);
         return int(result);
     }
+#else
+    return 2500;
 #endif
 }
 
@@ -235,6 +237,8 @@ int BQ27441::getRemainingCapacity() {
         result = (uint16_t) wiringPiI2CReadReg16(bus,BQ27441_COMMAND_REM_CAPACITY);
         return int(result);
     }
+#else
+    return 2000;
 #endif
 }
 
