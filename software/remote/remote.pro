@@ -111,7 +111,7 @@ include(qtzeroconf/qtzeroconf.pri)
 DEFINES= QZEROCONF_STATIC
 
 # Wiringpi config
-linux {
+unix:arm {
     INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
 
     LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
@@ -149,6 +149,11 @@ macx {
     COPIES += extraData
     extraData.files = $$PWD/config.json $$PWD/translations.json
     extraData.path = $$DESTDIR
+
+    # copy plugin files
+    COPIES += plugins
+    plugins.files = $$files($$PWD/plugins/*.*)
+    plugins.path = $$DESTDIR/plugins
 }
 
 DISTFILES +=

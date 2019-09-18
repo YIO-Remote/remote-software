@@ -26,8 +26,14 @@ QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
     QString err = pluginLoader.errorString();
     qDebug() << err;
     return plugin;
-#else
+#elif __APPLE__
     QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName + ".dylib");
+    QObject *plugin = pluginLoader.instance();
+    QString err = pluginLoader.errorString();
+    qDebug() << err;
+    return plugin;
+#else
+    QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName);
     QObject *plugin = pluginLoader.instance();
     QString err = pluginLoader.errorString();
     qDebug() << err;
