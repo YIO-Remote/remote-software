@@ -1,16 +1,7 @@
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++11 disable-desktop qtquickcompiler
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which as been marked deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
-
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 HEADERS += \
     sources/fileio.h \
@@ -55,10 +46,10 @@ SOURCES += \
 equals(QT_ARCH, arm): {
     HEADERS += \
         sources/hardware/apds9960.h \
-        sources/hardware/mcp23017.h \
+        sources/hardware/mcp23017.h
 
     SOURCES += \
-        sources/hardware/apds9960.cpp \
+        sources/hardware/apds9960.cpp
 }
 
 RESOURCES += qml.qrc \
@@ -108,15 +99,14 @@ TRANSLATIONS = translations/bg_BG.ts \
 
 # include zeroconf
 include(qtzeroconf/qtzeroconf.pri)
-DEFINES= QZEROCONF_STATIC
+DEFINES = QZEROCONF_STATIC
 
-# Wiringpi config
+# Wiringpi config, only on raspberry pi
 unix:arm {
-    INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
+        INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
 
-    LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
-    LIBS += -lwiringPi
-#    LIBS += -llibavahi
+        LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+        LIBS += -lwiringPi
 }
 
 # Default rules for deployment.
@@ -129,17 +119,24 @@ DESTDIR = $$OUT_PWD
 
 win32 {
     CONFIG(debug, debug|release) {
-    DESTDIR = $$OUT_PWD/debug
+    DESTDIR = $$DESTDIR/debug
     }
     CONFIG(release, debug|release) {
-    DESTDIR = $$OUT_PWD/release
+    DESTDIR = $$DESTDIR/release
     }
+
+    # copy plugin files
+    CONFIG += file_copies
+    COPIES += plugins
+    plugins.files = $$files($$PWD/plugins/*.*)
+    plugins.path = $$DESTDIR/release/plugins
 }
 macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
+    # copy plugin files
     INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
     INTEGRATIONS.path = Contents/Resources/plugins
     QMAKE_BUNDLE_DATA += INTEGRATIONS
@@ -155,5 +152,3 @@ macx {
     plugins.files = $$files($$PWD/plugins/*.*)
     plugins.path = $$DESTDIR/plugins
 }
-
-DISTFILES +=
