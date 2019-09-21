@@ -153,10 +153,14 @@ void HomeyThread::onTextMessageReceived(const QString &message)
         m_socket->sendTextMessage(message);
     }
 
+    // handle fetch states from homey app
+    if (type == "command" && map.value("command").toString() == "send_states") {
+
+    }
+
     if (type == "event") {
-        QVariantMap data = map.value("event").toMap().value("data").toMap();
-        QVariantMap newState = data.value("new_state").toMap();
-        updateEntity(data.value("entity_id").toString(), newState);
+        QVariantMap data = map.value("data").toMap();
+        updateEntity(data.value("entity_id").toString(), data);
     }
 }
 
@@ -247,14 +251,14 @@ void HomeyThread::updateEntity(const QString& entity_id, const QVariantMap& attr
 
 void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
 {
-//    QVariantMap attributes;
+    QVariantMap attributes;
 
-//    // state
-//    if (attr.value("state").toString() == "on") {
-//        attributes.insert("state", true);
-//    } else {
-//        attributes.insert("state", false);
-//    }
+    // state
+    if (attr.value("state").toString() == "on") {
+        attributes.insert("state", true);
+    } else {
+        attributes.insert("state", false);
+    }
 
 //    // brightness
 //    if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
@@ -279,7 +283,7 @@ void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
 
 //    }
 
-//    m_entities->update(entity->entity_id(), attributes);
+    m_entities->update(entity->entity_id(), attributes);
 }
 
 void HomeyThread::updateBlind(Entity *entity, const QVariantMap &attr)
