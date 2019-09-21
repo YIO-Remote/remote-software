@@ -129,7 +129,10 @@ void HomeyThread::onTextMessageReceived(const QString &message)
         QVariantMap returnData;
 
         // set type
-        map.insert("type", QVariant("send_config"));
+        returnData.insert("type", QVariant("command"));
+
+        // set command
+        returnData.insert("command", QVariant("send_config"));
 
         // create list to store entity ids
         QVariantMap list;
