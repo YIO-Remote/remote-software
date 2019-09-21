@@ -209,19 +209,19 @@ void HomeyThread::webSocketSendCommand(const QString& domain, const QString& ser
     m_webSocketId++;
 
     QVariantMap map;
-    map.insert("id", QVariant(m_webSocketId));
-    map.insert("type", QVariant("call_service"));
+//    map.insert("id", QVariant(m_webSocketId));
+    map.insert("type", QVariant("command"));
     map.insert("domain", QVariant(domain));
-    map.insert("service", QVariant(service));
+    map.insert("command", QVariant(service));
 
     if (data == NULL) {
         QVariantMap d;
         d.insert("entity_id", QVariant(entity_id));
-        map.insert("service_data", d);
+        map.insert("data", d);
     }
     else {
         data->insert("entity_id", QVariant(entity_id));
-        map.insert("service_data", *data);
+        map.insert("data", *data);
     }
     QJsonDocument doc = QJsonDocument::fromVariant(map);
     QString message = doc.toJson(QJsonDocument::JsonFormat::Compact);
@@ -398,29 +398,29 @@ void HomeyThread::disconnect()
 
 void HomeyThread::sendCommand(const QString &type, const QString &entity_id, const QString &command, const QVariant &param)
 {
-//    if (type == "light") {
-//        if (command == "TOGGLE")
-//            webSocketSendCommand(type, "toggle", entity_id, NULL);
-//        else if (command == "ON")
-//            webSocketSendCommand(type, "turn_on", entity_id, NULL);
-//        else if (command == "OFF")
-//            webSocketSendCommand(type, "turn_off", entity_id, NULL);
-//        else if (command == "BRIGHTNESS") {
-//            QVariantMap data;
-//            data.insert("brightness_pct", param);
-//            webSocketSendCommand(type, "turn_on", entity_id, &data);
-//        }
-//        else if (command == "COLOR") {
-//            QColor color = param.value<QColor>();
-//            QVariantMap data;
-//            QVariantList list;
-//            list.append(color.red());
-//            list.append(color.green());
-//            list.append(color.blue());
-//            data.insert("rgb_color", list);
-//            webSocketSendCommand(type, "turn_on", entity_id, &data);
-//        }
-//    }
+    if (type == "light") {
+        if (command == "TOGGLE")
+            webSocketSendCommand(type, "toggle", entity_id, NULL);
+        else if (command == "ON")
+            webSocketSendCommand(type, "turn_on", entity_id, NULL);
+        else if (command == "OFF")
+            webSocketSendCommand(type, "turn_off", entity_id, NULL);
+        else if (command == "BRIGHTNESS") {
+            QVariantMap data;
+            data.insert("brightness", (param.toInt()/100));
+            webSocketSendCommand(type, "turn_on", entity_id, &data);
+        }
+        else if (command == "COLOR") {
+            QColor color = param.value<QColor>();
+            QVariantMap data;
+            QVariantList list;
+            list.append(color.red());
+            list.append(color.green());
+            list.append(color.blue());
+            data.insert("rgb_color", list);
+            webSocketSendCommand(type, "turn_on", entity_id, &data);
+        }
+    }
 //    if (type == "blind") {
 //        if (command == "OPEN")
 //            webSocketSendCommand("cover", "open_cover", entity_id, NULL);
