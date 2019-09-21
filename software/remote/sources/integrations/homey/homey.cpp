@@ -155,7 +155,8 @@ void HomeyThread::onTextMessageReceived(const QString &message)
 
     // handle fetch states from homey app
     if (type == "command" && map.value("command").toString() == "send_states") {
-
+        QVariantMap data = map.value("data").toMap();
+        updateEntity(data.value("entity_id").toString(), data);
     }
 
     if (type == "event") {
