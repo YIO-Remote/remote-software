@@ -231,7 +231,7 @@ void HomeyThread::webSocketSendCommand(const QString& domain, const QString& ser
 
 int HomeyThread::convertBrightnessToPercentage(float value)
 {
-    return int(round(value/255*100));
+    return int(round(value*100));
 }
 
 void HomeyThread::updateEntity(const QString& entity_id, const QVariantMap& attr)
@@ -254,6 +254,11 @@ void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
 {
     QVariantMap attributes;
 
+    // friendly name
+//    if (attr.contains("friendly_name")) {
+//        attributes.insert("friendly_name", attr.value("friendly_name").toString());
+//    }
+
     // state
     if (attr.value("state").toString() == "on") {
         attributes.insert("state", true);
@@ -261,28 +266,28 @@ void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
         attributes.insert("state", false);
     }
 
-//    // brightness
-//    if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
-//        if (attr.value("attributes").toMap().contains("brightness")) {
-//            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
-//        } else {
-//            attributes.insert("brightness", 0);
-//        }
-//    }
+    // brightness
+    if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
+        if (attr.value("attributes").toMap().contains("brightness")) {
+            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
+        } else {
+            attributes.insert("brightness", 0);
+        }
+    }
 
-//    // color
-//    if (entity->supported_features().indexOf("COLOR") > -1) {
-//        QVariant color = attr.value("attributes").toMap().value("rgb_color");
-//        QVariantList cl(color.toList());
-//        char buffer[10];
-//        sprintf(buffer, "#%02X%02X%02X", cl.value(0).toInt(), cl.value(1).toInt(), cl.value(2).toInt());
-//        attributes.insert("color", buffer);
-//    }
+    // color
+    if (entity->supported_features().indexOf("COLOR") > -1) {
+        QVariant color = attr.value("attributes").toMap().value("rgb_color");
+        QVariantList cl(color.toList());
+        char buffer[10];
+        sprintf(buffer, "#%02X%02X%02X", cl.value(0).toInt(), cl.value(1).toInt(), cl.value(2).toInt());
+        attributes.insert("color", buffer);
+    }
 
-//    // color temp
-//    if (entity->supported_features().indexOf("COLORTEMP") > -1) {
+    // color temp
+    if (entity->supported_features().indexOf("COLORTEMP") > -1) {
 
-//    }
+    }
 
     m_entities->update(entity->entity_id(), attributes);
 }
