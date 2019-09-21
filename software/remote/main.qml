@@ -277,6 +277,14 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        if (config == undefined) {
+            console.debug("Cannot load configuration file");
+            // create a temporary standard config
+
+            // notify user
+            notifications.add(true, "Cannot load configuration");
+        }
+
         // change dark mode to the configured value
         darkMode = Qt.binding(function () { return config.settings.darkmode});
         standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })

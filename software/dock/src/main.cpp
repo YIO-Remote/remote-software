@@ -37,7 +37,7 @@ bool recordmessage = false; // if true, bluetooth will start recording messages
 ////////////////////////////////////////////////////////////////
 // WIFI SETUP
 ////////////////////////////////////////////////////////////////
-#define CONN_TIMEOUT 10    // wifi timeout
+#define CONN_TIMEOUT 20    // wifi timeout
 char hostString[] = "YIO-Dock-xxxxxxxxxxxx"; // stores the hostname
 String ssid;               // ssid
 String passwd;             // password
