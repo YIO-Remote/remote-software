@@ -42,7 +42,7 @@ Item {
                 id: step1
                 color: colorText
                 opacity: 0.5
-                text: qsTr("Connect to the Wi-Fi network\n") + fileio.read("/apssid") + translateHandler.emptyString
+                text: qsTr("Connect to the Wi-Fi network\n") + fileio.read("/apssid").trim() + translateHandler.emptyString
                 horizontalAlignment: Text.AlignHCenter
                 anchors {
                     top: titleText.bottom
@@ -59,7 +59,7 @@ Item {
                 id: step2
                 color: colorText
                 opacity: 0.5
-                text: qsTr("Open a web browser\nand navigate to\nhttp://yio.remote") + translateHandler.emptyString
+                text: qsTr("Open a web browser\nand navigate to\nyio.remote") + translateHandler.emptyString
                 horizontalAlignment: Text.AlignHCenter
                 anchors {
                     top: step1.bottom
@@ -306,7 +306,7 @@ Item {
                 id: dockSuccessText
                 color: colorText
                 opacity: 0.5
-                text: qsTr("YIO Dock has successfully connected to your Wi-Fi network.\n\nTo continue the configuration, open a web browser on your computer and navigate to\nhttp://yioremote.local") + translateHandler.emptyString
+                text: qsTr("YIO Dock has successfully connected to your Wi-Fi network.\n\nTo continue the configuration, open a web browser on your computer and navigate to\n" + fileio.read("/apssid").trim() + "local") + translateHandler.emptyString
                 width: 420
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
