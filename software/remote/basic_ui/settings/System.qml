@@ -138,7 +138,6 @@ Item {
                 settingsLauncher.launch("fbv -d 1 /bye.png")
                 console.debug("now reboot")
                 settingsLauncher.launch("reboot");
-//                standbyControl.displayControl.batteryChargingOff();
             }
         }
 
@@ -153,7 +152,6 @@ Item {
             mouseArea.onClicked: {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
-//                standbyControl.displayControl.batteryChargingOn();
             }
         }
     }

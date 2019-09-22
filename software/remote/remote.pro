@@ -67,6 +67,7 @@ SOURCES = main.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \
+          components/media_player/ui/*.qml \
           sources/proximity_gesture_control.h
 }
 TRANSLATIONS = translations/bg_BG.ts \
@@ -102,11 +103,10 @@ include(qtzeroconf/qtzeroconf.pri)
 DEFINES = QZEROCONF_STATIC
 
 # Wiringpi config, only on raspberry pi
-unix:arm {
-        INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
-
-        LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
-        LIBS += -lwiringPi
+equals(QT_ARCH, arm): {
+    INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
+    LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+    LIBS += -lwiringPi
 }
 
 # Default rules for deployment.

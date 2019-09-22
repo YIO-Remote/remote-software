@@ -129,7 +129,10 @@ void HomeyThread::onTextMessageReceived(const QString &message)
         QVariantMap returnData;
 
         // set type
-        map.insert("type", QVariant("send_config"));
+        returnData.insert("type", QVariant("command"));
+
+        // set command
+        returnData.insert("command", QVariant("send_config"));
 
         // create list to store entity ids
         QVariantMap list;
@@ -150,10 +153,15 @@ void HomeyThread::onTextMessageReceived(const QString &message)
         m_socket->sendTextMessage(message);
     }
 
+    // handle fetch states from homey app
+    if (type == "command" && map.value("command").toString() == "send_states") {
+        QVariantMap data = map.value("data").toMap();
+        updateEntity(data.value("entity_id").toString(), data);
+    }
+
     if (type == "event") {
-        QVariantMap data = map.value("event").toMap().value("data").toMap();
-        QVariantMap newState = data.value("new_state").toMap();
-        updateEntity(data.value("entity_id").toString(), newState);
+        QVariantMap data = map.value("data").toMap();
+        updateEntity(data.value("entity_id").toString(), data);
     }
 }
 
@@ -201,19 +209,19 @@ void HomeyThread::webSocketSendCommand(const QString& domain, const QString& ser
     m_webSocketId++;
 
     QVariantMap map;
-    map.insert("id", QVariant(m_webSocketId));
-    map.insert("type", QVariant("call_service"));
+//    map.insert("id", QVariant(m_webSocketId));
+    map.insert("type", QVariant("command"));
     map.insert("domain", QVariant(domain));
-    map.insert("service", QVariant(service));
+    map.insert("command", QVariant(service));
 
     if (data == NULL) {
         QVariantMap d;
         d.insert("entity_id", QVariant(entity_id));
-        map.insert("service_data", d);
+        map.insert("data", d);
     }
     else {
         data->insert("entity_id", QVariant(entity_id));
-        map.insert("service_data", *data);
+        map.insert("data", *data);
     }
     QJsonDocument doc = QJsonDocument::fromVariant(map);
     QString message = doc.toJson(QJsonDocument::JsonFormat::Compact);
@@ -223,7 +231,7 @@ void HomeyThread::webSocketSendCommand(const QString& domain, const QString& ser
 
 int HomeyThread::convertBrightnessToPercentage(float value)
 {
-    return int(round(value/255*100));
+    return int(round(value*100));
 }
 
 void HomeyThread::updateEntity(const QString& entity_id, const QVariantMap& attr)
@@ -244,39 +252,44 @@ void HomeyThread::updateEntity(const QString& entity_id, const QVariantMap& attr
 
 void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
 {
-//    QVariantMap attributes;
+    QVariantMap attributes;
 
-//    // state
-//    if (attr.value("state").toString() == "on") {
-//        attributes.insert("state", true);
-//    } else {
-//        attributes.insert("state", false);
+    // friendly name
+//    if (attr.contains("friendly_name")) {
+//        attributes.insert("friendly_name", attr.value("friendly_name").toString());
 //    }
 
-//    // brightness
-//    if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
-//        if (attr.value("attributes").toMap().contains("brightness")) {
-//            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
-//        } else {
-//            attributes.insert("brightness", 0);
-//        }
-//    }
+    // state
+    if (attr.value("state").toString() == "on") {
+        attributes.insert("state", true);
+    } else {
+        attributes.insert("state", false);
+    }
 
-//    // color
-//    if (entity->supported_features().indexOf("COLOR") > -1) {
-//        QVariant color = attr.value("attributes").toMap().value("rgb_color");
-//        QVariantList cl(color.toList());
-//        char buffer[10];
-//        sprintf(buffer, "#%02X%02X%02X", cl.value(0).toInt(), cl.value(1).toInt(), cl.value(2).toInt());
-//        attributes.insert("color", buffer);
-//    }
+    // brightness
+    if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
+        if (attr.value("attributes").toMap().contains("brightness")) {
+            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
+        } else {
+            attributes.insert("brightness", 0);
+        }
+    }
 
-//    // color temp
-//    if (entity->supported_features().indexOf("COLORTEMP") > -1) {
+    // color
+    if (entity->supported_features().indexOf("COLOR") > -1) {
+        QVariant color = attr.value("attributes").toMap().value("rgb_color");
+        QVariantList cl(color.toList());
+        char buffer[10];
+        sprintf(buffer, "#%02X%02X%02X", cl.value(0).toInt(), cl.value(1).toInt(), cl.value(2).toInt());
+        attributes.insert("color", buffer);
+    }
 
-//    }
+    // color temp
+    if (entity->supported_features().indexOf("COLORTEMP") > -1) {
 
-//    m_entities->update(entity->entity_id(), attributes);
+    }
+
+    m_entities->update(entity->entity_id(), attributes);
 }
 
 void HomeyThread::updateBlind(Entity *entity, const QVariantMap &attr)
@@ -385,29 +398,29 @@ void HomeyThread::disconnect()
 
 void HomeyThread::sendCommand(const QString &type, const QString &entity_id, const QString &command, const QVariant &param)
 {
-//    if (type == "light") {
-//        if (command == "TOGGLE")
-//            webSocketSendCommand(type, "toggle", entity_id, NULL);
-//        else if (command == "ON")
-//            webSocketSendCommand(type, "turn_on", entity_id, NULL);
-//        else if (command == "OFF")
-//            webSocketSendCommand(type, "turn_off", entity_id, NULL);
-//        else if (command == "BRIGHTNESS") {
-//            QVariantMap data;
-//            data.insert("brightness_pct", param);
-//            webSocketSendCommand(type, "turn_on", entity_id, &data);
-//        }
-//        else if (command == "COLOR") {
-//            QColor color = param.value<QColor>();
-//            QVariantMap data;
-//            QVariantList list;
-//            list.append(color.red());
-//            list.append(color.green());
-//            list.append(color.blue());
-//            data.insert("rgb_color", list);
-//            webSocketSendCommand(type, "turn_on", entity_id, &data);
-//        }
-//    }
+    if (type == "light") {
+        if (command == "TOGGLE")
+            webSocketSendCommand(type, "toggle", entity_id, NULL);
+        else if (command == "ON")
+            webSocketSendCommand(type, "turn_on", entity_id, NULL);
+        else if (command == "OFF")
+            webSocketSendCommand(type, "turn_off", entity_id, NULL);
+        else if (command == "BRIGHTNESS") {
+            QVariantMap data;
+            data.insert("brightness", (param.toInt()/100));
+            webSocketSendCommand(type, "turn_on", entity_id, &data);
+        }
+        else if (command == "COLOR") {
+            QColor color = param.value<QColor>();
+            QVariantMap data;
+            QVariantList list;
+            list.append(color.red());
+            list.append(color.green());
+            list.append(color.blue());
+            data.insert("rgb_color", list);
+            webSocketSendCommand(type, "turn_on", entity_id, &data);
+        }
+    }
 //    if (type == "blind") {
 //        if (command == "OPEN")
 //            webSocketSendCommand("cover", "open_cover", entity_id, NULL);

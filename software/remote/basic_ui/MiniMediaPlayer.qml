@@ -261,6 +261,7 @@ Item {
                     volume.state = "visible";
                 }
                 var newvolume = mediaPlayers.currentItem.player.obj.volume + 0.02;
+                if (newvolume > 1) newvolume = 1;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             } else {
@@ -269,6 +270,7 @@ Item {
                     volume.state = "visible";
                 }
                 newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
+                if (newvolume < 0) newvolume = 0;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             }

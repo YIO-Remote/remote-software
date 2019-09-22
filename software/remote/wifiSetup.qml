@@ -203,8 +203,9 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     mouseArea.onClicked: {
-                        mainLauncher.launch("/usr/bin/yio-remote/reset-wifi.sh")
                         swipeView.currentIndex = 0;
+                        mainLauncher.launch("/usr/bin/yio-remote/reset-wifi.sh")
+                        firstSetupCheck.start();
                     }
                 }
             }
@@ -335,6 +336,7 @@ Item {
     }
 
     Timer {
+        id: firstSetupCheck
         running: true
         repeat: true
         interval: 2000
