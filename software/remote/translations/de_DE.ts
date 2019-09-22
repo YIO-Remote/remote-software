@@ -26,18 +26,18 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="176"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>Akkuladung</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>Leistunsgverbrauch</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>Noch keine Daten verfügbar</translation>
     </message>
   </context>
   <context>
@@ -45,17 +45,17 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Bereichserkennung</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Scant automatisch nach Bluetooth-Beacons, die mit Bereichen assoziiert sind, findet die nahegelegensten und zeigt Geräte in diesem Bereich.</translation>
     </message>
   </context>
   <context>
@@ -80,7 +80,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>% aufgeladen</translation>
     </message>
   </context>
   <context>
@@ -129,7 +129,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lampen</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
