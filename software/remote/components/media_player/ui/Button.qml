@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -201,9 +201,9 @@ Rectangle {
         mouseArea.enabled: mediaButton.state == "open" ? false: true
         mouseArea.onClicked: {
             if (obj.state) {
-                obj.close();
+                obj.turnOff();
             } else {
-                obj.open();
+                obj.turnOn();
             }
         }
     }

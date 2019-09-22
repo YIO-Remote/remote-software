@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
@@ -282,7 +282,7 @@ Item {
 
                     Rectangle {
                         width: 6
-                        height: 96 * (Math.abs(battery_data[index].power) / 6020)
+                        height: (96 * (Math.abs(battery_data[index].power) / 5500)) + 1
                         color: battery_data[index].power < 0 ? colorText : colorGreen
                         anchors.bottom: parent.bottom
                     }

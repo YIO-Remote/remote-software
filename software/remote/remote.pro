@@ -1,18 +1,10 @@
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++11 disable-desktop qtquickcompiler
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which as been marked deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
 HEADERS += \
+    sources/fileio.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \
@@ -32,7 +24,8 @@ HEADERS += \
     sources/notifications.h \
     sources/notificationsinterface.h \
     sources/entities/mediaplayer.h \
-    sources/bluetootharea.h
+    sources/bluetootharea.h \
+    sources/yioapi.h
 
 SOURCES += \
     sources/main.cpp \
@@ -47,19 +40,21 @@ SOURCES += \
     sources/entities/blind.cpp \
     sources/notifications.cpp \
     sources/entities/mediaplayer.cpp \
-    sources/bluetootharea.cpp
+    sources/bluetootharea.cpp \
+    sources/yioapi.cpp
 
 equals(QT_ARCH, arm): {
     HEADERS += \
         sources/hardware/apds9960.h \
-        sources/hardware/mcp23017.h \
+        sources/hardware/mcp23017.h
 
     SOURCES += \
-        sources/hardware/apds9960.cpp \
+        sources/hardware/apds9960.cpp
 }
 
 RESOURCES += qml.qrc \
     images.qrc \
+    keyboard.qrc \
     translations.qrc
 
 # TRANSLATION
@@ -67,10 +62,12 @@ lupdate_only{
 SOURCES = main.qml \
           MainContainer.qml \
           StandbyControl.qml \
+          wifiSetup.qml \
           basic_ui/*.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \
+          components/media_player/ui/*.qml \
           sources/proximity_gesture_control.h
 }
 TRANSLATIONS = translations/bg_BG.ts \
@@ -101,16 +98,13 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
-# Additional import path used to resolve QML modules in Qt Creator's code model
-#QML_IMPORT_PATH =
+# include zeroconf
+include(qtzeroconf/qtzeroconf.pri)
+DEFINES = QZEROCONF_STATIC
 
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-#QML_DESIGNER_IMPORT_PATH =
-
-# Wiringpi config
-linux {
+# Wiringpi config, only on raspberry pi
+equals(QT_ARCH, arm): {
     INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
-
     LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
     LIBS += -lwiringPi
 }
@@ -125,17 +119,24 @@ DESTDIR = $$OUT_PWD
 
 win32 {
     CONFIG(debug, debug|release) {
-    DESTDIR = $$OUT_PWD/debug
+    DESTDIR = $$DESTDIR/debug
     }
     CONFIG(release, debug|release) {
-    DESTDIR = $$OUT_PWD/release
+    DESTDIR = $$DESTDIR/release
     }
+
+    # copy plugin files
+    CONFIG += file_copies
+    COPIES += plugins
+    plugins.files = $$files($$PWD/plugins/*.*)
+    plugins.path = $$DESTDIR/release/plugins
 }
 macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
+    # copy plugin files
     INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
     INTEGRATIONS.path = Contents/Resources/plugins
     QMAKE_BUNDLE_DATA += INTEGRATIONS
@@ -145,6 +146,9 @@ macx {
     COPIES += extraData
     extraData.files = $$PWD/config.json $$PWD/translations.json
     extraData.path = $$DESTDIR
-}
 
-DISTFILES +=
+    # copy plugin files
+    COPIES += plugins
+    plugins.files = $$files($$PWD/plugins/*.*)
+    plugins.path = $$DESTDIR/plugins
+}

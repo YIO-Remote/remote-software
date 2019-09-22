@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 
 import Launcher 1.0
 
@@ -20,10 +20,36 @@ Item {
 
         onTriggered: {
             wifiSignalValue.text = settingsLauncher.launch("/usr/bin/yio-remote/wifi_rssi.sh").trim();
+            var ssid = settingsLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();
+            if (ssid == "") {
+                wifiSSIDText.text = "Select WiFi network";
+            } else {
+                wifiSSIDText.text = ssid;
+            }
         }
     }
 
     Component.onCompleted: timer.start()
+
+    property var wifiNetworks: []
+    property var wifiNetworksRSSI: []
+    property var wifiNetworkSelected
+    property var wifiNetworkSelectedRSSI
+
+    function addNetworks() {
+        var comp = Qt.createComponent("qrc:/basic_ui/settings/WifiNetworkListElement.qml");
+
+        for (var i=0; i<wifiNetworks.length; i++) {
+            var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i], rssi: wifiNetworksRSSI[i], buttonId: i});
+            obj.clicked.connect(buttonClicked)
+        }
+    }
+
+    function buttonClicked(buttonId) {
+        wifiNetworkSelected = wifiNetworks[buttonId];
+        wifiSwipeview.currentIndex += 1;
+        popup.height = 200;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NETWORK
@@ -49,13 +75,182 @@ Item {
         anchors.top: header.bottom
         anchors.topMargin: 20
 
+        Item {
+            id: wifiSSID
+            width: parent.width
+            height: 50
+            anchors.top: parent.top
+            anchors.topMargin: 20
+
+            Text {
+                id: wifiSSIDText
+                color: colorText
+                text: ""
+                anchors.left: parent.left
+                anchors.leftMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 27
+                lineHeight: 1
+            }
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    haptic.playEffect("click");
+
+                    // Start wifi network scan
+                    wifiNetworks = [];
+                    wifiNetworksRSSI = [];
+
+                    // clear list
+                    for (var k = flowWifiList.children.length; k>0; k--) {
+                        flowWifiList.children[k-1].destroy();
+                    }
+
+                    var tmp = mainLauncher.launch("/usr/bin/yio-remote/wifi_network_list.sh");
+                    tmp = tmp.split('\n');
+                    for (var i=0; i<tmp.length-1; i++) {
+                        var wifitmp = tmp[i].split(',')
+                        wifiNetworks[i] = wifitmp[1];
+                        wifiNetworksRSSI[i] = wifitmp[0]
+                    }
+
+                    // add wifi networks to the list
+                    addNetworks();
+
+                    // open popup that displays the list
+                    popup.open();
+                }
+            }
+
+        }
+
+
+        Popup {
+            id: popup
+            x: 0
+            y: 0
+            width: section.width
+            height: 400
+            modal: true
+            focus: true
+            clip: true
+            closePolicy: Popup.NoAutoClose
+
+            enter: Transition {
+                NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutExpo; duration: 300 }
+                NumberAnimation { property: "width"; from: 0; to: section.width; easing.type: Easing.OutBack; duration: 300 }
+                NumberAnimation { property: "height"; from: 0; to: 400; easing.type: Easing.OutBack; duration: 300 }
+            }
+
+            exit: Transition {
+                NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; easing.type: Easing.InExpo; duration: 300 }
+                NumberAnimation { property: "width"; from: section.width; to: 0; easing.type: Easing.InExpo; duration: 300 }
+                NumberAnimation { property: "height"; from: 400; to: 0; easing.type: Easing.InExpo; duration: 300 }
+            }
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: colorLine
+                radius: cornerRadius
+            }
+
+            SwipeView {
+                id: wifiSwipeview
+                anchors.fill: parent
+                interactive: false
+
+                Item {
+                    id: page1
+
+                    Flickable {
+                        id: flickableWifiList
+                        anchors.top: parent.top
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width
+                        height: parent.height
+                        maximumFlickVelocity: 4000
+                        flickDeceleration: 1000
+                        contentHeight: flowWifiList.height
+                        boundsBehavior: Flickable.DragAndOvershootBounds
+                        flickableDirection: Flickable.VerticalFlick
+
+                        ScrollBar.vertical: ScrollBar {
+                            opacity: 0.5
+                        }
+
+                        Flow {
+                            id: flowWifiList
+                            width: parent.width
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.top: parent.top
+                            spacing: 0
+                        }
+                    }
+                }
+
+                Item {
+                    id: page2
+
+                    Text {
+                        color: colorBackground
+                        text: wifiNetworkSelected
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        anchors.top: parent.top
+                        anchors.topMargin: 20
+                        font.family: "Open Sans"
+                        font.weight: Font.Normal
+                        font.pixelSize: 27
+                        lineHeight: 1
+                    }
+
+                    TextField {
+                            id: textfieldWifiPassword
+                            width: parent.width-40
+                            anchors.top: parent.top
+                            anchors.topMargin: 100
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            height: 60
+                            echoMode: TextInput.PasswordEchoOnEdit
+                            placeholderText: "Password"
+                            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase | Qt.ImhSensitiveData | Qt.ImhNoPredictiveText
+
+                            font.family: "Neuzeit Grotesk"
+                            font.weight: Font.Normal
+                            font.pixelSize: 28
+                            color: "#000000"
+
+                            background: Rectangle {
+                                implicitWidth: parent.width-40
+                                implicitHeight: 60
+                                color: colorHighlight1
+                            }
+                        }
+                }
+            }
+        }
+
+
+        Rectangle {
+            id: line0
+            width: parent.width
+            height: 2
+            color: colorBackground
+            anchors.top: wifiSSID.bottom
+            anchors.topMargin: 20
+        }
+
         Text {
             id: wifiSignalText
             color: colorText
             text: qsTr("Wi-Fi signal strength") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
-            anchors.top: parent.top
+            anchors.top: line0.bottom
             anchors.topMargin: 20
             font.family: "Open Sans"
             font.weight: Font.Normal

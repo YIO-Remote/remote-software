@@ -29,3 +29,8 @@ software/remote/translations/*.qm
 *.user
 software/remote/sources/integrations/openhab/openhab.pro.user
 software/remote/sources/integrations/homeassistant/homeassistant.pro.user
+software/dock/.vscode/settings.json
+software/dock/.travis.yml
+software/dock/include/README
+software/dock/lib/README
+software/dock/test/README

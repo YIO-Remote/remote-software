@@ -84,7 +84,7 @@
                         "brightness": 0
                     },
                     "type": "light",
-                    "supported_features": [BRIGHTNESS]
+                    "supported_features": []
                 },
                 {
                     "entity_id": "light.living_room_corner_lamp_level",
@@ -98,7 +98,7 @@
                         "brightness": 0
                     },
                     "type": "light",
-                    "supported_features": [BRIGHTNESS,COLOR]
+                    "supported_features": []
                 },
                 {
                     "entity_id": "light.bedroom_lamp_level",
@@ -146,13 +146,13 @@
     "integration": [
 	{
             "data": {
-                "ip": "localhost:8080",
+                "ip": "localhost:8080"
              },
-            "friendly_name": "OpenHAB",
-            "id": 2,
+            "friendly_name": "Home Assistant",
+            "id": 1,
             "obj": null,
-            "plugin": "openhab",
-            "type": "openhab"
+            "plugin": "homeassistant",
+            "type": "homeassistant"
         }
 
     ],

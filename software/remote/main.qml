@@ -1,5 +1,7 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
+import QtQuick.VirtualKeyboard 2.2
+import QtQuick.VirtualKeyboard.Settings 2.2
 
 import Launcher 1.0
 import JsonFile 1.0
@@ -58,26 +60,32 @@ ApplicationWindow {
             battery_averagepower = battery.getAveragePower()
             battery_averagecurrent = battery.getAverageCurrent()
 
-            // if the designcapacity is off correct it
-            if (battery_design_capacity != battery.capacity) {
-                console.debug("Design capacity doesn't match. Recalibrating battery.");
-                battery.changeCapacity(battery.capacity);
-            }
+            if (battery_level != -1) {
 
-            // if voltage is too low and we are sourcing power, turn off the remote after timeout
-            if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
-                shutdownDelayTimer.start();
-            }
-
-            // hide and show the charging screen
-            if (battery_averagepower >= 0 ) {
-                chargingScreen.item.state = "visible";
-                // cancel shutdown when started charging
-                if (shutdownDelayTimer.running) {
-                    shutdownDelayTimer.stop();
+                // if the designcapacity is off correct it
+                if (battery_design_capacity != battery.capacity) {
+                    console.debug("Design capacity doesn't match. Recalibrating battery.");
+                    battery.changeCapacity(battery.capacity);
                 }
-            } else {
-                chargingScreen.item.state = "hidden";
+
+                // if voltage is too low and we are sourcing power, turn off the remote after timeout
+                if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
+                    shutdownDelayTimer.start();
+                }
+
+                // hide and show the charging screen
+                if (battery_averagepower >= 0) {
+                    chargingScreen.item.state = "visible";
+                    // cancel shutdown when started charging
+                    if (shutdownDelayTimer.running) {
+                        shutdownDelayTimer.stop();
+                    }
+                } else {
+                    chargingScreen.item.state = "hidden";
+                }
+
+                console.debug("Average power:" + battery_averagepower + "mW");
+                console.debug("Average current:" + battery_averagecurrent + "mA");
             }
         }
     }
@@ -91,25 +99,6 @@ ApplicationWindow {
         onTriggered: {
             loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
             loadingScreen.active = true;
-        }
-    }
-
-    Timer {
-        running: true
-        repeat: true
-        interval: standbyControl.mode == "on" ? 3000 : 120000
-
-        onTriggered: {
-
-            battery.checkBattery();
-
-            // debug
-            //            console.debug("Battery voltage: " + battery_voltage);
-            //            console.debug("Battery design capacity: " + battery_design_capacity);
-            //            console.debug("Battery full available capacity: " + battery_full_available_capacity);
-            //            console.debug("Battery full charge capacity: " + battery_full_charge_capacity);
-            //            console.debug("Average power: " + battery.getAveragePower() + "mW");
-            //                        console.debug("Average current: " + battery.getAverageCurrent() + "mA");
         }
     }
 
@@ -192,12 +181,21 @@ ApplicationWindow {
     Timer {
         repeat: true
         running: true
-        interval: 7200000
+        interval: 3600000
         triggeredOnStart: true
 
         onTriggered: {
             if (config.settings.softwareupdate) {
                 JSUpdate.checkForUpdate();
+
+                if (updateAvailable) {
+                    var hour = new Date().getHours();
+                    if (hour >= 3 && hour <= 5) {
+                        fileio.write("/usr/bin/updateURL", updateURL);
+                        mainLauncher.launch("systemctl restart update.service");
+                        Qt.quit();
+                    }
+                }
             }
         }
     }
@@ -208,7 +206,7 @@ ApplicationWindow {
         if (updateAvailable) {
             //: Notification text when new software update is available
             //~ "Update" is a label for the button
-            addNotification("normal", qsTr("New software version is available!") + translateHandler.emptyString, function() { var command = "/usr/bin/remote/updater.sh " + obj.assets[0].browser_download_url; mainLauncher.launch(command); }, qsTr("Update") + translateHandler.emptyString);
+            notifications.add(qsTr("New software version is available!") + translateHandler.emptyString);
         }
     }
 
@@ -279,6 +277,14 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        if (config == undefined) {
+            console.debug("Cannot load configuration file");
+            // create a temporary standard config
+
+            // notify user
+            notifications.add(true, "Cannot load configuration");
+        }
+
         // change dark mode to the configured value
         darkMode = Qt.binding(function () { return config.settings.darkmode});
         standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
@@ -294,12 +300,20 @@ ApplicationWindow {
         translateHandler.selectLanguage(language);
 
         // when everything is loaded, load the main UI
-        loader_main.setSource("qrc:/MainContainer.qml");
-        //        loader_main.active = true;
+        if (fileio.exists("/wifisetup")) {
+            loader_main.setSource("qrc:/wifiSetup.qml");
+        } else {
+             loader_main.setSource("qrc:/MainContainer.qml");
+        }
 
         // load bluetooth
         bluetoothArea.init(config);
-        bluetoothArea.startScan();
+        if (config.settings.bluetootharea) {
+            bluetoothArea.startScan();
+        }
+
+        // Start websocket API
+        api.start();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -555,6 +569,7 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
+                battery.checkBattery();
             }
         }
     }
@@ -586,6 +601,38 @@ ApplicationWindow {
             }
             if (standbyControl.mode == "standby") {
                 touchEventCatcher.enabled = true;
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // KEYBOARD
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    InputPanel {
+        id: inputPanel
+        width: parent.width
+        y: applicationWindow.height
+
+        states: State {
+            name: "visible"
+            when: inputPanel.active
+            PropertyChanges {
+                target: inputPanel
+                y: applicationWindow.height - inputPanel.height
+            }
+        }
+        transitions: Transition {
+            id: inputPanelTransition
+            from: ""
+            to: "visible"
+            reversible: true
+            ParallelAnimation {
+                NumberAnimation {
+                    properties: "y"
+                    duration: 300
+                    easing.type: Easing.InOutExpo
+                }
             }
         }
     }

@@ -52,6 +52,16 @@ bool MediaPlayer::update(const QVariantMap &attributes)
     return  chg;
 }
 
+void MediaPlayer::turnOn()
+{
+    command("TURNON", "");
+}
+
+void MediaPlayer::turnOff()
+{
+    command("TURNOFF", "");
+}
+
 void MediaPlayer::play()
 {
     command("PLAY", "");

@@ -77,6 +77,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY CONTROL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias displayControl: displayControl
     DisplayControl {
         id: displayControl
     }
@@ -107,7 +108,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-        battery.checkBattery();
+        //        battery.checkBattery();
 
         switch (mode) {
 
@@ -144,6 +145,9 @@ Item {
             for (var i=0; i<config.integration.length; i++) {
                 integration[config.integration[i].type].obj.connect();
             }
+
+            // turn on API
+            api.start();
 
             break;
         }
@@ -204,8 +208,8 @@ Item {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
 
             // add screen on time
-            screenOnTime += new Date().getTime() - startTime
-            screenOffTime = new Date().getTime() - baseTime - screenOnTime
+            screenOnTime += new Date().getTime() - baseTime - startTime
+            screenOffTime = new Date().getTime() - screenOnTime
         }
     }
 
@@ -253,11 +257,14 @@ Item {
             }
 
             // mode = wifi_off
-            if (time-standbyBaseTime > wifiOffTime * 1000 && wifiOffTime != 0 && mode == "standby") {
+            if (time-standbyBaseTime > wifiOffTime * 1000 && wifiOffTime != 0 && mode == "standby" && battery_averagepower <= 0) {
                 // integration socket off
                 for (var i=0; i<config.integration.length; i++) {
                     integration[config.integration[i].type].obj.disconnect();
                 }
+                // turn off API
+                api.stop();
+
                 // turn off wifi
                 wifiHandler("off")
 
@@ -265,7 +272,7 @@ Item {
             }
 
             // mode = shutdown
-            if (time-standbyBaseTime > shutdownTime * 1000 && shutdownTime != 0 && (mode == "standby" || mode =="wifi_off")) {
+            if (time-standbyBaseTime > shutdownTime * 1000 && shutdownTime != 0 && (mode == "standby" || mode =="wifi_off") && battery_averagepower <= 0) {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
             }
@@ -279,7 +286,9 @@ Item {
 
         onTriggered: {
             standbyBaseTime = new Date().getTime()
-            standbyTimer.start()
+            if (loader_main.source != "qrc:/wifiSetup.qml") {
+                standbyTimer.start()
+            }
         }
     }
 }

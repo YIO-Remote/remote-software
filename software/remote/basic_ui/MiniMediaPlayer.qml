@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
 Item {
@@ -165,7 +165,7 @@ Item {
 
     function remove(name) {
         // if stopped playing, remove the player after 30 seconds
-        var obj = singleShot.createObject(miniMediaPlayer, { name: name, action: function() { removePlayer(name) }, interval: 30000 });
+        var obj = singleShot.createObject(miniMediaPlayer, { name: name, action: function() { removePlayer(name) }, interval: 60000 });
         runningTimers.push(obj);
     }
 
@@ -187,7 +187,7 @@ Item {
 
     Connections {
         target: buttonHandler
-        enabled: miniMediaPlayer.state == "open"
+        enabled: miniMediaPlayer.state == "open" && (standbyControl.mode == "on" || standbyControl.mode == "dim")
 
         onButtonPress: {
             switch (button) {
@@ -221,23 +221,58 @@ Item {
         onButtonPress: {
             switch (button) {
             case "volume up":
+                buttonTimeout.stop();
+                buttonTimeout.volumeUp = true;
+                buttonTimeout.start();
+                break;
+            case "volume down":
+                buttonTimeout.stop();
+                buttonTimeout.volumeUp = false;
+                buttonTimeout.start();
+                break;
+            }
+        }
+
+        onButtonRelease: {
+            switch (button) {
+            case "volume up":
+                buttonTimeout.stop();
+                break;
+            case "volume down":
+                buttonTimeout.stop();
+                break;
+            }
+        }
+    }
+
+    Timer {
+        id: buttonTimeout
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+
+        property bool volumeUp: false
+
+        onTriggered: {
+            if (volumeUp) {
                 if (volume.state != "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
                 var newvolume = mediaPlayers.currentItem.player.obj.volume + 0.02;
+                if (newvolume > 1) newvolume = 1;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
-                break;
-            case "volume down":
+            } else {
                 if (volume.state != "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
+                newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
+                if (newvolume < 0) newvolume = 0;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
-                break;
             }
         }
     }
@@ -271,7 +306,7 @@ Item {
                         PropertyChanges {target: artist; opacity: 0 }
                         PropertyChanges {target: closeButton; opacity: 1 }
                         PropertyChanges {target: blur; radius: 0 }
-                        PropertyChanges {target: overlay; opacity: 0.3 }
+                        PropertyChanges {target: overlay; opacity: 0.5 }
                         PropertyChanges {target: titleOpen; y: 200; opacity: 1 }
                         PropertyChanges {target: artistOpen; opacity: 0.8 }
                         PropertyChanges {target: indicator; opacity: 1 }

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>keyboard/layouts/en_GB/dialpad.qml</file>
+        <file>keyboard/layouts/en_GB/digits.qml</file>
+        <file>keyboard/layouts/en_GB/handwriting.qml</file>
+        <file>keyboard/layouts/en_GB/main.qml</file>
+        <file>keyboard/layouts/en_GB/numbers.qml</file>
+        <file>keyboard/layouts/en_GB/symbols.qml</file>
+    </qresource>
+</RCC>

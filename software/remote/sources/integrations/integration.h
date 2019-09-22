@@ -21,7 +21,7 @@ public:
 
     Q_ENUM(states)
 
-    Q_PROPERTY(states       state           READ state          WRITE setState)
+    Q_PROPERTY(states       state           READ state          WRITE setState          NOTIFY stateChanged)
     Q_PROPERTY(int          integrationId   READ integrationId  WRITE setIntegrationId  NOTIFY integrationIdChanged)
     Q_PROPERTY(QString      type            READ type           WRITE setType)
     Q_PROPERTY(QString      friendlyName    READ friendlyName   WRITE setFriendlyName)
@@ -37,10 +37,13 @@ public:
         m_state = value;
         if (m_state == CONNECTING) {
             emit connecting();
+            emit stateChanged();
         } else if (m_state == CONNECTED){
             emit connected();
+            emit stateChanged();
         } else {
             emit disconnected();
+            emit stateChanged();
         }
     }
 
@@ -77,6 +80,7 @@ signals:
     void connected();
     void connecting();
     void disconnected();
+    void stateChanged();
 
 };
 

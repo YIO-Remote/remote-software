@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 
 import Launcher 1.0
 
@@ -152,10 +152,6 @@ Item {
             mouseArea.onClicked: {
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
-                //                settingsLauncher.launch("fbv -d 1 /bye.png")
-                //                console.debug("now shutdown")
-                //                buttonHandler.interruptHandler.shutdown();
-                //                settingsLauncher.launch("halt");
             }
         }
     }

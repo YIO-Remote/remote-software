@@ -93,8 +93,6 @@ HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *ent
     QObject::connect(m_socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onStateChanged(QAbstractSocket::SocketState)));
 
     QObject::connect(m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
-
-    qDebug() << "Home Assistant init";
 }
 
 
@@ -438,5 +436,9 @@ void HomeAssistantThread::sendCommand(const QString &type, const QString &entity
             webSocketSendCommand(type, "media_previous_track", entity_id, NULL);
         else if (command == "NEXT")
             webSocketSendCommand(type, "media_next_track", entity_id, NULL);
+        else if (command == "TURNON")
+            webSocketSendCommand(type, "turn_on", entity_id, NULL);
+        else if (command == "TURNOFF")
+            webSocketSendCommand(type, "turn_off", entity_id, NULL);
     }
 }

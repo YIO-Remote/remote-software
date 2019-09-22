@@ -28,6 +28,9 @@ public:
 
     Q_INVOKABLE void setBrightness(int from, int to);
 
+    Q_INVOKABLE void batteryChargingOn();
+    Q_INVOKABLE void batteryChargingOff();
+
     DisplayControl();
 
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);

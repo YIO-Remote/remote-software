@@ -27,7 +27,13 @@ bool Light::update(const QVariantMap &attributes)
 
 void Light::toggle()
 {
-    command("TOGGLE", "");
+//    command("TOGGLE", "");
+    if (state()) {
+        command("OFF", "");
+    }
+    else {
+        command("ON", "");
+    }
 }
 
 void Light::turnOn()

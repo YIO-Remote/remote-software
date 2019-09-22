@@ -8,8 +8,9 @@
 
 #include "launcher.h"
 #include "jsonfile.h"
-#include "hardware/display_control.h"
 #include "translation.h"
+
+#include "hardware/display_control.h"
 #include "hardware/touchdetect.h"
 #include "hardware/interrupt_handler.h"
 #include "hardware/drv2605.h"
@@ -22,9 +23,15 @@
 #include "notifications.h"
 #include "bluetootharea.h"
 
+#include "fileio.h"
+#include "yioapi.h"
+
 int main(int argc, char *argv[])
 {
+    qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
+    qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
 
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
@@ -82,6 +89,14 @@ int main(int argc, char *argv[])
     // NOTIFICATIONS
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
+
+    // FILE IO
+    FileIO fileIO;
+    engine.rootContext()->setContextProperty("fileio", &fileIO);
+
+    // YIO API
+    YioAPI yioapi(&engine);
+    engine.rootContext()->setContextProperty("api", &yioapi);
 
     engine.addImportPath("qrc:/");
 

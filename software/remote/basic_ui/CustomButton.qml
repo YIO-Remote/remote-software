@@ -1,5 +1,5 @@
 import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.5
 
 Rectangle {
 
@@ -45,5 +45,9 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
+
+        onClicked: {
+            haptic.playEffect("click");
+        }
     }
 }

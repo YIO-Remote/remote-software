@@ -11,6 +11,7 @@
 #include <QBluetoothDeviceInfo>
 #include <QBluetoothDeviceDiscoveryAgent>
 #include "qbluetoothlocaldevice.h"
+#include <QBluetoothSocket>
 
 #include <QtDebug>
 
@@ -21,7 +22,7 @@ class BluetoothArea : public QObject
 
 public:
     // the current area
-    Q_PROPERTY  (QString currentArea    READ currentArea                            NOTIFY currentAreaChanged CONSTANT)
+    Q_PROPERTY  (QString currentArea    READ currentArea                            NOTIFY currentAreaChanged)
     Q_PROPERTY  (int     interval       READ interval       WRITE setInterval       NOTIFY intervalChanged)
 
     QString currentArea ()              { return m_currentArea; }
@@ -35,10 +36,14 @@ public:
 
     // initialise with the config from config.json
     Q_INVOKABLE void init               (const QVariantMap& config);
+    Q_INVOKABLE void turnOn             ();
     Q_INVOKABLE void turnOff            ();
 
     Q_INVOKABLE void startScan();
     Q_INVOKABLE void stopScan();
+
+    Q_INVOKABLE void lookForDock();
+    Q_INVOKABLE void sendInfoToDock(const QString &msg);
 
 
     explicit BluetoothArea(QObject *parent = nullptr);
@@ -51,10 +56,18 @@ signals:
 
     void startScanSignal();
     void stopScanSignal();
+    void turnOnSignal();
     void turnOffSignal();
+
+    void lookForDockSignal();
+    void sendInfoToDockSignal(const QString &msg);
+
+    void dockFound();
+    void dockMessage(const QString &message);
 
 public slots:
     void deviceDiscovered(const QString &);
+    void foundDock();
 
 
 private:
@@ -78,14 +91,20 @@ public:
 
 signals:
     void foundRoom(const QString &area);
-
+    void foundDock();
 
 public slots:
     void startScan();
     void stopScan();
     void turnOff();
+    void turnOn();
     void deviceDiscovered(const QBluetoothDeviceInfo &device);
     void discoveryFinished();
+
+    void lookForDock();
+    void receiveInfoForDock(const QString &msg);
+    void dockConnected();
+    void dockStateChanged(QBluetoothSocket::SocketState state);
 
     void onTimeout();
 
@@ -100,6 +119,10 @@ private:
     QBluetoothAddress                   m_localDeviceAddr;
 
     QTimer*                             m_timer = new QTimer(this);
+
+    QBluetoothAddress                   m_dock_address;
+    QBluetoothSocket*                   m_socket;
+    QString                             m_dock_message;
 };
 
 #endif // BLUETOOTHAREA_H
