@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl" sourcelanguage="en">
+<TS version="2.1" language="nl_NL">
 <context>
     <name>Battery</name>
     <message>
         <location filename="../basic_ui/settings/Battery.qml" line="54"/>
         <source>Battery</source>
-        <translation>Batterij</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Battery.qml" line="75"/>
+        <source>Battery health</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Battery.qml" line="111"/>
         <source>Screen on</source>
-        <translation>Scherm aan</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Battery.qml" line="139"/>
         <source>Screen off</source>
-        <translation>Scherm uit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Battery.qml" line="176"/>
@@ -33,11 +38,6 @@
         <source>No data available yet</source>
         <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="75"/>
-        <source>Battery health</source>
-        <translation>Batterij gezondheid</translation>
     </message>
 </context>
 <context>
@@ -65,22 +65,18 @@
         <location filename="../components/light/ui/Button.qml" line="370"/>
         <location filename="../components/media_player/ui/Button.qml" line="343"/>
         <source>Remove from favorites</source>
-        <translation>Uit favorieten verwijderen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../components/blind/ui/Button.qml" line="372"/>
         <location filename="../components/light/ui/Button.qml" line="370"/>
         <location filename="../components/media_player/ui/Button.qml" line="343"/>
         <source>Add to favorites</source>
-        <translation>Aan favorieten toevoegen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ChargingScreen</name>
-    <message>
-        <source>Charging</source>
-        <translation type="vanished">Opladen</translation>
-    </message>
     <message>
         <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
         <source>% Charged</source>
@@ -92,12 +88,12 @@
     <message>
         <location filename="../basic_ui/settings/Devices.qml" line="17"/>
         <source>Devices</source>
-        <translation>Apparaten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Devices.qml" line="38"/>
         <source>Add new</source>
-        <translation>Nieuw apparaat toevoegen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -105,27 +101,27 @@
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="18"/>
         <source>Display</source>
-        <translation>Scherm</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="39"/>
         <source>Auto brightness</source>
-        <translation>Automatische helderheid</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="144"/>
         <source>Dark mode</source>
-        <translation>Nachtmodus</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="183"/>
         <source>Cleaning mode</source>
-        <translation>Reinigingsmodus</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="198"/>
         <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-        <translation>Raak het scherm voor 10 seconden aan om de reinigingsmodus uit te schakelen.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -133,12 +129,12 @@
     <message>
         <location filename="../sources/entities/entities.h" line="61"/>
         <source>Lights</source>
-        <translation type="unfinished">Verlichting</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sources/entities/entities.h" line="61"/>
         <source>Blinds</source>
-        <translation type="unfinished">Jaloezieën</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../sources/entities/entities.h" line="61"/>
@@ -166,12 +162,12 @@
     <message>
         <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
         <source>Hubs</source>
-        <translation>Hubs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
         <source>Add new</source>
-        <translation>Nieuwe toevoegen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -179,30 +175,7 @@
     <message>
         <location filename="../basic_ui/settings/Languages.qml" line="25"/>
         <source>Languages</source>
-        <translation>Talen</translation>
-    </message>
-</context>
-<context>
-    <name>LoadingScreen</name>
-    <message>
-        <source>Wait for it ...</source>
-        <translation type="vanished">Even wachten ...</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation type="vanished">Gereed</translation>
-    </message>
-    <message>
-        <source>Something went wrong. Please reboot</source>
-        <translation type="vanished">Er ging iets mis. Een herstart is nodig</translation>
-    </message>
-    <message>
-        <source>Reboot</source>
-        <translation type="vanished">Herstarten</translation>
-    </message>
-    <message>
-        <source>Hello</source>
-        <translation type="vanished">Hallo</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -211,22 +184,22 @@
         <location filename="../basic_ui/MainNavigation.qml" line="31"/>
         <source>Favorites</source>
         <extracomment>menu items that are in the bottom menu</extracomment>
-        <translation>Favorieten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/MainNavigation.qml" line="31"/>
         <source>Settings</source>
-        <translation>Instellingen</translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="32"/>
-        <source>Blinds</source>
-        <translation>Jaloezieën</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/MainNavigation.qml" line="32"/>
         <source>Lights</source>
-        <translation>Verlichting</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/MainNavigation.qml" line="32"/>
+        <source>Blinds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -234,22 +207,22 @@
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="60"/>
         <source>Network</source>
-        <translation>Netwerk</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="250"/>
         <source>Wi-Fi signal strength</source>
-        <translation>Wi-Fi signaal sterkte</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="287"/>
         <source>IP address</source>
-        <translation>IP-adres</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="323"/>
         <source>MAC address</source>
-        <translation>MAC-adres</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -257,7 +230,7 @@
     <message>
         <location filename="../basic_ui/Notification.qml" line="244"/>
         <source>Dismiss</source>
-        <translation>Negeren</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -265,7 +238,7 @@
     <message>
         <location filename="../basic_ui/NotificationDrawer.qml" line="16"/>
         <source>Notifications</source>
-        <translation>Notificaties</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -273,12 +246,12 @@
     <message>
         <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
         <source>Low battery</source>
-        <translation>Batterij bijna leeg</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
         <source>Please charge the remote soon</source>
-        <translation>Laad de afstandsbediening binnenkort op</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -286,43 +259,43 @@
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
         <source>Power saving</source>
-        <translation>Energiebesparing</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Never turn off Wi-Fi</source>
-        <translation>Wi-Fi nooit uitschakelen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-        <translation>Wi-Fi uitschakelen na %1 minuten van inactiviteit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
         <source>Never</source>
-        <translation>Nooit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
         <source>60 minutes</source>
-        <translation>60 minuten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Never turn off the remote</source>
-        <translation>Schakel de afstandsbediening nooit uit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Turn off the remote after %1 hours of inactivity</source>
-        <translation>De afstandsbediening uitschakelen na %1 uur van inactiviteit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
         <source>8 hours</source>
-        <translation>8 uren</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -354,7 +327,7 @@
     <message>
         <location filename="../basic_ui/Settings.qml" line="34"/>
         <source>Settings</source>
-        <translation type="unfinished">Instellingen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -362,12 +335,12 @@
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="19"/>
         <source>Software update</source>
-        <translation>Software update</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="40"/>
         <source>Auto update</source>
-        <translation>Automatisch bijwerken</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
@@ -406,37 +379,33 @@ YIO remote </source>
         <source>Check for update</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Automatically look for updates and update when a new software version is available.</source>
-        <translation type="vanished">Automatisch zoeken naar updates en bijwerken wanneer er een nieuwe software versie beschikbaar is.</translation>
-    </message>
 </context>
 <context>
     <name>System</name>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="37"/>
         <source>System</source>
-        <translation>Systeem</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="58"/>
         <source>Uptime</source>
-        <translation>Uptime</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="95"/>
         <source>CPU temperature</source>
-        <translation>CPU-temperatuur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="131"/>
         <source>Reboot</source>
-        <translation>Herstart</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="146"/>
         <source>Shutdown</source>
-        <translation>Uitschakelen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -445,7 +414,7 @@ YIO remote </source>
         <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
         <source>Favorites</source>
         <extracomment>Name of the settings page</extracomment>
-        <translation type="unfinished">Favorieten</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -458,14 +427,6 @@ YIO remote </source>
 </context>
 <context>
     <name>main</name>
-    <message>
-        <source>Lights</source>
-        <translation type="vanished">Verlichting</translation>
-    </message>
-    <message>
-        <source>Blinds</source>
-        <translation type="vanished">Jaloezieën</translation>
-    </message>
     <message>
         <location filename="../main.qml" line="209"/>
         <source>New software version is available!</source>
@@ -480,7 +441,7 @@ YIO remote </source>
         <location filename="../basic_ui/pages/settings.qml" line="10"/>
         <source>Settings</source>
         <extracomment>Name of the settings page</extracomment>
-        <translation type="unfinished">Instellingen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -506,7 +467,7 @@ http://yio.remote</source>
     <message>
         <location filename="../wifiSetup.qml" line="77"/>
         <source>Shutdown</source>
-        <translation type="unfinished">Uitschakelen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../wifiSetup.qml" line="102"/>
