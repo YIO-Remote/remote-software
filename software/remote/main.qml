@@ -205,7 +205,6 @@ ApplicationWindow {
     onUpdateAvailableChanged: {
         if (updateAvailable) {
             //: Notification text when new software update is available
-            //~ "Update" is a label for the button
             notifications.add(qsTr("New software version is available!") + translateHandler.emptyString);
         }
     }
