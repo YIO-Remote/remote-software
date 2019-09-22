@@ -186,7 +186,7 @@
     <message>
       <location filename="../basic_ui/Notification.qml" line="250"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Avskjedige</translation>
     </message>
   </context>
   <context>
