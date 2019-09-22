@@ -319,7 +319,7 @@
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
+      <translation>Utilisez votre navigateur pour configurer votre télécommande YIO ou téléchargez des sauvegardes. Accédez à la page :
 
 </translation>
     </message>
@@ -329,7 +329,7 @@
     <message>
       <location filename="../basic_ui/Settings.qml" line="34"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Paramètres</translation>
     </message>
   </context>
   <context>
@@ -355,33 +355,33 @@ Updates are installed between 03.00 am and 05.00 am.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>New software is available.
 YIO remote </source>
-      <translation type="unfinished">New software is available.
-YIO remote </translation>
+      <translation>Nouveau logiciel disponible.
+Télécommande YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Votre système est à jour.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Version installée : télécommande YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>Télécommande YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Mise à jour</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Vérifier les mises à jour</translation>
     </message>
   </context>
   <context>
@@ -418,7 +418,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoris</translation>
     </message>
   </context>
   <context>
@@ -426,7 +426,7 @@ YIO remote </translation>
     <message>
       <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
       <source>Failed to connect to Home Assistant.</source>
-      <translation type="unfinished">Failed to connect to Home Assistant.</translation>
+      <translation>Échec de la connexion à Home Assistant.</translation>
     </message>
   </context>
   <context>
@@ -435,7 +435,7 @@ YIO remote </translation>
       <location filename="../main.qml" line="208"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
-      <translation type="unfinished">New software version is available!</translation>
+      <translation>Nouvelle version disponible !</translation>
     </message>
   </context>
   <context>
@@ -444,7 +444,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/settings.qml" line="10"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Settings</translation>
+      <translation>Paramètres</translation>
     </message>
   </context>
   <context>
@@ -452,13 +452,13 @@ YIO remote </translation>
     <message>
       <location filename="../wifiSetup.qml" line="28"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Configuration du Wi-Fi</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="45"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation type="unfinished">Connect to the Wi-Fi network
+      <translation>Se connecter au réseau Wi-Fi
 </translation>
     </message>
     <message>
@@ -473,12 +473,12 @@ yio.remote</translation>
     <message>
       <location filename="../wifiSetup.qml" line="77"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Éteindre</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="102"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Connecté</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="119"/>
@@ -491,12 +491,12 @@ connected to your Wi-Fi network.</translation>
       <location filename="../wifiSetup.qml" line="133"/>
       <location filename="../wifiSetup.qml" line="271"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Suivant</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="152"/>
       <source>Not connected</source>
-      <translation type="unfinished">Not connected</translation>
+      <translation>Non Connecté</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="169"/>
@@ -508,12 +508,12 @@ connect to your Wi-Fi network.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="186"/>
       <source>Please try again</source>
-      <translation type="unfinished">Please try again</translation>
+      <translation>Veuillez réessayer</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Réessayez</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
@@ -523,12 +523,12 @@ connect to your Wi-Fi network.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Configuration du Wi-Fi terminée</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="325"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Redémarrer</translation>
     </message>
   </context>
 </TS>
