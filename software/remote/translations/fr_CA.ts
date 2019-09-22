@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr-CA" sourcelanguage="en">
+<TS version="2.1" language="ca_ES">
 <context>
     <name>Battery</name>
     <message>
         <location filename="../basic_ui/settings/Battery.qml" line="54"/>
         <source>Battery</source>
-        <translation type="unfinished">Battery</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Battery.qml" line="75"/>
+        <source>Battery health</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Battery.qml" line="111"/>
@@ -33,19 +38,6 @@
         <source>No data available yet</source>
         <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Battery charge</source>
-        <translation type="obsolete">Battery charge</translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="75"/>
-        <source>Battery health</source>
-        <translation type="unfinished">Battery health</translation>
-    </message>
-    <message>
-        <source>Battery voltage</source>
-        <translation type="obsolete">Battery voltage</translation>
     </message>
 </context>
 <context>
@@ -86,40 +78,9 @@
 <context>
     <name>ChargingScreen</name>
     <message>
-        <source>Charging</source>
-        <translation type="obsolete">Charging</translation>
-    </message>
-    <message>
         <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
         <source>% Charged</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ConnectionScreen</name>
-    <message>
-        <source>Reconnecting...</source>
-        <translation type="obsolete">Reconnecting...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="obsolete">Connected</translation>
-    </message>
-    <message>
-        <source>Connection failed</source>
-        <translation type="obsolete">Connection failed</translation>
-    </message>
-    <message>
-        <source>Try again</source>
-        <translation type="obsolete">Try again</translation>
-    </message>
-    <message>
-        <source>Hello</source>
-        <translation type="obsolete">Hello</translation>
-    </message>
-    <message>
-        <source>Wait for it...</source>
-        <translation type="obsolete">Wait for it...</translation>
     </message>
 </context>
 <context>
@@ -132,7 +93,7 @@
     <message>
         <location filename="../basic_ui/settings/Devices.qml" line="38"/>
         <source>Add new</source>
-        <translation type="unfinished">Add new</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -140,27 +101,27 @@
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="18"/>
         <source>Display</source>
-        <translation type="unfinished">Display</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="39"/>
         <source>Auto brightness</source>
-        <translation type="unfinished">Auto brightness</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="144"/>
         <source>Dark mode</source>
-        <translation type="unfinished">Dark mode</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="183"/>
         <source>Cleaning mode</source>
-        <translation type="unfinished">Cleaning mode</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Display.qml" line="198"/>
         <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-        <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -201,12 +162,12 @@
     <message>
         <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
         <source>Hubs</source>
-        <translation type="unfinished">Hubs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
         <source>Add new</source>
-        <translation type="unfinished">Add new</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -214,28 +175,20 @@
     <message>
         <location filename="../basic_ui/settings/Languages.qml" line="25"/>
         <source>Languages</source>
-        <translation type="unfinished">Languages</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainNavigation</name>
     <message>
-        <source>Dashboard</source>
-        <translation type="obsolete">Dashboard</translation>
-    </message>
-    <message>
-        <source>Rooms</source>
-        <translation type="obsolete">Rooms</translation>
+        <location filename="../basic_ui/MainNavigation.qml" line="31"/>
+        <source>Favorites</source>
+        <extracomment>menu items that are in the bottom menu</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/MainNavigation.qml" line="31"/>
         <source>Settings</source>
-        <translation type="unfinished">Settings</translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="31"/>
-        <source>Favorites</source>
-        <extracomment>menu items that are in the bottom menu</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -250,49 +203,26 @@
     </message>
 </context>
 <context>
-    <name>Menu</name>
-    <message>
-        <source>Display</source>
-        <translation type="obsolete">Display</translation>
-    </message>
-    <message>
-        <source>Auto brightness</source>
-        <translation type="obsolete">Auto brightness</translation>
-    </message>
-    <message>
-        <source>Dark mode</source>
-        <translation type="obsolete">Dark mode</translation>
-    </message>
-    <message>
-        <source>Cleaning mode</source>
-        <translation type="obsolete">Cleaning mode</translation>
-    </message>
-    <message>
-        <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-        <translation type="obsolete">Touch the display for 10 seconds to turn cleaning mode off.</translation>
-    </message>
-</context>
-<context>
     <name>Network</name>
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="60"/>
         <source>Network</source>
-        <translation type="unfinished">Network</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="250"/>
         <source>Wi-Fi signal strength</source>
-        <translation type="unfinished">Wi-Fi signal strength</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="287"/>
         <source>IP address</source>
-        <translation type="unfinished">IP address</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Network.qml" line="323"/>
         <source>MAC address</source>
-        <translation type="unfinished">MAC address</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -316,12 +246,12 @@
     <message>
         <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
         <source>Low battery</source>
-        <translation type="unfinished">Low battery</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
         <source>Please charge the remote soon</source>
-        <translation type="unfinished">Please charge the remote soon</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -329,43 +259,43 @@
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
         <source>Power saving</source>
-        <translation type="unfinished">Power saving</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Never turn off Wi-Fi</source>
-        <translation type="unfinished">Never turn off Wi-Fi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
         <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-        <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
         <source>Never</source>
-        <translation type="unfinished">Never</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
         <source>60 minutes</source>
-        <translation type="unfinished">60 minutes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Never turn off the remote</source>
-        <translation type="unfinished">Never turn off the remote</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
         <source>Turn off the remote after %1 hours of inactivity</source>
-        <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
         <source>8 hours</source>
-        <translation type="unfinished">8 hours</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -397,7 +327,7 @@
     <message>
         <location filename="../basic_ui/Settings.qml" line="34"/>
         <source>Settings</source>
-        <translation type="unfinished">Settings</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -442,7 +372,7 @@ YIO remote </source>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
         <source>Update</source>
-        <translation type="unfinished">Update</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
@@ -451,42 +381,31 @@ YIO remote </source>
     </message>
 </context>
 <context>
-    <name>StatusBar</name>
-    <message>
-        <source>New software version is available.</source>
-        <translation type="obsolete">New software version is available.</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="obsolete">Update</translation>
-    </message>
-</context>
-<context>
     <name>System</name>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="37"/>
         <source>System</source>
-        <translation type="unfinished">System</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="58"/>
         <source>Uptime</source>
-        <translation type="unfinished">Uptime</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="95"/>
         <source>CPU temperature</source>
-        <translation type="unfinished">CPU temperature</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="131"/>
         <source>Reboot</source>
-        <translation type="unfinished">Reboot</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/System.qml" line="146"/>
         <source>Shutdown</source>
-        <translation type="unfinished">Shutdown</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -522,7 +441,7 @@ YIO remote </source>
         <location filename="../basic_ui/pages/settings.qml" line="10"/>
         <source>Settings</source>
         <extracomment>Name of the settings page</extracomment>
-        <translation type="unfinished">Settings</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -548,12 +467,12 @@ http://yio.remote</source>
     <message>
         <location filename="../wifiSetup.qml" line="77"/>
         <source>Shutdown</source>
-        <translation type="unfinished">Shutdown</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../wifiSetup.qml" line="102"/>
         <source>Connected</source>
-        <translation type="unfinished">Connected</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../wifiSetup.qml" line="119"/>
@@ -586,7 +505,7 @@ connect to your Wi-Fi network.</source>
     <message>
         <location filename="../wifiSetup.qml" line="200"/>
         <source>Try again</source>
-        <translation type="unfinished">Try again</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../wifiSetup.qml" line="254"/>
@@ -609,7 +528,7 @@ http://yioremote.local</source>
     <message>
         <location filename="../wifiSetup.qml" line="325"/>
         <source>Reboot</source>
-        <translation type="unfinished">Reboot</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
