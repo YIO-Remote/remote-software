@@ -23,12 +23,10 @@ software/remote/translations/.DS_Store
 software/build-*
 
 #Translation files
-software/remote/translations/*.ts
-software/remote/translations/*.qm
-!software/remote/translations/en_US.ts
+#software/remote/translations/*.ts
+#software/remote/translations/*.qm
+#!software/remote/translations/en_US.ts
 *.user
-software/remote/sources/integrations/openhab/openhab.pro.user
-software/remote/sources/integrations/homeassistant/homeassistant.pro.user
 software/dock/.vscode/settings.json
 software/dock/.travis.yml
 software/dock/include/README
