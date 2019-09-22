@@ -77,7 +77,7 @@ Item {
             id: smallText
             color: colorText
             opacity: 0.5
-            text: qsTr("Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:\n\n") + "http://" + fileio.read("/apssid").trim() + ".local" + translateHandler.emptyString
+            text: qsTr("Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:\n\n") + fileio.read("/apssid").trim() + ".local" + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width - 40 - remoteConfigButton.width
             anchors.left: parent.left

@@ -428,11 +428,10 @@ YIO remote </source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="209"/>
+        <location filename="../main.qml" line="208"/>
         <source>New software version is available!</source>
         <extracomment>Notification text when new software update is available</extracomment>
         <translation type="unfinished"></translation>
-        <extra-"Update">is a label for the button</extra-"Update">
     </message>
 </context>
 <context>
@@ -461,7 +460,7 @@ YIO remote </source>
         <location filename="../wifiSetup.qml" line="62"/>
         <source>Open a web browser
 and navigate to
-http://yio.remote</source>
+yio.remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -515,14 +514,6 @@ connect to your Wi-Fi network.</source>
     <message>
         <location filename="../wifiSetup.qml" line="290"/>
         <source>Wi-Fi setup completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="309"/>
-        <source>YIO Dock has successfully connected to your Wi-Fi network.
-
-To continue the configuration, open a web browser on your computer and navigate to
-http://yioremote.local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
