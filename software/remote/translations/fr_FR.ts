@@ -26,18 +26,18 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="176"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>Niveau de la batterie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>Puissance moyenne</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>Aucune donnée disponible pour le moment</translation>
     </message>
   </context>
   <context>
@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
@@ -80,7 +80,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>Chargé</translation>
     </message>
   </context>
   <context>
@@ -129,17 +129,17 @@
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lumières</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Volets</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Média</translation>
     </message>
   </context>
   <context>
@@ -147,17 +147,17 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> Déconnecté</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Se connecte</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Se déconnecte</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
@@ -303,7 +303,7 @@
     <message>
       <location filename="../sources/hardware/proximity_gesture_control.h" line="118"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Impossible d'initialiser le capteur de proximité. Veuillez redémarrer la télécommande.</translation>
     </message>
   </context>
   <context>
@@ -312,7 +312,7 @@
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="24"/>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="45"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>Paramétrage de la télécommande</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="80"/>
