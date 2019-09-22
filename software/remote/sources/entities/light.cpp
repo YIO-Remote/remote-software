@@ -6,17 +6,17 @@ QString Light::Type = "light";
 bool Light::update(const QVariantMap &attributes)
 {
     bool chg = false;
-    if (m_state != attributes.value("state").toBool()) {
+    if (attributes.contains("state") && m_state != attributes.value("state").toBool()) {
         m_state = attributes.value("state").toBool();
         chg = true;
         emit stateChanged();
     }
-    if (m_brightness != attributes.value("brightness").toInt()) {
+    if (attributes.contains("brightness") && m_brightness != attributes.value("brightness").toInt()) {
         m_brightness = attributes.value("brightness").toInt();
         chg = true;
         emit brightnessChanged();
     }
-    if (m_color != attributes.value("color")) {
+    if (attributes.contains("color") && m_color != attributes.value("color")) {
         QColor color(attributes.value("color").toString());
         m_color = color;
         chg = true;

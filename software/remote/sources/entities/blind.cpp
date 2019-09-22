@@ -6,12 +6,12 @@ QString Blind::Type = "blind";
 bool Blind::update(const QVariantMap &attributes)
 {
     bool chg = false;
-    if (m_state != attributes.value("state").toBool()) {
+    if (attributes.contains("state") && m_state != attributes.value("state").toBool()) {
         m_state = attributes.value("state").toBool();
         chg = true;
         emit stateChanged();
     }
-    if (m_position != attributes.value("position").toInt()) {
+    if (attributes.contains("position") && m_position != attributes.value("position").toInt()) {
         m_position = attributes.value("position").toInt();
         chg = true;
         emit positionChanged();
