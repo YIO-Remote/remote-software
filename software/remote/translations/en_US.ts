@@ -4,51 +4,73 @@
 <context>
     <name>Battery</name>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="26"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="54"/>
         <source>Battery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="83"/>
-        <source>Screen on</source>
+        <location filename="../basic_ui/settings/Battery.qml" line="75"/>
+        <source>Battery health</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Battery.qml" line="111"/>
+        <source>Screen on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Battery.qml" line="139"/>
         <source>Screen off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="148"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="176"/>
         <source>Battery level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="207"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="236"/>
         <source>Average power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="282"/>
+        <location filename="../basic_ui/settings/Battery.qml" line="312"/>
         <source>No data available yet</source>
         <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>Bluetooth</name>
     <message>
-        <location filename="../basic_ui/settings/Battery.qml" line="47"/>
-        <source>Battery health</source>
+        <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
+        <source>Bluetooth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
+        <source>Area detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
+        <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Button</name>
     <message>
-        <location filename="../components/light/Button.qml" line="429"/>
+        <location filename="../components/blind/ui/Button.qml" line="372"/>
+        <location filename="../components/light/ui/Button.qml" line="370"/>
+        <location filename="../components/media_player/ui/Button.qml" line="343"/>
         <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/light/Button.qml" line="429"/>
+        <location filename="../components/blind/ui/Button.qml" line="372"/>
+        <location filename="../components/light/ui/Button.qml" line="370"/>
+        <location filename="../components/media_player/ui/Button.qml" line="343"/>
         <source>Add to favorites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -57,7 +79,7 @@
     <name>ChargingScreen</name>
     <message>
         <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
-        <source>Charging</source>
+        <source>% Charged</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -77,40 +99,73 @@
 <context>
     <name>Display</name>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="17"/>
+        <location filename="../basic_ui/settings/Display.qml" line="18"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="38"/>
+        <location filename="../basic_ui/settings/Display.qml" line="39"/>
         <source>Auto brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="164"/>
+        <location filename="../basic_ui/settings/Display.qml" line="144"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="224"/>
+        <location filename="../basic_ui/settings/Display.qml" line="183"/>
         <source>Cleaning mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Display.qml" line="239"/>
+        <location filename="../basic_ui/settings/Display.qml" line="198"/>
         <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Entities</name>
+    <message>
+        <location filename="../sources/entities/entities.h" line="61"/>
+        <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/entities/entities.h" line="61"/>
+        <source>Blinds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/entities/entities.h" line="61"/>
+        <source>Media</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Hubs</name>
     <message>
-        <location filename="../basic_ui/settings/Hubs.qml" line="17"/>
+        <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
+        <source> - Disconnected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
+        <source>Disconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
         <source>Hubs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Hubs.qml" line="38"/>
+        <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
         <source>Add new</source>
         <translation type="unfinished"></translation>
     </message>
@@ -124,78 +179,48 @@
     </message>
 </context>
 <context>
-    <name>LoadingScreen</name>
-    <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="22"/>
-        <source>Wait for it ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="33"/>
-        <source>Done</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="43"/>
-        <source>Something went wrong. Please restart the remote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="156"/>
-        <source>Restart</source>
-        <extracomment>loading screen button if it failes to load</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/LoadingScreen.qml" line="172"/>
-        <source>Hello</source>
-        <extracomment>greating at the loadin screen</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MainNavigation</name>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="47"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="31"/>
         <source>Favorites</source>
         <extracomment>menu items that are in the bottom menu</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="47"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="31"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="48"/>
-        <source>Blinds</source>
+        <location filename="../basic_ui/MainNavigation.qml" line="32"/>
+        <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="48"/>
-        <source>Lights</source>
+        <location filename="../basic_ui/MainNavigation.qml" line="32"/>
+        <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Network</name>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="34"/>
+        <location filename="../basic_ui/settings/Network.qml" line="60"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="55"/>
+        <location filename="../basic_ui/settings/Network.qml" line="250"/>
         <source>Wi-Fi signal strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="92"/>
+        <location filename="../basic_ui/settings/Network.qml" line="287"/>
         <source>IP address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Network.qml" line="128"/>
+        <location filename="../basic_ui/settings/Network.qml" line="323"/>
         <source>MAC address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -203,7 +228,7 @@
 <context>
     <name>Notification</name>
     <message>
-        <location filename="../basic_ui/Notification.qml" line="250"/>
+        <location filename="../basic_ui/Notification.qml" line="244"/>
         <source>Dismiss</source>
         <translation type="unfinished"></translation>
     </message>
@@ -276,39 +301,82 @@
 <context>
     <name>ProximityGestureControl</name>
     <message>
-        <location filename="../sources/proximity_gesture_control.h" line="141"/>
+        <location filename="../sources/hardware/proximity_gesture_control.h" line="118"/>
         <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-        <extracomment>Error message that shows up as notification when the proximity sensor cannot be initialized</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteConfig</name>
+    <message>
+        <location filename="../basic_ui/settings/RemoteConfig.qml" line="24"/>
+        <location filename="../basic_ui/settings/RemoteConfig.qml" line="45"/>
+        <source>Remote configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/proximity_gesture_control.h" line="148"/>
-        <source>Cannot initialize the light sensor. Please restart the remote.</source>
-        <extracomment>Error message that shows up as notification when the light sensor cannot be initialized</extracomment>
+        <location filename="../basic_ui/settings/RemoteConfig.qml" line="80"/>
+        <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
+
+</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>Settings</name>
     <message>
-        <location filename="../sources/proximity_gesture_control.h" line="157"/>
-        <source>Error reading light values.</source>
-        <extracomment>Error message that shows up as notification when light value cannot be read</extracomment>
+        <location filename="../basic_ui/Settings.qml" line="34"/>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Softwareupdate</name>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="17"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="19"/>
         <source>Software update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="38"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="40"/>
         <source>Auto update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="90"/>
-        <source>Automatically look for updates and update when a new software version is available.</source>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
+        <source>Automatically look for updates and update when a new software version is available.
+Updates are installed between 03.00 am and 05.00 am.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
+        <source>New software is available.
+YIO remote </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
+        <source>Your software is up to date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
+        <source>Installed version: YIO Remote </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
+        <source>YIO Remote </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
+        <source>Check for update</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -341,28 +409,125 @@
     </message>
 </context>
 <context>
+    <name>dashboard</name>
+    <message>
+        <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
+        <source>Favorites</source>
+        <extracomment>Name of the settings page</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>homeassistant</name>
+    <message>
+        <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
+        <source>Failed to connect to Home Assistant.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>main</name>
     <message>
-        <location filename="../main.qml" line="168"/>
+        <location filename="../main.qml" line="209"/>
         <source>New software version is available!</source>
         <extracomment>Notification text when new software update is available</extracomment>
         <translation type="unfinished"></translation>
         <extra-"Update">is a label for the button</extra-"Update">
     </message>
+</context>
+<context>
+    <name>settings</name>
     <message>
-        <location filename="../main.qml" line="168"/>
-        <source>Update</source>
+        <location filename="../basic_ui/pages/settings.qml" line="10"/>
+        <source>Settings</source>
+        <extracomment>Name of the settings page</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>wifiSetup</name>
+    <message>
+        <location filename="../wifiSetup.qml" line="28"/>
+        <source>Wi-Fi setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="258"/>
-        <source>Lights</source>
-        <extracomment>names of the entities. Shows up in menu on the bottom. Always plural</extracomment>
+        <location filename="../wifiSetup.qml" line="45"/>
+        <source>Connect to the Wi-Fi network
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.qml" line="258"/>
-        <source>Blinds</source>
+        <location filename="../wifiSetup.qml" line="62"/>
+        <source>Open a web browser
+and navigate to
+http://yio.remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="77"/>
+        <source>Shutdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="102"/>
+        <source>Connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="119"/>
+        <source>YIO Remote has successfully
+connected to your Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="133"/>
+        <location filename="../wifiSetup.qml" line="271"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="152"/>
+        <source>Not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="169"/>
+        <source>YIO Remote could not
+connect to your Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="186"/>
+        <source>Please try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="200"/>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="254"/>
+        <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="290"/>
+        <source>Wi-Fi setup completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="309"/>
+        <source>YIO Dock has successfully connected to your Wi-Fi network.
+
+To continue the configuration, open a web browser on your computer and navigate to
+http://yioremote.local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wifiSetup.qml" line="325"/>
+        <source>Reboot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
