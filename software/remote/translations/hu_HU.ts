@@ -11,12 +11,12 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="81"/>
       <source>Screen on</source>
-      <translation type="unfinished">Screen on</translation>
+      <translation>Képernyő be</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="109"/>
       <source>Screen off</source>
-      <translation type="unfinished">Screen off</translation>
+      <translation>Képernyő ki</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="45"/>
