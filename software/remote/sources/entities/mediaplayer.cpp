@@ -7,7 +7,7 @@ QString MediaPlayer::Type = "media_player";
 bool MediaPlayer::update(const QVariantMap &attributes)
 {
     bool chg = false;
-    if (m_state != static_cast<states>(attributes.value("state").toInt())) {
+    if (attributes.contains("state") && m_state != static_cast<states>(attributes.value("state").toInt())) {
         m_state = static_cast<states>(attributes.value("state").toInt());
         if (m_state == PLAYING) {
             emit playing(objectName());
@@ -18,33 +18,33 @@ bool MediaPlayer::update(const QVariantMap &attributes)
         emit stateChanged();
     }
 
-    if (m_source != attributes.value("source").toString()) {
+    if (attributes.contains("source") && m_source != attributes.value("source").toString()) {
         m_source = attributes.value("source").toString();
         chg = true;
         emit sourceChanged();
     }
 
-    if (m_volume != attributes.value("volume").toDouble()) {
+    if (attributes.contains("volume") && m_volume != attributes.value("volume").toDouble()) {
         m_volume = attributes.value("volume").toDouble();
         chg = true;
         emit volumeChanged();
     }
-    if (m_mediaType != attributes.value("mediaType").toString()){
+    if (attributes.contains("mediaType") && m_mediaType != attributes.value("mediaType").toString()){
         m_mediaType = attributes.value("mediaType").toString();
         chg = true;
         emit mediaTypeChanged();
     }
-    if (m_mediaTitle != attributes.value("mediaTitle").toString()){
+    if (attributes.contains("mediaTitle") && m_mediaTitle != attributes.value("mediaTitle").toString()){
         m_mediaTitle = attributes.value("mediaTitle").toString();
         chg = true;
         emit mediaTitleChanged();
     }
-    if (m_mediaArtist != attributes.value("mediaArtist").toString()){
+    if (attributes.contains("mediaArtist") && m_mediaArtist != attributes.value("mediaArtist").toString()){
         m_mediaArtist = attributes.value("mediaArtist").toString();
         chg = true;
         emit mediaArtistChanged();
     }
-    if (m_mediaImage != attributes.value("mediaImage").toString()) {
+    if (attributes.contains("mediaImage") && m_mediaImage != attributes.value("mediaImage").toString()) {
         m_mediaImage = attributes.value("mediaImage").toString();
         chg = true;
         emit mediaImageChanged();

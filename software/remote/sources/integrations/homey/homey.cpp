@@ -268,8 +268,8 @@ void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
 
     // brightness
     if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
-        if (attr.value("attributes").toMap().contains("brightness")) {
-            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("attributes").toMap().value("brightness").toInt()));
+        if (attr.contains("brightness")) {
+            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("brightness").toInt()));
         } else {
             attributes.insert("brightness", 0);
         }
