@@ -66,7 +66,7 @@ public slots:
 
 
 private:
-    void webSocketSendCommand	    (const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data);
+    void webSocketSendCommand	    (QVariantMap data);
     int  convertBrightnessToPercentage (float value);
 
     void updateEntity               (const QString& entity_id, const QVariantMap& attr);

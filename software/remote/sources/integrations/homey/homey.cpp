@@ -129,21 +129,21 @@ void HomeyThread::onTextMessageReceived(const QString &message)
         QVariantMap returnData;
 
         // set type
-        returnData.insert("type", QVariant("command"));
-
-        // set command
-        returnData.insert("command", QVariant("send_config"));
+        returnData.insert("type", "sendConfig");
 
         // create list to store entity ids
-        QVariantMap list;
+        QStringList list;
+
 
         // interate throug the list and get the entity ids
-        foreach (QObject *value, es) {
-            list.insert("entity_id", QVariant(value->property("entity_id").toString()));
-        }
 
+        foreach (QObject *value, es) {
+            list.append(value->property("entity_id").toString());
+            qDebug() << value->property("entity_id").toString();
+        }
+        qDebug() << "LIST" << list;
         // insert list to data key in response
-        returnData.insert("data", list);
+        returnData.insert("devices", list);
 
         // convert map to json
         QJsonDocument doc = QJsonDocument::fromVariant(returnData);
@@ -203,27 +203,9 @@ void HomeyThread::onTimeout()
     }
 }
 
-void HomeyThread::webSocketSendCommand(const QString& domain, const QString& service, const QString& entity_id, QVariantMap *data)
+void HomeyThread::webSocketSendCommand(QVariantMap data)
 {
-    // sends a command to home assistant
-    m_webSocketId++;
-
-    QVariantMap map;
-//    map.insert("id", QVariant(m_webSocketId));
-    map.insert("type", QVariant("command"));
-    map.insert("domain", QVariant(domain));
-    map.insert("command", QVariant(service));
-
-    if (data == NULL) {
-        QVariantMap d;
-        d.insert("entity_id", QVariant(entity_id));
-        map.insert("data", d);
-    }
-    else {
-        data->insert("entity_id", QVariant(entity_id));
-        map.insert("data", *data);
-    }
-    QJsonDocument doc = QJsonDocument::fromVariant(map);
+    QJsonDocument doc = QJsonDocument::fromVariant(data);
     QString message = doc.toJson(QJsonDocument::JsonFormat::Compact);
     m_socket->sendTextMessage(message);
 
@@ -254,24 +236,17 @@ void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
 {
     QVariantMap attributes;
 
-    // friendly name
-//    if (attr.contains("friendly_name")) {
-//        attributes.insert("friendly_name", attr.value("friendly_name").toString());
-//    }
-
-    // state
-    if (attr.value("state").toString() == "on") {
-        attributes.insert("state", true);
-    } else {
-        attributes.insert("state", false);
+    //onoff to state.
+    if (attr.contains("onoff")) {
+        attributes.insert("state", attr.value("onoff"));
+        printf("Setting state");
     }
 
     // brightness
     if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
-        if (attr.contains("brightness")) {
-            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("brightness").toInt()));
-        } else {
-            attributes.insert("brightness", 0);
+        if (attr.contains("dim")) {
+            attributes.insert("brightness", convertBrightnessToPercentage(attr.value("dim").toFloat()));
+            printf("Setting brightness");
         }
     }
 
@@ -282,11 +257,6 @@ void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
         char buffer[10];
         sprintf(buffer, "#%02X%02X%02X", cl.value(0).toInt(), cl.value(1).toInt(), cl.value(2).toInt());
         attributes.insert("color", buffer);
-    }
-
-    // color temp
-    if (entity->supported_features().indexOf("COLORTEMP") > -1) {
-
     }
 
     m_entities->update(entity->entity_id(), attributes);
@@ -398,57 +368,104 @@ void HomeyThread::disconnect()
 
 void HomeyThread::sendCommand(const QString &type, const QString &entity_id, const QString &command, const QVariant &param)
 {
+    QVariantMap map;
+    //example
+    //{"command":"onoff","deviceId":"78f3ab16-c622-4bd7-aebf-3ca981e41375","type":"command","value":true}
+    map.insert("type", "command");
+
+    map.insert("deviceId", QVariant(entity_id));
     if (type == "light") {
-        if (command == "TOGGLE")
-            webSocketSendCommand(type, "toggle", entity_id, NULL);
-        else if (command == "ON")
-            webSocketSendCommand(type, "turn_on", entity_id, NULL);
-        else if (command == "OFF")
-            webSocketSendCommand(type, "turn_off", entity_id, NULL);
+        if (command == "TOGGLE") {
+            map.insert("command", QVariant("toggle"));
+            map.insert("value", true);
+            webSocketSendCommand(map);
+        }
+        else if (command == "ON") {
+            map.insert("command", QVariant("onoff"));
+            map.insert("value", true);
+            webSocketSendCommand(map);
+        }
+        else if (command == "OFF"){
+            map.insert("command", QVariant("onoff"));
+            map.insert("value", false);
+            webSocketSendCommand(map);
+        }
         else if (command == "BRIGHTNESS") {
-            QVariantMap data;
-            data.insert("brightness", (param.toInt()/100));
-            webSocketSendCommand(type, "turn_on", entity_id, &data);
+            map.insert("command", "dim");
+            float value = param.toFloat()/100;
+            map.insert("value", value);
+            webSocketSendCommand(map);
         }
         else if (command == "COLOR") {
             QColor color = param.value<QColor>();
-            QVariantMap data;
+            //QVariantMap data;
             QVariantList list;
             list.append(color.red());
             list.append(color.green());
             list.append(color.blue());
-            data.insert("rgb_color", list);
-            webSocketSendCommand(type, "turn_on", entity_id, &data);
+            map.insert("command", "color");
+            map.insert("value", list);
+            webSocketSendCommand(map);
+            //webSocketSendCommand(type, "turn_on", entity_id, &data);
         }
     }
-//    if (type == "blind") {
-//        if (command == "OPEN")
-//            webSocketSendCommand("cover", "open_cover", entity_id, NULL);
-//        else if (command == "CLOSE")
-//            webSocketSendCommand("cover", "close_cover", entity_id, NULL);
-//        else if (command == "STOP")
-//            webSocketSendCommand("cover", "stop_cover", entity_id, NULL);
-//        else if (command == "POSITION") {
-//            QVariantMap data;
-//            data.insert("position", param);
-//            webSocketSendCommand("cover", "set_cover_position", entity_id, &data);
-//        }
-//    }
-//    if (type == "media_player") {
-//        if (command == "VOLUME_SET") {
-//            QVariantMap data;
-//            data.insert("volume_level", param);
-//            webSocketSendCommand(type, "volume_set", entity_id, &data);
-//        }
-//        else if (command == "PLAY")
-//            webSocketSendCommand(type, "media_play_pause", entity_id, NULL);
-//        else if (command == "PREVIOUS")
-//            webSocketSendCommand(type, "media_previous_track", entity_id, NULL);
-//        else if (command == "NEXT")
-//            webSocketSendCommand(type, "media_next_track", entity_id, NULL);
-//        else if (command == "TURNON")
-//            webSocketSendCommand(type, "turn_on", entity_id, NULL);
-//        else if (command == "TURNOFF")
-//            webSocketSendCommand(type, "turn_off", entity_id, NULL);
-//    }
+    if (type == "blind") {
+        if (command == "OPEN"){
+            map.insert("command", "windowcoverings_closed");
+            map.insert("value", "false");
+            webSocketSendCommand(map);
+        }
+        else if (command == "CLOSE"){
+            map.insert("command", "windowcoverings_closed");
+            map.insert("value", "true");
+            webSocketSendCommand(map);
+        }
+        else if (command == "STOP"){
+            map.insert("command", "windowcoverings_tilt_set");
+            map.insert("value", 0);
+            webSocketSendCommand(map);
+        }
+        else if (command == "POSITION") {
+            map.insert("command", "windowcoverings_set");
+            map.insert("value", param);
+            webSocketSendCommand(map);
+        }
+    }
+    if (type == "media_player") {
+        if (command == "VOLUME_SET") {
+            map.insert("command", "volume_set");
+            map.insert("value", param);
+            webSocketSendCommand(map);
+        }
+        else if (command == "PLAY"){
+            map.insert("command", "speaker_playing");
+            map.insert("value", true);
+            webSocketSendCommand(map);
+        }
+        else if (command == "STOP"){
+            map.insert("command", "speaker_playing");
+            map.insert("value", false);
+            webSocketSendCommand(map);
+        }
+        else if (command == "PREVIOUS"){
+            map.insert("command", "speaker_prev");
+            map.insert("value", true);
+            webSocketSendCommand(map);
+        }
+        else if (command == "NEXT"){
+            map.insert("command", "speaker_next");
+            map.insert("value", true);
+            webSocketSendCommand(map);
+        }
+        else if (command == "TURNON"){
+            map.insert("command", QVariant("onoff"));
+            map.insert("value", true);
+            webSocketSendCommand(map);
+        }
+        else if (command == "TURNOFF"){
+            map.insert("command", QVariant("onoff"));
+            map.insert("value", false);
+            webSocketSendCommand(map);
+        }
+    }
 }
