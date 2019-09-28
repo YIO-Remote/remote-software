@@ -5,7 +5,7 @@ import QtGraphicalEffects 1.0
 Item {
     id: miniMediaPlayer
     width: 480
-    height: 100
+    height: 90
     anchors.bottom: parent.bottom
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -16,38 +16,31 @@ Item {
 
     states: [
         State { name: "closed";
-            PropertyChanges {target: miniMediaPlayer; height: 100 }
-            ParentChange { target: miniMediaPlayer; parent: loader_main.item.miniMediaPlayer }
+            PropertyChanges {target: miniMediaPlayer; height: 90 }
+            ParentChange { target: miniMediaPlayer; parent: loader_main.item.miniMediaPlayer; scale: 1 }
             PropertyChanges {target: loader_main; state: "visible" }
         },
         State { name: "open";
             PropertyChanges {target: miniMediaPlayer; height: 670 }
             ParentChange { target: miniMediaPlayer; parent: contentWrapper }
             PropertyChanges {target: loader_main; state: "hidden" }
-            PropertyChanges {target: loader_main.item.mainNavigation; y: 800 }
         }
     ]
     transitions: [
         Transition {to: "closed";
-            SequentialAnimation {
                 ParallelAnimation {
-                    PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
-                    PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
-                }
-                ParentAnimation {
-                    NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
-                }
-            }
-        },
-        Transition {to: "open";
-            SequentialAnimation {
-                ParallelAnimation {
-                    PropertyAnimation { target: miniMediaPlayer; properties: "y, height"; easing.type: Easing.OutExpo; duration: 500 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 400 }
                     ParentAnimation {
-                        NumberAnimation { properties: "y"; easing.type: Easing.OutExpo; duration: 500 }
+                        NumberAnimation { properties: "scale"; easing.type: Easing.InExpo; duration: 180 }
                     }
                 }
-                PropertyAnimation { target: loader_main.item.mainNavigation; properties: "y"; duration: 1 }
+        },
+        Transition {to: "open";
+            ParallelAnimation {
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 400 }
+                ParentAnimation {
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutExpo; duration: 400 }
+                }
             }
         }
     ]
@@ -68,7 +61,6 @@ Item {
 
     property var players: []
     property int currPlaying: 0
-    property var mainNav
 
     onCurrPlayingChanged: {
         if (currPlaying == 0) {

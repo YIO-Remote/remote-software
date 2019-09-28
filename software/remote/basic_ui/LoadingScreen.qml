@@ -44,10 +44,10 @@ Rectangle {
         id: endAnim
         running: false
 
-        PauseAnimation {duration: 800}
+        PauseAnimation {duration: 6000}
         PropertyAnimation { target: loadingIconAnim; properties: "running";to: false; duration: 0 }
         PropertyAnimation { target: yio_O; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
-        //        PauseAnimation {duration: 500}
+        PauseAnimation {duration: 200}
         ParallelAnimation {
             PropertyAnimation { target: left; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 800 }
             PropertyAnimation { target: right; properties: "width"; to: 0; easing.type: Easing.Linear; duration: 800 }

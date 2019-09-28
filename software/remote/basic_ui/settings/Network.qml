@@ -33,7 +33,7 @@ Item {
 
     property var wifiNetworks: []
     property var wifiNetworksRSSI: []
-    property var wifiNetworkSelected
+    property var wifiNetworkSelected: ""
     property var wifiNetworkSelectedRSSI
 
     function addNetworks() {

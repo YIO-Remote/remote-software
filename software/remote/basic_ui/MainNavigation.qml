@@ -7,9 +7,7 @@ import "qrc:/scripts/helper.js" as JSHelper
 Item {
     id: mainNavigation
     width: parent.width
-    height: 150
-
-    state: "open"
+    height: 70
 
     Rectangle {
         anchors.fill: parent
@@ -167,13 +165,8 @@ Item {
                 Drag.hotSpot.x: width / 2
                 Drag.hotSpot.y: height / 2
 
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    bottom: parent.bottom
-                }
-
                 width: buttonText.implicitWidth+30
-                height: 150
+                height: 50
                 color: colorBackgroundTransparent
                 opacity: selected ? 1 : 0.3
 
@@ -194,48 +187,29 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height
-                    color: dragArea.held ? colorHighlight1 : colorBackgroundTransparent
-                    radius: cornerRadius * 2
-//                    opacity: 0.5
+                    color: dragArea.held ? colorHighlight1 : ( selected ? colorHighlight2 : colorBackgroundTransparent )
+                    radius: width / 2
 
                     Behavior on color {
                         ColorAnimation { duration: 200 }
                     }
-                }
 
-                Text {
-                    id: buttonText
-                    color: colorText
-                    text: qsTr(display_name) + translateHandler.emptyString
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 20
-                    font.family: "Open Sans"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
-                    lineHeight: 0.8
-                }
-
-                Image {
-                    asynchronous: true
-                    id: icon
-                    width: 60
-                    height: 60
-                    fillMode: Image.PreserveAspectFit
-                    anchors.horizontalCenter: buttonText.horizontalCenter
-                    anchors.bottom: buttonText.top
-                    anchors.bottomMargin: 15
-                    source: name == "area" ? "qrc:/images/navigation/icon-area-" + Math.floor(Math.random() * (3 - 0)) + ".png" : "qrc:/images/navigation/icon-" + name + ".png"
-
-                    ColorOverlay {
-                        visible: !darkMode
-                        anchors.fill: parent
-                        source: parent
+                    Text {
+                        id: buttonText
                         color: colorText
+                        text: qsTr(display_name) + translateHandler.emptyString
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: -5
+                        font.family: "Open Sans"
+                        font.weight: Font.Normal
+                        font.pixelSize: 27
+                        lineHeight: 0.8
                     }
                 }
-            }
+
+           }
 
             DropArea {
                 anchors { fill: parent; margins: 10 }
@@ -255,11 +229,9 @@ Item {
     ListView {
         id: mainNavigationListView
 
-        width: parent.width
-        height: parent.height
-        anchors.bottom: parent.bottom
-//        maximumFlickVelocity: 2000
-//        flickDeceleration: 400
+        width: parent.width-20
+        height: 50
+        anchors.centerIn: parent
         clip: true
         boundsBehavior: Flickable.DragAndOvershootBounds
         flickableDirection: Flickable.HorizontalFlick
@@ -273,7 +245,6 @@ Item {
         spacing: 4
 
         model: visualModel
-
     }
 
     DelegateModel {
@@ -281,7 +252,6 @@ Item {
 
         model: menuConfig
         delegate: dragDelegate
-
     }
 
     Rectangle { //left gradient fade

@@ -22,6 +22,9 @@ Item {
                 integration[key].obj.connect();
             }
         }
+
+        // turn off loading screen when this is loaded
+        loadingScreen.item.state = "loaded";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,68 +169,54 @@ Item {
         }
     }
 
-    onItemsLoadedChanged: {
-        if (itemsLoaded >= 2) {
-            bottomGradient.opacity = Qt.binding(function() {
-                if (mainNavigation.y != 800) {
-                    return 1
-                } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.atYEnd){
-                    return 0
-                } else {
-                    return 1
-                }
-            })
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BOTTOM GRADIENT FADE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Image {
-        id: bottomGradient
-        width: 480
-        height: 80
-        anchors.bottom: miniMediaPlayer.top
-        asynchronous: true
-        fillMode: Image.Stretch
-        source: "qrc:/images/navigation/bottom_gradient.png"
+//    Image {
+//        id: bottomGradient
+//        width: 480
+//        height: 80
+//        anchors.bottom: miniMediaPlayer.top
+//        asynchronous: true
+//        fillMode: Image.Stretch
+//        source: "qrc:/images/navigation/bottom_gradient.png"
 
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutExpo
-            }
-        }
-    }
+//        Behavior on opacity {
+//            NumberAnimation {
+//                duration: 300
+//                easing.type: Easing.OutExpo
+//            }
+//        }
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // PAGE INDICATOR
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    PageIndicator {
-        id: indicator
+//    PageIndicator {
+//        id: indicator
 
-        count: mainNavigationSwipeview.count
-        currentIndex: mainNavigationSwipeview.currentIndex
+//        count: mainNavigationSwipeview.count
+//        currentIndex: mainNavigationSwipeview.currentIndex
 
-        anchors.bottom: miniMediaPlayer.top
-        anchors.bottomMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
-        opacity: mainNavigation.y == 800 ? 1 : 0
+//        anchors.bottom: miniMediaPlayer.top
+//        anchors.bottomMargin: 10
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        opacity: mainNavigation.y == 800 ? 1 : 0
 
-        Behavior on opacity {
-            NumberAnimation { duration: 300; easing.type: Easing.InOutExpo }
-        }
+//        Behavior on opacity {
+//            NumberAnimation { duration: 300; easing.type: Easing.InOutExpo }
+//        }
 
-        delegate: Rectangle {
-            width: 8
-            height: 8
-            radius: height/2
-            color: colorText
-            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
-        }
-    }
+//        delegate: Rectangle {
+//            width: 8
+//            height: 8
+//            radius: height/2
+//            color: colorText
+//            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
+//        }
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MINI MEDIA PLAYER
@@ -249,8 +238,8 @@ Item {
 
         function onPlay(name) {
             if (!miniMediaPlayerLoader.active) {
-                miniMediaPlayer.height = 100;
-                miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml", { mainNav: mainNavigation })
+                miniMediaPlayer.height = 90;
+                miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
                 miniMediaPlayerLoader.active = true;
             } else if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
                 miniMediaPlayerLoader.item.add(name);
@@ -283,48 +272,8 @@ Item {
 
     BasicUI.MainNavigation {
         id: mainNavigation
-        //        anchors.bottom: parent.bottom
-        //        anchors.bottomMargin: 0
-        y: parent.height - mainNavigation.height
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Behavior on y {
-            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
-        }
-    }
-
-    MouseArea {
-        width: parent.width
-        height: 30
         anchors.bottom: parent.bottom
-        enabled: mainNavigation.y == 800 ? true : false
-        propagateComposedEvents: true
-
-        property real velocity: 0.0
-        property int yStart: 0
-        property int yPrev: 0
-        property bool tracing: false
-
-        onPressed: {
-            yStart = mouse.y;
-            yPrev = mouse.y;
-            velocity = 0;
-            tracing = true;
-        }
-
-        onPositionChanged: {
-            if (!tracing) return
-            var currVel = (mouse.y-yPrev);
-            velocity = (velocity-currVel)
-            yPrev = mouse.y
-        }
-
-        onReleased: {
-            tracing = false;
-            if (velocity > 20) {
-                mainNavigation.y = 800 - mainNavigation.height;
-            }
-        }
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
