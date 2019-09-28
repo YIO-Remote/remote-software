@@ -208,8 +208,8 @@ Item {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
 
             // add screen on time
-            screenOnTime += new Date().getTime() - baseTime - startTime
-            screenOffTime = new Date().getTime() - screenOnTime
+            screenOnTime += new Date().getTime() - startTime
+            screenOffTime = new Date().getTime() - baseTime - screenOnTime
         }
     }
 

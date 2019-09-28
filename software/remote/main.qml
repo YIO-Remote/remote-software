@@ -302,7 +302,7 @@ ApplicationWindow {
         if (fileio.exists("/wifisetup")) {
             loader_main.setSource("qrc:/wifiSetup.qml");
         } else {
-             loader_main.setSource("qrc:/MainContainer.qml");
+            loader_main.setSource("qrc:/MainContainer.qml");
         }
 
         // load bluetooth
@@ -392,7 +392,7 @@ ApplicationWindow {
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready) {
-//                             loadingScreen.item.state = "loaded";
+                             loadingScreen.item.state = "loaded";
                          }
     }
 

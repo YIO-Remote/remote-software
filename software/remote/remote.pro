@@ -64,6 +64,7 @@ SOURCES = main.qml \
           StandbyControl.qml \
           wifiSetup.qml \
           basic_ui/*.qml \
+          basic_ui/pages/*.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \
