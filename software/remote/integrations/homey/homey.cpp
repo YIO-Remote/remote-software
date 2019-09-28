@@ -132,16 +132,13 @@ void HomeyThread::onTextMessageReceived(const QString &message)
         returnData.insert("type", "sendConfig");
 
         // create list to store entity ids
-        QStringList list;
-
+        QVariantMap list;
 
         // interate throug the list and get the entity ids
-
         foreach (QObject *value, es) {
-            list.append(value->property("entity_id").toString());
-            qDebug() << value->property("entity_id").toString();
+            list.insert("deviceId", QVariant(value->property("entity_id").toString()));
         }
-        qDebug() << "LIST" << list;
+
         // insert list to data key in response
         returnData.insert("devices", list);
 
