@@ -143,7 +143,7 @@ ApplicationWindow {
 
     property bool darkMode: true
 
-    property string colorGreen: "#19D37B"
+    property string colorGreen: "#91BF4C"
     property string colorRed: "#EA003C"
 
     property string colorBackground: darkMode ? "#000000" : "#ffffff"
