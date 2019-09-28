@@ -61,7 +61,7 @@ Item {
         running: false
 
         PropertyAnimation { target: titleText; properties: "opacity"; to: 0; easing.type: Easing.InExpo; duration: 400 }
-        PropertyAnimation { target: titleText; properties: "y"; to: 60; easing.type: Easing.InExpo; duration: 400 }
+        PropertyAnimation { target: titleText; properties: "y"; to: 60; easing.type: Easing.OutExpo; duration: 400 }
         PropertyAnimation { target: timeText; properties: "opacity"; to: 1; easing.type: Easing.OutExpo; duration: 400 }
     }
 

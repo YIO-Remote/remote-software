@@ -5,7 +5,7 @@ import QtGraphicalEffects 1.0
 Item {
     id: miniMediaPlayer
     width: 480
-    height: 80
+    height: 90
     anchors.bottom: parent.bottom
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +16,7 @@ Item {
 
     states: [
         State { name: "closed";
-            PropertyChanges {target: miniMediaPlayer; height: 80 }
+            PropertyChanges {target: miniMediaPlayer; height: 90 }
             ParentChange { target: miniMediaPlayer; parent: loader_main.item.miniMediaPlayer; scale: 1 }
             PropertyChanges {target: loader_main; state: "visible" }
         },
@@ -29,16 +29,18 @@ Item {
     transitions: [
         Transition {to: "closed";
                 ParallelAnimation {
-                    PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
-                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 400 }
                     ParentAnimation {
-                        NumberAnimation { properties: "scale"; easing.type: Easing.OutExpo; duration: 300 }
+                        NumberAnimation { properties: "scale"; easing.type: Easing.InExpo; duration: 180 }
                     }
                 }
         },
         Transition {to: "open";
             ParallelAnimation {
-                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 400 }
+                ParentAnimation {
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutExpo; duration: 400 }
+                }
             }
         }
     ]

@@ -22,6 +22,9 @@ Item {
                 integration[key].obj.connect();
             }
         }
+
+        // turn off loading screen when this is loaded
+        loadingScreen.item.state = "loaded";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,7 +238,7 @@ Item {
 
         function onPlay(name) {
             if (!miniMediaPlayerLoader.active) {
-                miniMediaPlayer.height = 80;
+                miniMediaPlayer.height = 90;
                 miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
                 miniMediaPlayerLoader.active = true;
             } else if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {

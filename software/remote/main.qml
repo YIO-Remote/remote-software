@@ -313,6 +313,8 @@ ApplicationWindow {
 
         // Start websocket API
         api.start();
+
+        battery.checkBattery();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -390,7 +392,7 @@ ApplicationWindow {
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready) {
-                             loadingScreen.item.state = "loaded";
+//                             loadingScreen.item.state = "loaded";
                          }
     }
 
@@ -568,7 +570,7 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
-                battery.checkBattery();
+                //battery.checkBattery();
             }
         }
     }
