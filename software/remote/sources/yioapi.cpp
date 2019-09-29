@@ -2,6 +2,7 @@
 
 #include "yioapi.h"
 #include "fileio.h"
+#include "entities/entities.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -50,6 +51,62 @@ void YioAPI::stop()
     emit runningChanged();
 }
 
+QVariantMap YioAPI::getConfig()
+{
+    return Config::getInstance()->read();
+}
+
+bool YioAPI::addEntityToConfig(QVariantMap entity)
+{
+    // check the input if it's OK
+    if (!entity.contains("area") && !entity.contains("entity_id") && !entity.contains("friendly_name") && !entity.contains("integration") && !entity.contains("supported_features") && !entity.contains("type"))
+    {
+        return false;
+    }
+
+    // if no favorite is set, set it to false
+    if (!entity.contains("favorite")) {
+       entity.insert("favorite", true);
+    }
+
+    // get the config
+    QVariantMap c = getConfig();
+    QVariantList e = c.value("entities").toJsonArray().toVariantList();
+
+    // check what is the type of the new entity
+    QString entityType = entity.value("type").toString();
+
+
+    //find the entities key and insert the new entity
+    for (int i=0; i<e.length(); i++) {
+        if (e[i].toMap().value("type").toString() == entityType) {
+
+            // get the data key array
+            QVariantMap r = e[i].toMap();
+            QVariantList rl = r.value("data").toJsonArray().toVariantList();
+
+            // add the entity
+            rl.append(entity);
+
+            r.insert("data", rl);
+
+            e[i] = r;
+
+            // add it to the entity registry
+//            Entities::getInstance()->add(entity, );
+
+            // put the entity back to the config
+            c.insert("entities", e);
+        }
+    }
+
+    // writeh the config back
+    Config::getInstance()->readWrite(c);
+    Config::getInstance()->writeConfig();
+
+    return true;
+}
+
 void YioAPI::onNewConnection()
 {
     QWebSocket *socket = m_server->nextPendingConnection();
@@ -91,7 +148,7 @@ void YioAPI::processMessage(QString message)
         // AUTHENTICATION
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (type == "auth") {
-             qDebug() << m_clients[client];
+            qDebug() << m_clients[client];
 
             if (map.contains("token")) {
                 qDebug() << "Has token";

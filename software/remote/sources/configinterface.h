@@ -10,6 +10,7 @@ public:
     virtual ~ConfigInterface() {}
 
     virtual QVariantMap read() = 0;
+    virtual void readWrite(QVariantMap config) = 0;
 
 private:
     QVariantMap                  m_config;

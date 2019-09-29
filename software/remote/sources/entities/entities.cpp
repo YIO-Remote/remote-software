@@ -5,13 +5,25 @@
 #include "blind.h"
 #include "mediaplayer.h"
 
-Entities::Entities(QObject *parent) : QObject(parent) {
+//Entities::Entities(QObject *parent) : QObject(parent) {
 
-    //    qmlRegisterType<Light>("Light", 1, 0, "Light");
+//    //    qmlRegisterType<Light>("Light", 1, 0, "Light");
 
+//}
+
+//Entities::~Entities() {}
+
+Entities* Entities::s_instance = NULL;
+
+Entities::Entities(QObject *parent) : QObject(parent)
+{
+    s_instance = this;
 }
 
-Entities::~Entities() {}
+Entities::~Entities()
+{
+    s_instance = NULL;
+}
 
 QList<QObject *> Entities::list()
 {

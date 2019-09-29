@@ -44,6 +44,8 @@ Rectangle {
         PropertyAnimation { target: timeText; properties: "anchors.bottomMargin"; to: -400; easing.type: Easing.OutExpo; duration: 300 }
     }
 
+    property alias showClock: showClock
+
     SequentialAnimation {
         id: showClock
         running: false
