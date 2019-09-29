@@ -55,7 +55,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>自動掃描與區域相關的藍牙信標，尋找最近的區域並顯示該區域中的設備。</translation>
     </message>
   </context>
   <context>
@@ -65,14 +65,14 @@
       <location filename="../components/light/ui/Button.qml" line="370"/>
       <location filename="../components/media_player/ui/Button.qml" line="343"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>從收藏中移除</translation>
     </message>
     <message>
       <location filename="../components/blind/ui/Button.qml" line="372"/>
       <location filename="../components/light/ui/Button.qml" line="370"/>
       <location filename="../components/media_player/ui/Button.qml" line="343"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>添加到收藏</translation>
     </message>
   </context>
   <context>
@@ -80,7 +80,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>%充電</translation>
     </message>
   </context>
   <context>
@@ -88,12 +88,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="17"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>設備</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="38"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>新增</translation>
     </message>
   </context>
   <context>
@@ -101,22 +101,22 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="18"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>顯示</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="39"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>自動調整亮度</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="144"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>深色主題</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="183"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>清潔模式</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="198"/>
