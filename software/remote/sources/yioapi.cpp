@@ -55,25 +55,47 @@ QVariantMap YioAPI::getConfig()
     return Config::getInstance()->read();
 }
 
-void YioAPI::addEntityToConfig(QVariantMap entity)
+bool YioAPI::addEntityToConfig(QVariantMap entity)
 {
+    // check the input if it's OK
+    if (!entity.contains("area") && !entity.contains("entity_id") && !entity.contains("friendly_name") && !entity.contains("integration") && !entity.contains("supported_features") && !entity.contains("type"))
+    {
+        return false;
+    }
+
+    // if no favorite is set, set it to false
+    if (!entity.contains("favorite")) {
+       entity.insert("favorite", true);
+    }
+
     // get the config
     QVariantMap c = getConfig();
+    QVariantList e = c.value("entities").toJsonArray().toVariantList();
 
     // check what is the type of the new entity
-    QString entityType = entity["tpye"].toString();
+    QString entityType = entity.value("type").toString();
+
 
     //find the entities key and insert the new entity
-    foreach (QVariant value, c)
-    {
-        if (value["type"].toString() == entityType) {
+    for (int i=0; i<e.length(); i++) {
+        if (e[i].toMap().value("type").toString() == entityType) {
 
+            // get the data key array
+            QVariantList r = e[i].toMap().value("data").toJsonArray().toVariantList();
+
+            // add the entity
+            r.append(entity);
+
+            // put the entity back to the config
+            c.insert("entities", r);
         }
     }
 
-
     // writeh the config back
     Config::getInstance()->readWrite(c);
+    Config::getInstance()->writeConfig();
+
+    return true;
 }
 
 void YioAPI::onNewConnection()
@@ -117,7 +139,7 @@ void YioAPI::processMessage(QString message)
         // AUTHENTICATION
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (type == "auth") {
-             qDebug() << m_clients[client];
+            qDebug() << m_clients[client];
 
             if (map.contains("token")) {
                 qDebug() << "Has token";

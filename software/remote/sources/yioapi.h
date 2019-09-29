@@ -26,7 +26,7 @@ public:
 
     // CONFIG MANIPULATION METHODS
     Q_INVOKABLE QVariantMap     getConfig                   ();
-    Q_INVOKABLE void            addEntityToConfig           (QVariantMap entity);
+    Q_INVOKABLE bool            addEntityToConfig           (QVariantMap entity);
 
     bool running()
     {

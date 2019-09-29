@@ -14,7 +14,7 @@ public:
 
     // CONFIG MANIPULATION METHODS
     virtual QVariantMap getConfig() = 0;
-    virtual void addEntityToConfig(QVariantMap entity) = 0;
+    virtual bool addEntityToConfig(QVariantMap entity) = 0;
 };
 
 QT_BEGIN_NAMESPACE
