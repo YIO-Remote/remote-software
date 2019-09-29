@@ -2,6 +2,7 @@
 
 #include "yioapi.h"
 #include "fileio.h"
+#include "entities/entities.h"
 
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -81,13 +82,21 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
         if (e[i].toMap().value("type").toString() == entityType) {
 
             // get the data key array
-            QVariantList r = e[i].toMap().value("data").toJsonArray().toVariantList();
+            QVariantMap r = e[i].toMap();
+            QVariantList rl = r.value("data").toJsonArray().toVariantList();
 
             // add the entity
-            r.append(entity);
+            rl.append(entity);
+
+            r.insert("data", rl);
+
+            e[i] = r;
+
+            // add it to the entity registry
+//            Entities::getInstance()->add(entity, );
 
             // put the entity back to the config
-            c.insert("entities", r);
+            c.insert("entities", e);
         }
     }
 
