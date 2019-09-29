@@ -59,7 +59,7 @@ Item {
             highlightRangeMode: ListView.StrictlyEnforceRange
             interactive: section.height == 300 ? true : false
 
-            currentIndex: getLanguage(language);
+            currentIndex: getLanguage(config.read.language);
 
             focus: true
 
@@ -91,8 +91,10 @@ Item {
                             languageListView.currentIndex = index
                             section.height = 74
                             translateHandler.selectLanguage(translations[index].id)
-                            language = translations[index].id
-                            JSHelper.saveConfig();
+                            var tmp = config.read
+                            tmp.language = translations[index].id
+                            config.write = tmp
+                            config.writeConfig();
                         }
                     }
                 }

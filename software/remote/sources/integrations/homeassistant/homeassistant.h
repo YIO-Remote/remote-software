@@ -21,7 +21,7 @@ class HomeAssistant : public Integration, IntegrationInterface
 public:
     explicit HomeAssistant() {}
 
-    Q_INVOKABLE void initialize	    (int integrationId, const QVariantMap& config, QObject *entities, QObject *notifications) override;
+    Q_INVOKABLE void initialize	    (int integrationId, const QVariantMap& config, QObject *entities, QObject *notifications, QObject* api, QObject *configObj) override;
     Q_INVOKABLE void connect	    () override;
     Q_INVOKABLE void disconnect	    () override;
 
@@ -47,7 +47,7 @@ class HomeAssistantThread : public QObject
     Q_OBJECT
 
 public:
-    HomeAssistantThread             (const QVariantMap &config, QObject *entities, QObject *notifications);
+    HomeAssistantThread             (const QVariantMap &config, QObject *entities, QObject *notifications, QObject *api, QObject *configObj);
 
 signals:
     void stateChanged               (int state);
@@ -78,6 +78,8 @@ private:
 
     EntitiesInterface*              m_entities;
     NotificationsInterface*         m_notifications;
+    YioAPIInterface*                m_api;
+    ConfigInterface*                m_config;
 
     QString                         m_ip;
     QString                         m_token;

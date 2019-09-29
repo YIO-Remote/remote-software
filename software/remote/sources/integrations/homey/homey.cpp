@@ -7,7 +7,7 @@
 #include "../../entities/entities.h"
 #include "math.h"
 
-void Homey::initialize(int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications)
+void Homey::initialize(int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications, QObject* api, QObject *configObj)
 {
     setIntegrationId(integrationId);
 
@@ -19,7 +19,7 @@ void Homey::initialize(int integrationId, const QVariantMap& config, QObject* en
     }
 
     // crate a new instance and pass on variables
-    HomeyThread *HAThread = new HomeyThread(config, entities, notifications);
+    HomeyThread *HAThread = new HomeyThread(config, entities, notifications, api, configObj);
 
     // move to thread
     HAThread->moveToThread(&m_thread);
@@ -66,7 +66,7 @@ void Homey::stateHandler(int state)
 //// HOME ASSISTANT THREAD CLASS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-HomeyThread::HomeyThread(const QVariantMap &config, QObject *entities, QObject *notifications)
+HomeyThread::HomeyThread(const QVariantMap &config, QObject *entities, QObject *notifications, QObject* api, QObject *configObj)
 {
     for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
         if (iter.key() == "data") {
@@ -77,6 +77,8 @@ HomeyThread::HomeyThread(const QVariantMap &config, QObject *entities, QObject *
     }
     m_entities = qobject_cast<EntitiesInterface *>(entities);
     m_notifications = qobject_cast<NotificationsInterface *>(notifications);
+    m_api = qobject_cast<YioAPIInterface *>(api);
+    m_config = qobject_cast<ConfigInterface *>(configObj);
 
     m_webSocketId = 4;
 

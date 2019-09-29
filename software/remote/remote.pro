@@ -4,7 +4,10 @@ CONFIG += c++11 disable-desktop qtquickcompiler
 DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
+    sources/config.h \
+    sources/configinterface.h \
     sources/fileio.h \
+    sources/integrations/integrations.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \
@@ -25,9 +28,12 @@ HEADERS += \
     sources/notificationsinterface.h \
     sources/entities/mediaplayer.h \
     sources/bluetootharea.h \
-    sources/yioapi.h
+    sources/yioapi.h \
+    sources/yioapiinterface.h
 
 SOURCES += \
+    sources/config.cpp \
+    sources/integrations/integrations.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
@@ -64,6 +70,7 @@ SOURCES = main.qml \
           StandbyControl.qml \
           wifiSetup.qml \
           basic_ui/*.qml \
+          basic_ui/pages/*.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \

@@ -163,7 +163,6 @@ ApplicationWindow {
     // TRANSLATIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var translations: translationsJson.read()
-    property string language: config.language
 
     JsonFile {
         id: translationsJson
@@ -185,7 +184,7 @@ ApplicationWindow {
         triggeredOnStart: true
 
         onTriggered: {
-            if (config.settings.softwareupdate) {
+            if (config.read.settings.softwareupdate) {
                 JSUpdate.checkForUpdate();
 
                 if (updateAvailable) {
@@ -212,35 +211,28 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var config: jsonConfig.read();
     property var integration: ({}) // holds the integrations
-
     property var device: ({}) // holds the standalone device integration qmls
-
-    JsonFile { // this module loads the config file
-        id: jsonConfig
-        name: configPath + "/config.json"
-    }
 
     // load the hub integrations
     function loadHubIntegrations() {
         var comp;
 
-        for (var i=0; i<config.integration.length; i++) {
-            integration[config.integration[i].type] = config.integration[i];
+        for (var i=0; i<config.read.integration.length; i++) {
+            integration[config.read.integration[i].type] = config.read.integration[i];
 
             // if plugin integration exists, load that
-            if (config.integration[i].plugin) {
-                comp = mainLauncher.loadIntegration(appPath, config.integration[i].plugin, i, config.integration[i], entities, notifications);
-                integration[config.integration[i].type].obj = comp;
+            if (config.read.integration[i].plugin) {
+                comp = mainLauncher.loadIntegration(appPath, config.read.integration[i].plugin, i, config.read.integration[i], entities, notifications, api, config);
+                integration[config.read.integration[i].type].obj = comp;
 
                 // otherwise load qml based integration
             } else {
-                comp = Qt.createComponent("qrc:/integrations/"+ config.integration[i].type + "/" + config.integration[i].type +".qml");
+                comp = Qt.createComponent("qrc:/integrations/"+ config.read.integration[i].type + "/" + config.read.integration[i].type +".qml");
                 if (comp.status !== Component.Ready) {
                     console.debug("Error: " + comp.errorString() );
                 }
-                integration[config.integration[i].type].obj = comp.createObject(applicationWindow, {integrationId: i});
+                integration[config.read.integration[i].type].obj = comp.createObject(applicationWindow, {integrationId: i});
             }
         }
 
@@ -259,11 +251,11 @@ ApplicationWindow {
         var tmp = {};
 
         // load the entities from the config file that are supported
-        for (var i=0; i<config.entities.length; i++) {
+        for (var i=0; i<config.read.entities.length; i++) {
             for (var k=0; k<entities.supported_entities.length; k++) {
-                if (config.entities[i].type == entities.supported_entities[k]) {
-                    for (var j=0; j < config.entities[i].data.length; j++) {
-                        const en = config.entities[i].data[j];
+                if (config.read.entities[i].type == entities.supported_entities[k]) {
+                    for (var j=0; j < config.read.entities[i].data.length; j++) {
+                        const en = config.read.entities[i].data[j];
                         entities.add(en, integration[en.integration].obj);
                     }
 
@@ -276,7 +268,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        if (config == undefined) {
+        if (config.read == undefined) {
             console.debug("Cannot load configuration file");
             // create a temporary standard config
 
@@ -285,9 +277,9 @@ ApplicationWindow {
         }
 
         // change dark mode to the configured value
-        darkMode = Qt.binding(function () { return config.settings.darkmode});
-        standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
-        standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
+        darkMode = Qt.binding(function () { return config.read.settings.darkmode});
+        standbyControl.display_autobrightness = Qt.binding(function() { return config.read.settings.autobrightness })
+        standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
 
         // load the hub integrations
         if (loadHubIntegrations()) {
@@ -296,24 +288,26 @@ ApplicationWindow {
         }
 
         // set the language
-        translateHandler.selectLanguage(language);
+        translateHandler.selectLanguage(config.read.language);
 
         // when everything is loaded, load the main UI
         if (fileio.exists("/wifisetup")) {
             loader_main.setSource("qrc:/wifiSetup.qml");
         } else {
-             loader_main.setSource("qrc:/MainContainer.qml");
+            loader_main.setSource("qrc:/MainContainer.qml");
         }
 
         // load bluetooth
-        bluetoothArea.init(config);
-        if (config.settings.bluetootharea) {
+        bluetoothArea.init(config.read);
+        if (config.read.settings.bluetootharea) {
             bluetoothArea.startScan();
         }
 
         // Start websocket API
         api.start();
-    }
+
+        battery.checkBattery();
+   }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES
@@ -331,8 +325,8 @@ ApplicationWindow {
         id: standbyControl
 
         Component.onCompleted: {
-            standbyControl.wifiOffTime = Qt.binding(function () { return config.settings.wifitime});
-            standbyControl.shutdownTime = Qt.binding(function () { return config.settings.shutdowntime});
+            standbyControl.wifiOffTime = Qt.binding(function () { return config.read.settings.wifitime});
+            standbyControl.shutdownTime = Qt.binding(function () { return config.read.settings.shutdowntime});
         }
     }
 
@@ -568,7 +562,7 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
-                battery.checkBattery();
+                //battery.checkBattery();
             }
         }
     }

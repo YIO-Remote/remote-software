@@ -41,13 +41,13 @@ QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
 #endif
 }
 
-QObject* Launcher::loadIntegration(const QString& path, const QString &pluginName, int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications)
+QObject* Launcher::loadIntegration(const QString& path, const QString &pluginName, int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications, QObject* api, QObject *configObj)
 {
     QObject *plugin = loadPlugin(path, pluginName);
     if (plugin) {
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(plugin);
         if (interface) {
-            interface->initialize (integrationId, config, entities, notifications);
+            interface->initialize (integrationId, config, entities, notifications, api, configObj);
         }
     }
     return plugin;
