@@ -6,38 +6,38 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="54"/>
       <source>Battery</source>
-      <translation type="unfinished">Battery</translation>
+      <translation>電量</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="75"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>電池壽命</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="111"/>
       <source>Screen on</source>
-      <translation type="unfinished">Screen on</translation>
+      <translation>開啟螢幕</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="139"/>
       <source>Screen off</source>
-      <translation type="unfinished">Screen off</translation>
+      <translation>關閉螢幕</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="176"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>電池存量</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>平均電量</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>暫時沒有可用資料</translation>
     </message>
   </context>
   <context>
@@ -45,12 +45,12 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>藍牙</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>區域偵測</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
