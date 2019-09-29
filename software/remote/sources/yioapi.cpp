@@ -32,22 +32,13 @@ void YioAPI::start()
         emit runningChanged();
     }
 
-    // zeroconf
-    // get mac address and generate a name
-//    QString name;
-//    QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
-
-//    name = list.last().hardwareAddress();
-//    name.remove(":");
-//    name.remove(0, 6);
-//    name.prepend("YIO-Remote-");
-
     FileIO fileIO;
     m_hostname = fileIO.read("/apssid").trimmed();
 
     emit hostnameChanged();
 
     m_qzero_conf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
+
 }
 
 void YioAPI::stop()

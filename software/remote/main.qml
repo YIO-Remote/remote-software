@@ -223,7 +223,7 @@ ApplicationWindow {
 
             // if plugin integration exists, load that
             if (config.read.integration[i].plugin) {
-                comp = mainLauncher.loadIntegration(appPath, config.read.integration[i].plugin, i, config.read.integration[i], entities, notifications);
+                comp = mainLauncher.loadIntegration(appPath, config.read.integration[i].plugin, i, config.read.integration[i], entities, notifications, api, config);
                 integration[config.read.integration[i].type].obj = comp;
 
                 // otherwise load qml based integration

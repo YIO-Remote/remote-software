@@ -6,12 +6,15 @@
 #include <QtWebSockets/QWebSocket>
 #include <QtWebSockets/QWebSocketServer>
 
-#include "qzeroconf.h"
+#include "yioapiinterface.h"
+//#include "qzeroconf.h"
+#include "../qtzeroconf/qzeroconf.h"
 #include "config.h"
 
-class YioAPI : public QObject
+class YioAPI : public QObject, YioAPIInterface
 {
     Q_OBJECT
+    Q_INTERFACES(YioAPIInterface)
 
 public:
     Q_PROPERTY  (bool running       READ running            NOTIFY runningChanged)      // returns the state of the API
@@ -20,6 +23,12 @@ public:
     Q_INVOKABLE void start();                                                           // start the API
     Q_INVOKABLE void stop();                                                            // stop the API
     //Q_INVOKABLE void sendMessage(QString message);                  // send a message to a client
+
+    // CONFIG MANIPULATION METHODS
+    Q_INVOKABLE QVariantMap getConfig()
+    {
+        return Config::getInstance()->read();
+    }
 
     bool running()
     {

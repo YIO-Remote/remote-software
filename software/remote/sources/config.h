@@ -3,11 +3,14 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include "configinterface.h"
 #include "jsonfile.h"
 
-class Config : public QObject
+class Config : public QObject, ConfigInterface
 {
     Q_OBJECT
+    Q_INTERFACES(ConfigInterface)
+
 public:
     Q_PROPERTY (QVariantMap      read          READ read            NOTIFY configChanged)
     Q_PROPERTY (QVariantMap      write         WRITE readWrite      NOTIFY configChanged)

@@ -5,6 +5,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     sources/config.h \
+    sources/configinterface.h \
     sources/fileio.h \
     sources/jsonfile.h \
     sources/launcher.h \
@@ -26,7 +27,8 @@ HEADERS += \
     sources/notificationsinterface.h \
     sources/entities/mediaplayer.h \
     sources/bluetootharea.h \
-    sources/yioapi.h
+    sources/yioapi.h \
+    sources/yioapiinterface.h
 
 SOURCES += \
     sources/config.cpp \
