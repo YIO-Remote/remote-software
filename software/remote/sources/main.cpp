@@ -25,6 +25,7 @@
 
 #include "fileio.h"
 #include "yioapi.h"
+#include "config.h"
 
 int main(int argc, char *argv[])
 {
@@ -56,6 +57,10 @@ int main(int argc, char *argv[])
         configPath = "/mnt/boot";
     }
     engine.rootContext()->setContextProperty("configPath", configPath);
+
+    // LOAD CONFIG
+    Config config(&engine, configPath);
+    engine.rootContext()->setContextProperty("config", &config);
 
     // LOADING FONTS
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Light.ttf"));

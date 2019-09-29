@@ -6,7 +6,7 @@
 #include "../../entities/entity.h"
 #include "math.h"
 
-void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications)
+void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications, QObject* api, QObject* configObj)
 {
     setIntegrationId(integrationId);
 
@@ -18,7 +18,7 @@ void HomeAssistant::initialize(int integrationId, const QVariantMap& config, QOb
     }
 
     // crate a new instance and pass on variables
-    HomeAssistantThread *HAThread = new HomeAssistantThread(config, entities, notifications);
+    HomeAssistantThread *HAThread = new HomeAssistantThread(config, entities, notifications, api, configObj);
 
     // move to thread
     HAThread->moveToThread(&m_thread);
@@ -65,7 +65,7 @@ void HomeAssistant::stateHandler(int state)
 //// HOME ASSISTANT THREAD CLASS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *entities, QObject *notifications)
+HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *entities, QObject *notifications, QObject *api, QObject *configObj)
 {
     for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
         if (iter.key() == "data") {
@@ -76,6 +76,8 @@ HomeAssistantThread::HomeAssistantThread(const QVariantMap &config, QObject *ent
     }
     m_entities = qobject_cast<EntitiesInterface *>(entities);
     m_notifications = qobject_cast<NotificationsInterface *>(notifications);
+    m_api = qobject_cast<YioAPIInterface *>(api);
+    m_config = qobject_cast<ConfigInterface *>(configObj);
 
     m_webSocketId = 4;
 

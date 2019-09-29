@@ -55,12 +55,12 @@ Item {
             anchors.rightMargin: 20
             anchors.verticalCenter: softwareUpdateText.verticalCenter
 
-            checked: config.settings.softwareupdate
+            checked: config.read.settings.softwareupdate
             mouseArea.onClicked: {
-                var tmp = config;
+                var tmp = config.read
                 tmp.settings.softwareupdate = !tmp.settings.softwareupdate
-                config = tmp;
-                JSHelper.saveConfig();
+                config.write = tmp
+                config.writeConfig();
             }
         }
 

@@ -96,8 +96,9 @@ Item {
         }
     }
 
+    property alias timeText: timeText
 
-    Text { // time in the left corner
+    Text { // time in the middle
         id: timeText
         color: colorText
         text: "22:00"
