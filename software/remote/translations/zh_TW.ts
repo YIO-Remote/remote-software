@@ -121,7 +121,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="198"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>長按屏幕10秒後關閉清潔模式</translation>
+      <translation>長按螢幕10秒後關閉清潔模式</translation>
     </message>
   </context>
   <context>
@@ -157,7 +157,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
       <source>Disconnect</source>
-      <translation>斷開連線</translation>
+      <translation>連線中斷</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
@@ -312,14 +312,14 @@
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="24"/>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="45"/>
       <source>Remote configuration</source>
-      <translation>遠端設定</translation>
+      <translation>遙控器設定</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="80"/>
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation>使用瀏覽器配置你的YIO遙控器或用作下載和上傳備份。 請在瀏覽器中輸入：
+      <translation>使用瀏覽器設定你的YIO遙控器或用作下載和上傳備份。 請在瀏覽器中輸入：
 
 </translation>
     </message>
@@ -515,17 +515,17 @@ connect to your Wi-Fi network.</source>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>請將YIO DOCK接上電源，並等待狀態顯示燈開始閃動。 要與YIO DOCK共享Wi-Fi網絡憑據，請點擊下一步</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Wi-Fi 設定完成</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="325"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>重新啟動</translation>
     </message>
   </context>
 </TS>
