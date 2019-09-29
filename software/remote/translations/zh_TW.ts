@@ -303,7 +303,7 @@
     <message>
       <location filename="../sources/hardware/proximity_gesture_control.h" line="118"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation>距離傳感器未能初始化。 請重新啟動遙控器。</translation>
+      <translation>距離傳感器未能初始化。請重新啟動遙控器。</translation>
     </message>
   </context>
   <context>
@@ -483,7 +483,7 @@ yio.remote</translation>
       <location filename="../wifiSetup.qml" line="119"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation>YIO 遙控器已成功已連接到您的Wi-Fi網絡。</translation>
+      <translation>YIO 遙控器已成功連接到您的Wi-Fi網絡。</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
