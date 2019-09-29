@@ -251,6 +251,9 @@ Item {
                 if (config.settings.bluetootharea) bluetoothArea.stopScan();
 
                 mode = "standby";
+
+                // reset battery charging screen
+                chargingScreen.item.resetClock.start();
             }
 
             // bluetooth turn off
