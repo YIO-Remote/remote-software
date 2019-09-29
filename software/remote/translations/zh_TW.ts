@@ -312,14 +312,14 @@
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="24"/>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="45"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>遠端設定</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="80"/>
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
+      <translation>使用瀏覽器配置你的YIO遙控器或用作下載和上傳備份。 請在瀏覽器中輸入：
 
 </translation>
     </message>
@@ -329,7 +329,7 @@
     <message>
       <location filename="../basic_ui/Settings.qml" line="34"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>設定</translation>
     </message>
   </context>
   <context>
@@ -337,19 +337,19 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="19"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>軟體更新</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="40"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>自動更新</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>自動檢查更新，並在有新軟件版本時更新。
+更新會於03.00 am - 05.00 am之間安裝。</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
