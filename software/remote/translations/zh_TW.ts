@@ -355,33 +355,33 @@ Updates are installed between 03.00 am and 05.00 am.</source>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>New software is available.
 YIO remote </source>
-      <translation type="unfinished">New software is available.
-YIO remote </translation>
+      <translation>有新的軟件版本可用。
+YIO遙控器 </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>您的系統已是最新狀態</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>已安裝的版本: YIO 遙控器 </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>YIO 遙控器 </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>更新</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>檢查更新</translation>
     </message>
   </context>
   <context>
@@ -389,27 +389,27 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>系統</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>執行時間</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="95"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>處理器溫度</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>重新啟動</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="146"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>關機</translation>
     </message>
   </context>
   <context>
@@ -418,7 +418,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>收藏</translation>
     </message>
   </context>
   <context>
@@ -426,7 +426,7 @@ YIO remote </translation>
     <message>
       <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
       <source>Failed to connect to Home Assistant.</source>
-      <translation type="unfinished">Failed to connect to Home Assistant.</translation>
+      <translation>無法連接到Home Assistant。</translation>
     </message>
   </context>
   <context>
@@ -435,7 +435,7 @@ YIO remote </translation>
       <location filename="../main.qml" line="208"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
-      <translation type="unfinished">New software version is available!</translation>
+      <translation>有新版本可用！</translation>
     </message>
   </context>
   <context>
@@ -444,7 +444,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/settings.qml" line="10"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Settings</translation>
+      <translation>設定</translation>
     </message>
   </context>
   <context>
@@ -452,13 +452,13 @@ YIO remote </translation>
     <message>
       <location filename="../wifiSetup.qml" line="28"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Wi-Fi 設定</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="45"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation type="unfinished">Connect to the Wi-Fi network
+      <translation>連接Wi-Fi網絡
 </translation>
     </message>
     <message>
@@ -466,54 +466,51 @@ YIO remote </translation>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
-      <translation type="unfinished">Open a web browser
-and navigate to
+      <translation>打開瀏覽器並瀏覽
 yio.remote</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="77"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>關機</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="102"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>已連接</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="119"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully
-connected to your Wi-Fi network.</translation>
+      <translation>YIO 遙控器已成功已連接到您的Wi-Fi網絡。</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
       <location filename="../wifiSetup.qml" line="271"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>繼續</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="152"/>
       <source>Not connected</source>
-      <translation type="unfinished">Not connected</translation>
+      <translation>未連接</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="169"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>YIO 遙控器未能連接到您的Wi-Fi網絡。</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="186"/>
       <source>Please try again</source>
-      <translation type="unfinished">Please try again</translation>
+      <translation>請再試一次</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>再試一次</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
