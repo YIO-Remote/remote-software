@@ -157,6 +157,9 @@ Item {
 
         // start bluetooth scanning
         if (config.read.settings.bluetootharea) bluetoothArea.startScan();
+
+        // reset battery charging screen
+        chargingScreen.item.showClock.start();
     }
 
     Timer {

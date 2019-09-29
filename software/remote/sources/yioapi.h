@@ -25,10 +25,8 @@ public:
     //Q_INVOKABLE void sendMessage(QString message);                  // send a message to a client
 
     // CONFIG MANIPULATION METHODS
-    Q_INVOKABLE QVariantMap getConfig()
-    {
-        return Config::getInstance()->read();
-    }
+    Q_INVOKABLE QVariantMap     getConfig                   ();
+    Q_INVOKABLE void            addEntityToConfig           (QVariantMap entity);
 
     bool running()
     {

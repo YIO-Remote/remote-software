@@ -50,6 +50,32 @@ void YioAPI::stop()
     emit runningChanged();
 }
 
+QVariantMap YioAPI::getConfig()
+{
+    return Config::getInstance()->read();
+}
+
+void YioAPI::addEntityToConfig(QVariantMap entity)
+{
+    // get the config
+    QVariantMap c = getConfig();
+
+    // check what is the type of the new entity
+    QString entityType = entity["tpye"].toString();
+
+    //find the entities key and insert the new entity
+    foreach (QVariant value, c)
+    {
+        if (value["type"].toString() == entityType) {
+
+        }
+    }
+
+
+    // writeh the config back
+    Config::getInstance()->readWrite(c);
+}
+
 void YioAPI::onNewConnection()
 {
     QWebSocket *socket = m_server->nextPendingConnection();
