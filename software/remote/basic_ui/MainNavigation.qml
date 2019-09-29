@@ -31,37 +31,37 @@ Item {
     ]
 
 
-    function loadMenuConfig() {
+    function loadmenuConfig() {
         // clear the menuConfig
         menuConfig.clear();
 
         // if the default config is in the menu
-        if (config.settings.menu.order.length < 3) {
-            for (var i=0; i<config.settings.menu.order.length; i++) {
-                config.settings.menu.order[i].display_name = qsTr(config.settings.menu.order[i].display_name) + translateHandler.emptyString;
-                menuConfig.append(config.settings.menu.order[i]);
+        if (config.read.settings.menu.order.length < 3) {
+            for (var i=0; i<config.read.settings.menu.order.length; i++) {
+                config.read.settings.menu.order[i].display_name = qsTr(config.read.settings.menu.order[i].display_name) + translateHandler.emptyString;
+                menuConfig.append(config.read.settings.menu.order[i]);
             }
             addDeviceTypes();
             addAreas();
             menuConfig.move(1, menuConfig.count-1, 1);
         } else {
-            for (var i=0; i<config.settings.menu.order.length; i++) {
-                config.settings.menu.order[i].display_name = qsTr(config.settings.menu.order[i].display_name) + translateHandler.emptyString;
-                menuConfig.append(config.settings.menu.order[i]);
+            for (var i=0; i<config.read.settings.menu.order.length; i++) {
+                config.read.settings.menu.order[i].display_name = qsTr(config.read.settings.menu.order[i].display_name) + translateHandler.emptyString;
+                menuConfig.append(config.read.settings.menu.order[i]);
             }
         }
     }
 
-    function saveMenuConfig() {
+    function savemenuConfig() {
         // clear the list
-        config.settings.menu.order = [];
+        config.read.settings.menu.order = [];
         // get the data from the listmodel
         for (var i=0; i<menuConfig.count; i++) {
-            config.settings.menu.order.push({"name": menuConfig.get(i).name, "display_name": menuConfig.get(i).display_name, "show": menuConfig.get(i).show});
+            config.read.settings.menu.order.push({"name": menuConfig.get(i).name, "display_name": menuConfig.get(i).display_name, "show": menuConfig.get(i).show});
         }
 
         // write to json file
-        jsonConfig.write(config);
+        jsonconfig.write(config);
     }
 
     function addDeviceTypes() {
@@ -71,13 +71,13 @@ Item {
     }
 
     function addAreas() {
-        for (var i=0; i<config.areas.length; i++) {
-            menuConfig.append({"name": "area", "display_name": config.areas[i].area,"show": true});
+        for (var i=0; i<config.read.areas.length; i++) {
+            menuConfig.append({"name": "area", "display_name": config.read.areas[i].area,"show": true});
         }
     }
 
     Component.onCompleted: {
-        loadMenuConfig()
+        loadmenuConfig()
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ Item {
             }
             onReleased: {
                 if (held) {
-                    saveMenuConfig()
+                    savemenuConfig()
                 }
                 haptic.playEffect("click");
 

@@ -4,6 +4,7 @@ CONFIG += c++11 disable-desktop qtquickcompiler
 DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
+    sources/config.h \
     sources/fileio.h \
     sources/jsonfile.h \
     sources/launcher.h \
@@ -28,6 +29,7 @@ HEADERS += \
     sources/yioapi.h
 
 SOURCES += \
+    sources/config.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \

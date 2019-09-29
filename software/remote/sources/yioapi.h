@@ -7,6 +7,7 @@
 #include <QtWebSockets/QWebSocketServer>
 
 #include "qzeroconf.h"
+#include "config.h"
 
 class YioAPI : public QObject
 {
@@ -53,13 +54,12 @@ private:
 
     bool                         m_running = false;
 
-    static YioAPI*              s_instance;
-    QQmlApplicationEngine*      m_engine;
+    static YioAPI*               s_instance;
+    QQmlApplicationEngine*       m_engine;
 
-    QString                     m_token = "0";
-    QString                     m_hostname;
+    QString                      m_token = "0";
+    QString                      m_hostname;
 
-    QZeroConf                   m_qzero_conf;
+    QZeroConf                    m_qzero_conf;
 };
-
 #endif // YIOAPI_H

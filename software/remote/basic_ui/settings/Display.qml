@@ -56,10 +56,10 @@ Item {
 
             checked: standbyControl.display_autobrightness
             mouseArea.onClicked: {
-                var tmp = config;
-                tmp.settings.autobrightness = !tmp.settings.autobrightness
-                config = tmp;
-                JSHelper.saveConfig();
+                var tmp = config.read;
+                tmp.settings.autobrightness = !tmp.settings.autobrightness;
+                config.write = tmp;
+                config.writeConfig();
             }
         }
 
@@ -161,10 +161,10 @@ Item {
 
             checked: darkMode
             mouseArea.onClicked: {
-                var tmp = config;
+                var tmp = config.read
                 tmp.settings.darkmode = !tmp.settings.darkmode
-                config = tmp;
-                JSHelper.saveConfig();
+                config.write = tmp;
+                config.writeConfig();
             }
         }
 

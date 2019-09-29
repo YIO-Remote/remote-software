@@ -142,7 +142,7 @@ Rectangle {
     Text {
         id: timeText
         color: colorText
-        text: loader_main.item.statusBar.timeText.text
+        text: loader_main.item ? loader_main.item.statusBar.timeText.text : ""
         verticalAlignment: Text.AlignVCenter
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom

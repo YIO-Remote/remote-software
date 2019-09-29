@@ -72,12 +72,12 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
         target: bluetoothArea
-        enabled: config.settings.bluetootharea
+        enabled: config.read.settings.bluetootharea
 
         onCurrentAreaChanged: {
-            if (config.settings.menu.order[mainNavigationSwipeview.currentIndex].display_name != bluetoothArea.currentArea) {
-                for (var i=0; config.settings.menu.order.length; i++) {
-                    if (config.settings.menu.order[i] && config.settings.menu.order[i].display_name == bluetoothArea.currentArea) {
+            if (config.read.settings.menu.order[mainNavigationSwipeview.currentIndex].display_name != bluetoothArea.currentArea) {
+                for (var i=0; config.read.settings.menu.order.length; i++) {
+                    if (config.read.settings.menu.order[i] && config.settings.menu.order[i].display_name == bluetoothArea.currentArea) {
                         mainNavigationSwipeview.currentIndex = i;
                     }
                 }

@@ -142,8 +142,8 @@ Item {
             mode = "on";
 
             // integration socket on
-            for (var i=0; i<config.integration.length; i++) {
-                integration[config.integration[i].type].obj.connect();
+            for (var i=0; i<config.read.integration.length; i++) {
+                integration[config.read.integration[i].type].obj.connect();
             }
 
             // turn on API
@@ -156,7 +156,7 @@ Item {
         standbyBaseTime = new Date().getTime()
 
         // start bluetooth scanning
-        if (config.settings.bluetootharea) bluetoothArea.startScan();
+        if (config.read.settings.bluetootharea) bluetoothArea.startScan();
     }
 
     Timer {
@@ -248,7 +248,7 @@ Item {
                 displayControl.setmode("standbyon");
 
                 // stop bluetooth scanning
-                if (config.settings.bluetootharea) bluetoothArea.stopScan();
+                if (config.read.settings.bluetootharea) bluetoothArea.stopScan();
 
                 mode = "standby";
 
@@ -257,7 +257,7 @@ Item {
             }
 
             // bluetooth turn off
-            if (time-standbyBaseTime > (standbyTime+20)* 1000 && config.settings.bluetootharea) {
+            if (time-standbyBaseTime > (standbyTime+20)* 1000 && config.read.settings.bluetootharea) {
                 // turn off bluetooth
                 bluetoothArea.turnOff()
             }
@@ -265,8 +265,8 @@ Item {
             // mode = wifi_off
             if (time-standbyBaseTime > wifiOffTime * 1000 && wifiOffTime != 0 && mode == "standby" && battery_averagepower <= 0) {
                 // integration socket off
-                for (var i=0; i<config.integration.length; i++) {
-                    integration[config.integration[i].type].obj.disconnect();
+                for (var i=0; i<config.read.integration.length; i++) {
+                    integration[config.read.integration[i].type].obj.disconnect();
                 }
                 // turn off API
                 api.stop();

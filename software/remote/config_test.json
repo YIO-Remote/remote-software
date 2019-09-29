@@ -22,15 +22,6 @@
             "data": [
                 {
                     "area": "Entrance",
-                    "attributes": {
-                        "brightness": 70,
-                        "color": [
-                            255,
-                            255,
-                            255
-                        ],
-                        "state": "on"
-                    },
                     "entity_id": "light.test_lamp",
                     "favorite": true,
                     "friendly_name": "Test lamp",
@@ -42,15 +33,6 @@
                 },
                 {
                     "area": "Entrance",
-                    "attributes": {
-                        "brightness": 70,
-                        "color": [
-                            255,
-                            255,
-                            255
-                        ],
-                        "state": "on"
-                    },
                     "entity_id": "light.backdoor_lamp",
                     "favorite": false,
                     "friendly_name": "Backdoor lamp",
@@ -61,15 +43,6 @@
                 },
                 {
                     "area": "Entrance",
-                    "attributes": {
-                        "brightness": 70,
-                        "color": [
-                            255,
-                            255,
-                            255
-                        ],
-                        "state": "on"
-                    },
                     "entity_id": "light.entrance_lamp_level",
                     "favorite": false,
                     "friendly_name": "Entrance lamp",
@@ -86,10 +59,6 @@
             "data": [
                 {
                     "area": "Living room",
-                    "attributes": {
-                        "position": 0,
-                        "state": "open"
-                    },
                     "entity_id": "cover.living_room_blinds_level",
                     "favorite": true,
                     "friendly_name": "Living room blinds",
@@ -109,9 +78,6 @@
             "data": [
                 {
                     "area": "Kitchen",
-                    "attributes": {
-                        "state": "off"
-                    },
                     "entity_id": "media_player.kitchen",
                     "favorite": false,
                     "friendly_name": "Kitchen speaker",
@@ -155,7 +121,6 @@
                 "token": ""
             },
             "friendly_name": "Home Assistant",
-            "id": 1,
             "plugin": "homeassistant",
             "type": "homeassistant"
         }
@@ -194,6 +159,7 @@
                     {
                         "type": "area",
                         "friendly_name": "Living room",
+                        "image": "/usr/bin/yio-remote/images/livingroom.png",
                         "data":
                         [
                             {
@@ -246,6 +212,7 @@
                     {
                         "type": "area",
                         "friendly_name": "Living room",
+                        "image": "/usr/bin/yio-remote/images/my_own_image.png",
                         "data":
                         [
                             {
