@@ -7,6 +7,7 @@ HEADERS += \
     sources/config.h \
     sources/configinterface.h \
     sources/fileio.h \
+    sources/integrations/integrations.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \
@@ -32,6 +33,7 @@ HEADERS += \
 
 SOURCES += \
     sources/config.cpp \
+    sources/integrations/integrations.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
