@@ -26,8 +26,8 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property double startTime: new Date().getTime()
-    property double baseTime: new Date().getTime()
+    property double onStartTime: new Date().getTime()
+    property double standbyStartTime: new Date().getTime()
     property double screenOnTime: 0
     property double screenOffTime: 0
 
@@ -201,15 +201,18 @@ Item {
         // if mode is on change processor to ondemand
         if (mode == "on") {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
-            startTime = new Date().getTime()
+
+            // start screen on timer and calculate off time
+            onStartTime = new Date().getTime()
+            screenOffTime += new Date().getTime() - standbyStartTime
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
 
-            // add screen on time
-            screenOnTime += new Date().getTime() - startTime
-            screenOffTime = new Date().getTime() - baseTime - screenOnTime
+            // start standby timer and calculate on time
+            standbyStartTime = new Date().getTime()
+            screenOnTime += new Date().getTime() - onStartTime
         }
     }
 
