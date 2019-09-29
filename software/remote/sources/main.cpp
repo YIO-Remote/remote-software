@@ -18,6 +18,7 @@
 #include "hardware/proximity_gesture_control.h"
 
 #include "integrations/integration.h"
+#include "integrations/integrations.h"
 #include "entities/entities.h"
 
 #include "notifications.h"
@@ -90,6 +91,10 @@ int main(int argc, char *argv[])
     // ENTITIES
     Entities entities;
     engine.rootContext()->setContextProperty("entities", &entities);
+
+    // INTEGRATIONS
+    Integrations integrations;
+    engine.rootContext()->setContextProperty("integrations", &integrations);
 
     // NOTIFICATIONS
     Notifications notifications(&engine);

@@ -25,6 +25,7 @@ Rectangle {
 
     onStateChanged: {
         if (state == "visible") {
+            resetClock.start();
             showClock.start();
         } else {
             resetClock.start();
@@ -37,11 +38,11 @@ Rectangle {
         id: resetClock
         running: false
 
-        PropertyAnimation { target: batteryIcon; properties: "x"; to: (parent.width-implicitWidth)/2; easing.type: Easing.OutExpo; duration: 300 }
-        PropertyAnimation { target: batteryIcon; properties: "y"; to: (parent.height-implicitHeight)/2; easing.type: Easing.OutExpo; duration: 300 }
-        PropertyAnimation { target: batteryIcon; properties: "scale"; to: 1; easing.type: Easing.OutExpo; duration: 300 }
-        PropertyAnimation { target: chargeText; properties: "opacity"; to: 1; easing.type: Easing.OutExpo; duration: 300 }
-        PropertyAnimation { target: timeText; properties: "anchors.bottomMargin"; to: -400; easing.type: Easing.OutExpo; duration: 300 }
+        PropertyAnimation { target: batteryIcon; properties: "x"; to: (parent.width-implicitWidth)/2; duration: 1 }
+        PropertyAnimation { target: batteryIcon; properties: "y"; to: (parent.height-implicitHeight)/2; duration: 1 }
+        PropertyAnimation { target: batteryIcon; properties: "scale"; to: 1; duration: 1 }
+        PropertyAnimation { target: chargeText; properties: "opacity"; to: 1; duration: 1 }
+        PropertyAnimation { target: timeText; properties: "anchors.bottomMargin"; to: -400; duration: 1 }
     }
 
     property alias showClock: showClock

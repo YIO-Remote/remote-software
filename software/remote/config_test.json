@@ -17,103 +17,94 @@
             "bluetooth": "xx:xx:xx:xx:xx"
         }
     ],
-    "entities": [
-        {
-            "data": [
-                {
-                    "area": "Entrance",
-                    "entity_id": "light.test_lamp",
-                    "favorite": true,
-                    "friendly_name": "Test lamp",
-                    "integration": "openhab",
-                    "supported_features": [
-                        "BRIGHTNESS"
-                    ],
-                    "type": "light"
-                },
-                {
-                    "area": "Entrance",
-                    "entity_id": "light.backdoor_lamp",
-                    "favorite": false,
-                    "friendly_name": "Backdoor lamp",
-                    "integration": "homeassistant",
-                    "supported_features": [
-                    ],
-                    "type": "light"
-                },
-                {
-                    "area": "Entrance",
-                    "entity_id": "light.entrance_lamp_level",
-                    "favorite": false,
-                    "friendly_name": "Entrance lamp",
-                    "integration": "homeassistant",
-                    "supported_features": [
-                        "BRIGHTNESS"
-                    ],
-                    "type": "light"
-                }
-            ],
-            "type": "light"
-        },
-        {
-            "data": [
-                {
-                    "area": "Living room",
-                    "entity_id": "cover.living_room_blinds_level",
-                    "favorite": true,
-                    "friendly_name": "Living room blinds",
-                    "integration": "homeassistant",
-                    "supported_features": [
-                        "OPEN",
-                        "CLOSE",
-                        "STOP",
-                        "POSITION"
-                    ],
-                    "type": "blind"
-                }
-            ],
-            "type": "blind"
-        },
-        {
-            "data": [
-                {
-                    "area": "Kitchen",
-                    "entity_id": "media_player.kitchen",
-                    "favorite": false,
-                    "friendly_name": "Kitchen speaker",
-                    "integration": "homeassistant",
-                    "supported_features": [
-                        "SOURCE",
-                        "APP_NAME",
-                        "VOLUME",
-                        "VOLUME_UP",
-                        "VOLUME_DOWN",
-                        "VOLUME_SET",
-                        "MUTE",
-                        "MUTE_SET",
-                        "MEDIA_TYPE",
-                        "MEDIA_TITLE",
-                        "MEDIA_ARTIST",
-                        "MEDIA_ALBUM",
-                        "MEDIA_DURATION",
-                        "MEDIA_POSITION",
-                        "MEDIA_IMAGE",
-                        "PLAY",
-                        "PAUSE",
-                        "STOP",
-                        "PREVIOUS",
-                        "NEXT",
-                        "SEEK",
-                        "SHUFFLE",
-                        "TURN_ON",
-                        "TURN_OFF"
-                    ],
-                    "type": "media_player"
-                }
-            ],
-            "type": "media_player"
-        }
-    ],
+    "entities": {
+        "light": [
+            {
+                "area": "Entrance",
+                "entity_id": "light.test_lamp",
+                "favorite": true,
+                "friendly_name": "Test lamp",
+                "integration": "openhab",
+                "supported_features": [
+                    "BRIGHTNESS"
+                ],
+                "type": "light"
+            },
+            {
+                "area": "Entrance",
+                "entity_id": "light.backdoor_lamp",
+                "favorite": false,
+                "friendly_name": "Backdoor lamp",
+                "integration": "homeassistant",
+                "supported_features": [
+                ],
+                "type": "light"
+            },
+            {
+                "area": "Entrance",
+                "entity_id": "light.entrance_lamp_level",
+                "favorite": false,
+                "friendly_name": "Entrance lamp",
+                "integration": "homeassistant",
+                "supported_features": [
+                    "BRIGHTNESS"
+                ],
+                "type": "light"
+            }
+        ],
+        "blind": [
+            {
+                "area": "Living room",
+                "entity_id": "cover.living_room_blinds_level",
+                "favorite": true,
+                "friendly_name": "Living room blinds",
+                "integration": "homeassistant",
+                "supported_features": [
+                    "OPEN",
+                    "CLOSE",
+                    "STOP",
+                    "POSITION"
+                ],
+                "type": "blind"
+            }
+        ],
+        "media_player": [
+            {
+                "area": "Kitchen",
+                "entity_id": "media_player.kitchen",
+                "favorite": false,
+                "friendly_name": "Kitchen speaker",
+                "integration": "homeassistant",
+                "supported_features": [
+                    "SOURCE",
+                    "APP_NAME",
+                    "VOLUME",
+                    "VOLUME_UP",
+                    "VOLUME_DOWN",
+                    "VOLUME_SET",
+                    "MUTE",
+                    "MUTE_SET",
+                    "MEDIA_TYPE",
+                    "MEDIA_TITLE",
+                    "MEDIA_ARTIST",
+                    "MEDIA_ALBUM",
+                    "MEDIA_DURATION",
+                    "MEDIA_POSITION",
+                    "MEDIA_IMAGE",
+                    "PLAY",
+                    "PAUSE",
+                    "STOP",
+                    "PREVIOUS",
+                    "NEXT",
+                    "SEEK",
+                    "SHUFFLE",
+                    "TURN_ON",
+                    "TURN_OFF"
+                ],
+                "type": "media_player"
+            }
+        ]
+    },
     "integration": [
         {
             "data": {
