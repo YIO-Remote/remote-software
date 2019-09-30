@@ -50,12 +50,12 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Détection de zone</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Analyse automatiquement des balises bluetooth associées aux zones, trouve les périphériques les plus proches et les affichent dans cette zone.</translation>
     </message>
   </context>
   <context>
@@ -348,8 +348,7 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Recherche automatique des mises à jour. Les mises à jour disponibles seront installées entre 03:00 et 05:00 du matin.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
@@ -466,9 +465,7 @@ Télécommande YIO </translation>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
-      <translation type="unfinished">Open a web browser
-and navigate to
-yio.remote</translation>
+      <translation>Ouvrez le naviguateur de votre choix et accédez à la page yio.remote</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="77"/>
@@ -484,8 +481,7 @@ yio.remote</translation>
       <location filename="../wifiSetup.qml" line="119"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully
-connected to your Wi-Fi network.</translation>
+      <translation>La télécommande YIO est connectée à votre réseau sans-fil.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
@@ -517,7 +513,7 @@ connect to your Wi-Fi network.</source>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Connectez la station d'accueil YIO à une source d'alimentation et attendez qu'il commence à clignoter. Pour partager les identifiants du réseau sans fil avec la station d'accueil, appuyez sur le bouton suivant.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
