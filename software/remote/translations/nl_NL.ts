@@ -26,18 +26,18 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="176"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>Batterij niveau</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>Gemiddelde stroom</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>Er is nog geen data beschikbaar</translation>
     </message>
   </context>
   <context>
@@ -45,17 +45,17 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Herkenning van omgeving</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Scant automatisch voor bluetooth beacons geassocieerd met gebieden en weergeeft dan de dichtstbijzijnde apparaten.</translation>
     </message>
   </context>
   <context>
