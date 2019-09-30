@@ -356,7 +356,7 @@ Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
       <source>New software is available.
 YIO remote </source>
       <translation>Nieuwe softwareversie is beschikbaar.
-YIO remote </translation>
+YIO Afstandsbediening </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
@@ -518,17 +518,17 @@ verbinden met uw Wi-Fi netwerk.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Verbind de YIO Dock met een stroomnetwerk en wacht totdat het begint met knipperen. Om vervolgens de inloggegevens van het wifi-netwerk te delen met het dock, tik op volgende.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Wi-Fi-instellingen voltooid</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="325"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Herstarten</translation>
     </message>
   </context>
 </TS>
