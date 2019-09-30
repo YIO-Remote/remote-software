@@ -27,8 +27,7 @@
                 "integration": "openhab",
                 "supported_features": [
                     "BRIGHTNESS"
-                ],
-                "type": "light"
+                ]
             },
             {
                 "area": "Entrance",
@@ -37,8 +36,7 @@
                 "friendly_name": "Backdoor lamp",
                 "integration": "homeassistant",
                 "supported_features": [
-                ],
-                "type": "light"
+                ]
             },
             {
                 "area": "Entrance",
@@ -48,8 +46,7 @@
                 "integration": "homeassistant",
                 "supported_features": [
                     "BRIGHTNESS"
-                ],
-                "type": "light"
+                ]
             }
         ],
         "blind": [
@@ -64,8 +61,7 @@
                     "CLOSE",
                     "STOP",
                     "POSITION"
-                ],
-                "type": "blind"
+                ]
             }
         ],
         "media_player": [
@@ -100,8 +96,7 @@
                     "SHUFFLE",
                     "TURN_ON",
                     "TURN_OFF"
-                ],
-                "type": "media_player"
+                ]
             }
         ]
     },
