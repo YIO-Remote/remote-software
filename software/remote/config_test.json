@@ -137,8 +137,16 @@
                         "data":
                         [
                             {
-                                "type": "favorites",
-                                "entities": ["light_entity_id", "scene_entity_id1", "scene_entity_id2", "blind_entity_id"]
+                                "type": "scene",
+                                "entities": ["scene_entity_id1", "scene_entity_id2"]
+                            },
+                            {
+                                "type": "light",
+                                "entities": ["light_entity_id", "light_entity_id2"]
+                            },
+                            {
+                                "type": "blind",
+                                "entities": ["blind_entity_id", "blind_entity_id2"]
                             }
                         ]
                     },
