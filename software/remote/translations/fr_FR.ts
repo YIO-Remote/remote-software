@@ -502,8 +502,7 @@ connected to your Wi-Fi network.</translation>
       <location filename="../wifiSetup.qml" line="169"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>La télécommande YIO ne peut pas se connecter à votre réseau sans-fil.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="186"/>
