@@ -26,10 +26,10 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property double onStartTime: new Date().getTime()
-    property double standbyStartTime: new Date().getTime()
-    property double screenOnTime: 0
-    property double screenOffTime: 0
+    property int onStartTime: new Date().getTime()
+    property int standbyStartTime: new Date().getTime()
+    property int screenOnTime: 0
+    property int screenOffTime: 0
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TOUCH EVENT DETECTOR
