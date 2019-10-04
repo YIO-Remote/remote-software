@@ -27,7 +27,7 @@ Item {
     property int display_brightness_set: 100
 
     property var onStartTime: new Date().getTime()
-    property var standbyStartTime: new Date().getTime()
+    property var standbyStartTime: 0 // new Date().getTime()
     property var screenOnTime: 0
     property var screenOffTime: 0
 
