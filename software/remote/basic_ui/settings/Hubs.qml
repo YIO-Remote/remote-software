@@ -206,12 +206,15 @@ Item {
         anchors.topMargin: 20
 
         Component.onCompleted: {
-            var comp;
-            var obj;
-            for (var key in integration) {
-                if (integration.hasOwnProperty(key)) {
-                    integrationComponent.createObject(column, { title: integration[key].friendly_name, obj: integration[key].obj });
-                }
+//            var comp;
+//            var obj;
+//            for (var key in integration) {
+//                if (integration.hasOwnProperty(key)) {
+//                    integrationComponent.createObject(column, { title: integration[key].friendly_name, obj: integration[key].obj });
+//                }
+//            }
+            for (var i=0; i<integrations.list.length; i++) {
+                integrationComponent.createObject(column, { title: integrations.getFriendlyName(integrations.list[i]), obj: integrations.list[i] });
             }
         }
 

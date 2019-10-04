@@ -17,10 +17,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        for (var key in integration) {
-            if (integration.hasOwnProperty(key)) {
-                integration[key].obj.connect();
-            }
+        for (var i=0; i<integrations.list.length; i++) {
+            integrations.list[i].connect();
         }
     }
 
@@ -170,50 +168,50 @@ Item {
     // BOTTOM GRADIENT FADE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//    Image {
-//        id: bottomGradient
-//        width: 480
-//        height: 80
-//        anchors.bottom: miniMediaPlayer.top
-//        asynchronous: true
-//        fillMode: Image.Stretch
-//        source: "qrc:/images/navigation/bottom_gradient.png"
+    //    Image {
+    //        id: bottomGradient
+    //        width: 480
+    //        height: 80
+    //        anchors.bottom: miniMediaPlayer.top
+    //        asynchronous: true
+    //        fillMode: Image.Stretch
+    //        source: "qrc:/images/navigation/bottom_gradient.png"
 
-//        Behavior on opacity {
-//            NumberAnimation {
-//                duration: 300
-//                easing.type: Easing.OutExpo
-//            }
-//        }
-//    }
+    //        Behavior on opacity {
+    //            NumberAnimation {
+    //                duration: 300
+    //                easing.type: Easing.OutExpo
+    //            }
+    //        }
+    //    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // PAGE INDICATOR
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//    PageIndicator {
-//        id: indicator
+    //    PageIndicator {
+    //        id: indicator
 
-//        count: mainNavigationSwipeview.count
-//        currentIndex: mainNavigationSwipeview.currentIndex
+    //        count: mainNavigationSwipeview.count
+    //        currentIndex: mainNavigationSwipeview.currentIndex
 
-//        anchors.bottom: miniMediaPlayer.top
-//        anchors.bottomMargin: 10
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        opacity: mainNavigation.y == 800 ? 1 : 0
+    //        anchors.bottom: miniMediaPlayer.top
+    //        anchors.bottomMargin: 10
+    //        anchors.horizontalCenter: parent.horizontalCenter
+    //        opacity: mainNavigation.y == 800 ? 1 : 0
 
-//        Behavior on opacity {
-//            NumberAnimation { duration: 300; easing.type: Easing.InOutExpo }
-//        }
+    //        Behavior on opacity {
+    //            NumberAnimation { duration: 300; easing.type: Easing.InOutExpo }
+    //        }
 
-//        delegate: Rectangle {
-//            width: 8
-//            height: 8
-//            radius: height/2
-//            color: colorText
-//            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
-//        }
-//    }
+    //        delegate: Rectangle {
+    //            width: 8
+    //            height: 8
+    //            radius: height/2
+    //            color: colorText
+    //            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
+    //        }
+    //    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MINI MEDIA PLAYER

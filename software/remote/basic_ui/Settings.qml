@@ -49,7 +49,7 @@ Item {
         Settings.Languages {}
 
         Settings.Hubs {
-            visible: Object.keys(integration).length == 0 ? false : true
+            visible: integrations.list.length == 0 ? false : true
         }
 
         Settings.Devices {

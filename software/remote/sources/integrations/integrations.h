@@ -10,20 +10,26 @@ class Integrations : public QObject
 
 public:
     // list of all integrations
-    Q_PROPERTY  (QList<QObject *>       list                          READ    list                      NOTIFY     listChanged                         CONSTANT)
+    Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged          CONSTANT)
+
+    // load all integrations from config file
+    Q_INVOKABLE bool                    load                    (const QString& appPath);
 
     // get all integrations
     QList<QObject *>                    list                    ();
 
+    // get an integration by type
+    Q_INVOKABLE QObject*                getByType               (const QString& type);
+
     // add an integration
-    Q_INVOKABLE void                    add                     (QString name, QObject* obj, QString friendlyName);
+    Q_INVOKABLE void                    add                     (const QString& type, const QString& friendlyName, QObject* obj);
 
     // remove an integraiton
-    Q_INVOKABLE void                    remove                  (QString name);
+    Q_INVOKABLE void                    remove                  (const QString& type);
 
     // get friendly name
-    Q_INVOKABLE QString                 getFriendlyName         (QString name);
-
+    Q_INVOKABLE QString                 getFriendlyName         (const QString& type);
+    Q_INVOKABLE QString                 getFriendlyName         (QObject* obj);
 
     explicit Integrations(QObject *parent = nullptr);
     virtual ~Integrations();

@@ -18,6 +18,7 @@ public:
     Q_PROPERTY	(QString        entity_id READ entity_id CONSTANT)
     Q_PROPERTY	(QString        area READ area CONSTANT)
     Q_PROPERTY	(QString        integration READ integration CONSTANT)
+    Q_PROPERTY	(QObject*       integrationObj READ integrationObj)
     Q_PROPERTY	(bool           favorite READ favorite WRITE setFavorite NOTIFY favoriteChanged)
     Q_PROPERTY	(QStringList   	supported_features READ supported_features NOTIFY featureChanged)
     Q_PROPERTY  (QVariant       attributes READ attributes NOTIFY attributesChanged)		// all dynamic attributes component type specific, for example: state, brightness, etc.
@@ -40,6 +41,7 @@ public:
     QString			friendly_name()         { return m_friendly_name; }
     QString			entity_id()             { return objectName(); }
     QString			integration()           { return m_integration; }
+    QObject*		integrationObj()        { return m_integrationObj; }
     QStringList     supported_features()    { return m_supported_features; }
     bool			favorite()              { return m_favorite; }
     QVariant        attributes()            { return m_attributes; }

@@ -152,12 +152,17 @@ Item {
     }
 
     Component.onCompleted: {
-        for (var key in integration) {
-            if (integration.hasOwnProperty(key)) {
-                integration[key].obj.connecting.connect(loadingIconON);
-                integration[key].obj.disconnected.connect(loadingIconOFF);
-                integration[key].obj.connected.connect(loadingIconOFF);
-            }
+//        for (var key in integration) {
+//            if (integration.hasOwnProperty(key)) {
+//                integration[key].obj.connecting.connect(loadingIconON);
+//                integration[key].obj.disconnected.connect(loadingIconOFF);
+//                integration[key].obj.connected.connect(loadingIconOFF);
+//            }
+//        }
+        for (var i=0; i<integrations.list.length; i++) {
+            integrations.list[i].connecting.connect(loadingIconON);
+            integrations.list[i].disconnected.connect(loadingIconOFF);
+            integrations.list[i].connected.connect(loadingIconOFF);
         }
     }
 

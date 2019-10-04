@@ -265,7 +265,7 @@ Rectangle {
                         notifications.remove(idN);
                     }
                     if (notification.actionlabel == "Reconnect") {
-                        integration[notification.action].obj.connect();
+//                        integrations.getByType(notification.action).connect();
                     }
                 }
             }

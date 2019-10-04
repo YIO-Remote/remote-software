@@ -4,14 +4,11 @@
 #include "light.h"
 #include "blind.h"
 #include "mediaplayer.h"
+#include "../config.h"
+#include "../integrations/integrations.h"
 
-//Entities::Entities(QObject *parent) : QObject(parent) {
-
-//    //    qmlRegisterType<Light>("Light", 1, 0, "Light");
-
-//}
-
-//Entities::~Entities() {}
+#include <QJsonArray>
+#include <QtDebug>
 
 Entities* Entities::s_instance = NULL;
 
@@ -28,6 +25,47 @@ Entities::~Entities()
 QList<QObject *> Entities::list()
 {
     return m_entities.values();
+}
+
+void Entities::load()
+{
+    QVariantMap c = Config::getInstance()->read();
+    QVariantList entities = c.value("entities").toJsonArray().toVariantList();
+
+    for (int i=0; i<entities.length(); i++)
+    {
+        for (int k=0; k<m_supported_entities.length(); k++)
+        {
+            if (entities[i].toMap().value("type").toString() == m_supported_entities[k]) {
+                QVariantList data = entities[i].toMap().value("data").toJsonArray().toVariantList();
+                for (int j=0; i < data.length(); j++)
+                {
+                    QVariant d = data[j];
+                    qDebug() << "DATA" << d;
+
+                    ////                    add(en, Integrations::getInstance()->getByType(en.value("integration").toString()));
+                    ////                    addLoadedEntity(m_supported_entities[k]);
+                }
+            }
+        }
+    }
+
+
+    //    for (var i=0; i<config.read.entities.length; i++) {
+    //        for (var k=0; k<entities.supported_entities.length; k++) {
+    //            if (config.read.entities[i].type == entities.supported_entities[k]) {
+    //                for (var j=0; j < config.read.entities[i].data.length; j++) {
+    //                    const en = config.read.entities[i].data[j];
+    ////                        entities.add(en, integration[en.integration].obj);
+    ////                        var obj = integrations.getByType(en.integration);
+    //                    entities.add(en, obj);
+    //                }
+
+    //                // store which entity type was loaded. Not all supported entities are loaded.
+    //                entities.addLoadedEntity(entities.supported_entities[k]);
+    //            }
+    //        }
+    //    }
 }
 
 QList<QObject *> Entities::getByType(const QString& type)

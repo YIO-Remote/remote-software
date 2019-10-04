@@ -74,13 +74,13 @@ ApplicationWindow {
                 }
 
                 // hide and show the charging screen
-                if (battery_averagepower >= 0) {
+                if (battery_averagepower >= 0 && chargingScreen.item) {
                     chargingScreen.item.state = "visible";
                     // cancel shutdown when started charging
                     if (shutdownDelayTimer.running) {
                         shutdownDelayTimer.stop();
                     }
-                } else {
+                } else if (chargingScreen.item) {
                     chargingScreen.item.state = "hidden";
                 }
 
@@ -211,56 +211,21 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var integration: ({}) // holds the integrations
-    property var device: ({}) // holds the standalone device integration qmls
-
-    // load the hub integrations
-    function loadHubIntegrations() {
-        var comp;
-
-        for (var i=0; i<config.read.integration.length; i++) {
-            integration[config.read.integration[i].type] = config.read.integration[i];
-
-            // if plugin integration exists, load that
-            if (config.read.integration[i].plugin) {
-                comp = mainLauncher.loadIntegration(appPath, config.read.integration[i].plugin, i, config.read.integration[i], entities, notifications, api, config);
-                integration[config.read.integration[i].type].obj = comp;
-
-                // otherwise load qml based integration
-            } else {
-                comp = Qt.createComponent("qrc:/integrations/"+ config.read.integration[i].type + "/" + config.read.integration[i].type +".qml");
-                if (comp.status !== Component.Ready) {
-                    console.debug("Error: " + comp.errorString() );
-                }
-                integration[config.read.integration[i].type].obj = comp.createObject(applicationWindow, {integrationId: i});
-            }
-        }
-
-        // must be at least one integration for this to be successful
-        if (i != 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     // load the entities
     function loadEntities() {
-        var comp;
-        var obj;
-        var tmp = {};
-
         // load the entities from the config file that are supported
         for (var i=0; i<config.read.entities.length; i++) {
             for (var k=0; k<entities.supported_entities.length; k++) {
                 if (config.read.entities[i].type == entities.supported_entities[k]) {
                     for (var j=0; j < config.read.entities[i].data.length; j++) {
                         const en = config.read.entities[i].data[j];
-                        entities.add(en, integration[en.integration].obj);
+//                        entities.add(en, integration[en.integration].obj);
+//                        var obj = integrations.getByType(en.integration);
+                        entities.add(en, obj);
                     }
 
                     // store which entity type was loaded. Not all supported entities are loaded.
-                    //                    loaded_entities.push({ obj: entities.supported_entities[k], id : k });
                     entities.addLoadedEntity(entities.supported_entities[k]);
                 }
             }
@@ -282,9 +247,9 @@ ApplicationWindow {
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
 
         // load the hub integrations
-        if (loadHubIntegrations()) {
+        if (integrations.load(appPath)) {
             // if success, load the entities
-            loadEntities();
+            entities.load();
         }
 
         // set the language

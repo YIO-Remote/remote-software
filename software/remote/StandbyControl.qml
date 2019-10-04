@@ -26,10 +26,10 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property int onStartTime: new Date().getTime()
-    property int standbyStartTime: new Date().getTime()
-    property int screenOnTime: 0
-    property int screenOffTime: 0
+    property var onStartTime: new Date().getTime()
+    property var standbyStartTime: new Date().getTime()
+    property var screenOnTime: 0
+    property var screenOffTime: 0
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TOUCH EVENT DETECTOR
@@ -142,8 +142,8 @@ Item {
             mode = "on";
 
             // integration socket on
-            for (var i=0; i<config.read.integration.length; i++) {
-                integration[config.read.integration[i].type].obj.connect();
+            for (var i=0; i<integrations.list.length; i++) {
+                integrations.list[i].connect();
             }
 
             // turn on API
@@ -268,8 +268,8 @@ Item {
             // mode = wifi_off
             if (time-standbyBaseTime > wifiOffTime * 1000 && wifiOffTime != 0 && mode == "standby" && battery_averagepower <= 0) {
                 // integration socket off
-                for (var i=0; i<config.read.integration.length; i++) {
-                    integration[config.read.integration[i].type].obj.disconnect();
+                for (var i=0; i<integrations.list.length; i++) {
+                    integrations.list[i].disconnect();
                 }
                 // turn off API
                 api.stop();

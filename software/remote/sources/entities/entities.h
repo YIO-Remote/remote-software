@@ -27,6 +27,9 @@ public:
     // get all entities
     QList<QObject *>                list                ();
 
+    // load all entites from config file
+    Q_INVOKABLE void                load                ();
+
     // get entites by type
     Q_INVOKABLE QList<QObject *>    getByType           (const QString& type);
 
