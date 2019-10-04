@@ -7,11 +7,12 @@
 #include "../../entities/entities.h"
 #include "math.h"
 
-void Homey::initialize(int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications)
+void Homey::initialize(int integrationId, const QVariantMap &config, QObject *entities, QObject *notifications)
 {
     setIntegrationId(integrationId);
 
-    for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter)
+    {
         if (iter.key() == "type")
             setType(iter.value().toString());
         else if (iter.key() == "friendly_name")
@@ -46,30 +47,37 @@ void Homey::disconnect()
     emit disconnectSignal();
 }
 
-void Homey::sendCommand(const QString& type, const QString& entity_id, const QString& command, const QVariant& param)
+void Homey::sendCommand(const QString &type, const QString &entity_id, const QString &command, const QVariant &param)
 {
     emit sendCommandSignal(type, entity_id, command, param);
 }
 
 void Homey::stateHandler(int state)
 {
-    if (state == 0) {
+    if (state == 0)
+    {
         setState(CONNECTED);
-    } else if (state == 1) {
+    }
+    else if (state == 1)
+    {
         setState(CONNECTING);
-    } else if (state == 2) {
+    }
+    else if (state == 2)
+    {
         setState(DISCONNECTED);
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//// HOME ASSISTANT THREAD CLASS
+//// Homey THREAD CLASS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 HomeyThread::HomeyThread(const QVariantMap &config, QObject *entities, QObject *notifications)
 {
-    for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
-        if (iter.key() == "data") {
+    for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter)
+    {
+        if (iter.key() == "data")
+        {
             QVariantMap map = iter.value().toMap();
             m_ip = map.value("ip").toString();
             m_token = map.value("token").toString();
@@ -96,32 +104,34 @@ HomeyThread::HomeyThread(const QVariantMap &config, QObject *entities, QObject *
     QObject::connect(m_websocketReconnect, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
-
-
 void HomeyThread::onTextMessageReceived(const QString &message)
 {
     QJsonParseError parseerror;
     QJsonDocument doc = QJsonDocument::fromJson(message.toUtf8(), &parseerror);
-    if (parseerror.error != QJsonParseError::NoError) {
+    if (parseerror.error != QJsonParseError::NoError)
+    {
         qDebug() << "JSON error : " << parseerror.errorString();
         return;
     }
     QVariantMap map = doc.toVariant().toMap();
 
     QString m = map.value("error").toString();
-    if (m.length() > 0) {
+    if (m.length() > 0)
+    {
         qDebug() << "error : " << m;
     }
 
     QString type = map.value("type").toString();
-//    int id = map.value("id").toInt();
+    //    int id = map.value("id").toInt();
 
-    if (type == "connected") {
+    if (type == "connected")
+    {
         setState(0);
     }
 
     // handle get config request from homey app
-    if (type == "command" && map.value("command").toString() == "get_config") {
+    if (type == "command" && map.value("command").toString() == "get_config")
+    {
         // get loaded homey entities
         QList<QObject *> es = m_entities->getByIntegration("homey");
 
@@ -134,10 +144,10 @@ void HomeyThread::onTextMessageReceived(const QString &message)
         // create list to store entity ids
         QStringList list;
 
-
         // interate throug the list and get the entity ids
 
-        foreach (QObject *value, es) {
+        foreach (QObject *value, es)
+        {
             list.append(value->property("entity_id").toString());
             qDebug() << value->property("entity_id").toString();
         }
@@ -154,12 +164,14 @@ void HomeyThread::onTextMessageReceived(const QString &message)
     }
 
     // handle fetch states from homey app
-    if (type == "command" && map.value("command").toString() == "send_states") {
+    if (type == "sendStates")
+    {
         QVariantMap data = map.value("data").toMap();
         updateEntity(data.value("entity_id").toString(), data);
     }
 
-    if (type == "event") {
+    if (type == "event")
+    {
         QVariantMap data = map.value("data").toMap();
         updateEntity(data.value("entity_id").toString(), data);
     }
@@ -167,7 +179,8 @@ void HomeyThread::onTextMessageReceived(const QString &message)
 
 void HomeyThread::onStateChanged(QAbstractSocket::SocketState state)
 {
-    if (state == QAbstractSocket::UnconnectedState && !m_userDisconnect) {
+    if (state == QAbstractSocket::UnconnectedState && !m_userDisconnect)
+    {
         setState(2);
         m_websocketReconnect->start();
     }
@@ -183,14 +196,16 @@ void HomeyThread::onError(QAbstractSocket::SocketError error)
 
 void HomeyThread::onTimeout()
 {
-    if (m_tries == 3) {
+    if (m_tries == 3)
+    {
         m_websocketReconnect->stop();
 
-        m_notifications->add(true,tr("Cannot connect to Homey."), tr("Reconnect"), "homey");
+        m_notifications->add(true, tr("Cannot connect to Homey."), tr("Reconnect"), "homey");
         disconnect();
         m_tries = 0;
     }
-    else {
+    else
+    {
         m_webSocketId = 4;
         if (m_state != 1)
         {
@@ -208,50 +223,57 @@ void HomeyThread::webSocketSendCommand(QVariantMap data)
     QJsonDocument doc = QJsonDocument::fromVariant(data);
     QString message = doc.toJson(QJsonDocument::JsonFormat::Compact);
     m_socket->sendTextMessage(message);
-
 }
 
 int HomeyThread::convertBrightnessToPercentage(float value)
 {
-    return int(round(value*100));
+    return int(round(value * 100));
 }
 
-void HomeyThread::updateEntity(const QString& entity_id, const QVariantMap& attr)
+void HomeyThread::updateEntity(const QString &entity_id, const QVariantMap &attr)
 {
-    Entity* entity = (Entity*)m_entities->get(entity_id);
-    if (entity) {
-        if (entity->type() == "light") {
+    Entity *entity = (Entity *)m_entities->get(entity_id);
+    if (entity)
+    {
+        if (entity->type() == "light")
+        {
             updateLight(entity, attr);
         }
-        if (entity->type() == "blind") {
+        if (entity->type() == "blind")
+        {
             updateBlind(entity, attr);
         }
-        if (entity->type() == "media_player") {
+        if (entity->type() == "media_player")
+        {
             updateMediaPlayer(entity, attr);
         }
     }
 }
 
-void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
+void HomeyThread::updateLight(Entity *entity, const QVariantMap &attr)
 {
     QVariantMap attributes;
 
     //onoff to state.
-    if (attr.contains("onoff")) {
+    if (attr.contains("onoff"))
+    {
         attributes.insert("state", attr.value("onoff"));
         printf("Setting state");
     }
 
     // brightness
-    if (entity->supported_features().indexOf("BRIGHTNESS") > -1) {
-        if (attr.contains("dim")) {
+    if (entity->supported_features().indexOf("BRIGHTNESS") > -1)
+    {
+        if (attr.contains("dim"))
+        {
             attributes.insert("brightness", convertBrightnessToPercentage(attr.value("dim").toFloat()));
             printf("Setting brightness");
         }
     }
 
     // color
-    if (entity->supported_features().indexOf("COLOR") > -1) {
+    if (entity->supported_features().indexOf("COLOR") > -1)
+    {
         QVariant color = attr.value("attributes").toMap().value("rgb_color");
         QVariantList cl(color.toList());
         char buffer[10];
@@ -264,73 +286,73 @@ void HomeyThread::updateLight(Entity* entity, const QVariantMap& attr)
 
 void HomeyThread::updateBlind(Entity *entity, const QVariantMap &attr)
 {
-//    QVariantMap attributes;
+    //    QVariantMap attributes;
 
-//    // state
-//    if (attr.value("state").toString() == "open") {
-//        attributes.insert("state", true);
-//    } else {
-//        attributes.insert("state", false);
-//    }
+    //    // state
+    //    if (attr.value("state").toString() == "open") {
+    //        attributes.insert("state", true);
+    //    } else {
+    //        attributes.insert("state", false);
+    //    }
 
-//    // position
-//    if (entity->supported_features().indexOf("POSITION") > -1) {
-//        attributes.insert("position", attr.value("attributes").toMap().value("current_position").toInt());
-//    }
+    //    // position
+    //    if (entity->supported_features().indexOf("POSITION") > -1) {
+    //        attributes.insert("position", attr.value("attributes").toMap().value("current_position").toInt());
+    //    }
 
-//    m_entities->update(entity->entity_id(), attributes);
+    //    m_entities->update(entity->entity_id(), attributes);
 }
 
 void HomeyThread::updateMediaPlayer(Entity *entity, const QVariantMap &attr)
 {
-//    QVariantMap attributes;
+    //    QVariantMap attributes;
 
-//    //state
-//    if (attr.value("state").toString() == "off") {
-//        attributes.insert("state", 0);
-//    } else if (attr.value("state").toString() == "on") {
-//        attributes.insert("state", 1);
-//    } else if (attr.value("state").toString() == "idle") {
-//        attributes.insert("state", 2);
-//    } else if (attr.value("state").toString() == "playing") {
-//        attributes.insert("state", 3);
-//    } else {
-//        attributes.insert("state", 0);
-//    }
+    //    //state
+    //    if (attr.value("state").toString() == "off") {
+    //        attributes.insert("state", 0);
+    //    } else if (attr.value("state").toString() == "on") {
+    //        attributes.insert("state", 1);
+    //    } else if (attr.value("state").toString() == "idle") {
+    //        attributes.insert("state", 2);
+    //    } else if (attr.value("state").toString() == "playing") {
+    //        attributes.insert("state", 3);
+    //    } else {
+    //        attributes.insert("state", 0);
+    //    }
 
-//    // source
-//    if (entity->supported_features().indexOf("SOURCE") > -1 && attr.value("attributes").toMap().contains("source")) {
-//        attributes.insert("source", attr.value("attributes").toMap().value("source").toString());
-//    }
+    //    // source
+    //    if (entity->supported_features().indexOf("SOURCE") > -1 && attr.value("attributes").toMap().contains("source")) {
+    //        attributes.insert("source", attr.value("attributes").toMap().value("source").toString());
+    //    }
 
-//    // volume
-//    if (entity->supported_features().indexOf("VOLUME") > -1 && attr.value("attributes").toMap().contains("volume_level")) {
-//        attributes.insert("volume", attr.value("attributes").toMap().value("volume_level").toDouble());
-//    }
+    //    // volume
+    //    if (entity->supported_features().indexOf("VOLUME") > -1 && attr.value("attributes").toMap().contains("volume_level")) {
+    //        attributes.insert("volume", attr.value("attributes").toMap().value("volume_level").toDouble());
+    //    }
 
-//    // media type
-//    if (entity->supported_features().indexOf("MEDIA_TYPE") > -1 && attr.value("attributes").toMap().contains("media_content_type")) {
-//        attributes.insert("mediaType", attr.value("attributes").toMap().value("media_content_type").toString());
-//    }
+    //    // media type
+    //    if (entity->supported_features().indexOf("MEDIA_TYPE") > -1 && attr.value("attributes").toMap().contains("media_content_type")) {
+    //        attributes.insert("mediaType", attr.value("attributes").toMap().value("media_content_type").toString());
+    //    }
 
-//    // media image
-//    if (entity->supported_features().indexOf("MEDIA_IMAGE") > -1 && attr.value("attributes").toMap().contains("entity_picture")) {
-//        QString url = attr.value("attributes").toMap().value("entity_picture").toString();
-//        QString fullUrl = QString("http://").append(m_ip).append(url);
-//        attributes.insert("mediaImage", fullUrl);
-//    }
+    //    // media image
+    //    if (entity->supported_features().indexOf("MEDIA_IMAGE") > -1 && attr.value("attributes").toMap().contains("entity_picture")) {
+    //        QString url = attr.value("attributes").toMap().value("entity_picture").toString();
+    //        QString fullUrl = QString("http://").append(m_ip).append(url);
+    //        attributes.insert("mediaImage", fullUrl);
+    //    }
 
-//    // media title
-//    if (entity->supported_features().indexOf("MEDIA_TITLE") > -1 && attr.value("attributes").toMap().contains("media_title")) {
-//        attributes.insert("mediaTitle", attr.value("attributes").toMap().value("media_title").toString());
-//    }
+    //    // media title
+    //    if (entity->supported_features().indexOf("MEDIA_TITLE") > -1 && attr.value("attributes").toMap().contains("media_title")) {
+    //        attributes.insert("mediaTitle", attr.value("attributes").toMap().value("media_title").toString());
+    //    }
 
-//    // media artist
-//    if (entity->supported_features().indexOf("MEDIA_ARTIST") > -1 && attr.value("attributes").toMap().contains("media_artist")) {
-//        attributes.insert("mediaArtist", attr.value("attributes").toMap().value("media_artist").toString());
-//    }
+    //    // media artist
+    //    if (entity->supported_features().indexOf("MEDIA_ARTIST") > -1 && attr.value("attributes").toMap().contains("media_artist")) {
+    //        attributes.insert("mediaArtist", attr.value("attributes").toMap().value("media_artist").toString());
+    //    }
 
-//    m_entities->update(entity->entity_id(), attributes);
+    //    m_entities->update(entity->entity_id(), attributes);
 }
 
 void HomeyThread::setState(int state)
@@ -374,29 +396,35 @@ void HomeyThread::sendCommand(const QString &type, const QString &entity_id, con
     map.insert("type", "command");
 
     map.insert("deviceId", QVariant(entity_id));
-    if (type == "light") {
-        if (command == "TOGGLE") {
+    if (type == "light")
+    {
+        if (command == "TOGGLE")
+        {
             map.insert("command", QVariant("toggle"));
             map.insert("value", true);
             webSocketSendCommand(map);
         }
-        else if (command == "ON") {
+        else if (command == "ON")
+        {
             map.insert("command", QVariant("onoff"));
             map.insert("value", true);
             webSocketSendCommand(map);
         }
-        else if (command == "OFF"){
+        else if (command == "OFF")
+        {
             map.insert("command", QVariant("onoff"));
             map.insert("value", false);
             webSocketSendCommand(map);
         }
-        else if (command == "BRIGHTNESS") {
+        else if (command == "BRIGHTNESS")
+        {
             map.insert("command", "dim");
-            float value = param.toFloat()/100;
+            float value = param.toFloat() / 100;
             map.insert("value", value);
             webSocketSendCommand(map);
         }
-        else if (command == "COLOR") {
+        else if (command == "COLOR")
+        {
             QColor color = param.value<QColor>();
             //QVariantMap data;
             QVariantList list;
@@ -409,60 +437,73 @@ void HomeyThread::sendCommand(const QString &type, const QString &entity_id, con
             //webSocketSendCommand(type, "turn_on", entity_id, &data);
         }
     }
-    if (type == "blind") {
-        if (command == "OPEN"){
+    if (type == "blind")
+    {
+        if (command == "OPEN")
+        {
             map.insert("command", "windowcoverings_closed");
             map.insert("value", "false");
             webSocketSendCommand(map);
         }
-        else if (command == "CLOSE"){
+        else if (command == "CLOSE")
+        {
             map.insert("command", "windowcoverings_closed");
             map.insert("value", "true");
             webSocketSendCommand(map);
         }
-        else if (command == "STOP"){
+        else if (command == "STOP")
+        {
             map.insert("command", "windowcoverings_tilt_set");
             map.insert("value", 0);
             webSocketSendCommand(map);
         }
-        else if (command == "POSITION") {
+        else if (command == "POSITION")
+        {
             map.insert("command", "windowcoverings_set");
             map.insert("value", param);
             webSocketSendCommand(map);
         }
     }
-    if (type == "media_player") {
-        if (command == "VOLUME_SET") {
+    if (type == "media_player")
+    {
+        if (command == "VOLUME_SET")
+        {
             map.insert("command", "volume_set");
             map.insert("value", param);
             webSocketSendCommand(map);
         }
-        else if (command == "PLAY"){
+        else if (command == "PLAY")
+        {
             map.insert("command", "speaker_playing");
             map.insert("value", true);
             webSocketSendCommand(map);
         }
-        else if (command == "STOP"){
+        else if (command == "STOP")
+        {
             map.insert("command", "speaker_playing");
             map.insert("value", false);
             webSocketSendCommand(map);
         }
-        else if (command == "PREVIOUS"){
+        else if (command == "PREVIOUS")
+        {
             map.insert("command", "speaker_prev");
             map.insert("value", true);
             webSocketSendCommand(map);
         }
-        else if (command == "NEXT"){
+        else if (command == "NEXT")
+        {
             map.insert("command", "speaker_next");
             map.insert("value", true);
             webSocketSendCommand(map);
         }
-        else if (command == "TURNON"){
+        else if (command == "TURNON")
+        {
             map.insert("command", QVariant("onoff"));
             map.insert("value", true);
             webSocketSendCommand(map);
         }
-        else if (command == "TURNOFF"){
+        else if (command == "TURNOFF")
+        {
             map.insert("command", QVariant("onoff"));
             map.insert("value", false);
             webSocketSendCommand(map);
