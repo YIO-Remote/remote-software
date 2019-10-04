@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("entities", &entities);
 
     // INTEGRATIONS
-    Integrations integrations;
+    Integrations integrations(&engine, appPath);
     engine.rootContext()->setContextProperty("integrations", &integrations);
 
     // NOTIFICATIONS

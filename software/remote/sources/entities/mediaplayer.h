@@ -52,8 +52,6 @@ public:
     explicit MediaPlayer();
     MediaPlayer(const QVariantMap& config, QObject* integrationObj);
 
-    void                        init(const QVariantMap& config);
-
     enum states                 state() { return m_state; }
 
 signals:

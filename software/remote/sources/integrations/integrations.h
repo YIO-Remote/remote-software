@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QQmlApplicationEngine>
 
 class Integrations : public QObject
 {
@@ -13,7 +14,7 @@ public:
     Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged          CONSTANT)
 
     // load all integrations from config file
-    Q_INVOKABLE bool                    load                    (const QString& appPath);
+    Q_INVOKABLE bool                    load                    ();
 
     // get all integrations
     QList<QObject *>                    list                    ();
@@ -31,7 +32,7 @@ public:
     Q_INVOKABLE QString                 getFriendlyName         (const QString& type);
     Q_INVOKABLE QString                 getFriendlyName         (QObject* obj);
 
-    explicit Integrations(QObject *parent = nullptr);
+    explicit Integrations(QQmlApplicationEngine *engine = NULL, const QString& appPath = "");
     virtual ~Integrations();
 
     static Integrations*       getInstance     ()
@@ -44,8 +45,10 @@ signals:
 private:
     QMap<QString, QObject*>     m_integrations;
     QMap<QString, QString>      m_integrations_friendly_names;
+    QString                     m_appPath;
 
     static Integrations*        s_instance;
+    QQmlApplicationEngine*      m_engine;
 
 
 };

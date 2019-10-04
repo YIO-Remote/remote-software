@@ -30,42 +30,25 @@ QList<QObject *> Entities::list()
 void Entities::load()
 {
     QVariantMap c = Config::getInstance()->read();
-    QVariantList entities = c.value("entities").toJsonArray().toVariantList();
+    QVariant entities = c.value("entities");
 
-    for (int i=0; i<entities.length(); i++)
+    for (int i=0; i < m_supported_entities.length(); i++)
     {
-        for (int k=0; k<m_supported_entities.length(); k++)
-        {
-            if (entities[i].toMap().value("type").toString() == m_supported_entities[k]) {
-                QVariantList data = entities[i].toMap().value("data").toJsonArray().toVariantList();
-                for (int j=0; i < data.length(); j++)
-                {
-                    QVariant d = data[j];
-                    qDebug() << "DATA" << d;
+        if (entities.toMap().contains(m_supported_entities[i])) {
 
-                    ////                    add(en, Integrations::getInstance()->getByType(en.value("integration").toString()));
-                    ////                    addLoadedEntity(m_supported_entities[k]);
-                }
+            QVariantList type = entities.toMap().value(m_supported_entities[i]).toJsonArray().toVariantList();
+
+            for (int k=0; k < type.length(); k++)
+            {
+                QVariantMap map = type[k].toMap();
+                QObject* obj = Integrations::getInstance()->getByType(map.value("integration").toString());
+
+                add(m_supported_entities[i], map, obj);
+                addLoadedEntity(m_supported_entities[i]);
             }
+
         }
     }
-
-
-    //    for (var i=0; i<config.read.entities.length; i++) {
-    //        for (var k=0; k<entities.supported_entities.length; k++) {
-    //            if (config.read.entities[i].type == entities.supported_entities[k]) {
-    //                for (var j=0; j < config.read.entities[i].data.length; j++) {
-    //                    const en = config.read.entities[i].data[j];
-    ////                        entities.add(en, integration[en.integration].obj);
-    ////                        var obj = integrations.getByType(en.integration);
-    //                    entities.add(en, obj);
-    //                }
-
-    //                // store which entity type was loaded. Not all supported entities are loaded.
-    //                entities.addLoadedEntity(entities.supported_entities[k]);
-    //            }
-    //        }
-    //    }
 }
 
 QList<QObject *> Entities::getByType(const QString& type)
@@ -121,19 +104,19 @@ QObject *Entities::get(const QString& entity_id)
     return m_entities.value(entity_id);
 }
 
-void Entities::add(const QVariantMap& config, QObject *integrationObj)
+void Entities::add(const QString& type, const QVariantMap& config, QObject *integrationObj)
 {
     Entity *entity;
     // Light entity
-    if (config.value("type").toString() == "light") {
+    if (type == "light") {
         entity = new Light(config, integrationObj);
     }
     // Blind entity
-    if (config.value("type").toString() == "blind") {
+    if (type == "blind") {
         entity = new Blind(config, integrationObj);
     }
     // Media player entity
-    if (config.value("type").toString() == "media_player") {
+    if (type == "media_player") {
         entity = new MediaPlayer(config, integrationObj);
     }
     m_entities.insert(entity->entity_id(), entity);

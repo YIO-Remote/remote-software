@@ -70,27 +70,4 @@ Light::Light() :
 Light::Light(const QVariantMap& config, QObject* integrationObj):
     Entity (Type, config, integrationObj)
 {
-    init(config["attributes"].toMap());
-}
-
-void Light::init(const QVariantMap &config)
-{
-    m_state = config.value("state").toBool();
-    emit stateChanged();
-
-    if (m_supported_features.indexOf("BRIGHTNESS") > -1) {
-        m_brightness = config.value("brightness").toInt();
-        emit brightnessChanged();
-    }
-
-    if (m_supported_features.indexOf("COLOR") > -1) {
-        QColor color(config.value("color").toString());
-        m_color = color;
-        emit colorChanged();
-    }
-
-    if (m_supported_features.indexOf("COLORTEMP") > -1) {
-        m_colorTemp = config.value("colortemp").toInt();
-        emit colorTempChanged();
-    }
 }

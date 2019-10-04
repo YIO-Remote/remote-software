@@ -46,7 +46,7 @@ public:
     Q_INVOKABLE QObject*            get                 (const QString& entity_id);
 
     // add an entity
-    Q_INVOKABLE void                add                 (const QVariantMap& config, QObject *integrationObj);
+    Q_INVOKABLE void                add                 (const QString& type, const QVariantMap& config, QObject *integrationObj);
 
     // update an entity
     Q_INVOKABLE void                update              (const QString& entity_id, const QVariantMap& attributes);

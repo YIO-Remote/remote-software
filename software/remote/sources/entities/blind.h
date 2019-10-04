@@ -29,8 +29,6 @@ public:
     bool                        state() const { return m_state; }
     int                         position() const { return m_position; }
 
-    void                        init(const QVariantMap& config);
-
 signals:
     void stateChanged();
     void positionChanged();

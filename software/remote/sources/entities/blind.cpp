@@ -47,14 +47,4 @@ Blind::Blind() :
 Blind::Blind(const QVariantMap& config, QObject* integrationObj):
     Entity (Type, config, integrationObj)
 {
-    init(config["attributes"].toMap());
-}
-
-void Blind::init(const QVariantMap &config)
-{
-    m_state = config.value("state").toBool();
-    emit stateChanged();
-
-    m_position = config.value("position").toInt();
-    emit positionChanged();
 }

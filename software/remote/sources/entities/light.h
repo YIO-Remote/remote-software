@@ -37,8 +37,6 @@ public:
     QColor                      color() const { return m_color; }
     int                         colorTemp() const { return m_colorTemp; }
 
-    void                        init(const QVariantMap& config);
-
 signals:
     void stateChanged();
     void brightnessChanged();

@@ -7,10 +7,13 @@
 
 #include <QJsonArray>
 #include <QtDebug>
+#include <QQuickItem>
 
 Integrations* Integrations::s_instance = NULL;
 
-Integrations::Integrations(QObject *parent) : QObject(parent)
+Integrations::Integrations(QQmlApplicationEngine *engine, const QString& appPath) :
+    m_engine(engine),
+    m_appPath(appPath)
 {
     s_instance = this;
 }
@@ -20,7 +23,7 @@ Integrations::~Integrations()
     s_instance = NULL;
 }
 
-bool Integrations::load(const QString& appPath)
+bool Integrations::load()
 {
     Entities* entities = Entities::getInstance();
     Notifications* notifications = Notifications::getInstance();
@@ -37,7 +40,7 @@ bool Integrations::load(const QString& appPath)
     for (i=0; i<integrations.length(); i++)
     {
         if (integrations[i].toMap().contains("plugin")) {
-            QObject* obj = l->loadIntegration(appPath, integrations[i].toMap().value("plugin").toString(), i, integrations[i].toMap(), entities, notifications, api, config);
+            QObject* obj = l->loadIntegration(m_appPath, integrations[i].toMap().value("plugin").toString(), i, integrations[i].toMap(), entities, notifications, api, config);
 
             // add the integration to the list
             add(integrations[i].toMap().value("type").toString(), integrations[i].toMap().value("friendly_name").toString(), obj);

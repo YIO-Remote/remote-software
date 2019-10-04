@@ -90,12 +90,4 @@ MediaPlayer::MediaPlayer() :
 MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj):
     Entity(Type, config, integrationObj)
 {
-    init(config["attributes"].toMap());
-}
-
-
-void MediaPlayer::init(const QVariantMap &config)
-{
-    m_state = static_cast<states>(config.value("state").toInt());
-    emit stateChanged();
 }

@@ -13,6 +13,7 @@ import "qrc:/basic_ui" as BasicUI
 
 ApplicationWindow {
     id: applicationWindow
+    objectName : "applicationWindow"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,26 +213,6 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // load the entities
-    function loadEntities() {
-        // load the entities from the config file that are supported
-        for (var i=0; i<config.read.entities.length; i++) {
-            for (var k=0; k<entities.supported_entities.length; k++) {
-                if (config.read.entities[i].type == entities.supported_entities[k]) {
-                    for (var j=0; j < config.read.entities[i].data.length; j++) {
-                        const en = config.read.entities[i].data[j];
-//                        entities.add(en, integration[en.integration].obj);
-//                        var obj = integrations.getByType(en.integration);
-                        entities.add(en, obj);
-                    }
-
-                    // store which entity type was loaded. Not all supported entities are loaded.
-                    entities.addLoadedEntity(entities.supported_entities[k]);
-                }
-            }
-        }
-    }
-
     Component.onCompleted: {
         if (config.read == undefined) {
             console.debug("Cannot load configuration file");
@@ -242,12 +223,12 @@ ApplicationWindow {
         }
 
         // change dark mode to the configured value
-        darkMode = Qt.binding(function () { return config.read.settings.darkmode});
+        darkMode = Qt.binding(function () { return config.read.ui_config.darkmode});
         standbyControl.display_autobrightness = Qt.binding(function() { return config.read.settings.autobrightness })
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
 
         // load the hub integrations
-        if (integrations.load(appPath)) {
+        if (integrations.load()) {
             // if success, load the entities
             entities.load();
         }
