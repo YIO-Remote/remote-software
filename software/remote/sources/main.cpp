@@ -18,6 +18,7 @@
 #include "hardware/proximity_gesture_control.h"
 
 #include "integrations/integration.h"
+#include "integrations/integrations.h"
 #include "entities/entities.h"
 
 #include "notifications.h"
@@ -25,6 +26,7 @@
 
 #include "fileio.h"
 #include "yioapi.h"
+#include "config.h"
 
 int main(int argc, char *argv[])
 {
@@ -57,6 +59,10 @@ int main(int argc, char *argv[])
     }
     engine.rootContext()->setContextProperty("configPath", configPath);
 
+    // LOAD CONFIG
+    Config config(&engine, configPath);
+    engine.rootContext()->setContextProperty("config", &config);
+
     // LOADING FONTS
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Light.ttf"));
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));
@@ -85,6 +91,10 @@ int main(int argc, char *argv[])
     // ENTITIES
     Entities entities;
     engine.rootContext()->setContextProperty("entities", &entities);
+
+    // INTEGRATIONS
+    Integrations integrations;
+    engine.rootContext()->setContextProperty("integrations", &integrations);
 
     // NOTIFICATIONS
     Notifications notifications(&engine);

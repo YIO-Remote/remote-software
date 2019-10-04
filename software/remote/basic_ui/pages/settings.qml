@@ -24,13 +24,9 @@ Flickable {
     height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: settingsPage.height + 40
+    contentHeight: settingsPage.height + mainNavigation.height + 20
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
-
-    onFlickStarted: {
-        loader_main.item.mainNavigation.y = 800;
-    }
 
     Behavior on contentY {
         PropertyAnimation {

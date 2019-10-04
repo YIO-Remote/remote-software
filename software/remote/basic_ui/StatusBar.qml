@@ -32,8 +32,10 @@ Item {
         id: titleText
         color: colorText
         text: "Favorites"
+        elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
         height: parent.height
+        width: parent.width/2
         anchors.left: parent.left
         anchors.leftMargin: 10
         y: 2
@@ -51,6 +53,7 @@ Item {
 
         PropertyAnimation { target: titleText; properties: "opacity"; to: 1; easing.type: Easing.OutExpo; duration: 400 }
         PropertyAnimation { target: titleText; properties: "y"; to: 2; easing.type: Easing.OutExpo; duration: 400 }
+        PropertyAnimation { target: timeText; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
     }
 
     ParallelAnimation {
@@ -58,7 +61,8 @@ Item {
         running: false
 
         PropertyAnimation { target: titleText; properties: "opacity"; to: 0; easing.type: Easing.InExpo; duration: 400 }
-        PropertyAnimation { target: titleText; properties: "y"; to: 60; easing.type: Easing.InExpo; duration: 400 }
+        PropertyAnimation { target: titleText; properties: "y"; to: 60; easing.type: Easing.OutExpo; duration: 400 }
+        PropertyAnimation { target: timeText; properties: "opacity"; to: 1; easing.type: Easing.OutExpo; duration: 400 }
     }
 
     Connections {
@@ -92,19 +96,19 @@ Item {
         }
     }
 
+    property alias timeText: timeText
 
-    Text { // time in the left corner
+    Text { // time in the middle
         id: timeText
         color: colorText
         text: "22:00"
         verticalAlignment: Text.AlignVCenter
         height: parent.height
-        anchors.right: batteryIcon.left
-        anchors.rightMargin: 10
-        anchors.verticalCenter: statusBar.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
         font.family: "Open Sans"
         font.weight: Font.Normal
-        font.pixelSize: 20
+        font.pixelSize: 28
         lineHeight: 1
     }
 
@@ -115,37 +119,23 @@ Item {
 
     Rectangle {
         id: notificationCount
-        width: 26
+        width: 12
         height: width
         radius: width/2
-        color: notifications.isThereError ? colorRed : colorText
+        color: colorRed
         visible: notifications.list.length > 0 ? true : false
         anchors.right: timeText.left
         anchors.rightMargin: 10
-        anchors.verticalCenter: statusBar.verticalCenter
+        anchors.verticalCenter: parent.verticalCenter
 
-        Text {
-            id: notificationCountText
-            color: notifications.isThereError ? colorText : colorBackground
-            text: notifications.list.length
-            verticalAlignment: Text.AlignVCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.family: "Open Sans"
-            font.weight: Font.Bold
-            font.styleName: "Bold"
-            font.pixelSize: 20
-            lineHeight: 1
-        }
+//        MouseArea {
+//            width: parent.width + 60
+//            height: width
+//            anchors.centerIn: parent
 
-        MouseArea {
-            width: parent.width + 60
-            height: width
-            anchors.centerIn: parent
-
-            onClicked: {
-            }
-        }
+//            onClicked: {
+//            }
+//        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +169,7 @@ Item {
         opacity: 0
         visible: false
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: notificationCount.visible ? notificationCount.left : timeText.left
+        anchors.right: timeText.left
         anchors.rightMargin: 10
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/statusbar/statusbar-loader.png"

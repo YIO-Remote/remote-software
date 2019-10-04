@@ -23,13 +23,9 @@ Flickable {
     height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: iconFlow.height + titleContainer.height + 40 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
+    contentHeight: iconFlow.height + titleContainer.height + mainNavigation.height + 20 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
-
-    onFlickStarted: {
-        loader_main.item.mainNavigation.y = 800;
-    }
 
     Behavior on contentY {
         PropertyAnimation {
@@ -70,8 +66,8 @@ Flickable {
         Component.onCompleted: {
             var hasTitle = false;
 
-            for (var i=0; i<config.areas.length; i++) {
-                if (config.areas[i].area == area) {
+            for (var i=0; i<config.read.areas.length; i++) {
+                if (config.read.areas[i].area == area) {
                     for (var k=0; k<entities.loaded_entities.length; k++) {
                         var e = entities.getByType(entities.loaded_entities[k]);
 

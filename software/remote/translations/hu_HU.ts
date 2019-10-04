@@ -26,18 +26,18 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="176"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>Akkumlátor szint</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>Átlagos energia</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>Még nincs elérhető adat</translation>
     </message>
   </context>
   <context>
@@ -45,17 +45,17 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Szoba detektálás</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Automatikusan keres blueooth jeladókat, amik a szobákhoz vannak rendelve és ha talál, akkor a legközelebbihez rendelt szobát mutatja.</translation>
     </message>
   </context>
   <context>
@@ -80,7 +80,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>% feltöltve</translation>
     </message>
   </context>
   <context>
@@ -129,17 +129,17 @@
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Világítás</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Árnyékolók</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Média</translation>
     </message>
   </context>
   <context>
@@ -147,17 +147,17 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Szétkapcsolva</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Kapcsolódás</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Kapcsolat bontása</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
@@ -303,7 +303,7 @@
     <message>
       <location filename="../sources/hardware/proximity_gesture_control.h" line="118"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Közelség érzékelő szenzor inicializálása sikertelen. Indítsd újra a távirányítót.</translation>
     </message>
   </context>
   <context>
@@ -312,14 +312,14 @@
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="24"/>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="45"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>Távoli konfiguráció</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="80"/>
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
+      <translation>Használd a böngészőt a YIO távirányító beállításához vagy tölts le és állíts vissza biztonsági mentéseket. Nyisd meg böngésződben:
 
 </translation>
     </message>
@@ -329,7 +329,7 @@
     <message>
       <location filename="../basic_ui/Settings.qml" line="34"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Beállítások</translation>
     </message>
   </context>
   <context>
@@ -348,40 +348,40 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Automatikusan keress frissítésket és frissíts, amikor új verzió elérhető.
+A frissítések 03.00 és 05.00 óra között települnek.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>New software is available.
 YIO remote </source>
-      <translation type="unfinished">New software is available.
-YIO remote </translation>
+      <translation>Új verzió elérhető.
+YIO távirányító </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Nem érhető el frissebb verzió.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Telepített verzió: YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Frissítés</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Frissítések keresése</translation>
     </message>
   </context>
   <context>
@@ -418,7 +418,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Kedvencek</translation>
     </message>
   </context>
   <context>
@@ -426,7 +426,7 @@ YIO remote </translation>
     <message>
       <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
       <source>Failed to connect to Home Assistant.</source>
-      <translation type="unfinished">Failed to connect to Home Assistant.</translation>
+      <translation>Sikertelen kapcsolódás a Home Assistanthoz.</translation>
     </message>
   </context>
   <context>
@@ -435,7 +435,7 @@ YIO remote </translation>
       <location filename="../main.qml" line="208"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
-      <translation type="unfinished">New software version is available!</translation>
+      <translation>Új software verzió elérhető!</translation>
     </message>
   </context>
   <context>
@@ -444,7 +444,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/settings.qml" line="10"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Settings</translation>
+      <translation>Beállítások</translation>
     </message>
   </context>
   <context>
@@ -452,83 +452,82 @@ YIO remote </translation>
     <message>
       <location filename="../wifiSetup.qml" line="28"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Wi-Fi beállítás</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="45"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation type="unfinished">Connect to the Wi-Fi network
-</translation>
+      <translation>Kapcsolódj Wi-Fi hálózathoz</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="62"/>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
-      <translation type="unfinished">Open a web browser
-and navigate to
+      <translation>Nyisd meg a böngészőt
+és navigálj ide
 yio.remote</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="77"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Kikapcsolás</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="102"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Kapcsolódva</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="119"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully
-connected to your Wi-Fi network.</translation>
+      <translation>YIO Távirányító sikeresen
+kapcsolódott a Wi-Fi hálózathoz.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
       <location filename="../wifiSetup.qml" line="271"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Tovább</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="152"/>
       <source>Not connected</source>
-      <translation type="unfinished">Not connected</translation>
+      <translation>Nincs kapcsolódva</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="169"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>YIO Távirányító nem tudott
+kapcsolódni a Wi-Fi hálozathoz.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="186"/>
       <source>Please try again</source>
-      <translation type="unfinished">Please try again</translation>
+      <translation>Kérlek, próbáld újra</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Próbáld újra</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Csatlakoztast a bázist áramforráshoz és várj amíg elkezd villogni. Nyomj a tovább gombra a Wi-Fi beállítások megosztásához a bázissal.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Wi-Fi beállítás kész</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="325"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Újraindítás</translation>
     </message>
   </context>
 </TS>

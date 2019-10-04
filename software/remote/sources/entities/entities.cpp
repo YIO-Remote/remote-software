@@ -5,13 +5,25 @@
 #include "blind.h"
 #include "mediaplayer.h"
 
-Entities::Entities(QObject *parent) : QObject(parent) {
+//Entities::Entities(QObject *parent) : QObject(parent) {
 
-    //    qmlRegisterType<Light>("Light", 1, 0, "Light");
+//    //    qmlRegisterType<Light>("Light", 1, 0, "Light");
 
+//}
+
+//Entities::~Entities() {}
+
+Entities* Entities::s_instance = NULL;
+
+Entities::Entities(QObject *parent) : QObject(parent)
+{
+    s_instance = this;
 }
 
-Entities::~Entities() {}
+Entities::~Entities()
+{
+    s_instance = NULL;
+}
 
 QList<QObject *> Entities::list()
 {
@@ -36,6 +48,18 @@ QList<QObject *> Entities::getByArea(const QString& area)
     foreach (QObject *value, m_entities)
     {
         if (value->property("area") == area) {
+            e.append(m_entities.value(value->property("entity_id").toString()));
+        }
+    }
+    return e;
+}
+
+QList<QObject *> Entities::getByAreaType(const QString &area, const QString &type)
+{
+    QList<QObject *> e;
+    foreach (QObject *value, m_entities)
+    {
+        if (value->property("area") == area && value->property("type") == type) {
             e.append(m_entities.value(value->property("entity_id").toString()));
         }
     }

@@ -1,0 +1,227 @@
+{
+    "areas": [
+        {
+            "area": "Entrance",
+            "bluetooth": "xx:xx:xx:xx:xx"
+        },
+        {
+            "area": "Kitchen",
+            "bluetooth": "C9:A6:6E:D8:50:80"
+        },
+        {
+            "area": "Living room",
+            "bluetooth": "ED:93:1C:34:76:9B"
+        },
+        {
+            "area": "Bedroom",
+            "bluetooth": "xx:xx:xx:xx:xx"
+        }
+    ],
+    "entities": {
+        "light": [
+            {
+                "area": "Entrance",
+                "entity_id": "light.test_lamp",
+                "favorite": true,
+                "friendly_name": "Test lamp",
+                "integration": "openhab",
+                "supported_features": [
+                    "BRIGHTNESS"
+                ],
+                "type": "light"
+            },
+            {
+                "area": "Entrance",
+                "entity_id": "light.backdoor_lamp",
+                "favorite": false,
+                "friendly_name": "Backdoor lamp",
+                "integration": "homeassistant",
+                "supported_features": [
+                ],
+                "type": "light"
+            },
+            {
+                "area": "Entrance",
+                "entity_id": "light.entrance_lamp_level",
+                "favorite": false,
+                "friendly_name": "Entrance lamp",
+                "integration": "homeassistant",
+                "supported_features": [
+                    "BRIGHTNESS"
+                ],
+                "type": "light"
+            }
+        ],
+        "blind": [
+            {
+                "area": "Living room",
+                "entity_id": "cover.living_room_blinds_level",
+                "favorite": true,
+                "friendly_name": "Living room blinds",
+                "integration": "homeassistant",
+                "supported_features": [
+                    "OPEN",
+                    "CLOSE",
+                    "STOP",
+                    "POSITION"
+                ],
+                "type": "blind"
+            }
+        ],
+        "media_player": [
+            {
+                "area": "Kitchen",
+                "entity_id": "media_player.kitchen",
+                "favorite": false,
+                "friendly_name": "Kitchen speaker",
+                "integration": "homeassistant",
+                "supported_features": [
+                    "SOURCE",
+                    "APP_NAME",
+                    "VOLUME",
+                    "VOLUME_UP",
+                    "VOLUME_DOWN",
+                    "VOLUME_SET",
+                    "MUTE",
+                    "MUTE_SET",
+                    "MEDIA_TYPE",
+                    "MEDIA_TITLE",
+                    "MEDIA_ARTIST",
+                    "MEDIA_ALBUM",
+                    "MEDIA_DURATION",
+                    "MEDIA_POSITION",
+                    "MEDIA_IMAGE",
+                    "PLAY",
+                    "PAUSE",
+                    "STOP",
+                    "PREVIOUS",
+                    "NEXT",
+                    "SEEK",
+                    "SHUFFLE",
+                    "TURN_ON",
+                    "TURN_OFF"
+                ],
+                "type": "media_player"
+            }
+        ]
+    },
+    "integration": [
+        {
+            "data": {
+                "ip": "",
+                "token": ""
+            },
+            "friendly_name": "Home Assistant",
+            "plugin": "homeassistant",
+            "type": "homeassistant"
+        }
+    ],
+    "settings": 
+    {
+        "language": "en_US",
+        "autobrightness": true,
+        "proximity": 40,
+        "shutdowntime": 7200,
+        "softwareupdate": false,
+        "wifitime": 240,
+        "bluetootharea": false
+    },
+    "ui-config": 
+    {
+        "darkmode": true,
+        "profiles":
+        [
+            {
+                "id": 1,
+                "name": "Marton",
+                "config":
+                [
+                    {
+                        "type": "favorites",
+                        "friendly_name": "Favorites",
+                        "data":
+                        [
+                            {
+                                "type": "favorites",
+                                "entities": ["light_entity_id", "scene_entity_id1", "scene_entity_id2", "blind_entity_id"]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "area",
+                        "friendly_name": "Living room",
+                        "image": "/usr/bin/yio-remote/images/livingroom.png",
+                        "data":
+                        [
+                            {
+                                "type": "scene",
+                                "entities": ["scene_entity_id1", "scene_entity_id2"]
+                            },
+                            {
+                                "type": "light",
+                                "entities": ["light_entity_id", "light_entity_id2"]
+                            },
+                            {
+                                "type": "blind",
+                                "entities": ["blind_entity_id", "blind_entity_id2"]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "entity",
+                        "friendly_name": "Lights",
+                        "data":
+                        [
+                            {
+                                "type": "light",
+                                "entities": ["light_entity_id", "light_entity_id2"]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "settings",
+                        "friendly_name": "Settings"
+                    }        
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Niels",
+                "config":
+                [
+                    {
+                        "type": "favorites",
+                        "friendly_name": "Favorites",
+                        "data":
+                        [
+                            {
+                                "type": "favorites",
+                                "entities": ["light_entity_id"]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "area",
+                        "friendly_name": "Living room",
+                        "image": "/usr/bin/yio-remote/images/my_own_image.png",
+                        "data":
+                        [
+                            {
+                                "type": "scene",
+                                "entities": ["scene_entity_id1", "scene_entity_id2"]
+                            },
+                            {
+                                "type": "light",
+                                "entities": ["light_entity_id", "light_entity_id2"]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "settings",
+                        "friendly_name": "Settings"
+                    } 
+                ]
+            }
+        ]
+    }
+}
