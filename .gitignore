@@ -1,18 +1,6 @@
 # Mac crap
 .DS_Store
-software/.DS_Store
-software/remote/basic_ui/.DS_Store
-software/remote/components/.DS_Store
-software/remote/components/blind/.DS_Store
-software/remote/components/light/.DS_Store
-software/remote/images/.DS_Store
-software/remote/remote/.DS_Store
-software/remote/remote/basic_ui/.DS_Store
-software/remote/remote/components/.DS_Store
-software/remote/remote/components/blind/.DS_Store
-software/remote/remote/components/light/.DS_Store
-software/remote/remote/images/.DS_Store
-software/build
+build*
 *.DS_Store
 
 # Windows crap
@@ -23,12 +11,7 @@ software/remote/translations/.DS_Store
 software/build-*
 
 #Translation files
-software/remote/translations/*.ts
-software/remote/translations/*.qm
-!software/remote/translations/en_US.ts
+translations/*.ts
+translations/*.qm
+translations/en_US.ts
 *.user
-software/dock/.vscode/settings.json
-software/dock/.travis.yml
-software/dock/include/README
-software/dock/lib/README
-software/dock/test/README
