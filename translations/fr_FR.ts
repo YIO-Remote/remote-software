@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation>Bluetooth</translation>
+      <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
@@ -238,7 +238,7 @@
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="16"/>
       <source>Notifications</source>
-      <translation>Notifications</translation>
+      <translation type="unfinished">Notifications</translation>
     </message>
   </context>
   <context>
@@ -280,7 +280,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
       <source>60 minutes</source>
-      <translation>60 minutes</translation>
+      <translation type="unfinished">60 minutes</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>

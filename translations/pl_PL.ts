@@ -389,7 +389,7 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation>System</translation>
+      <translation type="unfinished">System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>

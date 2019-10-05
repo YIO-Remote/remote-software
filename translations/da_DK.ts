@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation>Bluetooth</translation>
+      <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
@@ -162,7 +162,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
       <source>Hubs</source>
-      <translation>Hubs</translation>
+      <translation type="unfinished">Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
@@ -389,7 +389,7 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation>System</translation>
+      <translation type="unfinished">System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>

@@ -394,7 +394,7 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
-      <translation>Uptime</translation>
+      <translation type="unfinished">Uptime</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="95"/>
