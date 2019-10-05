@@ -96,8 +96,8 @@ Item {
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
-        height: parent.height-statusBar.height-miniMediaPlayer.height
-        anchors.top: statusBar.bottom
+        height: parent.height-miniMediaPlayer.height
+        anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
 
         currentIndex: 0 //mainNavigation.menuConfig.count-1
@@ -150,7 +150,7 @@ Item {
             if (itemsLoaded >= 3) {
                 if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-                    //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+                                        mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
 
@@ -159,6 +159,13 @@ Item {
                 statusBar.title = "";
             } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
+            }
+
+            // change statusbar opacity
+            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
+                statusBar.bg.opacity = 0;
+            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+                statusBar.bg.opacity = 1;
             }
         }
     }

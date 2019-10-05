@@ -10,8 +10,16 @@ Flickable {
 
     signal scrolledUp()
     signal scrolledDown()
+    signal scrollupBegin()
+    signal scrolldownBegin()
 
     onContentYChanged: {
+        if (contentY > 10) {
+            scrollupBegin();
+        } else {
+            scrolldownBegin()
+        }
+
         if (contentY > 130) {
             scrolledUp();
         } else {
@@ -39,10 +47,16 @@ Flickable {
     }
 
     Rectangle {
+        width: parent.width
+        height: 270
+        color: "red"
+        anchors.top: parent.top
+    }
+
+    Item {
         id: titleContainer
         width: parent.width
-        height: 200
-        color: colorBackground
+        height: 240
 
         Text {
             id: titleText

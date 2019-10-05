@@ -9,6 +9,8 @@ Flickable {
 
     signal scrolledUp()
     signal scrolledDown()
+    signal scrollupBegin()
+    signal scrolldownBegin()
 
     width: parent.width
     height: parent.height
@@ -35,6 +37,8 @@ Flickable {
         id: iconFlow
         width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 40
         spacing: 10
 
         Component.onCompleted: {

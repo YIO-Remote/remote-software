@@ -27,8 +27,8 @@ Item {
         onConfigChanged: {
             // if the config is changed, reload the menu
             if (manualRearrange != false) {
-                menuConfig.clear();
-                loadmenuConfig();
+//                menuConfig.clear();
+//                loadmenuConfig();
             }
         }
     }
