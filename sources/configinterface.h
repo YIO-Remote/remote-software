@@ -9,11 +9,11 @@ class ConfigInterface
 public:
     virtual ~ConfigInterface() {}
 
-    virtual QVariantMap read() = 0;
+    virtual QVariantMap  read() = 0;
     virtual void readWrite(QVariantMap config) = 0;
 
 private:
-    QVariantMap                  m_config;
+    QVariantMap                   m_config;
 };
 
 QT_BEGIN_NAMESPACE

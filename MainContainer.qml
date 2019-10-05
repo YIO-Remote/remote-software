@@ -109,24 +109,23 @@ Item {
             Loader {
                 id: mainNavigationLoader
                 asynchronous: true
-                //active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
 
                 property alias mainNavigationLoader: mainNavigationLoader
 
-                function determinePageToLoad(name) {
-                    if (name === "favorites") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/dashboard.qml";
-                    } else if (name === "area") {
-                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/area.qml", { "area": display_name });
-                    } else if (name === "settings") {
+                function determinePageToLoad(type) {
+                    if (type === "favorites") {
+                        mainNavigationLoader.source = "qrc:/basic_ui/pages/favorites.qml";
+                    } else if (type === "area") {
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/area.qml", { "area": friendly_name });
+                    } else if (type === "settings") {
                         mainNavigationLoader.source = "qrc:/basic_ui/pages/settings.qml";
                     } else {
-                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/device.qml", { "type": name });
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/device.qml", { "type": type });
                     }
                 }
 
                 Component.onCompleted: {
-                    determinePageToLoad(name);
+                    determinePageToLoad(type);
                 }
 
                 onStatusChanged: {
@@ -163,55 +162,6 @@ Item {
             }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // BOTTOM GRADIENT FADE
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //    Image {
-    //        id: bottomGradient
-    //        width: 480
-    //        height: 80
-    //        anchors.bottom: miniMediaPlayer.top
-    //        asynchronous: true
-    //        fillMode: Image.Stretch
-    //        source: "qrc:/images/navigation/bottom_gradient.png"
-
-    //        Behavior on opacity {
-    //            NumberAnimation {
-    //                duration: 300
-    //                easing.type: Easing.OutExpo
-    //            }
-    //        }
-    //    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // PAGE INDICATOR
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //    PageIndicator {
-    //        id: indicator
-
-    //        count: mainNavigationSwipeview.count
-    //        currentIndex: mainNavigationSwipeview.currentIndex
-
-    //        anchors.bottom: miniMediaPlayer.top
-    //        anchors.bottomMargin: 10
-    //        anchors.horizontalCenter: parent.horizontalCenter
-    //        opacity: mainNavigation.y == 800 ? 1 : 0
-
-    //        Behavior on opacity {
-    //            NumberAnimation { duration: 300; easing.type: Easing.InOutExpo }
-    //        }
-
-    //        delegate: Rectangle {
-    //            width: 8
-    //            height: 8
-    //            radius: height/2
-    //            color: colorText
-    //            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
-    //        }
-    //    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MINI MEDIA PLAYER

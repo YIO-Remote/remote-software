@@ -52,9 +52,9 @@ Item {
             visible: integrations.list.length == 0 ? false : true
         }
 
-        Settings.Devices {
-            visible: Object.keys(device).length == 0 ? false : true
-        }
+//        Settings.Devices {
+//            visible: Object.keys(device).length == 0 ? false : true
+//        }
 
         Settings.Battery {}
 

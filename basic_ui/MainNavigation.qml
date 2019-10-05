@@ -19,6 +19,20 @@ Item {
     // MENU CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    property bool manualRearrange: false
+
+    Connections {
+        target: config
+
+        onConfigChanged: {
+            // if the config is changed, reload the menu
+            if (manualRearrange != false) {
+                menuConfig.clear();
+                loadmenuConfig();
+            }
+        }
+    }
+
     property alias menuConfig: menuConfig
 
     ListModel {
@@ -27,7 +41,7 @@ Item {
 
     //: menu items that are in the bottom menu
     property var menuTranslations: [qsTr("Favorites") + translateHandler.emptyString, qsTr("Settings") + translateHandler.emptyString,
-                qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString
+        qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString
     ]
 
 
@@ -35,33 +49,41 @@ Item {
         // clear the menuConfig
         menuConfig.clear();
 
-        // if the default config is in the menu
-        if (config.read.settings.menu.order.length < 3) {
-            for (var i=0; i<config.read.settings.menu.order.length; i++) {
-                config.read.settings.menu.order[i].display_name = qsTr(config.read.settings.menu.order[i].display_name) + translateHandler.emptyString;
-                menuConfig.append(config.read.settings.menu.order[i]);
-            }
-            addDeviceTypes();
-            addAreas();
-            menuConfig.move(1, menuConfig.count-1, 1);
-        } else {
-            for (var i=0; i<config.read.settings.menu.order.length; i++) {
-                config.read.settings.menu.order[i].display_name = qsTr(config.read.settings.menu.order[i].display_name) + translateHandler.emptyString;
-                menuConfig.append(config.read.settings.menu.order[i]);
-            }
+        for (var i = 0; i < config.read.ui_config.profiles[config.read.ui_config.selected_profile].config.length; i++) {
+            var c = config.read.ui_config.profiles[config.read.ui_config.selected_profile].config[i];
+            c.friendly_name += translateHandler.emptyString;
+
+            // add to listmodel
+            menuConfig.append(c);
         }
     }
 
     function savemenuConfig() {
-        // clear the list
-        config.read.settings.menu.order = [];
-        // get the data from the listmodel
-        for (var i=0; i<menuConfig.count; i++) {
-            config.read.settings.menu.order.push({"name": menuConfig.get(i).name, "display_name": menuConfig.get(i).display_name, "show": menuConfig.get(i).show});
+        var tmp = config.read;
+
+        var newConfig = [];
+
+        for (var i = 0; i < menuConfig.count; i++) {
+            var found = false;
+
+            for (var j = 0; j < tmp.ui_config.profiles[config.read.ui_config.selected_profile].config.length && !found; j++) {
+                if (tmp.ui_config.profiles[config.read.ui_config.selected_profile].config[j].friendly_name == menuConfig.get(i).friendly_name) {
+                    newConfig.push(tmp.ui_config.profiles[config.read.ui_config.selected_profile].config[j]);
+                    tmp.ui_config.profiles[config.read.ui_config.selected_profile].config.splice(j,1);
+                    found = true;
+                }
+            }
         }
 
-        // write to json file
-        jsonconfig.write(config);
+        // clear the config
+        tmp.ui_config.profiles[config.read.ui_config.selected_profile].config  = [];
+
+        // update the config
+        tmp.ui_config.profiles[config.read.ui_config.selected_profile].config = newConfig;
+
+        config.write = tmp;
+        config.writeConfig();
+        manualRearrange = false;
     }
 
     function addDeviceTypes() {
@@ -104,6 +126,8 @@ Item {
                 haptic.playEffect("click");
             }
             onReleased: {
+                manualRearrange = true;
+
                 if (held) {
                     savemenuConfig()
                 }
@@ -197,7 +221,7 @@ Item {
                     Text {
                         id: buttonText
                         color: colorText
-                        text: qsTr(display_name) + translateHandler.emptyString
+                        text: qsTr(friendly_name) + translateHandler.emptyString
                         horizontalAlignment: Text.AlignHCenter
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
@@ -209,7 +233,7 @@ Item {
                     }
                 }
 
-           }
+            }
 
             DropArea {
                 anchors { fill: parent; margins: 10 }
@@ -245,6 +269,7 @@ Item {
         spacing: 4
 
         model: visualModel
+        delegate: dragDelegate
     }
 
     DelegateModel {
@@ -253,50 +278,4 @@ Item {
         model: menuConfig
         delegate: dragDelegate
     }
-
-    Rectangle { //left gradient fade
-        width: parent.height
-        height: parent.height
-        anchors.left: parent.left
-        anchors.verticalCenter: mainNavigation.verticalCenter
-        rotation: 90
-
-        opacity: mainNavigationListView.atXBeginning ? 0 : 1
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.OutExpo
-            }
-        }
-
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: colorBackgroundTransparent }
-            GradientStop { position: 1.0; color: colorBackground }
-        }
-    }
-
-    Rectangle { //right gradient fade
-        width: parent.height
-        height: parent.height
-        anchors.right: parent.right
-        anchors.verticalCenter: mainNavigation.verticalCenter
-        rotation: 90
-
-        opacity: mainNavigationListView.atXEnd ? 0 : 1
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.OutExpo
-            }
-        }
-
-        gradient: Gradient {
-            GradientStop { position: 1.0; color: colorBackgroundTransparent }
-            GradientStop { position: 0.0; color: colorBackground }
-        }
-    }
-
-
 }

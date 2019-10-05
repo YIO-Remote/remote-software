@@ -51,7 +51,7 @@ Rectangle {
         id: showClock
         running: false
 
-        PauseAnimation {duration: 5000}
+        PauseAnimation {duration: 3000}
         ParallelAnimation {
             PropertyAnimation { target: batteryIcon; properties: "x"; to: 100; easing.type: Easing.OutExpo; duration: 600 }
             PropertyAnimation { target: batteryIcon; properties: "y"; to: 150; easing.type: Easing.OutExpo; duration: 600 }

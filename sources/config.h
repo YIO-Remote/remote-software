@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <QJsonArray>
 #include "configinterface.h"
 #include "jsonfile.h"
 
