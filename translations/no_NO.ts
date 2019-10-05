@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation>Bluetooth</translation>
+      <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>

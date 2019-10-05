@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation>Bluetooth</translation>
+      <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
@@ -139,7 +139,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Media</source>
-      <translation>Media</translation>
+      <translation type="unfinished">Media</translation>
     </message>
   </context>
   <context>
@@ -162,7 +162,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
       <source>Hubs</source>
-      <translation>Hubs</translation>
+      <translation type="unfinished">Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="19"/>
       <source>Software update</source>
-      <translation>Software update</translation>
+      <translation type="unfinished">Software update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="40"/>
@@ -376,7 +376,7 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
       <source>Update</source>
-      <translation>Update</translation>
+      <translation type="unfinished">Update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
@@ -394,7 +394,7 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
-      <translation>Uptime</translation>
+      <translation type="unfinished">Uptime</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="95"/>
