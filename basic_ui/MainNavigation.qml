@@ -26,9 +26,9 @@ Item {
 
         onConfigChanged: {
             // if the config is changed, reload the menu
-            if (manualRearrange != false) {
-//                menuConfig.clear();
-//                loadmenuConfig();
+            if (manualRearrange != true) {
+                // compare what is in the listmodel with the config and adjust
+                // still needs to be done
             }
         }
     }
@@ -41,16 +41,15 @@ Item {
 
     //: menu items that are in the bottom menu
     property var menuTranslations: [qsTr("Favorites") + translateHandler.emptyString, qsTr("Settings") + translateHandler.emptyString,
-        qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString
+        qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString, qsTr("Media") + translateHandler.emptyString
     ]
-
 
     function loadmenuConfig() {
         // clear the menuConfig
         menuConfig.clear();
 
-        for (var i = 0; i < config.read.ui_config.profiles[config.read.ui_config.selected_profile].config.length; i++) {
-            var c = config.read.ui_config.profiles[config.read.ui_config.selected_profile].config[i];
+        for (var i = 0; i < config.read.ui_config.profiles[config.profile].config.length; i++) {
+            var c = config.read.ui_config.profiles[config.profile].config[i];
             c.friendly_name += translateHandler.emptyString;
 
             // add to listmodel
@@ -66,36 +65,24 @@ Item {
         for (var i = 0; i < menuConfig.count; i++) {
             var found = false;
 
-            for (var j = 0; j < tmp.ui_config.profiles[config.read.ui_config.selected_profile].config.length && !found; j++) {
-                if (tmp.ui_config.profiles[config.read.ui_config.selected_profile].config[j].friendly_name == menuConfig.get(i).friendly_name) {
-                    newConfig.push(tmp.ui_config.profiles[config.read.ui_config.selected_profile].config[j]);
-                    tmp.ui_config.profiles[config.read.ui_config.selected_profile].config.splice(j,1);
+            for (var j = 0; j < tmp.ui_config.profiles[config.profile].config.length && !found; j++) {
+                if (tmp.ui_config.profiles[config.profile].config[j].friendly_name == menuConfig.get(i).friendly_name) {
+                    newConfig.push(tmp.ui_config.profiles[config.profile].config[j]);
+                    tmp.ui_config.profiles[config.profile].config.splice(j,1);
                     found = true;
                 }
             }
         }
 
         // clear the config
-        tmp.ui_config.profiles[config.read.ui_config.selected_profile].config  = [];
+        tmp.ui_config.profiles[config.profile].config  = [];
 
         // update the config
-        tmp.ui_config.profiles[config.read.ui_config.selected_profile].config = newConfig;
+        tmp.ui_config.profiles[config.profile].config = newConfig;
 
         config.write = tmp;
         config.writeConfig();
         manualRearrange = false;
-    }
-
-    function addDeviceTypes() {
-        for (var i=0; i<entities.loaded_entities.length; i++) {
-            menuConfig.append({"name": entities.loaded_entities[i], "display_name": entities.getSupportedEntityTranslation(entities.loaded_entities[i]),"show": true});
-        }
-    }
-
-    function addAreas() {
-        for (var i=0; i<config.read.areas.length; i++) {
-            menuConfig.append({"name": "area", "display_name": config.read.areas[i].area,"show": true});
-        }
     }
 
     Component.onCompleted: {
