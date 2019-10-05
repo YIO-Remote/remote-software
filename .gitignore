@@ -15,3 +15,5 @@ translations/*.ts
 translations/*.qm
 !translations/en_US.ts
 *.user
+*.dylib
+config.json

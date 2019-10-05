@@ -67,6 +67,16 @@ void MediaPlayer::play()
     command("PLAY", "");
 }
 
+void MediaPlayer::pause()
+{
+    command("PAUSE", "");
+}
+
+void MediaPlayer::stop()
+{
+    command("STOP", "");
+}
+
 void MediaPlayer::previous()
 {
     command("PREVIOUS", "");
