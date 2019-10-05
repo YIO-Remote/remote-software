@@ -21,18 +21,8 @@
         "light": [
             {
                 "area": "Entrance",
-                "entity_id": "light.test_lamp",
-                "favorite": true,
-                "friendly_name": "Test lamp",
-                "integration": "openhab",
-                "supported_features": [
-                    "BRIGHTNESS"
-                ]
-            },
-            {
-                "area": "Entrance",
                 "entity_id": "light.backdoor_lamp",
-                "favorite": false,
+                "favorite": true,
                 "friendly_name": "Backdoor lamp",
                 "integration": "homeassistant",
                 "supported_features": [
@@ -102,11 +92,12 @@
     },
     "integration": [
         {
+            "connectionOpen": true,
             "data": {
-                "ip": "",
-                "token": ""
             },
             "friendly_name": "Home Assistant",
+            "id": 1,
+            "obj": null,
             "plugin": "homeassistant",
             "type": "homeassistant"
         }
@@ -121,7 +112,7 @@
         "wifitime": 240,
         "bluetootharea": false
     },
-    "ui-config": 
+    "ui_config": 
     {
         "darkmode": true,
         "profiles":
