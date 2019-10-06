@@ -1,6 +1,7 @@
 #include <QtDebug>
 
 #include "mediaplayer.h"
+#include "entities.h"
 
 QString MediaPlayer::Type = "media_player";
 
@@ -10,9 +11,9 @@ bool MediaPlayer::update(const QVariantMap &attributes)
     if (attributes.contains("state") && m_state != static_cast<states>(attributes.value("state").toInt())) {
         m_state = static_cast<states>(attributes.value("state").toInt());
         if (m_state == PLAYING) {
-            emit playing(objectName());
-        } else {
-            emit stopped(objectName());
+            Entities::getInstance()->addMediaplayersPlaying(entity_id());
+        } else if (m_state == IDLE || m_state == OFF){
+            Entities::getInstance()->removeMediaplayersPlaying(entity_id());
         }
         chg = true;
         emit stateChanged();

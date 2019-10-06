@@ -23,6 +23,8 @@ class Entities : public QObject , EntitiesInterface
     Q_PROPERTY  (QStringList         supported_entities_translation READ  supported_entities_translation    CONSTANT)
     Q_PROPERTY  (QStringList         loaded_entities        READ    loaded_entities         CONSTANT)
 
+    Q_PROPERTY  (QList<QObject *>    mediaplayersPlaying     READ    mediaplayersPlaying     NOTIFY mediaplayersPlayingChanged)
+
 public:
     // get all entities
     QList<QObject *>                list                ();
@@ -55,6 +57,10 @@ public:
     QStringList                     supported_entities_translation () { return m_supported_entities_translation; }
     QStringList                     loaded_entities     () { return m_loaded_entities; }
 
+    QList<QObject *>                mediaplayersPlaying ();
+    void                            addMediaplayersPlaying (const QString &entity_id);
+    void                            removeMediaplayersPlaying (const QString &entity_id);
+
     Q_INVOKABLE void                addLoadedEntity     (const QString& entity);
     Q_INVOKABLE QString             getSupportedEntityTranslation (const QString& type);
 
@@ -67,11 +73,18 @@ public:
     static Entities*       getInstance     ()
     { return s_instance; }
 
+signals:
+    void mediaplayersPlayingChanged();
+    void mediaplayerAdded();
+    void mediaplayerRemoved();
+
 private:
     QMap<QString, QObject*>     m_entities;
     QStringList                 m_supported_entities = {"light","blind","media_player"};
     QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds"), tr("Media")};
     QStringList                 m_loaded_entities;
+
+    QMap<QString, QObject*>     m_mediaplayersPlaying;
 
     static Entities*            s_instance;
 };

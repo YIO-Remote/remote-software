@@ -58,8 +58,6 @@ public:
 
 signals:
     void stateChanged();
-    void playing(QString name);
-    void stopped(QString name);
     void volumeChanged();
     void mutedChanged();
     void mediaTypeChanged();

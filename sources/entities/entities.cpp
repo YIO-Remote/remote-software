@@ -128,6 +128,30 @@ void Entities::update(const QString &entity_id, const QVariantMap& attributes)
     e->update(attributes);
 }
 
+QList<QObject *> Entities::mediaplayersPlaying()
+{
+    return m_mediaplayersPlaying.values();
+}
+
+void Entities::addMediaplayersPlaying(const QString &entity_id)
+{
+    QObject *o = m_entities.value(entity_id);
+    if (!m_mediaplayersPlaying.contains(entity_id)) {
+        m_mediaplayersPlaying.insert(entity_id, o);
+        emit mediaplayersPlayingChanged();;
+        emit mediaplayerAdded();
+    }
+}
+
+void Entities::removeMediaplayersPlaying(const QString &entity_id)
+{
+    if (m_mediaplayersPlaying.contains(entity_id)) {
+        m_mediaplayersPlaying.remove(entity_id);
+        emit mediaplayersPlayingChanged();
+        emit mediaplayersPlayingChanged();
+    }
+}
+
 void Entities::addLoadedEntity(const QString &entity)
 {
     m_loaded_entities.append(entity);

@@ -148,7 +148,7 @@ Item {
             if (itemsLoaded >= 3) {
                 if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-                                        mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
 
@@ -186,27 +186,16 @@ Item {
             anchors.fill: parent
         }
 
-        function onPlay(name) {
-            if (!miniMediaPlayerLoader.active) {
-                miniMediaPlayer.height = 90;
-                miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
-                miniMediaPlayerLoader.active = true;
-            } else if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
-                miniMediaPlayerLoader.item.add(name);
-            }
-        }
+        Connections {
+            target: entities
 
-        function onStopped(name) {
-            if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
-                miniMediaPlayerLoader.item.remove(name);
-            }
-        }
-
-        Component.onCompleted: {
-            var e = entities.getByType("media_player");
-            for (var i=0; i<e.length; i++) {
-                e[i].playing.connect(onPlay);
-                e[i].stopped.connect(onStopped);
+            onMediaplayersPlayingChanged: {
+                console.debug(entities.mediaplayersPlaying);
+                if (!miniMediaPlayerLoader.active) {
+                    miniMediaPlayer.height = 90;
+                    miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
+                    miniMediaPlayerLoader.active = true;
+                }
             }
         }
 

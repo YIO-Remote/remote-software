@@ -59,117 +59,14 @@ Item {
         }
     }
 
-    property var players: []
-    property int currPlaying: 0
+    property var players: entities.mediaplayersPlaying
 
-    onCurrPlayingChanged: {
-        if (currPlaying == 0) {
+    onPlayersChanged: {
+        if (entities.mediaplayersPlaying.length == 0) {
             loader_main.state = "visible";
             loader_main.item.miniMediaPlayer.height = 0;
             loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
             loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
-            players = [];
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECT TO MEDIA PLAYERS
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    Component.onCompleted: {
-        var e = entities.getByType("media_player");
-        for (var i=0; i<e.length; i++) {
-            if (e[i].state == 3) {
-                players.push(e[i]);
-                currPlaying++;
-            }
-        }
-        var tmp = players;
-        players = tmp;
-    }
-
-    function add(name) {
-        // check if we are runnig timers to kill players
-        for (var t=0; t<runningTimers.length; t++) {
-            if (runningTimers[t].name == name) {
-                runningTimers[t].stop();
-                runningTimers[t].destroy();
-                runningTimers.splice(t, 1);
-            }
-        }
-
-        // add new players
-        var e = entities.get(name)
-        var chg = false;
-
-        if (players.indexOf(e) < 0) {
-            if (e.supported_features.indexOf("PLAY") > -1 || e.supported_features.indexOf("PAUSE") > -1) {
-                playButton.visible = true;
-            } else {
-                playButton.visible = false;
-            }
-            if (e.supported_features.indexOf("PREVIOUS") > -1) {
-                prevButton.visible = true;
-            } else {
-                prevButton.visible = false;
-            }
-            if (e.supported_features.indexOf("NEXT") > -1) {
-                nextButton.visible = true;
-            } else {
-                nextButton.visible = false;
-            }
-
-            players.push(e);
-            currPlaying++;
-
-            chg = true;
-        }
-
-        if (chg) {
-            var tmp = players;
-            players = tmp;
-        }
-    }
-
-    Component {
-        id: singleShot
-        Timer {
-            id: singleShotTimer
-            running: true
-            repeat: false
-
-            property var action
-            property var name
-
-            onTriggered: {
-                action()
-                for (var i=0; i<runningTimers.length; i++) {
-                    if (runningTimers[i].name == name) {
-                        runningTimers.splice(i,1);
-                    }
-                }
-                this.destroy(200)
-            }
-        }
-    }
-
-    property var runningTimers: []
-
-    function remove(name) {
-        // if stopped playing, remove the player after 30 seconds
-        var obj = singleShot.createObject(miniMediaPlayer, { name: name, action: function() { removePlayer(name) }, interval: 60000 });
-        runningTimers.push(obj);
-    }
-
-    function removePlayer(name) {
-        for (var i=0; i<players.length; i++) {
-            if (players[i] == entities.get(name)) {
-                var e = entities.get(name);
-                players.splice(i, 1);
-                currPlaying--;
-                var tmp = players;
-                players = tmp;
-            }
         }
     }
 
@@ -495,16 +392,6 @@ Item {
                     }
                 }
 
-                //                Rectangle {
-                //                    width: parent.width - 30
-                //                    height: 2
-                //                    color: colorLight
-                //                    opacity: (800-mainNav.y)/mainNav.height
-
-                //                    anchors.bottom: parent.bottom
-                //                    anchors.horizontalCenter: parent.horizontalCenter
-                //                }
-
                 MouseArea {
                     anchors.fill: parent
                     enabled: miniMediaPlayer.state == "closed" ? true : false
@@ -774,13 +661,4 @@ Item {
             opacity: index == mediaPlayers.currentIndex ? 1 : 0.3
         }
     }
-
-    //    MouseArea {
-    //        anchors.fill: parent
-    //        propagateComposedEvents: true
-
-    //        onClicked: {
-    //            console.debug("OPEN mini player");
-    //        }
-    //    }
 }
