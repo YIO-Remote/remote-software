@@ -1,5 +1,4 @@
 #include "config.h"
-#include <QtDebug>
 
 Config* Config::s_instance = nullptr;
 

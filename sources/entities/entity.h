@@ -18,7 +18,7 @@ public:
     Q_PROPERTY	(QString        entity_id READ entity_id CONSTANT)
     Q_PROPERTY	(QString        area READ area CONSTANT)
     Q_PROPERTY	(QString        integration READ integration CONSTANT)
-    Q_PROPERTY	(QObject*       integrationObj READ integrationObj)
+    Q_PROPERTY	(QObject*       integrationObj READ integrationObj NOTIFY integrationObjChanged)
     Q_PROPERTY	(bool           favorite READ favorite WRITE setFavorite NOTIFY favoriteChanged)
     Q_PROPERTY	(QStringList   	supported_features READ supported_features NOTIFY featureChanged)
     Q_PROPERTY  (QVariant       attributes READ attributes NOTIFY attributesChanged)		// all dynamic attributes component type specific, for example: state, brightness, etc.
@@ -52,6 +52,7 @@ signals:
     void featureChanged();
     void favoriteChanged();
     void attributesChanged();
+    void integrationObjChanged();
 
 protected:
     //    IntegrationInterface*   m_integrationIf;

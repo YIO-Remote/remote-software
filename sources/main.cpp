@@ -88,13 +88,13 @@ int main(int argc, char *argv[])
     TranslationHandler transHndl(&engine);
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
 
-    // ENTITIES
-    Entities entities;
-    engine.rootContext()->setContextProperty("entities", &entities);
-
     // INTEGRATIONS
     Integrations integrations(&engine, appPath);
     engine.rootContext()->setContextProperty("integrations", &integrations);
+
+    // ENTITIES
+    Entities entities;
+    engine.rootContext()->setContextProperty("entities", &entities);
 
     // NOTIFICATIONS
     Notifications notifications(&engine);

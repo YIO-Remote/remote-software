@@ -125,7 +125,7 @@ Rectangle {
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans SemiBold"; pixelSize: 60 }
+        font {family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
@@ -231,11 +231,6 @@ Rectangle {
             onClicked: {
                 haptic.playEffect("click");
                 blindButton.state = "closed"
-                loader_main.state = "visible"
-                var tmp = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY;
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.active = false;
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.active = true;
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = tmp;
             }
         }
     }

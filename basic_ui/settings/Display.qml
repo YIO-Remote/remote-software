@@ -162,7 +162,7 @@ Item {
             checked: darkMode
             mouseArea.onClicked: {
                 var tmp = config.read
-                tmp.settings.darkmode = !tmp.settings.darkmode
+                tmp.ui_config.darkmode = !tmp.ui_config.darkmode
                 config.write = tmp;
                 config.writeConfig();
             }

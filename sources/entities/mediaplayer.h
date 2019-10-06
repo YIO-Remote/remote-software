@@ -44,6 +44,8 @@ public:
     Q_INVOKABLE void            turnOn();
     Q_INVOKABLE void            turnOff();
     Q_INVOKABLE void            play();
+    Q_INVOKABLE void            pause();
+    Q_INVOKABLE void            stop();
     Q_INVOKABLE void            previous();
     Q_INVOKABLE void            next();
     Q_INVOKABLE void            setVolume(double value);
@@ -56,8 +58,6 @@ public:
 
 signals:
     void stateChanged();
-    void playing(QString name);
-    void stopped(QString name);
     void volumeChanged();
     void mutedChanged();
     void mediaTypeChanged();

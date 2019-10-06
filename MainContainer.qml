@@ -96,8 +96,8 @@ Item {
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
-        height: parent.height-statusBar.height-miniMediaPlayer.height
-        anchors.top: statusBar.bottom
+        height: parent.height-miniMediaPlayer.height
+        anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
 
         currentIndex: 0 //mainNavigation.menuConfig.count-1
@@ -109,24 +109,21 @@ Item {
             Loader {
                 id: mainNavigationLoader
                 asynchronous: true
-                //active: SwipeView.isCurrentItem //|| SwipeView.isNextItem || SwipeView.isPreviousItem
 
                 property alias mainNavigationLoader: mainNavigationLoader
 
-                function determinePageToLoad(name) {
-                    if (name === "favorites") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/dashboard.qml";
-                    } else if (name === "area") {
-                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/area.qml", { "area": display_name });
-                    } else if (name === "settings") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/settings.qml";
+                function determinePageToLoad(type) {
+                    if (type === "favorites") {
+                        mainNavigationLoader.source = "qrc:/basic_ui/pages/Favorites.qml";
+                    } else if (type === "settings") {
+                        mainNavigationLoader.source = "qrc:/basic_ui/pages/Settings.qml";
                     } else {
-                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/device.qml", { "type": name });
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/Page.qml", { "page": page });
                     }
                 }
 
                 Component.onCompleted: {
-                    determinePageToLoad(name);
+                    determinePageToLoad(page);
                 }
 
                 onStatusChanged: {
@@ -151,7 +148,7 @@ Item {
             if (itemsLoaded >= 3) {
                 if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
-                    //                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
+                    mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
 
@@ -161,57 +158,15 @@ Item {
             } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
             }
+
+            // change statusbar opacity
+            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
+                statusBar.bg.opacity = 0;
+            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+                statusBar.bg.opacity = 1;
+            }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // BOTTOM GRADIENT FADE
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //    Image {
-    //        id: bottomGradient
-    //        width: 480
-    //        height: 80
-    //        anchors.bottom: miniMediaPlayer.top
-    //        asynchronous: true
-    //        fillMode: Image.Stretch
-    //        source: "qrc:/images/navigation/bottom_gradient.png"
-
-    //        Behavior on opacity {
-    //            NumberAnimation {
-    //                duration: 300
-    //                easing.type: Easing.OutExpo
-    //            }
-    //        }
-    //    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // PAGE INDICATOR
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //    PageIndicator {
-    //        id: indicator
-
-    //        count: mainNavigationSwipeview.count
-    //        currentIndex: mainNavigationSwipeview.currentIndex
-
-    //        anchors.bottom: miniMediaPlayer.top
-    //        anchors.bottomMargin: 10
-    //        anchors.horizontalCenter: parent.horizontalCenter
-    //        opacity: mainNavigation.y == 800 ? 1 : 0
-
-    //        Behavior on opacity {
-    //            NumberAnimation { duration: 300; easing.type: Easing.InOutExpo }
-    //        }
-
-    //        delegate: Rectangle {
-    //            width: 8
-    //            height: 8
-    //            radius: height/2
-    //            color: colorText
-    //            opacity: index == mainNavigationSwipeview.currentIndex ? 1 : 0.3
-    //        }
-    //    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MINI MEDIA PLAYER
@@ -231,27 +186,15 @@ Item {
             anchors.fill: parent
         }
 
-        function onPlay(name) {
-            if (!miniMediaPlayerLoader.active) {
-                miniMediaPlayer.height = 90;
-                miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
-                miniMediaPlayerLoader.active = true;
-            } else if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
-                miniMediaPlayerLoader.item.add(name);
-            }
-        }
+        Connections {
+            target: entities
 
-        function onStopped(name) {
-            if (miniMediaPlayerLoader.active && miniMediaPlayerLoader.status == Loader.Ready) {
-                miniMediaPlayerLoader.item.remove(name);
-            }
-        }
-
-        Component.onCompleted: {
-            var e = entities.getByType("media_player");
-            for (var i=0; i<e.length; i++) {
-                e[i].playing.connect(onPlay);
-                e[i].stopped.connect(onStopped);
+            onMediaplayersPlayingChanged: {
+                if (!miniMediaPlayerLoader.active) {
+                    miniMediaPlayer.height = 90;
+                    miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
+                    miniMediaPlayerLoader.active = true;
+                }
             }
         }
 

@@ -25,7 +25,7 @@ Item {
 
         Rectangle {
             width: parent.width
-            height: 200
+            height: 240
             color: colorBackground
 
             Text {
@@ -50,10 +50,6 @@ Item {
 
         Settings.Hubs {
             visible: integrations.list.length == 0 ? false : true
-        }
-
-        Settings.Devices {
-            visible: Object.keys(device).length == 0 ? false : true
         }
 
         Settings.Battery {}

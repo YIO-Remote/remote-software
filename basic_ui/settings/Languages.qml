@@ -59,7 +59,7 @@ Item {
             highlightRangeMode: ListView.StrictlyEnforceRange
             interactive: section.height == 300 ? true : false
 
-            currentIndex: getLanguage(config.read.language);
+            currentIndex: getLanguage(config.read.settings.language);
 
             focus: true
 

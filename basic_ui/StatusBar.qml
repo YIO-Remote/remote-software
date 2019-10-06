@@ -8,16 +8,34 @@ Item {
     height: 40
     clip: true
 
+    property alias bg: bg
+
     Rectangle {
+        id: bg
         anchors.fill: parent
         color: colorBackground
+        opacity: 0
+
+        Behavior on opacity {
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        }
     }
 
     Connections {
         target: loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item
+
+        onScrollupBegin: {
+            bg.opacity = 1;
+        }
+
+        onScrolldownBegin: {
+            bg.opacity = 0;
+        }
+
         onScrolledUp: {
             title = loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
         }
+
         onScrolledDown: {
             title = "";
         }
@@ -127,15 +145,6 @@ Item {
         anchors.right: timeText.left
         anchors.rightMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-
-//        MouseArea {
-//            width: parent.width + 60
-//            height: width
-//            anchors.centerIn: parent
-
-//            onClicked: {
-//            }
-//        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,13 +161,6 @@ Item {
     }
 
     Component.onCompleted: {
-//        for (var key in integration) {
-//            if (integration.hasOwnProperty(key)) {
-//                integration[key].obj.connecting.connect(loadingIconON);
-//                integration[key].obj.disconnected.connect(loadingIconOFF);
-//                integration[key].obj.connected.connect(loadingIconOFF);
-//            }
-//        }
         for (var i=0; i<integrations.list.length; i++) {
             integrations.list[i].connecting.connect(loadingIconON);
             integrations.list[i].disconnected.connect(loadingIconOFF);
@@ -174,7 +176,7 @@ Item {
         opacity: 0
         visible: false
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: timeText.left
+        anchors.right: batteryIcon.left
         anchors.rightMargin: 10
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/statusbar/statusbar-loader.png"

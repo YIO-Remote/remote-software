@@ -11,8 +11,16 @@ Flickable {
 
     signal scrolledUp()
     signal scrolledDown()
+    signal scrollupBegin()
+    signal scrolldownBegin()
 
     onContentYChanged: {
+        if (contentY > 10) {
+            scrollupBegin();
+        } else {
+            scrolldownBegin()
+        }
+
         if (contentY > 130) {
             scrolledUp();
         } else {

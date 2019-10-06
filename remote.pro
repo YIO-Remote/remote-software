@@ -160,3 +160,5 @@ macx {
     plugins.files = $$files($$PWD/plugins/*.*)
     plugins.path = $$DESTDIR/plugins
 }
+
+DISTFILES +=

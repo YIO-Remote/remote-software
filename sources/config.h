@@ -1,8 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <QtDebug>
+
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <QJsonArray>
 #include "configinterface.h"
 #include "jsonfile.h"
 
@@ -12,8 +15,9 @@ class Config : public QObject, ConfigInterface
     Q_INTERFACES(ConfigInterface)
 
 public:
-    Q_PROPERTY (QVariantMap      read          READ read            NOTIFY configChanged)
-    Q_PROPERTY (QVariantMap      write         WRITE readWrite      NOTIFY configChanged)
+    Q_PROPERTY (QVariantMap      read           READ read           NOTIFY configChanged)
+    Q_PROPERTY (QVariantMap      write          WRITE readWrite     NOTIFY configChanged)
+    Q_PROPERTY (int              profile        READ profile        WRITE profileWrite      NOTIFY profileChanged)
 
     Q_INVOKABLE void readConfig(QString path);
     Q_INVOKABLE void writeConfig();
@@ -29,6 +33,21 @@ public:
         emit configChanged();
     }
 
+    // profile
+    int profile()
+    {
+        return m_config.value("ui_config").toMap().value("selected_profile").toInt();
+    }
+
+    void profileWrite(int id)
+    {
+        QVariantMap p = m_config.value("ui_config").toMap();
+        p.insert("selected_profile", id);
+        m_config.insert("ui_config", p);
+
+        emit profileChanged();
+    }
+
 public:
     explicit Config(QQmlApplicationEngine *engine = nullptr, QString path = "");
     virtual ~Config();
@@ -38,6 +57,7 @@ public:
 
 signals:
     void configChanged();
+    void profileChanged();
 
 private:
     static Config*               s_instance;
