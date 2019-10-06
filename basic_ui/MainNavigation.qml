@@ -51,15 +51,15 @@ Item {
         // clear the menuConfig
         menuConfig.clear();
 
-        for (var i = 0; i < config.read.ui_config.profiles[config.profile].config.length; i++) {
+        for (var i = 0; i < config.read.ui_config.profiles[config.profile].pages.length; i++) {
             var c = {};
-            c.page = config.read.ui_config.profiles[config.profile].config[i];
-            if (config.read.ui_config.profiles[config.profile].config[i] == "favorites") {
+            c.page = config.read.ui_config.profiles[config.profile].pages[i];
+            if (config.read.ui_config.profiles[config.profile].pages[i] == "favorites") {
                 c.friendly_name = qsTr("Favorites") + translateHandler.emptyString;
-            } else if (config.read.ui_config.profiles[config.profile].config[i] == "settings") {
+            } else if (config.read.ui_config.profiles[config.profile].pages[i] == "settings") {
                 c.friendly_name = qsTr("Settings") + translateHandler.emptyString;
             } else {
-                c.friendly_name = config.read.ui_config.pages[config.read.ui_config.profiles[config.profile].config[i]].name;
+                c.friendly_name = config.read.ui_config.pages[config.read.ui_config.profiles[config.profile].pages[i]].name;
             }
 
             // add to listmodel
@@ -75,20 +75,20 @@ Item {
         for (var i = 0; i < menuConfig.count; i++) {
             var found = false;
 
-            for (var j = 0; j < tmp.ui_config.profiles[config.profile].config.length && !found; j++) {
-                if (tmp.ui_config.profiles[config.profile].config[j] == menuConfig.get(i).page) {
-                    newConfig.push(tmp.ui_config.profiles[config.profile].config[j]);
-                    tmp.ui_config.profiles[config.profile].config.splice(j,1);
+            for (var j = 0; j < tmp.ui_config.profiles[config.profile].pages.length && !found; j++) {
+                if (tmp.ui_config.profiles[config.profile].pages[j] == menuConfig.get(i).page) {
+                    newConfig.push(tmp.ui_config.profiles[config.profile].pages[j]);
+                    tmp.ui_config.profiles[config.profile].pages.splice(j,1);
                     found = true;
                 }
             }
         }
 
         // clear the config
-        tmp.ui_config.profiles[config.profile].config  = [];
+        tmp.ui_config.profiles[config.profile].pages  = [];
 
         // update the config
-        tmp.ui_config.profiles[config.profile].config = newConfig;
+        tmp.ui_config.profiles[config.profile].pages = newConfig;
 
         config.write = tmp;
         config.writeConfig();
