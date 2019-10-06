@@ -68,7 +68,7 @@ Flickable {
     Item {
         id: topImage
         width: parent.width
-        height: 270
+        height: 320
         anchors.top: parent.top
 
         Rectangle {
@@ -95,7 +95,7 @@ Flickable {
                         start: Qt.point(0, 0)
                         end: Qt.point(0, 80)
                         gradient: Gradient {
-                            GradientStop { position: 0.5; color: colorBackgroundTransparent }
+                            GradientStop { position: 0.2; color: colorBackgroundTransparent }
                             GradientStop { position: 1.0; color: colorBackground }
                         }
                     }

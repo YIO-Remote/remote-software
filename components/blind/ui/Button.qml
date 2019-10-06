@@ -396,7 +396,7 @@ Rectangle {
         asynchronous: true
         active: blindButton.state == "open"
         source: "qrc:/components/blind/ui/Card.qml"
-        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+//        opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {

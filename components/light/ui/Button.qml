@@ -403,7 +403,7 @@ Rectangle {
         asynchronous: true
         active: lightButton.state == "open"
         source: getSource() //lightButton.state != "open" ? "" : (obj.supported_features.indexOf("obj.brightness") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
-        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+//        opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {

@@ -669,7 +669,7 @@ Item {
         radius: height/2
         color: colorLight
 
-        property bool isPlaying: players[mediaPlayers.currentIndex].state == 3 ? true : false
+        property bool isPlaying: players[mediaPlayers.currentIndex] && players[mediaPlayers.currentIndex].state == 3 ? true : false
 
         anchors {
             horizontalCenter: parent.horizontalCenter
