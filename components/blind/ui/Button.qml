@@ -61,10 +61,6 @@ Rectangle {
                 case "top right":
                     blindButton.state = "closed"
                     loader_main.state = "visible"
-                    var tmp = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY;
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.active = false;
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.active = true;
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = tmp;
                     break;
                 }
             }
@@ -75,7 +71,7 @@ Rectangle {
     // BASIC SETTINGS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    width: parent.width-20
+    width: 460
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
     color: colorDark
@@ -108,15 +104,17 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: blindButton; width: parent.width-20; height: 125}
+            PropertyChanges {target: blindButton; width: 460; height: 125; scale: 1}
             PropertyChanges {target: button; _opacity: 1}
-            ParentChange { target: blindButton; parent: originParent }
+            ParentChange { target: blindButton; parent: originParent; scale: 1}
+            PropertyChanges {target: loader_main; state: "visible" }
         },
         State {
             name: "open"
             PropertyChanges {target: blindButton; width: 440; height: 720}
             PropertyChanges {target: button; _opacity: 0}
-            ParentChange { target: blindButton; parent: contentWrapper; x: 20; y: 80 }
+            ParentChange { target: blindButton; parent: contentWrapper; x: 20; y: 80; scale: 1}
+            PropertyChanges {target: loader_main; state: "hidden" }
         }
     ]
 
@@ -126,6 +124,9 @@ Rectangle {
             ParallelAnimation {
                 PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                ParentAnimation {
+                    NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutExpo; duration: 300 }
+                }
             }
         },
         Transition {
@@ -134,7 +135,7 @@ Rectangle {
                 PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
-                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+                    NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutExpo; duration: 300 }
                 }
             }
         }

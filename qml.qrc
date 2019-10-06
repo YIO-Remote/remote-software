@@ -24,10 +24,9 @@
         <file>basic_ui/settings/System.qml</file>
         <file>basic_ui/settings/Hubs.qml</file>
         <file>basic_ui/settings/Devices.qml</file>
-        <file>basic_ui/pages/favorites.qml</file>
-        <file>basic_ui/pages/device.qml</file>
-        <file>basic_ui/pages/settings.qml</file>
-        <file>basic_ui/pages/area.qml</file>
+        <file>basic_ui/pages/Favorites.qml</file>
+        <file>basic_ui/pages/Settings.qml</file>
+        <file>basic_ui/pages/Page.qml</file>
         <file>components/light/ui/CardDimmable.qml</file>
         <file>components/light/ui/CardColor.qml</file>
         <file>components/light/ui/CardSwitch.qml</file>
@@ -204,5 +203,6 @@
         <file>sources/yioapi.cpp</file>
         <file>sources/yioapi.h</file>
         <file>sources/yioapiinterface.h</file>
+        <file>basic_ui/pages/Group.qml</file>
     </qresource>
 </RCC>

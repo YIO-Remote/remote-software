@@ -176,7 +176,7 @@ Item {
         opacity: 0
         visible: false
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: timeText.left
+        anchors.right: batteryIcon.left
         anchors.rightMargin: 10
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/statusbar/statusbar-loader.png"

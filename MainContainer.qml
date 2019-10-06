@@ -114,18 +114,16 @@ Item {
 
                 function determinePageToLoad(type) {
                     if (type === "favorites") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/favorites.qml";
-                    } else if (type === "area") {
-                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/area.qml", { "area": friendly_name });
+                        mainNavigationLoader.source = "qrc:/basic_ui/pages/Favorites.qml";
                     } else if (type === "settings") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/settings.qml";
+                        mainNavigationLoader.source = "qrc:/basic_ui/pages/Settings.qml";
                     } else {
-                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/device.qml", { "type": type });
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/Page.qml", { "page": page });
                     }
                 }
 
                 Component.onCompleted: {
-                    determinePageToLoad(type);
+                    determinePageToLoad(page);
                 }
 
                 onStatusChanged: {

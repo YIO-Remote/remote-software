@@ -14,6 +14,9 @@ Item {
         color: colorBackground
     }
 
+    MouseArea {
+        anchors.fill: parent
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MENU CONFIGURATION
@@ -49,8 +52,15 @@ Item {
         menuConfig.clear();
 
         for (var i = 0; i < config.read.ui_config.profiles[config.profile].config.length; i++) {
-            var c = config.read.ui_config.profiles[config.profile].config[i];
-            c.friendly_name += translateHandler.emptyString;
+            var c = {};
+            c.page = config.read.ui_config.profiles[config.profile].config[i];
+            if (config.read.ui_config.profiles[config.profile].config[i] == "favorites") {
+                c.friendly_name = qsTr("Favorites") + translateHandler.emptyString;
+            } else if (config.read.ui_config.profiles[config.profile].config[i] == "settings") {
+                c.friendly_name = qsTr("Settings") + translateHandler.emptyString;
+            } else {
+                c.friendly_name = config.read.ui_config.pages[config.read.ui_config.profiles[config.profile].config[i]].name;
+            }
 
             // add to listmodel
             menuConfig.append(c);
@@ -66,7 +76,7 @@ Item {
             var found = false;
 
             for (var j = 0; j < tmp.ui_config.profiles[config.profile].config.length && !found; j++) {
-                if (tmp.ui_config.profiles[config.profile].config[j].friendly_name == menuConfig.get(i).friendly_name) {
+                if (tmp.ui_config.profiles[config.profile].config[j] == menuConfig.get(i).page) {
                     newConfig.push(tmp.ui_config.profiles[config.profile].config[j]);
                     tmp.ui_config.profiles[config.profile].config.splice(j,1);
                     found = true;
@@ -102,8 +112,8 @@ Item {
 
             property bool held: false
 
-            width: content.width
-            height: content.height
+            width: content.width + 20
+            height: content.height + 20
 
             drag.target: held ? content : undefined
             drag.axis: Drag.XAxis
