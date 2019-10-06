@@ -12,11 +12,25 @@ Flickable {
     signal scrollupBegin()
     signal scrolldownBegin()
 
+    onContentYChanged: {
+        if (contentY > 10) {
+            scrollupBegin();
+        } else {
+            scrolldownBegin()
+        }
+
+        if (contentY > 130) {
+            scrolledUp();
+        } else {
+            scrolledDown();
+        }
+    }
+
     width: parent.width
     height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: iconFlow.height + mainNavigation.height + 20 //iconFlow.height < 800 - mainNavigation.height - statusBar.height - miniMediaPlayer.height + bottomGradient.height ? iconFlow.height + 40 : iconFlow.height
+    contentHeight: listView.height + titleContainer.height + mainNavigation.height + 20
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
 
@@ -31,27 +45,51 @@ Flickable {
         opacity: 0.5
     }
 
-    property alias iconFlow: iconFlow
+    Item {
+        id: titleContainer
+        width: parent.width
+        height: 240
 
-//    Column {
-//        id: iconFlow
-//        width: parent.width
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.top: parent.top
-//        anchors.topMargin: 40
-//        spacing: 10
+        Text {
+            id: titleText
+            color: colorText
+            text: title
+            anchors.centerIn: parent
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 60
+            lineHeight: 1
+        }
+    }
 
-//        Component.onCompleted: {
-//            for (var i =0; i < entities.list.length; i++) {
-//                if (entities.list[i].favorite) {
-//                    // load entity button
-//                    var comp = Qt.createComponent("qrc:/components/"+ entities.list[i].type +"/ui/Button.qml");
-//                    if (comp.status != Component.Ready) {
-//                        console.debug("Error: " + comp.errorString() );
-//                    }
-//                    var obj = comp.createObject(iconFlow, { obj: entities.list[i] });
-//                }
-//            }
-//        }
-//    }
+    // ENTITIES
+    ListView {
+        id: listView
+        width: parent.width
+        height: contentHeight
+        anchors.top: titleContainer.bottom
+        interactive: false
+        spacing: 10
+
+        model: config.read.ui_config.profiles[config.profile].favorites
+        delegate: entityDelegate
+    }
+
+    // LISTVIEW DELEGATE
+    Component {
+        id: entityDelegate
+
+        Loader {
+            id: entityLoader
+            width: 460
+            height: 125
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Component.onCompleted: {
+                var e = entities.get(config.read.ui_config.profiles[config.profile].favorites[index]);
+                this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
+            }
+        }
+    }
+
 }

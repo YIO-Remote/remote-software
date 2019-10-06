@@ -131,7 +131,7 @@ Rectangle {
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans SemiBold"; pixelSize: 60 }
+        font {family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 

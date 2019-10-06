@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "../config.h"
 
 #include <QtDebug>
 
@@ -8,11 +9,24 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
     m_area(config.value("area").toString()),
     m_friendly_name(config.value("friendly_name").toString()),
     m_integration(config.value("integration").toString()),
-    m_favorite(config.value("favorite").toBool()),
     m_supported_features(config.value("supported_features").toStringList()),
     m_attributes(config.value("attributes"))
 {
     setObjectName(config.value("entity_id").toString());
+
+    QVariantMap c = Config::getInstance()->read();
+    QString p = QString::number(Config::getInstance()->profile());
+
+    QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
+
+    m_favorite = false;
+
+    for (int i = 0; i < f.length(); i++)
+    {
+        if (f[i].toString() == config.value("entity_id").toString()) {
+            m_favorite = true;
+        }
+    }
 }
 
 Entity::~Entity()
@@ -51,8 +65,40 @@ bool Entity::update(const QVariantMap &attributes)
 
 void Entity::setFavorite(bool value)
 {
-    if (m_favorite != value) {
+//    if (value) {
+
+        QVariantMap c = Config::getInstance()->read();
+        QString p = QString::number(Config::getInstance()->profile());
+
+        QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
+
+        for (int i = 0; i < f.length(); i++)
+        {
+            if (f[i].toString() != entity_id() && value) {
+                f.append(entity_id());
+            } else if (f[i].toString() == entity_id() && !value) {
+                f.removeAt(i);
+            }
+        }
+
+        // save to config
+        QVariantMap r = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap();
+        r.insert("favorites", f);
+
+        QVariantMap r2 = c.value("ui_config").toMap().value("profiles").toMap();
+        r2.insert(p, r);
+
+        QVariantMap r3 = c.value("ui_config").toMap();
+        r3.insert("profiles", r2);
+
+        c.insert("ui_config", r3);
+
+        Config::getInstance()->readWrite(c);
+
+        // write to config file
+        Config::getInstance()->getInstance()->writeConfig();
+
         m_favorite = value;
         emit favoriteChanged();
-    }
+//    }
 }

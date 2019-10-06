@@ -190,7 +190,6 @@ Item {
             target: entities
 
             onMediaplayersPlayingChanged: {
-                console.debug(entities.mediaplayersPlaying);
                 if (!miniMediaPlayerLoader.active) {
                     miniMediaPlayer.height = 90;
                     miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")

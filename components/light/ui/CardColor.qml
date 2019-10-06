@@ -160,7 +160,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 width: parent.width-60
                 anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-                font {family: "Open Sans SemiBold"; pixelSize: 60 }
+                font {family: "Open Sans Regular"; pixelSize: 60 }
                 lineHeight: 0.9
             }
 
@@ -191,7 +191,7 @@ Rectangle {
 
             BasicUI.CustomButton {
                 anchors { left:toggleButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: obj.color ? Qt.rgba(obj.color[0]/255, obj.color[1]/255, obj.color[2]/255, 1) : colorText
+                color: colorText
                 buttonTextColor: colorBackground
                 buttonText: "Color"
 
@@ -391,7 +391,7 @@ Rectangle {
             BasicUI.CustomButton {
                 id: button_b
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: obj.color ? Qt.rgba(obj.color[0]/255, obj.color[1]/255, obj.color[2]/255, 1) : colorText
+                color: colorText
                 buttonTextColor: colorBackground
                 buttonText: "OK"
 

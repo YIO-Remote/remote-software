@@ -327,16 +327,8 @@ Rectangle {
                 enabled: addToFavButtonCircle.opacity == 1 ? true : false
 
                 onClicked: {
-                    addToFavButton.state = "closed";
                     obj.favorite = !obj.favorite;
-
-                    for (var i=0; i<mainNavigationSwipeview.count; i++) {
-                        if (mainNavigationSwipeview.itemAt(i).mainNavigationLoader.source == "qrc:/basic_ui/pages/dashboard.qml") {
-                            mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = false;
-                            mainNavigationSwipeview.itemAt(i).mainNavigationLoader.active = true;
-                        }
-                    }
-                    JSHelper.saveConfig();
+                    addToFavButton.state = "closed";
                 }
             }
         }
