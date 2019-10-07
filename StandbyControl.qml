@@ -26,10 +26,10 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property var onStartTime: new Date().getTime()
-    property var standbyStartTime: 0 // new Date().getTime()
-    property var screenOnTime: 0
-    property var screenOffTime: 0
+    property int onStartTime: new Date().getTime()|0
+    property int standbyStartTime: 0 // new Date().getTime()
+    property int screenOnTime: 0
+    property int screenOffTime: 0
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TOUCH EVENT DETECTOR
@@ -206,17 +206,16 @@ Item {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
 
             // start screen on timer and calculate off time
-            onStartTime = new Date().getTime()
-            screenOffTime += (new Date().getTime() - standbyStartTime)
+            onStartTime = new Date().getTime()|0
+            screenOffTime += (new Date().getTime() - standbyStartTime)|0
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
 
             // start standby timer and calculate on time
-            standbyStartTime = new Date().getTime()
-            screenOnTime += (new Date().getTime() - onStartTime)
-
+            standbyStartTime = new Date().getTime()|0
+            screenOnTime += (new Date().getTime() - onStartTime)|0
         }
     }
 
