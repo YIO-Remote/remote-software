@@ -17,3 +17,4 @@ translations/*.qm
 *.user
 *.dylib
 config.json
+config.json
