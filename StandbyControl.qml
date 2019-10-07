@@ -26,9 +26,8 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property var onStartTime: new Date().getTime() //only once during bootup!!!
-    property var standbyStartTime: 0
-    property var standbyStoppTime: 0
+    property var onStartTime: new Date().getTime()
+    property var standbyStartTime: 0 // new Date().getTime()
     property var screenOnTime: 0
     property var screenOffTime: 0
 
@@ -207,8 +206,8 @@ Item {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
 
             // start screen on timer and calculate off time
-            standbyStoppTime = new Date().getTime()
-            screenOffTime += standbyStoppTime - onStartTime
+            onStartTime = new Date().getTime()
+            screenOffTime += (new Date().getTime() - standbyStartTime)
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
@@ -216,7 +215,7 @@ Item {
 
             // start standby timer and calculate on time
             standbyStartTime = new Date().getTime()
-            screenOnTime += standbyStartTime - onStartTime
+            screenOnTime += (new Date().getTime() - onStartTime)
 
         }
     }
