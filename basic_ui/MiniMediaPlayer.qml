@@ -236,6 +236,7 @@ Item {
                                 SequentialAnimation {
                                     PauseAnimation { duration: 300 }
                                     ParallelAnimation {
+                                        PropertyAnimation { target: blur; properties: "radius"; easing.type: Easing.InExpo; duration: 300 }
                                         PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 500 }
                                         PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                         SequentialAnimation {
