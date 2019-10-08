@@ -48,7 +48,7 @@ Item {
 
         Settings.Languages {}
 
-        Settings.Hubs {
+        Settings.Integrations {
             visible: integrations.list.length == 0 ? false : true
         }
 

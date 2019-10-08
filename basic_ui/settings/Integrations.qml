@@ -187,7 +187,7 @@ Item {
     Text {
         id: header
         color: colorText
-        text: qsTr("Hubs") + translateHandler.emptyString
+        text: qsTr("Integrations") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
         font.weight: Font.Normal

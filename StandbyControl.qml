@@ -27,9 +27,9 @@ Item {
     property int display_brightness_set: 100
 
     property int onStartTime: new Date().getTime()|0
-    property int standbyStartTime: 0 // new Date().getTime()
-    property int screenOnTime: 0
-    property int screenOffTime: 0
+    property int standbyStartTime: 0|0 // new Date().getTime()
+    property int screenOnTime: 0|0
+    property int screenOffTime: 0|0
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TOUCH EVENT DETECTOR
@@ -207,7 +207,7 @@ Item {
 
             // start screen on timer and calculate off time
             onStartTime = new Date().getTime()|0
-            screenOffTime += (new Date().getTime() - standbyStartTime)|0
+            screenOffTime += (new Date().getTime()|0 - standbyStartTime|0)|0
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
@@ -215,7 +215,7 @@ Item {
 
             // start standby timer and calculate on time
             standbyStartTime = new Date().getTime()|0
-            screenOnTime += (new Date().getTime() - onStartTime)|0
+            screenOnTime += (new Date().getTime()|0 - onStartTime|0)|0
         }
     }
 

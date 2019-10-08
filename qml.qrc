@@ -22,7 +22,7 @@
         <file>basic_ui/settings/Battery.qml</file>
         <file>basic_ui/settings/Network.qml</file>
         <file>basic_ui/settings/System.qml</file>
-        <file>basic_ui/settings/Hubs.qml</file>
+        <file>basic_ui/settings/Integrations.qml</file>
         <file>basic_ui/settings/Devices.qml</file>
         <file>basic_ui/pages/Favorites.qml</file>
         <file>basic_ui/pages/Settings.qml</file>
