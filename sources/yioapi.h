@@ -22,7 +22,7 @@ public:
 
     Q_INVOKABLE void start();                                                           // start the API
     Q_INVOKABLE void stop();                                                            // stop the API
-    //Q_INVOKABLE void sendMessage(QString message);                  // send a message to a client
+    Q_INVOKABLE void sendMessage(QString message);                                      // send a message to all clients
 
     // CONFIG MANIPULATION METHODS
     Q_INVOKABLE QVariantMap     getConfig                   ();

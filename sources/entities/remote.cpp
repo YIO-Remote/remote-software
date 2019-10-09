@@ -1,10 +1,15 @@
 #include <QtDebug>
 #include <QJsonArray>
 #include "remote.h"
+#include "../yioapi.h"
 
 QString Remote::Type = "remote";
 
 bool Remote::update(const QVariantMap &attributes)
+{
+}
+
+void Remote::sendIRCommand(QString code)
 {
 }
 

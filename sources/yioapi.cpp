@@ -51,6 +51,18 @@ void YioAPI::stop()
     emit runningChanged();
 }
 
+void YioAPI::sendMessage(QString message)
+{
+    QMap<QWebSocket *, bool>::iterator i;
+    for (i = m_clients.begin(); i != m_clients.end(); i++)
+    {
+        if (i.value()) {
+            QWebSocket *socket = i.key();
+            socket->sendTextMessage(message);
+        }
+    }
+}
+
 QVariantMap YioAPI::getConfig()
 {
     return Config::getInstance()->read();
