@@ -9,10 +9,6 @@ bool Remote::update(const QVariantMap &attributes)
 {
 }
 
-void Remote::sendIRCommand(QString code)
-{
-}
-
 Remote::Remote() :
     Entity (Type, QVariantMap(), NULL)
 {

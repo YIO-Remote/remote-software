@@ -14,10 +14,7 @@ public:
     Q_PROPERTY  (QVariantList   commands       READ    commands       NOTIFY commandsChanged)
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
 
-    Q_INVOKABLE void            sendIRCommand(QString code);
-
     QVariantList                commands() const { return m_commands; }
-
 
     explicit Remote();
     Remote(const QVariantMap& config, QObject* integrationObj);

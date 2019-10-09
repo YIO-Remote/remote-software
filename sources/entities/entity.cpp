@@ -55,7 +55,7 @@ QVariantMap Entity::getDataToSave()
     map["integration"] = m_integration;
     map["area"] = m_area;
     map["supported_features"] = m_supported_features;
-    map["attributes"] = m_attributes;
+//    map["attributes"] = m_attributes;
 
     return map;
 }
