@@ -80,8 +80,8 @@ signals:
 
 private:
     QMap<QString, QObject*>     m_entities;
-    QStringList                 m_supported_entities = {"light","blind","media_player"};
-    QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds"), tr("Media")};
+    QStringList                 m_supported_entities = {"light","blind","media_player","remote"};
+    QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds"), tr("Media"), tr("Remote")};
     QStringList                 m_loaded_entities;
 
     QMap<QString, QObject*>     m_mediaplayersPlaying;
