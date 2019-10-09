@@ -16,6 +16,9 @@ public:
     // CONFIG MANIPULATION METHODS
     virtual QVariantMap getConfig() = 0;
     virtual bool addEntityToConfig(QVariantMap entity) = 0;
+
+    // NETWORK SERVICES DISCOVERY
+    virtual void discoverNetworkServices(bool start) = 0;
 };
 
 QT_BEGIN_NAMESPACE

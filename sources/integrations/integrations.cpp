@@ -43,7 +43,7 @@ bool Integrations::load()
             QObject* obj = l->loadIntegration(m_appPath, integrations[i].toMap().value("plugin").toString(), i, integrations[i].toMap(), entities, notifications, api, config);
 
             // add the integration to the list
-            add(integrations[i].toMap().value("type").toString(), integrations[i].toMap().value("friendly_name").toString(), obj);
+            add(integrations[i].toMap(), obj);
         }
     }
 
@@ -64,10 +64,11 @@ QObject *Integrations::getByType(const QString& type)
     return m_integrations.value(type);
 }
 
-void Integrations::add(const QString& type, const QString& friendlyName, QObject *obj)
+void Integrations::add(const QVariantMap& config, QObject *obj)
 {
-    m_integrations.insert(type, obj);
-    m_integrations_friendly_names.insert(type, friendlyName);
+    m_integrations.insert(config.value("type").toString(), obj);
+    m_integrations_friendly_names.insert(config.value("type").toString(), config.value("friendly_name").toString());
+    m_integrations_mdns.insert(config.value("type").toString(), config.value("mdns").toString());
     emit listChanged();
 }
 
@@ -87,4 +88,14 @@ QString Integrations::getFriendlyName(QObject *obj)
 {
     QString name = m_integrations.key(obj);
     return m_integrations_friendly_names.value(name);
+}
+
+QString Integrations::getMDNS(const QString &type)
+{
+    return m_integrations_mdns.value(type);
+}
+
+QStringList Integrations::getMDNSList()
+{
+    return  m_integrations_mdns.values();
 }

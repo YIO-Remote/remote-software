@@ -10,6 +10,7 @@
 //#include "qzeroconf.h"
 #include "../qtzeroconf/qzeroconf.h"
 #include "config.h"
+#include "integrations/integrations.h"
 
 class YioAPI : public QObject, YioAPIInterface
 {
@@ -24,9 +25,16 @@ public:
     Q_INVOKABLE void stop();                                                            // stop the API
     Q_INVOKABLE void sendMessage(QString message);                                      // send a message to all clients
 
+
     // CONFIG MANIPULATION METHODS
     Q_INVOKABLE QVariantMap     getConfig                   ();
     Q_INVOKABLE bool            addEntityToConfig           (QVariantMap entity);
+
+
+    // NETWORK SERVICES DISCOVERY
+    Q_INVOKABLE void            discoverNetworkServices     (bool start);
+
+
 
     bool running()
     {
@@ -54,6 +62,8 @@ public slots:
     void onNewConnection();
     void processMessage(QString message);
     void onClientDisconnected();
+
+    void netWorkServiceDiscovered(QZeroConfService item);
 
 private:
     QWebSocketServer*            m_server;

@@ -14,6 +14,8 @@ YioAPI::YioAPI(QQmlApplicationEngine *engine) :
     m_engine(engine)
 {
     s_instance = this;
+
+    connect(&m_qzero_conf, &QZeroConf::serviceAdded, this, &YioAPI::netWorkServiceDiscovered);
 }
 
 YioAPI::~YioAPI()
@@ -39,7 +41,6 @@ void YioAPI::start()
     emit hostnameChanged();
 
     m_qzero_conf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
-
 }
 
 void YioAPI::stop()
@@ -117,6 +118,23 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     Config::getInstance()->writeConfig();
 
     return true;
+}
+
+void YioAPI::discoverNetworkServices(bool start)
+{
+    if (start) {
+        QStringList list = Integrations::getInstance()->getMDNSList();
+
+        for (int i=0; i<list.length(); i++) {
+            m_qzero_conf.startBrowser(list[i]);
+        }
+    } else {
+        m_qzero_conf.stopBrowser();
+    }
+}
+
+void YioAPI::netWorkServiceDiscovered(QZeroConfService item) {
+    qDebug() << "Service discovered:" << item;
 }
 
 void YioAPI::onNewConnection()
