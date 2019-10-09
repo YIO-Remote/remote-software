@@ -176,7 +176,7 @@ Item {
         id: miniMediaPlayer
         width: parent.width
         height: 0
-        anchors.bottom: mainNavigation.top
+        anchors.bottom: parent.bottom
 
         property alias miniMediaPlayerLoader: miniMediaPlayerLoader
 
@@ -210,7 +210,7 @@ Item {
 
     BasicUI.MainNavigation {
         id: mainNavigation
-        anchors.bottom: parent.bottom
+        anchors.bottom: miniMediaPlayer.top
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
