@@ -1,4 +1,5 @@
 #include <QtDebug>
+#include <QJsonArray>
 #include "remote.h"
 
 QString Remote::Type = "remote";
@@ -16,4 +17,6 @@ Remote::Remote() :
 Remote::Remote(const QVariantMap& config, QObject* integrationObj):
     Entity (Type, config, integrationObj)
 {
+    m_commands = config.value("commands").toJsonArray().toVariantList();
+    emit commandsChanged();
 }

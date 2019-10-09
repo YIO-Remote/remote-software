@@ -46,6 +46,16 @@ signals:
 public:
     static QString Type;
 
+    static QStringList&         AllFeatures()
+    {
+        static QStringList      s
+        {
+            "BRIGHTNESS", "COLOR", "COLORTEMP"
+        };
+
+        return s;
+    }
+
 private:
     bool            m_state;
     QColor          m_color;

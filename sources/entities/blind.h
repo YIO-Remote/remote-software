@@ -36,6 +36,16 @@ signals:
 public:
     static QString Type;
 
+    static QStringList&         AllFeatures()
+    {
+        static QStringList      s
+        {
+            "OPEN", "CLOSE", "STOP", "POSITION"
+        };
+
+        return s;
+    }
+
 private:
     bool            m_state;
     int             m_position;
