@@ -40,7 +40,7 @@ Rectangle {
         }
 
         transitions: Transition {
-            NumberAnimation { target: rotation; property: "angle"; easing.type: Easing.OutExpo; duration: 300 }
+            NumberAnimation { target: rotation; property: "angle"; easing.type: Easing.OutExpo; duration: 500 }
         }
 
         front: Item {
