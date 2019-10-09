@@ -4,6 +4,7 @@
 #include "light.h"
 #include "blind.h"
 #include "mediaplayer.h"
+#include "remote.h"
 #include "../config.h"
 #include "../integrations/integrations.h"
 
@@ -118,6 +119,10 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
     // Media player entity
     if (type == "media_player") {
         entity = new MediaPlayer(config, integrationObj);
+    }  
+    // Remote entity
+    if (type == "remote") {
+        entity = new Remote(config, integrationObj);
     }
     m_entities.insert(entity->entity_id(), entity);
 }

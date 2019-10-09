@@ -6,6 +6,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     sources/config.h \
     sources/configinterface.h \
+    sources/entities/remote.h \
     sources/fileio.h \
     sources/integrations/integrations.h \
     sources/jsonfile.h \
@@ -33,6 +34,7 @@ HEADERS += \
 
 SOURCES += \
     sources/config.cpp \
+    sources/entities/remote.cpp \
     sources/integrations/integrations.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
