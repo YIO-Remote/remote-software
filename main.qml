@@ -227,7 +227,7 @@ ApplicationWindow {
         standbyControl.display_autobrightness = Qt.binding(function() { return config.read.settings.autobrightness })
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
 
-        // load the hub integrations
+        // load the hub JsonFiles
         if (integrations.load()) {
             // if success, load the entities
             entities.load();

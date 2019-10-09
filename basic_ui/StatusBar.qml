@@ -72,6 +72,7 @@ Item {
         PropertyAnimation { target: titleText; properties: "opacity"; to: 1; easing.type: Easing.OutExpo; duration: 400 }
         PropertyAnimation { target: titleText; properties: "y"; to: 2; easing.type: Easing.OutExpo; duration: 400 }
         PropertyAnimation { target: timeText; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
+        PropertyAnimation { target: notificationCount; properties: "anchors.rightMargin"; to: 10-(timeText.width/2); easing.type: Easing.OutExpo; duration: 400 }
     }
 
     ParallelAnimation {
@@ -81,6 +82,7 @@ Item {
         PropertyAnimation { target: titleText; properties: "opacity"; to: 0; easing.type: Easing.InExpo; duration: 400 }
         PropertyAnimation { target: titleText; properties: "y"; to: 60; easing.type: Easing.OutExpo; duration: 400 }
         PropertyAnimation { target: timeText; properties: "opacity"; to: 1; easing.type: Easing.OutExpo; duration: 400 }
+        PropertyAnimation { target: notificationCount; properties: "anchors.rightMargin"; to: 10; easing.type: Easing.OutExpo; duration: 400 }
     }
 
     Connections {

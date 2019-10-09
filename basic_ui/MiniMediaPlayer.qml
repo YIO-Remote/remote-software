@@ -29,7 +29,7 @@ Item {
     transitions: [
         Transition {to: "closed";
                 ParallelAnimation {
-                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 400 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
                     ParentAnimation {
                         NumberAnimation { properties: "scale"; easing.type: Easing.InExpo; duration: 180 }
                     }
@@ -37,9 +37,9 @@ Item {
         },
         Transition {to: "open";
             ParallelAnimation {
-                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 400 }
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.6; duration: 400 }
                 ParentAnimation {
-                    NumberAnimation { properties: "scale"; easing.type: Easing.OutExpo; duration: 400 }
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.6; duration: 400 }
                 }
             }
         }
@@ -236,6 +236,7 @@ Item {
                                 SequentialAnimation {
                                     PauseAnimation { duration: 300 }
                                     ParallelAnimation {
+                                        PropertyAnimation { target: blur; properties: "radius"; easing.type: Easing.InExpo; duration: 300 }
                                         PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 500 }
                                         PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                         SequentialAnimation {

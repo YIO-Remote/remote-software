@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Bold.ttf"));
 
     // LOADING CUSTOM COMPONENTS
-    qmlRegisterType<Integration>("Integration", 1, 0, "Integration");
+//    qmlRegisterType<Integration>("Integration", 1, 0, "Integration");
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
     qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
