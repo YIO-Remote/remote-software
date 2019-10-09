@@ -31,10 +31,10 @@ public:
         static QStringList      s
         {
             // Transport and mediacontrols
-            "PLAY", "PAUSE", "PLAYTOGGLE", "STOP", "FORWARD", "REVERSE", "NEXT", "PREVIOUS", "INFO", "RECORDINGS", "RECORD", "LIVE",
+            "PLAY", "PAUSE", "PLAYTOGGLE", "STOP", "FORWARD", "BACKWARD", "NEXT", "PREVIOUS", "INFO", "RECORDINGS", "RECORD", "LIVE",
 
             // digits
-            "DIGIT 0", "DIGIT 1","DIGIT 2", "DIGIT 3", "DIGIT 4", "DIGIT 5", "DIGIT 6", "DIGIT 7", "DIGIT 8", "DIGIT 9", "DIGIT 10", "DIGIT 10+", "DIGIT 11", "DIGIT 12", "DIGIT_SEPARATOR", "DIGIT_ENTER,"
+            "DIGIT_0", "DIGIT_1","DIGIT_2", "DIGIT_3", "DIGIT_4", "DIGIT_5", "DIGIT_6", "DIGIT_7", "DIGIT_8", "DIGIT_9", "DIGIT_10", "DIGIT_10+", "DIGIT_11", "DIGIT_12", "DIGIT_SEPARATOR", "DIGIT_ENTER,"
 
             // navigation
             "CURSOR_UP", "CURSOR_DOWN", "CURSOR_LEFT", "CURSOR_RIGHT", "CURSOR_OK", "BACK", "HOME", "MENU", "EXIT", "INFO", "APP",
