@@ -204,5 +204,6 @@
         <file>sources/yioapi.h</file>
         <file>sources/yioapiinterface.h</file>
         <file>basic_ui/pages/Group.qml</file>
+        <file>components/remote/ui/Button.qml</file>
     </qresource>
 </RCC>
