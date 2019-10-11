@@ -202,11 +202,12 @@ Rectangle {
             id: icon
             color: colorText
             text: "\uE900"
+            renderType: Text.NativeRendering
             width: 85
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 120 }
+            font {family: "icons"; pixelSize: 100 }
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.verticalCenter: parent.verticalCenter

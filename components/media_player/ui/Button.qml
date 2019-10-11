@@ -180,7 +180,7 @@ Rectangle {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 120 }
+            font {family: "icons"; pixelSize: 100 }
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.verticalCenter: parent.verticalCenter
