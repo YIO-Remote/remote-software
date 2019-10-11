@@ -63,14 +63,16 @@ int main(int argc, char *argv[])
     Config config(&engine, configPath);
     engine.rootContext()->setContextProperty("config", &config);
 
-    // LOADING FONTS
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Light.ttf"));
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-SemiBold.ttf"));
-    QFontDatabase::addApplicationFont(QStringLiteral("/usr/lib/fonts/OpenSans-Bold.ttf"));
+    // LOAD FONTS
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
+
+    // LOAD ICONS
+    QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
 
     // LOADING CUSTOM COMPONENTS
-//    qmlRegisterType<Integration>("Integration", 1, 0, "Integration");
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
     qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");

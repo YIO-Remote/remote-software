@@ -197,24 +197,18 @@ Rectangle {
             lineHeight: 1
         }
 
-        Image {
+        Text {
             id: icon
-            asynchronous: true
-            width: 80
-            height: 80
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/components/light/images/icon-light.png"
+            color: colorText
+            text: "\uE903"
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 120 }
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.verticalCenter: parent.verticalCenter
-
-            ColorOverlay {
-                visible: !darkMode
-                anchors.fill: parent
-                source: parent
-                color: colorText
-                antialiasing: true
-            }
         }
 
     }

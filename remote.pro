@@ -140,6 +140,16 @@ win32 {
     COPIES += plugins
     plugins.files = $$files($$PWD/plugins/*.*)
     plugins.path = $$DESTDIR/release/plugins
+
+    #copy fonts
+    COPIES += icons
+    fonts.files = $$files($$PWD/fonts/*.*)
+    fonts.path = $$DESTDIR/release/fonts
+
+    #copy icons
+    COPIES += icons
+    icons.files = $$files($$PWD/icons/*.*)
+    icons.path = $$DESTDIR/release/icons
 }
 macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
@@ -151,6 +161,16 @@ macx {
     INTEGRATIONS.path = Contents/Resources/plugins
     QMAKE_BUNDLE_DATA += INTEGRATIONS
 
+    #copy fonts
+    FONTS.files = $$files($$PWD/fonts/*.*)
+    FONTS.path = Contents/Resources/fonts
+    QMAKE_BUNDLE_DATA += FONTS
+
+    #copy icons
+    ICONS.files = $$files($$PWD/icons/*.*)
+    ICONS.path = Contents/Resources/icons
+    QMAKE_BUNDLE_DATA += ICONS
+
 } else {
     CONFIG += file_copies
     COPIES += extraData
@@ -161,6 +181,16 @@ macx {
     COPIES += plugins
     plugins.files = $$files($$PWD/plugins/*.*)
     plugins.path = $$DESTDIR/plugins
+
+    #copy fonts
+    COPIES += fonts
+    fonts.files = $$files($$PWD/fonts/*.*)
+    fonts.path = $$DESTDIR/fonts
+
+    #copy icons
+    COPIES += icons
+    icons.files = $$files($$PWD/icons/*.*)
+    icons.path = $$DESTDIR/icons
 }
 
 DISTFILES +=
