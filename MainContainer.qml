@@ -73,9 +73,11 @@ Item {
         enabled: config.read.settings.bluetootharea
 
         onCurrentAreaChanged: {
-            if (config.read.settings.menu.order[mainNavigationSwipeview.currentIndex].display_name != bluetoothArea.currentArea) {
-                for (var i=0; config.read.settings.menu.order.length; i++) {
-                    if (config.read.settings.menu.order[i] && config.settings.menu.order[i].display_name == bluetoothArea.currentArea) {
+            var p = config.read.ui_config.profiles[config.profile].pages;
+
+            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name != bluetoothArea.currentArea) {
+                for (var i=0; i<p.length; i++) {
+                    if (p[i].name == bluetoothArea.currentArea) {
                         mainNavigationSwipeview.currentIndex = i;
                     }
                 }
