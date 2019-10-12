@@ -26,8 +26,6 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property int onStartTime: nTime(29)
-    property int standbyStartTime: 0 // new Date().getTime()
     property int screenOnTime: 0
     property int screenOffTime: 0
 
@@ -106,14 +104,8 @@ Item {
         }
     }
 
-    function nTime(lineNr){
+    function getCurrentTime(){
         const timeSizeReduction = 1570881231088;
-        if (lineNr !== 241){
-            console.log("Line NR" + lineNr);
-            console.log("debug TiMe!");
-            console.log((new Date().getTime() - timeSizeReduction));
-        }
-
         return (new Date().getTime() - timeSizeReduction);
     }
 
@@ -123,48 +115,48 @@ Item {
 
         switch (mode) {
 
-        case "dim":
-            // set the display brightness
-            ambientLightReadTimer.start();
+            case "dim":
+                // set the display brightness
+                ambientLightReadTimer.start();
 
-            // set the mode
-            mode = "on";
-            break;
+                // set the mode
+                mode = "on";
+                break;
 
-        case "standby":
-            // turn off standby
-            if (displayControl.setmode("standbyoff")) {
-                standbyoffDelay.start();
-            }
+            case "standby":
+                // turn off standby
+                if (displayControl.setmode("standbyoff")) {
+                    standbyoffDelay.start();
+                }
 
-            // set the mode
-            mode = "on";
-            break;
+                // set the mode
+                mode = "on";
+                break;
 
-        case "wifi_off":
-            wifiHandler("on")
+            case "wifi_off":
+                wifiHandler("on")
 
-            // turn off standby
-            if (displayControl.setmode("standbyoff")) {
-                standbyoffDelay.start();
-            }
+                // turn off standby
+                if (displayControl.setmode("standbyoff")) {
+                    standbyoffDelay.start();
+                }
 
-            // set the mode
-            mode = "on";
+                // set the mode
+                mode = "on";
 
-            // integration socket on
-            for (var i=0; i<integrations.list.length; i++) {
-                integrations.list[i].connect();
-            }
+                // integration socket on
+                for (var i=0; i<integrations.list.length; i++) {
+                    integrations.list[i].connect();
+                }
 
-            // turn on API
-            api.start();
+                // turn on API
+                api.start();
 
-            break;
+                break;
         }
 
         // reset elapsed time
-        standbyBaseTime = nTime(164);
+        standbyBaseTime = getCurrentTime();
 
         // start bluetooth scanning
         if (config.read.settings.bluetootharea) bluetoothArea.startScan();
@@ -211,22 +203,14 @@ Item {
     }
 
     onModeChanged: {
-        console.debug("Mode: " + mode);
+        console.debug("Mode changed: " + mode);
         // if mode is on change processor to ondemand
-        if (mode == "on") {
+        if (mode === "on") {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
-
-            // start screen on timer and calculate off time
-            onStartTime = nTime(217);
-            screenOffTime += (nTime(218) - standbyStartTime)
         }
         // if mode is standby change processor to powersave
-        if (mode == "standby") {
+        if (mode === "standby") {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
-
-            // start standby timer and calculate on time
-            standbyStartTime = nTime(225);
-            screenOnTime += (nTime(226) - onStartTime)
         }
     }
 
@@ -241,7 +225,16 @@ Item {
         interval: 1000
 
         onTriggered: {
-            let time = nTime(241);
+            let time = getCurrentTime();
+
+
+            if (mode == "on" || "dim"){
+                screenOnTime += 1000;
+            }
+            if (mode == "standby" || "wifi_off"){
+                screenOffTime += 1000;
+            }
+
 
             // mode = dim
             if (time - standbyBaseTime > displayDimTime * 1000 && mode == "on") {
@@ -305,7 +298,7 @@ Item {
         interval: 20000
 
         onTriggered: {
-            standbyBaseTime = nTime(305);
+            standbyBaseTime = getCurrentTime();
             if (loader_main.source != "qrc:/wifiSetup.qml") {
                 standbyTimer.start()
             }
