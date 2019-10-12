@@ -228,10 +228,10 @@ Item {
             let time = getCurrentTime();
 
 
-            if (mode == "on" || "dim"){
+            if (mode == "on" || mode == "dim"){
                 screenOnTime += 1000;
             }
-            if (mode == "standby" || "wifi_off"){
+            if (mode == "standby" || mode == "wifi_off"){
                 screenOffTime += 1000;
             }
 
