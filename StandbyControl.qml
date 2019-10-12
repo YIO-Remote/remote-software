@@ -26,7 +26,7 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property int onStartTime: new Date().getTime()|0
+    property int onStartTime: nTime(29)
     property int standbyStartTime: 0 // new Date().getTime()
     property int screenOnTime: 0
     property int screenOffTime: 0
@@ -97,13 +97,24 @@ Item {
     function wifiHandler(state) {
         var cmd;
 
-        if (state == "on") {
+        if (state === "on") {
             cmd = "systemctl start wpa_supplicant@wlan0.service"
             wifiLauncher.launch(cmd);
         } else {
             cmd = "systemctl stop wpa_supplicant@wlan0.service"
             wifiLauncher.launch(cmd);
         }
+    }
+
+    function nTime(lineNr){
+        const timeSizeReduction = 1570881231088;
+        if (lineNr !== 241){
+            console.log("Line NR" + lineNr);
+            console.log("debug TiMe!");
+            console.log((new Date().getTime() - timeSizeReduction));
+        }
+
+        return (new Date().getTime() - timeSizeReduction);
     }
 
     function wakeUp() {
@@ -153,7 +164,7 @@ Item {
         }
 
         // reset elapsed time
-        standbyBaseTime = new Date().getTime()
+        standbyBaseTime = nTime(164);
 
         // start bluetooth scanning
         if (config.read.settings.bluetootharea) bluetoothArea.startScan();
@@ -206,16 +217,16 @@ Item {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
 
             // start screen on timer and calculate off time
-            onStartTime = new Date().getTime()|0
-            screenOffTime += (new Date().getTime() - standbyStartTime)|0
+            onStartTime = nTime(217);
+            screenOffTime += (nTime(218) - standbyStartTime)
         }
         // if mode is standby change processor to powersave
         if (mode == "standby") {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
 
             // start standby timer and calculate on time
-            standbyStartTime = new Date().getTime()|0
-            screenOnTime += (new Date().getTime() - onStartTime)|0
+            standbyStartTime = nTime(225);
+            screenOnTime += (nTime(226) - onStartTime)
         }
     }
 
@@ -230,17 +241,17 @@ Item {
         interval: 1000
 
         onTriggered: {
-            var time = new Date().getTime()
+            let time = nTime(241);
 
             // mode = dim
-            if (time-standbyBaseTime > displayDimTime * 1000 && mode == "on") {
+            if (time - standbyBaseTime > displayDimTime * 1000 && mode == "on") {
                 // dim the display
                 setBrightness(10);
                 mode = "dim";
             }
 
             // mode = standby
-            if (time-standbyBaseTime > standbyTime * 1000 && mode == "dim") {
+            if (time - standbyBaseTime > standbyTime * 1000 && mode == "dim") {
                 // turn on proximity detection
                 proximity.proximityDetection(true);
 
@@ -294,7 +305,7 @@ Item {
         interval: 20000
 
         onTriggered: {
-            standbyBaseTime = new Date().getTime()
+            standbyBaseTime = nTime(305);
             if (loader_main.source != "qrc:/wifiSetup.qml") {
                 standbyTimer.start()
             }
