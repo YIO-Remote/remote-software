@@ -340,28 +340,23 @@ ApplicationWindow {
 //        onConfigChanged: {
 //            loader_main.source = "";
 //            loader_main.active = false;
-////            reloadTimer.start()
+//            reloadTimer.start()
 //        }
 //    }
 
-    property alias reloadTimer: reloadTimer
+//    property alias reloadTimer: reloadTimer
 
-    Timer {
-        id: reloadTimer
-        interval: 2000
-        running: false
-        repeat: false
+//    Timer {
+//        id: reloadTimer
+//        interval: 1000
+//        running: false
+//        repeat: false
 
-        onTriggered: {
-            loader_main.source = "";
-            loader_main.active = false;
-
-            loader_second.source = "";
-
-            loader_main.setSource("qrc:/MainContainer.qml");
-            loader_main.active = true;
-        }
-    }
+//        onTriggered: {
+//            loader_main.setSource("qrc:/MainContainer.qml");
+//            loader_main.active = true;
+//        }
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER

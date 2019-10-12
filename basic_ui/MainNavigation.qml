@@ -28,6 +28,14 @@ Item {
         id: menuConfig
     }
 
+    Connections {
+        target: config
+
+        onConfigChanged: {
+            loadmenuConfig();
+        }
+    }
+
     //: menu items that are in the bottom menu
     property var menuTranslations: [qsTr("Favorites") + translateHandler.emptyString, qsTr("Settings") + translateHandler.emptyString,
         qsTr("Lights") + translateHandler.emptyString, qsTr("Blinds") + translateHandler.emptyString, qsTr("Media") + translateHandler.emptyString
@@ -83,7 +91,7 @@ Item {
     }
 
     Component.onCompleted: {
-            loadmenuConfig()
+        loadmenuConfig()
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

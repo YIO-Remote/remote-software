@@ -79,17 +79,19 @@ Flickable {
     Component {
         id: entityDelegate
 
-        Loader {
-            id: entityLoader
-            width: 460
-            height: 125
-            anchors.horizontalCenter: parent.horizontalCenter
+//        Loader {
+//            id: entityLoader
+//            width: 460
+//            height: 125
+//            anchors.horizontalCenter: parent.horizontalCenter
 
-            Component.onCompleted: {
-                var e = entities.get(config.read.ui_config.profiles[config.profile].favorites[index]);
-                this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
-            }
-        }
+//            Component.onCompleted: {
+//                var e = entities.get(config.read.ui_config.profiles[config.profile].favorites[index]);
+//                if (e.type != "undefined") {
+//                    this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
+//                }
+//            }
+//        }
     }
 
 }

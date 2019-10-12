@@ -143,7 +143,7 @@ Rectangle {
                 onClicked: {
                     config.profile = id;
                     profileModel.move(index, 0, 1);
-                    reloadTimer.start();
+//                    reloadTimer.start();
 //                    closeTimer.start();
                 }
             }

@@ -31,6 +31,7 @@ public:
     {
         m_config = config;
         emit configChanged();
+        qDebug() << "CONFIG READWRITE";
     }
 
     // profile
@@ -49,6 +50,8 @@ public:
 
         emit profileChanged();
         emit configChanged();
+
+        qDebug() << "PROFILE CHANGE";
     }
 
 public:
