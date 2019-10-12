@@ -45,7 +45,10 @@ public:
         p.insert("selected_profile", id);
         m_config.insert("ui_config", p);
 
+        writeConfig();
+
         emit profileChanged();
+        emit configChanged();
     }
 
 public:

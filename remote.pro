@@ -77,6 +77,8 @@ SOURCES = main.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \
           components/media_player/ui/*.qml \
+          components/remote/ui/*.qml \
+          components/media_player/ui/*.qml \
           sources/proximity_gesture_control.h
 }
 

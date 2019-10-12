@@ -62,6 +62,8 @@ Item {
             anchors.topMargin: 114
             anchors.horizontalCenter: parent.horizontalCenter
 
+            property bool setbyUser: false
+
             background: Rectangle {
                 x: parent.leftPadding
                 y: wifioffSlider.topPadding + wifioffSlider.availableHeight / 2 - height / 2
@@ -103,7 +105,14 @@ Item {
             onValueChanged: {
                 var tmp = config.read;
                 tmp.settings.wifitime = wifioffSlider.value*60;
-                config.write = tmp;
+                if (setbyUser) {
+                    config.write = tmp;
+                    setbyUser = false;
+                }
+            }
+
+            onMoved: {
+                setbyUser = true;
             }
 
             onPressedChanged: {
@@ -177,6 +186,8 @@ Item {
             anchors.topMargin: 114
             anchors.horizontalCenter: parent.horizontalCenter
 
+            property bool setbyUser: false
+
             background: Rectangle {
                 x: parent.leftPadding
                 y: shutdownSlider.topPadding + shutdownSlider.availableHeight / 2 - height / 2
@@ -218,7 +229,14 @@ Item {
             onValueChanged: {
                 var tmp = config.read
                 tmp.settings.shutdowntime = shutdownSlider.value*60*60
-                config.write = tmp
+                if (setbyUser) {
+                    config.write = tmp
+                    setbyUser = false;
+                }
+            }
+
+            onMoved: {
+                setbyUser = true;
             }
 
             onPressedChanged: {

@@ -22,20 +22,6 @@ Item {
     // MENU CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    property bool manualRearrange: false
-
-    Connections {
-        target: config
-
-        onConfigChanged: {
-            // if the config is changed, reload the menu
-            if (manualRearrange != true) {
-                // compare what is in the listmodel with the config and adjust
-                // still needs to be done
-            }
-        }
-    }
-
     property alias menuConfig: menuConfig
 
     ListModel {
@@ -68,6 +54,8 @@ Item {
     }
 
     function savemenuConfig() {
+        console.debug("SAVE MENUCONFIG");
+
         var tmp = config.read;
 
         var newConfig = [];
@@ -92,11 +80,10 @@ Item {
 
         config.write = tmp;
         config.writeConfig();
-        manualRearrange = false;
     }
 
     Component.onCompleted: {
-        loadmenuConfig()
+            loadmenuConfig()
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,8 +110,6 @@ Item {
                 haptic.playEffect("click");
             }
             onReleased: {
-                manualRearrange = true;
-
                 if (held) {
                     savemenuConfig()
                 }

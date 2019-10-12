@@ -253,7 +253,7 @@ ApplicationWindow {
         api.start();
 
         battery.checkBattery();
-   }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SYSTEM VARIABLES
@@ -329,27 +329,58 @@ ApplicationWindow {
             Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
 
-        onStatusChanged: if (loader_main.status == Loader.Ready) {
+        onStatusChanged: if (loader_main.status == Loader.Ready && loadingScreen.item) {
                              loadingScreen.item.state = "loaded";
                          }
+    }
+
+//    Connections {
+//        target: config
+
+//        onConfigChanged: {
+//            loader_main.source = "";
+//            loader_main.active = false;
+////            reloadTimer.start()
+//        }
+//    }
+
+    property alias reloadTimer: reloadTimer
+
+    Timer {
+        id: reloadTimer
+        interval: 2000
+        running: false
+        repeat: false
+
+        onTriggered: {
+            loader_main.source = "";
+            loader_main.active = false;
+
+            loader_second.source = "";
+
+            loader_main.setSource("qrc:/MainContainer.qml");
+            loader_main.active = true;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //    Loader {
-    //        id: loader_second
-    //        asynchronous: true
-    //        visible: false
-    //        width: 480
-    //        height: 800
-    //        x: 0
-    //        y: 0
+    property alias loader_second: loader_second
 
-    //        onStatusChanged: if (loader_second.status == Loader.Ready) {
-    //                             loader_second.visible = true;
-    //                         }
-    //    }
+    Loader {
+        id: loader_second
+        asynchronous: true
+        //        visible: false
+//        width: 480
+//        height: 800
+//        x: 0
+//        y: 0
+
+        //        onStatusChanged: if (loader_second.status == Loader.Ready) {
+        //                             loader_second.visible = true;
+        //                         }
+    }
 
     property alias contentWrapper: contentWrapper
 
