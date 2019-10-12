@@ -1,4 +1,4 @@
-#include <QtDebug>
+﻿#include <QtDebug>
 
 #include "yioapi.h"
 #include "fileio.h"
@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QNetworkInterface>
+#include <QTimer>
 
 YioAPI* YioAPI::s_instance = nullptr;
 
@@ -14,8 +15,6 @@ YioAPI::YioAPI(QQmlApplicationEngine *engine) :
     m_engine(engine)
 {
     s_instance = this;
-
-    connect(&m_qzero_conf, &QZeroConf::serviceAdded, this, &YioAPI::netWorkServiceDiscovered);
 }
 
 YioAPI::~YioAPI()
@@ -77,10 +76,10 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
         return false;
     }
 
-    // if no favorite is set, set it to false
-    if (!entity.contains("favorite")) {
-       entity.insert("favorite", true);
-    }
+    //    // if no favorite is set, set it to false
+    //    if (!entity.contains("favorite")) {
+    //       entity.insert("favorite", true);
+    //    }
 
     // get the config
     QVariantMap c = getConfig();
@@ -105,11 +104,11 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
 
             e[i] = r;
 
-            // add it to the entity registry
-//            Entities::getInstance()->add(entity, );
-
             // put the entity back to the config
             c.insert("entities", e);
+
+            // add it to the entity registry
+            //            Entities::getInstance()->add(entity, );
         }
     }
 
@@ -120,21 +119,40 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     return true;
 }
 
-void YioAPI::discoverNetworkServices(bool start)
+void YioAPI::discoverNetworkServices()
 {
-    if (start) {
-        QStringList list = Integrations::getInstance()->getMDNSList();
+    m_discoveredServices.clear();
 
-        for (int i=0; i<list.length(); i++) {
-            m_qzero_conf.startBrowser(list[i]);
-        }
-    } else {
-        m_qzero_conf.stopBrowser();
+    m_discoverableServices = Integrations::getInstance()->getMDNSList();
+
+    for (int i=0; i<m_discoverableServices.length(); i++) {
+        m_qzero_conf_browser = new QZeroConf;
+        connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+            QVariantMap map;
+            map.insert(QString("name"),item->name());
+            map.insert(QString("ip"),item->ip().toString());
+            map.insert(QString("port"), item->port());
+            map.insert(QString("mdns"), m_discoverableServices[i]);
+            m_discoveredServices.insert(item->name(), map);
+
+            emit serviceDiscovered();
+        });
+        m_qzero_conf_browser->startBrowser(m_discoverableServices[i]);
     }
 }
 
-void YioAPI::netWorkServiceDiscovered(QZeroConfService item) {
-    qDebug() << "Service discovered:" << item;
+QVariantList YioAPI::discoveredServices()
+{
+    QVariantList list;
+
+    QMap<QString, QVariantMap>::iterator i;
+    for (i = m_discoveredServices.begin(); i != m_discoveredServices.end(); i++)
+    {
+        QVariantMap map = i.value();
+        list.append(map);
+    }
+
+    return list;
 }
 
 void YioAPI::onNewConnection()

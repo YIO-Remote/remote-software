@@ -44,12 +44,12 @@ Item {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // TITLE
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    property string title: "Favorites"
+    property string title: ""
 
-    Text { // time in the left corner
+    Text {
         id: titleText
         color: colorText
-        text: "Favorites"
+        text: ""
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
         height: parent.height
@@ -261,6 +261,10 @@ Item {
 
         onClicked: {
             loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = 0;
+        }
+
+        onPressAndHold: {
+            console.debug("OPEN PROFILES");
         }
     }
 

@@ -18,7 +18,7 @@ public:
     virtual bool addEntityToConfig(QVariantMap entity) = 0;
 
     // NETWORK SERVICES DISCOVERY
-    virtual void discoverNetworkServices(bool start) = 0;
+    virtual void discoverNetworkServices() = 0;
 };
 
 QT_BEGIN_NAMESPACE

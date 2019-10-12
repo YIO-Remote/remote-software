@@ -32,8 +32,10 @@ public:
 
 
     // NETWORK SERVICES DISCOVERY
-    Q_INVOKABLE void            discoverNetworkServices     (bool start);
+    Q_PROPERTY  (QVariantList   discoveredServices      READ discoveredServices     NOTIFY serviceDiscovered);
+    Q_INVOKABLE void            discoverNetworkServices     ();
 
+    QVariantList discoveredServices();
 
 
     bool running()
@@ -57,13 +59,12 @@ signals:
     void messageReceived(QVariantMap message);
     void runningChanged();
     void hostnameChanged();
+    void serviceDiscovered();
 
 public slots:
     void onNewConnection();
     void processMessage(QString message);
     void onClientDisconnected();
-
-    void netWorkServiceDiscovered(QZeroConfService item);
 
 private:
     QWebSocketServer*            m_server;
@@ -78,5 +79,10 @@ private:
     QString                      m_hostname;
 
     QZeroConf                    m_qzero_conf;
+    QZeroConf*                   m_qzero_conf_browser;
+
+    QStringList                  m_discoverableServices;
+    QMap<QString, QVariantMap>   m_discoveredServices; // name as string, <ip address as string, mdns name as string>  "192.169.100.1", 496
 };
+
 #endif // YIOAPI_H

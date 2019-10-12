@@ -48,18 +48,22 @@ Item {
                 }
                 break;
             case "dpad up":
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY -= 200;
-                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY <= 0) {
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = 0;
+                var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
+//                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY -= 200;
+                if (newpos <= 0) {
+                    newpos = 0;
                     haptic.playEffect("buzz");
                 }
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
             case "dpad down":
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY += 200;
-                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
+//                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY += 200;
+                newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
+                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
+                    newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
                     haptic.playEffect("buzz");
                 }
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
             }
         }
@@ -92,8 +96,6 @@ Item {
     property alias mainNavigationSwipeview: mainNavigationSwipeview
     property int itemsLoaded: 0
     property bool startUp: false
-
-    property int prevIndex: 0
 
     SwipeView {
         id: mainNavigationSwipeview
@@ -155,14 +157,14 @@ Item {
             }
 
             // change the statusbar title
-            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
+            if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
                 statusBar.title = "";
             } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
             }
 
             // change statusbar opacity
-            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
+            if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
                 statusBar.bg.opacity = 0;
             } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.bg.opacity = 1;
