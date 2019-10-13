@@ -147,6 +147,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
+                    haptic.playEffect("click");
                     config.profile = id;
                     profileModel.move(index, 0, 1);
                 }
