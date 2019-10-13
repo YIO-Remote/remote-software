@@ -11,7 +11,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="75"/>
       <source>Battery health</source>
-      <translation>Batterij gezondheid</translation>
+      <translation>Batterij conditie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="111"/>
@@ -121,7 +121,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="198"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Raak het scherm voor 10 seconden aan om de reinigingsmodus uit te schakelen.</translation>
+      <translation>Raak het scherm aan voor 10 seconden om de reinigingsmodus uit te schakelen.</translation>
     </message>
   </context>
   <context>
