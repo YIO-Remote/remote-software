@@ -29,8 +29,8 @@ public:
     Q_INVOKABLE void            setColor(QColor value);
     Q_INVOKABLE void            setColorTemp(int value);
 
-    explicit Light();
-    Light(const QVariantMap& config, QObject* integrationObj);
+    explicit Light(QObject *parent = nullptr);
+    Light(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
 
     bool                        state() const { return m_state; }
     int                         brightness() const { return m_brightness; }

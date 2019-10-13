@@ -4,12 +4,13 @@
 #include <QtDebug>
 #include <QTimer>
 
-Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj) :
+Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj, QObject *parent) :
+    QObject(parent),
     m_integrationObj(integrationObj),
     m_type(type),
     m_area(config.value("area").toString()),
     m_friendly_name(config.value("friendly_name").toString()),
-    m_integration(config.value("integration").toString()),
+    m_integration(config.value("type").toString()), //integration
     m_supported_features(config.value("supported_features").toStringList()),
     m_attributes(config.value("attributes"))
 {

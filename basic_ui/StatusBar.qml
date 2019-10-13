@@ -264,7 +264,8 @@ Item {
         }
 
         onPressAndHold: {
-            console.debug("OPEN PROFILES");
+            console.debug("LOAD PROFILE");
+            loader_second.setSource("qrc:/basic_ui/Profiles.qml");
         }
     }
 

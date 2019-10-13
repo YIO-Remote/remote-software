@@ -61,13 +61,13 @@ void Light::setColorTemp(int value)
     command("COLORTEMP", value);
 }
 
-Light::Light() :
-    Entity (Type, QVariantMap(), NULL)
+Light::Light(QObject *parent) :
+    Entity (Type, QVariantMap(), NULL, parent)
 {
 
 }
 
-Light::Light(const QVariantMap& config, QObject* integrationObj):
-    Entity (Type, config, integrationObj)
+Light::Light(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+    Entity (Type, config, integrationObj, parent)
 {
 }

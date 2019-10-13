@@ -232,6 +232,15 @@ void YioAPI::processMessage(QString message)
             }
         }
 
+        if (m_clients[client] == true){
+            if (type == "getconfig"){
+                QVariantMap c = getConfig();
+                QJsonDocument json = QJsonDocument::fromVariant(c);
+                client->sendTextMessage(json.toJson());
+            }
+        }
+
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EMIT MESSAGES OF AUTHENTICATED CLIENTS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -9,14 +9,14 @@ bool Remote::update(const QVariantMap &attributes)
 {
 }
 
-Remote::Remote() :
-    Entity (Type, QVariantMap(), NULL)
+Remote::Remote(QObject *parent) :
+    Entity (Type, QVariantMap(), NULL, parent)
 {
 
 }
 
-Remote::Remote(const QVariantMap& config, QObject* integrationObj):
-    Entity (Type, config, integrationObj)
+Remote::Remote(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+    Entity (Type, config, integrationObj, parent)
 {
     m_commands = config.value("commands").toJsonArray().toVariantList();
     emit commandsChanged();

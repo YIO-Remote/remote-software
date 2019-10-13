@@ -16,8 +16,8 @@ public:
 
     QVariantList                commands() const { return m_commands; }
 
-    explicit Remote();
-    Remote(const QVariantMap& config, QObject* integrationObj);
+    explicit Remote(QObject *parent = nullptr);
+    Remote(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
 
 signals:
     void commandsChanged();

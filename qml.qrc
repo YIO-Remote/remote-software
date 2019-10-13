@@ -5,7 +5,6 @@
         <file>basic_ui/ChargingScreen.qml</file>
         <file>scripts/helper.js</file>
         <file>basic_ui/PopupLowBattery.qml</file>
-        <file>basic_ui/ProgressCircle.qml</file>
         <file>basic_ui/LoadingScreen.qml</file>
         <file>basic_ui/ClosingScreen.qml</file>
         <file>basic_ui/CustomButton.qml</file>
@@ -205,5 +204,7 @@
         <file>sources/yioapiinterface.h</file>
         <file>basic_ui/pages/Group.qml</file>
         <file>components/remote/ui/Button.qml</file>
+        <file>basic_ui/Profiles.qml</file>
+        <file>basic_ui/ProgressCircle.qml</file>
     </qresource>
 </RCC>

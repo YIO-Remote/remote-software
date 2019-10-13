@@ -42,7 +42,7 @@ void Entities::load()
             for (int k=0; k < type.length(); k++)
             {
                 QVariantMap map = type[k].toMap();
-                QObject* obj = Integrations::getInstance()->getByType(map.value("integration").toString());
+                QObject* obj = Integrations::getInstance()->getByID(map.value("integration").toString());
 
                 add(m_supported_entities[i], map, obj);
                 addLoadedEntity(m_supported_entities[i]);
@@ -110,19 +110,19 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
     Entity *entity;
     // Light entity
     if (type == "light") {
-        entity = new Light(config, integrationObj);
+        entity = new Light(config, integrationObj, this);
     }
     // Blind entity
     if (type == "blind") {
-        entity = new Blind(config, integrationObj);
+        entity = new Blind(config, integrationObj, this);
     }
     // Media player entity
     if (type == "media_player") {
-        entity = new MediaPlayer(config, integrationObj);
-    }  
+        entity = new MediaPlayer(config, integrationObj, this);
+    }
     // Remote entity
     if (type == "remote") {
-        entity = new Remote(config, integrationObj);
+        entity = new Remote(config, integrationObj, this);
     }
     m_entities.insert(entity->entity_id(), entity);
 }

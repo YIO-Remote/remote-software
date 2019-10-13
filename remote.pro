@@ -9,6 +9,7 @@ HEADERS += \
     sources/entities/remote.h \
     sources/fileio.h \
     sources/integrations/integrations.h \
+    sources/integrations/integrationsinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \
@@ -76,6 +77,8 @@ SOURCES = main.qml \
           basic_ui/settings/*.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \
+          components/media_player/ui/*.qml \
+          components/remote/ui/*.qml \
           components/media_player/ui/*.qml \
           sources/proximity_gesture_control.h
 }
