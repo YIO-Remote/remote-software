@@ -518,7 +518,7 @@ verbinden met uw Wi-Fi netwerk.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Verbind de YIO Dock met een stroomnetwerk en wacht totdat het begint met knipperen. Om vervolgens de inloggegevens van het wifi-netwerk te delen met het dock, tik op volgende.</translation>
+      <translation>Sluit uw YIO dock aan op een stroombron en wacht totdat het lampje begint met knipperen. Tik vervolgens op 'Volgende' om de inloggegevens van uw Wi-Fi netwerk te delen met de dock.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
