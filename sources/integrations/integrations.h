@@ -5,7 +5,9 @@
 #include <QMap>
 #include <QQmlApplicationEngine>
 
-class Integrations : public QObject
+#include "integrationsinterface.h"
+
+class Integrations : public QObject, IntegrationsInterface
 {
     Q_OBJECT
 

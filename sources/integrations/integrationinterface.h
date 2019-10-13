@@ -16,8 +16,8 @@ class IntegrationInterface
 public:
     virtual ~IntegrationInterface() {}
 
-    // initialize integration hub with data and entities
-    virtual void    initialize	    (const QVariantMap& configurations, QObject *entities, QObject *notifications, QObject* api, QObject *configObj, QObject *integrations) = 0;
+    // create an integration and return the object
+    virtual QMap<QObject *, QVariant> create  (const QVariantMap& configurations, QObject *entities, QObject *notifications, QObject* api, QObject *configObj) = 0;
 
     // connects the integration Hub
 //    virtual void    connect	    () = 0;
