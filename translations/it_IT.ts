@@ -147,7 +147,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation>- Disconnesso</translation>
+      <translation> - Disconnesso</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
@@ -513,7 +513,7 @@ riuscito a connettersi alla tua rete Wi-Fi.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>Try again</source>
-      <translation>Prova ancora!</translation>
+      <translation>Prova ancora</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
