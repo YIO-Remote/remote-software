@@ -9,6 +9,7 @@ HEADERS += \
     sources/entities/remote.h \
     sources/fileio.h \
     sources/integrations/integrations.h \
+    sources/integrations/integrationsinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \

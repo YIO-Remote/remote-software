@@ -11,7 +11,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="75"/>
       <source>Battery health</source>
-      <translation>Batterij gezondheid</translation>
+      <translation>Batterij conditie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="111"/>
@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
@@ -121,7 +121,7 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="198"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Raak het scherm voor 10 seconden aan om de reinigingsmodus uit te schakelen.</translation>
+      <translation>Raak het scherm aan voor 10 seconden om de reinigingsmodus uit te schakelen.</translation>
     </message>
   </context>
   <context>
@@ -139,7 +139,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
   </context>
   <context>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="19"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Software update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="40"/>
@@ -376,7 +376,7 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
@@ -394,7 +394,7 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Beschikbaarheid</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="95"/>
@@ -518,7 +518,7 @@ verbinden met uw Wi-Fi netwerk.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Verbind de YIO Dock met een stroomnetwerk en wacht totdat het begint met knipperen. Om vervolgens de inloggegevens van het wifi-netwerk te delen met het dock, tik op volgende.</translation>
+      <translation>Sluit uw YIO dock aan op een stroombron en wacht totdat het lampje begint met knipperen. Tik vervolgens op 'Volgende' om de inloggegevens van uw Wi-Fi netwerk te delen met de dock.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
