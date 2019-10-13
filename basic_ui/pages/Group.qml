@@ -9,6 +9,38 @@ Item {
 
     property string groupID
 
+    function checkGroupState() {
+        var s = false;
+
+        var eArr = config.read.ui_config.groups[groupID].entities;
+
+        for (var i=0; i<eArr.length; i++) {
+            var eid = entities.get(eArr[i]);
+
+            if (eid) {
+                if (eid.type == "light" && eid.state) {
+                    s = true;
+                } else if (eid.type == "blind" && eid.state) {
+                    s = true;
+                } else if (eid.type == "media_player" && eid.state != 0) {
+                    s = true;
+                }
+            }
+        }
+
+        return s;
+    }
+
+    Timer {
+        repeat: false
+        running: true
+        interval: 2000
+
+        onTriggered: {
+            customSwitch.checked = Qt.binding(function() { return checkGroupState()})
+        }
+    }
+
     // HEADER
     Item {
         id: header
@@ -38,6 +70,41 @@ Item {
 
             checked: false
             mouseArea.onClicked: {
+                if (!customSwitch.checked) {
+                    // turn off
+                    var eArr = config.read.ui_config.groups[groupID].entities;
+
+                    for (var i=0; i<eArr.length; i++) {
+                        var eid = entities.get(eArr[i]);
+
+                        if (eid) {
+                            if (eid.type == "light") {
+                                eid.turnOff();
+                            } else if (eid.type == "blind") {
+                                eid.close();
+                            } else if (eid.type == "media_player") {
+                                eid.turnOff();
+                            }
+                        }
+                    }
+                } else {
+                    // turn on
+                    var eArr = config.read.ui_config.groups[groupID].entities;
+
+                    for (var i=0; i<eArr.length; i++) {
+                        var eid = entities.get(eArr[i]);
+
+                        if (eid) {
+                            if (eid.type == "light") {
+                                eid.turnOn();
+                            } else if (eid.type == "blind") {
+                                eid.open();
+                            } else if (eid.type == "media_player") {
+                                eid.turnOn();
+                            }
+                        }
+                    }
+                }
             }
         }
     }

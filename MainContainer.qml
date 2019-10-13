@@ -48,18 +48,20 @@ Item {
                 }
                 break;
             case "dpad up":
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY -= 200;
-                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY <= 0) {
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = 0;
+                var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
+                if (newpos <= 0) {
+                    newpos = 0;
                     haptic.playEffect("buzz");
                 }
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
             case "dpad down":
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY += 200;
-                if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
-                    mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
+                newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
+                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
+                    newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
                     haptic.playEffect("buzz");
                 }
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
             }
         }
@@ -73,9 +75,11 @@ Item {
         enabled: config.read.settings.bluetootharea
 
         onCurrentAreaChanged: {
-            if (config.read.settings.menu.order[mainNavigationSwipeview.currentIndex].display_name != bluetoothArea.currentArea) {
-                for (var i=0; config.read.settings.menu.order.length; i++) {
-                    if (config.read.settings.menu.order[i] && config.settings.menu.order[i].display_name == bluetoothArea.currentArea) {
+            var p = config.read.ui_config.profiles[config.profile].pages;
+
+            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name != bluetoothArea.currentArea) {
+                for (var i=0; i<p.length; i++) {
+                    if (p[i].name == bluetoothArea.currentArea) {
                         mainNavigationSwipeview.currentIndex = i;
                     }
                 }
@@ -90,8 +94,6 @@ Item {
     property alias mainNavigationSwipeview: mainNavigationSwipeview
     property int itemsLoaded: 0
     property bool startUp: false
-
-    property int prevIndex: 0
 
     SwipeView {
         id: mainNavigationSwipeview
@@ -146,23 +148,23 @@ Item {
             }
 
             if (itemsLoaded >= 3) {
-                if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
+                if (mainNavigation.mainNavigationListView.count !== 0 && !mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
                     mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
 
             // change the statusbar title
-            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
+            if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
                 statusBar.title = "";
-            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+            } else if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
             }
 
             // change statusbar opacity
-            if (currentIndex != prevIndex && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
+            if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
                 statusBar.bg.opacity = 0;
-            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+            } else if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.bg.opacity = 1;
             }
         }
@@ -176,7 +178,7 @@ Item {
         id: miniMediaPlayer
         width: parent.width
         height: 0
-        anchors.bottom: mainNavigation.top
+        anchors.bottom: parent.bottom
 
         property alias miniMediaPlayerLoader: miniMediaPlayerLoader
 
@@ -210,7 +212,7 @@ Item {
 
     BasicUI.MainNavigation {
         id: mainNavigation
-        anchors.bottom: parent.bottom
+        anchors.bottom: miniMediaPlayer.top
         anchors.horizontalCenter: parent.horizontalCenter
     }
 

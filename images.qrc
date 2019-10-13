@@ -2,15 +2,6 @@
     <qresource prefix="/">
         <file>images/chargingscreen/icon-battery-lightning.png</file>
         <file>images/popuplowbattery/icon-lowbattery.png</file>
-        <file>images/navigation/icon-area-0.png</file>
-        <file>images/navigation/icon-area-1.png</file>
-        <file>images/navigation/icon-area-2.png</file>
-        <file>images/navigation/icon-area-3.png</file>
-        <file>images/navigation/icon-favorites.png</file>
-        <file>images/navigation/icon-blind.png</file>
-        <file>images/navigation/icon-light.png</file>
-        <file>components/light/images/icon-light.png</file>
-        <file>images/navigation/icon-settings.png</file>
         <file>images/components/fav-minus.png</file>
         <file>images/components/fav-plus.png</file>
         <file>images/components/close_button.png</file>
@@ -20,11 +11,9 @@
         <file>images/notification/icon-notification-normal.png</file>
         <file>images/settings/battery-level.png</file>
         <file>images/settings/average-power.png</file>
-        <file>images/navigation/bottom_gradient.png</file>
         <file>images/loading/I.png</file>
         <file>images/loading/O.png</file>
         <file>images/loading/Y.png</file>
-        <file>components/blind/images/icon-blind.png</file>
         <file>components/blind/images/down-arrow.png</file>
         <file>components/blind/images/stop.png</file>
         <file>components/blind/images/up-arrow.png</file>

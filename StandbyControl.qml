@@ -26,10 +26,8 @@ Item {
     property int display_brightness_ambient: 100
     property int display_brightness_set: 100
 
-    property int onStartTime: new Date().getTime()|0
-    property int standbyStartTime: 0|0 // new Date().getTime()
-    property int screenOnTime: 0|0
-    property int screenOffTime: 0|0
+    property int screenOnTime: 0
+    property int screenOffTime: 0
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TOUCH EVENT DETECTOR
@@ -97,7 +95,7 @@ Item {
     function wifiHandler(state) {
         var cmd;
 
-        if (state == "on") {
+        if (state === "on") {
             cmd = "systemctl start wpa_supplicant@wlan0.service"
             wifiLauncher.launch(cmd);
         } else {
@@ -106,54 +104,59 @@ Item {
         }
     }
 
+    function getCurrentTime(){
+        const timeSizeReduction = 1570881231088;
+        return (new Date().getTime() - timeSizeReduction);
+    }
+
     function wakeUp() {
         // get battery readings
         //        battery.checkBattery();
 
         switch (mode) {
 
-        case "dim":
-            // set the display brightness
-            ambientLightReadTimer.start();
+            case "dim":
+                // set the display brightness
+                ambientLightReadTimer.start();
 
-            // set the mode
-            mode = "on";
-            break;
+                // set the mode
+                mode = "on";
+                break;
 
-        case "standby":
-            // turn off standby
-            if (displayControl.setmode("standbyoff")) {
-                standbyoffDelay.start();
-            }
+            case "standby":
+                // turn off standby
+                if (displayControl.setmode("standbyoff")) {
+                    standbyoffDelay.start();
+                }
 
-            // set the mode
-            mode = "on";
-            break;
+                // set the mode
+                mode = "on";
+                break;
 
-        case "wifi_off":
-            wifiHandler("on")
+            case "wifi_off":
+                wifiHandler("on")
 
-            // turn off standby
-            if (displayControl.setmode("standbyoff")) {
-                standbyoffDelay.start();
-            }
+                // turn off standby
+                if (displayControl.setmode("standbyoff")) {
+                    standbyoffDelay.start();
+                }
 
-            // set the mode
-            mode = "on";
+                // set the mode
+                mode = "on";
 
-            // integration socket on
-            for (var i=0; i<integrations.list.length; i++) {
-                integrations.list[i].connect();
-            }
+                // integration socket on
+                for (var i=0; i<integrations.list.length; i++) {
+                    integrations.list[i].connect();
+                }
 
-            // turn on API
-            api.start();
+                // turn on API
+                api.start();
 
-            break;
+                break;
         }
 
         // reset elapsed time
-        standbyBaseTime = new Date().getTime()
+        standbyBaseTime = getCurrentTime();
 
         // start bluetooth scanning
         if (config.read.settings.bluetootharea) bluetoothArea.startScan();
@@ -200,22 +203,14 @@ Item {
     }
 
     onModeChanged: {
-        console.debug("Mode: " + mode);
+        console.debug("Mode changed: " + mode);
         // if mode is on change processor to ondemand
-        if (mode == "on") {
+        if (mode === "on") {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
-
-            // start screen on timer and calculate off time
-            onStartTime = new Date().getTime()|0
-            screenOffTime += (new Date().getTime()|0 - standbyStartTime|0)|0
         }
         // if mode is standby change processor to powersave
-        if (mode == "standby") {
+        if (mode === "standby") {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
-
-            // start standby timer and calculate on time
-            standbyStartTime = new Date().getTime()|0
-            screenOnTime += (new Date().getTime()|0 - onStartTime|0)|0
         }
     }
 
@@ -230,17 +225,26 @@ Item {
         interval: 1000
 
         onTriggered: {
-            var time = new Date().getTime()
+            let time = getCurrentTime();
+
+
+            if (mode == "on" || mode == "dim"){
+                screenOnTime += 1000;
+            }
+            if (mode == "standby" || mode == "wifi_off"){
+                screenOffTime += 1000;
+            }
+
 
             // mode = dim
-            if (time-standbyBaseTime > displayDimTime * 1000 && mode == "on") {
+            if (time - standbyBaseTime > displayDimTime * 1000 && mode == "on") {
                 // dim the display
                 setBrightness(10);
                 mode = "dim";
             }
 
             // mode = standby
-            if (time-standbyBaseTime > standbyTime * 1000 && mode == "dim") {
+            if (time - standbyBaseTime > standbyTime * 1000 && mode == "dim") {
                 // turn on proximity detection
                 proximity.proximityDetection(true);
 
@@ -294,7 +298,7 @@ Item {
         interval: 20000
 
         onTriggered: {
-            standbyBaseTime = new Date().getTime()
+            standbyBaseTime = getCurrentTime();
             if (loader_main.source != "qrc:/wifiSetup.qml") {
                 standbyTimer.start()
             }

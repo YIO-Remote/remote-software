@@ -10,7 +10,6 @@ Config::Config(QQmlApplicationEngine *engine, QString path) :
 
     //load the config file
     readConfig(path);
-
 }
 
 Config::~Config()

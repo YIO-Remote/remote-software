@@ -33,7 +33,7 @@ public:
     virtual     bool        update          (const QVariantMap& attributes);
 
     // Creation from config.json content and integration hub
-    explicit Entity (const QString& type, const QVariantMap& config, QObject *integrationObj);
+    explicit Entity (const QString& type, const QVariantMap& config, QObject *integrationObj, QObject *parent = nullptr);
     virtual ~Entity ();
 
     QString			type()                  { return m_type; }

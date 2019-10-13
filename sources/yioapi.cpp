@@ -1,4 +1,4 @@
-#include <QtDebug>
+﻿#include <QtDebug>
 
 #include "yioapi.h"
 #include "fileio.h"
@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QNetworkInterface>
+#include <QTimer>
 
 YioAPI* YioAPI::s_instance = nullptr;
 
@@ -39,7 +40,6 @@ void YioAPI::start()
     emit hostnameChanged();
 
     m_qzero_conf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
-
 }
 
 void YioAPI::stop()
@@ -49,6 +49,18 @@ void YioAPI::stop()
     m_running = false;
     m_qzero_conf.stopServicePublish();
     emit runningChanged();
+}
+
+void YioAPI::sendMessage(QString message)
+{
+    QMap<QWebSocket *, bool>::iterator i;
+    for (i = m_clients.begin(); i != m_clients.end(); i++)
+    {
+        if (i.value()) {
+            QWebSocket *socket = i.key();
+            socket->sendTextMessage(message);
+        }
+    }
 }
 
 QVariantMap YioAPI::getConfig()
@@ -64,10 +76,10 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
         return false;
     }
 
-    // if no favorite is set, set it to false
-    if (!entity.contains("favorite")) {
-       entity.insert("favorite", true);
-    }
+    //    // if no favorite is set, set it to false
+    //    if (!entity.contains("favorite")) {
+    //       entity.insert("favorite", true);
+    //    }
 
     // get the config
     QVariantMap c = getConfig();
@@ -92,11 +104,11 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
 
             e[i] = r;
 
-            // add it to the entity registry
-//            Entities::getInstance()->add(entity, );
-
             // put the entity back to the config
             c.insert("entities", e);
+
+            // add it to the entity registry
+            //            Entities::getInstance()->add(entity, );
         }
     }
 
@@ -105,6 +117,42 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     Config::getInstance()->writeConfig();
 
     return true;
+}
+
+void YioAPI::discoverNetworkServices()
+{
+    m_discoveredServices.clear();
+
+    m_discoverableServices = Integrations::getInstance()->getMDNSList();
+
+    for (int i=0; i<m_discoverableServices.length(); i++) {
+        m_qzero_conf_browser = new QZeroConf;
+        connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+            QVariantMap map;
+            map.insert(QString("name"),item->name());
+            map.insert(QString("ip"),item->ip().toString());
+            map.insert(QString("port"), item->port());
+            map.insert(QString("mdns"), m_discoverableServices[i]);
+            m_discoveredServices.insert(item->name(), map);
+
+            emit serviceDiscovered();
+        });
+        m_qzero_conf_browser->startBrowser(m_discoverableServices[i]);
+    }
+}
+
+QVariantList YioAPI::discoveredServices()
+{
+    QVariantList list;
+
+    QMap<QString, QVariantMap>::iterator i;
+    for (i = m_discoveredServices.begin(); i != m_discoveredServices.end(); i++)
+    {
+        QVariantMap map = i.value();
+        list.append(map);
+    }
+
+    return list;
 }
 
 void YioAPI::onNewConnection()
@@ -183,6 +231,15 @@ void YioAPI::processMessage(QString message)
                 client->sendTextMessage(r_message);
             }
         }
+
+        if (m_clients[client] == true){
+            if (type == "getconfig"){
+                QVariantMap c = getConfig();
+                QJsonDocument json = QJsonDocument::fromVariant(c);
+                client->sendTextMessage(json.toJson());
+            }
+        }
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EMIT MESSAGES OF AUTHENTICATED CLIENTS

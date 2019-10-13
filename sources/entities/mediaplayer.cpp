@@ -93,12 +93,12 @@ void MediaPlayer::setVolume(double value)
     command("VOLUME_SET", value);
 }
 
-MediaPlayer::MediaPlayer() :
-    Entity(Type, QVariantMap(), NULL)
+MediaPlayer::MediaPlayer(QObject *parent) :
+    Entity(Type, QVariantMap(), NULL, parent)
 {
 }
 
-MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj):
-    Entity(Type, config, integrationObj)
+MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+    Entity(Type, config, integrationObj, parent)
 {
 }

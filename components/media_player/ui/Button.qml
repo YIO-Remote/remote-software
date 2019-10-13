@@ -107,10 +107,10 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: mediaButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.6; duration: 400 }
-                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
+                PropertyAnimation { target: mediaButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
-                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.6; duration: 400 }
+                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }
             }
         }
@@ -172,24 +172,18 @@ Rectangle {
             lineHeight: 1
         }
 
-        Image {
+        Text {
             id: icon
-            asynchronous: true
-            width: 80
-            height: 80
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/components/blind/images/icon-blind.png"
+            color: colorText
+            text: "\uE905"
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.verticalCenter: parent.verticalCenter
-
-            ColorOverlay {
-                visible: !darkMode
-                anchors.fill: parent
-                source: parent
-                color: colorText
-                antialiasing: true
-            }
         }
 
     }

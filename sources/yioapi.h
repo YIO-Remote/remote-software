@@ -10,6 +10,7 @@
 //#include "qzeroconf.h"
 #include "../qtzeroconf/qzeroconf.h"
 #include "config.h"
+#include "integrations/integrations.h"
 
 class YioAPI : public QObject, YioAPIInterface
 {
@@ -22,11 +23,20 @@ public:
 
     Q_INVOKABLE void start();                                                           // start the API
     Q_INVOKABLE void stop();                                                            // stop the API
-    //Q_INVOKABLE void sendMessage(QString message);                  // send a message to a client
+    Q_INVOKABLE void sendMessage(QString message);                                      // send a message to all clients
+
 
     // CONFIG MANIPULATION METHODS
     Q_INVOKABLE QVariantMap     getConfig                   ();
     Q_INVOKABLE bool            addEntityToConfig           (QVariantMap entity);
+
+
+    // NETWORK SERVICES DISCOVERY
+    Q_PROPERTY  (QVariantList   discoveredServices      READ discoveredServices     NOTIFY serviceDiscovered);
+    Q_INVOKABLE void            discoverNetworkServices     ();
+
+    QVariantList discoveredServices();
+
 
     bool running()
     {
@@ -49,6 +59,7 @@ signals:
     void messageReceived(QVariantMap message);
     void runningChanged();
     void hostnameChanged();
+    void serviceDiscovered();
 
 public slots:
     void onNewConnection();
@@ -68,5 +79,10 @@ private:
     QString                      m_hostname;
 
     QZeroConf                    m_qzero_conf;
+    QZeroConf*                   m_qzero_conf_browser;
+
+    QStringList                  m_discoverableServices;
+    QMap<QString, QVariantMap>   m_discoveredServices; // name as string, <ip address as string, mdns name as string>  "192.169.100.1", 496
 };
+
 #endif // YIOAPI_H
