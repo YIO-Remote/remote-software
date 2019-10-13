@@ -1,22 +1,4 @@
 {
-    "areas": [
-        {
-            "area": "Entrance",
-            "bluetooth": "xx:xx:xx:xx:xx"
-        },
-        {
-            "area": "Kitchen",
-            "bluetooth": "xx:xx:xx:xx:xx"
-        },
-        {
-            "area": "Living room",
-            "bluetooth": "xx:xx:xx:xx:xx"
-        },
-        {
-            "area": "Bedroom",
-            "bluetooth": "xx:xx:xx:xx:xx"
-        }
-    ],
     "entities": {
         "light": [
             {
@@ -120,12 +102,10 @@
         "media_player": [
             {
                 "area": "Living room",
-                "attributes": {
-                    "state": "off"
-                },
                 "entity_id": "media_player.beoplay_m5",
                 "friendly_name": "BeoPlay M5",
                 "integration": "homeassistant",
+                "type:": "speaker",
                 "supported_features": [
                     "SOURCE",
                     "APP_NAME",
@@ -249,19 +229,74 @@
                     "TURN_OFF"
                 ]
             }
+        ],
+        "remote": [
+            {
+                "area": "Living room",
+                "entity_id": "remote.living_room",
+                "friendly_name": "Living room TV",
+                "integration": "ir",
+                "supported_features": ["POWER TOGGLE", "CHANNEL UP"],
+                "commands": [
+                    {
+                        "code": "R1,0000,0067,0000,0015,0060,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,03f6",
+                        "button_map": "POWER_TOGGLE"
+                    },
+                    {
+                        "code": "R2,0000,0067,0000,0015,0060,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,03f6",
+                        "button_map": "CHANNEL_UP"
+                    }
+                ]    
+            }
         ]
     },
-    "integration": [
+    "integrations": 
+    {
+        "homeassistant": 
         {
-            "data": {
-                "ip": "homeassistant.facan.lan:8123"
-            },
-            "friendly_name": "Home Assistant",
-            "id": 1,
-            "plugin": "homeassistant",
-            "type": "homeassistant"
+            "mdns": "_hap._tcp",
+            "data":         
+            [
+                {
+                    "data": {
+                        "ip": "192.168.100.2:8123"
+                    },
+                    "friendly_name": "Home Assistant",
+                    "id": "homeassistant"
+                },
+                {
+                    "data": {
+                        "ip": "192.168.100.3:8123"
+                    },
+                    "friendly_name": "Home 2",
+                    "id": "homeassistant2"
+                }
+            ]
+        },
+        "ir": {
+            "data":
+            [
+                {
+                    "friendly_name": "IR",
+                    "id": "ir"
+                }    
+            ]
+        },
+        "appletv": 
+        {
+            "mdns": "_mediaremotetv._tcp",
+            "data":
+            [
+                {
+                    "data": {
+    
+                    },
+                    "friendly_name": "Apple TV",
+                    "id": "appletv"
+                }    
+            ]
         }
-    ],
+    },
     "settings": 
     {
         "language": "en_US",
@@ -284,7 +319,12 @@
             },
             "1": {
                 "name": "Niels",
-                "pages": [],
+                "pages": ["favorites","5","6"],
+                "favorites": ["media_player.beoplay_m5"]
+            },
+            "2": {
+                "name": "Markus",
+                "pages": ["1"],
                 "favorites": []
             }
         },
@@ -292,7 +332,8 @@
             "0": {
                 "name": "Living room",
                 "image": "/usr/bin/yio-remote/images/livingroom.jpg",
-                "groups": ["3", "4"]
+                "groups": ["3", "4", "10"],
+                "bluetooth": "xx:xx:xx:xx:xx"
             },
             "1": {
                 "name": "Kitchen",
@@ -338,6 +379,11 @@
                 "name": "Blinds",
                 "switch": false,
                 "entities": ["cover.bedroom_blinds_level"]
+            },
+            "10": {
+                "name": "Remotes",
+                "switch": false,
+                "entities": ["remote.living_room"]
             }
         }
     }
