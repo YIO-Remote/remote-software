@@ -39,12 +39,12 @@ void Blind::setPosition(int value)
      command("POSITION", value);
 }
 
-Blind::Blind() :
-    Entity (Type, QVariantMap(), NULL)
+Blind::Blind(QObject *parent) :
+    Entity (Type, QVariantMap(), NULL, parent)
 {
 }
 
-Blind::Blind(const QVariantMap& config, QObject* integrationObj):
-    Entity (Type, config, integrationObj)
+Blind::Blind(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+    Entity (Type, config, integrationObj, parent)
 {
 }

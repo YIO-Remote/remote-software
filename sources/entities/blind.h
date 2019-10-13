@@ -23,8 +23,8 @@ public:
     Q_INVOKABLE void            stop();
     Q_INVOKABLE void            setPosition(int value);
 
-    explicit Blind();
-    Blind(const QVariantMap& config, QObject* integrationObj);
+    explicit Blind(QObject *parent = nullptr);
+    Blind(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
 
     bool                        state() const { return m_state; }
     int                         position() const { return m_position; }

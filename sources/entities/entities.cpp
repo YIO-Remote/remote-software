@@ -110,19 +110,19 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
     Entity *entity;
     // Light entity
     if (type == "light") {
-        entity = new Light(config, integrationObj);
+        entity = new Light(config, integrationObj, this);
     }
     // Blind entity
     if (type == "blind") {
-        entity = new Blind(config, integrationObj);
+        entity = new Blind(config, integrationObj, this);
     }
     // Media player entity
     if (type == "media_player") {
-        entity = new MediaPlayer(config, integrationObj);
-    }  
+        entity = new MediaPlayer(config, integrationObj, this);
+    }
     // Remote entity
     if (type == "remote") {
-        entity = new Remote(config, integrationObj);
+        entity = new Remote(config, integrationObj, this);
     }
     m_entities.insert(entity->entity_id(), entity);
 }

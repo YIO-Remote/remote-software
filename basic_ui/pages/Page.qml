@@ -156,13 +156,13 @@ Flickable {
         anchors.top: titleContainer.bottom
         spacing: 60
 
-//        Repeater {
-//            id: groupRepeater
-//            model: config.read.ui_config.pages[page].groups
+        Repeater {
+            id: groupRepeater
+            model: config.read.ui_config.pages[page].groups
 
-//            Group {
-//                groupID: config.read.ui_config.pages[page].groups[index]
-//            }
-//        }
+            Group {
+                groupID: config.read.ui_config.pages[page].groups[index]
+            }
+        }
     }
 }

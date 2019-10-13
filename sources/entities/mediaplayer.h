@@ -51,8 +51,8 @@ public:
     Q_INVOKABLE void            setVolume(double value);
 
     // constructor
-    explicit MediaPlayer();
-    MediaPlayer(const QVariantMap& config, QObject* integrationObj);
+    explicit MediaPlayer(QObject *parent = nullptr);
+    MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
 
     enum states                 state() { return m_state; }
 

@@ -4,7 +4,8 @@
 #include <QtDebug>
 #include <QTimer>
 
-Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj) :
+Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj, QObject *parent) :
+    QObject(parent),
     m_integrationObj(integrationObj),
     m_type(type),
     m_area(config.value("area").toString()),

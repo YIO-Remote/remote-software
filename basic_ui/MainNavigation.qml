@@ -31,7 +31,7 @@ Item {
     Connections {
         target: config
 
-        onConfigChanged: {
+        onProfileChanged: {
             loadmenuConfig();
         }
     }

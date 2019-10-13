@@ -16,8 +16,14 @@ Rectangle {
 
         for (var value in config.read.ui_config.profiles) {
             var v = config.read.ui_config.profiles[value];
-            v["id"] = value;
+            v["id"] = parseInt(value, 10);
             profileModel.append(v);
+        }
+
+        for (var i=0; i<profileModel.count; i++) {
+            if (profileModel.get(i).id === config.profile) {
+                profileModel.move(i, 0, 1);
+            }
         }
     }
 
@@ -34,7 +40,7 @@ Rectangle {
             PropertyChanges {target: loader_main; state: "visible" }
         },
         State { name: "open";
-            when: parent.status == Loader.Ready
+            when: parent.status === Loader.Ready
             PropertyChanges {target: profiles; height: 670 }
             PropertyChanges {target: parent; height: 670 }
             PropertyChanges {target: loader_main; state: "hidden" }
@@ -143,22 +149,8 @@ Rectangle {
                 onClicked: {
                     config.profile = id;
                     profileModel.move(index, 0, 1);
-//                    reloadTimer.start();
-//                    closeTimer.start();
                 }
             }
-
-//            Timer {
-//                id: closeTimer
-//                interval: 300
-//                repeat: false
-//                running: false
-
-//                onTriggered: {
-//                    profiles.state = "closed";
-//                }
-//            }
-
         }
     }
 

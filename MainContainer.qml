@@ -49,7 +49,6 @@ Item {
                 break;
             case "dpad up":
                 var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
-//                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY -= 200;
                 if (newpos <= 0) {
                     newpos = 0;
                     haptic.playEffect("buzz");
@@ -57,7 +56,6 @@ Item {
                 mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
             case "dpad down":
-//                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY += 200;
                 newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
                     newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
@@ -150,23 +148,23 @@ Item {
             }
 
             if (itemsLoaded >= 3) {
-                if (!mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
+                if (mainNavigation.mainNavigationListView.count !== 0 && !mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
                     mainNavigation.mainNavigationListView.currentIndex = currentIndex
                     mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
 
             // change the statusbar title
-            if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
+            if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 130) {
                 statusBar.title = "";
-            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+            } else if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.title = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.title;
             }
 
             // change statusbar opacity
-            if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
+            if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY < 10) {
                 statusBar.bg.opacity = 0;
-            } else if (mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
+            } else if (mainNavigation.mainNavigationListView.count !== 0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item) {
                 statusBar.bg.opacity = 1;
             }
         }
