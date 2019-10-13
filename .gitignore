@@ -10,6 +10,9 @@ software/remote/translations/.DS_Store
 # Linux build files
 software/build-*
 
+# plugins
+plugins/*.so
+
 #Translation files
 translations/*.ts
 translations/*.qm
