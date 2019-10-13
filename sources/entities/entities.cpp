@@ -42,7 +42,7 @@ void Entities::load()
             for (int k=0; k < type.length(); k++)
             {
                 QVariantMap map = type[k].toMap();
-                QObject* obj = Integrations::getInstance()->getByType(map.value("integration").toString());
+                QObject* obj = Integrations::getInstance()->getByID(map.value("integration").toString());
 
                 add(m_supported_entities[i], map, obj);
                 addLoadedEntity(m_supported_entities[i]);
