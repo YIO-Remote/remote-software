@@ -306,22 +306,38 @@ Rectangle {
                 }
             }
 
-            Image {
+            //            Image {
+            //                id: icon_b
+            //                asynchronous: true
+            //                width: 85
+            //                height: 85
+            //                fillMode: Image.PreserveAspectFit
+            //                source: "qrc:/components/light/images/icon-light.png"
+            //                anchors {top: parent.top; topMargin: 30; left: parent.left; leftMargin: 30}
+
+            //                ColorOverlay {
+            //                    visible: !darkMode
+            //                    anchors.fill: parent
+            //                    source: parent
+            //                    color: colorText
+            //                    antialiasing: true
+            //                }
+
+            //                Behavior on opacity {
+            //                    PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
+            //                }
+            //            }
+            Text {
                 id: icon_b
-                asynchronous: true
+                color: colorText
+                text: "\uE903"
+                renderType: Text.NativeRendering
                 width: 85
                 height: 85
-                fillMode: Image.PreserveAspectFit
-                source: "qrc:/components/light/images/icon-light.png"
-                anchors {top: parent.top; topMargin: 30; left: parent.left; leftMargin: 30}
-
-                ColorOverlay {
-                    visible: !darkMode
-                    anchors.fill: parent
-                    source: parent
-                    color: colorText
-                    antialiasing: true
-                }
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 100 }
+                anchors {top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20}
 
                 Behavior on opacity {
                     PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }

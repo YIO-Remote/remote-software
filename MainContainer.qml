@@ -50,18 +50,22 @@ Item {
             case "dpad up":
                 var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
 //                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY -= 200;
+                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == 0) {
+                    haptic.playEffect("buzz");
+                }
                 if (newpos <= 0) {
                     newpos = 0;
-                    haptic.playEffect("buzz");
                 }
                 mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
             case "dpad down":
 //                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY += 200;
                 newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
+                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
+                     haptic.playEffect("buzz");
+                }
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
                     newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
-                    haptic.playEffect("buzz");
                 }
                 mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
