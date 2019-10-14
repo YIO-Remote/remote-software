@@ -85,6 +85,7 @@ private:
     QStringList                 m_loaded_entities;
 
     QMap<QString, QObject*>     m_mediaplayersPlaying;
+    QMap<QString, QTimer*>      m_mediaplayersTimers;
 
     static Entities*            s_instance;
 };

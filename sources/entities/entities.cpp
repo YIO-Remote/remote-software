@@ -10,6 +10,7 @@
 
 #include <QJsonArray>
 #include <QtDebug>
+#include <QTimer>
 
 Entities* Entities::s_instance = NULL;
 
@@ -140,7 +141,14 @@ QList<QObject *> Entities::mediaplayersPlaying()
 
 void Entities::addMediaplayersPlaying(const QString &entity_id)
 {
+    // check if there is a timer active to remove the media player
+    QTimer* timer = m_mediaplayersTimers.value(entity_id);
+    if (timer) {
+        timer->stop();
+    }
+
     QObject *o = m_entities.value(entity_id);
+
     if (!m_mediaplayersPlaying.contains(entity_id)) {
         m_mediaplayersPlaying.insert(entity_id, o);
         emit mediaplayersPlayingChanged();;
@@ -151,9 +159,18 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
 void Entities::removeMediaplayersPlaying(const QString &entity_id)
 {
     if (m_mediaplayersPlaying.contains(entity_id)) {
-        m_mediaplayersPlaying.remove(entity_id);
-        emit mediaplayersPlayingChanged();
-        emit mediaplayersPlayingChanged();
+
+        // use a timer to remove the entity with a delay
+        QTimer* timer = new QTimer();
+        timer->setSingleShot(true);
+        connect(timer, &QTimer::timeout, this, [=](){
+            m_mediaplayersPlaying.remove(entity_id);
+            emit mediaplayersPlayingChanged();
+            emit mediaplayersPlayingChanged();
+        });
+        timer->start(30000);
+
+        m_mediaplayersTimers.insert(entity_id, timer);
     }
 }
 
