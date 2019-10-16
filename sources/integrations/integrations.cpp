@@ -54,13 +54,13 @@ bool Integrations::load()
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
         if (interface) {
             ha = interface->create(map, entities, notifications, api, config);
+
+            // add the integrations to the integration database
+            for (QMap<QObject *, QVariant>::const_iterator iter = ha.begin(); iter != ha.end(); ++iter) {
+                add(iter.value().toMap(), iter.key());
+            }
         }
         i++;
-    }
-
-    // add the integrations to the integration database
-    for (QMap<QObject *, QVariant>::const_iterator iter = ha.begin(); iter != ha.end(); ++iter) {
-        add(iter.value().toMap(), iter.key());
     }
 
     if (i != 0) {

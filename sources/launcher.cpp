@@ -20,6 +20,7 @@ QString Launcher::launch(const QString &program)
 
 QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
 {
+    qDebug() << "LOADING PLUGIN:" << pluginName;
 #ifdef __arm__
     QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName);
     QObject *plugin = pluginLoader.instance();
