@@ -91,11 +91,15 @@ QList<QObject *> Entities::getByAreaType(const QString &area, const QString &typ
 
 QList<QObject *> Entities::getByIntegration(const QString& integration)
 {
+    qDebug() << "CALLED";
+
     QList<QObject *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("integration") == integration) {
             e.append(m_entities.value(value->property("entity_id").toString()));
+
+            qDebug() << e;
         }
     }
     return e;
