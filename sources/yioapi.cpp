@@ -185,7 +185,7 @@ void YioAPI::processMessage(QString message)
 
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
-        qDebug() << message;
+//        qDebug() << message;
 
         // convert message to json
         QJsonParseError parseerror;
@@ -243,6 +243,8 @@ void YioAPI::processMessage(QString message)
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (type == "getconfig" && m_clients[client]){
+            qDebug() << "REQUEST FOR GETCONFIG";
+
             QVariantMap response;
 
             QVariantMap config = getConfig();
@@ -252,6 +254,8 @@ void YioAPI::processMessage(QString message)
             QJsonDocument json = QJsonDocument::fromVariant(response);
             client->sendTextMessage(json.toJson());
         } else if (type == "setconfig" && m_clients[client]) {
+            qDebug() << "REQUEST FOR SETCONFIG";
+
             QVariantMap config = map.value("config").toMap();
             setConfig(config);
         } else {
