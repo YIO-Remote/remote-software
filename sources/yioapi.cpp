@@ -68,6 +68,12 @@ QVariantMap YioAPI::getConfig()
     return Config::getInstance()->read();
 }
 
+void YioAPI::setConfig(QVariantMap config)
+{
+    Config::getInstance()->readWrite(config);
+    Config::getInstance()->writeConfig();
+}
+
 bool YioAPI::addEntityToConfig(QVariantMap entity)
 {
     // check the input if it's OK
@@ -232,25 +238,23 @@ void YioAPI::processMessage(QString message)
             }
         }
 
-        if (m_clients[client] == true){
-            if (type == "getconfig"){
-                QVariantMap response;
-
-                QVariantMap config = getConfig();
-                response.insert("config", config);
-                response.insert("type", "config");
-
-                QJsonDocument json = QJsonDocument::fromVariant(response);
-                client->sendTextMessage(json.toJson());
-            }
-        }
-
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EMIT MESSAGES OF AUTHENTICATED CLIENTS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (type != "auth" && m_clients[client]) {
+        if (type == "getconfig" && m_clients[client]){
+            QVariantMap response;
+
+            QVariantMap config = getConfig();
+            response.insert("config", config);
+            response.insert("type", "config");
+
+            QJsonDocument json = QJsonDocument::fromVariant(response);
+            client->sendTextMessage(json.toJson());
+        } else if (type == "setconfig" && m_clients[client]) {
+            QVariantMap config = doc.toVariant().toMap().value("config").toMap();
+            setConfig(config);
+        } else {
             emit messageReceived(map);
         }
     }
