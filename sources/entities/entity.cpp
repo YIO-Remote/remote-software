@@ -17,7 +17,7 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
     setObjectName(config.value("entity_id").toString());
 
     QVariantMap c = Config::getInstance()->read();
-    QString p = QString::number(Config::getInstance()->profile());
+    QString p = Config::getInstance()->profile();
 
     QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
 
@@ -70,7 +70,7 @@ void Entity::setFavorite(bool value)
         QTimer::singleShot(1000, this, [=](){
 
             QVariantMap c = Config::getInstance()->read();
-            QString p = QString::number(Config::getInstance()->profile());
+            QString p = Config::getInstance()->profile();
 
             QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
 
