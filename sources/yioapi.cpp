@@ -252,7 +252,7 @@ void YioAPI::processMessage(QString message)
             QJsonDocument json = QJsonDocument::fromVariant(response);
             client->sendTextMessage(json.toJson());
         } else if (type == "setconfig" && m_clients[client]) {
-            QVariantMap config = doc.toVariant().toMap().value("config").toMap();
+            QVariantMap config = map.value("config").toMap();
             setConfig(config);
         } else {
             emit messageReceived(map);
