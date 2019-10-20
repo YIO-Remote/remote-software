@@ -206,5 +206,8 @@
         <file>components/remote/ui/Button.qml</file>
         <file>basic_ui/Profiles.qml</file>
         <file>basic_ui/ProgressCircle.qml</file>
+        <file>components/ButtonBase.qml</file>
+        <file>components/remote/ui/ir/Card.qml</file>
+        <file>components/remote/ui/ir/Group.qml</file>
     </qresource>
 </RCC>

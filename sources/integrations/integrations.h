@@ -21,22 +21,25 @@ public:
     // get all integrations
     QList<QObject *>                    list                    ();
 
-    // get an integration by type
-    Q_INVOKABLE QObject*                getByID                 (const QString& id);
+    // get an integration object by id
+    Q_INVOKABLE QObject*                get                     (const QString& id);
 
     // add an integration
-    Q_INVOKABLE void                    add                     (const QVariantMap& config, QObject *obj);
+    Q_INVOKABLE void                    add                     (const QVariantMap& config, QObject *obj, const QString& type);
 
     // remove an integraiton
-    Q_INVOKABLE void                    remove                  (const QString& type);
+    Q_INVOKABLE void                    remove                  (const QString& id);
 
     // get friendly name
-    Q_INVOKABLE QString                 getFriendlyName         (const QString& type);
+    Q_INVOKABLE QString                 getFriendlyName         (const QString& id);
     Q_INVOKABLE QString                 getFriendlyName         (QObject* obj);
 
     // get mdns _tcp name
-    Q_INVOKABLE QString                 getMDNS                 (const QString& type);
+    Q_INVOKABLE QString                 getMDNS                 (const QString& id);
     Q_INVOKABLE QStringList             getMDNSList             ();
+
+    // get the type of integration by id
+    Q_INVOKABLE QString                 getType                 (const QString& id);
 
     explicit Integrations(QQmlApplicationEngine *engine = NULL, const QString& appPath = "");
     virtual ~Integrations();
@@ -53,6 +56,7 @@ private:
     QMap<QString, QObject*>     m_integrations;
     QMap<QString, QString>      m_integrations_friendly_names;
     QMap<QString, QString>      m_integrations_mdns;
+    QMap<QString, QString>      m_integrations_types;
     QString                     m_appPath;
 
     static Integrations*        s_instance;
