@@ -24,6 +24,31 @@ void Remote::powerToggle()
     command("POWER_TOGGLE", "");
 }
 
+void Remote::channelUp()
+{
+    command("CHANNEL_UP", "");
+}
+
+void Remote::channelDown()
+{
+    command("CHANNEL_DOWN", "");
+}
+
+void Remote::volumeUp()
+{
+    command("VOLUME_UP", "");
+}
+
+void Remote::volumeDown()
+{
+    command("VOLUME_DOWN", "");
+}
+
+void Remote::muteToggle()
+{
+    command("MUTE_TOGGLE", "");
+}
+
 Remote::Remote(QObject *parent) :
     Entity (Type, QVariantMap(), NULL, parent)
 {

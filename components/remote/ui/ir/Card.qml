@@ -10,6 +10,43 @@ Rectangle {
     height: parent.height
     color: colorDark
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: buttonHandler
+        enabled: parent.state == "open" ? true : false
+
+        onButtonPress: {
+            switch (button) {
+            case "volume up":
+                if (obj.supported_features.indexOf("VOLUME_UP") > -1) {
+                    obj.volumeUp();
+                }
+                break;
+            case "volume down":
+                if (obj.supported_features.indexOf("VOLUME_DOWN") > -1) {
+                    obj.volumeDown();
+                }
+                break;
+            case "channel up":
+                if (obj.supported_features.indexOf("CHANNEL_UP") > -1) {
+                    obj.channelUp();
+                }
+                break;
+            case "channel down":
+                if (obj.supported_features.indexOf("CHANNEL_DOWN") > -1) {
+                    obj.channelDown();
+                }
+                break;
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI ELEMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     Item {
         width: parent.width
         height: 125
@@ -148,7 +185,7 @@ Rectangle {
 
     Group {
         id: group2
-//        offset: 160
+        //        offset: 160
         height: 500
 
         onStateChanged: {

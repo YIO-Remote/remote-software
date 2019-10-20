@@ -21,6 +21,15 @@ public:
     Q_INVOKABLE void            powerOff();
     Q_INVOKABLE void            powerToggle();
 
+    // tuner commands
+    Q_INVOKABLE void            channelUp();
+    Q_INVOKABLE void            channelDown();
+
+    // volume commands
+    Q_INVOKABLE void            volumeUp();
+    Q_INVOKABLE void            volumeDown();
+    Q_INVOKABLE void            muteToggle();
+
 
     explicit Remote(QObject *parent = nullptr);
     Remote(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
