@@ -16,6 +16,20 @@ public:
 
     QVariantList                commands() const { return m_commands; }
 
+    // transport and media controls
+    Q_INVOKABLE void            play();
+    Q_INVOKABLE void            pause();
+    Q_INVOKABLE void            playToggle();
+    Q_INVOKABLE void            stop();
+    Q_INVOKABLE void            forward();
+    Q_INVOKABLE void            backward();
+    Q_INVOKABLE void            next();
+    Q_INVOKABLE void            previous();
+    Q_INVOKABLE void            info();
+    Q_INVOKABLE void            recordings();
+    Q_INVOKABLE void            record();
+    Q_INVOKABLE void            live();
+
     // power commands
     Q_INVOKABLE void            powerOn();
     Q_INVOKABLE void            powerOff();

@@ -9,6 +9,68 @@ bool Remote::update(const QVariantMap &attributes)
 {
 }
 
+// transport and media controls
+void Remote::play()
+{
+    command("PLAY", "");
+}
+
+void Remote::pause()
+{
+    command("PAUSE", "");
+}
+
+void Remote::playToggle()
+{
+    command("PLAYTOGGLE", "");
+}
+
+void Remote::stop()
+{
+    command("STOP", "");
+}
+
+void Remote::forward()
+{
+    command("FORWARD", "");
+}
+
+void Remote::backward()
+{
+    command("BACKWARD", "");
+}
+
+void Remote::next()
+{
+    command("NEXT", "");
+}
+
+void Remote::previous()
+{
+    command("PREVIOUS", "");
+}
+
+void Remote::info()
+{
+    command("INFO", "");
+}
+
+void Remote::recordings()
+{
+    command("RECORDINGS", "");
+}
+
+void Remote::record()
+{
+    command("RECORD", "");
+}
+
+void Remote::live()
+{
+    command("LIVE", "");
+}
+
+// power commands
 void Remote::powerOn()
 {
     command("POWER_ON", "");
@@ -24,6 +86,7 @@ void Remote::powerToggle()
     command("POWER_TOGGLE", "");
 }
 
+// tuner commands
 void Remote::channelUp()
 {
     command("CHANNEL_UP", "");
@@ -34,6 +97,7 @@ void Remote::channelDown()
     command("CHANNEL_DOWN", "");
 }
 
+// volume commands
 void Remote::volumeUp()
 {
     command("VOLUME_UP", "");
