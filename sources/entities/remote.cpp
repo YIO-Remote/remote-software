@@ -70,6 +70,57 @@ void Remote::live()
     command("LIVE", "");
 }
 
+// navigation
+void Remote::cursorUp()
+{
+    command("CURSOR_UP", "");
+}
+
+void Remote::cursorDown()
+{
+    command("CURSOR_DOWN", "");
+}
+
+void Remote::cursorLeft()
+{
+    command("CURSOR_LEFT", "");
+}
+
+void Remote::cursorRight()
+{
+    command("CURSOR_RIGHT", "");
+}
+
+void Remote::cursorOK()
+{
+    command("CURSOR_OK", "");
+}
+
+void Remote::back()
+{
+    command("BACK", "");
+}
+
+void Remote::home()
+{
+    command("HOME", "");
+}
+
+void Remote::menu()
+{
+    command("MENU", "");
+}
+
+void Remote::exit()
+{
+    command("EXIT", "");
+}
+
+void Remote::app()
+{
+    command("APP", "");
+}
+
 // power commands
 void Remote::powerOn()
 {
@@ -95,6 +146,21 @@ void Remote::channelUp()
 void Remote::channelDown()
 {
     command("CHANNEL_DOWN", "");
+}
+
+void Remote::channelSearch()
+{
+    command("CHANNEL_SEARCH", "");
+}
+
+void Remote::favorite()
+{
+    command("FAVORITE", "");
+}
+
+void Remote::guide()
+{
+    command("GUIDE", "");
 }
 
 // volume commands
