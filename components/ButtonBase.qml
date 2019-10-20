@@ -373,6 +373,21 @@ Rectangle {
     // CLOSE BUTTON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    Connections {
+        target: buttonHandler
+        enabled: state == "open" ? true : false
+
+        onButtonPress: {
+            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
+                switch (button) {
+                case "top right":
+                    buttonContainer.state = "closed"
+                    break;
+                }
+            }
+        }
+    }
+
     Image {
         id: closeButton
         asynchronous: true

@@ -172,7 +172,7 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
             emit mediaplayersPlayingChanged();
             emit mediaplayersPlayingChanged();
         });
-        timer->start(30000);
+        timer->start(120000);
 
         m_mediaplayersTimers.insert(entity_id, timer);
     }
