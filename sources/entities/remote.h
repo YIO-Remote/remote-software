@@ -16,6 +16,12 @@ public:
 
     QVariantList                commands() const { return m_commands; }
 
+    // power commands
+    Q_INVOKABLE void            powerOn();
+    Q_INVOKABLE void            powerOff();
+    Q_INVOKABLE void            powerToggle();
+
+
     explicit Remote(QObject *parent = nullptr);
     Remote(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
 

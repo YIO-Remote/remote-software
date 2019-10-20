@@ -47,6 +47,47 @@ Rectangle {
 
     }
 
+    Item {
+        id: contentGroup0
+        width: parent.width-40
+        height: parent.height
+        anchors.top: parent.top
+        anchors.topMargin: 120
+        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: group1.state == "open" || group2.state == "open" ? 0.1 : 1
+        enabled: group1.state == "open" || group2.state == "open" ? 0.1 : 1
+
+        Item {
+            width: 80
+            height: 60
+
+            Rectangle {
+                width: 80
+                height: 60
+                radius: width/2
+                color: colorRed
+            }
+
+            Text {
+                color: colorText
+                text: "O"
+                verticalAlignment: Text.AlignVCenter
+                anchors.centerIn: parent
+                font.family: "Open Semibold"
+                font.weight: Font.Normal
+                font.pixelSize: 27
+            }
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    obj.powerToggle();
+                }
+            }
+        }
+    }
+
     Group {
         id: group1
         height: 580
