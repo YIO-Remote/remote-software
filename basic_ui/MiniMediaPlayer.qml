@@ -29,17 +29,17 @@ Item {
     transitions: [
         Transition {to: "closed";
                 ParallelAnimation {
-                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
                     ParentAnimation {
-                        NumberAnimation { properties: "scale"; easing.type: Easing.InExpo; duration: 180 }
+                        NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
                     }
                 }
         },
         Transition {to: "open";
             ParallelAnimation {
-                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
                 ParentAnimation {
-                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
                 }
             }
         }
@@ -237,7 +237,7 @@ Item {
                                     PauseAnimation { duration: 300 }
                                     ParallelAnimation {
                                         //PropertyAnimation { target: blur; properties: "radius"; easing.type: Easing.InExpo; duration: 300 }
-                                        PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 500 }
+                                        PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                                         PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                         SequentialAnimation {
                                             //                                            PauseAnimation { duration: 200 }
@@ -328,12 +328,12 @@ Item {
 
                 Image {
                     id: image
-                    width: 60
-                    height: 60
+                    width: 90
+                    height: width
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left
-                        leftMargin: 15
+                        leftMargin: 0
                     }
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
