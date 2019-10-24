@@ -13,6 +13,7 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \
+    sources/logger.h \
     sources/translation.h \
     sources/hardware/touchdetect.h \
     sources/hardware/proximity_gesture_control.h \
@@ -37,6 +38,7 @@ SOURCES += \
     sources/config.cpp \
     sources/entities/remote.cpp \
     sources/integrations/integrations.cpp \
+    sources/logger.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \

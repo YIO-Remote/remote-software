@@ -27,6 +27,7 @@
 #include "fileio.h"
 #include "yioapi.h"
 #include "config.h"
+#include "logger.h"
 
 int main(int argc, char *argv[])
 {
@@ -109,6 +110,10 @@ int main(int argc, char *argv[])
     // YIO API
     YioAPI yioapi(&engine);
     engine.rootContext()->setContextProperty("api", &yioapi);
+
+    // LOGGER
+    Logger logger(nullptr, appPath);
+    engine.rootContext()->setContextProperty("logger", &logger);
 
     engine.addImportPath("qrc:/");
 
