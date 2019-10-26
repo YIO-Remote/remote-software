@@ -11,7 +11,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="75"/>
       <source>Battery health</source>
-      <translation>Batterihelse</translation>
+      <translation>Batteristatus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="111"/>
@@ -31,7 +31,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation>Gjennomsnittlig kraft</translation>
+      <translation>Gjennomsnittlig forbruk</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
@@ -72,7 +72,7 @@
       <location filename="../components/light/ui/Button.qml" line="370"/>
       <location filename="../components/media_player/ui/Button.qml" line="343"/>
       <source>Add to favorites</source>
-      <translation>Legge til favoritter</translation>
+      <translation>Legg til i favoritter</translation>
     </message>
   </context>
   <context>
@@ -359,17 +359,17 @@ YIO remote </source>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>Your software is up to date.</source>
-      <translation>Programvaren er oppdatert.</translation>
+      <translation>Programvaren er oppdatert</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Installed version: YIO Remote </source>
-      <translation>Installert versjon:</translation>
+      <translation>Installert versjon: </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>YIO Remote </source>
-      <translation>YIO Fjernkontroll</translation>
+      <translation>YIO Fjernkontroll </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
@@ -387,7 +387,7 @@ YIO remote </source>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation>Systemet</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
@@ -424,7 +424,7 @@ YIO remote </source>
     <message>
       <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
       <source>Failed to connect to Home Assistant.</source>
-      <translation>Klarte ikke å koble til Home Assistant</translation>
+      <translation>Klarte ikke å koble til Home Assistant.</translation>
     </message>
   </context>
   <context>
@@ -498,33 +498,32 @@ connected to your Wi-Fi network.</source>
       <location filename="../wifiSetup.qml" line="169"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>Oppkobling til nettverket feilet.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="186"/>
       <source>Please try again</source>
-      <translation type="unfinished">Please try again</translation>
+      <translation>Vennligst prøv igjen</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Prøv Igjen</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="254"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Koble dockingen til en strømkilde og vent til den begynner å blinke. For å dele nettverksinnstillinger med docken, trykk neste.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="290"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Konfigureringen av Wifi er fullført</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="325"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Start enheten på ny</translation>
     </message>
   </context>
 </TS>
