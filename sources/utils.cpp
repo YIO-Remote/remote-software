@@ -8,8 +8,6 @@ Utils::Utils(QObject *parent) : QObject(parent)
 {
     s_instance = this;
 
-    m_manager = new QNetworkAccessManager(this);
-    connect(m_manager, &QNetworkAccessManager::finished, this, &Utils::netWorkReply);
 }
 
 Utils::~Utils()
@@ -32,7 +30,9 @@ QColor Utils::getPixelColor(QImage *image, const int &x, const int &y)
 
 void Utils::getPixelColor(QString url)
 {
-    m_manager->get(QNetworkRequest(QUrl(url)));
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    connect(manager, &QNetworkAccessManager::finished, this, &Utils::getPixelColorReply);
+    manager->get(QNetworkRequest(QUrl(url)));
 }
 
 QImage Utils::addNoise(QImage image)
@@ -48,7 +48,7 @@ QImage Utils::addNoise(QImage image)
     return rImage;
 }
 
-void Utils::netWorkReply(QNetworkReply *reply)
+void Utils::getPixelColorReply(QNetworkReply *reply)
 {
     if (reply->error() == QNetworkReply::NoError)
     {
@@ -60,7 +60,7 @@ void Utils::netWorkReply(QNetworkReply *reply)
         image.scaled(1, 1, Qt::IgnoreAspectRatio);
         m_pixelColor = image.pixelColor(0, 0);
 
-        if (m_pixelColor.lightness() > 200) {
+        if (m_pixelColor.lightness() > 215) {
             m_pixelColor = QColor("black");
         }
         emit pixelColorChanged();

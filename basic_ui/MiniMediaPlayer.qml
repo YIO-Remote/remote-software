@@ -32,7 +32,7 @@ Item {
                 PauseAnimation { duration: 200 }
                 ParallelAnimation {
                     PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
-                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 400 }
                     ParentAnimation {
                         NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
                     }
@@ -41,7 +41,7 @@ Item {
         },
         Transition {to: "open";
             ParallelAnimation {
-                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                 ParentAnimation {
                     NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
                 }
@@ -294,6 +294,10 @@ Item {
                     anchors.fill: parent
                     color: state == "open" ? "black" : utils.pixelColor //colorBackground
 
+                    Behavior on color {
+                        ColorAnimation { duration: 300 }
+                    }
+
                     property var m_image: players[index].mediaImage
 
                     onM_imageChanged: {
@@ -317,6 +321,7 @@ Item {
                     Image {
                         id: noise
                         visible: bgImage.visible
+                        opacity: bgImage.opacity
                         anchors.fill: parent
                         asynchronous: true
                         fillMode: Image.PreserveAspectCrop

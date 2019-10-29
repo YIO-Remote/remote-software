@@ -34,12 +34,11 @@ signals:
 
 private:
     static Utils*               s_instance;
-    QNetworkAccessManager*      m_manager;
     QImage*                     m_image = nullptr;
     QColor                      m_pixelColor;
 
 private slots:
-    void netWorkReply(QNetworkReply* reply);
+    void getPixelColorReply(QNetworkReply* reply);
 
 };
 #endif // UTILS_H
