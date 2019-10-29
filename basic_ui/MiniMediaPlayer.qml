@@ -28,10 +28,14 @@ Item {
     ]
     transitions: [
         Transition {to: "closed";
-            ParallelAnimation {
-                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                ParentAnimation {
-                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+            SequentialAnimation {
+                PauseAnimation { duration: 200 }
+                ParallelAnimation {
+                    PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                    ParentAnimation {
+                        NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                    }
                 }
             }
         },
@@ -202,7 +206,8 @@ Item {
                         PropertyChanges {target: prevButton; opacity: 1 }
                         PropertyChanges {target: nextButton; opacity: 1 }
                         PropertyChanges {target: sourceText; opacity: 1 }
-                        PropertyChanges {target: bgImage; opacity: 0.7; visible: true }
+                        PropertyChanges {target: bgImage; opacity: 1; visible: true }
+                        PropertyChanges {target: image; opacity: 0 }
                     },
                     State {
                         name: "closed"
@@ -219,6 +224,7 @@ Item {
                         PropertyChanges {target: nextButton; opacity: 0 }
                         PropertyChanges {target: sourceText; opacity: 0 }
                         PropertyChanges {target: bgImage; opacity: 0; visible: false }
+                        PropertyChanges {target: image; opacity: 1 }
                     }]
 
                 transitions: [
@@ -230,6 +236,7 @@ Item {
                                 PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: image; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 SequentialAnimation {
                                     PauseAnimation { duration: 300 }
                                     ParallelAnimation {
@@ -261,20 +268,23 @@ Item {
                     },
                     Transition {
                         to: "closed"
-                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: speaker; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         SequentialAnimation {
-                            PropertyAnimation { target: bgImage; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                            PropertyAnimation { target: bgImage; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
                             PropertyAnimation { target: bgImage; properties: "visible"; duration: 1 }
+                            ParallelAnimation {
+                                PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: speaker; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: image; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                            }
                         }
                     }
                 ]
@@ -320,6 +330,13 @@ Item {
                         foregroundSource: noise
                         mode: "multiply"
                     }
+
+                    Rectangle {
+                        visible: bgImage.visible
+                        anchors.fill: parent
+                        color: "black"
+                        opacity: 0.5
+                    }
                 }
 
 
@@ -342,7 +359,7 @@ Item {
                         }
                     }
 
-                    opacity: miniMediaPlayer.state == "closed" ? 1 : 0
+//                    opacity: miniMediaPlayer.state == "closed" ? 1 : 0
 
                     Behavior on opacity {
                         NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
