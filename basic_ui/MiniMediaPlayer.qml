@@ -28,12 +28,12 @@ Item {
     ]
     transitions: [
         Transition {to: "closed";
-                ParallelAnimation {
-                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                    ParentAnimation {
-                        NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                    }
+            ParallelAnimation {
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                ParentAnimation {
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
                 }
+            }
         },
         Transition {to: "open";
             ParallelAnimation {
@@ -194,8 +194,6 @@ Item {
                         PropertyChanges {target: title; opacity: 0 }
                         PropertyChanges {target: artist; opacity: 0 }
                         PropertyChanges {target: closeButton; opacity: 1 }
-                        PropertyChanges {target: blur; radius: 0 }
-                        PropertyChanges {target: overlay; opacity: 0.5 }
                         PropertyChanges {target: titleOpen; y: 200; opacity: 1 }
                         PropertyChanges {target: artistOpen; opacity: 0.8 }
                         PropertyChanges {target: indicator; opacity: 1 }
@@ -204,6 +202,7 @@ Item {
                         PropertyChanges {target: prevButton; opacity: 1 }
                         PropertyChanges {target: nextButton; opacity: 1 }
                         PropertyChanges {target: sourceText; opacity: 1 }
+                        PropertyChanges {target: bgImage; opacity: 0.7; visible: true }
                     },
                     State {
                         name: "closed"
@@ -211,8 +210,6 @@ Item {
                         PropertyChanges {target: title; opacity: 1 }
                         PropertyChanges {target: artist; opacity: 1 }
                         PropertyChanges {target: closeButton; opacity: 0 }
-                        PropertyChanges {target: blur; radius: 10 }
-                        PropertyChanges {target: overlay; opacity: 0.7 }
                         PropertyChanges {target: titleOpen; y: 366; opacity: 0 }
                         PropertyChanges {target: artistOpen; opacity: 0 }
                         PropertyChanges {target: indicator; opacity: 0 }
@@ -221,6 +218,7 @@ Item {
                         PropertyChanges {target: prevButton; opacity: 0 }
                         PropertyChanges {target: nextButton; opacity: 0 }
                         PropertyChanges {target: sourceText; opacity: 0 }
+                        PropertyChanges {target: bgImage; opacity: 0; visible: false }
                     }]
 
                 transitions: [
@@ -231,12 +229,10 @@ Item {
                                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                PropertyAnimation { target: overlay; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 SequentialAnimation {
                                     PauseAnimation { duration: 300 }
                                     ParallelAnimation {
-                                        //PropertyAnimation { target: blur; properties: "radius"; easing.type: Easing.InExpo; duration: 300 }
                                         PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                                         PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                         SequentialAnimation {
@@ -254,6 +250,10 @@ Item {
                                             }
                                         }
                                         PropertyAnimation { target: speaker; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                        SequentialAnimation {
+                                            PropertyAnimation { target: bgImage; properties: "visible"; duration: 1 }
+                                            PropertyAnimation { target: bgImage; properties: "opacity"; easing.type: Easing.OutExpo; duration: 500 }
+                                        }
                                     }
                                 }
                             }
@@ -264,7 +264,6 @@ Item {
                         PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: overlay; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
@@ -273,13 +272,23 @@ Item {
                         PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        SequentialAnimation {
+                            PropertyAnimation { target: bgImage; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                            PropertyAnimation { target: bgImage; properties: "visible"; duration: 1 }
+                        }
                     }
                 ]
 
                 Rectangle {
                     id: comp
                     anchors.fill: parent
-                    color: colorBackground
+                    color: state == "open" ? "black" : utils.pixelColor //colorBackground
+
+                    property var m_image: players[index].mediaImage
+
+                    onM_imageChanged: {
+                        utils.getPixelColor(players[index].mediaImage);
+                    }
 
                     Image {
                         id: bgImage
@@ -295,36 +304,24 @@ Item {
                         }
                     }
 
-                    GaussianBlur {
-                        id: blur
+                    Image {
+                        id: noise
+                        visible: bgImage.visible
+                        anchors.fill: parent
+                        asynchronous: true
+                        fillMode: Image.PreserveAspectCrop
+                        source: "qrc:/images/mini-music-player/noise.png"
+                    }
+
+                    Blend {
+                        visible: bgImage.visible
                         anchors.fill: bgImage
                         source: bgImage
-                        radius: 10
-                        samples: 10
+                        foregroundSource: noise
+                        mode: "multiply"
                     }
                 }
 
-                Image {
-                    id: noise
-                    anchors.fill: parent
-                    asynchronous: true
-                    fillMode: Image.PreserveAspectCrop
-                    source: "qrc:/images/mini-music-player/noise.png"
-                }
-
-                Blend {
-                    anchors.fill: comp
-                    source: comp
-                    foregroundSource: noise
-                    mode: "multiply"
-                }
-
-                Rectangle {
-                    id: overlay
-                    anchors.fill: noise
-                    color: colorBackground
-                    opacity: 0.7
-                }
 
                 Image {
                     id: image
