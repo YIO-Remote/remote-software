@@ -28,6 +28,7 @@
 #include "yioapi.h"
 #include "config.h"
 #include "logger.h"
+#include "utils.h"
 
 int main(int argc, char *argv[])
 {
@@ -110,6 +111,10 @@ int main(int argc, char *argv[])
     // YIO API
     YioAPI yioapi(&engine);
     engine.rootContext()->setContextProperty("api", &yioapi);
+
+    // UTILS
+    Utils utils;
+    engine.rootContext()->setContextProperty("utils", &utils);
 
     // LOGGER
     Logger logger(nullptr, appPath);
