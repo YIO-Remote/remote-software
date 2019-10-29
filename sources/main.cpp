@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
     // LOGGER
     Logger logger(nullptr, appPath);
     engine.rootContext()->setContextProperty("logger", &logger);
+    Logger::getInstance()->write("Logging started");
 
     engine.addImportPath("qrc:/");
 

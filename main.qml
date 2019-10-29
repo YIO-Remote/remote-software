@@ -76,6 +76,7 @@ ApplicationWindow {
 
                 // hide and show the charging screen
                 if (battery_averagepower >= 0 && chargingScreen.item) {
+                    console.debug("Charging screen visible");
                     chargingScreen.item.state = "visible";
                     // cancel shutdown when started charging
                     if (shutdownDelayTimer.running) {
@@ -343,10 +344,10 @@ ApplicationWindow {
         id: loader_second
         asynchronous: true
         //        visible: false
-//        width: 480
-//        height: 800
-//        x: 0
-//        y: 0
+        //        width: 480
+        //        height: 800
+        //        x: 0
+        //        y: 0
 
         //        onStatusChanged: if (loader_second.status == Loader.Ready) {
         //                             loader_second.visible = true;
