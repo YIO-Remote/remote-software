@@ -301,6 +301,7 @@ Item {
                     property var m_image: players[index].mediaImage
 
                     onM_imageChanged: {
+                        utils.addNoise(players[index].mediaImage);
                         utils.getPixelColor(players[index].mediaImage);
                     }
 
@@ -309,38 +310,13 @@ Item {
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
-                        source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+                        source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : utils.miniMusicPlayerImage
 
                         onStatusChanged: {
                             if (image.status == Image.Error) {
-                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : utils.miniMusicPlayerImage
                             }
                         }
-                    }
-
-                    Image {
-                        id: noise
-                        visible: bgImage.visible
-                        opacity: bgImage.opacity
-                        anchors.fill: parent
-                        asynchronous: true
-                        fillMode: Image.PreserveAspectCrop
-                        source: "qrc:/images/mini-music-player/noise.png"
-                    }
-
-                    Blend {
-                        visible: bgImage.visible
-                        anchors.fill: bgImage
-                        source: bgImage
-                        foregroundSource: noise
-                        mode: "multiply"
-                    }
-
-                    Rectangle {
-                        visible: bgImage.visible
-                        anchors.fill: parent
-                        color: "black"
-                        opacity: 0.5
                     }
                 }
 

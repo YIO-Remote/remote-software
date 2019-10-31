@@ -7,6 +7,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QPainter>
+#include <QBuffer>
 
 class Utils : public QObject
 {
@@ -16,29 +17,33 @@ public:
     explicit Utils(QObject *parent = nullptr);
     virtual ~Utils();
 
-    Q_PROPERTY  (QColor pixelColor      READ pixelColor         NOTIFY pixelColorChanged)
+    Q_PROPERTY  (QColor     pixelColor                  READ pixelColor                 NOTIFY pixelColorChanged)
+    Q_PROPERTY  (QString    miniMusicPlayerImage        READ miniMusicPlayerImage       NOTIFY miniMusicPlayerImageChanged)
 
     QColor                      pixelColor              () { return m_pixelColor; }
+    QString                     miniMusicPlayerImage    () { return m_miniMuiscPlayerImage; }
 
     // Image manipulation helpers
-    QImage                      resizeImage             (QImage* image);
     QColor                      getPixelColor           (QImage* image, const int &x, const int &y);
     Q_INVOKABLE void            getPixelColor           (QString url);
-    QImage                      addNoise                (QImage image);
+    QColor                      dominantColor           (const QImage& image);
+    Q_INVOKABLE void            addNoise                (QString url);
 
     static Utils*               getInstance ()
     { return s_instance; }
 
 signals:
     void pixelColorChanged();
+    void miniMusicPlayerImageChanged();
 
 private:
     static Utils*               s_instance;
-    QImage*                     m_image = nullptr;
+    QString                     m_miniMuiscPlayerImage;
     QColor                      m_pixelColor;
 
 private slots:
-    void getPixelColorReply(QNetworkReply* reply);
+    void                        getPixelColorReply     (QNetworkReply* reply);
+    void                        addNoiseReply          (QNetworkReply* reply);
 
 };
 #endif // UTILS_H
