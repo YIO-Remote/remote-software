@@ -520,6 +520,8 @@ ApplicationWindow {
     // STANDBY MODE TOUCHEVENT OVERLAY
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // captures all touch events when in standby mode. Avoids clicking on random buttons when waking up the display
+    property alias touchEventCatcher: touchEventCatcher
+
     MouseArea {
         id: touchEventCatcher
         anchors.fill: parent
@@ -529,6 +531,12 @@ ApplicationWindow {
         onPressAndHold: {
             console.debug("Disabling touch even catcher");
             touchEventCatcher.enabled = false;
+            standbyControl.displayControl.setmode("standbyoff");
+            if (standbyControl.display_autobrightness) {
+                standbyControl.setBrightness(standbyControl.display_brightness_ambient);
+            } else {
+                standbyControl.setBrightness(standbyControl.display_brightness_set);
+            }
         }
     }
 

@@ -218,6 +218,21 @@ Item {
             checked: false
             mouseArea.onClicked: {
                 cleaningmodeButton.checked = true
+                touchEventCatcher.enabled = true
+                standbyControl.setBrightness(0);
+                standbyControl.displayControl.setmode("standbyon");
+                cleaningmodeButtonTimer.start();
+            }
+
+            Timer {
+                id: cleaningmodeButtonTimer
+                repeat: false
+                interval: 2000
+                running: false
+
+                onTriggered: {
+                    cleaningmodeButton.checked = false;
+                }
             }
         }
     }

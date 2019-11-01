@@ -33,9 +33,9 @@ Item {
                 ParallelAnimation {
                     PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
                     PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 400 }
-                    ParentAnimation {
-                        NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                    }
+                }
+                ParentAnimation {
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
                 }
             }
         },
@@ -338,12 +338,6 @@ Item {
                         if (image.status == Image.Error) {
                             image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
                         }
-                    }
-
-//                    opacity: miniMediaPlayer.state == "closed" ? 1 : 0
-
-                    Behavior on opacity {
-                        NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
                     }
                 }
 
