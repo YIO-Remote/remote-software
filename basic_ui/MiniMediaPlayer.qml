@@ -127,20 +127,21 @@ Item {
         }
 
         onButtonRelease: {
-            switch (button) {
-            case "volume up":
-                buttonTimeout.stop();
-                break;
-            case "volume down":
-                buttonTimeout.stop();
-                break;
-            }
+            buttonTimeout.stop();
+//            switch (button) {
+//            case "volume up":
+//                buttonTimeout.stop();
+//                break;
+//            case "volume down":
+//                buttonTimeout.stop();
+//                break;
+//            }
         }
     }
 
     Timer {
         id: buttonTimeout
-        interval: 250
+        interval: 300
         repeat: true
         running: false
         triggeredOnStart: true

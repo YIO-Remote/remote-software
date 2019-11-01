@@ -17,11 +17,11 @@ void drv2605::playEffect(QString effect)
 {
 #ifdef __arm__
     if (effect == "click") {
-        setWaveform(0, 5);
+        setWaveform(0, 2);
         go();
     }
     if (effect == "bump") {
-        setWaveform(0, 6);
+        setWaveform(0, 5    );
         go();
     }
     if (effect == "press") {
@@ -41,23 +41,21 @@ bool drv2605::init()
     wiringPiSetup();
     bus = wiringPiI2CSetupInterface("/dev/i2c-3", DRV2605_ADDR);
 
-    uint8_t id = readRegister8(DRV2605_REG_STATUS);
+//    int id = readRegister8(DRV2605_REG_STATUS);
 
     writeRegister8(DRV2605_REG_MODE, 0x00); // out of standby
 
-    writeRegister8(DRV2605_REG_RTPIN, 0x00); // no real-time-playback
+//    writeRegister8(DRV2605_REG_RTPIN, 0x00); // no real-time-playback
 
-    writeRegister8(DRV2605_REG_WAVESEQ1, 1); // strong click
-    writeRegister8(DRV2605_REG_WAVESEQ2, 0); // end sequence
+//    writeRegister8(DRV2605_REG_WAVESEQ1, 1); // strong click
+//    writeRegister8(DRV2605_REG_WAVESEQ2, 0); // end sequence
 
-    writeRegister8(DRV2605_REG_OVERDRIVE, 0); // no overdrive
+//    writeRegister8(DRV2605_REG_OVERDRIVE, 0); // no overdrive
 
-    writeRegister8(DRV2605_REG_SUSTAINPOS, 0);
-    writeRegister8(DRV2605_REG_SUSTAINNEG, 0);
-    writeRegister8(DRV2605_REG_BREAK, 0);
-    writeRegister8(DRV2605_REG_AUDIOMAX, 0x64);
-
-    // ERM open loop
+//    writeRegister8(DRV2605_REG_SUSTAINPOS, 0);
+//    writeRegister8(DRV2605_REG_SUSTAINNEG, 0);
+//    writeRegister8(DRV2605_REG_BREAK, 0);
+//    writeRegister8(DRV2605_REG_AUDIOMAX, 0x64);
 
     // turn off N_ERM_LRA
     writeRegister8(DRV2605_REG_FEEDBACK, readRegister8(DRV2605_REG_FEEDBACK) & 0x7F);
