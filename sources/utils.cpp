@@ -44,7 +44,7 @@ void Utils::getPixelColorReply(QNetworkReply *reply)
         m_pixelColor = dominantColor(image);
 
         // if the color is too bright, return black instead
-        if (m_pixelColor.lightness() > 215) {
+        if (m_pixelColor.lightness() > 210) {
             m_pixelColor = QColor("black");
         }
         emit pixelColorChanged();
