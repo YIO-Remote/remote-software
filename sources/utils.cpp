@@ -75,6 +75,8 @@ void Utils::addNoiseReply(QNetworkReply *reply)
         if (!image.load(reply, nullptr)) {
             qDebug() << "ERROR LOADING IMAGE";
         }
+        // resize image
+        image.scaledToHeight(800, Qt::SmoothTransformation);
 
         // create noise layer
         QImage noise(":/images/mini-music-player/noise.png");
