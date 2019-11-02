@@ -98,7 +98,6 @@ void Utils::addNoiseReply(QNetworkReply *reply)
         painter.drawImage(image.rect(), overlay);
         painter.end();
         painter.begin(&image);
-        painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
         painter.drawImage(image.rect(), noise);
 
         // create byte array and then convert to base64
