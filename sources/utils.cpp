@@ -88,16 +88,15 @@ void Utils::addNoiseReply(QNetworkReply *reply)
         fill.fill(Qt::black);
 
         QPainter overlayP(&overlay);
-        overlayP.setOpacity(0.3);
+        overlayP.setOpacity(0.6);
         overlayP.drawImage(QRect(0, 0, overlay.width(), overlay.height()), fill);
 
         // merge the images together
         QPainter painter(&image);
-        painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
-        painter.drawImage(image.rect(), noise);
+        painter.drawImage(image.rect(), overlay);
         painter.end();
         painter.begin(&image);
-        painter.drawImage(image.rect(), overlay);
+        painter.drawImage(image.rect(), noise);
 
         // create byte array and then convert to base64
         QByteArray bArray;
