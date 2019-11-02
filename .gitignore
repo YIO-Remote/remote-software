@@ -77,3 +77,10 @@ translations/*.qm
 !translations/en_US.ts
 *.user
 *.dylib
+*.o
+*.bak
+*.old
+*.log
+.qmake.stash
+# Makefile should always be generated with qmake
+Makefile

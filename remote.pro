@@ -3,6 +3,9 @@ CONFIG += c++11 disable-desktop qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+include(qmake-target-platform.pri)
+include(qmake-destination-path.pri)
+
 HEADERS += \
     sources/config.h \
     sources/configinterface.h \
@@ -115,18 +118,15 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
-command = lupdate remote.pro
-system($$command) | error("Failed to run: $$command")
-
-command = lrelease remote.pro
-system($$command) | error("Failed to run: $$command")
-
 # include zeroconf
 include(qtzeroconf/qtzeroconf.pri)
 DEFINES = QZEROCONF_STATIC
 
 # Wiringpi config, only on raspberry pi
 equals(QT_ARCH, arm): {
+    message(Cross compiling for arm system: including Wiringpi config on RPi)
+
+    # FIXME hard coded directory path!
     INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
     LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
     LIBS += -lwiringPi
@@ -137,40 +137,59 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-# Configure default JSON destination path
-DESTDIR = $$OUT_PWD
+# Configure destination path by "Operating System/Compiler/Processor Architecture/Build Configuration"
+DESTDIR = $$PWD/../binaries/$$DESTINATION_PATH
+OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/obj
+MOC_DIR = $$PWD/build/$$DESTINATION_PATH/moc
+RCC_DIR = $$PWD/build/$$DESTINATION_PATH/qrc
+UI_DIR = $$PWD/build/$$DESTINATION_PATH/ui
 
 win32 {
-    CONFIG(debug, debug|release) {
-    DESTDIR = $$DESTDIR/debug
-    }
-    CONFIG(release, debug|release) {
-    DESTDIR = $$DESTDIR/release
-    }
+    message(Handling win32 specific configuration)
 
     # copy plugin files
     CONFIG += file_copies
-    COPIES += plugins
-    plugins.files = $$files($$PWD/plugins/*.*)
-    plugins.path = $$DESTDIR/release/plugins
 
     #copy fonts
     COPIES += icons
     fonts.files = $$files($$PWD/fonts/*.*)
-    fonts.path = $$DESTDIR/release/fonts
+    fonts.path = $$DESTDIR/fonts
 
     #copy icons
     COPIES += icons
     icons.files = $$files($$PWD/icons/*.*)
-    icons.path = $$DESTDIR/release/icons
-}
-macx {
+    icons.path = $$DESTDIR/icons
+} else:linux {
+    message(Handling 'linux' configuration)
+
+    CONFIG += file_copies
+    COPIES += extraData
+    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.path = $$DESTDIR
+
+    # copy plugin files
+    #COPIES += plugins
+    #plugins.files = $$files($$PWD/plugins/*.*)
+    #plugins.path = $$DESTDIR/plugins
+
+    #copy fonts
+    COPIES += fonts
+    fonts.files = $$files($$PWD/fonts/*.*)
+    fonts.path = $$DESTDIR/fonts
+
+    #copy icons
+    COPIES += icons
+    icons.files = $$files($$PWD/icons/*.*)
+    icons.path = $$DESTDIR/icons
+} else:macx {
+    message(Handling macOS specific configuration)
+
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
-    # copy plugin files
-    INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
+    # copy plugin files into app bundle
+    INTEGRATIONS.files = $$files($$DESTDIR/plugins/*.*)
     INTEGRATIONS.path = Contents/Resources/plugins
     QMAKE_BUNDLE_DATA += INTEGRATIONS
 
@@ -185,25 +204,8 @@ macx {
     QMAKE_BUNDLE_DATA += ICONS
 
 } else {
-    CONFIG += file_copies
-    COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/translations.json
-    extraData.path = $$DESTDIR
-
-    # copy plugin files
-    COPIES += plugins
-    plugins.files = $$files($$PWD/plugins/*.*)
-    plugins.path = $$DESTDIR/plugins
-
-    #copy fonts
-    COPIES += fonts
-    fonts.files = $$files($$PWD/fonts/*.*)
-    fonts.path = $$DESTDIR/fonts
-
-    #copy icons
-    COPIES += icons
-    icons.files = $$files($$PWD/icons/*.*)
-    icons.path = $$DESTDIR/icons
+    message(ERROR: unknown configuration)
+    # TODO is there a fail command?
 }
 
 DISTFILES +=
