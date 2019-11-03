@@ -123,7 +123,7 @@ system($$command) | error("Failed to run: $$command")
 
 # include zeroconf
 include(qtzeroconf/qtzeroconf.pri)
-DEFINES = QZEROCONF_STATIC
+DEFINES += QZEROCONF_STATIC
 
 # Wiringpi config, only on raspberry pi
 equals(QT_ARCH, arm): {

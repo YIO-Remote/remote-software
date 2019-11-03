@@ -8,6 +8,8 @@
 #include <QNetworkReply>
 #include <QPainter>
 #include <QBuffer>
+#include <QFuture>
+#include <QtConcurrent/QtConcurrentRun>
 
 class Utils : public QObject
 {
