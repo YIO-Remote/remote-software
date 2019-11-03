@@ -90,7 +90,7 @@ void Utils::addNoiseReply(QNetworkReply *reply)
         fill.fill(Qt::black);
 
         QPainter overlayP(&overlay);
-        overlayP.setOpacity(0.6);
+        overlayP.setOpacity(0.3);
         overlayP.drawImage(QRect(0, 0, overlay.width(), overlay.height()), fill);
 
         // merge the images together
