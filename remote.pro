@@ -145,11 +145,13 @@ RCC_DIR = $$PWD/build/$$DESTINATION_PATH/qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/ui
 
 win32 {
-    # copy plugin files
     CONFIG += file_copies
+    COPIES += extraData
+    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.path = $$DESTDIR
 
     #copy fonts
-    COPIES += icons
+    COPIES += fonts
     fonts.files = $$files($$PWD/fonts/*.*)
     fonts.path = $$DESTDIR/fonts
 
@@ -193,8 +195,7 @@ win32 {
     QMAKE_BUNDLE_DATA += ICONS
 
 } else {
-    message(ERROR: unknown configuration)
-    # TODO is there a fail command?
+    error(unknown platform! Platform must be configured in remote.pro)
 }
 
 DISTFILES +=
