@@ -82,11 +82,6 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
         return false;
     }
 
-    //    // if no favorite is set, set it to false
-    //    if (!entity.contains("favorite")) {
-    //       entity.insert("favorite", true);
-    //    }
-
     // get the config
     QVariantMap c = getConfig();
     QVariantList e = c.value("entities").toJsonArray().toVariantList();
@@ -145,6 +140,26 @@ void YioAPI::discoverNetworkServices()
         });
         m_qzero_conf_browser->startBrowser(m_discoverableServices[i]);
     }
+}
+
+void YioAPI::discoverNetworkServices(QString mdns)
+{
+    m_discoveredServices.clear();
+
+    m_qzero_conf_browser = new QZeroConf;
+
+    connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+        QVariantMap map;
+        map.insert(QString("name"),item->name());
+        map.insert(QString("ip"),item->ip().toString());
+        map.insert(QString("port"), item->port());
+        map.insert(QString("mdns"), mdns);
+        m_discoveredServices.insert(item->name(), map);
+
+        emit serviceDiscovered();
+    });
+
+    m_qzero_conf_browser->startBrowser(mdns);
 }
 
 QVariantList YioAPI::discoveredServices()
@@ -206,6 +221,9 @@ void YioAPI::processMessage(QString message)
 
             if (map.contains("token")) {
                 qDebug() << "Has token";
+
+//                QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(), QCryptographicHash::Sha512);
+
                 if (map.value("token").toString() == m_token) {
                     qDebug() << "Token OK";
                     r_map.insert("type", "auth_ok");

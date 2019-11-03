@@ -36,20 +36,24 @@ void Utils::getPixelColorReply(QNetworkReply *reply)
 {
     if (reply->error() == QNetworkReply::NoError)
     {
-        QImage image;
-        if (!image.load(reply, nullptr)) {
-            qDebug() << "ERROR LOADING IMAGE";
-        }
+        // run image processing in different thread
+        QFuture<void> future = QtConcurrent::run([=](){
+            QImage image;
 
-        m_pixelColor = dominantColor(image);
+            if (!image.load(reply, nullptr)) {
+                qDebug() << "ERROR LOADING IMAGE";
+            }
 
-        // if the color is too bright, return black instead
-        if (m_pixelColor.lightness() > 210) {
-            m_pixelColor = QColor("black");
-        }
-        emit pixelColorChanged();
+            m_pixelColor = dominantColor(image);
 
-        reply->deleteLater();
+            // if the color is too bright, return black instead
+            if (m_pixelColor.lightness() > 210) {
+                m_pixelColor = QColor("black");
+            }
+            emit pixelColorChanged();
+
+            reply->deleteLater();
+        });
 
     } else {
         qDebug() << "ERROR LOADING IMAGE" << reply->errorString();
@@ -71,47 +75,49 @@ void Utils::addNoiseReply(QNetworkReply *reply)
 {
     if (reply->error() == QNetworkReply::NoError)
     {
-        QImage image;
-        if (!image.load(reply, nullptr)) {
-            qDebug() << "ERROR LOADING IMAGE";
-        }
-        // resize image
-        image.scaledToHeight(800, Qt::SmoothTransformation);
+        // run image processing in different thread
+        QFuture<void> future = QtConcurrent::run([=](){
+            QImage image;
+            if (!image.load(reply, nullptr)) {
+                qDebug() << "ERROR LOADING IMAGE";
+            }
+            // resize image
+            image.scaledToHeight(800, Qt::SmoothTransformation);
 
-        // create noise layer
-        QImage noise(":/images/mini-music-player/noise.png");
-        noise = noise.convertToFormat(QImage::Format_ARGB32);
+            // create noise layer
+            QImage noise(":/images/mini-music-player/noise.png");
+            noise = noise.convertToFormat(QImage::Format_ARGB32);
 
-        // create overlay
-        QImage overlay(image.width(), image.height(), QImage::Format_ARGB32);
-        overlay.fill(Qt::transparent);
+            // create overlay
+            QImage overlay(image.width(), image.height(), QImage::Format_ARGB32);
+            overlay.fill(Qt::transparent);
 
-        QImage fill(image.width(), image.height(), QImage::Format_ARGB32);
-        fill.fill(Qt::black);
+            QImage fill(image.width(), image.height(), QImage::Format_ARGB32);
+            fill.fill(Qt::black);
 
-        QPainter overlayP(&overlay);
-        overlayP.setOpacity(0.3);
-        overlayP.drawImage(QRect(0, 0, overlay.width(), overlay.height()), fill);
+            QPainter overlayP(&overlay);
+            overlayP.setOpacity(0.6);
+            overlayP.drawImage(QRect(0, 0, overlay.width(), overlay.height()), fill);
 
-        // merge the images together
-        QPainter painter(&image);
-        painter.drawImage(image.rect(), overlay);
-        painter.end();
-        painter.begin(&image);
-        painter.drawImage(image.rect(), noise);
+            // merge the images together
+            QPainter painter(&image);
+            painter.drawImage(image.rect(), overlay);
+            painter.end();
+            painter.begin(&image);
+            painter.drawImage(image.rect(), noise);
 
-        // create byte array and then convert to base64
-        QByteArray bArray;
-        QBuffer buffer(&bArray);
-        buffer.open(QIODevice::WriteOnly);
-        image.save(&buffer, "JPEG");
+            // create byte array and then convert to base64
+            QByteArray bArray;
+            QBuffer buffer(&bArray);
+            buffer.open(QIODevice::WriteOnly);
+            image.save(&buffer, "JPEG");
 
-        QString bImage("data:image/jpg;base64,");
-        bImage.append(QString::fromLatin1(bArray.toBase64().data()));
+            QString bImage("data:image/jpg;base64,");
+            bImage.append(QString::fromLatin1(bArray.toBase64().data()));
 
-        m_miniMuiscPlayerImage = bImage;
-        emit miniMusicPlayerImageChanged();
-
+            m_miniMuiscPlayerImage = bImage;
+            emit miniMusicPlayerImageChanged();
+        });
     } else {
         qDebug() << "ERROR LOADING IMAGE" << reply->errorString();
     }
