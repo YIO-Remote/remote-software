@@ -1,6 +1,7 @@
 #include "drv2605.h"
 #include "../notifications.h"
 
+// FIXME use strategy pattern for architecture specific device driver instead of multiple #ifdef __arm__
 drv2605::drv2605()
 {
 #ifdef __arm__
@@ -64,6 +65,7 @@ bool drv2605::init()
 
     return true;
 #endif
+    return false;
 }
 #ifdef __arm__
 void drv2605::setWaveform(uint8_t slot, uint8_t w)

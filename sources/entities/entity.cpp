@@ -63,6 +63,7 @@ QVariantMap Entity::getDataToSave()
 
 bool Entity::update(const QVariantMap &attributes)
 {
+    return false;
 }
 
 void Entity::setFavorite(bool value)

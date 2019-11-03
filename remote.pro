@@ -120,7 +120,7 @@ TRANSLATIONS = translations/bg_BG.ts \
 
 # include zeroconf
 include(qtzeroconf/qtzeroconf.pri)
-DEFINES = QZEROCONF_STATIC
+DEFINES += QZEROCONF_STATIC
 
 # Wiringpi config, only on raspberry pi
 equals(QT_ARCH, arm): {
@@ -145,8 +145,6 @@ RCC_DIR = $$PWD/build/$$DESTINATION_PATH/qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/ui
 
 win32 {
-    message(Handling win32 specific configuration)
-
     # copy plugin files
     CONFIG += file_copies
 
@@ -160,17 +158,10 @@ win32 {
     icons.files = $$files($$PWD/icons/*.*)
     icons.path = $$DESTDIR/icons
 } else:linux {
-    message(Handling 'linux' configuration)
-
     CONFIG += file_copies
     COPIES += extraData
     extraData.files = $$PWD/config.json $$PWD/translations.json
     extraData.path = $$DESTDIR
-
-    # copy plugin files
-    #COPIES += plugins
-    #plugins.files = $$files($$PWD/plugins/*.*)
-    #plugins.path = $$DESTDIR/plugins
 
     #copy fonts
     COPIES += fonts
@@ -182,8 +173,6 @@ win32 {
     icons.files = $$files($$PWD/icons/*.*)
     icons.path = $$DESTDIR/icons
 } else:macx {
-    message(Handling macOS specific configuration)
-
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
