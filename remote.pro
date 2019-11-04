@@ -138,17 +138,35 @@ equals(QT_ARCH, arm): {
     LIBS += -lwiringPi
 }
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 # Configure destination path by "Operating System/Compiler/Processor Architecture/Build Configuration"
 DESTDIR = $$PWD/../binaries/$$DESTINATION_PATH
 OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/obj
 MOC_DIR = $$PWD/build/$$DESTINATION_PATH/moc
 RCC_DIR = $$PWD/build/$$DESTINATION_PATH/qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/ui
+
+# Default rules for deployment.
+# This enables RPi device deployment in Qt Creator
+qnx: target.path = /tmp/$${TARGET}/bin
+else: linux: target.path = /opt/$${TARGET}/bin  # A different target path is used on purpose to leave the installed app untouched
+
+# Wildcards or directories just don't work: One has to know the magic $$files() command!
+targetConfig.files = *.json
+targetConfig.path = $$target.path
+targetFonts.files = $$files($$PWD/fonts/*.*)
+targetFonts.path = $$target.path/fonts
+targetIcons.files = $$files($$PWD/icons/*.*)
+targetIcons.path = $$target.path/icons
+# The integration projects have to store the binary plugin in the destination folder.
+# Note: restart Qt Creator if it doesn't pick up new plugins!
+targetPlugins.files = $$files($$DESTDIR/plugins/*.*)
+targetPlugins.path = $$target.path/plugins
+
+!isEmpty(target.path): INSTALLS += target
+!isEmpty(target.path): INSTALLS += targetConfig
+!isEmpty(target.path): INSTALLS += targetFonts
+!isEmpty(target.path): INSTALLS += targetIcons
+!isEmpty(target.path): INSTALLS += targetPlugins
 
 win32 {
     CONFIG += file_copies
@@ -165,6 +183,11 @@ win32 {
     COPIES += icons
     icons.files = $$files($$PWD/icons/*.*)
     icons.path = $$DESTDIR/icons
+
+    #plugins are already stored in DESTDIR by the integration projects
+
+    # TODO Windows application icon
+    #RC_ICONS = icons/windows.ico
 } else:linux {
     CONFIG += file_copies
     COPIES += extraData
@@ -180,12 +203,24 @@ win32 {
     COPIES += icons
     icons.files = $$files($$PWD/icons/*.*)
     icons.path = $$DESTDIR/icons
+
+    #plugins are already stored in DESTDIR by the integration projects
+
+    # create deployment archive for RPi image build only
+    # usage: make install_tarball
+    equals(QT_ARCH, arm): {
+        tarball.path = $$PWD/../binaries
+        message( Storing tarball in $$tarball.path/$${TARGET}-$${platform_path}_$${processor_path}_$${build_path}.tar )
+        tarball.extra = mkdir -p $$tarball.path; tar -cvf $$tarball.path/$${TARGET}-$${platform_path}_$${processor_path}_$${build_path}.tar -C $$DESTDIR .
+        INSTALLS += tarball
+    }
+
 } else:macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
-    # copy plugin files into app bundle
+    # re-package plugin files into app bundle
     INTEGRATIONS.files = $$files($$DESTDIR/plugins/*.*)
     INTEGRATIONS.path = Contents/Resources/plugins
     QMAKE_BUNDLE_DATA += INTEGRATIONS
@@ -200,6 +235,8 @@ win32 {
     ICONS.path = Contents/Resources/icons
     QMAKE_BUNDLE_DATA += ICONS
 
+    # TODO macOS application icon
+    #ICON=icons/macos.icns
 } else {
     error(unknown platform! Platform must be configured in remote.pro)
 }
