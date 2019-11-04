@@ -6,7 +6,6 @@
 #include "../yioapi.h"
 
 #include <QJsonArray>
-#include <QtDebug>
 #include <QQuickItem>
 
 Integrations* Integrations::s_instance = NULL;
@@ -52,12 +51,14 @@ bool Integrations::load()
         // create instances of the integration based on how many are defined in the config
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
         if (interface) {
-            QMap<QObject *, QVariant> ic = interface->create(map, entities, notifications, api, config);
+            connect(interface, &IntegrationInterface::createDone, this, [=](QMap<QObject *, QVariant> map){
+                // add the integrations to the integration database
+                for (QMap<QObject *, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
+                    add(iter.value().toMap(), iter.key(), type);
+                }
+            });
 
-            // add the integrations to the integration database
-            for (QMap<QObject *, QVariant>::const_iterator iter = ic.begin(); iter != ic.end(); ++iter) {
-                add(iter.value().toMap(), iter.key(), type);
-            }
+            interface->create(map, entities, notifications, api, config);
         }
         i++;
     }
@@ -77,12 +78,14 @@ bool Integrations::load()
         // create instances of the integration, no config needed for built in integrations
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
         if (interface) {
-            QMap<QObject *, QVariant> ic = interface->create(QVariantMap(), entities, notifications, api, config);
+            connect(interface, &IntegrationInterface::createDone, this, [=](QMap<QObject *, QVariant> map){
+                // add the integrations to the integration database
+                for (QMap<QObject *, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
+                    add(iter.value().toMap(), iter.key(), type);
+                }
+            });
 
-            // add the integrations to the integration database
-            for (QMap<QObject *, QVariant>::const_iterator iter = ic.begin(); iter != ic.end(); ++iter) {
-                add(iter.value().toMap(), iter.key(), type);
-            }
+            interface->create(QVariantMap(), entities, notifications, api, config);
         }
         i++;
     }

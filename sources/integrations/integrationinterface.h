@@ -11,25 +11,19 @@
 #include "../config.h"
 
 // This interface is implemented by the integration .so files, it is used by the entities to operate the integration
-class IntegrationInterface
+class IntegrationInterface : public QObject
 {
+    Q_OBJECT
+
 public:
     virtual ~IntegrationInterface() {}
 
     // create an integration and return the object
-    virtual QMap<QObject *, QVariant> create  (const QVariantMap& configurations, QObject *entities, QObject *notifications, QObject* api, QObject *configObj) = 0;
+    virtual void create  (const QVariantMap& configurations, QObject *entities, QObject *notifications, QObject* api, QObject *configObj) = 0;
 
-    // connects the integration Hub
-//    virtual void    connect	    () = 0;
+signals:
+    void createDone(QMap<QObject *, QVariant> map);
 
-    // disconnects the integration Hub
-//    virtual void    disconnect() = 0;
-
-//public slots:
-//    virtual void    sendCommand     (const QString& type, const QString& id, const QString& command, const QVariant& param) = 0;
-
-//private:
-//    virtual void    updateEntity    (const QString& entity_id, const QVariantMap& attr) = 0;
 };
 
 QT_BEGIN_NAMESPACE

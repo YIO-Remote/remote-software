@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QQmlApplicationEngine>
+#include <QtDebug>
 
 #include "integrationsinterface.h"
 
@@ -49,7 +50,6 @@ public:
 
 signals:
     void listChanged();
-
 
 private:
     QMap<QString, QObject*>     m_plugins;
