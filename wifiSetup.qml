@@ -268,6 +268,7 @@ Item {
             }
 
             BasicUI.CustomButton {
+                id: dockButtonNext
                 buttonText: qsTr("Next") + translateHandler.emptyString
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 60
@@ -276,6 +277,18 @@ Item {
                 mouseArea.onClicked: {
                     bluetoothArea.lookForDock();
                     // show loader here
+                }
+            }
+
+            BasicUI.CustomButton {
+                buttonText: qsTr("Reboot") + translateHandler.emptyString
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 60
+                anchors.left: dockButtonNext.right
+                anchors.leftMargin: 20
+
+                mouseArea.onClicked: {
+                    mainLauncher.launch("reboot");
                 }
             }
         }

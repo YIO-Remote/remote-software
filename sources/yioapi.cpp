@@ -129,14 +129,26 @@ void YioAPI::discoverNetworkServices()
     for (int i=0; i<m_discoverableServices.length(); i++) {
         m_qzero_conf_browser = new QZeroConf;
         connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+            QVariantMap txt;
+
+            QMap<QByteArray, QByteArray> txtInfo = item->txt();
+
+            QMap<QByteArray, QByteArray>::iterator qi;
+            for (qi = txtInfo.begin(); qi != txtInfo.end(); ++qi)
+            {
+                txt.insert(qi.key(), qi.value());
+            }
+
             QVariantMap map;
             map.insert(QString("name"),item->name());
             map.insert(QString("ip"),item->ip().toString());
             map.insert(QString("port"), item->port());
             map.insert(QString("mdns"), m_discoverableServices[i]);
+            map.insert(QString("txt"), txt);
             m_discoveredServices.insert(item->name(), map);
 
-            emit serviceDiscovered();
+            emit serviceDiscovered(m_discoveredServices);
+            emit discoveredServicesChanged();
         });
         m_qzero_conf_browser->startBrowser(m_discoverableServices[i]);
     }
@@ -149,14 +161,26 @@ void YioAPI::discoverNetworkServices(QString mdns)
     m_qzero_conf_browser = new QZeroConf;
 
     connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+        QVariantMap txt;
+
+        QMap<QByteArray, QByteArray> txtInfo = item->txt();
+
+        QMap<QByteArray, QByteArray>::iterator i;
+        for (i = txtInfo.begin(); i != txtInfo.end(); ++i)
+        {
+            txt.insert(i.key(), i.value());
+        }
+
         QVariantMap map;
         map.insert(QString("name"),item->name());
         map.insert(QString("ip"),item->ip().toString());
         map.insert(QString("port"), item->port());
         map.insert(QString("mdns"), mdns);
+        map.insert(QString("txt"), txt);
         m_discoveredServices.insert(item->name(), map);
 
-        emit serviceDiscovered();
+        emit serviceDiscovered(m_discoveredServices);
+        emit discoveredServicesChanged();
     });
 
     m_qzero_conf_browser->startBrowser(mdns);

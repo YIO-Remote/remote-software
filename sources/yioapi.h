@@ -13,7 +13,7 @@
 #include "config.h"
 #include "integrations/integrations.h"
 
-class YioAPI : public QObject, YioAPIInterface
+class YioAPI : public YioAPIInterface
 {
     Q_OBJECT
     Q_INTERFACES(YioAPIInterface)
@@ -22,21 +22,21 @@ public:
     Q_PROPERTY  (bool running       READ running            NOTIFY runningChanged)      // returns the state of the API
     Q_PROPERTY  (QString hostname   READ hostname           NOTIFY hostnameChanged)     // returns the hostname of the remote
 
-    Q_INVOKABLE void start();                                                           // start the API
-    Q_INVOKABLE void stop();                                                            // stop the API
-    Q_INVOKABLE void sendMessage(QString message);                                      // send a message to all clients
+    Q_INVOKABLE void start() override;                                                           // start the API
+    Q_INVOKABLE void stop() override;                                                            // stop the API
+    Q_INVOKABLE void sendMessage(QString message) override;                                      // send a message to all clients
 
 
     // CONFIG MANIPULATION METHODS
-    Q_INVOKABLE QVariantMap     getConfig                   ();
+    Q_INVOKABLE QVariantMap     getConfig                   () override;
     Q_INVOKABLE void            setConfig                   (QVariantMap config);
-    Q_INVOKABLE bool            addEntityToConfig           (QVariantMap entity);
+    Q_INVOKABLE bool            addEntityToConfig           (QVariantMap entity) override;
 
 
     // NETWORK SERVICES DISCOVERY
-    Q_PROPERTY  (QVariantList   discoveredServices      READ discoveredServices     NOTIFY serviceDiscovered);
-    Q_INVOKABLE void            discoverNetworkServices     ();
-    Q_INVOKABLE void            discoverNetworkServices     (QString mdns);
+    Q_PROPERTY  (QVariantList   discoveredServices          READ discoveredServices     NOTIFY discoveredServicesChanged)
+    Q_INVOKABLE void            discoverNetworkServices     () override;
+    Q_INVOKABLE void            discoverNetworkServices     (QString mdns) override;
 
     QVariantList discoveredServices();
 
@@ -52,9 +52,9 @@ public:
     }
 
     explicit YioAPI(QQmlApplicationEngine *engine = nullptr);
-    virtual ~YioAPI();
+    virtual ~YioAPI() override;
 
-    static YioAPI*       getInstance     ()
+    static YioAPI*              getInstance()
     { return s_instance; }
 
 signals:
@@ -62,7 +62,8 @@ signals:
     void messageReceived(QVariantMap message);
     void runningChanged();
     void hostnameChanged();
-    void serviceDiscovered();
+    void discoveredServicesChanged();
+//    void serviceDiscovered(QMap<QString, QVariantMap> services);
 
 public slots:
     void onNewConnection();

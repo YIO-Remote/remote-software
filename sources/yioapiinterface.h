@@ -2,10 +2,13 @@
 #define YIOAPIINTERFACE_H
 
 #include <QVariant>
+#include <QObject>
 
 /// This interface is implemented by the Entities object and used by integration DLLs to access the entities
-class YioAPIInterface
+class YioAPIInterface : public QObject
 {
+    Q_OBJECT
+
 public:
     virtual ~YioAPIInterface() {}
 
@@ -20,6 +23,9 @@ public:
     // NETWORK SERVICES DISCOVERY
     virtual void discoverNetworkServices() = 0;
     virtual void discoverNetworkServices(QString mdns) = 0;
+
+signals:
+    void serviceDiscovered(QMap<QString, QVariantMap> services);
 };
 
 QT_BEGIN_NAMESPACE

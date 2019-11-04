@@ -51,6 +51,9 @@ public:
 signals:
     void listChanged();
 
+public slots:
+    void onCreateDone(QMap<QObject *, QVariant> map);
+
 private:
     QMap<QString, QObject*>     m_plugins;
     QMap<QString, QObject*>     m_integrations;

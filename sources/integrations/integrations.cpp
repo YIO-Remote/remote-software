@@ -45,25 +45,21 @@ bool Integrations::load()
 
         // push the config to the integration
         QVariantMap map = iter.value().toMap();
+        map.insert("type", iter.key());
 
         QString type = iter.key();
 
         // create instances of the integration based on how many are defined in the config
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
         if (interface) {
-            connect(interface, &IntegrationInterface::createDone, this, [=](QMap<QObject *, QVariant> map){
-                // add the integrations to the integration database
-                for (QMap<QObject *, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
-                    add(iter.value().toMap(), iter.key(), type);
-                }
-            });
+            connect(interface, &IntegrationInterface::createDone, this, &Integrations::onCreateDone);
 
             interface->create(map, entities, notifications, api, config);
         }
         i++;
     }
 
-    // load plugins that are not defines in config.json
+    // load plugins that are not defined in config.json aka default plugins
     QStringList defaultIntegrations = {"ir", "dock"};
 
     for (int k = 0; k<defaultIntegrations.length(); k++)
@@ -78,14 +74,12 @@ bool Integrations::load()
         // create instances of the integration, no config needed for built in integrations
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
         if (interface) {
-            connect(interface, &IntegrationInterface::createDone, this, [=](QMap<QObject *, QVariant> map){
-                // add the integrations to the integration database
-                for (QMap<QObject *, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
-                    add(iter.value().toMap(), iter.key(), type);
-                }
-            });
+            connect(interface, &IntegrationInterface::createDone, this, &Integrations::onCreateDone);
 
-            interface->create(QVariantMap(), entities, notifications, api, config);
+            QVariantMap map;
+            map.insert("type", defaultIntegrations[k]);
+
+            interface->create(map, entities, notifications, api, config);
         }
         i++;
     }
@@ -94,6 +88,14 @@ bool Integrations::load()
         return true;
     } else {
         return false;
+    }
+}
+
+void Integrations::onCreateDone(QMap<QObject *, QVariant> map)
+{
+    // add the integrations to the integration database
+    for (QMap<QObject *, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
+        add(iter.value().toMap(), iter.key(), iter.value().toMap().value("type").toString());
     }
 }
 
