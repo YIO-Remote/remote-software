@@ -118,7 +118,6 @@ void Utils::addNoiseReply(QNetworkReply *reply)
             m_miniMuiscPlayerImage = bImage;
             emit miniMusicPlayerImageChanged();
         });
-
     } else {
         qDebug() << "ERROR LOADING IMAGE" << reply->errorString();
     }
