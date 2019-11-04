@@ -79,7 +79,7 @@ private:
     static YioAPI*               s_instance;
     QQmlApplicationEngine*       m_engine;
 
-    QString                      m_token = "c82b5fd6bea6fc3faf9a30bb864a9ee2";
+    QString                      m_token = "0"; //"c82b5fd6bea6fc3faf9a30bb864a9ee2"
     QByteArray                   m_hash = "{U\xC0<$\xF7\n\xA7PA\xC3=\xBEk\xF5\xC1\xCA\x8B\t\x91\xA0\x9Et\xBA""E\xE9\xA0)\xE4\x07^E\x04\x17Xg\xE4)\x04\xB7\xD4\x9D,\x19%\xD7\xA1\xDC\x84U\x83\xA2\xAA\x1D\xD7:\xBE\xF6""1\xFA\x90\xED\x16\xBB";//QCryptographicHash::hash(m_token.toLocal8Bit(), QCryptographicHash::Sha512);
     QString                      m_hostname;
 

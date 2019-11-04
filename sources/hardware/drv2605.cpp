@@ -21,7 +21,7 @@ void drv2605::playEffect(QString effect)
         go();
     }
     if (effect == "bump") {
-        setWaveform(0, 5    );
+        setWaveform(0, 26);
         go();
     }
     if (effect == "press") {
