@@ -19,6 +19,7 @@ public:
 
     // NETWORK SERVICES DISCOVERY
     virtual void discoverNetworkServices() = 0;
+    virtual void discoverNetworkServices(QString mdns) = 0;
 };
 
 QT_BEGIN_NAMESPACE

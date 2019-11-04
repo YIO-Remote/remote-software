@@ -118,6 +118,12 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
+#command = lupdate remote.pro
+#system($$command) | error("Failed to run: $$command")
+
+#command = lrelease remote.pro
+#system($$command) | error("Failed to run: $$command")
+
 # include zeroconf
 include(qtzeroconf/qtzeroconf.pri)
 DEFINES += QZEROCONF_STATIC

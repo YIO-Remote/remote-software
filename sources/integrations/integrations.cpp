@@ -52,10 +52,35 @@ bool Integrations::load()
         // create instances of the integration based on how many are defined in the config
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
         if (interface) {
-            QMap<QObject *, QVariant> ha = interface->create(map, entities, notifications, api, config);
+            QMap<QObject *, QVariant> ic = interface->create(map, entities, notifications, api, config);
 
             // add the integrations to the integration database
-            for (QMap<QObject *, QVariant>::const_iterator iter = ha.begin(); iter != ha.end(); ++iter) {
+            for (QMap<QObject *, QVariant>::const_iterator iter = ic.begin(); iter != ic.end(); ++iter) {
+                add(iter.value().toMap(), iter.key(), type);
+            }
+        }
+        i++;
+    }
+
+    // load plugins that are not defines in config.json
+    QStringList defaultIntegrations = {"ir", "dock"};
+
+    for (int k = 0; k<defaultIntegrations.length(); k++)
+    {
+        QObject* obj = l->loadPlugin(m_appPath, defaultIntegrations[k]);
+
+        // store the plugin objects
+        m_plugins.insert(defaultIntegrations[k], obj);
+
+        QString type = defaultIntegrations[k];
+
+        // create instances of the integration, no config needed for built in integrations
+        IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
+        if (interface) {
+            QMap<QObject *, QVariant> ic = interface->create(QVariantMap(), entities, notifications, api, config);
+
+            // add the integrations to the integration database
+            for (QMap<QObject *, QVariant>::const_iterator iter = ic.begin(); iter != ic.end(); ++iter) {
                 add(iter.value().toMap(), iter.key(), type);
             }
         }

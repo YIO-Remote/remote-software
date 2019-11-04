@@ -205,7 +205,7 @@ Item {
         }
 
         Behavior on height {
-            NumberAnimation { duration: 400; easing.type: Easing.InOutExpo }
+            NumberAnimation { duration: 400; easing.type: Easing.OutExpo }
         }
     }
 
