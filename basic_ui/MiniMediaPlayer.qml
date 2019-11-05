@@ -293,7 +293,7 @@ Item {
                 Rectangle {
                     id: comp
                     anchors.fill: parent
-                    color: state == "open" ? "black" : utils.pixelColor //colorBackground
+                    color: state == "open" ? "black" : mediaplayerUtils.pixelColor
 
                     Behavior on color {
                         ColorAnimation { duration: 300 }
@@ -302,8 +302,7 @@ Item {
                     property var m_image: players[index].mediaImage
 
                     onM_imageChanged: {
-                        utils.addNoise(players[index].mediaImage);
-                        utils.getPixelColor(players[index].mediaImage);
+                        mediaplayerUtils.imageURL = players[index].mediaImage
                     }
 
                     Image {
@@ -311,11 +310,11 @@ Item {
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
-                        source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : utils.miniMusicPlayerImage
+                        source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
 
                         onStatusChanged: {
                             if (image.status == Image.Error) {
-                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : utils.miniMusicPlayerImage
+                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                             }
                         }
                     }
@@ -333,11 +332,11 @@ Item {
                     }
                     fillMode: Image.PreserveAspectFit
                     asynchronous: true
-                    source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+                    source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage //players[index].mediaImage
 
                     onStatusChanged: {
                         if (image.status == Image.Error) {
-                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
+                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage //players[index].mediaImage
                         }
                     }
                 }
