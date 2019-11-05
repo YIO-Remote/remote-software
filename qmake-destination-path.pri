@@ -43,5 +43,5 @@ BUILD_DEBUG {
     build_path = release
 }
 
-DESTINATION_PATH = $$platform_path/$$compiler_path/$$processor_path/$$build_path
+DESTINATION_PATH = $${platform_path}-$${compiler_path}-$${processor_path}/$$build_path
 message(Dest path: $${DESTINATION_PATH})
