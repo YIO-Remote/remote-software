@@ -64,9 +64,7 @@ $RECYCLE.BIN/
 *.lnk
 
 ### Project specific ###
-build*
 software/build-*
-software/remote/translations/.DS_Store
 
 # plugins
 plugins/*.so
@@ -77,6 +75,14 @@ translations/*.qm
 !translations/en_US.ts
 *.user
 *.dylib
+*.o
+*.bak
+*.old
+*.log
+.qmake.stash
+*.autosave
+# Makefile should always be generated with qmake
+Makefile
 translations/bg_BG.ts
 translations/cs_CZ.ts
 translations/da_DK.ts

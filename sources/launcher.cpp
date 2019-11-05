@@ -20,48 +20,25 @@ QString Launcher::launch(const QString &program)
 
 QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
 {
-    qDebug() << "LOADING PLUGIN:" << pluginName;
-#ifdef __arm__
-    QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName);
-    QObject *plugin = pluginLoader.instance();
-    QString err = pluginLoader.errorString();
-    qDebug() << err;
-    return plugin;
-#elif __APPLE__
-    QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName + ".dylib", this);
+    QString pluginPath;
+    #ifdef __arm__
+        pluginPath = path + "/plugins/lib" + pluginName;
+    #elif __APPLE__
+        pluginPath = path + "/plugins/lib" + pluginName + ".dylib";
+    #elif __WIN32__
+        pluginPath = path + "/plugins/" + pluginName + ".dll";
+    #else
+        pluginPath = path + "/plugins/lib" + pluginName;
+    #endif
+    qDebug() << "LOADING PLUGIN:" << pluginPath;
+    QPluginLoader pluginLoader(pluginPath, this);
     QObject *plugin = pluginLoader.instance();
 
     if (!plugin) {
-        qDebug() << "FAILED TO LOAD PLUGIN";
-        QString err = pluginLoader.errorString();
-        qDebug() << err;
+        qDebug() << "FAILED TO LOAD PLUGIN: " <<  pluginLoader.errorString();
 
         Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
     }
 
     return plugin;
-#else
-    QPluginLoader pluginLoader(path + "/plugins/lib" + pluginName);
-    QObject *plugin = pluginLoader.instance();
-
-    if (!plugin) {
-        qDebug() << "FAILED TO LOAD PLUGIN";
-        QString err = pluginLoader.errorString();
-        qDebug() << err;
-
-        Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
-    }
-
-    return plugin;
-#endif
 }
-
-//QObject* Launcher::loadIntegration(const QString& path, const QString &pluginName, int integrationId, const QVariantMap& config, QObject* entities, QObject* notifications, QObject* api, QObject *configObj)
-//{
-//    QObject *plugin = loadPlugin(path, pluginName);
-//    IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(plugin);
-//    if (interface) {
-//        interface->initialize (integrationId, config, entities, notifications, api, configObj);
-//    }
-//    return plugin;
-//}

@@ -7,6 +7,7 @@ QString Remote::Type = "remote";
 
 bool Remote::update(const QVariantMap &attributes)
 {
+    return false;
 }
 
 // transport and media controls
