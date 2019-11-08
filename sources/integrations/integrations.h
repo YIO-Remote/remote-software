@@ -17,7 +17,7 @@ public:
     Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged          CONSTANT)
 
     // load all integrations from config file
-    Q_INVOKABLE bool                    load                    ();
+    Q_INVOKABLE void                    load                    ();
 
     // get all integrations
     QList<QObject *>                    list                    ();
@@ -50,6 +50,7 @@ public:
 
 signals:
     void listChanged();
+    void loadComplete();
 
 public slots:
     void onCreateDone(QMap<QObject *, QVariant> map);
@@ -61,6 +62,8 @@ private:
     QMap<QString, QString>      m_integrations_mdns;
     QMap<QString, QString>      m_integrations_types;
     QString                     m_appPath;
+    int                         m_integrationsToLoad = 0;
+    int                         m_integrationsLoaded = 0;
 
     static Integrations*        s_instance;
     QQmlApplicationEngine*      m_engine;
