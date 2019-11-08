@@ -290,7 +290,8 @@
         "shutdowntime": 7200,
         "softwareupdate": false,
         "wifitime": 240,
-        "bluetootharea": false
+        "bluetootharea": false,
+        "paired_dock": "YIO-Dock-30AEA4D73C34"
     },
     "ui_config": 
     {
