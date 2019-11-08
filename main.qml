@@ -86,6 +86,13 @@ ApplicationWindow {
                     chargingScreen.item.state = "hidden";
                 }
 
+                // charging is done
+                if (battery_averagepower == 0 && battery_level == 1) {
+                    // signal with the dock that the remote is fully charged
+                    var obj = integrations.get(config.read.settings.paired_dock);
+                    obj.sendCommand("dock", "", "REMOTE_CHARGED", "");
+                }
+
                 console.debug("Average power:" + battery_averagepower + "mW");
                 console.debug("Average current:" + battery_averagecurrent + "mA");
             }
@@ -415,6 +422,10 @@ ApplicationWindow {
             lowBatteryNotification.item.open();
             wasBatteryWarning = true;
             standbyControl.touchDetected = true;
+
+            // signal with the dock that it is low battery
+            var obj = integrations.get(config.read.settings.paired_dock);
+            obj.sendCommand("dock", "", "REMOTE_LOWBATTERY", "");
         }
         if (battery_level > 0.2) {
             wasBatteryWarning = false;
