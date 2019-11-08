@@ -25,7 +25,7 @@ QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
         pluginPath = path + "/plugins/lib" + pluginName;
     #elif __APPLE__
         pluginPath = path + "/plugins/lib" + pluginName + ".dylib";
-    #elif __WIN32__
+    #elif _WIN32
         pluginPath = path + "/plugins/" + pluginName + ".dll";
     #else
         pluginPath = path + "/plugins/lib" + pluginName;
