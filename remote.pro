@@ -142,13 +142,16 @@ equals(QT_ARCH, arm): {
 
 # Configure destination path by "Operating System/Compiler/Processor Architecture/Build Configuration"
 DESTDIR = $$(YIO_BIN)
+DESTDIR_BIN = $$(YIO_BIN)
 isEmpty(DESTDIR) {
     DESTDIR = $$(YIO_SRC)
     isEmpty(DESTDIR) {
-        DESTDIR = $$PWD/../binaries/$$DESTINATION_PATH
+        DESTDIR_BIN = $$PWD/../binaries
+        DESTDIR = $$DESTDIR_BIN/$$DESTINATION_PATH
         warning(Environment variables YIO_BIN and YIO_SRC not defined! Using '$$DESTDIR' as binary output directory.)
     } else {
-        DESTDIR = $$(YIO_SRC)/binaries/$$DESTINATION_PATH
+        DESTDIR_BIN = $$(YIO_SRC)/binaries
+        DESTDIR = $$DESTDIR_BIN/$$DESTINATION_PATH
         message(YIO_SRC is set: using '$$DESTDIR' as binary output directory.)
     }
 } else {
@@ -223,7 +226,7 @@ win32 {
     # create deployment archive for RPi image build only
     # usage: make install_tarball
     equals(QT_ARCH, arm): {
-        tarball.path = $$PWD/../binaries
+        tarball.path = $$DESTDIR_BIN
         message( Storing tarball in $$tarball.path/$${TARGET}-$${platform_path}_$${processor_path}_$${build_path}.tar )
         tarball.extra = mkdir -p $$tarball.path; tar -cvf $$tarball.path/$${TARGET}-$${platform_path}_$${processor_path}_$${build_path}.tar -C $$DESTDIR .
         INSTALLS += tarball
