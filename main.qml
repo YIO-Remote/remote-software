@@ -86,6 +86,13 @@ ApplicationWindow {
                     chargingScreen.item.state = "hidden";
                 }
 
+                // charging is done
+                if (battery_averagepower == 0 && battery_level == 1) {
+                    // signal with the dock that the remote is fully charged
+                    var obj = integrations.get(config.read.settings.paired_dock);
+                    obj.sendCommand("dock", "", "REMOTE_CHARGED", "");
+                }
+
                 console.debug("Average power:" + battery_averagepower + "mW");
                 console.debug("Average current:" + battery_averagecurrent + "mA");
             }
@@ -228,20 +235,15 @@ ApplicationWindow {
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
 
         // load the integrations
-        if (integrations.load()) {
-            // if success, load the entities
-            entities.load();
-        }
+//        if (integrations.load()) {
+//            // if success, load the entities
+//            entities.load();
+//        }
+        integrations.load();
+
 
         // set the language
         translateHandler.selectLanguage(config.read.language);
-
-        // when everything is loaded, load the main UI
-        if (fileio.exists("/wifisetup")) {
-            loader_main.setSource("qrc:/wifiSetup.qml");
-        } else {
-            loader_main.setSource("qrc:/MainContainer.qml");
-        }
 
         // load bluetooth
         bluetoothArea.init(config.read);
@@ -253,6 +255,23 @@ ApplicationWindow {
         api.start();
 
         battery.checkBattery();
+    }
+
+    // load the entities when the integrations are loaded
+    Connections {
+        target: integrations
+
+        onLoadComplete: {
+            console.debug("loadComplete");
+            entities.load();
+
+            // when everything is loaded, load the main UI
+            if (fileio.exists("/wifisetup")) {
+                loader_main.setSource("qrc:/wifiSetup.qml");
+            } else {
+                loader_main.setSource("qrc:/MainContainer.qml");
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -403,6 +422,10 @@ ApplicationWindow {
             lowBatteryNotification.item.open();
             wasBatteryWarning = true;
             standbyControl.touchDetected = true;
+
+            // signal with the dock that it is low battery
+            var obj = integrations.get(config.read.settings.paired_dock);
+            obj.sendCommand("dock", "", "REMOTE_LOWBATTERY", "");
         }
         if (battery_level > 0.2) {
             wasBatteryWarning = false;

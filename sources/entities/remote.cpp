@@ -23,6 +23,7 @@ void Remote::pause()
 
 void Remote::playToggle()
 {
+    qDebug() << "POWERTOGGLE";
     command("PLAYTOGGLE", "");
 }
 

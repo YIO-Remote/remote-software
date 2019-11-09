@@ -28,7 +28,7 @@
 #include "yioapi.h"
 #include "config.h"
 #include "logger.h"
-#include "utils.h"
+#include "components/media_player/sources/utils_mediaplayer.h"
 
 int main(int argc, char *argv[])
 {
@@ -113,8 +113,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("api", &yioapi);
 
     // UTILS
-    Utils utils;
-    engine.rootContext()->setContextProperty("utils", &utils);
+    MediaPlayerUtils mediaUtils;
+    engine.rootContext()->setContextProperty("mediaplayerUtils", &mediaUtils);
 
     // LOGGER
     Logger logger(nullptr, appPath);

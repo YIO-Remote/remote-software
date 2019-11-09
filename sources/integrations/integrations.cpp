@@ -22,7 +22,7 @@ Integrations::~Integrations()
     s_instance = NULL;
 }
 
-bool Integrations::load()
+void Integrations::load()
 {
     Entities* entities = Entities::getInstance();
     Notifications* notifications = Notifications::getInstance();
@@ -60,7 +60,7 @@ bool Integrations::load()
     }
 
     // load plugins that are not defined in config.json aka default plugins
-    QStringList defaultIntegrations = {"ir", "dock"};
+    QStringList defaultIntegrations = {"dock"};
 
     for (int k = 0; k<defaultIntegrations.length(); k++)
     {
@@ -84,11 +84,7 @@ bool Integrations::load()
         i++;
     }
 
-    if (i != 0) {
-        return true;
-    } else {
-        return false;
-    }
+    m_integrationsToLoad = i;
 }
 
 void Integrations::onCreateDone(QMap<QObject *, QVariant> map)
@@ -96,6 +92,11 @@ void Integrations::onCreateDone(QMap<QObject *, QVariant> map)
     // add the integrations to the integration database
     for (QMap<QObject *, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
         add(iter.value().toMap(), iter.key(), iter.value().toMap().value("type").toString());
+    }
+    m_integrationsLoaded++;
+
+    if (m_integrationsLoaded == m_integrationsToLoad) {
+        emit loadComplete();
     }
 }
 

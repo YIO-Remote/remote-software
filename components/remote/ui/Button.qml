@@ -14,7 +14,7 @@ Comp.ButtonBase {
         if (remoteButton.state != "open") {
             return "";
         } else {
-            return "qrc:/components/remote/ui/" + integrations.getType(obj.integration) + "/Card.qml";
+            return "qrc:/components/remote/ui/ir/Card.qml";
         }
     }
 }

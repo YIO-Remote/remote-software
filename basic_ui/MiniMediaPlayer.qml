@@ -2,6 +2,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import "qrc:/basic_ui" as BasicUI
+
 Item {
     id: miniMediaPlayer
     width: 480
@@ -32,7 +34,7 @@ Item {
                 PauseAnimation { duration: 200 }
                 ParallelAnimation {
                     PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
-                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 400 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
                 }
                 ParentAnimation {
                     NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
@@ -128,14 +130,14 @@ Item {
 
         onButtonRelease: {
             buttonTimeout.stop();
-//            switch (button) {
-//            case "volume up":
-//                buttonTimeout.stop();
-//                break;
-//            case "volume down":
-//                buttonTimeout.stop();
-//                break;
-//            }
+            //            switch (button) {
+            //            case "volume up":
+            //                buttonTimeout.stop();
+            //                break;
+            //            case "volume down":
+            //                buttonTimeout.stop();
+            //                break;
+            //            }
         }
     }
 
@@ -293,7 +295,7 @@ Item {
                 Rectangle {
                     id: comp
                     anchors.fill: parent
-                    color: state == "open" ? "black" : utils.pixelColor //colorBackground
+                    color: state == "open" ? "black" : mediaplayerUtils.pixelColor
 
                     Behavior on color {
                         ColorAnimation { duration: 300 }
@@ -302,27 +304,17 @@ Item {
                     property var m_image: players[index].mediaImage
 
                     onM_imageChanged: {
-                        utils.addNoise(players[index].mediaImage);
-                        utils.getPixelColor(players[index].mediaImage);
+                        mediaplayerUtils.imageURL = players[index].mediaImage
                     }
 
-                    Image {
+                    CustomImageLoader {
                         id: bgImage
                         anchors.fill: parent
-                        fillMode: Image.PreserveAspectCrop
-                        asynchronous: true
-                        source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : utils.miniMusicPlayerImage
-
-                        onStatusChanged: {
-                            if (image.status == Image.Error) {
-                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : utils.miniMusicPlayerImage
-                            }
-                        }
+                        url: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
-
-                Image {
+                CustomImageLoader {
                     id: image
                     width: 90
                     height: width
@@ -331,15 +323,7 @@ Item {
                         left: parent.left
                         leftMargin: 0
                     }
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                    source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
-
-                    onStatusChanged: {
-                        if (image.status == Image.Error) {
-                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
-                        }
-                    }
+                    url: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
                 Item {
