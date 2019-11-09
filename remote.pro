@@ -124,7 +124,9 @@ TRANSLATIONS = translations/bg_BG.ts \
 # There are so many different ways and each one works great on SOME platform(s) only :-(
 # 1.) Check if we get the linguist cmd line tools from the QT installation (works on macOS and Win but not on Linux)
 exists($$[QT_INSTALL_BINS]/lupdate):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate
+exists($$[QT_INSTALL_BINS]/lupdate.exe):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate.exe
 exists($$[QT_INSTALL_BINS]/lrelease):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
+exists($$[QT_INSTALL_BINS]/lrelease.exe):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease.exe
 # 2.) Check if it's available from $HOST_DIR env var which is set during Buildroot. Only use it if it's not already defined (*=).
 exists($$(HOST_DIR)/bin/lupdate):QMAKE_LUPDATE *= $$(HOST_DIR)/bin/lupdate
 exists($$(HOST_DIR)/bin/lrelease):QMAKE_LRELEASE *= $$(HOST_DIR)/bin/lrelease
