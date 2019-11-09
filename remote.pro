@@ -120,11 +120,26 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
-command = $$[QT_INSTALL_BINS]/lupdate remote.pro
-system($$command) | error("Failed to run: $$command")
+# lupdate & lrelease integration in qmake is a major pain to get working on Linux, macOS, Windows PLUS Linux arm cross compile PLUS qmake / make cmd line
+# There are so many different ways and each one works great on SOME platform(s) only :-(
+# 1.) Check if we get the linguist cmd line tools from the QT installation (works on macOS and Win but not on Linux)
+exists($$[QT_INSTALL_BINS]/lupdate):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate
+exists($$[QT_INSTALL_BINS]/lrelease):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
+# 2.) Check if it's available from $HOST_DIR env var which is set during Buildroot. Only use it if it's not already defined (*=).
+exists($$(HOST_DIR)/bin/lupdate):QMAKE_LUPDATE *= $$(HOST_DIR)/bin/lupdate
+exists($$(HOST_DIR)/bin/lrelease):QMAKE_LRELEASE *= $$(HOST_DIR)/bin/lrelease
+# TODO 3.) custom env var?
 
-command = $$[QT_INSTALL_BINS]/lrelease remote.pro
-system($$command) | error("Failed to run: $$command")
+message("Using Qt linguist tools from: '$$QMAKE_LUPDATE', '$$QMAKE_LRELEASE'")
+
+exists($$QMAKE_LUPDATE) {
+    command = $$QMAKE_LUPDATE remote.pro
+    system($$command) | error("Failed to run: $$command")
+    command = $$QMAKE_LRELEASE remote.pro
+    system($$command) | error("Failed to run: $$command")
+} else {
+    warning(Qt linguist cmd line tools lupdate / lrelease not found: translations will NOT be compiled!)
+}
 
 # include zeroconf
 include(qtzeroconf/qtzeroconf.pri)
