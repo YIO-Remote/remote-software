@@ -45,3 +45,21 @@ BUILD_DEBUG {
 
 DESTINATION_PATH = $${platform_path}-$${compiler_path}-$${processor_path}/$$build_path
 message(Dest path: $${DESTINATION_PATH})
+
+# Configure destination path by "Operating System/Compiler/Processor Architecture/Build Configuration"
+DESTDIR = $$(YIO_BIN)
+DESTDIR_BIN = $$(YIO_BIN)
+isEmpty(DESTDIR) {
+    DESTDIR = $$(YIO_SRC)
+    isEmpty(DESTDIR) {
+        DESTDIR_BIN = $$PWD/../binaries
+        DESTDIR = $$DESTDIR_BIN/$$DESTINATION_PATH
+        warning(Environment variables YIO_BIN and YIO_SRC not defined! Using '$$DESTDIR' as binary output directory.)
+    } else {
+        DESTDIR_BIN = $$(YIO_SRC)/binaries
+        DESTDIR = $$DESTDIR_BIN/$$DESTINATION_PATH
+        message(YIO_SRC is set: using '$$DESTDIR' as binary output directory.)
+    }
+} else {
+    message(YIO_BIN defined '$$DESTDIR' as binary output directory.)
+}
