@@ -54,7 +54,7 @@ ehthumbs_vista.db
 $RECYCLE.BIN/
 
 # Windows Installer files
-*.cab
+*.cab 
 *.msi
 *.msix
 *.msm
@@ -65,11 +65,15 @@ $RECYCLE.BIN/
 
 ### Project specific ###
 software/build-*
+object_script.*
+debug/*
+release/* 
+qml_qmlcache.qrc
 
 # plugins
 plugins/*.so
 
-#Translation files
+# Translation files
 translations/*.ts
 translations/*.qm
 !translations/en_US.ts
@@ -81,32 +85,6 @@ translations/*.qm
 *.log
 .qmake.stash
 *.autosave
+
 # Makefile should always be generated with qmake
-Makefile
-translations/bg_BG.ts
-translations/cs_CZ.ts
-translations/da_DK.ts
-translations/de_DE.ts
-translations/el_GR.ts
-translations/en_US.ts
-translations/es_ES.ts
-translations/et_EE.ts
-translations/fi_FI.ts
-translations/fr_CA.ts
-translations/fr_FR.ts
-translations/ga_IE.ts
-translations/hr_HR.ts
-translations/hu_HU.ts
-translations/it_IT.ts
-translations/lt_LT.ts
-translations/lv_LV.ts
-translations/mt_MT.ts
-translations/nl_NL.ts
-translations/no_NO.ts
-translations/pl_PL.ts
-translations/pt_BR.ts
-translations/pt_PT.ts
-translations/ro_RO.ts
-translations/sk_SK.ts
-translations/sl_SI.ts
-translations/sv_SE.ts
+Makefile*

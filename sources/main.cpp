@@ -52,6 +52,11 @@ int main(int argc, char *argv[])
     if ((!QFile::exists(appPath + "/translations.json")) && (QFile::exists(macPath + "/translations.json"))) {
         appPath = macPath;
     }
+
+    // In case you are running without YIO hardware
+    if (argc >= 2 && QString(argv[1]) == "simulate")
+        engine.rootContext()->setContextProperty("yiomode", "simulate");
+
     engine.rootContext()->setContextProperty("appPath", appPath);
 
     // Determine configuration path

@@ -81,7 +81,9 @@ void Integrations::load()
 
             interface->create(map, entities, notifications, api, config);
         }
-        i++;
+        QString yiomode = m_engine->rootContext()->contextProperty("yiomode").toString();
+        if (yiomode != "simulate")      // avoid waiting for docks onCreateDone
+            i++;
     }
 
     m_integrationsToLoad = i;
