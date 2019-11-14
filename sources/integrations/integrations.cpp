@@ -85,6 +85,11 @@ void Integrations::load()
     }
 
     m_integrationsToLoad = i;
+
+    // If all integrations are loaded synchronously, all onCreateDone have allready fired
+    if (m_integrationsLoaded == m_integrationsToLoad) {
+        emit loadComplete();
+    }
 }
 
 void Integrations::onCreateDone(QMap<QObject *, QVariant> map)

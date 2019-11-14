@@ -11,6 +11,7 @@ public:
 
     virtual QVariantMap  read() = 0;
     virtual void readWrite(QVariantMap config) = 0;
+    virtual QVariant getContextProperty (const QString& name) = 0;
 
 private:
     QVariantMap                   m_config;
