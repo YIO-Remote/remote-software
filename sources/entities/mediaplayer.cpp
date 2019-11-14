@@ -50,6 +50,18 @@ bool MediaPlayer::update(const QVariantMap &attributes)
         chg = true;
         emit mediaImageChanged();
     }
+
+    // extension for "generic" media browsing
+    if (attributes.contains("browseItems")) {
+        m_browseItems = attributes.value("browseItems");
+        chg = true;
+        emit browseItemsChanged();
+    }
+    if (attributes.contains("browseCmds")) {
+        m_browseCmds = attributes.value("browseCmds");
+        chg = true;
+        emit browseCmdsChanged();
+    }
     return  chg;
 }
 
@@ -91,6 +103,12 @@ void MediaPlayer::next()
 void MediaPlayer::setVolume(double value)
 {
     command("VOLUME_SET", value);
+}
+
+// extension for "generic" media browsing
+void MediaPlayer::browse(QString cmd)
+{
+    command("BROWSE", cmd);
 }
 
 MediaPlayer::MediaPlayer(QObject *parent) :

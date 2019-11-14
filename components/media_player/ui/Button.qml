@@ -355,7 +355,7 @@ Rectangle {
         height: mediaButton.height
         asynchronous: true
         active: mediaButton.state == "open"
-        source: "qrc:/components/blind/ui/Card.qml"
+        source: "qrc:/components/media_player/ui/Card.qml"
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {

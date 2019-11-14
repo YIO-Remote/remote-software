@@ -30,6 +30,8 @@ public:
     Q_PROPERTY  (QString        mediaArtist READ    mediaArtist NOTIFY      mediaArtistChanged)
     Q_PROPERTY  (QString        mediaImage  READ    mediaImage  NOTIFY      mediaImageChanged)
     Q_PROPERTY  (QString        source      READ    source      NOTIFY      sourceChanged)
+    Q_PROPERTY  (QVariant       browseItems READ    browseItems NOTIFY      browseItemsChanged)
+    Q_PROPERTY  (QVariant       browseCmds  READ    browseCmds  NOTIFY      browseCmdsChanged)
 
     double                      volume() { return m_volume; }
     bool                        muted()  { return m_muted; }
@@ -38,6 +40,10 @@ public:
     QString                     mediaTitle() { return m_mediaTitle; }
     QString                     mediaArtist() { return m_mediaArtist; }
     QString                     source() { return m_source; }
+
+    // extension for "generic" media browsing
+    QVariant                    browseItems() { return m_browseItems; }
+    QVariant                    browseCmds() { return m_browseCmds; }
 
     // methods
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
@@ -49,6 +55,9 @@ public:
     Q_INVOKABLE void            previous();
     Q_INVOKABLE void            next();
     Q_INVOKABLE void            setVolume(double value);
+
+    // extension for "generic" media browsing
+    Q_INVOKABLE void            browse(QString command);        // Command item_key, "TOP", "BACK", "PLAY"
 
     // constructor
     explicit MediaPlayer(QObject *parent = nullptr);
@@ -65,6 +74,8 @@ signals:
     void mediaArtistChanged();
     void mediaImageChanged();
     void sourceChanged();
+    void browseItemsChanged();
+    void browseCmdsChanged();
 
 public:
     static QString Type;
@@ -91,6 +102,10 @@ private:
     QString                     m_mediaTitle;
     QString                     m_mediaArtist;
     QString                     m_source;
+
+    // extension for "generic" media browsing
+    QVariant                    m_browseItems;         // Array of { item_key, title, sub_title, image_url }
+    QVariant                    m_browseCmds;          // Array of cmds like TOP, BACK, PLAY
 };
 
 #endif // MEDIAPLAYER_H
