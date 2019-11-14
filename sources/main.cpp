@@ -56,6 +56,8 @@ int main(int argc, char *argv[])
     // In case you are running without YIO hardware
     if (argc >= 2 && QString(argv[1]) == "simulate")
         engine.rootContext()->setContextProperty("yiomode", "simulate");
+    else
+        engine.rootContext()->setContextProperty("yiomode", "real");
 
     engine.rootContext()->setContextProperty("appPath", appPath);
 

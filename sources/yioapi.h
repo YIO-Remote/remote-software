@@ -63,6 +63,8 @@ signals:
     void runningChanged();
     void hostnameChanged();
     void discoveredServicesChanged();
+    void buttonPressed(QString button);
+    void buttonReleased(QString button);
 //    void serviceDiscovered(QMap<QString, QVariantMap> services);
 
 public slots:

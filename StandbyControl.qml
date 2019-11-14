@@ -16,7 +16,7 @@ Item {
     property string mode: "on" // on, dim, standby, wifi_off
 
     property int displayDimTime: 20 // seconds
-    property int standbyTime: 30 // seconds
+    property int standbyTime: yiomode === "simulate" ? 3600 : 30 // seconds
     property int wifiOffTime: 0 // seconds
     property int shutdownTime: 0 // seconds
 

@@ -10,6 +10,18 @@ Item {
     signal buttonPress(string button)
     signal buttonRelease(string button)
 
+    // Simulation via YIO API
+    Connections {
+        target: api
+        enabled: true
+
+        onButtonPressed: {
+            buttonPress(button);
+        }
+        onButtonReleased: {
+            buttonRelease(button);
+        }
+    }
     InterruptHandler {
         id: interruptHandler
 

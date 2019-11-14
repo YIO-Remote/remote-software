@@ -300,6 +300,14 @@ void YioAPI::processMessage(QString message)
 
             QVariantMap config = map.value("config").toMap();
             setConfig(config);
+        } else if (type == "button" && m_clients[client]) {
+            QString buttonName = map["name"].toString();
+            QString buttonAction = map["action"].toString();
+            qDebug() << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
+            if (buttonAction == "pressed")
+                emit buttonPressed(buttonName);
+            else
+                emit buttonReleased(buttonName);
         } else {
             emit messageReceived(map);
         }
