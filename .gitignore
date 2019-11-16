@@ -65,6 +65,7 @@ $RECYCLE.BIN/
 
 ### Project specific ###
 software/build-*
+build
 
 # plugins
 plugins/*.so

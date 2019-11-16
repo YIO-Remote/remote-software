@@ -1,3 +1,0 @@
-# only check in empty directory to be able to select it in Qt Creator for shallow builds
-*
-!.gitignore
