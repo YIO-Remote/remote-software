@@ -484,6 +484,7 @@ Item {
             width: parent.width + 20
             height: parent.height + 20
             anchors.centerIn: parent
+            enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
                 haptic.playEffect("click");
