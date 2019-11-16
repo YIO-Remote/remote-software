@@ -7,7 +7,7 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: remoteButton
-    icon: "\uE909"
+    icon: "\uE90B"
     cardLoader.source: getSource()
 
     function getSource() {

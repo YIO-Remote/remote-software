@@ -64,11 +64,9 @@ private:
 
     void                        generateImages          (QString url);
     QColor                      dominantColor           (const QImage& image);
-    void                        addNoise                (QString url);
 
 
 private slots:
-    void                        addNoiseReply          (QNetworkReply* reply);
     void                        generateImagesReply    (QNetworkReply* reply);
 
 };

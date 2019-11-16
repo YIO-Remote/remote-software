@@ -201,7 +201,7 @@ Rectangle {
         Text {
             id: icon
             color: colorText
-            text: "\uE900"
+            text: "\uE914"
             renderType: Text.NativeRendering
             width: 85
             height: 85

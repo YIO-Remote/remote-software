@@ -62,6 +62,10 @@ Item {
             width: miniMediaPlayer.width
             height: miniMediaPlayer.height
             radius: miniMediaPlayer.state == "closed" ? 0 : cornerRadius
+
+            Behavior on radius {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
         }
     }
 
@@ -130,14 +134,6 @@ Item {
 
         onButtonRelease: {
             buttonTimeout.stop();
-            //            switch (button) {
-            //            case "volume up":
-            //                buttonTimeout.stop();
-            //                break;
-            //            case "volume down":
-            //                buttonTimeout.stop();
-            //                break;
-            //            }
         }
     }
 
@@ -201,7 +197,7 @@ Item {
                         PropertyChanges {target: title; opacity: 0 }
                         PropertyChanges {target: artist; opacity: 0 }
                         PropertyChanges {target: closeButton; opacity: 1 }
-                        PropertyChanges {target: titleOpen; y: 200; opacity: 1 }
+                        PropertyChanges {target: titleOpen; y: 380; opacity: 1 }
                         PropertyChanges {target: artistOpen; opacity: 0.8 }
                         PropertyChanges {target: indicator; opacity: 1 }
                         PropertyChanges {target: speaker; opacity: 1 }
@@ -218,7 +214,7 @@ Item {
                         PropertyChanges {target: title; opacity: 1 }
                         PropertyChanges {target: artist; opacity: 1 }
                         PropertyChanges {target: closeButton; opacity: 0 }
-                        PropertyChanges {target: titleOpen; y: 366; opacity: 0 }
+                        PropertyChanges {target: titleOpen; y: 420; opacity: 0 }
                         PropertyChanges {target: artistOpen; opacity: 0 }
                         PropertyChanges {target: indicator; opacity: 0 }
                         PropertyChanges {target: speaker; opacity: 0 }
@@ -295,7 +291,7 @@ Item {
                 Rectangle {
                     id: comp
                     anchors.fill: parent
-                    color: state == "open" ? "black" : mediaplayerUtils.pixelColor
+                    color: mediaplayerUtils.pixelColor
 
                     Behavior on color {
                         ColorAnimation { duration: 300 }
@@ -309,7 +305,11 @@ Item {
 
                     CustomImageLoader {
                         id: bgImage
-                        anchors.fill: parent
+                        width: 280
+                        height: 280
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.top: parent.top
+                        anchors.topMargin: 86
                         url: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
@@ -333,7 +333,6 @@ Item {
                     anchors.left: image.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: image.verticalCenter
-                    anchors.topMargin: 290
 
                     Text {
                         id: title
@@ -403,7 +402,8 @@ Item {
                     text: players[index].mediaTitle
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    wrapMode: Text.NoWrap
                     width: parent.width-80
                     font.family: "Open Sans"
                     font.weight: Font.Bold
@@ -419,14 +419,14 @@ Item {
                     text: players[index].mediaArtist
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    wrapMode: Text.NoWrap
                     width: parent.width-80
                     font.family: "Open Sans"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     lineHeight: 1
                     anchors.top: titleOpen.bottom
-                    anchors.topMargin: 10
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -465,33 +465,29 @@ Item {
 
     }
 
-    Item {
+    Text {
         id: closeButton
-        width: 60
-        height: width
-
-        anchors.top: parent.top
+        color: colorText
+        text: "\uE916"
+        renderType: Text.NativeRendering
+        width: 70
+        height: 70
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 80 }
         anchors.right: parent.right
-
-        Image {
-            asynchronous: true
-            anchors {
-                top: parent.top
-                topMargin: 20
-                right: parent.right
-                rightMargin: 20
-            }
-
-            source: "qrc:/images/mini-music-player/icon-close.png"
-        }
+        anchors.rightMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 10
 
         MouseArea {
-            anchors.fill: parent
-            enabled: miniMediaPlayer.state == "open" ? true : false
+            width: parent.width + 20
+            height: parent.height + 20
+            anchors.centerIn: parent
 
             onClicked: {
                 haptic.playEffect("click");
-                miniMediaPlayer.state = "closed";
+                miniMediaPlayer.state = "closed"
             }
         }
     }
@@ -507,10 +503,16 @@ Item {
             verticalCenter: playButton.verticalCenter
         }
 
-        Image {
+        Text {
+            color: colorText
+            text: "\uE909"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            asynchronous: true
-            source: "qrc:/images/mini-music-player/icon-prev.png"
         }
 
         MouseArea {
@@ -524,58 +526,50 @@ Item {
         }
     }
 
-    Rectangle {
+    Item {
         id: playButton
         width: 120
         height: 120
-        radius: height/2
-        color: colorLight
 
         property bool isPlaying: players[mediaPlayers.currentIndex] && players[mediaPlayers.currentIndex].state == 3 ? true : false
 
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 140
+            bottomMargin: 80
         }
 
-        Item {
-            width: childrenRect.width
-            height: childrenRect.height
+        Text {
+            color: colorText
+            text: "\uE905"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
+            opacity: playButton.isPlaying ? 1 : 0
 
-            Rectangle {
-                width: 4
-                height: 30
-                color: colorLine
-                x: 0
-                y: playButton.isPlaying ? 0 : 18
-                rotation: playButton.isPlaying ? 0 : 45
-
-                Behavior on y {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
-
-                Behavior on rotation {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
+            Behavior on opacity {
+                NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
             }
+        }
 
-            Rectangle {
-                width: 4
-                height: 30
-                color: colorLine
-                x: playButton.isPlaying ? 10 : 0
-                y: 0
-                rotation: playButton.isPlaying ? 0 : -45
+        Text {
+            color: colorText
+            text: "\uE906"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
+            anchors.centerIn: parent
+            opacity: playButton.isPlaying ? 0 : 1
 
-                Behavior on x {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
-
-                Behavior on rotation {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
+            Behavior on opacity {
+                NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
             }
         }
 
@@ -601,10 +595,16 @@ Item {
             verticalCenter: playButton.verticalCenter
         }
 
-        Image {
+        Text {
+            color: colorText
+            text: "\uE904"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            asynchronous: true
-            source: "qrc:/images/mini-music-player/icon-next.png"
         }
 
         MouseArea {

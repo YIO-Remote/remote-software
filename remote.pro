@@ -276,5 +276,4 @@ win32 {
     error(unknown platform! Platform must be configured in remote.pro)
 }
 
-DISTFILES += \
-    basic_ui/CustomImageLoader.qml
+DISTFILES +=
