@@ -254,13 +254,8 @@ Item {
                                             PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                             ParallelAnimation {
                                                 PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                                SequentialAnimation {
-                                                    PauseAnimation { duration: 100 }
-                                                    ParallelAnimation {
-                                                        PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                                        PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                                    }
-                                                }
+                                                PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                                PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                             }
                                         }
                                         PropertyAnimation { target: speaker; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
@@ -492,6 +487,7 @@ Item {
             width: parent.width + 20
             height: parent.height + 20
             anchors.centerIn: parent
+            enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
                 haptic.playEffect("click");
