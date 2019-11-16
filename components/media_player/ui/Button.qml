@@ -14,7 +14,7 @@ Comp.ButtonBase {
     cardLoader.source: "qrc:/components/media_player/ui/Card.qml"
 
     // override default settings
-    title.anchors.verticalCenterOffset: -15
+    title.anchors.verticalCenterOffset: obj.source === "" ? 0 : -15
     button.enabled: true
 
     // include mediaplayer utils
@@ -39,6 +39,7 @@ Comp.ButtonBase {
         font.weight: Font.Normal
         font.pixelSize: 20
         lineHeight: 1
+        visible: remoteButton.state == "closed" ? true : false
     }
 
     // album art
@@ -49,6 +50,7 @@ Comp.ButtonBase {
 
     BasicUI.CustomImageLoader {
         id: image
+        visible: remoteButton.state == "closed" ? true : false
         width: 80
         height: 80
         anchors.left: parent.left

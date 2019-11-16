@@ -210,5 +210,6 @@
         <file>components/remote/ui/ir/Card.qml</file>
         <file>components/remote/ui/ir/Group.qml</file>
         <file>basic_ui/CustomImageLoader.qml</file>
+        <file>components/media_player/ui/Card.qml</file>
     </qresource>
 </RCC>
