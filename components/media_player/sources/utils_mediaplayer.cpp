@@ -26,7 +26,12 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
             ////////////////////////////////////////////////////////////////////
             m_pixelColor = dominantColor(image);
 
-            // if the color is too bright, return black instead
+            // change the brightness of the color if it's too bright
+            if (m_pixelColor.lightness() > 150) {
+                m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value()-80));
+            }
+
+            // if the color is close to white, return black instead
             if (m_pixelColor.lightness() > 210) {
                 m_pixelColor = QColor("black");
             }

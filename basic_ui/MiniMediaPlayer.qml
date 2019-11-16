@@ -4,6 +4,8 @@ import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
+import MediaPlayerUtils 1.0
+
 Item {
     id: miniMediaPlayer
     width: 480
@@ -185,6 +187,12 @@ Item {
             Item {
                 id: player
                 width: 480
+
+                // include mediaplayer utils
+                MediaPlayerUtils {
+                    id: mediaplayerUtils
+                }
+
                 property alias player: player
 
                 property var obj: players[index]

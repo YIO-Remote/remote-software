@@ -31,17 +31,6 @@ Rectangle {
         PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
     }
 
-//    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    // CONNECT TO BUTTONS
-//    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    Connections {
-//        target: buttonHandler
-//        enabled: state == "open" ? true : false
-
-//        onButtonPress: {
-//        }
-//    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BASIC SETTINGS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,9 +125,7 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-
             originParent = buttonContainer.parent
-
             buttonContainer.state = "open"
         }
     }
@@ -148,7 +135,10 @@ Rectangle {
     // CLOSED STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    property alias title: title
     property alias icon: icon.text
+    property alias button: button
+
 
     Item {
         width: parent.width
@@ -188,23 +178,25 @@ Rectangle {
 
     }
 
-//    BasicUI.CustomSwitch {
-//        id: button
+    BasicUI.CustomSwitch {
+        id: button
 
-//        anchors.verticalCenter: parent.verticalCenter
-//        anchors.right: parent.right
-//        anchors.rightMargin: 20
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        enabled: false
+        visible: enabled
 
-//        checked: obj.state
-//        mouseArea.enabled: buttonContainer.state == "open" ? false: true
-//        mouseArea.onClicked: {
-//            if (obj.state) {
-//                obj.turnOff();
-//            } else {
-//                obj.turnOn();
-//            }
-//        }
-//    }
+        checked: obj.state
+        mouseArea.enabled: buttonContainer.state == "open" ? false: true
+        mouseArea.onClicked: {
+            if (obj.state) {
+                obj.turnOff();
+            } else {
+                obj.turnOn();
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ADD TO FAVORITE
