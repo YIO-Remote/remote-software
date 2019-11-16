@@ -201,11 +201,13 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ADD TO FAVORITE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias addToFavButton: addToFavButton
 
     Rectangle {
         id: addToFavButton
         width: 0
         height: 0
+        z: 1000
         radius: 200
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
@@ -232,7 +234,7 @@ Rectangle {
             Transition {
                 to: "closed"
                 SequentialAnimation {
-                    PauseAnimation { duration: 300 }
+//                    PauseAnimation { duration: 300 }
                     ParallelAnimation {
                         PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                         PropertyAnimation { target: addToFavButtonText; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
