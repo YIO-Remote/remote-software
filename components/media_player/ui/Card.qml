@@ -26,6 +26,7 @@ Rectangle {
             PropertyChanges {target: playButton; opacity: 0 }
             PropertyChanges {target: prevButton; opacity: 0 }
             PropertyChanges {target: nextButton; opacity: 0 }
+            PropertyChanges {target: progressBar; opacity: 0 }
         },
         State {
             name: "open"
@@ -35,24 +36,19 @@ Rectangle {
             PropertyChanges {target: playButton; opacity: 1 }
             PropertyChanges {target: prevButton; opacity: 1 }
             PropertyChanges {target: nextButton; opacity: 1 }
+            PropertyChanges {target: progressBar; opacity: 1 }
         }
     ]
 
     transitions: [
         Transition {to: "closed";
-            SequentialAnimation {
-                PauseAnimation { duration: 200 }
-                PropertyAnimation { target: albumArt; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                ParallelAnimation {
-                    PropertyAnimation { target: songTitle; properties: "opacity, anchors.topMargin"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                }
-                ParallelAnimation {
-                    PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                }
-            }
+            PropertyAnimation { target: albumArt; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: songTitle; properties: "opacity, anchors.topMargin"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: progressBar; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
         },
         Transition {to: "open";
             SequentialAnimation {
@@ -61,6 +57,7 @@ Rectangle {
                 ParallelAnimation {
                     PropertyAnimation { target: songTitle; properties: "opacity, anchors.topMargin"; easing.type: Easing.OutExpo; duration: 300 }
                     PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: progressBar; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 }
                 ParallelAnimation {
                     PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
@@ -92,7 +89,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors.left: parent.left
-            anchors.leftMargin: 126
+            anchors.leftMargin: 106
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: obj.source === "" ? 0 : -15
             font.family: "Open Sans"
@@ -127,7 +124,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 100 }
             anchors.left: parent.left
-            anchors.leftMargin: 20
+            anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -179,6 +176,16 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
+    Rectangle {
+        id: progressBar
+        width: parent.width-80
+        height: 4
+        color: "#000000"
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: artist.bottom
+        anchors.topMargin: 30
+    }
+
     Item {
         id: prevButton
         width: 120
@@ -198,7 +205,7 @@ Rectangle {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 
@@ -232,7 +239,7 @@ Rectangle {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: obj.state == 3 ? 1 : 0
 
@@ -249,7 +256,7 @@ Rectangle {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: obj.state == 3 ? 0 : 1
 
@@ -288,7 +295,7 @@ Rectangle {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 

@@ -61,7 +61,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors.left: parent.left
-            anchors.leftMargin: 126
+            anchors.leftMargin: 106
             anchors.verticalCenter: parent.verticalCenter
             font.family: "Open Sans"
             font.weight: Font.Normal
@@ -78,7 +78,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 100 }
             anchors.left: parent.left
-            anchors.leftMargin: 20
+            anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
         }
 

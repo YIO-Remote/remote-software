@@ -515,7 +515,7 @@ Item {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 
@@ -551,7 +551,7 @@ Item {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: playButton.isPlaying ? 1 : 0
 
@@ -568,7 +568,7 @@ Item {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: playButton.isPlaying ? 0 : 1
 
@@ -607,7 +607,7 @@ Item {
             height: 85
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 
