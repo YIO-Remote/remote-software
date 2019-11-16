@@ -113,8 +113,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("api", &yioapi);
 
     // UTILS
-    MediaPlayerUtils mediaUtils;
-    engine.rootContext()->setContextProperty("mediaplayerUtils", &mediaUtils);
+    qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
 
     // LOGGER
     Logger logger(nullptr, appPath);
