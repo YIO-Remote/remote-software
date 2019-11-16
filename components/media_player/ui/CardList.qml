@@ -10,57 +10,189 @@ Rectangle {
     height: parent.height
     color: colorDark
 
-    property var items: obj.browseItems;
-    property var buttons: obj.browseCmds;
+    property var    browseResult:       obj.browseResult                        // structure of items, playCommands, type, title, level
+                                                                                // items : array of structure (item_key, title, sub_title, image_url
+    property var    navCommands:        ["TOP", "BACK", "GOTO"]
+    property bool   showNavCommands:    false;                                  // could be configurable
+    property int    selectedItem:       0
+    property string selectedItemKey:    ""
+    property int    selectedCommand:    0;
+    property string selectedCommandKey: ""
+    property bool   showCommands:       false
 
-    BasicUI.CustomButton {
-        id: buttonLeft
-        anchors { left: parent.left; top: parent.top; }
-        color: colorText
-        buttonText: buttons[0];
-        buttonTextColor: colorBackground
-        visible: buttons[0].length > 0;
-        mouseArea.onClicked: {
-            haptic.playEffect("click");
-            obj.browse(buttons[0]);
-        }
-    }
-    onItemsChanged: {
+    onBrowseResultChanged: {
+        var i;
+        // update items
         listItems.clear();
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].image_url === "")
-                items[i].image_url = "qrc:/images/mini-music-player/no_image.png";
-            listItems.append(items[i]);
+        for (i = 0; i < browseResult.items.length; i++) {
+            var item = browseResult.items[i];
+            if (item.image_url === "")
+                item.image_url = "qrc:/images/mini-music-player/no_image.png";
+            listItems.append(item);
+        }
+        selectedItem = 0;
+        selectedItemKey = browseResult.items.length > selectedItem ? browseResult.items[selectedItem].item_key : "";
+
+        // update play commands
+        selectedCommand = 0;
+        commandItems.clear();
+        if (showNavCommands) {
+            if (browseResult.level > 0) {
+                commandItems.append({command : "TOP" });
+                commandItems.append({command : "BACK"});
+            }
+            selectedCommand = commandItems.count;
+            if (browseResult.type !== "Album" && browseResult.type !== "Playlist") {
+                commandItems.append({command : "GOTO"});
+            }
+        }
+        for (i = 0; i < browseResult.playCommands.length; i++) {
+            commandItems.append({command : browseResult.playCommands[i]});
+        }
+        selectedCommandKey = commandItems.count > selectedCommand ? commandItems.get(selectedCommand).command : "";
+    }
+
+    function performCommand (command) {
+        if (navCommands.indexOf (command) >= 0) {
+            if (command === "GOTO")
+                obj.browse(selectedItemKey);
+            else
+                obj.browse(command)
+        }
+        else
+            obj.playMedia(command, selectedItemKey);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS (with long press detection)
+    /////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: buttonHandler
+        enabled: true
+
+        onButtonPress: {
+            if (standbyControl.mode === "on" || standbyControl.mode === "dim") {
+                switch (button) {
+                    case "dpad up":
+                        if (showCommands) {
+                            if (selectedCommand > 0) {
+                                selectedCommand--;
+                                selectedCommandKey = commandItems.get(selectedCommand).command;
+                            }
+                            return;
+                        }
+                        if (selectedItem > 0) {
+                            selectedItem--;
+                            selectedItemKey = browseResult.items[selectedItem].item_key
+                            listView.currentIndex = selectedItem;
+                        }
+                        break;
+                    case "dpad down":
+                        if (showCommands) {
+                            if (selectedCommand < commandItems.count - 1) {
+                                selectedCommand++;
+                                selectedCommandKey = commandItems.get(selectedCommand).command;
+                            }
+                            return;
+                        }
+                        if (selectedItem < browseResult.items.length - 1) {
+                            selectedItem++;
+                            selectedItemKey = browseResult.items[selectedItem].item_key
+                            listView.currentIndex = selectedItem;
+                        }
+                        break;
+                    case "dpad middle":
+                        if (showCommands) {
+                            performCommand(selectedCommandKey);
+                            showCommands = false;
+                        }
+                        else {
+                            showCommands = true;
+                            return;
+                        }
+                        break;
+                    case "dpad right":
+                        obj.browse(selectedItemKey);
+                        break;
+                    case "dpad left":
+                        if (!showCommands)
+                            obj.browse("BACK");
+                        break;
+                    case "top left":
+                        obj.browse("TOP");
+                        break;
+                    case "volume up":
+                        obj.volumeUp();
+                        break;
+                    case "volume down":
+                        obj.volumeDown();
+                        break;
+                }
+                showCommands = false;
+            }
+        }
+        onButtonRelease: {
         }
     }
 
-    BasicUI.CustomButton {
-        id: buttonMiddle
-        anchors { left: buttonLeft.right; leftMargin: 10; top: parent.top;  }
-        color: colorText
-        buttonText: buttons[1];
-        buttonTextColor: colorBackground
-        visible: buttons[1].length > 0;
-        mouseArea.onClicked: {
+    /////////////////////////////////////////////////////////////////////////////////////
+    // Catch backround click
+    /////////////////////////////////////////////////////////////////////////////////////
+    MouseArea {
+        anchors.fill: parent
+
+        onClicked: {
             haptic.playEffect("click");
-            obj.browse(buttons[1]);
+            //obj.browse(model.item_key);
+            showCommands = false;
         }
     }
-    BasicUI.CustomButton {
-        id: buttonRight
-        anchors { left: buttonMiddle.right; leftMargin: 10; top: parent.top; }
-        color: colorText
-        buttonText: buttons[2];
-        buttonTextColor: colorBackground
-        visible: buttons[2].length > 0;
+    /////////////////////////////////////////////////////////////////////////////////////
+    // Header type title
+    /////////////////////////////////////////////////////////////////////////////////////
+    Item {
+        id: textItem;
+        width: parent.width
+        height: 40
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: 20
 
-        mouseArea.onClicked: {
-            haptic.playEffect("click");
-            obj.browse(buttons[2]);
+        Text {
+            id: type
+            color: colorText
+            text: browseResult.type
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
+            width: 120
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
         }
+
+        Text {
+            id: title
+            color: colorText
+            text: browseResult.title
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
+            width: 250
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
+        }
+
     }
 
-
+    /////////////////////////////////////////////////////////////////////////////////////
+    // Items List
+    /////////////////////////////////////////////////////////////////////////////////////
     ListModel {
         id: listItems
         /*
@@ -81,18 +213,18 @@ Rectangle {
                 id: rect
                 width: parent.width
                 height: parent.height
-                color: colorMedium
+                color: model.item_key === selectedItemKey ? colorHighlight1 : colorMedium
                 visible: true
 
                 Text {
-                    anchors { topMargin: 20; leftMargin: 20 }
+                    anchors { left: parent.left; top:parent.top; topMargin: 5; leftMargin: 10 }
                     id: title
                     color: colorText
                     text: model.title
                     font.pixelSize: 24
                 }
                 Text {
-                    anchors { top : title.bottom; leftMargin: 20 }
+                    anchors { left: parent.left; top: title.bottom; leftMargin: 10 }
                     color: colorText
                     text: model.sub_title
                     font.pixelSize: 24
@@ -102,9 +234,9 @@ Rectangle {
                     width: 64
                     height: 64
                     fillMode: Image.PreserveAspectFit
-                    anchors { right: rect.right; rightMargin: 20 }
+                    anchors { right: parent.right; rightMargin: 10 }
                     visible: !model.image_url.startsWith ('qrc');
-                    source: model.image_url
+                    source: model.image_url;
                 }
             }
             MouseArea {
@@ -112,7 +244,9 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    obj.browse(model.item_key);
+                    //obj.browse(model.item_key);
+                    selectedItemKey = model.item_key
+                    showCommands = !showCommands;
                 }
             }
         }
@@ -120,17 +254,92 @@ Rectangle {
     ListView {
         id: listView
         width: parent.width
-        spacing: 20
+        height: parent.height - textItem.bottom - 30
+        spacing: 10
         orientation: ListView.Vertical
         flickableDirection: Flickable.VerticalFlick
         anchors {
-            left: parent.left; top: buttonLeft.bottom;
+            left: parent.left; top: textItem.bottom;
             right: parent.right; bottom: parent.bottom;
-            margins: 20
+            margins: 10
         }
+        clip: true
         model: listItems
         delegate: listDelegate
     }
+    /////////////////////////////////////////////////////////////////////////////////////
+    // Commands List
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: section
+        width: parent.width - 250
+        height: commandItems.count * 70 + 20;
+        radius: cornerRadius
+        color: colorBackground
+        visible : showCommands
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        clip: true
+
+        ListModel {
+            id: commandItems
+            /*
+            ListElement {
+                command: "key"
+            }
+            */
+        }
+        Component {
+            id: commandDelegate
+            Item {
+                width: parent.width
+                height: 50
+                Rectangle {
+                    id: rect
+                    width: parent.width
+                    height: parent.height
+                    radius: cornerRadius;
+                    color:  model.command === selectedCommandKey ? colorHighlight1 : colorMedium;
+                    visible: true
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        id: title
+                        color: colorText
+                        text: model.command
+                        font.pixelSize: 24
+                    }
+                }
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: {
+                        haptic.playEffect("click");
+                        performCommand(model.command);
+                        showCommands = false;
+                    }
+                }
+            }
+        }
+        ListView {
+            id: commandView
+            visible: showCommands
+            width: parent.width
+            height: parent.height
+            spacing: 20
+            anchors.fill: parent
+            anchors.margins: 20
+            orientation: ListView.Vertical
+            model: commandItems
+            delegate: commandDelegate
+        }
+    }
+    /////////////////////////////////////////////////////////////////////////////////////
+    // Close Button
+    /////////////////////////////////////////////////////////////////////////////////////
     Image {
         id: closeButton
         asynchronous: true

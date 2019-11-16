@@ -41,10 +41,10 @@ public:
     QString			friendly_name()         { return m_friendly_name; }
     QString			entity_id()             { return objectName(); }
     QString			integration()           { return m_integration; }
-    QObject*		integrationObj()        { return m_integrationObj; }
-    QStringList     supported_features()    { return m_supported_features; }
+    QObject*                    integrationObj()        { return m_integrationObj; }
+    QStringList                 supported_features()    { return m_supported_features; }
     bool			favorite()              { return m_favorite; }
-    QVariant        attributes()            { return m_attributes; }
+    QVariant                    attributes()            { return m_attributes; }
 
     void			setFavorite             (bool value);
 

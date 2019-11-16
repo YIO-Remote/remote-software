@@ -17,9 +17,18 @@ Rectangle {
     property var percent
     property bool userMove: false
     property bool listOpen: false;
+    property string waitLongButton : ""
 
     Component.onCompleted: {
         percent = obj.volume
+    }
+
+    onVolumeChanged: {
+        if (userMove && volume === percent) {
+            userMove = false;
+        } else {
+            percent = volume;
+        }
     }
 
     Item {
@@ -76,12 +85,71 @@ Rectangle {
             }
         }
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS (with long press detection)
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: buttonHandler
+        enabled: !listOpen
 
-    onVolumeChanged: {
-        if (userMove && volume === percent) {
-            userMove = false;
-        } else {
-            percent = position;
+        onButtonPress: {
+            waitLongButton = "";
+            buttonHandlerTimer.stop();
+            if (standbyControl.mode === "on" || standbyControl.mode === "dim") {
+                switch (button) {
+                    case "dpad middle":
+                        waitLongButton = button;
+                        buttonHandlerTimer.start();
+                        break;
+                    case "volume up":
+                        obj.volumeUp();
+                        break;
+                    case "volume down":
+                        obj.volumeDown();
+                        break;
+                    case "dpad left":
+                        obj.previous();
+                        break;
+                    case "dpad next":
+                        obj.next();
+                        break;
+                    case "bottom left":
+                        obj.play();
+                        break;
+                    case "bottom right":
+                        obj.stop();
+                        break;
+                }
+            }
+        }
+        onButtonRelease: {
+            if (standbyControl.mode === "on" || standbyControl.mode === "dim") {
+                switch(button) {
+                    case "dpad middle":
+                         if (waitLongButton == button && buttonHandlerTimer.running) {
+                             waitLongButton = "";
+                             buttonHandlerTimer.stop();
+                             console.debug("MIDDLE short");
+                         }
+                         break;
+                }
+            }
+        }
+    }
+    Timer {
+        id: buttonHandlerTimer
+        running: false
+        repeat: false
+        interval: 1000
+
+        onTriggered: {
+            switch (waitLongButton) {
+                case "dpad middle":
+                    obj.browse("TOP");
+                    listOpen = true;
+                    break;
+            }
+            waitLongButton = "";
         }
     }
 

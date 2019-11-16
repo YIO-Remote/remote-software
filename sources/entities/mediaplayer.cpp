@@ -52,15 +52,10 @@ bool MediaPlayer::update(const QVariantMap &attributes)
     }
 
     // extension for "generic" media browsing
-    if (attributes.contains("browseItems")) {
-        m_browseItems = attributes.value("browseItems");
+    if (attributes.contains("browseResult")) {
+        m_browseResult = attributes.value("browseResult");
         chg = true;
-        emit browseItemsChanged();
-    }
-    if (attributes.contains("browseCmds")) {
-        m_browseCmds = attributes.value("browseCmds");
-        chg = true;
-        emit browseCmdsChanged();
+        emit browseResultChanged();
     }
     return  chg;
 }
@@ -104,11 +99,22 @@ void MediaPlayer::setVolume(double value)
 {
     command("VOLUME_SET", value);
 }
-
+void MediaPlayer::volumeUp()
+{
+    command("VOLUME_UP", "");
+}
+void MediaPlayer::volumeDown()
+{
+    command("VOLUME_DOWN", "");
+}
 // extension for "generic" media browsing
 void MediaPlayer::browse(QString cmd)
 {
     command("BROWSE", cmd);
+}
+void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
+{
+    command(cmd, itemKey);
 }
 
 MediaPlayer::MediaPlayer(QObject *parent) :

@@ -1,5 +1,5 @@
 QT += qml quick websockets quickcontrols2 bluetooth
-CONFIG += c++11 disable-desktop qtquickcompiler
+CONFIG += c++11 disable-desktop # qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -80,6 +80,7 @@ lupdate_only{
 SOURCES = main.qml \
           MainContainer.qml \
           StandbyControl.qml \
+          ButtonHandler.qml \
           wifiSetup.qml \
           basic_ui/*.qml \
           basic_ui/pages/*.qml \
@@ -275,6 +276,3 @@ win32 {
 } else {
     error(unknown platform! Platform must be configured in remote.pro)
 }
-
-DISTFILES += \
-    basic_ui/CustomImageLoader.qml

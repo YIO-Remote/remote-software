@@ -22,16 +22,15 @@ public:
     Q_ENUM(states)
 
     // properties
-    Q_PROPERTY  (states         state       READ    state       NOTIFY      stateChanged)
-    Q_PROPERTY  (double         volume      READ    volume      NOTIFY      volumeChanged)
-    Q_PROPERTY  (bool           muted       READ    muted       NOTIFY      mutedChanged)
-    Q_PROPERTY  (QString        mediaType   READ    mediaType   NOTIFY      mediaTypeChanged)
-    Q_PROPERTY  (QString        mediaTitle  READ    mediaTitle  NOTIFY      mediaTitleChanged)
-    Q_PROPERTY  (QString        mediaArtist READ    mediaArtist NOTIFY      mediaArtistChanged)
-    Q_PROPERTY  (QString        mediaImage  READ    mediaImage  NOTIFY      mediaImageChanged)
-    Q_PROPERTY  (QString        source      READ    source      NOTIFY      sourceChanged)
-    Q_PROPERTY  (QVariant       browseItems READ    browseItems NOTIFY      browseItemsChanged)
-    Q_PROPERTY  (QVariant       browseCmds  READ    browseCmds  NOTIFY      browseCmdsChanged)
+    Q_PROPERTY  (states         state           READ    state           NOTIFY      stateChanged)
+    Q_PROPERTY  (double         volume          READ    volume          NOTIFY      volumeChanged)
+    Q_PROPERTY  (bool           muted           READ    muted           NOTIFY      mutedChanged)
+    Q_PROPERTY  (QString        mediaType       READ    mediaType       NOTIFY      mediaTypeChanged)
+    Q_PROPERTY  (QString        mediaTitle      READ    mediaTitle      NOTIFY      mediaTitleChanged)
+    Q_PROPERTY  (QString        mediaArtist     READ    mediaArtist     NOTIFY      mediaArtistChanged)
+    Q_PROPERTY  (QString        mediaImage      READ    mediaImage      NOTIFY      mediaImageChanged)
+    Q_PROPERTY  (QString        source          READ    source          NOTIFY      sourceChanged)
+    Q_PROPERTY  (QVariant       browseResult    READ    browseResult    NOTIFY      browseResultChanged)
 
     double                      volume() { return m_volume; }
     bool                        muted()  { return m_muted; }
@@ -42,8 +41,7 @@ public:
     QString                     source() { return m_source; }
 
     // extension for "generic" media browsing
-    QVariant                    browseItems() { return m_browseItems; }
-    QVariant                    browseCmds() { return m_browseCmds; }
+    QVariant                    browseResult() { return m_browseResult; }
 
     // methods
     Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
@@ -55,9 +53,12 @@ public:
     Q_INVOKABLE void            previous();
     Q_INVOKABLE void            next();
     Q_INVOKABLE void            setVolume(double value);
+    Q_INVOKABLE void            volumeUp();
+    Q_INVOKABLE void            volumeDown();
 
     // extension for "generic" media browsing
     Q_INVOKABLE void            browse(QString command);        // Command item_key, "TOP", "BACK", "PLAY"
+    Q_INVOKABLE void            playMedia(const QString& command, const QString& itemKey); // command PLAY, QUEUE
 
     // constructor
     explicit MediaPlayer(QObject *parent = nullptr);
@@ -74,8 +75,7 @@ signals:
     void mediaArtistChanged();
     void mediaImageChanged();
     void sourceChanged();
-    void browseItemsChanged();
-    void browseCmdsChanged();
+    void browseResultChanged();
 
 public:
     static QString Type;
@@ -104,8 +104,12 @@ private:
     QString                     m_source;
 
     // extension for "generic" media browsing
-    QVariant                    m_browseItems;         // Array of { item_key, title, sub_title, image_url }
-    QVariant                    m_browseCmds;          // Array of cmds like TOP, BACK, PLAY
+    QVariant                    m_browseResult;         // Better to return in one structure (perf, synchronisation) :
+                                                        // items :          Array of { item_key, title, sub_title, image_url }
+                                                        // playCommands:    Array of play commands for the items like PLAY, QUEUE
+                                                        // type:            Item type Genre, Album, Artist, Track, Playlist, Radio
+                                                        // title:           Name of the genre, album, artist, track
+                                                        // level:           Top is 0
 };
 
 #endif // MEDIAPLAYER_H

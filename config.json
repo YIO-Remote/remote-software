@@ -2,98 +2,47 @@
     "entities": {
         "light": [
             {
-                "entity_id": "light.backdoor_lamp",
-                "friendly_name": "Backdoor lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                ]
+              "entity_id": "Lightify|Arbeitsplatz",
+              "supported_features": [ "BRIGHTNESS", "COLOR" ],
+              "friendly_name": "Arbeitslicht",
+              "integration": "smarthome"
             },
             {
-                "entity_id": "light.entrance_lamp_level",
-                "friendly_name": "Entrance lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS"
-                ]
+              "entity_id": "HomeMatic|Wohnzimmer Rechts",
+              "supported_features": [ "BRIGHTNESS" ],
+              "friendly_name": "Wohnzimmer Rechts",
+              "integration": "smarthome"
             },
             {
-                "entity_id": "light.kitchen_lamp_level",
-                "friendly_name": "Kitchen lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS"
-                ]
+              "entity_id": "HomeMatic|Wohnzimmer Mitte",
+              "supported_features": [ "BRIGHTNESS" ],
+              "friendly_name": "Wohnzimmer Mitte",
+              "integration": "smarthome"
             },
             {
-                "entity_id": "light.kitchen_table_lamp_level",
-                "friendly_name": "Kitchen table lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS"
-                ]
+              "entity_id": "HomeMatic|Wohnzimmer Links",
+              "supported_features": [ "BRIGHTNESS" ],
+              "friendly_name": "Wohnzimmer Links",
+              "integration": "smarthome"
             },
             {
-                "entity_id": "light.kitchen_sink_lamp",
-                "friendly_name": "Kitchen sink lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                ]
+              "entity_id": "HomeMatic|Schlafzimmer",
+              "supported_features": [ "BRIGHTNESS" ],
+              "friendly_name": "Schlafzimmer",
+              "integration": "smarthome"
             },
             {
-                "entity_id": "light.living_room_lamp_level",
-                "friendly_name": "Living room lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS"
-                ]
-            },
-            {
-                "entity_id": "light.living_room_corner_lamp_level",
-                "friendly_name": "Living room corner lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS",
-                    "COLOR"
-                ]
-            },
-            {
-                "entity_id": "light.bedroom_lamp_level",
-                "friendly_name": "Bedroom lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS"
-                ]
-            }
-        ],
-        "blind": [
-            {
-                "entity_id": "cover.living_room_blinds_level",
-                "friendly_name": "Living room blinds",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "OPEN",
-                    "CLOSE",
-                    "STOP",
-                    "POSITION"
-                ]
-            },
-            {
-                "entity_id": "cover.bedroom_blinds_level",
-                "friendly_name": "Bedroom blinds",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "OPEN",
-                    "CLOSE",
-                    "STOP",
-                    "POSITION"
-                ]
+              "entity_id": "HomeMatic|Terrasse",
+              "supported_features": [ "BRIGHTNESS" ],
+              "friendly_name": "Terrasse",
+              "integration": "smarthome"
             }
         ],
         "media_player": [
             {
-                "entity_id": "media_player.beoplay_m5",
-                "friendly_name": "BeoPlay M5",
-                "integration": "homeassistant",
+                "entity_id": "media_player.work",
+                "friendly_name": "Arbeitsplatz",
+                "integration": "roon",
                 "type:": "speaker",
                 "supported_features": [
                     "SOURCE",
@@ -123,9 +72,10 @@
                 ]
             },
             {
-                "entity_id": "media_player.beoplay_s8",
-                "friendly_name": "BeoPlay S8",
-                "integration": "homeassistant",
+                "entity_id": "media_player.living",
+                "friendly_name": "Soundbar SPDIF",
+                "integration": "roon",
+                "type:": "speaker",
                 "supported_features": [
                     "SOURCE",
                     "APP_NAME",
@@ -152,133 +102,33 @@
                     "TURN_ON",
                     "TURN_OFF"
                 ]
-            },
-            {
-                "entity_id": "media_player.kitchen",
-                "friendly_name": "Kitchen speaker",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "SOURCE",
-                    "APP_NAME",
-                    "VOLUME",
-                    "VOLUME_UP",
-                    "VOLUME_DOWN",
-                    "VOLUME_SET",
-                    "MUTE",
-                    "MUTE_SET",
-                    "MEDIA_TYPE",
-                    "MEDIA_TITLE",
-                    "MEDIA_ARTIST",
-                    "MEDIA_ALBUM",
-                    "MEDIA_DURATION",
-                    "MEDIA_POSITION",
-                    "MEDIA_IMAGE",
-                    "PLAY",
-                    "PAUSE",
-                    "STOP",
-                    "PREVIOUS",
-                    "NEXT",
-                    "SEEK",
-                    "SHUFFLE",
-                    "TURN_ON",
-                    "TURN_OFF"
-                ]
-            },
-            {
-                "entity_id": "media_player.dm_tv",
-                "friendly_name": "Apple TV",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "SOURCE",
-                    "APP_NAME",
-                    "VOLUME",
-                    "VOLUME_UP",
-                    "VOLUME_DOWN",
-                    "VOLUME_SET",
-                    "MUTE",
-                    "MUTE_SET",
-                    "MEDIA_TYPE",
-                    "MEDIA_TITLE",
-                    "MEDIA_ARTIST",
-                    "MEDIA_ALBUM",
-                    "MEDIA_DURATION",
-                    "MEDIA_POSITION",
-                    "MEDIA_IMAGE",
-                    "PLAY",
-                    "PAUSE",
-                    "STOP",
-                    "PREVIOUS",
-                    "NEXT",
-                    "SEEK",
-                    "SHUFFLE",
-                    "TURN_ON",
-                    "TURN_OFF"
-                ]
-            }
-        ],
-        "remote": [
-            {
-                "entity_id": "remote.living_room",
-                "friendly_name": "Living room TV",
-                "integration": "YIO-Dock-30AEA4D73C34",
-                "supported_features": ["POWER TOGGLE", "CHANNEL UP"],
-                "commands": [
-                    {
-                        "code": "R1,0000,0067,0000,0015,0060,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,03f6",
-                        "button_map": "POWER_TOGGLE"
-                    },
-                    {
-                        "code": "R2,0000,0067,0000,0015,0060,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0030,0018,0030,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,0018,0018,0018,0030,0018,0018,03f6",
-                        "button_map": "CHANNEL_UP"
-                    }
-                ]    
             }
         ]
     },
     "integrations": 
     {
-        "homeassistant": 
+        "smarthomemqtt":
         {
-            "mdns": "_hap._tcp",
-            "data":         
+            "data":
             [
                 {
-                    "data": {
-                        "ip": "192.168.100.2:8123"
-                    },
-                    "friendly_name": "Home Assistant",
-                    "id": "homeassistant"
-                },
-                {
-                    "data": {
-                        "ip": "192.168.100.3:8123"
-                    },
-                    "friendly_name": "Home 2",
-                    "id": "homeassistant2"
+                    "url": "ws://www.christian-riedl.com/smarthome/mqtt/connectanonymous",
+                    "friendly_name": "RIC's SmartHome MQTT",
+                    "id": "smarthome",
+                    "log": "info"
                 }
             ]
         },
-        "ir": {
-            "data":
-            [
-                {
-                    "friendly_name": "IR",
-                    "id": "ir"
-                }    
-            ]
-        },
-        "appletv": 
+        "roon":
         {
-            "mdns": "_mediaremotetv._tcp",
             "data":
             [
                 {
-                    "data": {
-    
-                    },
-                    "friendly_name": "Apple TV",
-                    "id": "appletv"
-                }    
+                    "ip": "192.168.1.100",
+                    "friendly_name": "RICSRV-2019",
+                    "id": "roon",
+                    "log": "debug"
+                }
             ]
         }
     },
@@ -299,77 +149,31 @@
         "selected_profile": 0,
         "profiles": {
             "0": {
-                "name": "Marton",
-                "pages": ["favorites", "5", "1", "0", "6", "settings"],
-                "favorites": ["light.living_room_lamp_level", "cover.living_room_blinds_level"]
-            },
-            "1": {
-                "name": "Niels",
-                "pages": ["favorites","5","6"],
-                "favorites": ["media_player.beoplay_m5"]
-            },
-            "2": {
-                "name": "Markus",
-                "pages": ["1"],
-                "favorites": []
+                "name": "RIC",
+                "pages": ["favorites","0","1", "settings"],
+                "favorites": ["media_player.work"]
             }
         },
         "pages": {
             "0": {
-                "name": "Living room",
-                "image": "/usr/bin/yio-remote/images/livingroom.jpg",
-                "groups": ["3", "4", "10"],
-                "bluetooth": "xx:xx:xx:xx:xx"
-            },
-            "1": {
-                "name": "Kitchen",
-                "image": "/usr/bin/yio-remote/images/kitchen.jpg",
+                "name": "Wohnzimmer",
                 "groups": ["2"]
             },
-            "5": {
-                "name": "Entrance",
-                "groups": ["7"]
-            },
-            "6": {
-                "name": "Bedroom",
-                "groups": ["8", "9"]
+            "1": {
+                "name": "Schlafzimmer",
+                "groups": ["3"]
             }
         },
         "groups": {
             "2": {
                 "name": "Lights",
                 "switch": true,
-                "entities": ["light.kitchen_lamp_level", "light.kitchen_table_lamp_level", "light.kitchen_sink_lamp"]
+                "entities": ["Lightify|Arbeitsplatz", "HomeMatic|Wohnzimmer Rechts", "HomeMatic|Wohnzimmer Mitte", "HomeMatic|Wohnzimmer Links"]
             },
             "3": {
                 "name": "Lights",
                 "switch": true,
-                "entities": ["light.living_room_lamp_level", "light.living_room_corner_lamp_level"]
-            },
-            "4": {
-                "name": "Blinds",
-                "switch": false,
-                "entities": ["cover.living_room_blinds_level"]
-            },
-            "7": {
-                "name": "Lights",
-                "switch": true,
-                "entities": ["light.backdoor_lamp", "light.entrance_lamp_level"]
-            },
-            "8": {
-                "name": "Lights",
-                "switch": true,
-                "entities": ["light.bedroom_lamp_level"]
-            },
-            "9": {
-                "name": "Blinds",
-                "switch": false,
-                "entities": ["cover.bedroom_blinds_level"]
-            },
-            "10": {
-                "name": "Remotes",
-                "switch": false,
-                "entities": ["remote.living_room"]
+                "entities": ["HomeMatic|Schlafzimmer"]
             }
         }
     }
