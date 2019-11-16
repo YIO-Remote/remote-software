@@ -253,7 +253,7 @@ Item {
                                             //                                            PauseAnimation { duration: 200 }
                                             PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                             ParallelAnimation {
-                                                PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 500 }
+                                                PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                                 SequentialAnimation {
                                                     PauseAnimation { duration: 100 }
                                                     ParallelAnimation {
