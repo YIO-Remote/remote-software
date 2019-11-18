@@ -59,6 +59,7 @@ public:
     // extension for "generic" media browsing
     Q_INVOKABLE void            browse(QString command);        // Command item_key, "TOP", "BACK", "PLAY"
     Q_INVOKABLE void            playMedia(const QString& command, const QString& itemKey); // command PLAY, QUEUE
+    Q_INVOKABLE void            search(const QString& searchText, const QString& itemKey); // Search
 
     // constructor
     explicit MediaPlayer(QObject *parent = nullptr);
@@ -105,11 +106,12 @@ private:
 
     // extension for "generic" media browsing
     QVariant                    m_browseResult;         // Better to return in one structure (perf, synchronisation) :
-                                                        // items :          Array of { item_key, title, sub_title, image_url }
+                                                        // items :          Array of { item_key, title, sub_title, image_url, input_prompt for search }
                                                         // playCommands:    Array of play commands for the items like PLAY, QUEUE
                                                         // type:            Item type Genre, Album, Artist, Track, Playlist, Radio
                                                         // title:           Name of the genre, album, artist, track
                                                         // level:           Top is 0
+                                                        // error:           Error message
 };
 
 #endif // MEDIAPLAYER_H

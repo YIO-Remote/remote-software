@@ -114,11 +114,15 @@ void MediaPlayer::browse(QString cmd)
 }
 void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
 {
-    command(cmd, itemKey);
+    command("play:" + cmd, itemKey);
+}
+void MediaPlayer::search(const QString& searchString, const QString& itemKey)
+{
+    command("search:" + searchString, itemKey);
 }
 
 MediaPlayer::MediaPlayer(QObject *parent) :
-    Entity(Type, QVariantMap(), NULL, parent)
+    Entity(Type, QVariantMap(), nullptr, parent)
 {
 }
 

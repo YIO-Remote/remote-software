@@ -62,14 +62,17 @@ void Integrations::load()
     // load plugins that are not defined in config.json aka default plugins
     QStringList defaultIntegrations = {"dock"};
 
+    QString yiomode = m_engine->rootContext()->contextProperty("yiomode").toString();
     for (int k = 0; k<defaultIntegrations.length(); k++)
     {
-        QObject* obj = l->loadPlugin(m_appPath, defaultIntegrations[k]);
+        QString type = defaultIntegrations[k];
+        if (yiomode == "simulate" && type == "dock")        // Dock will not be found and not fire onCreateDone
+            continue;
+
+        QObject* obj = l->loadPlugin(m_appPath, type);
 
         // store the plugin objects
-        m_plugins.insert(defaultIntegrations[k], obj);
-
-        QString type = defaultIntegrations[k];
+        m_plugins.insert(type, obj);
 
         // create instances of the integration, no config needed for built in integrations
         IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
@@ -77,13 +80,10 @@ void Integrations::load()
             connect(interface, &IntegrationInterface::createDone, this, &Integrations::onCreateDone);
 
             QVariantMap map;
-            map.insert("type", defaultIntegrations[k]);
-
+            map.insert("type", type);
             interface->create(map, entities, notifications, api, config);
         }
-        QString yiomode = m_engine->rootContext()->contextProperty("yiomode").toString();
-        if (yiomode != "simulate")      // avoid waiting for docks onCreateDone
-            i++;
+        i++;
     }
 
     m_integrationsToLoad = i;

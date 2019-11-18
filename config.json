@@ -38,6 +38,38 @@
               "integration": "smarthome"
             }
         ],
+        "blind": [
+            {
+              "entity_id": "SomfyShutter|Rechts",
+              "supported_features": [ "OPEN", "CLOSE", "STOP", "POSITON"],
+              "friendly_name": "Jalousie Rechts",
+              "integration": "smarthome"
+            },
+            {
+              "entity_id": "SomfyShutter|Mitte",
+              "supported_features": [ "OPEN", "CLOSE", "STOP", "POSITON"],
+              "friendly_name": "Jalousie Mitte",
+              "integration": "smarthome"
+            },
+            {
+              "entity_id": "SomfyShutter|Links",
+              "supported_features": [ "OPEN", "CLOSE", "STOP", "POSITON"],
+              "friendly_name": "Jalousie Links",
+              "integration": "smarthome"
+            },
+            {
+              "entity_id": "SomfyShutter|Ost",
+              "supported_features": [ "OPEN", "CLOSE", "STOP", "POSITON"],
+              "friendly_name": "Jalousie Ost",
+              "integration": "smarthome"
+            },
+            {
+              "entity_id": "SomfyShutter|Markise",
+              "supported_features": [ "OPEN", "CLOSE", "STOP", "POSITON"],
+              "friendly_name": "Markise",
+              "integration": "smarthome"
+            }
+        ],
         "media_player": [
             {
                 "entity_id": "media_player.work",
@@ -150,7 +182,7 @@
         "profiles": {
             "0": {
                 "name": "RIC",
-                "pages": ["favorites","0","1", "settings"],
+                "pages": ["favorites","0","1","2", "settings"],
                 "favorites": ["media_player.work"]
             }
         },
@@ -162,6 +194,10 @@
             "1": {
                 "name": "Schlafzimmer",
                 "groups": ["3"]
+            },
+            "2": {
+                "name": "Terrasse",
+                "groups": ["4"]
             }
         },
         "groups": {
@@ -174,6 +210,11 @@
                 "name": "Lights",
                 "switch": true,
                 "entities": ["HomeMatic|Schlafzimmer"]
+            },
+            "4": {
+                "name": "Blinds",
+                "switch": false,
+                "entities": ["SomfyShutter|Rechts", "SomfyShutter|Mitte", "SomfyShutter|Links", "SomfyShutter|Markise"]
             }
         }
     }

@@ -18,7 +18,9 @@ Rectangle {
     property string selectedItemKey:    ""
     property int    selectedCommand:    0;
     property string selectedCommandKey: ""
+    property string selectedSearch:     ""
     property bool   showCommands:       false
+    property bool   showSearch:         false
 
     onBrowseResultChanged: {
         var i;
@@ -30,8 +32,7 @@ Rectangle {
                 item.image_url = "qrc:/images/mini-music-player/no_image.png";
             listItems.append(item);
         }
-        selectedItem = 0;
-        selectedItemKey = browseResult.items.length > selectedItem ? browseResult.items[selectedItem].item_key : "";
+        selectItem (0);
 
         // update play commands
         selectedCommand = 0;
@@ -54,13 +55,51 @@ Rectangle {
 
     function performCommand (command) {
         if (navCommands.indexOf (command) >= 0) {
-            if (command === "GOTO")
-                obj.browse(selectedItemKey);
+            if (command === "GOTO") {
+                if (selectedSearch != "") {
+                    var searchText = searchSection.children[1].text;
+                    if (showSearch && searchText !== "") {
+                        obj.search(searchText, selectedItemKey);
+                    }
+                    else {
+                        showSearch = true;
+                        return;
+                    }
+                }
+                else
+                    obj.browse(selectedItemKey);
+            }
             else
                 obj.browse(command)
         }
         else
             obj.playMedia(command, selectedItemKey);
+        showSearch = false;
+    }
+    function selectItem (index) {
+        if (index < 0)
+            index = 0;
+        if (index >= browseResult.items.length)
+            index = browseResult.items.length - 1;
+
+        if (index >= 0) {
+            selectedItem = index;
+            var item = browseResult.items[selectedItem];
+            selectedItemKey = item.item_key;
+            if (item.input_prompt)
+                selectedSearch = item.input_prompt;
+            else {
+                showSearch = false;
+                selectedSearch = "";
+            }
+            listView.currentIndex = selectedItem;
+        }
+        else {
+            selectedItem = 0;
+            selectedItemKey = "";
+            selectedSearch = "";
+        }
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -81,11 +120,7 @@ Rectangle {
                             }
                             return;
                         }
-                        if (selectedItem > 0) {
-                            selectedItem--;
-                            selectedItemKey = browseResult.items[selectedItem].item_key
-                            listView.currentIndex = selectedItem;
-                        }
+                        selectItem(selectedItem - 1);
                         break;
                     case "dpad down":
                         if (showCommands) {
@@ -95,31 +130,34 @@ Rectangle {
                             }
                             return;
                         }
-                        if (selectedItem < browseResult.items.length - 1) {
-                            selectedItem++;
-                            selectedItemKey = browseResult.items[selectedItem].item_key
-                            listView.currentIndex = selectedItem;
-                        }
+                        selectItem(selectedItem + 1);
                         break;
                     case "dpad middle":
                         if (showCommands) {
                             performCommand(selectedCommandKey);
-                            showCommands = false;
                         }
                         else {
-                            showCommands = true;
+                            if (commandItems.count > 0)
+                                showCommands = true;
                             return;
                         }
                         break;
                     case "dpad right":
-                        obj.browse(selectedItemKey);
-                        break;
+                        performCommand("GOTO");
+                        showCommands = false;
+                        return;
                     case "dpad left":
                         if (!showCommands)
                             obj.browse("BACK");
                         break;
                     case "top left":
                         obj.browse("TOP");
+                        break;
+                    case "top right":
+                        selectItem(selectedItem - 8);
+                        break;
+                    case "bottom right":
+                        selectItem(selectedItem + 8);
                         break;
                     case "volume up":
                         obj.volumeUp();
@@ -129,6 +167,7 @@ Rectangle {
                         break;
                 }
                 showCommands = false;
+                showSearch = false;
             }
         }
         onButtonRelease: {
@@ -145,6 +184,7 @@ Rectangle {
             haptic.playEffect("click");
             //obj.browse(model.item_key);
             showCommands = false;
+            showSearch = false;
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////
@@ -217,16 +257,20 @@ Rectangle {
                 visible: true
 
                 Text {
-                    anchors { left: parent.left; top:parent.top; topMargin: 5; leftMargin: 10 }
+                    anchors { left: parent.left; top:parent.top; topMargin: 0; leftMargin: 10 }
                     id: title
                     color: colorText
                     text: model.title
+                    font.family: "Open Sans"
+                    font.weight: Font.Normal
                     font.pixelSize: 24
                 }
                 Text {
                     anchors { left: parent.left; top: title.bottom; leftMargin: 10 }
                     color: colorText
                     text: model.sub_title
+                    font.family: "Open Sans"
+                    font.weight: Font.Normal
                     font.pixelSize: 24
                 }
                 Image {
@@ -245,8 +289,11 @@ Rectangle {
                 onClicked: {
                     haptic.playEffect("click");
                     //obj.browse(model.item_key);
-                    selectedItemKey = model.item_key
-                    showCommands = !showCommands;
+                    selectItem(model.index);
+                    if (showCommands)
+                        showCommands = false;
+                    else if (commandItems.count > 0)
+                        showCommands = true;
                 }
             }
         }
@@ -272,7 +319,7 @@ Rectangle {
     /////////////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
-        id: section
+        id: commandSection
         width: parent.width - 250
         height: commandItems.count * 70 + 20;
         radius: cornerRadius
@@ -310,6 +357,8 @@ Rectangle {
                         id: title
                         color: colorText
                         text: model.command
+                        font.family: "Open Sans"
+                        font.weight: Font.Normal
                         font.pixelSize: 24
                     }
                 }
@@ -335,6 +384,82 @@ Rectangle {
             orientation: ListView.Vertical
             model: commandItems
             delegate: commandDelegate
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    // Search
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: searchSection
+        width: parent.width - 100
+        height: 200;
+        radius: cornerRadius
+        color: colorBackground
+        visible : showSearch
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Text {
+            id: textSearch
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 10
+            color: colorText
+            text: "Enter your search !"
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 24
+        }
+        TextField {
+            id: textfieldSearch
+            width: parent.width - 40
+            anchors.left: parent.left
+            anchors.top: textSearch.bottom
+            anchors.margins: 20
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 28
+            color: "#000000"
+            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase | Qt.ImhNoPredictiveText
+            background: Rectangle {
+                implicitWidth: parent.width
+                implicitHeight: 50
+                color: colorHighlight1
+            }
+        }
+        Rectangle {
+            id: rectSearch
+            anchors.left: parent.left
+            anchors.top: textfieldSearch.bottom
+            anchors.margins: 20
+            width: parent.width - 40
+            height: 50
+            radius: cornerRadius;
+            color:  colorHighlight1;
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: colorText
+                text: "Start Search"
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 24
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    var x;
+                    x = parent.anchors;
+                    x = textSearch.anchors.top;
+                    x = textfieldSearch.anchors.top;
+                    x = rectSearch.anchors.top;
+                    haptic.playEffect("click");
+                    performCommand("GOTO");
+                }
+            }
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////
