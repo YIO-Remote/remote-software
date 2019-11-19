@@ -93,7 +93,7 @@ Rectangle {
     Text {
         id: icon
         color: colorText
-        text: "\uE903"
+        text: "\uE901"
         renderType: Text.NativeRendering
         width: 85
         height: 85
@@ -154,30 +154,24 @@ Rectangle {
         }
     }
 
-
-    Image {
+    Text {
         id: closeButton
-        asynchronous: true
-        width: 30
-        height: 30
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/components/close_button.png"
+        color: colorText
+        text: "\uE915"
+        renderType: Text.NativeRendering
+        width: 70
+        height: 70
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 80 }
         anchors.right: parent.right
-        anchors.rightMargin: 20
+        anchors.rightMargin: 10
         anchors.top: parent.top
         anchors.topMargin: 20
 
-        ColorOverlay {
-            visible: !darkMode
-            anchors.fill: parent
-            source: parent
-            color: colorText
-            antialiasing: true
-        }
-
         MouseArea {
-            width: parent.width + 60
-            height: parent.height + 60
+            width: parent.width + 20
+            height: parent.height + 20
             anchors.centerIn: parent
 
             onClicked: {

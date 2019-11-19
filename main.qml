@@ -76,6 +76,7 @@ ApplicationWindow {
 
                 // hide and show the charging screen
                 if (battery_averagepower >= 0 && chargingScreen.item) {
+                    console.debug("Charging screen visible");
                     chargingScreen.item.state = "visible";
                     // cancel shutdown when started charging
                     if (shutdownDelayTimer.running) {
@@ -83,6 +84,13 @@ ApplicationWindow {
                     }
                 } else if (chargingScreen.item) {
                     chargingScreen.item.state = "hidden";
+                }
+
+                // charging is done
+                if (battery_averagepower == 0 && battery_level == 1) {
+                    // signal with the dock that the remote is fully charged
+                    var obj = integrations.get(config.read.settings.paired_dock);
+                    obj.sendCommand("dock", "", "REMOTE_CHARGED", "");
                 }
 
                 console.debug("Average power:" + battery_averagepower + "mW");
@@ -226,21 +234,16 @@ ApplicationWindow {
         standbyControl.display_autobrightness = Qt.binding(function() { return config.read.settings.autobrightness })
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
 
-        // load the hub JsonFiles
-        if (integrations.load()) {
-            // if success, load the entities
-            entities.load();
-        }
+        // load the integrations
+//        if (integrations.load()) {
+//            // if success, load the entities
+//            entities.load();
+//        }
+        integrations.load();
+
 
         // set the language
         translateHandler.selectLanguage(config.read.language);
-
-        // when everything is loaded, load the main UI
-        if (fileio.exists("/wifisetup")) {
-            loader_main.setSource("qrc:/wifiSetup.qml");
-        } else {
-            loader_main.setSource("qrc:/MainContainer.qml");
-        }
 
         // load bluetooth
         bluetoothArea.init(config.read);
@@ -252,6 +255,23 @@ ApplicationWindow {
         api.start();
 
         battery.checkBattery();
+    }
+
+    // load the entities when the integrations are loaded
+    Connections {
+        target: integrations
+
+        onLoadComplete: {
+            console.debug("loadComplete");
+            entities.load();
+
+            // when everything is loaded, load the main UI
+            if (fileio.exists("/wifisetup")) {
+                loader_main.setSource("qrc:/wifiSetup.qml");
+            } else {
+                loader_main.setSource("qrc:/MainContainer.qml");
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -343,10 +363,10 @@ ApplicationWindow {
         id: loader_second
         asynchronous: true
         //        visible: false
-//        width: 480
-//        height: 800
-//        x: 0
-//        y: 0
+        //        width: 480
+        //        height: 800
+        //        x: 0
+        //        y: 0
 
         //        onStatusChanged: if (loader_second.status == Loader.Ready) {
         //                             loader_second.visible = true;
@@ -402,6 +422,10 @@ ApplicationWindow {
             lowBatteryNotification.item.open();
             wasBatteryWarning = true;
             standbyControl.touchDetected = true;
+
+            // signal with the dock that it is low battery
+            var obj = integrations.get(config.read.settings.paired_dock);
+            obj.sendCommand("dock", "", "REMOTE_LOWBATTERY", "");
         }
         if (battery_level > 0.2) {
             wasBatteryWarning = false;
@@ -519,6 +543,8 @@ ApplicationWindow {
     // STANDBY MODE TOUCHEVENT OVERLAY
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // captures all touch events when in standby mode. Avoids clicking on random buttons when waking up the display
+    property alias touchEventCatcher: touchEventCatcher
+
     MouseArea {
         id: touchEventCatcher
         anchors.fill: parent
@@ -528,6 +554,12 @@ ApplicationWindow {
         onPressAndHold: {
             console.debug("Disabling touch even catcher");
             touchEventCatcher.enabled = false;
+            standbyControl.displayControl.setmode("standbyoff");
+            if (standbyControl.display_autobrightness) {
+                standbyControl.setBrightness(standbyControl.display_brightness_ambient);
+            } else {
+                standbyControl.setBrightness(standbyControl.display_brightness_set);
+            }
         }
     }
 

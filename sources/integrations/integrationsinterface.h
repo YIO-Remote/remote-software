@@ -8,7 +8,7 @@ class IntegrationsInterface
 public:
     virtual ~IntegrationsInterface() {}
 
-    virtual void                    add                     (const QVariantMap& config, QObject *obj) = 0;
+    virtual void                    add                     (const QVariantMap& config, QObject *obj, const QString& type) = 0;
 };
 
 QT_BEGIN_NAMESPACE

@@ -10,14 +10,14 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
     m_type(type),
     m_area(config.value("area").toString()),
     m_friendly_name(config.value("friendly_name").toString()),
-    m_integration(config.value("type").toString()), //integration
+    m_integration(config.value("integration").toString()),
     m_supported_features(config.value("supported_features").toStringList()),
     m_attributes(config.value("attributes"))
 {
     setObjectName(config.value("entity_id").toString());
 
     QVariantMap c = Config::getInstance()->read();
-    QString p = QString::number(Config::getInstance()->profile());
+    QString p = Config::getInstance()->profile();
 
     QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
 
@@ -63,6 +63,7 @@ QVariantMap Entity::getDataToSave()
 
 bool Entity::update(const QVariantMap &attributes)
 {
+    return false;
 }
 
 void Entity::setFavorite(bool value)
@@ -70,7 +71,7 @@ void Entity::setFavorite(bool value)
         QTimer::singleShot(1000, this, [=](){
 
             QVariantMap c = Config::getInstance()->read();
-            QString p = QString::number(Config::getInstance()->profile());
+            QString p = Config::getInstance()->profile();
 
             QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
 

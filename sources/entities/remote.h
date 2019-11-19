@@ -16,6 +16,50 @@ public:
 
     QVariantList                commands() const { return m_commands; }
 
+    // transport and media controls
+    Q_INVOKABLE void            play();
+    Q_INVOKABLE void            pause();
+    Q_INVOKABLE void            playToggle();
+    Q_INVOKABLE void            stop();
+    Q_INVOKABLE void            forward();
+    Q_INVOKABLE void            backward();
+    Q_INVOKABLE void            next();
+    Q_INVOKABLE void            previous();
+    Q_INVOKABLE void            info();
+    Q_INVOKABLE void            recordings();
+    Q_INVOKABLE void            record();
+    Q_INVOKABLE void            live();
+
+    // navigation
+    Q_INVOKABLE void            cursorUp();
+    Q_INVOKABLE void            cursorDown();
+    Q_INVOKABLE void            cursorLeft();
+    Q_INVOKABLE void            cursorRight();
+    Q_INVOKABLE void            cursorOK();
+    Q_INVOKABLE void            back();
+    Q_INVOKABLE void            home();
+    Q_INVOKABLE void            menu();
+    Q_INVOKABLE void            exit();
+    Q_INVOKABLE void            app();
+
+    // power commands
+    Q_INVOKABLE void            powerOn();
+    Q_INVOKABLE void            powerOff();
+    Q_INVOKABLE void            powerToggle();
+
+    // tuner commands
+    Q_INVOKABLE void            channelUp();
+    Q_INVOKABLE void            channelDown();
+    Q_INVOKABLE void            channelSearch();
+    Q_INVOKABLE void            favorite();
+    Q_INVOKABLE void            guide();
+
+    // volume commands
+    Q_INVOKABLE void            volumeUp();
+    Q_INVOKABLE void            volumeDown();
+    Q_INVOKABLE void            muteToggle();
+
+
     explicit Remote(QObject *parent = nullptr);
     Remote(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
 
@@ -36,7 +80,7 @@ public:
             "DIGIT_0", "DIGIT_1","DIGIT_2", "DIGIT_3", "DIGIT_4", "DIGIT_5", "DIGIT_6", "DIGIT_7", "DIGIT_8", "DIGIT_9", "DIGIT_10", "DIGIT_10+", "DIGIT_11", "DIGIT_12", "DIGIT_SEPARATOR", "DIGIT_ENTER,"
 
             // navigation
-            "CURSOR_UP", "CURSOR_DOWN", "CURSOR_LEFT", "CURSOR_RIGHT", "CURSOR_OK", "BACK", "HOME", "MENU", "EXIT", "INFO", "APP",
+            "CURSOR_UP", "CURSOR_DOWN", "CURSOR_LEFT", "CURSOR_RIGHT", "CURSOR_OK", "BACK", "HOME", "MENU", "EXIT", "INFO", "APP", // INFO is repeated twice
 
             // power
             "POWER_OFF", "POWER_ON", "POWER_TOGGLE",

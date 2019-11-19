@@ -3,7 +3,11 @@ CONFIG += c++11 disable-desktop qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+include(qmake-target-platform.pri)
+include(qmake-destination-path.pri)
+
 HEADERS += \
+    components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
     sources/configinterface.h \
     sources/entities/remote.h \
@@ -13,6 +17,7 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \
+    sources/logger.h \
     sources/translation.h \
     sources/hardware/touchdetect.h \
     sources/hardware/proximity_gesture_control.h \
@@ -30,13 +35,16 @@ HEADERS += \
     sources/notificationsinterface.h \
     sources/entities/mediaplayer.h \
     sources/bluetootharea.h \
+    sources/utils.h \
     sources/yioapi.h \
     sources/yioapiinterface.h
 
 SOURCES += \
+    components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/remote.cpp \
     sources/integrations/integrations.cpp \
+    sources/logger.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
@@ -50,6 +58,7 @@ SOURCES += \
     sources/notifications.cpp \
     sources/entities/mediaplayer.cpp \
     sources/bluetootharea.cpp \
+    sources/utils.cpp \
     sources/yioapi.cpp
 
 equals(QT_ARCH, arm): {
@@ -66,7 +75,7 @@ RESOURCES += qml.qrc \
     keyboard.qrc \
     translations.qrc
 
-# TRANSLATION
+# === start TRANSLATION section =======================================
 lupdate_only{
 SOURCES = main.qml \
           MainContainer.qml \
@@ -111,56 +120,143 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
+# lupdate & lrelease integration in qmake is a major pain to get working on Linux, macOS, Windows PLUS Linux arm cross compile PLUS qmake / make cmd line!
+# There are so many different ways and each one works great on SOME platform(s) only :-(
+# So this here might look excessive but I found no other reliable way to make it work on as many environments as possible...
+# 1.) Check if we get the linguist cmd line tools from the QT installation (works in Qt Creator on Linux, macOS and Win but not with Buildroot / Linux crosscompile)
+exists($$[QT_INSTALL_BINS]/lupdate):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate
+exists($$[QT_INSTALL_BINS]/lrelease):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
+  # think about our Windows friends
+exists($$[QT_INSTALL_BINS]/lupdate.exe):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate.exe
+exists($$[QT_INSTALL_BINS]/lrelease.exe):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease.exe
+# 2.) Check if it's available from $HOST_DIR env var which is set during Buildroot. Only use it if it's not already defined (*=).
+exists($$(HOST_DIR)/bin/lupdate):QMAKE_LUPDATE *= $$(HOST_DIR)/bin/lupdate
+exists($$(HOST_DIR)/bin/lrelease):QMAKE_LRELEASE *= $$(HOST_DIR)/bin/lrelease
+# 3.) Linux Qt Creator arm cross compile: QT_INSTALL_BINS is NOT available, but host tools should be available in QTDIR
+exists($$(QTDIR)/bin/lupdate):QMAKE_LUPDATE *= $$(QTDIR)/bin/lupdate
+exists($$(QTDIR)/bin/lrelease):QMAKE_LRELEASE *= $$(QTDIR)/bin/lrelease
+# 4.) Fallback: custom env var QT_LINGUIST_DIR (which can also be used to override the tools found in the path)
+exists($$(QT_LINGUIST_DIR)/lupdate):QMAKE_LUPDATE *= $$(QT_LINGUIST_DIR)/lupdate
+exists($$(QT_LINGUIST_DIR)/lrelease):QMAKE_LRELEASE *= $$(QT_LINGUIST_DIR)/lrelease
+# 5.) Last option: check path, plain and simple. (Would most likely be enough on most systems...)
+if(!defined($$QMAKE_LUPDATE, var)) {
+    win32:QMAKE_LUPDATE    = $$system(where lupdate)
+    unix|mac:QMAKE_LUPDATE = $$system(which lupdate)
+}
+if(!defined($$QMAKE_LRELEASE, var)) {
+    win32:QMAKE_LRELEASE    = $$system(where lrelease)
+    unix|mac:QMAKE_LRELEASE = $$system(which lrelease)
+}
+
+exists($$QMAKE_LUPDATE) {
+    message("Using Qt linguist tools: '$$QMAKE_LUPDATE', '$$QMAKE_LRELEASE'")
+    command = $$QMAKE_LUPDATE remote.pro
+    system($$command) | error("Failed to run: $$command")
+    command = $$QMAKE_LRELEASE remote.pro
+    system($$command) | error("Failed to run: $$command")
+} else {
+    warning("Qt linguist cmd line tools lupdate / lrelease not found: translations will NOT be compiled and build will most likely fail due to missing .qm files!")
+}
+
+# === end TRANSLATION section =========================================
+
 # include zeroconf
 include(qtzeroconf/qtzeroconf.pri)
-DEFINES = QZEROCONF_STATIC
+DEFINES += QZEROCONF_STATIC
 
 # Wiringpi config, only on raspberry pi
 equals(QT_ARCH, arm): {
+    message(Cross compiling for arm system: including Wiringpi config on RPi)
+
+    # FIXME hard coded directory path!
     INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
     LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
     LIBS += -lwiringPi
 }
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+# Configure destination path. DESTDIR is set in qmake-destination-path.pri
+OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/obj
+MOC_DIR = $$PWD/build/$$DESTINATION_PATH/moc
+RCC_DIR = $$PWD/build/$$DESTINATION_PATH/qrc
+UI_DIR = $$PWD/build/$$DESTINATION_PATH/ui
 
-# Configure default JSON destination path
-DESTDIR = $$OUT_PWD
+# Default rules for deployment.
+# This enables RPi device deployment in Qt Creator
+qnx: target.path = /tmp/$${TARGET}/bin
+else: linux: target.path = /opt/$${TARGET}/bin  # A different target path is used on purpose to leave the installed app untouched
+
+# Wildcards or directories just don't work: One has to know the magic $$files() command!
+targetConfig.files = *.json
+targetConfig.path = $$target.path
+targetFonts.files = $$files($$PWD/fonts/*.*)
+targetFonts.path = $$target.path/fonts
+targetIcons.files = $$files($$PWD/icons/*.*)
+targetIcons.path = $$target.path/icons
+# The integration projects have to store the binary plugin in the destination folder.
+# Note: restart Qt Creator if it doesn't pick up new plugins!
+targetPlugins.files = $$files($$DESTDIR/plugins/*.*)
+targetPlugins.path = $$target.path/plugins
+
+!isEmpty(target.path): INSTALLS += target
+!isEmpty(target.path): INSTALLS += targetConfig
+!isEmpty(target.path): INSTALLS += targetFonts
+!isEmpty(target.path): INSTALLS += targetIcons
+!isEmpty(target.path): INSTALLS += targetPlugins
 
 win32 {
-    CONFIG(debug, debug|release) {
-    DESTDIR = $$DESTDIR/debug
-    }
-    CONFIG(release, debug|release) {
-    DESTDIR = $$DESTDIR/release
-    }
-
-    # copy plugin files
     CONFIG += file_copies
-    COPIES += plugins
-    plugins.files = $$files($$PWD/plugins/*.*)
-    plugins.path = $$DESTDIR/release/plugins
+    COPIES += extraData
+    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.path = $$DESTDIR
 
     #copy fonts
-    COPIES += icons
+    COPIES += fonts
     fonts.files = $$files($$PWD/fonts/*.*)
-    fonts.path = $$DESTDIR/release/fonts
+    fonts.path = $$DESTDIR/fonts
 
     #copy icons
     COPIES += icons
     icons.files = $$files($$PWD/icons/*.*)
-    icons.path = $$DESTDIR/release/icons
-}
-macx {
+    icons.path = $$DESTDIR/icons
+
+    #plugins are already stored in DESTDIR by the integration projects
+
+    # TODO Windows application icon
+    #RC_ICONS = icons/windows.ico
+} else:linux {
+    CONFIG += file_copies
+    COPIES += extraData
+    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.path = $$DESTDIR
+
+    #copy fonts
+    COPIES += fonts
+    fonts.files = $$files($$PWD/fonts/*.*)
+    fonts.path = $$DESTDIR/fonts
+
+    #copy icons
+    COPIES += icons
+    icons.files = $$files($$PWD/icons/*.*)
+    icons.path = $$DESTDIR/icons
+
+    #plugins are already stored in DESTDIR by the integration projects
+
+    # create deployment archive for RPi image build only
+    # usage: make install_tarball
+    equals(QT_ARCH, arm): {
+        tarball.path = $$DESTDIR_BIN
+        message( Storing tarball in $$tarball.path/$${TARGET}-$${platform_path}_$${processor_path}_$${build_path}.tar )
+        tarball.extra = mkdir -p $$tarball.path; tar -cvf $$tarball.path/$${TARGET}-$${platform_path}_$${processor_path}_$${build_path}.tar -C $$DESTDIR .
+        INSTALLS += tarball
+    }
+
+} else:macx {
     APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
-    # copy plugin files
-    INTEGRATIONS.files = $$files($$PWD/plugins/*.*)
+    # re-package plugin files into app bundle
+    INTEGRATIONS.files = $$files($$DESTDIR/plugins/*.*)
     INTEGRATIONS.path = Contents/Resources/plugins
     QMAKE_BUNDLE_DATA += INTEGRATIONS
 
@@ -174,26 +270,10 @@ macx {
     ICONS.path = Contents/Resources/icons
     QMAKE_BUNDLE_DATA += ICONS
 
+    # TODO macOS application icon
+    #ICON=icons/macos.icns
 } else {
-    CONFIG += file_copies
-    COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/translations.json
-    extraData.path = $$DESTDIR
-
-    # copy plugin files
-    COPIES += plugins
-    plugins.files = $$files($$PWD/plugins/*.*)
-    plugins.path = $$DESTDIR/plugins
-
-    #copy fonts
-    COPIES += fonts
-    fonts.files = $$files($$PWD/fonts/*.*)
-    fonts.path = $$DESTDIR/fonts
-
-    #copy icons
-    COPIES += icons
-    icons.files = $$files($$PWD/icons/*.*)
-    icons.path = $$DESTDIR/icons
+    error(unknown platform! Platform must be configured in remote.pro)
 }
 
 DISTFILES +=

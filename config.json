@@ -2,7 +2,6 @@
     "entities": {
         "light": [
             {
-                "area": "Entrance",
                 "entity_id": "light.backdoor_lamp",
                 "friendly_name": "Backdoor lamp",
                 "integration": "homeassistant",
@@ -10,7 +9,6 @@
                 ]
             },
             {
-                "area": "Entrance",
                 "entity_id": "light.entrance_lamp_level",
                 "friendly_name": "Entrance lamp",
                 "integration": "homeassistant",
@@ -19,7 +17,6 @@
                 ]
             },
             {
-                "area": "Kitchen",
                 "entity_id": "light.kitchen_lamp_level",
                 "friendly_name": "Kitchen lamp",
                 "integration": "homeassistant",
@@ -28,7 +25,6 @@
                 ]
             },
             {
-                "area": "Kitchen",
                 "entity_id": "light.kitchen_table_lamp_level",
                 "friendly_name": "Kitchen table lamp",
                 "integration": "homeassistant",
@@ -37,7 +33,6 @@
                 ]
             },
             {
-                "area": "Kitchen",
                 "entity_id": "light.kitchen_sink_lamp",
                 "friendly_name": "Kitchen sink lamp",
                 "integration": "homeassistant",
@@ -45,7 +40,6 @@
                 ]
             },
             {
-                "area": "Living room",
                 "entity_id": "light.living_room_lamp_level",
                 "friendly_name": "Living room lamp",
                 "integration": "homeassistant",
@@ -54,7 +48,6 @@
                 ]
             },
             {
-                "area": "Living room",
                 "entity_id": "light.living_room_corner_lamp_level",
                 "friendly_name": "Living room corner lamp",
                 "integration": "homeassistant",
@@ -64,7 +57,6 @@
                 ]
             },
             {
-                "area": "Bedroom",
                 "entity_id": "light.bedroom_lamp_level",
                 "friendly_name": "Bedroom lamp",
                 "integration": "homeassistant",
@@ -75,7 +67,6 @@
         ],
         "blind": [
             {
-                "area": "Living room",
                 "entity_id": "cover.living_room_blinds_level",
                 "friendly_name": "Living room blinds",
                 "integration": "homeassistant",
@@ -87,7 +78,6 @@
                 ]
             },
             {
-                "area": "Bedroom",
                 "entity_id": "cover.bedroom_blinds_level",
                 "friendly_name": "Bedroom blinds",
                 "integration": "homeassistant",
@@ -101,7 +91,6 @@
         ],
         "media_player": [
             {
-                "area": "Living room",
                 "entity_id": "media_player.beoplay_m5",
                 "friendly_name": "BeoPlay M5",
                 "integration": "homeassistant",
@@ -134,7 +123,6 @@
                 ]
             },
             {
-                "area": "Living room",
                 "entity_id": "media_player.beoplay_s8",
                 "friendly_name": "BeoPlay S8",
                 "integration": "homeassistant",
@@ -166,7 +154,6 @@
                 ]
             },
             {
-                "area": "Kitchen",
                 "entity_id": "media_player.kitchen",
                 "friendly_name": "Kitchen speaker",
                 "integration": "homeassistant",
@@ -198,7 +185,6 @@
                 ]
             },
             {
-                "area": "Living room",
                 "entity_id": "media_player.dm_tv",
                 "friendly_name": "Apple TV",
                 "integration": "homeassistant",
@@ -232,10 +218,9 @@
         ],
         "remote": [
             {
-                "area": "Living room",
                 "entity_id": "remote.living_room",
                 "friendly_name": "Living room TV",
-                "integration": "ir",
+                "integration": "YIO-Dock-30AEA4D73C34",
                 "supported_features": ["POWER TOGGLE", "CHANNEL UP"],
                 "commands": [
                     {
@@ -305,7 +290,8 @@
         "shutdowntime": 7200,
         "softwareupdate": false,
         "wifitime": 240,
-        "bluetootharea": false
+        "bluetootharea": false,
+        "paired_dock": "YIO-Dock-30AEA4D73C34"
     },
     "ui_config": 
     {

@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QJsonArray>
 #include "configinterface.h"
 #include "jsonfile.h"
@@ -17,7 +18,7 @@ class Config : public QObject, ConfigInterface
 public:
     Q_PROPERTY (QVariantMap      read           READ read           NOTIFY configChanged)
     Q_PROPERTY (QVariantMap      write          WRITE readWrite     NOTIFY configChanged)
-    Q_PROPERTY (int              profile        READ profile        WRITE profileWrite      NOTIFY profileChanged)
+    Q_PROPERTY (QString          profile        READ profile        WRITE profileWrite      NOTIFY profileChanged)
 
     Q_INVOKABLE void readConfig(QString path);
     Q_INVOKABLE void writeConfig();
@@ -33,13 +34,19 @@ public:
         emit configChanged();
     }
 
-    // profile
-    int profile()
+    // get context property
+    QVariant getContextProperty(const QString& name)
     {
-        return m_config.value("ui_config").toMap().value("selected_profile").toInt();
+        return m_engine->rootContext()->contextProperty(name);
     }
 
-    void profileWrite(int id)
+    // profile
+    QString profile()
+    {
+        return m_config.value("ui_config").toMap().value("selected_profile").toString();
+    }
+
+    void profileWrite(QString id)
     {
         QVariantMap p = m_config.value("ui_config").toMap();
         p.insert("selected_profile", id);

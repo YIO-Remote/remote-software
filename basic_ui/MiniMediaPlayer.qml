@@ -2,6 +2,10 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import "qrc:/basic_ui" as BasicUI
+
+import MediaPlayerUtils 1.0
+
 Item {
     id: miniMediaPlayer
     width: 480
@@ -28,18 +32,22 @@ Item {
     ]
     transitions: [
         Transition {to: "closed";
+            SequentialAnimation {
+                PauseAnimation { duration: 200 }
                 ParallelAnimation {
-                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutExpo; duration: 300 }
-                    ParentAnimation {
-                        NumberAnimation { properties: "scale"; easing.type: Easing.InExpo; duration: 180 }
-                    }
+                    PropertyAnimation { target: loader_main; properties: "state"; duration: 1 }
+                    PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
                 }
+                ParentAnimation {
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                }
+            }
         },
         Transition {to: "open";
             ParallelAnimation {
-                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
                 ParentAnimation {
-                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                    NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
                 }
             }
         }
@@ -56,17 +64,23 @@ Item {
             width: miniMediaPlayer.width
             height: miniMediaPlayer.height
             radius: miniMediaPlayer.state == "closed" ? 0 : cornerRadius
+
+            Behavior on radius {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
         }
     }
 
-    property var players: entities.mediaplayersPlaying
+    Connections {
+        target: entities
 
-    onPlayersChanged: {
-        if (entities.mediaplayersPlaying.length == 0) {
-            loader_main.state = "visible";
-            loader_main.item.miniMediaPlayer.height = 0;
-            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
-            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
+        onMediaplayersPlayingChanged: {
+            if (entities.mediaplayersPlaying.length == 0) {
+                loader_main.state = "visible";
+                loader_main.item.miniMediaPlayer.height = 0;
+                loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
+                loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
+            }
         }
     }
 
@@ -81,7 +95,7 @@ Item {
         onButtonPress: {
             switch (button) {
             case "dpad middle":
-                players[mediaPlayers.currentIndex].play();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
                 break;
             case "dpad right":
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
@@ -123,20 +137,13 @@ Item {
         }
 
         onButtonRelease: {
-            switch (button) {
-            case "volume up":
-                buttonTimeout.stop();
-                break;
-            case "volume down":
-                buttonTimeout.stop();
-                break;
-            }
+            buttonTimeout.stop();
         }
     }
 
     Timer {
         id: buttonTimeout
-        interval: 250
+        interval: 300
         repeat: true
         running: false
         triggeredOnStart: true
@@ -177,14 +184,20 @@ Item {
 
         Repeater {
             id: mediaPlayersRepeater
-            model: players.length
+            model: entities.mediaplayersPlaying.length
 
             Item {
                 id: player
                 width: 480
+
+                // include mediaplayer utils
+                MediaPlayerUtils {
+                    id: mediaplayerUtils
+                }
+
                 property alias player: player
 
-                property var obj: players[index]
+                property var obj: entities.mediaplayersPlaying[index]
 
                 state: "closed"
 
@@ -194,9 +207,7 @@ Item {
                         PropertyChanges {target: title; opacity: 0 }
                         PropertyChanges {target: artist; opacity: 0 }
                         PropertyChanges {target: closeButton; opacity: 1 }
-                        PropertyChanges {target: blur; radius: 0 }
-                        PropertyChanges {target: overlay; opacity: 0.5 }
-                        PropertyChanges {target: titleOpen; y: 200; opacity: 1 }
+                        PropertyChanges {target: titleOpen; y: 380; opacity: 1 }
                         PropertyChanges {target: artistOpen; opacity: 0.8 }
                         PropertyChanges {target: indicator; opacity: 1 }
                         PropertyChanges {target: speaker; opacity: 1 }
@@ -204,6 +215,8 @@ Item {
                         PropertyChanges {target: prevButton; opacity: 1 }
                         PropertyChanges {target: nextButton; opacity: 1 }
                         PropertyChanges {target: sourceText; opacity: 1 }
+                        PropertyChanges {target: bgImage; opacity: 1; visible: true }
+                        PropertyChanges {target: image; opacity: 0 }
                     },
                     State {
                         name: "closed"
@@ -211,9 +224,7 @@ Item {
                         PropertyChanges {target: title; opacity: 1 }
                         PropertyChanges {target: artist; opacity: 1 }
                         PropertyChanges {target: closeButton; opacity: 0 }
-                        PropertyChanges {target: blur; radius: 10 }
-                        PropertyChanges {target: overlay; opacity: 0.7 }
-                        PropertyChanges {target: titleOpen; y: 366; opacity: 0 }
+                        PropertyChanges {target: titleOpen; y: 420; opacity: 0 }
                         PropertyChanges {target: artistOpen; opacity: 0 }
                         PropertyChanges {target: indicator; opacity: 0 }
                         PropertyChanges {target: speaker; opacity: 0 }
@@ -221,6 +232,8 @@ Item {
                         PropertyChanges {target: prevButton; opacity: 0 }
                         PropertyChanges {target: nextButton; opacity: 0 }
                         PropertyChanges {target: sourceText; opacity: 0 }
+                        PropertyChanges {target: bgImage; opacity: 0; visible: false }
+                        PropertyChanges {target: image; opacity: 1 }
                     }]
 
                 transitions: [
@@ -231,29 +244,27 @@ Item {
                                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                PropertyAnimation { target: overlay; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: image; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 SequentialAnimation {
                                     PauseAnimation { duration: 300 }
                                     ParallelAnimation {
-                                        //PropertyAnimation { target: blur; properties: "radius"; easing.type: Easing.InExpo; duration: 300 }
-                                        PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 500 }
+                                        PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                                         PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                         SequentialAnimation {
                                             //                                            PauseAnimation { duration: 200 }
                                             PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                             ParallelAnimation {
-                                                PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 500 }
-                                                SequentialAnimation {
-                                                    PauseAnimation { duration: 100 }
-                                                    ParallelAnimation {
-                                                        PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                                        PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                                    }
-                                                }
+                                                PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                                PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                                PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                             }
                                         }
                                         PropertyAnimation { target: speaker; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                        SequentialAnimation {
+                                            PropertyAnimation { target: bgImage; properties: "visible"; duration: 1 }
+                                            PropertyAnimation { target: bgImage; properties: "opacity"; easing.type: Easing.OutExpo; duration: 500 }
+                                        }
                                     }
                                 }
                             }
@@ -261,95 +272,63 @@ Item {
                     },
                     Transition {
                         to: "closed"
-                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: overlay; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: speaker; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                        PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        SequentialAnimation {
+                            PropertyAnimation { target: bgImage; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+                            PropertyAnimation { target: bgImage; properties: "visible"; duration: 1 }
+                            ParallelAnimation {
+                                PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: closeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: titleOpen; properties: "y, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: speaker; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                                PropertyAnimation { target: image; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                            }
+                        }
                     }
                 ]
 
                 Rectangle {
                     id: comp
                     anchors.fill: parent
-                    color: colorBackground
+                    color: mediaplayerUtils.pixelColor
 
-                    Image {
+                    Behavior on color {
+                        ColorAnimation { duration: 300 }
+                    }
+
+                    property var m_image: entities.mediaplayersPlaying[index].mediaImage
+
+                    onM_imageChanged: {
+                        mediaplayerUtils.imageURL = entities.mediaplayersPlaying[index].mediaImage
+                    }
+
+                    CustomImageLoader {
                         id: bgImage
-                        anchors.fill: parent
-                        fillMode: Image.PreserveAspectCrop
-                        asynchronous: true
-                        source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
-
-                        onStatusChanged: {
-                            if (image.status == Image.Error) {
-                                image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
-                            }
-                        }
-                    }
-
-                    GaussianBlur {
-                        id: blur
-                        anchors.fill: bgImage
-                        source: bgImage
-                        radius: 10
-                        samples: 10
+                        width: 280
+                        height: 280
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.top: parent.top
+                        anchors.topMargin: 86
+                        url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
-                Image {
-                    id: noise
-                    anchors.fill: parent
-                    asynchronous: true
-                    fillMode: Image.PreserveAspectCrop
-                    source: "qrc:/images/mini-music-player/noise.png"
-                }
-
-                Blend {
-                    anchors.fill: comp
-                    source: comp
-                    foregroundSource: noise
-                    mode: "multiply"
-                }
-
-                Rectangle {
-                    id: overlay
-                    anchors.fill: noise
-                    color: colorBackground
-                    opacity: 0.7
-                }
-
-                Image {
+                CustomImageLoader {
                     id: image
-                    width: 60
-                    height: 60
+                    width: 90
+                    height: width
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left
-                        leftMargin: 15
+                        leftMargin: 0
                     }
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                    source: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
-
-                    onStatusChanged: {
-                        if (image.status == Image.Error) {
-                            image.source = players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : players[index].mediaImage
-                        }
-                    }
-
-                    opacity: miniMediaPlayer.state == "closed" ? 1 : 0
-
-                    Behavior on opacity {
-                        NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                    }
+                    url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
                 Item {
@@ -359,12 +338,11 @@ Item {
                     anchors.left: image.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: image.verticalCenter
-                    anchors.topMargin: 290
 
                     Text {
                         id: title
                         color: colorText
-                        text: players[index].mediaTitle
+                        text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
@@ -378,7 +356,7 @@ Item {
                     Text {
                         id: artist
                         color: colorText
-                        text: players[index].friendly_name
+                        text: entities.mediaplayersPlaying[index].mediaTitle
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
@@ -408,7 +386,7 @@ Item {
                 Text {
                     id: sourceText
                     color: colorText
-                    text: players[index].source
+                    text: entities.mediaplayersPlaying[index].source
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
                     font.family: "Open Sans"
@@ -426,10 +404,11 @@ Item {
                 Text {
                     id: titleOpen
                     color: colorText
-                    text: players[index].mediaTitle
+                    text: entities.mediaplayersPlaying[index].mediaTitle
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    wrapMode: Text.NoWrap
                     width: parent.width-80
                     font.family: "Open Sans"
                     font.weight: Font.Bold
@@ -442,17 +421,17 @@ Item {
                 Text {
                     id: artistOpen
                     color: colorText
-                    text: players[index].mediaArtist
+                    text: entities.mediaplayersPlaying[index].mediaArtist
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    wrapMode: Text.NoWrap
                     width: parent.width-80
                     font.family: "Open Sans"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     lineHeight: 1
                     anchors.top: titleOpen.bottom
-                    anchors.topMargin: 10
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -473,7 +452,7 @@ Item {
 
                     Text {
                         color: colorText
-                        text: players[index].friendly_name
+                        text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         font.family: "Open Sans"
                         font.weight: Font.Normal
@@ -491,33 +470,30 @@ Item {
 
     }
 
-    Item {
+    Text {
         id: closeButton
-        width: 60
-        height: width
-
-        anchors.top: parent.top
+        color: colorText
+        text: "\uE916"
+        renderType: Text.NativeRendering
+        width: 70
+        height: 70
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 80 }
         anchors.right: parent.right
-
-        Image {
-            asynchronous: true
-            anchors {
-                top: parent.top
-                topMargin: 20
-                right: parent.right
-                rightMargin: 20
-            }
-
-            source: "qrc:/images/mini-music-player/icon-close.png"
-        }
+        anchors.rightMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 10
 
         MouseArea {
-            anchors.fill: parent
-            enabled: miniMediaPlayer.state == "open" ? true : false
+            width: parent.width + 20
+            height: parent.height + 20
+            anchors.centerIn: parent
+            enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
                 haptic.playEffect("click");
-                miniMediaPlayer.state = "closed";
+                miniMediaPlayer.state = "closed"
             }
         }
     }
@@ -533,10 +509,16 @@ Item {
             verticalCenter: playButton.verticalCenter
         }
 
-        Image {
+        Text {
+            color: colorText
+            text: "\uE909"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
-            asynchronous: true
-            source: "qrc:/images/mini-music-player/icon-prev.png"
         }
 
         MouseArea {
@@ -545,63 +527,55 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                players[mediaPlayers.currentIndex].previous();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].previous();
             }
         }
     }
 
-    Rectangle {
+    Item {
         id: playButton
         width: 120
         height: 120
-        radius: height/2
-        color: colorLight
 
-        property bool isPlaying: players[mediaPlayers.currentIndex] && players[mediaPlayers.currentIndex].state == 3 ? true : false
+        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == 3 ? true : false
 
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 140
+            bottomMargin: 80
         }
 
-        Item {
-            width: childrenRect.width
-            height: childrenRect.height
+        Text {
+            color: colorText
+            text: "\uE905"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
+            opacity: playButton.isPlaying ? 1 : 0
 
-            Rectangle {
-                width: 4
-                height: 30
-                color: colorLine
-                x: 0
-                y: playButton.isPlaying ? 0 : 18
-                rotation: playButton.isPlaying ? 0 : 45
-
-                Behavior on y {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
-
-                Behavior on rotation {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
+            Behavior on opacity {
+                NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
             }
+        }
 
-            Rectangle {
-                width: 4
-                height: 30
-                color: colorLine
-                x: playButton.isPlaying ? 10 : 0
-                y: 0
-                rotation: playButton.isPlaying ? 0 : -45
+        Text {
+            color: colorText
+            text: "\uE906"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
+            anchors.centerIn: parent
+            opacity: playButton.isPlaying ? 0 : 1
 
-                Behavior on x {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
-
-                Behavior on rotation {
-                    NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
-                }
+            Behavior on opacity {
+                NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
             }
         }
 
@@ -611,7 +585,7 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                players[mediaPlayers.currentIndex].play();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
             }
         }
     }
@@ -627,10 +601,16 @@ Item {
             verticalCenter: playButton.verticalCenter
         }
 
-        Image {
+        Text {
+            color: colorText
+            text: "\uE904"
+            renderType: Text.NativeRendering
+            width: 85
+            height: 85
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
-            asynchronous: true
-            source: "qrc:/images/mini-music-player/icon-next.png"
         }
 
         MouseArea {
@@ -639,7 +619,7 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                players[mediaPlayers.currentIndex].next();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].next();
             }
         }
     }

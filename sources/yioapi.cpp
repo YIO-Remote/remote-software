@@ -68,6 +68,12 @@ QVariantMap YioAPI::getConfig()
     return Config::getInstance()->read();
 }
 
+void YioAPI::setConfig(QVariantMap config)
+{
+    Config::getInstance()->readWrite(config);
+    Config::getInstance()->writeConfig();
+}
+
 bool YioAPI::addEntityToConfig(QVariantMap entity)
 {
     // check the input if it's OK
@@ -75,11 +81,6 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     {
         return false;
     }
-
-    //    // if no favorite is set, set it to false
-    //    if (!entity.contains("favorite")) {
-    //       entity.insert("favorite", true);
-    //    }
 
     // get the config
     QVariantMap c = getConfig();
@@ -128,17 +129,61 @@ void YioAPI::discoverNetworkServices()
     for (int i=0; i<m_discoverableServices.length(); i++) {
         m_qzero_conf_browser = new QZeroConf;
         connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+            QVariantMap txt;
+
+            QMap<QByteArray, QByteArray> txtInfo = item->txt();
+
+            QMap<QByteArray, QByteArray>::iterator qi;
+            for (qi = txtInfo.begin(); qi != txtInfo.end(); ++qi)
+            {
+                txt.insert(qi.key(), qi.value());
+            }
+
             QVariantMap map;
             map.insert(QString("name"),item->name());
             map.insert(QString("ip"),item->ip().toString());
             map.insert(QString("port"), item->port());
             map.insert(QString("mdns"), m_discoverableServices[i]);
+            map.insert(QString("txt"), txt);
             m_discoveredServices.insert(item->name(), map);
 
-            emit serviceDiscovered();
+            emit serviceDiscovered(m_discoveredServices);
+            emit discoveredServicesChanged();
         });
         m_qzero_conf_browser->startBrowser(m_discoverableServices[i]);
     }
+}
+
+void YioAPI::discoverNetworkServices(QString mdns)
+{
+    m_discoveredServices.clear();
+
+    m_qzero_conf_browser = new QZeroConf;
+
+    connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+        QVariantMap txt;
+
+        QMap<QByteArray, QByteArray> txtInfo = item->txt();
+
+        QMap<QByteArray, QByteArray>::iterator i;
+        for (i = txtInfo.begin(); i != txtInfo.end(); ++i)
+        {
+            txt.insert(i.key(), i.value());
+        }
+
+        QVariantMap map;
+        map.insert(QString("name"),item->name());
+        map.insert(QString("ip"),item->ip().toString());
+        map.insert(QString("port"), item->port());
+        map.insert(QString("mdns"), mdns);
+        map.insert(QString("txt"), txt);
+        m_discoveredServices.insert(item->name(), map);
+
+        emit serviceDiscovered(m_discoveredServices);
+        emit discoveredServicesChanged();
+    });
+
+    m_qzero_conf_browser->startBrowser(mdns);
 }
 
 QVariantList YioAPI::discoveredServices()
@@ -179,7 +224,7 @@ void YioAPI::processMessage(QString message)
 
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
-        qDebug() << message;
+        //        qDebug() << message;
 
         // convert message to json
         QJsonParseError parseerror;
@@ -200,6 +245,9 @@ void YioAPI::processMessage(QString message)
 
             if (map.contains("token")) {
                 qDebug() << "Has token";
+
+                //                QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(), QCryptographicHash::Sha512);
+
                 if (map.value("token").toString() == m_token) {
                     qDebug() << "Token OK";
                     r_map.insert("type", "auth_ok");
@@ -232,20 +280,35 @@ void YioAPI::processMessage(QString message)
             }
         }
 
-        if (m_clients[client] == true){
-            if (type == "getconfig"){
-                QVariantMap c = getConfig();
-                QJsonDocument json = QJsonDocument::fromVariant(c);
-                client->sendTextMessage(json.toJson());
-            }
-        }
-
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EMIT MESSAGES OF AUTHENTICATED CLIENTS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (type != "auth" && m_clients[client]) {
+        if (type == "getconfig" && m_clients[client]){
+            qDebug() << "REQUEST FOR GETCONFIG";
+
+            QVariantMap response;
+
+            QVariantMap config = getConfig();
+            response.insert("config", config);
+            response.insert("type", "config");
+
+            QJsonDocument json = QJsonDocument::fromVariant(response);
+            client->sendTextMessage(json.toJson());
+        } else if (type == "setconfig" && m_clients[client]) {
+            qDebug() << "REQUEST FOR SETCONFIG";
+
+            QVariantMap config = map.value("config").toMap();
+            setConfig(config);
+        } else if (type == "button" && m_clients[client]) {
+            QString buttonName = map["name"].toString();
+            QString buttonAction = map["action"].toString();
+            qDebug() << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
+            if (buttonAction == "pressed")
+                emit buttonPressed(buttonName);
+            else
+                emit buttonReleased(buttonName);
+        } else {
             emit messageReceived(map);
         }
     }

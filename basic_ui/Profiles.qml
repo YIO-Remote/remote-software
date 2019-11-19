@@ -16,7 +16,7 @@ Rectangle {
 
         for (var value in config.read.ui_config.profiles) {
             var v = config.read.ui_config.profiles[value];
-            v["id"] = parseInt(value, 10);
+            v["id"] = value
             profileModel.append(v);
         }
 
@@ -147,6 +147,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
+                    haptic.playEffect("click");
                     config.profile = id;
                     profileModel.move(index, 0, 1);
                 }

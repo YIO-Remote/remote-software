@@ -286,6 +286,12 @@ Item {
 
             // mode = shutdown
             if (time-standbyBaseTime > shutdownTime * 1000 && shutdownTime != 0 && (mode == "standby" || mode =="wifi_off") && battery_averagepower <= 0) {
+                logger.write("TIMER SHUTDOWN initated");
+                logger.write("time variable: " + time);
+                logger.write("standbyBaseTime variable: " + standbyBaseTime);
+                logger.write("shutdownTime variable:" + shutdownTime);
+                logger.write("battery_averagepower: " + battery_averagepower);
+
                 loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
                 loadingScreen.active = true;
             }

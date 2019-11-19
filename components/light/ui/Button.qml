@@ -107,14 +107,14 @@ Rectangle {
         State {
             name: "closed"
             PropertyChanges {target: lightButton; width: 460; height: 125}
-            PropertyChanges {target: button; _opacity: 1}
+//            PropertyChanges {target: button; _opacity: 1}
             ParentChange { target: lightButton; parent: originParent; scale: 1}
             PropertyChanges {target: loader_main; state: "visible" }
         },
         State {
             name: "open"
             PropertyChanges {target: lightButton; width: 440; height: 720}
-            PropertyChanges {target: button; _opacity: 0}
+//            PropertyChanges {target: button; _opacity: 0}
             ParentChange { target: lightButton; parent: contentWrapper; x: 20; y: 80; scale: 1}
             PropertyChanges {target: loader_main; state: "hidden" }
         }
@@ -200,7 +200,7 @@ Rectangle {
         Text {
             id: icon
             color: colorText
-            text: "\uE903"
+            text: "\uE901"
             renderType: Text.NativeRendering
             width: 85
             height: 85

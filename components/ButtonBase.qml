@@ -6,7 +6,7 @@ import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: blindButton
+    id: buttonContainer
 
     property var obj
 
@@ -14,57 +14,21 @@ Rectangle {
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj.integrationObj //integrations.getByType(obj.integration) //integration[obj.integration].obj
+        target: obj.integrationObj //integration[obj.integration].obj
 
         onConnected: {
-            blindButton.opacity = 1
-            blindButton.enabled = true
+            buttonContainer.opacity = 1
+            buttonContainer.enabled = true
         }
 
         onDisconnected: {
-            blindButton.opacity = 0.3
-            blindButton.enabled = false
+            buttonContainer.opacity = 0.3
+            buttonContainer.enabled = false
         }
     }
 
     Behavior on opacity {
         PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECT TO BUTTONS
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Connections {
-        target: buttonHandler
-        enabled: state == "open" ? true : false
-
-        onButtonPress: {
-            var tmp;
-
-            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
-                switch (button) {
-                case "dpad up":
-                    if (obj.supported_features.indexOf("OPEN") > -1) {
-                        obj.open();
-                    }
-                    break;
-                case "dpad down":
-                    if (obj.supported_features.indexOf("CLOSE") > -1) {
-                        obj.close();
-                    }
-                    break;
-                case "dpad middle":
-                    if (obj.supported_features.indexOf("STOP") > -1) {
-                        obj.stop();
-                    }
-                    break;
-                case "top right":
-                    blindButton.state = "closed"
-                    loader_main.state = "visible"
-                    break;
-                }
-            }
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +41,7 @@ Rectangle {
     color: colorDark
     radius: cornerRadius
 
-    property var originParent: blindButton.parent
+    property var originParent: buttonContainer.parent
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
@@ -86,8 +50,8 @@ Rectangle {
     layer.enabled: true
     layer.effect: OpacityMask {
         maskSource: Item {
-            width: blindButton.width
-            height: blindButton.height
+            width: buttonContainer.width
+            height: buttonContainer.height
             Rectangle {
                 anchors.fill: parent
                 radius: cornerRadius
@@ -104,16 +68,14 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: blindButton; width: 460; height: 125; scale: 1}
-            PropertyChanges {target: button; _opacity: 1}
-            ParentChange { target: blindButton; parent: originParent; scale: 1}
+            PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1}
+            ParentChange { target: buttonContainer; parent: originParent }
             PropertyChanges {target: loader_main; state: "visible" }
         },
         State {
             name: "open"
-            PropertyChanges {target: blindButton; width: 440; height: 720}
-            PropertyChanges {target: button; _opacity: 0}
-            ParentChange { target: blindButton; parent: contentWrapper; x: 20; y: 80; scale: 1}
+            PropertyChanges {target: buttonContainer; width: 440; height: 720}
+            ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
         }
     ]
@@ -122,20 +84,20 @@ Rectangle {
         Transition {
             to: "closed"
             ParallelAnimation {
-                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
-                    NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutExpo; duration: 300 }
+                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
                 }
             }
         },
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
-                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
-                    NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }
             }
         }
@@ -153,7 +115,7 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        enabled: blindButton.state == "open" ? false : true
+        enabled: buttonContainer.state == "open" ? false : true
 
         onPressAndHold: {
             haptic.playEffect("press");
@@ -163,11 +125,8 @@ Rectangle {
 
         onClicked: {
             haptic.playEffect("click");
-
-            originParent = blindButton.parent
-
-            loader_main.state = "hidden"
-            blindButton.state = "open"
+            originParent = buttonContainer.parent
+            buttonContainer.state = "open"
         }
     }
 
@@ -175,6 +134,11 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CLOSED STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    property alias title: title
+    property alias icon: icon.text
+    property alias button: button
+
 
     Item {
         width: parent.width
@@ -201,8 +165,7 @@ Rectangle {
         Text {
             id: icon
             color: colorText
-            text: "\uE914"
-            renderType: Text.NativeRendering
+            text: ""
             width: 85
             height: 85
             verticalAlignment: Text.AlignVCenter
@@ -221,14 +184,16 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 20
+        enabled: false
+        visible: enabled
 
         checked: obj.state
-        mouseArea.enabled: blindButton.state == "open" ? false: true
+        mouseArea.enabled: buttonContainer.state == "open" ? false: true
         mouseArea.onClicked: {
             if (obj.state) {
-                obj.close();
+                obj.turnOff();
             } else {
-                obj.open();
+                obj.turnOn();
             }
         }
     }
@@ -236,11 +201,13 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ADD TO FAVORITE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias addToFavButton: addToFavButton
 
     Rectangle {
         id: addToFavButton
         width: 0
         height: 0
+        z: 1000
         radius: 200
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
@@ -267,7 +234,7 @@ Rectangle {
             Transition {
                 to: "closed"
                 SequentialAnimation {
-                    PauseAnimation { duration: 300 }
+//                    PauseAnimation { duration: 300 }
                     ParallelAnimation {
                         PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                         PropertyAnimation { target: addToFavButtonText; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
@@ -376,14 +343,16 @@ Rectangle {
     // OPEN STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    property alias cardLoader: cardLoader
+
     Loader {
         id: cardLoader
-        width: blindButton.width
-        height: blindButton.height
+        width: buttonContainer.width
+        height: buttonContainer.height
         asynchronous: true
-        active: blindButton.state == "open"
-        source: "qrc:/components/blind/ui/Card.qml"
-//        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+        active: buttonContainer.state == "open"
+        source: "qrc:/components/remote/ui/Card.qml"
+        opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {
@@ -392,6 +361,53 @@ Rectangle {
             }
         }
 
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CLOSE BUTTON
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Connections {
+        target: buttonHandler
+        enabled: state == "open" ? true : false
+
+        onButtonPress: {
+            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
+                switch (button) {
+                case "top right":
+                    buttonContainer.state = "closed"
+                    break;
+                }
+            }
+        }
+    }
+
+    Text {
+        id: closeButton
+        color: colorText
+        visible: buttonContainer.state == "open"
+        text: "\uE915"
+        renderType: Text.NativeRendering
+        width: 70
+        height: 70
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 80 }
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 20
+
+        MouseArea {
+            width: parent.width + 20
+            height: parent.height + 20
+            anchors.centerIn: parent
+
+            onClicked: {
+                haptic.playEffect("click");
+                buttonContainer.state = "closed"
+            }
+        }
     }
 
 }

@@ -264,7 +264,7 @@ Item {
         }
 
         onPressAndHold: {
-            console.debug("LOAD PROFILE");
+            haptic.playEffect("press");
             loader_second.setSource("qrc:/basic_ui/Profiles.qml");
         }
     }

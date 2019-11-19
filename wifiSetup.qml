@@ -4,6 +4,9 @@ import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
+// FIXME rewrite using MVC pattern.
+// TODO direct wpa_supplicant integration instead of shell scripts
+// see: https://github.com/YIO-Remote/remote-software/issues/322
 Item {
     width: 480
     height: 800
@@ -268,6 +271,7 @@ Item {
             }
 
             BasicUI.CustomButton {
+                id: dockButtonNext
                 buttonText: qsTr("Next") + translateHandler.emptyString
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 60
@@ -276,6 +280,18 @@ Item {
                 mouseArea.onClicked: {
                     bluetoothArea.lookForDock();
                     // show loader here
+                }
+            }
+
+            BasicUI.CustomButton {
+                buttonText: qsTr("Reboot") + translateHandler.emptyString
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 60
+                anchors.left: dockButtonNext.right
+                anchors.leftMargin: 20
+
+                mouseArea.onClicked: {
+                    mainLauncher.launch("reboot");
                 }
             }
         }
@@ -352,7 +368,8 @@ Item {
     Timer {
         id: checkWifi
         repeat: false
-        interval: 6000
+        // TODO check multiple times instead of just once. Give option to continue waiting instead of starting from the beginning again
+        interval: 10000
 
         onTriggered: {
             var wifiSuccess = mainLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();

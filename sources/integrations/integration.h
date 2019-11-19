@@ -2,10 +2,9 @@
 #define INTEGRATION_H
 
 #include <QObject>
-#include <QQuickItem>
 
 // Integration base class
-class Integration : public QQuickItem
+class Integration : public QObject
 {
     Q_OBJECT
 

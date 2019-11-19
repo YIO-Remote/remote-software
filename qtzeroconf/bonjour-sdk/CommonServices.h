@@ -247,6 +247,10 @@ extern "C" {
         #define WIN32_LEAN_AND_MEAN         // Needed to avoid redefinitions by Windows interfaces.
     #endif
 
+    #if ( defined( __MINGW32__ ) )
+        #include <stdint.h>
+    #endif
+
     #if ( defined( __MWERKS__ ) )
 
         #if ( __option( c9x ) )

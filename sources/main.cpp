@@ -27,6 +27,8 @@
 #include "fileio.h"
 #include "yioapi.h"
 #include "config.h"
+#include "logger.h"
+#include "components/media_player/sources/utils_mediaplayer.h"
 
 int main(int argc, char *argv[])
 {
@@ -62,6 +64,11 @@ int main(int argc, char *argv[])
     // LOAD CONFIG
     Config config(&engine, configPath);
     engine.rootContext()->setContextProperty("config", &config);
+
+    // LOGGER
+    Logger logger(appPath, QtInfoMsg, true, true);
+    engine.rootContext()->setContextProperty("logger", &logger);
+    Logger::getInstance()->write("Logging started");
 
     // LOAD FONTS
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
@@ -109,6 +116,9 @@ int main(int argc, char *argv[])
     // YIO API
     YioAPI yioapi(&engine);
     engine.rootContext()->setContextProperty("api", &yioapi);
+
+    // UTILS
+    qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
 
     engine.addImportPath("qrc:/");
 
