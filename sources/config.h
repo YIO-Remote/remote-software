@@ -27,6 +27,10 @@ public:
     {
         return m_config;
     }
+    // copying whole VariantMap is too expensive, use reference where possible
+    const QVariantMap& getConfig() {
+        return m_config;
+    }
 
     void readWrite(QVariantMap config)
     {
