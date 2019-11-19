@@ -267,6 +267,7 @@ ApplicationWindow {
 
             // when everything is loaded, load the main UI
             if (fileio.exists("/wifisetup")) {
+                console.debug("Starting WiFi setup");
                 loader_main.setSource("qrc:/wifiSetup.qml");
             } else {
                 loader_main.setSource("qrc:/MainContainer.qml");

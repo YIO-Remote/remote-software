@@ -12,6 +12,7 @@ HEADERS += \
     sources/configinterface.h \
     sources/entities/remote.h \
     sources/fileio.h \
+    sources/hardware/wifi_control.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
     sources/jsonfile.h \
@@ -43,6 +44,7 @@ SOURCES += \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/remote.cpp \
+    sources/hardware/wifi_control.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
     sources/main.cpp \
@@ -61,19 +63,47 @@ SOURCES += \
     sources/utils.cpp \
     sources/yioapi.cpp
 
-equals(QT_ARCH, arm): {
-    HEADERS += \
-        sources/hardware/apds9960.h \
-        sources/hardware/mcp23017.h
-
-    SOURCES += \
-        sources/hardware/apds9960.cpp
-}
-
 RESOURCES += qml.qrc \
     images.qrc \
     keyboard.qrc \
     translations.qrc
+
+# === platform specific devices =======================================
+linux {
+    USE_WPA_SUPPLICANT = y
+
+    equals(USE_WPA_SUPPLICANT, y): {
+        DEFINES += CONFIG_WPA_SUPPLICANT
+
+        INCLUDEPATH += wpa_supplicant/src
+
+        HEADERS += \
+            sources/hardware/wifi_wpasupplicant.h
+
+        SOURCES += \
+            sources/hardware/wifi_wpasupplicant.cpp \
+            wpa_supplicant/src/wpa_ctrl.c
+    } else {
+        HEADERS += sources/hardware/wifi_shellscripts.h
+        SOURCES += sources/hardware/wifi_shellscripts.cpp
+    }
+
+    equals(QT_ARCH, arm): {
+        HEADERS += \
+            sources/hardware/apds9960.h \
+            sources/hardware/mcp23017.h
+
+        SOURCES += \
+            sources/hardware/apds9960.cpp
+    }
+
+} else:macx {
+    HEADERS += sources/hardware/wifi_mock.h
+    SOURCES += sources/hardware/wifi_mock.cpp
+} else:win32 {
+    HEADERS += sources/hardware/wifi_mock.h
+    SOURCES += sources/hardware/wifi_mock.cpp
+}
 
 # === start TRANSLATION section =======================================
 lupdate_only{
@@ -276,4 +306,3 @@ win32 {
     error(unknown platform! Platform must be configured in remote.pro)
 }
 
-DISTFILES +=

@@ -1,15 +1,9 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 
-import Launcher 1.0
-
 Item {
     width: parent.width
     height: header.height + section.height + 20
-
-    Launcher {
-        id: settingsLauncher
-    }
 
     Timer {
         id: timer
@@ -19,10 +13,10 @@ Item {
         triggeredOnStart: true
 
         onTriggered: {
-            wifiSignalValue.text = settingsLauncher.launch("/usr/bin/yio-remote/wifi_rssi.sh").trim();
-            var ssid = settingsLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();
-            if (ssid == "") {
-                wifiSSIDText.text = "Select WiFi network";
+            wifiSignalValue.text = wifi.getCurrentSignalStrength();
+            var ssid = wifi.getCurrentSSID();
+            if (ssid === "") {
+                wifiSSIDText.text = qsTr("Select WiFi network") + translateHandler.emptyString;
             } else {
                 wifiSSIDText.text = ssid;
             }
@@ -297,7 +291,7 @@ Item {
 
         Text {
             color: colorText
-            text: settingsLauncher.launch("/usr/bin/yio-remote/wifi_ip.sh").trim()
+            text: wifi.getCurrentIp()
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -333,7 +327,7 @@ Item {
 
         Text {
             color: colorText
-            text: settingsLauncher.launch("cat /sys/class/net/wlan0/address").trim()
+            text: wifi.getMacAddress();
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20

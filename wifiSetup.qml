@@ -207,7 +207,7 @@ Item {
 
                     mouseArea.onClicked: {
                         swipeView.currentIndex = 0;
-                        mainLauncher.launch("/usr/bin/yio-remote/reset-wifi.sh")
+                        wifi.reset()
                         firstSetupCheck.start();
                     }
                 }
@@ -359,6 +359,7 @@ Item {
 
         onTriggered: {
             if (fileio.exists("/firstsetup")) {
+                console.debug("WifiSetup: initiating firstsetup");
                 checkWifi.start();
                 this.stop();
             }
@@ -372,14 +373,15 @@ Item {
         interval: 10000
 
         onTriggered: {
-            var wifiSuccess = mainLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();
-            var ssid = fileio.read("/ssid").trim();
-            if (wifiSuccess == ssid) {
+            if (wifi.isConnected()) {
+                console.debug("WifiSetup: connected to network " + wifi.getCurrentSSID());
+                // FIXME Bluetooth credential handling
                 msg = fileio.read("/wificred");
                 msg += "\"remote_id\":\"" + api.hostname + "\"}";
                 failurePage.visible = false;
                 successPage.visible = true;
             } else {
+                console.debug("WifiSetup: could not connect to network!");
                 failurePage.visible = true;
                 successPage.visible = false;
             }
@@ -393,6 +395,7 @@ Item {
     Connections {
         target: bluetoothArea
         onDockFound: {
+            console.debug("WifiSetup: Dock found! Sending credentials...");
             // show dock page
             bluetoothArea.sendInfoToDock(msg);
         }

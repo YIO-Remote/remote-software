@@ -16,7 +16,7 @@
 #include "hardware/drv2605.h"
 #include "hardware/bq27441.h"
 #include "hardware/proximity_gesture_control.h"
-
+#include "hardware/wifi_control.h"
 #include "integrations/integration.h"
 #include "integrations/integrations.h"
 #include "entities/entities.h"
@@ -83,6 +83,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
+
+    // DRIVERS
+    WifiControl::instance().init();
+    engine.rootContext()->setContextProperty("wifi", &WifiControl::instance());
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
