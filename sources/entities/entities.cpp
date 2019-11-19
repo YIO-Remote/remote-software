@@ -13,7 +13,7 @@
 #include <QLoggingCategory>
 #include <QTimer>
 
-static Q_LOGGING_CATEGORY(LOGC, "Entities");
+static Q_LOGGING_CATEGORY(LOGC, "ENTITIES");
 
 Entities* Entities::s_instance = nullptr;
 
@@ -155,7 +155,7 @@ QList<QObject *> Entities::mediaplayersPlaying()
 
 void Entities::addMediaplayersPlaying(const QString &entity_id)
 {
-    qDebug() << "Add media player requested";
+    qDebug(LOGC) << "Add media player requested";
     // check if there is a timer active to remove the media player
     QTimer* timer = nullptr;
     timer = m_mediaplayersTimers.value(entity_id);
@@ -168,7 +168,7 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
 
     if (!m_mediaplayersPlaying.contains(entity_id) && o != nullptr) {
         m_mediaplayersPlaying.insert(entity_id, o);
-        qDebug() << "Media player added, emitting mediaplayersPlayingChanged";
+        qDebug(LOGC) << "Media player added, emitting mediaplayersPlayingChanged";
         emit mediaplayersPlayingChanged();;
         emit mediaplayerAdded();
     }
@@ -177,20 +177,20 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
 void Entities::removeMediaplayersPlaying(const QString &entity_id)
 {
     if (m_mediaplayersPlaying.contains(entity_id)) {
-        qDebug() << "Remove media player requested";
+        qDebug(LOGC) << "Remove media player requested";
 
         // use a timer to remove the entity with a delay
         QTimer* timer = new QTimer();
         timer->setSingleShot(true);
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
-            qDebug() << "Timer done, emitting mediaplayersPlayingChanged";
+            qDebug(LOGC) << "Timer done, emitting mediaplayersPlayingChanged";
             emit mediaplayersPlayingChanged();
         });
-        qDebug() << "Timer created, connected";
+        qDebug(LOGC) << "Timer created, connected";
         timer->start(120000);
 
-        qDebug() << "Timer added to m_mediaplayersTimers";
+        qDebug(LOGC) << "Timer added to m_mediaplayersTimers";
         m_mediaplayersTimers.insert(entity_id, timer);
     }
 }
