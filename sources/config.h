@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QJsonArray>
 #include "configinterface.h"
 #include "jsonfile.h"
@@ -31,6 +32,12 @@ public:
     {
         m_config = config;
         emit configChanged();
+    }
+
+    // get context property
+    QVariant getContextProperty(const QString& name)
+    {
+        return m_engine->rootContext()->contextProperty(name);
     }
 
     // profile

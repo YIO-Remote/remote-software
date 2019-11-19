@@ -71,14 +71,16 @@ Item {
         }
     }
 
-    property var players: entities.mediaplayersPlaying
+    Connections {
+        target: entities
 
-    onPlayersChanged: {
-        if (entities.mediaplayersPlaying.length == 0) {
-            loader_main.state = "visible";
-            loader_main.item.miniMediaPlayer.height = 0;
-            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
-            loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
+        onMediaplayersPlayingChanged: {
+            if (entities.mediaplayersPlaying.length == 0) {
+                loader_main.state = "visible";
+                loader_main.item.miniMediaPlayer.height = 0;
+                loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
+                loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
+            }
         }
     }
 
@@ -93,7 +95,7 @@ Item {
         onButtonPress: {
             switch (button) {
             case "dpad middle":
-                players[mediaPlayers.currentIndex].play();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
                 break;
             case "dpad right":
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
@@ -182,7 +184,7 @@ Item {
 
         Repeater {
             id: mediaPlayersRepeater
-            model: players.length
+            model: entities.mediaplayersPlaying.length
 
             Item {
                 id: player
@@ -195,7 +197,7 @@ Item {
 
                 property alias player: player
 
-                property var obj: players[index]
+                property var obj: entities.mediaplayersPlaying[index]
 
                 state: "closed"
 
@@ -300,10 +302,10 @@ Item {
                         ColorAnimation { duration: 300 }
                     }
 
-                    property var m_image: players[index].mediaImage
+                    property var m_image: entities.mediaplayersPlaying[index].mediaImage
 
                     onM_imageChanged: {
-                        mediaplayerUtils.imageURL = players[index].mediaImage
+                        mediaplayerUtils.imageURL = entities.mediaplayersPlaying[index].mediaImage
                     }
 
                     CustomImageLoader {
@@ -313,7 +315,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top
                         anchors.topMargin: 86
-                        url: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
+                        url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
@@ -326,7 +328,7 @@ Item {
                         left: parent.left
                         leftMargin: 0
                     }
-                    url: players[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
+                    url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
                 Item {
@@ -340,7 +342,7 @@ Item {
                     Text {
                         id: title
                         color: colorText
-                        text: players[index].mediaTitle
+                        text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
@@ -354,7 +356,7 @@ Item {
                     Text {
                         id: artist
                         color: colorText
-                        text: players[index].friendly_name
+                        text: entities.mediaplayersPlaying[index].mediaTitle
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
@@ -384,7 +386,7 @@ Item {
                 Text {
                     id: sourceText
                     color: colorText
-                    text: players[index].source
+                    text: entities.mediaplayersPlaying[index].source
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
                     font.family: "Open Sans"
@@ -402,7 +404,7 @@ Item {
                 Text {
                     id: titleOpen
                     color: colorText
-                    text: players[index].mediaTitle
+                    text: entities.mediaplayersPlaying[index].mediaTitle
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -419,7 +421,7 @@ Item {
                 Text {
                     id: artistOpen
                     color: colorText
-                    text: players[index].mediaArtist
+                    text: entities.mediaplayersPlaying[index].mediaArtist
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -450,7 +452,7 @@ Item {
 
                     Text {
                         color: colorText
-                        text: players[index].friendly_name
+                        text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         font.family: "Open Sans"
                         font.weight: Font.Normal
@@ -525,7 +527,7 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                players[mediaPlayers.currentIndex].previous();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].previous();
             }
         }
     }
@@ -535,7 +537,7 @@ Item {
         width: 120
         height: 120
 
-        property bool isPlaying: players[mediaPlayers.currentIndex] && players[mediaPlayers.currentIndex].state == 3 ? true : false
+        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == 3 ? true : false
 
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -583,7 +585,7 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                players[mediaPlayers.currentIndex].play();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
             }
         }
     }
@@ -617,7 +619,7 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                players[mediaPlayers.currentIndex].next();
+                entities.mediaplayersPlaying[mediaPlayers.currentIndex].next();
             }
         }
     }

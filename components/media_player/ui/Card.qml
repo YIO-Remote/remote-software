@@ -310,4 +310,31 @@ Rectangle {
         }
     }
 
+    Grid {
+        id: bottomMenu
+        width: childrenRect.width
+        height: 60
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        spacing: 80
+
+        Rectangle {
+            width: 60
+            height: 60
+            color: "red"
+        }
+
+        Rectangle {
+            width: 60
+            height: 60
+            color: "red"
+        }
+
+        Rectangle {
+            width: 60
+            height: 60
+            color: "red"
+        }
+    }
+
 }

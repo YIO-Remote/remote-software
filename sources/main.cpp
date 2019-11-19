@@ -65,6 +65,11 @@ int main(int argc, char *argv[])
     Config config(&engine, configPath);
     engine.rootContext()->setContextProperty("config", &config);
 
+    // LOGGER
+    Logger logger(appPath, QtDebugMsg, true, true);
+    engine.rootContext()->setContextProperty("logger", &logger);
+    Logger::getInstance()->write("Logging started");
+
     // LOAD FONTS
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
@@ -118,11 +123,6 @@ int main(int argc, char *argv[])
 
     // UTILS
     qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
-
-    // LOGGER
-    Logger logger(nullptr, appPath);
-    engine.rootContext()->setContextProperty("logger", &logger);
-    Logger::getInstance()->write("Logging started");
 
     engine.addImportPath("qrc:/");
 

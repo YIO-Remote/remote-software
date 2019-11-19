@@ -8,7 +8,7 @@
 #include <QJsonArray>
 #include <QQuickItem>
 
-Integrations* Integrations::s_instance = NULL;
+Integrations* Integrations::s_instance = nullptr;
 
 Integrations::Integrations(QQmlApplicationEngine *engine, const QString& appPath) :
     m_engine(engine),
@@ -19,7 +19,7 @@ Integrations::Integrations(QQmlApplicationEngine *engine, const QString& appPath
 
 Integrations::~Integrations()
 {
-    s_instance = NULL;
+    s_instance = nullptr;
 }
 
 void Integrations::load()
@@ -55,8 +55,8 @@ void Integrations::load()
             connect(interface, &IntegrationInterface::createDone, this, &Integrations::onCreateDone);
 
             interface->create(map, entities, notifications, api, config);
+            i++;
         }
-        i++;
     }
 
     // load plugins that are not defined in config.json aka default plugins
@@ -80,8 +80,8 @@ void Integrations::load()
             map.insert("type", defaultIntegrations[k]);
 
             interface->create(map, entities, notifications, api, config);
+            i++;
         }
-        i++;
     }
 
     m_integrationsToLoad = i;

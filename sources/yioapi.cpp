@@ -224,7 +224,7 @@ void YioAPI::processMessage(QString message)
 
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
-//        qDebug() << message;
+        //        qDebug() << message;
 
         // convert message to json
         QJsonParseError parseerror;
@@ -246,7 +246,7 @@ void YioAPI::processMessage(QString message)
             if (map.contains("token")) {
                 qDebug() << "Has token";
 
-//                QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(), QCryptographicHash::Sha512);
+                //                QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(), QCryptographicHash::Sha512);
 
                 if (map.value("token").toString() == m_token) {
                     qDebug() << "Token OK";
@@ -300,6 +300,14 @@ void YioAPI::processMessage(QString message)
 
             QVariantMap config = map.value("config").toMap();
             setConfig(config);
+        } else if (type == "button" && m_clients[client]) {
+            QString buttonName = map["name"].toString();
+            QString buttonAction = map["action"].toString();
+            qDebug() << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
+            if (buttonAction == "pressed")
+                emit buttonPressed(buttonName);
+            else
+                emit buttonReleased(buttonName);
         } else {
             emit messageReceived(map);
         }

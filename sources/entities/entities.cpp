@@ -112,7 +112,7 @@ QObject *Entities::get(const QString& entity_id)
 
 void Entities::add(const QString& type, const QVariantMap& config, QObject *integrationObj)
 {
-    Entity *entity;
+    Entity *entity = nullptr;
     // Light entity
     if (type == "light") {
         entity = new Light(config, integrationObj, this);
@@ -129,13 +129,20 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
     if (type == "remote") {
         entity = new Remote(config, integrationObj, this);
     }
-    m_entities.insert(entity->entity_id(), entity);
+    if (entity == nullptr) {
+        qDebug() << "Illegal entity type: " << type;
+    } else {
+        m_entities.insert(entity->entity_id(), entity);
+    }
 }
 
 void Entities::update(const QString &entity_id, const QVariantMap& attributes)
 {
-    Entity *e = (Entity*)m_entities.value(entity_id);
-    e->update(attributes);
+    Entity *e = static_cast<Entity*>(m_entities.value(entity_id));
+    if (e == nullptr)
+        qDebug() << "Entity not found: " << entity_id;
+    else
+        e->update(attributes);
 }
 
 QList<QObject *> Entities::mediaplayersPlaying()
@@ -145,16 +152,20 @@ QList<QObject *> Entities::mediaplayersPlaying()
 
 void Entities::addMediaplayersPlaying(const QString &entity_id)
 {
+    qDebug() << "Add media player requested";
     // check if there is a timer active to remove the media player
-    QTimer* timer = m_mediaplayersTimers.value(entity_id);
-    if (timer) {
+    QTimer* timer = nullptr;
+    timer = m_mediaplayersTimers.value(entity_id);
+    if (timer != nullptr) {
         timer->stop();
     }
 
-    QObject *o = m_entities.value(entity_id);
+    QObject *o = nullptr;
+    o = m_entities.value(entity_id);
 
-    if (!m_mediaplayersPlaying.contains(entity_id)) {
+    if (!m_mediaplayersPlaying.contains(entity_id) && o != nullptr) {
         m_mediaplayersPlaying.insert(entity_id, o);
+        qDebug() << "Media player added, emitting mediaplayersPlayingChanged";
         emit mediaplayersPlayingChanged();;
         emit mediaplayerAdded();
     }
@@ -163,17 +174,20 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
 void Entities::removeMediaplayersPlaying(const QString &entity_id)
 {
     if (m_mediaplayersPlaying.contains(entity_id)) {
+        qDebug() << "Remove media player requested";
 
         // use a timer to remove the entity with a delay
         QTimer* timer = new QTimer();
         timer->setSingleShot(true);
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
-            emit mediaplayersPlayingChanged();
+            qDebug() << "Timer done, emitting mediaplayersPlayingChanged";
             emit mediaplayersPlayingChanged();
         });
+        qDebug() << "Timer created, connected";
         timer->start(120000);
 
+        qDebug() << "Timer added to m_mediaplayersTimers";
         m_mediaplayersTimers.insert(entity_id, timer);
     }
 }
