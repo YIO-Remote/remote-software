@@ -119,8 +119,8 @@ public:
     int signal_strength = 0;
     bool wps_available = false;
     bool connected = false;
-
-    WifiNetwork(QString name, QString bssid) : name(name), bssid(bssid) {};
+//  Attention: <brace-enclosed initializer list> only works with C++14 and newer. Otherwise we need a constructor!
+//    WifiNetwork(QString name, QString bssid) : name(name), bssid(bssid) {}
 };
 
 #endif // WIFICONTROL_H

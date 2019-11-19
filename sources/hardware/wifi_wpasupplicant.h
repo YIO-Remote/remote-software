@@ -47,11 +47,12 @@
 void wpa_msg_cb(char* buf, size_t len);
 
 
-class WiFiWpaSupplicant : public WifiControl
+class WifiWpaSupplicant : public WifiControl
 {
     Q_OBJECT
 public:
-    explicit WiFiWpaSupplicant(QObject *parent = nullptr);
+    explicit WifiWpaSupplicant(QObject *parent = nullptr);
+    virtual ~WifiWpaSupplicant() override;
 
     void init() override;
 
@@ -77,7 +78,7 @@ public:
     /**
      * Connect to wpa control interface socket
      */
-    void connect_wpa_control_socket();
+    void connectWpaControlSocket();
 
 signals:
 
@@ -85,7 +86,7 @@ public slots:
     /**
      * data on control channel available
      */
-    void ctrl_event(int fd);
+    void controlEvent(int fd);
 
 private:
     /**
@@ -93,7 +94,7 @@ private:
      * @param line refernce to string in scan_results
      * @return WifiNetwork data object
      */
-    WifiNetwork line_to_network(const QStringRef& line);
+    WifiNetwork lineToNetwork(const QStringRef& line);
 
     /**
      * Tokenize a buffer returend by wpa_ctrl SCAN_RESULT into a vector of
@@ -101,19 +102,24 @@ private:
      * @param buffer result
      * @param len buffer length
      */
-    QList<WifiNetwork> parse_scanresult(const char* buffer, size_t len);
+    QList<WifiNetwork> parseScanresult(const char* buffer, size_t len);
+
+    /**
+     * Send read scan_results from wpa_ctrl
+     */
+    void readScanResults();
 
     /**
      * Issue a command, modifies reply and reply_size
      * @param cmd wpa_supplicant command
      */
-    void request_wrapper(const QString& cmd);
+    void requestWrapper(const QString& cmd);
 
     /**
      * Interpret event string from wpa_socket monitor
      * @param e_string event string
      */
-    void parse_event(const QString& e_string);
+    void parseEvent(const QString& e_string);
 
 private:
     /**

@@ -95,7 +95,7 @@ void WifiMock::startNetworkScan()
 
     m_scanResults.clear();
 
-    WifiNetwork nw { "Mock Net", "34:31:c4:e1:d3:97" }; //, -77, false, false };
+    WifiNetwork nw { "Mock Net", "34:31:c4:e1:d3:97", -77, false, false };
     m_scanResults.append(nw);
 
     setScanStatus(ScanOk);

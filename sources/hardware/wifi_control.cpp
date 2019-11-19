@@ -29,6 +29,8 @@
 
 #if defined (CONFIG_WPA_SUPPLICANT)
     #include "wifi_wpasupplicant.h"
+#elif defined (Q_OS_LINUX) && defined (USE_WPA_SUPPLICANT)
+    #include "wifi_wpasupplicant.h"
 #elif defined (Q_OS_LINUX)
     #include "wifi_shellscripts.h"
 #else
@@ -60,6 +62,8 @@ WifiControl& WifiControl::instance()
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
     #if defined (CONFIG_WPA_SUPPLICANT)
+        static WifiWpaSupplicant singleton;
+    #elif defined (Q_OS_LINUX) && defined (USE_WPA_SUPPLICANT)
         static WifiWpaSupplicant singleton;
     #elif defined (Q_OS_LINUX)
         static WifiShellScripts singleton;

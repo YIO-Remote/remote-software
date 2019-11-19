@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <time.h>
-#include "wpa_ctrl/wpa_ctrl.h"
+#include "wpa_ctrl.h"
 
 #ifdef CONFIG_CTRL_IFACE
 

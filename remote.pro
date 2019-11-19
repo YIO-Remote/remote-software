@@ -1,5 +1,5 @@
 QT += qml quick websockets quickcontrols2 bluetooth
-CONFIG += c++11 disable-desktop qtquickcompiler
+CONFIG += c++14 disable-desktop qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -72,8 +72,11 @@ RESOURCES += qml.qrc \
 linux {
     USE_WPA_SUPPLICANT = y
 
+    # TODO simplify defines
     equals(USE_WPA_SUPPLICANT, y): {
-        DEFINES += CONFIG_WPA_SUPPLICANT
+        DEFINES += CONFIG_WPA_SUPPLICANT \
+            CONFIG_CTRL_IFACE=1 \
+            CONFIG_CTRL_IFACE_UNIX=1
 
         INCLUDEPATH += wpa_supplicant/src
 
