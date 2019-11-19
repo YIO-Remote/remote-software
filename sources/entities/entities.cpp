@@ -153,14 +153,16 @@ QList<QObject *> Entities::mediaplayersPlaying()
 void Entities::addMediaplayersPlaying(const QString &entity_id)
 {
     // check if there is a timer active to remove the media player
-    QTimer* timer = m_mediaplayersTimers.value(entity_id);
-    if (timer) {
+    QTimer* timer = nullptr;
+    timer = m_mediaplayersTimers.value(entity_id);
+    if (timer != nullptr) {
         timer->stop();
     }
 
-    QObject *o = m_entities.value(entity_id);
+    QObject *o = nullptr;
+    o = m_entities.value(entity_id);
 
-    if (!m_mediaplayersPlaying.contains(entity_id)) {
+    if (!m_mediaplayersPlaying.contains(entity_id) && o != nullptr) {
         m_mediaplayersPlaying.insert(entity_id, o);
         emit mediaplayersPlayingChanged();;
         emit mediaplayerAdded();
@@ -178,7 +180,7 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
             m_mediaplayersPlaying.remove(entity_id);
             emit mediaplayersPlayingChanged();
         });
-         timer->start(120000);
+        timer->start(120000);
 
         m_mediaplayersTimers.insert(entity_id, timer);
     }
