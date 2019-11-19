@@ -112,7 +112,7 @@ QObject *Entities::get(const QString& entity_id)
 
 void Entities::add(const QString& type, const QVariantMap& config, QObject *integrationObj)
 {
-    Entity *entity;
+    Entity *entity = nullptr;
     // Light entity
     if (type == "light") {
         entity = new Light(config, integrationObj, this);
@@ -129,13 +129,20 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
     if (type == "remote") {
         entity = new Remote(config, integrationObj, this);
     }
-    m_entities.insert(entity->entity_id(), entity);
+    if (entity == nullptr) {
+        qDebug() << "Illegal entity type: " << type;
+    } else {
+        m_entities.insert(entity->entity_id(), entity);
+    }
 }
 
 void Entities::update(const QString &entity_id, const QVariantMap& attributes)
 {
-    Entity *e = (Entity*)m_entities.value(entity_id);
-    e->update(attributes);
+    Entity *e = static_cast<Entity*>(m_entities.value(entity_id));
+    if (e == nullptr)
+        qDebug() << "Entity not found: " << entity_id;
+    else
+        e->update(attributes);
 }
 
 QList<QObject *> Entities::mediaplayersPlaying()
@@ -170,9 +177,8 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
             emit mediaplayersPlayingChanged();
-            emit mediaplayersPlayingChanged();
         });
-        timer->start(120000);
+         timer->start(120000);
 
         m_mediaplayersTimers.insert(entity_id, timer);
     }
