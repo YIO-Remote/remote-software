@@ -52,7 +52,7 @@ Rectangle {
         },
         Transition {to: "open";
             SequentialAnimation {
-                PauseAnimation { duration: 200 }
+//                PauseAnimation { duration: 200 }
                 PropertyAnimation { target: albumArt; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParallelAnimation {
                     PropertyAnimation { target: songTitle; properties: "opacity, anchors.topMargin"; easing.type: Easing.OutExpo; duration: 300 }
