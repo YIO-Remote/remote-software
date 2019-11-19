@@ -45,7 +45,7 @@ Item {
         },
         Transition {to: "open";
             ParallelAnimation {
-                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
+                PropertyAnimation { target: miniMediaPlayer; properties: "height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "scale"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
                 }
@@ -232,7 +232,7 @@ Item {
                         PropertyChanges {target: prevButton; opacity: 0 }
                         PropertyChanges {target: nextButton; opacity: 0 }
                         PropertyChanges {target: sourceText; opacity: 0 }
-                        PropertyChanges {target: bgImage; opacity: 0; visible: false; anchors.topMargin: 126; scale: 0.6 }
+                        PropertyChanges {target: bgImage; opacity: 0; visible: false; anchors.topMargin: 126; scale: 0.8 }
                         PropertyChanges {target: image; opacity: 1 }
                     }]
 
@@ -256,7 +256,7 @@ Item {
                                             PropertyAnimation { target: artistOpen; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                             ParallelAnimation {
                                                 PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                                                PropertyAnimation { target: playButton; properties: "anchors.bottomMargin"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 300 }
+                                                PropertyAnimation { target: playButton; properties: "anchors.bottomMargin"; easing.type: Easing.OutBack; easing.overshoot: 1.4; duration: 300 }
                                                 PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                                 PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                             }
@@ -266,7 +266,7 @@ Item {
                                             PropertyAnimation { target: bgImage; properties: "visible"; duration: 1 }
                                             ParallelAnimation {
                                                 PropertyAnimation { target: bgImage; properties: "opacity"; easing.type: Easing.OutExpo; duration: 400 }
-                                                PropertyAnimation { target: bgImage; properties: "anchors.topMargin, scale"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                                                PropertyAnimation { target: bgImage; properties: "anchors.topMargin, scale"; easing.type: Easing.OutBack; easing.overshoot: 1.4; duration: 400 }
                                             }
                                         }
                                     }

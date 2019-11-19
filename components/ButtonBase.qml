@@ -94,7 +94,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
                 PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }

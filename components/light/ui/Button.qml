@@ -134,7 +134,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
                 PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
