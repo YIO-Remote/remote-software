@@ -10,9 +10,12 @@
 
 #include <QJsonArray>
 #include <QtDebug>
+#include <QLoggingCategory>
 #include <QTimer>
 
-Entities* Entities::s_instance = NULL;
+static Q_LOGGING_CATEGORY(LOGC, "Entities");
+
+Entities* Entities::s_instance = nullptr;
 
 Entities::Entities(QObject *parent) : QObject(parent)
 {
@@ -21,7 +24,7 @@ Entities::Entities(QObject *parent) : QObject(parent)
 
 Entities::~Entities()
 {
-    s_instance = NULL;
+    s_instance = nullptr;
 }
 
 QList<QObject *> Entities::list()
@@ -91,7 +94,7 @@ QList<QObject *> Entities::getByAreaType(const QString &area, const QString &typ
 
 QList<QObject *> Entities::getByIntegration(const QString& integration)
 {
-    qDebug() << "CALLED";
+    qDebug(LOGC) << "CALLED";
 
     QList<QObject *> e;
     foreach (QObject *value, m_entities)
@@ -99,7 +102,7 @@ QList<QObject *> Entities::getByIntegration(const QString& integration)
         if (value->property("integration") == integration) {
             e.append(m_entities.value(value->property("entity_id").toString()));
 
-            qDebug() << e;
+            qDebug(LOGC) << e;
         }
     }
     return e;
@@ -130,7 +133,7 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
         entity = new Remote(config, integrationObj, this);
     }
     if (entity == nullptr) {
-        qDebug() << "Illegal entity type: " << type;
+        qDebug(LOGC) << "Illegal entity type: " << type;
     } else {
         m_entities.insert(entity->entity_id(), entity);
     }
@@ -140,7 +143,7 @@ void Entities::update(const QString &entity_id, const QVariantMap& attributes)
 {
     Entity *e = static_cast<Entity*>(m_entities.value(entity_id));
     if (e == nullptr)
-        qDebug() << "Entity not found: " << entity_id;
+        qDebug(LOGC) << "Entity not found: " << entity_id;
     else
         e->update(attributes);
 }
