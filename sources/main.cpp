@@ -73,13 +73,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("config", &config);
 
     // LOGGER
-    QVariantMap map = config.read()["settings"].toMap();
     Logger logger(appPath, QtInfoMsg, true, true);
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
-    qDebug() << "Logger Test Debug";
-    qInfo() << "Logger Test Info";
-    qWarning() << "Logger Test Warning";
 
     // LOAD FONTS
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
