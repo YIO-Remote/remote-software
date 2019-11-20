@@ -35,7 +35,7 @@ class WifiShellScripts : public WifiControl
 public:
     explicit WifiShellScripts(QObject *parent = nullptr);
 
-    void init() override;
+    bool init() override;
 
     void on() override;
     void off() override;

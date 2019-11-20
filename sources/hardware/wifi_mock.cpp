@@ -32,9 +32,10 @@ WifiMock::WifiMock(QObject *parent) : WifiControl(parent)
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
-void WifiMock::init()
+bool WifiMock::init()
 {
     qCDebug(CLASS_LC) << "init";
+    return true;
 }
 
 void WifiMock::on()

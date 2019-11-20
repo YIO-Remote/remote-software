@@ -11,12 +11,10 @@
 
 #ifdef __cplusplus
 extern "C" {
-#include <cstddef>
-#include <cstdint>
-#else
+#endif
+
 #include <stddef.h>
 #include <stdint.h>
-#endif
 
 /* wpa_supplicant control interface - fixed message prefixes */
 

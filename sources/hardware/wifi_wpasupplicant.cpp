@@ -50,25 +50,26 @@ WifiWpaSupplicant::~WifiWpaSupplicant() {
     }
 }
 
-void WifiWpaSupplicant::init()
+bool WifiWpaSupplicant::init()
 {
     if (!ctrl) {
-        wpa_supplicant_sock_path = "FIXME wpa_socket_name";
+        // TODO make wpa control socket configurable
+        wpa_supplicant_sock_path = "/var/run/wpa_supplicant/wlan0";
         try {
             connectWpaControlSocket();
             ctrl_notifier = std::make_unique<QSocketNotifier>(
                 wpa_ctrl_get_fd(ctrl), QSocketNotifier::Read);
 
-            connect(ctrl_notifier.get(), SIGNAL(activated(int)),
-                this, SLOT(ctrlEvent(int)));
-
+            connect(ctrl_notifier.get(), SIGNAL(activated(int)), this, SLOT(controlEvent(int)));
         } catch (std::system_error& exc) {
             qCCritical(CLASS_LC) << exc.what();
+            return false;
         } catch (std::exception& exc) {
             qCCritical(CLASS_LC) << exc.what();
+            return false;
         }
     }
-
+    return true;
 }
 
 void WifiWpaSupplicant::on()
@@ -239,7 +240,7 @@ WifiNetwork WifiWpaSupplicant::lineToNetwork(const QStringRef& line) {
     if (list.size() > 3) {
         auto name = list.at(4).toString();
         auto bssid = list.at(0).toString();
-        auto signal = list.at(2).toInt(0);
+        auto signal = list.at(2).toInt();
         qCDebug(CLASS_LC) << "network:" << name << bssid << signal;
         WifiNetwork nw{name, bssid, signal, false, false};
         return nw;
@@ -249,8 +250,7 @@ WifiNetwork WifiWpaSupplicant::lineToNetwork(const QStringRef& line) {
 }
 
 /****************************************************************************/
-QList<WifiNetwork> WifiWpaSupplicant::parseScanresult(
-    const char* buffer, size_t len) {
+QList<WifiNetwork> WifiWpaSupplicant::parseScanresult(const char* buffer, size_t len) {
     QString results(buffer);
     auto lines = results.splitRef("\n");
     QList<WifiNetwork> cont;

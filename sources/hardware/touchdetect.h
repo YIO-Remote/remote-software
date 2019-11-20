@@ -41,6 +41,8 @@ private:
         case QEvent::MouseButtonPress:
             emit detectedChanged();
             break;
+        default:  // do nothing
+            break;
         }
         return QQuickItem::eventFilter(this, event);
 

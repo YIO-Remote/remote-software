@@ -53,7 +53,7 @@ public:
     };
     Q_ENUM(ScanStatus)
 
-    virtual void init() = 0;
+    virtual bool init() = 0;
 
     virtual void on() = 0;
     virtual void off() = 0;

@@ -51,10 +51,12 @@ class WifiWpaSupplicant : public WifiControl
 {
     Q_OBJECT
 public:
-    explicit WifiWpaSupplicant(QObject *parent = nullptr);
+    /**
+     * Destructor must close wpa_cli
+     */
     virtual ~WifiWpaSupplicant() override;
 
-    void init() override;
+    bool init() override;
 
     void on() override;
     void off() override;
@@ -89,6 +91,8 @@ public slots:
     void controlEvent(int fd);
 
 private:
+    explicit WifiWpaSupplicant(QObject *parent = nullptr);
+
     /**
      * Tokenize a single line of scan results and interpret fields as WifiNetwork
      * @param line refernce to string in scan_results
@@ -149,6 +153,7 @@ private:
      */
     std::unique_ptr<QSocketNotifier> ctrl_notifier;
 
+    friend WifiControl& WifiControl::instance();
 };
 
 #endif // WIFIWPASUPPLICANT_H

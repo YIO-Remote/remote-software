@@ -34,9 +34,9 @@ WifiShellScripts::WifiShellScripts(QObject *parent) :
 
 }
 
-void WifiShellScripts::init()
+bool WifiShellScripts::init()
 {
-
+    return true;
 }
 
 void WifiShellScripts::on()

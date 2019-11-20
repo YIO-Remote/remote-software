@@ -33,7 +33,7 @@ class WifiMock : public WifiControl
 public:
     explicit WifiMock(QObject *parent = nullptr);
 
-    void init() override;
+    bool init() override;
 
     void on() override;
     void off() override;
