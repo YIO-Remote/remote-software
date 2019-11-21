@@ -7,6 +7,7 @@
 
 #include <QJsonArray>
 #include <QQuickItem>
+#include <QTimer>
 
 Integrations* Integrations::s_instance = nullptr;
 
@@ -81,6 +82,14 @@ void Integrations::load()
 
             interface->create(map, entities, notifications, api, config);
             i++;
+
+            // set a timer and if timeout emit loadComplete signal
+            QTimer* timer = new QTimer();
+            timer->setSingleShot(true);
+            connect(timer, &QTimer::timeout, this, [=](){
+                 emit loadComplete();
+            });
+            timer->start(5000);
         }
     }
 

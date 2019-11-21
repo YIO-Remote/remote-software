@@ -10,7 +10,7 @@ class BlindDef : QObject
 {
     Q_OBJECT
 public:
-    enum class Attributes {  STATE, POSITION };
+    enum class Attributes { STATE, POSITION };
     Q_ENUM (Attributes)
 
     explicit BlindDef(QObject *parent = nullptr) : QObject(parent)

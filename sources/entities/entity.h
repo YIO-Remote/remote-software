@@ -32,7 +32,7 @@ public:
     // Q_PROPERTY  (QVariant       attributes READ attributes NOTIFY attributesChanged)		// all dynamic attributes component type specific, for example: state, brightness, etc.
 
     // send command to the integration
-    Q_INVOKABLE	void		command             (const QString &command, const QVariant& param);
+    Q_INVOKABLE	void            command             (const QString &command, const QVariant& param);
 
     // get the data of an entity to save in config.json
     Q_INVOKABLE QVariantMap     getDataToSave       ();
@@ -50,15 +50,15 @@ public:
     virtual     void*           getSpecificInterface();     // light, blind, media player */
 
     QString                     type()                  { return m_type; }
-    QString			area()                  { return m_area; }
-    QString			friendly_name()         { return m_friendly_name; }
-    QString			entity_id()             { return objectName(); }
-    QString			integration()           { return m_integration; }
+    QString                     area()                  { return m_area; }
+    QString                     friendly_name()         { return m_friendly_name; }
+    QString                     entity_id()             { return objectName(); }
+    QString                     integration()           { return m_integration; }
     QObject*                    integrationObj()        { return m_integrationObj; }
     QStringList                 supported_features()    { return m_supported_features; }
-    bool			favorite()              { return m_favorite; }
+    bool                        favorite()              { return m_favorite; }
 
-    void			setFavorite             (bool value);
+    void                        setFavorite             (bool value);
 
 signals:
     void featureChanged();
@@ -67,7 +67,6 @@ signals:
     void integrationObjChanged();
 
 protected:
-    //    IntegrationInterface*   m_integrationIf;
     QObject*                m_integrationObj;
     QString                 m_type;
     QString                 m_area;
