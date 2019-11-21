@@ -2,12 +2,12 @@
 #define ENTITIESINTERFACE_H
 
 #include <QVariant>
-
+#include "entityinterface.h"
 /// This interface is implemented by the Entities object and used by integration DLLs to access the entities
 class EntitiesInterface
 {
 public:
-    virtual ~EntitiesInterface() {}
+    virtual ~EntitiesInterface  ();
 
     virtual QList<QObject *>    list        () = 0;
 
@@ -25,6 +25,9 @@ public:
 
     // update an entity's attributes
     virtual void                update      (const QString& entity_id, const QVariantMap& attributes) = 0;
+
+    // get entity interface by entity_id
+    virtual EntityInterface*    getEntityInterface(const QString& entity_id) = 0;
 };
 
 QT_BEGIN_NAMESPACE

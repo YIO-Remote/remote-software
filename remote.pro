@@ -29,6 +29,10 @@ HEADERS += \
     sources/entities/entity.h \
     sources/integrations/integrationinterface.h \
     sources/entities/entitiesinterface.h \
+    sources/entities/entityinterface.h \
+    sources/entities/lightinterface.h \
+    sources/entities/blindinterface.h \
+    sources/entities/mediaplayerinterface.h \
     sources/entities/light.h \
     sources/entities/blind.h \
     sources/notifications.h \

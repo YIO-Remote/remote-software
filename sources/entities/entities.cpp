@@ -10,10 +10,12 @@
 
 #include <QJsonArray>
 #include <QtDebug>
-#include <QLoggingCategory>
 #include <QTimer>
 
-static Q_LOGGING_CATEGORY(LOGC, "ENTITIES");
+EntitiesInterface::~EntitiesInterface()
+{
+}
+
 
 Entities* Entities::s_instance = nullptr;
 
@@ -94,7 +96,7 @@ QList<QObject *> Entities::getByAreaType(const QString &area, const QString &typ
 
 QList<QObject *> Entities::getByIntegration(const QString& integration)
 {
-    qDebug(LOGC) << "CALLED";
+    qDebug() << "CALLED";
 
     QList<QObject *> e;
     foreach (QObject *value, m_entities)
@@ -102,7 +104,7 @@ QList<QObject *> Entities::getByIntegration(const QString& integration)
         if (value->property("integration") == integration) {
             e.append(m_entities.value(value->property("entity_id").toString()));
 
-            qDebug(LOGC) << e;
+            qDebug() << e;
         }
     }
     return e;
@@ -111,6 +113,10 @@ QList<QObject *> Entities::getByIntegration(const QString& integration)
 QObject *Entities::get(const QString& entity_id)
 {
     return m_entities.value(entity_id);
+}
+EntityInterface* Entities::getEntityInterface (const QString& entity_id)
+{
+    return qobject_cast<EntityInterface*>(m_entities.value(entity_id));
 }
 
 void Entities::add(const QString& type, const QVariantMap& config, QObject *integrationObj)
@@ -132,18 +138,17 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
     if (type == "remote") {
         entity = new Remote(config, integrationObj, this);
     }
-    if (entity == nullptr) {
-        qDebug(LOGC) << "Illegal entity type: " << type;
-    } else {
+    if (entity == nullptr)
+        qDebug() << "Illegal entity type : " << type;
+    else
         m_entities.insert(entity->entity_id(), entity);
-    }
 }
 
 void Entities::update(const QString &entity_id, const QVariantMap& attributes)
 {
     Entity *e = static_cast<Entity*>(m_entities.value(entity_id));
     if (e == nullptr)
-        qDebug(LOGC) << "Entity not found: " << entity_id;
+        qDebug() << "Entity not found : " << entity_id;
     else
         e->update(attributes);
 }
@@ -155,21 +160,17 @@ QList<QObject *> Entities::mediaplayersPlaying()
 
 void Entities::addMediaplayersPlaying(const QString &entity_id)
 {
-    qDebug(LOGC) << "Add media player requested";
     // check if there is a timer active to remove the media player
-    QTimer* timer = nullptr;
-    timer = m_mediaplayersTimers.value(entity_id);
-    if (timer != nullptr) {
+    QTimer* timer = m_mediaplayersTimers.value(entity_id);
+    if (timer) {
         timer->stop();
     }
 
-    QObject *o = nullptr;
-    o = m_entities.value(entity_id);
+    QObject *o = m_entities.value(entity_id);
 
-    if (!m_mediaplayersPlaying.contains(entity_id) && o != nullptr) {
+    if (!m_mediaplayersPlaying.contains(entity_id)) {
         m_mediaplayersPlaying.insert(entity_id, o);
-        qDebug(LOGC) << "Media player added, emitting mediaplayersPlayingChanged";
-        emit mediaplayersPlayingChanged();;
+        emit mediaplayersPlayingChanged();
         emit mediaplayerAdded();
     }
 }
@@ -177,20 +178,17 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
 void Entities::removeMediaplayersPlaying(const QString &entity_id)
 {
     if (m_mediaplayersPlaying.contains(entity_id)) {
-        qDebug(LOGC) << "Remove media player requested";
 
         // use a timer to remove the entity with a delay
         QTimer* timer = new QTimer();
         timer->setSingleShot(true);
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
-            qDebug(LOGC) << "Timer done, emitting mediaplayersPlayingChanged";
+            emit mediaplayersPlayingChanged();
             emit mediaplayersPlayingChanged();
         });
-        qDebug(LOGC) << "Timer created, connected";
         timer->start(120000);
 
-        qDebug(LOGC) << "Timer added to m_mediaplayersTimers";
         m_mediaplayersTimers.insert(entity_id, timer);
     }
 }

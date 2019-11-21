@@ -4,43 +4,56 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
+#include <QMetaEnum>
 #include "entity.h"
+#include "mediaplayerinterface.h"
 
-class MediaPlayer : public Entity
+class MediaPlayer : public Entity, MediaPlayerInterface
 {
     Q_OBJECT
-
+    Q_INTERFACES(MediaPlayerInterface)
 public:
-
-    enum states {
-        OFF=0,
-        ON=1,
-        IDLE=2,
-        PLAYING=3
+    // I see no other solution for cloning an enum for use in QML
+    enum class States {
+        OFF         = int (MediaPlayerDef::States::OFF),
+        ON          = int (MediaPlayerDef::States::ON),
+        IDLE        = int (MediaPlayerDef::States::IDLE),
+        PLAYING     = int (MediaPlayerDef::States::PLAYING)
     };
-
-    Q_ENUM(states)
-
+    Q_ENUM(States)
     // properties
-    Q_PROPERTY  (states         state       READ    state       NOTIFY      stateChanged)
-    Q_PROPERTY  (double         volume      READ    volume      NOTIFY      volumeChanged)
-    Q_PROPERTY  (bool           muted       READ    muted       NOTIFY      mutedChanged)
-    Q_PROPERTY  (QString        mediaType   READ    mediaType   NOTIFY      mediaTypeChanged)
-    Q_PROPERTY  (QString        mediaTitle  READ    mediaTitle  NOTIFY      mediaTitleChanged)
-    Q_PROPERTY  (QString        mediaArtist READ    mediaArtist NOTIFY      mediaArtistChanged)
-    Q_PROPERTY  (QString        mediaImage  READ    mediaImage  NOTIFY      mediaImageChanged)
-    Q_PROPERTY  (QString        source      READ    source      NOTIFY      sourceChanged)
+    Q_PROPERTY  (States                     state           READ    state           NOTIFY      stateChanged)
+    Q_PROPERTY  (int                        volume          READ    volume          NOTIFY      volumeChanged)
+    Q_PROPERTY  (bool                       muted           READ    muted           NOTIFY      mutedChanged)
+    Q_PROPERTY  (QString                    mediaType       READ    mediaType       NOTIFY      mediaTypeChanged)
+    Q_PROPERTY  (QString                    mediaTitle      READ    mediaTitle      NOTIFY      mediaTitleChanged)
+    Q_PROPERTY  (QString                    mediaArtist     READ    mediaArtist     NOTIFY      mediaArtistChanged)
+    Q_PROPERTY  (QString                    mediaImage      READ    mediaImage      NOTIFY      mediaImageChanged)
+    Q_PROPERTY  (QString                    source          READ    source          NOTIFY      sourceChanged)
+    Q_PROPERTY  (QVariant                   browseResult    READ    browseResult    NOTIFY      browseResultChanged)
 
-    double                      volume() { return m_volume; }
-    bool                        muted()  { return m_muted; }
-    QString                     mediaType() { return m_mediaType; }
-    QString                     mediaImage() { return m_mediaImage; }
-    QString                     mediaTitle() { return m_mediaTitle; }
-    QString                     mediaArtist() { return m_mediaArtist; }
-    QString                     source() { return m_source; }
+    States                      state()                 { return m_state; }
+    MediaPlayerDef::States      getState() override     { return static_cast<MediaPlayerDef::States>(m_state); }
+    int                         volume() override       { return m_volume; }
+    bool                        muted() override        { return m_muted; }
+    QString                     mediaType() override    { return m_mediaType; }
+    QString                     mediaImage() override   { return m_mediaImage; }
+    QString                     mediaTitle() override   { return m_mediaTitle; }
+    QString                     mediaArtist() override  { return m_mediaArtist; }
+    QString                     source() override       { return m_source; }
 
-    // methods
-    Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
+    // extension for "generic" media browsing
+    QVariant                    browseResult() override { return m_browseResult; }
+
+    // update an entity's attributes
+    Q_INVOKABLE bool            update              (const QVariantMap& attributes) override;
+    Q_INVOKABLE bool            updateAttrByName    (const QString& name, const QVariant& value) override;
+    Q_INVOKABLE bool            updateAttrByIndex   (int attrIndex, const QVariant& value) override;
+
+    // attribute name and index
+    Q_INVOKABLE QString         getAttrName         (int attrIndex) override;
+    Q_INVOKABLE int             getAttrIndex        (const QString& attrName) override;
+
     Q_INVOKABLE void            turnOn();
     Q_INVOKABLE void            turnOff();
     Q_INVOKABLE void            play();
@@ -49,12 +62,19 @@ public:
     Q_INVOKABLE void            previous();
     Q_INVOKABLE void            next();
     Q_INVOKABLE void            setVolume(double value);
+    Q_INVOKABLE void            volumeUp();
+    Q_INVOKABLE void            volumeDown();
+
+    // extension for "generic" media browsing
+    Q_INVOKABLE void            browse                  (QString command);        // Command item_key, "TOP", "BACK", "PLAY"
+    Q_INVOKABLE void            playMedia               (const QString& command, const QString& itemKey); // command PLAY, QUEUE
+    Q_INVOKABLE void            search                  (const QString& searchText, const QString& itemKey); // Search
+
+    // only for C++ integrations
+    virtual     void*           getSpecificInterface    () override;
 
     // constructor
-    explicit MediaPlayer(QObject *parent = nullptr);
     MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
-
-    enum states                 state() { return m_state; }
 
 signals:
     void stateChanged();
@@ -65,11 +85,19 @@ signals:
     void mediaArtistChanged();
     void mediaImageChanged();
     void sourceChanged();
+    void browseResultChanged();
 
 public:
     static QString Type;
 
-    static QStringList&         AllFeatures()
+    static QStringList&         AllAttributes()
+    {
+        static QStringList s;
+        if (s.count() == 0)
+            s.append(allAttributes());
+        return s;
+    }
+    static QStringList&         AllCommands()
     {
         static QStringList      s
         {
@@ -83,14 +111,25 @@ public:
     }
 
 private:
-    states                      m_state;
-    double                      m_volume;
-    bool                        m_muted;
-    QString                     m_mediaType;
-    QString                     m_mediaImage;
-    QString                     m_mediaTitle;
-    QString                     m_mediaArtist;
-    QString                     m_source;
+    static QStringList                  allAttributes();
+    static QMetaEnum                    s_metaEnum;
+
+    States                              m_state;
+    int                                 m_volume;
+    bool                                m_muted;
+    QString                             m_mediaType;
+    QString                             m_mediaImage;
+    QString                             m_mediaTitle;
+    QString                             m_mediaArtist;
+    QString                             m_source;
+
+    // extension for "generic" media browsing
+    QVariant                    m_browseResult;         // Better to return in one structure (perf, synchronisation) :
+                                                        // items :          Array of { item_key, title, sub_title, image_url, input_prompt for search }
+                                                        // playCommands:    Array of play commands for the items like PLAY, QUEUE
+                                                        // type:            Item type Genre, Album, Artist, Track, Playlist, Radio
+                                                        // title:           Name of the genre, album, artist, track
+                                                        // level:           Top is 0
 };
 
 #endif // MEDIAPLAYER_H
