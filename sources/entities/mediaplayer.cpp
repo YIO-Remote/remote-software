@@ -3,55 +3,104 @@
 #include "mediaplayer.h"
 #include "entities.h"
 
-QString MediaPlayer::Type = "media_player";
+MediaPlayerInterface::~MediaPlayerInterface()
+{}
+QMetaEnum   MediaPlayer::s_metaEnum;
+QString     MediaPlayer::Type = "media_player";
 
 bool MediaPlayer::update(const QVariantMap &attributes)
 {
     bool chg = false;
-    if (attributes.contains("state") && m_state != static_cast<states>(attributes.value("state").toInt())) {
-        m_state = static_cast<states>(attributes.value("state").toInt());
-        if (m_state == PLAYING) {
-            Entities::getInstance()->addMediaplayersPlaying(entity_id());
-        } else if (m_state == IDLE || m_state == OFF){
-            Entities::getInstance()->removeMediaplayersPlaying(entity_id());
-        }
-        chg = true;
-        emit stateChanged();
+    for (QVariantMap::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
+        if (updateAttrByName (iter.key(), iter.value()))
+            chg = true;
     }
-
-    if (attributes.contains("source") && m_source != attributes.value("source").toString()) {
-        m_source = attributes.value("source").toString();
-        chg = true;
-        emit sourceChanged();
-    }
-
-    if (attributes.contains("volume") && m_volume != attributes.value("volume").toDouble()) {
-        m_volume = attributes.value("volume").toDouble();
-        chg = true;
-        emit volumeChanged();
-    }
-    if (attributes.contains("mediaType") && m_mediaType != attributes.value("mediaType").toString()){
-        m_mediaType = attributes.value("mediaType").toString();
-        chg = true;
-        emit mediaTypeChanged();
-    }
-    if (attributes.contains("mediaTitle") && m_mediaTitle != attributes.value("mediaTitle").toString()){
-        m_mediaTitle = attributes.value("mediaTitle").toString();
-        chg = true;
-        emit mediaTitleChanged();
-    }
-    if (attributes.contains("mediaArtist") && m_mediaArtist != attributes.value("mediaArtist").toString()){
-        m_mediaArtist = attributes.value("mediaArtist").toString();
-        chg = true;
-        emit mediaArtistChanged();
-    }
-    if (attributes.contains("mediaImage") && m_mediaImage != attributes.value("mediaImage").toString()) {
-        m_mediaImage = attributes.value("mediaImage").toString();
-        chg = true;
-        emit mediaImageChanged();
-    }
-    return  chg;
+    return chg;
 }
+bool MediaPlayer::updateAttrByName (const QString& name, const QVariant& value)
+{
+    int attrIndex = getAttrIndex(name);
+    return updateAttrByIndex (attrIndex, value);
+}
+bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
+{
+    bool    chg = false;
+    States  state;
+    switch (static_cast<MediaPlayerDef::Attributes>(attrIndex)) {
+        case MediaPlayerDef::Attributes::STATE:
+            state = static_cast<States>(value.toInt());
+            if (m_state != state) {
+                m_state = state;
+                if (m_state == States::PLAYING)
+                    Entities::getInstance()->addMediaplayersPlaying(entity_id());
+                else if (m_state == States::IDLE || m_state == States::OFF)
+                    Entities::getInstance()->removeMediaplayersPlaying(entity_id());
+                chg = true;
+                emit stateChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::SOURCE:
+            if (m_source != value.toString()) {
+                m_source = value.toString();
+                chg = true;
+                emit sourceChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::VOLUME:
+            if (m_volume != value.toInt()) {
+                m_volume = value.toInt();
+                chg = true;
+                emit volumeChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::MUTED:
+            if (m_muted != value.toBool()) {
+                m_muted = value.toBool();
+                chg = true;
+                emit mutedChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::MEDIATYPE:
+            if (m_mediaType != value.toString()) {
+                m_mediaType = value.toString();
+                chg = true;
+                emit mediaTypeChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::MEDIATITLE:
+            if (m_mediaTitle != value.toString()) {
+                m_mediaTitle = value.toString();
+                chg = true;
+                emit mediaTitleChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::MEDIAARTIST:
+            if (m_mediaArtist != value.toString()) {
+                m_mediaArtist = value.toString();
+                chg = true;
+                emit mediaArtistChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::MEDIAIMAGE:
+            if (m_mediaImage != value.toString()) {
+                m_mediaImage = value.toString();
+                chg = true;
+                emit mediaImageChanged();
+            }
+            break;
+        case MediaPlayerDef::Attributes::BROWSERESULT:
+            m_browseResult = value;
+            chg = true;
+            emit browseResultChanged();
+            break;
+        }
+    return chg;
+}
+void* MediaPlayer::getSpecificInterface()
+{
+    return qobject_cast<MediaPlayerInterface*>(this);
+}
+
 
 void MediaPlayer::turnOn()
 {
@@ -92,13 +141,51 @@ void MediaPlayer::setVolume(double value)
 {
     command("VOLUME_SET", value);
 }
-
-MediaPlayer::MediaPlayer(QObject *parent) :
-    Entity(Type, QVariantMap(), NULL, parent)
+void MediaPlayer::volumeUp()
 {
+    command("VOLUME_UP", "");
+}
+void MediaPlayer::volumeDown()
+{
+    command("VOLUME_DOWN", "");
+}
+// extension for "generic" media browsing
+void MediaPlayer::browse(QString cmd)
+{
+    command("BROWSE", cmd);
+}
+void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
+{
+    command("play:" + cmd, itemKey);
+}
+void MediaPlayer::search(const QString& searchString, const QString& itemKey)
+{
+    command("search:" + searchString, itemKey);
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):
     Entity(Type, config, integrationObj, parent)
 {
+    if (!s_metaEnum.isValid()) {
+        int index = MediaPlayerDef::staticMetaObject.indexOfEnumerator("Attributes");
+        s_metaEnum = MediaPlayerDef::staticMetaObject.enumerator(index);
+    }
 }
+
+QStringList MediaPlayer::allFeatures ()
+{
+    QStringList list;
+    for (int i = 0; i < s_metaEnum.keyCount(); i++)
+        list.append(s_metaEnum.key(i));
+    return list;
+}
+QString MediaPlayer::getAttrName(int attrIndex)
+{
+    return s_metaEnum.valueToKey(static_cast<int>(attrIndex));
+}
+int MediaPlayer::getAttrIndex(const QString& str)
+{
+    return s_metaEnum.keyToValue(str.toUpper().toUtf8());
+}
+
+
