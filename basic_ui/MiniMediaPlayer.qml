@@ -71,19 +71,6 @@ Item {
         }
     }
 
-    Connections {
-        target: entities
-
-        onMediaplayersPlayingChanged: {
-            if (entities.mediaplayersPlaying.length == 0) {
-                loader_main.state = "visible";
-                loader_main.item.miniMediaPlayer.height = 0;
-                loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.source = "";
-                loader_main.item.miniMediaPlayer.miniMediaPlayerLoader.active = false;
-            }
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
