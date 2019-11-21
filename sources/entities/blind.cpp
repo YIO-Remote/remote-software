@@ -78,7 +78,7 @@ Blind::Blind(const QVariantMap& config, QObject* integrationObj, QObject *parent
     }
 }
 
-QStringList Blind::allFeatures ()
+QStringList Blind::allAttributes ()
 {
     QStringList list;
     for (int i = 0; i < s_metaEnum.keyCount(); i++)

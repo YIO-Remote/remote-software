@@ -53,7 +53,7 @@ public:
     // update an entity
     Q_INVOKABLE void                update              (const QString& entity_id, const QVariantMap& attributes);
 
-    EntityInterface*                getInterface        (const QString& entity_id);
+    EntityInterface*                getEntityInterface  (const QString& entity_id);
 
     QStringList                     supported_entities  () { return m_supported_entities; }
     QStringList                     supported_entities_translation () { return m_supported_entities_translation; }

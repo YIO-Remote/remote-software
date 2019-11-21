@@ -27,7 +27,7 @@ public:
     virtual void                update      (const QString& entity_id, const QVariantMap& attributes) = 0;
 
     // get entity interface by entity_id
-    virtual EntityInterface*    getInterface(const QString& entity_id) = 0;
+    virtual EntityInterface*    getEntityInterface(const QString& entity_id) = 0;
 };
 
 QT_BEGIN_NAMESPACE

@@ -172,7 +172,7 @@ MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QOb
     }
 }
 
-QStringList MediaPlayer::allFeatures ()
+QStringList MediaPlayer::allAttributes ()
 {
     QStringList list;
     for (int i = 0; i < s_metaEnum.keyCount(); i++)

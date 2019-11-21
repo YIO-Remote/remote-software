@@ -107,7 +107,7 @@ Light::Light(const QVariantMap& config, QObject* integrationObj, QObject *parent
         s_metaEnum = LightDef::staticMetaObject.enumerator(index);
     }
 }
-QStringList Light::allFeatures ()
+QStringList Light::allAttributes ()
 {
     QStringList list;
     for (int i = 0; i < s_metaEnum.keyCount(); i++)

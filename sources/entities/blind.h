@@ -48,16 +48,16 @@ signals:
 public:
     static QString Type;
 
-    static QStringList&         AllFeatures()
+    static QStringList&         AllAttributes()
     {
         static QStringList s;
         if (s.count() == 0)
-            s.append(allFeatures());
+            s.append(allAttributes());
         return s;
     }
 
 private:
-    static QStringList          allFeatures     ();
+    static QStringList          allAttributes();
     static QMetaEnum            s_metaEnum;
 
     bool                        m_state;
