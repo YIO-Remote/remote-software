@@ -56,7 +56,7 @@ Comp.ButtonBase {
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.verticalCenter: parent.verticalCenter
-        url: mediaplayerUtils.smallImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
+        url: mediaplayerUtils.smallImage == "" ? "" : mediaplayerUtils.smallImage
 
         layer.enabled: true
         layer.effect: OpacityMask {
