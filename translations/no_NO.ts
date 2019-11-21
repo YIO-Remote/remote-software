@@ -359,7 +359,7 @@ YIO remote </source>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
       <source>Your software is up to date.</source>
-      <translation>Programvaren er oppdatert</translation>
+      <translation>Programvaren er oppdatert.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
