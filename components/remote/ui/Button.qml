@@ -8,7 +8,7 @@ import "qrc:/components" as Comp
 Comp.ButtonBase {
     id: remoteButton
     icon: "\uE90B"
-    cardLoader.source: getSource()
+    cardLoader.source: "qrc:/components/remote/ui/ir/Card.qml" //getSource()
 
     function getSource() {
         if (remoteButton.state != "open") {
