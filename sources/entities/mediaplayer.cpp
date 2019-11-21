@@ -47,8 +47,8 @@ bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
             }
             break;
         case MediaPlayerDef::Attributes::VOLUME:
-            if (m_volume != value.toInt()) {
-                m_volume = value.toInt();
+            if (m_volume != value.toDouble()) {
+                m_volume = value.toDouble();
                 chg = true;
                 emit volumeChanged();
             }

@@ -23,7 +23,7 @@ public:
     Q_ENUM(States)
     // properties
     Q_PROPERTY  (States                     state           READ    state           NOTIFY      stateChanged)
-    Q_PROPERTY  (int                        volume          READ    volume          NOTIFY      volumeChanged)
+    Q_PROPERTY  (double                     volume          READ    volume          NOTIFY      volumeChanged)
     Q_PROPERTY  (bool                       muted           READ    muted           NOTIFY      mutedChanged)
     Q_PROPERTY  (QString                    mediaType       READ    mediaType       NOTIFY      mediaTypeChanged)
     Q_PROPERTY  (QString                    mediaTitle      READ    mediaTitle      NOTIFY      mediaTitleChanged)
@@ -34,7 +34,7 @@ public:
 
     States                      state()                 { return m_state; }
     MediaPlayerDef::States      getState() override     { return static_cast<MediaPlayerDef::States>(m_state); }
-    int                         volume() override       { return m_volume; }
+    double                      volume() override       { return m_volume; }
     bool                        muted() override        { return m_muted; }
     QString                     mediaType() override    { return m_mediaType; }
     QString                     mediaImage() override   { return m_mediaImage; }
@@ -115,7 +115,7 @@ private:
     static QMetaEnum                    s_metaEnum;
 
     States                              m_state;
-    int                                 m_volume;
+    double                              m_volume;
     bool                                m_muted;
     QString                             m_mediaType;
     QString                             m_mediaImage;

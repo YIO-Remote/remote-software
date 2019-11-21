@@ -7,9 +7,9 @@
 class NotificationsInterface
 {
 public:
-    virtual ~NotificationsInterface() {}
+    virtual ~NotificationsInterface  ();
 
-   // add a notification
+    // add a notification
     virtual void        add      (const bool &type, const QString &text, const QString &actionlabel, const QVariant &action) = 0;
     virtual void        add      (const bool &type, const QString &text) = 0;
     virtual void        remove   (const int id) = 0;
