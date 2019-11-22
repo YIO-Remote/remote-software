@@ -4,12 +4,6 @@
 #include <QString>
 #include <QVariantMap>
 
-#include "../entities/entities.h"
-#include "../entities/entity.h"
-#include "../notifications.h"
-#include "../yioapi.h"
-#include "../config.h"
-
 // This interface is implemented by the integration .so files, it is used by the entities to operate the integration
 class IntegrationInterface : public QObject
 {

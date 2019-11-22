@@ -7,6 +7,7 @@
 
 #include <QJsonArray>
 #include <QQuickItem>
+#include <QTimer>
 
 Integrations* Integrations::s_instance = nullptr;
 
@@ -85,6 +86,9 @@ void Integrations::load()
     }
 
     m_integrationsToLoad = i;
+
+    if (m_integrationsToLoad == 0)
+        emit loadComplete();
 }
 
 void Integrations::onCreateDone(QMap<QObject *, QVariant> map)

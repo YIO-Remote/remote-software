@@ -94,7 +94,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
                 PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
@@ -126,7 +126,8 @@ Rectangle {
         onClicked: {
             haptic.playEffect("click");
             originParent = buttonContainer.parent
-            buttonContainer.state = "open"
+//            buttonContainer.state = "open"
+            cardLoader.active = true;
         }
     }
 
@@ -350,9 +351,15 @@ Rectangle {
         width: buttonContainer.width
         height: buttonContainer.height
         asynchronous: true
-        active: buttonContainer.state == "open"
+        active: false // buttonContainer.state == "open"
         source: "qrc:/components/remote/ui/Card.qml"
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
+
+        onStatusChanged: {
+            if (cardLoader.status == Loader.Ready) {
+                buttonContainer.state = "open";
+            }
+        }
 
         Behavior on opacity {
             NumberAnimation {
@@ -406,6 +413,7 @@ Rectangle {
             onClicked: {
                 haptic.playEffect("click");
                 buttonContainer.state = "closed"
+                cardLoader.active = false;
             }
         }
     }

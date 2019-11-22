@@ -51,7 +51,7 @@ public:
     Q_INVOKABLE void            channelUp();
     Q_INVOKABLE void            channelDown();
     Q_INVOKABLE void            channelSearch();
-    Q_INVOKABLE void            favorite();
+    Q_INVOKABLE void            toFavorite();
     Q_INVOKABLE void            guide();
 
     // volume commands
