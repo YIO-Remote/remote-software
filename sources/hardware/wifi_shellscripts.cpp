@@ -21,10 +21,14 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include <QLoggingCategory>
 #include <QtDebug>
+#include <QVector>
 
 #include "../fileio.h"
 #include "wifi_shellscripts.h"
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");
 
 
 WifiShellScripts::WifiShellScripts(QObject *parent) :
@@ -36,6 +40,9 @@ WifiShellScripts::WifiShellScripts(QObject *parent) :
 
 bool WifiShellScripts::init()
 {
+    startSignalStrengthScanning();
+    startWifiStatusScanning();
+    startNetworkScan();
     return true;
 }
 
@@ -65,32 +72,46 @@ void WifiShellScripts::reset()
 bool WifiShellScripts::isConnected()
 {
     FileIO fileIO;
-    return getCurrentSSID() == fileIO.read("/ssid").trimmed();
-}
-
-QString WifiShellScripts::getMacAddress()
-{
-    return launch("cat /sys/class/net/wlan0/address");
-}
-
-QString WifiShellScripts::getCurrentSSID()
-{
-    return launch("/usr/bin/yio-remote/wifi_ssid.sh");
-}
-
-int WifiShellScripts::getCurrentSignalStrength()
-{
-    return launch("/usr/bin/yio-remote/wifi_rssi.sh").toInt();
-}
-
-QString WifiShellScripts::getCurrentIp()
-{
-    return launch("/usr/bin/yio-remote/wifi_ip.sh");
+    return ssid() == fileIO.read("/ssid").trimmed();
 }
 
 void WifiShellScripts::startNetworkScan()
 {
+    setScanStatus(Scanning);
     QString scanResult = launch("/usr/bin/yio-remote/wifi_network_list.sh");
+    m_scanResults = parseScanresult(scanResult);
+
+    setScanStatus(ScanOk);
+    emit networksFound(m_scanResults);
+}
+
+WifiNetwork WifiShellScripts::lineToNetwork(const QStringRef& line) {
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    QVector<QStringRef> list = line.split(",");
+
+    if (list.size() > 1) {
+        auto name = list.at(1).toString();
+        auto signal = list.at(0).toInt();
+        qCDebug(CLASS_LC) << "network:" << name << signal;
+        WifiNetwork nw{name, "", signal, false, false};
+        return nw;
+    } else {
+        throw std::runtime_error("parse error");
+    }
+}
+
+QList<WifiNetwork> WifiShellScripts::parseScanresult(const QString& buffer) {
+    auto lines = buffer.splitRef("\n");
+    QList<WifiNetwork> cont;
+    for (int i = 0; i < lines.length() - 1; i++) {
+        try {
+            cont.append(lineToNetwork(lines[i]));
+        } catch (std::exception& e) {
+            setScanStatus(ScanFailed);
+            qCCritical(CLASS_LC) << e.what() << lines[i];
+        }
+    }
+    return cont;
 }
 
 QString WifiShellScripts::launch(const QString &command)
@@ -107,4 +128,36 @@ QString WifiShellScripts::launch(const QString &command, const QStringList &argu
     QByteArray bytes = m_process->readAllStandardOutput();
     QString output = QString::fromLocal8Bit(bytes);
     return output;
+}
+
+void WifiShellScripts::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+    if (m_wifiStatusScanning) {
+        QString ssid = launch("/usr/bin/yio-remote/wifi_ssid.sh");
+        if (ssid != m_wifiStatus.name) {
+            m_wifiStatus.name = ssid;
+            emit networkNameChanged("dummy");
+        }
+
+        QString ipAddress = launch("/usr/bin/yio-remote/wifi_ip.sh");
+        if (ipAddress != m_wifiStatus.ipAddress) {
+            m_wifiStatus.ipAddress = ipAddress;
+            emit ipAddressChanged(ipAddress);
+        }
+
+        QString macAddress = launch("cat /sys/class/net/wlan0/address");
+        if (macAddress != m_wifiStatus.macAddress) {
+            m_wifiStatus.macAddress = macAddress;
+            emit macAddressChanged(macAddress);
+        }
+    }
+
+    if (m_signalStrengthScanning) {
+        int value = launch("/usr/bin/yio-remote/wifi_rssi.sh").toInt();
+        if (value != m_wifiStatus.signalStrength) {
+            m_wifiStatus.signalStrength = value;
+            emit signalStrengthChanged(value);
+        }
+    }
 }

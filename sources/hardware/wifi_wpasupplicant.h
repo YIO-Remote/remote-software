@@ -64,18 +64,12 @@ public:
     Q_INVOKABLE void reset() override;
     Q_INVOKABLE void join(const QString &ssid, const QString &password) override;
     Q_INVOKABLE bool isConnected() override;
-    Q_INVOKABLE QString getMacAddress() override;
-    Q_INVOKABLE QString getCurrentSSID() override;
-    Q_INVOKABLE int getCurrentSignalStrength() override;
-    Q_INVOKABLE QString getCurrentIp() override;
     Q_INVOKABLE void startNetworkScan() override;
 
     /**
-      * Trigger Push Button Configuration (PBC) authentication
-      * with given network
-      * @param network
+      * Trigger Push Button Configuration (PBC) authentication with given network
       */
-    void wps_pbc_auth(const WifiNetwork& network);
+    void wpsPushButtonConfigurationAuth(const WifiNetwork& network);
 
     /**
      * Connect to wpa control interface socket
@@ -86,7 +80,7 @@ signals:
 
 public slots:
     /**
-     * data on control channel available
+     * Data on control channel available
      */
     void controlEvent(int fd);
 
@@ -101,12 +95,15 @@ private:
     WifiNetwork lineToNetwork(const QStringRef& line);
 
     /**
-     * Tokenize a buffer returend by wpa_ctrl SCAN_RESULT into a vector of
-     * WifiNetworks
+     * Tokenize a buffer returned by wpa_ctrl SCAN_RESULT into a list of WifiNetworks
      * @param buffer result
      * @param len buffer length
      */
-    QList<WifiNetwork> parseScanresult(const char* buffer, size_t len);
+    QList<WifiNetwork> parseScanresult(const char* buffer);
+
+    WifiStatus parseStatus(const char* buffer);
+
+    int parseSignalStrength(const char* buffer);
 
     /**
      * Send read scan_results from wpa_ctrl
@@ -114,45 +111,45 @@ private:
     void readScanResults();
 
     /**
-     * Issue a command, modifies reply and reply_size
+     * Issue a command, modifies reply and m_replySize
      * @param cmd wpa_supplicant command
      */
     void requestWrapper(const QString& cmd);
 
     /**
      * Interpret event string from wpa_socket monitor
-     * @param e_string event string
      */
-    void parseEvent(const QString& e_string);
+    void parseEvent(const QString& event);
+
+    void timerEvent(QTimerEvent *event) override;
 
 private:
     /**
      * Handle for lower layer wpa_ctrl
      */
-    struct wpa_ctrl* ctrl;
+    struct wpa_ctrl* m_ctrl;
 
     /**
      * Buffer to hold reply of command
      */
-    char reply[2048] = {};
-    size_t reply_size;
+    char m_reply[2048] = {};
 
     /**
-     * Mutex to protect concurrent access to wpa_ctrl and buffers
-     * reply or reply_size
+     * Mutex to protect concurrent access to wpa_ctrl and buffers m_reply or m_replySize
      */
-    mutable std::mutex wpa_mtx;
+    mutable std::mutex m_wpaMutex;
 
     /**
      * Path to management socket e.g. /var/lib/wpa_supplicant/wlan0
      */
-    QString wpa_supplicant_sock_path;
+    QString m_wpaSupplicantSocketPath;
 
     /**
-     * Notifier for watching asynchornous events from wpa_ctrl socket
+     * Notifier for watching asynchronous events from wpa_ctrl socket
      */
-    std::unique_ptr<QSocketNotifier> ctrl_notifier;
+    std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
 
+    // Only allow WifiControl to create an instance
     friend WifiControl& WifiControl::instance();
 };
 

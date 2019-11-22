@@ -48,19 +48,23 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiControl");
 */
 WifiControl::WifiControl(QObject* parent)
     : QObject(parent)
-    , m_scanStatus(Idle) {
+    , m_scanStatus(Idle)
+    , m_scanInterval(10000)         // TODO make scan interval configurable
+{
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 WifiControl::~WifiControl()
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    stopScanTimer();
 }
 
 WifiControl& WifiControl::instance()
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
+    // TODO think about a redesign: device factory?
     #if defined (CONFIG_WPA_SUPPLICANT)
         static WifiWpaSupplicant singleton;
     #elif defined (Q_OS_LINUX) && defined (USE_WPA_SUPPLICANT)
@@ -74,16 +78,30 @@ WifiControl& WifiControl::instance()
     return singleton;
 }
 
-WifiControl::ScanStatus WifiControl::getScanStatus() const
+QString WifiControl::macAddress()
+{
+    return m_wifiStatus.macAddress;
+}
+
+QString WifiControl::ssid()
+{
+    return m_wifiStatus.name;
+}
+
+int WifiControl::signalStrength()
+{
+    return m_wifiStatus.signalStrength;
+}
+
+QString WifiControl::ipAddress()
+{
+    return m_wifiStatus.ipAddress;
+}
+
+WifiControl::ScanStatus WifiControl::scanStatus() const
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
     return m_scanStatus;
-}
-
-const QList<WifiNetwork>& WifiControl::getNetworkScanResult()
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-    return m_scanResults;
 }
 
 void WifiControl::setScanStatus(ScanStatus stat)
@@ -92,3 +110,53 @@ void WifiControl::setScanStatus(ScanStatus stat)
     m_scanStatus = stat;
     scanStatusChanged(m_scanStatus);
 }
+
+const QList<WifiNetwork>& WifiControl::networkScanResult()
+{
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    return m_scanResults;
+}
+
+void WifiControl::startSignalStrengthScanning()
+{
+    m_signalStrengthScanning = true;
+    startScanTimer();
+}
+
+void WifiControl::stopSignalStrengthScanning()
+{
+    m_signalStrengthScanning = false;
+    if (!m_wifiStatusScanning) {
+        stopScanTimer();
+    }
+}
+
+void WifiControl::startWifiStatusScanning()
+{
+    m_wifiStatusScanning = true;
+    startScanTimer();
+}
+
+void WifiControl::stopWifiStatusScanning()
+{
+    m_wifiStatusScanning = false;
+    if (!m_signalStrengthScanning) {
+        stopScanTimer();
+    }
+}
+
+void WifiControl::startScanTimer()
+{
+    if (m_timerId == 0) {
+        m_timerId = startTimer(m_scanInterval);
+    }
+}
+
+void WifiControl::stopScanTimer()
+{
+    if (m_timerId > 0) {
+        killTimer(m_timerId);
+        m_timerId = 0;
+    }
+}
+

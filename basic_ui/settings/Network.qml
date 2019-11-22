@@ -5,36 +5,19 @@ Item {
     width: parent.width
     height: header.height + section.height + 20
 
-    Timer {
-        id: timer
-        running: false
-        repeat: true
-        interval: 10000
-        triggeredOnStart: true
-
-        onTriggered: {
-            wifiSignalValue.text = wifi.getCurrentSignalStrength();
-            var ssid = wifi.getCurrentSSID();
-            if (ssid === "") {
-                wifiSSIDText.text = qsTr("Select WiFi network") + translateHandler.emptyString;
-            } else {
-                wifiSSIDText.text = ssid;
-            }
-        }
-    }
-
-    Component.onCompleted: timer.start()
-
-    property var wifiNetworks: []
-    property var wifiNetworksRSSI: []
+    property var wifiNetworks
     property var wifiNetworkSelected: ""
-    property var wifiNetworkSelectedRSSI
 
     function addNetworks() {
         var comp = Qt.createComponent("qrc:/basic_ui/settings/WifiNetworkListElement.qml");
 
-        for (var i=0; i<wifiNetworks.length; i++) {
-            var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i], rssi: wifiNetworksRSSI[i], buttonId: i});
+        // FIXME doesn't work
+        wifiNetworks = wifi.networkScanResult
+        console.log("Got networks: " + wifiNetworks)
+
+        for (var i = 0; i < wifiNetworks.length; i++) {
+            console.log("Adding network: " + wifiNetworks[i])
+            var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i].name, rssi: wifiNetworks[i].signalStrength, buttonId: i});
             obj.clicked.connect(buttonClicked)
         }
     }
@@ -79,7 +62,7 @@ Item {
             Text {
                 id: wifiSSIDText
                 color: colorText
-                text: ""
+                text: wifi.ssid
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
@@ -97,21 +80,14 @@ Item {
 
                     // Start wifi network scan
                     wifiNetworks = [];
-                    wifiNetworksRSSI = [];
 
                     // clear list
                     for (var k = flowWifiList.children.length; k>0; k--) {
                         flowWifiList.children[k-1].destroy();
                     }
 
-                    var tmp = mainLauncher.launch("/usr/bin/yio-remote/wifi_network_list.sh");
-                    tmp = tmp.split('\n');
-                    for (var i=0; i<tmp.length-1; i++) {
-                        var wifitmp = tmp[i].split(',')
-                        wifiNetworks[i] = wifitmp[1];
-                        wifiNetworksRSSI[i] = wifitmp[0]
-                    }
-
+                    wifi.startNetworkScan()
+                    // FIXME add handler: act on signal when scanning is finished
                     // add wifi networks to the list
                     addNetworks();
 
@@ -255,7 +231,7 @@ Item {
         Text {
             id: wifiSignalValue
             color: colorText
-            text: "-59"
+            text: wifi.signalStrength
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -291,7 +267,7 @@ Item {
 
         Text {
             color: colorText
-            text: wifi.getCurrentIp()
+            text: wifi.ipAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -327,7 +303,7 @@ Item {
 
         Text {
             color: colorText
-            text: wifi.getMacAddress();
+            text: wifi.macAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20

@@ -43,10 +43,6 @@ public:
     Q_INVOKABLE void reset() override;
     Q_INVOKABLE void join(const QString &ssid, const QString &password) override;
     Q_INVOKABLE bool isConnected() override;
-    Q_INVOKABLE QString getMacAddress() override;
-    Q_INVOKABLE QString getCurrentSSID() override;
-    Q_INVOKABLE int getCurrentSignalStrength() override;
-    Q_INVOKABLE QString getCurrentIp() override;
     Q_INVOKABLE void startNetworkScan() override;
 
 signals:
@@ -56,6 +52,21 @@ public slots:
 private:
     QString launch(const QString &command);
     QString launch(const QString &command, const QStringList &arguments);
+    void timerEvent(QTimerEvent *event) override;
+
+    /**
+     * Tokenize a single line of scan results and interpret fields as WifiNetwork
+     * @param line refernce to string in scan_results
+     * @return WifiNetwork data object
+     */
+    WifiNetwork lineToNetwork(const QStringRef& line);
+
+    /**
+     * Tokenize a buffer returned by the shell script into a list of WifiNetworks
+     * @param buffer result
+     */
+    QList<WifiNetwork> parseScanresult(const QString& buffer);
+
     QProcess *m_process;
 };
 

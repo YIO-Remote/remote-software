@@ -20,42 +20,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFIMOCK_H
-#define WIFIMOCK_H
+#ifndef WIFISTATUS_H
+#define WIFISTATUS_H
 
-#include <QObject>
+#include <QString>
 
-#include "wifi_control.h"
-
-class WifiMock : public WifiControl
-{
-    Q_OBJECT
+class WifiStatus {
 public:
-    explicit WifiMock(QObject *parent = nullptr);
-    virtual ~WifiMock() override;
-
-    bool init() override;
-
-    void on() override;
-    void off() override;
-
-    Q_INVOKABLE void reset() override;
-    Q_INVOKABLE void join(const QString &ssid, const QString &password) override;
-    Q_INVOKABLE bool isConnected() override;
-    Q_INVOKABLE void startNetworkScan() override;
-
-    QString macAddress() override;
-    QString ssid() override;
-    int signalStrength() override;
-    QString ipAddress() override;
-
-signals:
-
-public slots:
-
-private:
-    void timerEvent(QTimerEvent *event) override;
-
+    QString name = "";
+    QString bssid = "";
+    QString ipAddress = "";
+    QString macAddress = "";
+    int signalStrength = -100;
+    bool connected = false;
 };
 
-#endif // WIFIMOCK_H
+#endif // WIFISTATUS_H

@@ -1,5 +1,7 @@
 QT += qml quick websockets quickcontrols2 bluetooth
-CONFIG += c++14 disable-desktop qtquickcompiler
+CONFIG += c++14 disable-desktop
+# disable qtquickcompiler for QML debugging!
+CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -13,6 +15,7 @@ HEADERS += \
     sources/entities/remote.h \
     sources/fileio.h \
     sources/hardware/wifi_control.h \
+    sources/hardware/wifi_status.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
     sources/jsonfile.h \

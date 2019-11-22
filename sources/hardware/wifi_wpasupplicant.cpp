@@ -33,34 +33,35 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiWpaSupplicant");
 
-WifiWpaSupplicant::WifiWpaSupplicant(QObject *parent) : WifiControl(parent)
-  , ctrl(nullptr)
-      , reply_size(sizeof(reply)) {
-      qCDebug(CLASS_LC) << Q_FUNC_INFO;
+WifiWpaSupplicant::WifiWpaSupplicant(QObject *parent)
+    : WifiControl(parent)
+    , m_ctrl(nullptr) {
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 /****************************************************************************/
 WifiWpaSupplicant::~WifiWpaSupplicant() {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
-    if (ctrl) {
-        ctrl_notifier->setEnabled(false);
-        ctrl_notifier->disconnect();
-        wpa_ctrl_detach(ctrl);
-        wpa_ctrl_close(ctrl);
+    if (m_ctrl) {
+        m_ctrlNotifier->setEnabled(false);
+        m_ctrlNotifier->disconnect();
+        wpa_ctrl_detach(m_ctrl);
+        wpa_ctrl_close(m_ctrl);
     }
 }
 
 bool WifiWpaSupplicant::init()
 {
-    if (!ctrl) {
+    if (!m_ctrl) {
         // TODO make wpa control socket configurable
-        wpa_supplicant_sock_path = "/var/run/wpa_supplicant/wlan0";
+        m_wpaSupplicantSocketPath = "/var/run/wpa_supplicant/wlan0";
         try {
             connectWpaControlSocket();
-            ctrl_notifier = std::make_unique<QSocketNotifier>(
-                wpa_ctrl_get_fd(ctrl), QSocketNotifier::Read);
+            m_ctrlNotifier = std::make_unique<QSocketNotifier>(
+                wpa_ctrl_get_fd(m_ctrl), QSocketNotifier::Read);
 
-            connect(ctrl_notifier.get(), SIGNAL(activated(int)), this, SLOT(controlEvent(int)));
+            connect(m_ctrlNotifier.get(), SIGNAL(activated(int)), this, SLOT(controlEvent(int)));
+            startNetworkScan();
         } catch (std::system_error& exc) {
             qCCritical(CLASS_LC) << exc.what();
             return false;
@@ -98,35 +99,11 @@ bool WifiWpaSupplicant::isConnected()
     return false;
 }
 
-QString WifiWpaSupplicant::getMacAddress()
-{
-    // FIXME implement me
-    return "de:ad:be:ef:00:00";
-}
-
-QString WifiWpaSupplicant::getCurrentSSID()
-{
-    // FIXME implement me
-    return "Not Implemented";
-}
-
-int WifiWpaSupplicant::getCurrentSignalStrength()
-{
-    // FIXME implement me
-    return 0;
-}
-
-QString WifiWpaSupplicant::getCurrentIp()
-{
-    // FIXME implement me
-    return "127.0.0.1";
-}
-
 void WifiWpaSupplicant::startNetworkScan()
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
-    assert(ctrl);
-    std::lock_guard<std::mutex> lock(wpa_mtx);
+    assert(m_ctrl);
+    std::lock_guard<std::mutex> lock(m_wpaMutex);
     try {
         requestWrapper("SCAN");
     } catch (std::exception& exc) {
@@ -135,9 +112,9 @@ void WifiWpaSupplicant::startNetworkScan()
 }
 
 /****************************************************************************/
-void WifiWpaSupplicant::wps_pbc_auth(const WifiNetwork& network) {
+void WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& network) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
-    std::lock_guard<std::mutex> lock(wpa_mtx);
+    std::lock_guard<std::mutex> lock(m_wpaMutex);
     QString cmd("WPS_PBC ");
     try {
         requestWrapper(cmd + network.bssid);
@@ -148,49 +125,42 @@ void WifiWpaSupplicant::wps_pbc_auth(const WifiNetwork& network) {
 
 /****************************************************************************/
 void WifiWpaSupplicant::connectWpaControlSocket() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO << wpa_supplicant_sock_path;
-    ctrl = wpa_ctrl_open(wpa_supplicant_sock_path.toStdString().c_str());
-    if (!ctrl) {
-        throw std::system_error(
-            errno, std::generic_category(), "wpa_ctrl_open() failed");
+    qCDebug(CLASS_LC) << Q_FUNC_INFO << m_wpaSupplicantSocketPath;
+    m_ctrl = wpa_ctrl_open(m_wpaSupplicantSocketPath.toStdString().c_str());
+    if (!m_ctrl) {
+        throw std::system_error(errno, std::generic_category(), "wpa_ctrl_open() failed");
     }
-    if (wpa_ctrl_attach(ctrl) < 0) {
+    if (wpa_ctrl_attach(m_ctrl) < 0) {
         qCCritical(CLASS_LC) << " notifier attach failed!";
     }
 }
 
 /****************************************************************************/
 
-void WifiWpaSupplicant::parseEvent(const QString& e_string) {
+void WifiWpaSupplicant::parseEvent(const QString& event) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
-    /**
-     * Did we get a scan_results event?
-     */
-    if (e_string.contains(WPA_EVENT_SCAN_RESULTS)) {
+
+    if (event.contains(WPA_EVENT_SCAN_RESULTS)) {
         qCDebug(CLASS_LC) << " scan_results available!";
         setScanStatus(ScanOk);
         readScanResults();
         emit networksFound(m_scanResults);
-    }
-    if (e_string.contains(WPA_EVENT_SCAN_STARTED)) {
+    } else if (event.contains(WPA_EVENT_SCAN_STARTED)) {
         qCDebug(CLASS_LC) << "scan started!";
         setScanStatus(Scanning);
-    }
-    if (e_string.contains(WPA_EVENT_SCAN_FAILED)) {
+    } else if (event.contains(WPA_EVENT_SCAN_FAILED)) {
         qCDebug(CLASS_LC) << "scan failed!";
         setScanStatus(ScanFailed);
-    }
-    if (e_string.contains(WPA_EVENT_CONNECTED)) {
+    } else if (event.contains(WPA_EVENT_CONNECTED)) {
         qCDebug(CLASS_LC) << " connected!";
-    }
-    if (e_string.contains(WPS_EVENT_AP_AVAILABLE_PBC)) {
+    } else if (event.contains(WPS_EVENT_AP_AVAILABLE_PBC)) {
         qCDebug(CLASS_LC) << " WPS PBC available!";
-    }
-    if (e_string.contains(WPA_EVENT_DISCONNECTED)) {
+    } else if (event.contains(WPA_EVENT_DISCONNECTED)) {
         qCDebug(CLASS_LC) << " disconnected!";
-    }
-    if (e_string.contains(WPS_EVENT_ACTIVE)) {
+    } else if (event.contains(WPS_EVENT_ACTIVE)) {
         qCDebug(CLASS_LC) << " Push button Configuration active!";
+    } else {
+        qCDebug(CLASS_LC) << " event:" << event;
     }
 }
 
@@ -198,22 +168,22 @@ void WifiWpaSupplicant::parseEvent(const QString& e_string) {
 void WifiWpaSupplicant::controlEvent(int fd) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
     char buf[128] = {};
-    while (wpa_ctrl_pending(ctrl) > 0) {
+    while (wpa_ctrl_pending(m_ctrl) > 0) {
         auto buf_len = sizeof(buf);
-        wpa_ctrl_recv(ctrl, buf, &buf_len);
-        auto e_string = QString::fromLocal8Bit(buf, buf_len);
-        qCDebug(CLASS_LC) << "[monitor] CTRL:" << e_string << ":" << buf_len;
-        parseEvent(e_string);
+        wpa_ctrl_recv(m_ctrl, buf, &buf_len);
+        auto event = QString::fromLocal8Bit(buf, buf_len);
+        qCDebug(CLASS_LC) << "[monitor] CTRL:" << event << ":" << buf_len;
+        parseEvent(event);
     }
 }
 
 /****************************************************************************/
 void WifiWpaSupplicant::requestWrapper(const QString& cmd) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO << cmd;
-    assert(ctrl);
-    size_t buf_size = sizeof(reply);
+    assert(m_ctrl);
+    size_t buf_size = sizeof(m_reply);
     auto res = wpa_ctrl_request(
-        ctrl, cmd.toStdString().c_str(), cmd.size(), reply, &buf_size, NULL);
+        m_ctrl, cmd.toStdString().c_str(), cmd.size(), m_reply, &buf_size, NULL);
     if (res < 0) {
         throw std::runtime_error("wpa_ctrl_request failed");
     }
@@ -222,11 +192,11 @@ void WifiWpaSupplicant::requestWrapper(const QString& cmd) {
 /****************************************************************************/
 void WifiWpaSupplicant::readScanResults() {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
-    assert(ctrl);
-    std::lock_guard<std::mutex> lock(wpa_mtx);
+    assert(m_ctrl);
+    std::lock_guard<std::mutex> lock(m_wpaMutex);
     try {
         requestWrapper("SCAN_RESULTS");
-        m_scanResults = parseScanresult(reply, reply_size);
+        m_scanResults = parseScanresult(m_reply);
     } catch (std::exception& exc) {
         qCCritical(CLASS_LC) << exc.what();
     }
@@ -250,20 +220,121 @@ WifiNetwork WifiWpaSupplicant::lineToNetwork(const QStringRef& line) {
 }
 
 /****************************************************************************/
-QList<WifiNetwork> WifiWpaSupplicant::parseScanresult(const char* buffer, size_t len) {
+QList<WifiNetwork> WifiWpaSupplicant::parseScanresult(const char* buffer) {
     QString results(buffer);
     auto lines = results.splitRef("\n");
     QList<WifiNetwork> cont;
-    /*
-     * skip first line which is header of table and the last
-     * line which is a empty newline
-     */
+    // skip first line which is header of table and the last line which is a empty newline
     for (int i = 1; i < lines.length() - 1; i++) {
         try {
-            cont.push_back(lineToNetwork(lines[i]));
+            cont.append(lineToNetwork(lines[i]));
         } catch (std::exception& e) {
             qCCritical(CLASS_LC) << e.what() << lines[i];
         }
     }
     return cont;
+}
+
+QDebug operator<<(QDebug debug, const WifiStatus& wifiStatus)
+{
+    QDebugStateSaver saver(debug);
+    debug.nospace() << "("
+                    << "ssid: " << wifiStatus.name << ", "
+                    << "signal: " << wifiStatus.signalStrength  << ", "
+                    << "ip: " << wifiStatus.ipAddress  << ", "
+                    << "mac: " << wifiStatus.macAddress
+                    << ")";
+    return debug;
+}
+
+WifiStatus WifiWpaSupplicant::parseStatus(const char* buffer) {
+    QString results(buffer);
+    auto lines = results.splitRef("\n");
+    WifiStatus wifiStatus;
+
+    for (int i = 0; i < lines.length(); i++) {
+        int pos = lines[i].indexOf("=");
+        if (pos > 0) {
+            auto key = lines[i].left(pos);
+            auto value = lines[i].mid(pos + 1);
+            if ("bssid" == key) {
+                wifiStatus.bssid = value.toString();
+            } else if ("ssid" == key) {
+                wifiStatus.name = value.toString();
+            } else if ("ip_address" == key) {
+                wifiStatus.ipAddress = value.toString();
+            } else if ("address" == key) {
+                wifiStatus.macAddress = value.toString();
+            }
+        }
+    }
+
+    qCDebug(CLASS_LC) << "Status:" << wifiStatus;
+    return wifiStatus;
+}
+
+int WifiWpaSupplicant::parseSignalStrength(const char* buffer) {
+    QString results(buffer);
+    auto lines = results.splitRef("\n");
+    int rssi = -100;
+
+    for (int i = 0; i < lines.length(); i++) {
+        int pos = lines[i].indexOf("=");
+        if (pos > 0) {
+            auto key = lines[i].left(pos);
+            if ("RSSI" == key) {
+                rssi = lines[i].mid(pos + 1).toInt();
+                break;
+            }
+        }
+    }
+
+    qCDebug(CLASS_LC) << "Signal strength:" << rssi;
+    emit signalStrengthChanged(rssi);
+
+    return rssi;
+}
+
+void WifiWpaSupplicant::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+
+    if (m_wifiStatusScanning) {
+        std::lock_guard<std::mutex> lock(m_wpaMutex);
+        try {
+            requestWrapper("STATUS");
+            WifiStatus wifiStatus = parseStatus(m_reply);
+
+            if (wifiStatus.name != m_wifiStatus.name) {
+                m_wifiStatus.name = wifiStatus.name;
+                emit networkNameChanged(wifiStatus.name);
+            }
+
+            if (wifiStatus.ipAddress != m_wifiStatus.ipAddress) {
+                m_wifiStatus.ipAddress = wifiStatus.ipAddress;
+                emit ipAddressChanged(wifiStatus.ipAddress);
+            }
+
+            if (wifiStatus.macAddress != m_wifiStatus.macAddress) {
+                m_wifiStatus.macAddress = wifiStatus.macAddress;
+                emit macAddressChanged(wifiStatus.macAddress);
+            }
+        } catch (std::exception& exc) {
+            qCCritical(CLASS_LC) << exc.what();
+        }
+    }
+
+    if (m_signalStrengthScanning) {
+        std::lock_guard<std::mutex> lock(m_wpaMutex);
+        try {
+            requestWrapper("SIGNAL_POLL");
+            int value = parseSignalStrength(m_reply);
+            if (value != m_wifiStatus.signalStrength) {
+                m_wifiStatus.signalStrength = value;
+                emit signalStrengthChanged(value);
+            }
+        } catch (std::exception& exc) {
+            qCCritical(CLASS_LC) << " SCAN:" << exc.what();
+        }
+    }
 }

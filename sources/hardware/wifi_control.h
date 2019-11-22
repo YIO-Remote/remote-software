@@ -26,17 +26,23 @@
 #ifndef WIFICONTROL_H
 #define WIFICONTROL_H
 
+#include <QDebug>
 #include <QObject>
 #include <QString>
 #include <QList>
+
+#include "wifi_status.h"
 
 class WifiNetwork;
 
 class WifiControl : public QObject
 {
-    Q_OBJECT;
-    Q_PROPERTY(
-        ScanStatus scanStatus READ getScanStatus NOTIFY scanStatusChanged)
+    Q_OBJECT
+    Q_PROPERTY(QString ssid READ ssid NOTIFY networkNameChanged)
+    Q_PROPERTY(QString macAddress READ macAddress NOTIFY macAddressChanged)
+    Q_PROPERTY(QString ipAddress READ ipAddress NOTIFY ipAddressChanged)
+    Q_PROPERTY(int signalStrength READ signalStrength NOTIFY signalStrengthChanged)
+    Q_PROPERTY(ScanStatus scanStatus READ scanStatus NOTIFY scanStatusChanged)
 
 public:
     static WifiControl& instance();
@@ -61,33 +67,47 @@ public:
     Q_INVOKABLE virtual void reset() = 0;
     Q_INVOKABLE virtual void join(const QString &ssid, const QString &password) = 0;
     Q_INVOKABLE virtual bool isConnected() = 0;
-    Q_INVOKABLE virtual QString getMacAddress() = 0;
-    Q_INVOKABLE virtual QString getCurrentSSID() = 0;
-    Q_INVOKABLE virtual int getCurrentSignalStrength() = 0;
-    Q_INVOKABLE virtual QString getCurrentIp() = 0;
     Q_INVOKABLE virtual void startNetworkScan() = 0;
 
-    ScanStatus getScanStatus() const;
+    virtual QString macAddress();
+    virtual QString ssid();
+    virtual int signalStrength();
+    virtual QString ipAddress();
+    virtual ScanStatus scanStatus() const;
 
     /**
      * Returns the last network scan result
      */
-    const QList<WifiNetwork>& getNetworkScanResult();
+    Q_INVOKABLE const QList<WifiNetwork>& networkScanResult();
 
 signals:
-    //void signalStrength(float rssi);
+
+    void networkNameChanged(QString ssid);
+    void macAddressChanged(QString macAddress);
+    void ipAddressChanged(QString ipAddress);
 
     /**
-     * Scan was successful and result is available
+     * @brief Notifies that that the signal strength of the connected network changed
+     * @param rssi received signal strength indicator
+     */
+    void signalStrengthChanged(int rssi);
+
+    /**
+     * Network scan was successful and result is available
      */
     void networksFound(const QList<WifiNetwork>& network);
 
     /**
-     * Status changed
+     * Network scan status changed
      */
     void scanStatusChanged(WifiControl::ScanStatus status);
 
 public slots:
+
+    void startSignalStrengthScanning();
+    void stopSignalStrengthScanning();
+    void startWifiStatusScanning();
+    void stopWifiStatusScanning();
 
 protected:
     WifiControl(QObject* parent = nullptr);
@@ -100,6 +120,11 @@ protected:
 protected:
 
     /**
+     * @brief Current wifi connection status
+     */
+    WifiStatus m_wifiStatus;
+
+    /**
      * Current scan status
      */
     ScanStatus m_scanStatus;
@@ -109,18 +134,26 @@ protected:
      */
     QList<WifiNetwork> m_scanResults;
 
+    bool m_signalStrengthScanning;
+    bool m_wifiStatusScanning;
+
+private:
+    int  m_scanInterval;
+    int  m_timerId;
+
+    void startScanTimer();
+    void stopScanTimer();
+
 };
 
-// Plain Old Data class (POD)
+// Plain Old Data class (POD). Requires C++14 or newer!
 class WifiNetwork {
 public:
     QString name;
     QString bssid;
-    int signal_strength = 0;
-    bool wps_available = false;
+    int signalStrength = -100;
+    bool wpsAvailable = false;
     bool connected = false;
-//  Attention: <brace-enclosed initializer list> only works with C++14 and newer. Otherwise we need a constructor!
-//    WifiNetwork(QString name, QString bssid) : name(name), bssid(bssid) {}
 };
 
 #endif // WIFICONTROL_H

@@ -32,9 +32,16 @@ WifiMock::WifiMock(QObject *parent) : WifiControl(parent)
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
+WifiMock::~WifiMock()
+{
+}
+
 bool WifiMock::init()
 {
     qCDebug(CLASS_LC) << "init";
+    startSignalStrengthScanning();
+    startWifiStatusScanning();
+    startNetworkScan();
     return true;
 }
 
@@ -55,6 +62,7 @@ void WifiMock::reset()
 
 void WifiMock::join(const QString &ssid, const QString &password)
 {
+    Q_UNUSED(password)
     qCDebug(CLASS_LC) << "join " << ssid;
 }
 
@@ -64,28 +72,28 @@ bool WifiMock::isConnected()
     return rand() % 2 == 0;
 }
 
-QString WifiMock::getMacAddress()
+QString WifiMock::macAddress()
 {
-    qCDebug(CLASS_LC) << "getMacAddress";
+    qCDebug(CLASS_LC) << "macAddress";
     return "de:ad:be:ef:00:00";
 }
 
-QString WifiMock::getCurrentSSID()
+QString WifiMock::ssid()
 {
-    qCDebug(CLASS_LC) << "getCurrentSSID";
+    qCDebug(CLASS_LC) << "ssid";
     return "WiFi Mock";
 }
 
-int WifiMock::getCurrentSignalStrength()
+int WifiMock::signalStrength()
 {
-    qCDebug(CLASS_LC) << "getCurrentSignalStrength";
+    qCDebug(CLASS_LC) << "signalStrength";
 
     return -70 + qrand() % 9;
 }
 
-QString WifiMock::getCurrentIp()
+QString WifiMock::ipAddress()
 {
-    qCDebug(CLASS_LC) << "getCurrentIp";
+    qCDebug(CLASS_LC) << "ipAddress";
     return "127.0.0.1";
 }
 
@@ -95,11 +103,24 @@ void WifiMock::startNetworkScan()
     setScanStatus(Scanning);
 
     m_scanResults.clear();
-
-    WifiNetwork nw { "Mock Net", "34:31:c4:e1:d3:97", -77, false, false };
-    m_scanResults.append(nw);
+    m_scanResults.append({ "Mock Net", "34:31:c4:e1:d3:97", -77, false, false });
+    m_scanResults.append({ "Guest Network", "33:31:44:55:66:77", -66, false, false });
 
     setScanStatus(ScanOk);
 
     emit networksFound(m_scanResults);
+}
+
+void WifiMock::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+    if (m_wifiStatusScanning) {
+        emit ipAddressChanged("foo");
+        emit macAddressChanged("bar");
+        emit networkNameChanged("dummy");
+    }
+
+    if (m_signalStrengthScanning) {
+        emit signalStrengthChanged(-42);
+    }
 }
