@@ -43,7 +43,10 @@ private:
     void                messageOutput   (QtMsgType type,  const QMessageLogContext &context, const QString& msg);
 
     static void         s_messageOutput (QtMsgType type, const QMessageLogContext &context, const QString& msg)
-    {  s_instance->messageOutput (type, context, msg); }
+    {  
+        if (s_instance != nullptr)
+            s_instance->messageOutput (type, context, msg); 
+    }
 
     static Logger*      s_instance;
     static QStringList  s_msgTypeString;
