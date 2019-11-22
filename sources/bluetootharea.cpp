@@ -9,7 +9,7 @@ BluetoothArea::BluetoothArea(QObject *parent) : QObject(parent)
 BluetoothArea::~BluetoothArea() {
     if (m_thread.isRunning()) {
         m_thread.exit();
-        m_thread.wait();
+        m_thread.wait(5000);
     }
 }
 
