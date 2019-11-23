@@ -212,5 +212,6 @@
         <file>basic_ui/CustomImageLoader.qml</file>
         <file>components/media_player/ui/Card.qml</file>
         <file>components/media_player/ui/CardHome.qml</file>
+        <file>components/media_player/ui/CardSearch.qml</file>
     </qresource>
 </RCC>

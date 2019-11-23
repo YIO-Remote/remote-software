@@ -69,7 +69,7 @@ public:
     // extension for "generic" media browsing
     Q_INVOKABLE void            browse                  (QString command);        // Command item_key, "TOP", "BACK", "PLAY"
     Q_INVOKABLE void            playMedia               (const QString& command, const QString& itemKey); // command PLAY, QUEUE
-    Q_INVOKABLE void            search                  (const QString& searchText, const QString& itemKey); // Search
+    Q_INVOKABLE void            search                  (const QString& searchText);
 
     // only for C++ integrations
     virtual     void*           getSpecificInterface    () override;

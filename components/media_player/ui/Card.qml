@@ -7,7 +7,7 @@ Rectangle {
     id: card
     width: parent.width
     height: parent.height
-    color: mediaplayerUtils.pixelColor === "#000000" ? colorDark : mediaplayerUtils.pixelColor
+    color: mediaplayerUtils.pixelColor == "#000000" ? colorDark : mediaplayerUtils.pixelColor
 
     Behavior on color {
         ColorAnimation { duration: 300 }
@@ -188,10 +188,7 @@ Rectangle {
 
         Component {
             id: cardSearch
-            Rectangle {
-                anchors.fill: parent
-                color: "red"
-            }
+            CardSearch {}
         }
 
         Component {
@@ -257,6 +254,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
+                    haptic.playEffect("click");
                     cardSwipeView.currentIndex = 0;
                 }
             }
@@ -281,6 +279,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
+                    haptic.playEffect("click");
                     cardSwipeView.currentIndex = features.indexOf("SEARCH");
                 }
             }
@@ -305,6 +304,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
+                    haptic.playEffect("click");
                     cardSwipeView.currentIndex = features.indexOf("LIST");
                 }
             }
@@ -329,6 +329,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
+                    haptic.playEffect("click");
                     cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
                 }
             }

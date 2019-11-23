@@ -158,9 +158,9 @@ void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
 {
     command("play:" + cmd, itemKey);
 }
-void MediaPlayer::search(const QString& searchString, const QString& itemKey)
+void MediaPlayer::search(const QString& searchString)
 {
-    command("search:" + searchString, itemKey);
+    command("SEARCH", searchString);
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):
