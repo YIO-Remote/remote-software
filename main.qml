@@ -288,6 +288,7 @@ ApplicationWindow {
 
     StandbyControl {
         id: standbyControl
+        objectName: "standbyControl"
 
         Component.onCompleted: {
             standbyControl.wifiOffTime = Qt.binding(function () { return config.read.settings.wifitime});
