@@ -107,6 +107,7 @@ Item {
 
     Connections {
         target: buttonHandler
+        enabled: loader_main.state == "visible" ? true : false
 
         onButtonPress: {
             switch (button) {
@@ -143,8 +144,8 @@ Item {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = mediaPlayers.currentItem.player.obj.volume + 0.02;
-                if (newvolume > 1) newvolume = 1;
+                var newvolume = mediaPlayers.currentItem.player.obj.volume + 2;
+                if (newvolume > 100) newvolume = 100;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             } else {
@@ -152,7 +153,7 @@ Item {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                newvolume = mediaPlayers.currentItem.player.obj.volume - 0.02;
+                newvolume = mediaPlayers.currentItem.player.obj.volume - 2;
                 if (newvolume < 0) newvolume = 0;
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
@@ -576,7 +577,11 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == 3) {
+                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
+                } else {
+                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+                }
             }
         }
     }
