@@ -7,6 +7,14 @@ Item {
     width: parent.width
     height: parent.height
 
+    Connections {
+        target: card
+
+        onLooseFocus: {
+            searchTextField.focus = false;
+        }
+    }
+
     Rectangle {
         width: parent.width - 60
         height: 80
@@ -29,6 +37,16 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    haptic.playEffect("click");
+                    obj.search(searchTextField.text);
+                    searchTextField.focus = false;
+                }
+            }
         }
 
         TextField {
@@ -52,6 +70,13 @@ Item {
 
             onAccepted: {
                 obj.search(searchTextField.text)
+            }
+
+            onFocusChanged: {
+                if (focus)
+                    inputPanel.active = true
+                else
+                    inputPanel.active = false
             }
         }
     }

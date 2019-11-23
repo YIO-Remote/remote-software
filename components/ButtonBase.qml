@@ -391,6 +391,8 @@ Rectangle {
         }
     }
 
+    property alias closeButtonMouseArea: closeButtonMouseArea
+
     Text {
         id: closeButton
         color: colorText
@@ -408,6 +410,7 @@ Rectangle {
         anchors.topMargin: 20
 
         MouseArea {
+            id: closeButtonMouseArea
             width: parent.width + 20
             height: parent.height + 20
             anchors.centerIn: parent

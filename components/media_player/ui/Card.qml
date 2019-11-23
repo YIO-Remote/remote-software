@@ -150,6 +150,8 @@ Rectangle {
         cardRepeater.model = features;
     }
 
+    signal looseFocus()
+
 
     SwipeView {
         id: cardSwipeView
@@ -157,6 +159,11 @@ Rectangle {
         height: parent.height
         anchors.centerIn: parent
         currentIndex: 0
+
+        onCurrentIndexChanged: {
+            if (cardSwipeView.currentIndex != features.indexOf("SEARCH"))
+                looseFocus();
+        }
 
         Item {
             CardHome {}

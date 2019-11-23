@@ -42,6 +42,10 @@ Comp.ButtonBase {
         visible: mediaplayerButton.state == "closed" ? true : false
     }
 
+     closeButtonMouseArea.onClicked: {
+        inputPanel.active = false
+    }
+
     // album art
     property string m_image: obj.mediaImage
     onM_imageChanged: {
