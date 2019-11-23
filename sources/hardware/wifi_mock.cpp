@@ -72,26 +72,26 @@ bool WifiMock::isConnected()
     return rand() % 2 == 0;
 }
 
-QString WifiMock::macAddress()
+QString WifiMock::macAddress() const
 {
     qCDebug(CLASS_LC) << "macAddress";
     return "de:ad:be:ef:00:00";
 }
 
-QString WifiMock::ssid()
+QString WifiMock::ssid() const
 {
     qCDebug(CLASS_LC) << "ssid";
     return "WiFi Mock";
 }
 
-int WifiMock::signalStrength()
+int WifiMock::signalStrength() const
 {
     qCDebug(CLASS_LC) << "signalStrength";
 
     return -70 + qrand() % 9;
 }
 
-QString WifiMock::ipAddress()
+QString WifiMock::ipAddress() const
 {
     qCDebug(CLASS_LC) << "ipAddress";
     return "127.0.0.1";

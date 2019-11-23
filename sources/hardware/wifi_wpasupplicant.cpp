@@ -35,12 +35,15 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiWpaSupplicant");
 
 WifiWpaSupplicant::WifiWpaSupplicant(QObject *parent)
     : WifiControl(parent)
-    , m_ctrl(nullptr) {
+    , m_ctrl(nullptr)
+    , m_process(new QProcess(this))
+{
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 /****************************************************************************/
-WifiWpaSupplicant::~WifiWpaSupplicant() {
+WifiWpaSupplicant::~WifiWpaSupplicant()
+{
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
     if (m_ctrl) {
         m_ctrlNotifier->setEnabled(false);
@@ -75,27 +78,36 @@ bool WifiWpaSupplicant::init()
 
 void WifiWpaSupplicant::on()
 {
-    // FIXME implement me
+    // TODO make configurable
+    launch(m_process, "systemctl start wpa_supplicant@wlan0.service");
 }
 
 void WifiWpaSupplicant::off()
 {
-    // FIXME implement me
+    // TODO make configurable
+    // TODO what about TERMINATE command? https://w1.fi/wpa_supplicant/devel/ctrl_iface_page.html
+    launch(m_process, "systemctl stop wpa_supplicant@wlan0.service");
 }
 
 void WifiWpaSupplicant::reset()
 {
     // FIXME implement me
+    // use REMOVE_NETWORK & RECONFIGURE commands?
 }
 
 void WifiWpaSupplicant::join(const QString &ssid, const QString &password)
 {
-    // FIXME implement me
+    // FIXME implement me. Use commands: SET_NETWORK
+    // ALso see: https://github.com/loh-tar/wpa-cute/blob/master/src/networkconfig.cpp#L198
+
+    // Does SAVE_CONFIG save the new network into /etc/wpa_supplicant/wpa_supplicant-wlan0.conf? I hope so...
+    // Otherwise try: manually save new cfg file & RECONFIGURE command
 }
 
 bool WifiWpaSupplicant::isConnected()
 {
     // FIXME implement me
+    // TODO use STATUS command
     return false;
 }
 
@@ -117,7 +129,7 @@ void WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& networ
     std::lock_guard<std::mutex> lock(m_wpaMutex);
     QString cmd("WPS_PBC ");
     try {
-        requestWrapper(cmd + network.bssid);
+        requestWrapper(cmd + network.bssid());
     } catch (std::exception& exc) {
         qCCritical(CLASS_LC) << exc.what();
     }

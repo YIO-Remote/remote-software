@@ -24,7 +24,9 @@
 #define WIFISTATUS_H
 
 #include <QString>
+#include <QObject>
 
+// TODO rewrite C++ 14 POD class to Q_GADGET value class if access required from QML
 class WifiStatus {
 public:
     QString name = "";
@@ -34,5 +36,6 @@ public:
     int signalStrength = -100;
     bool connected = false;
 };
+
 
 #endif // WIFISTATUS_H

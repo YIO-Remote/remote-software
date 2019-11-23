@@ -37,21 +37,16 @@ public:
 
     bool init() override;
 
-    void on() override;
-    void off() override;
-
     Q_INVOKABLE void reset() override;
     Q_INVOKABLE void join(const QString &ssid, const QString &password) override;
     Q_INVOKABLE bool isConnected() override;
     Q_INVOKABLE void startNetworkScan() override;
 
-signals:
-
 public slots:
+    void on() override;
+    void off() override;
 
 private:
-    QString launch(const QString &command);
-    QString launch(const QString &command, const QStringList &arguments);
     void timerEvent(QTimerEvent *event) override;
 
     /**

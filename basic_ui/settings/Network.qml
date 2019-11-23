@@ -11,10 +11,7 @@ Item {
     function addNetworks() {
         var comp = Qt.createComponent("qrc:/basic_ui/settings/WifiNetworkListElement.qml");
 
-        // FIXME doesn't work
         wifiNetworks = wifi.networkScanResult
-        console.log("Got networks: " + wifiNetworks)
-
         for (var i = 0; i < wifiNetworks.length; i++) {
             console.log("Adding network: " + wifiNetworks[i])
             var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i].name, rssi: wifiNetworks[i].signalStrength, buttonId: i});
@@ -27,6 +24,9 @@ Item {
         wifiSwipeview.currentIndex += 1;
         popup.height = 200;
     }
+
+    // testing only!!!
+    Component.onCompleted: addNetworks();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NETWORK

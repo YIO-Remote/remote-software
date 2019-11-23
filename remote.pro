@@ -15,6 +15,7 @@ HEADERS += \
     sources/entities/remote.h \
     sources/fileio.h \
     sources/hardware/wifi_control.h \
+    sources/hardware/wifi_network.h \
     sources/hardware/wifi_status.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
@@ -94,8 +95,10 @@ linux {
             sources/hardware/wifi_wpasupplicant.cpp \
             wpa_supplicant/src/wpa_ctrl.c
     } else {
-        HEADERS += sources/hardware/wifi_shellscripts.h
-        SOURCES += sources/hardware/wifi_shellscripts.cpp
+        HEADERS += sources/hardware/wifi_shellscripts.h \
+            sources/hardware/wifi_mock.h
+        SOURCES += sources/hardware/wifi_shellscripts.cpp \
+            sources/hardware/wifi_mock.cpp
     }
 
     equals(QT_ARCH, arm): {

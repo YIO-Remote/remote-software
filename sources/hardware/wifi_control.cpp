@@ -78,22 +78,22 @@ WifiControl& WifiControl::instance()
     return singleton;
 }
 
-QString WifiControl::macAddress()
+QString WifiControl::macAddress() const
 {
     return m_wifiStatus.macAddress;
 }
 
-QString WifiControl::ssid()
+QString WifiControl::ssid() const
 {
     return m_wifiStatus.name;
 }
 
-int WifiControl::signalStrength()
+int WifiControl::signalStrength() const
 {
     return m_wifiStatus.signalStrength;
 }
 
-QString WifiControl::ipAddress()
+QString WifiControl::ipAddress() const
 {
     return m_wifiStatus.ipAddress;
 }
@@ -111,14 +111,26 @@ void WifiControl::setScanStatus(ScanStatus stat)
     scanStatusChanged(m_scanStatus);
 }
 
-const QList<WifiNetwork>& WifiControl::networkScanResult()
+QList<WifiNetwork>& WifiControl::scanResult()
 {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     return m_scanResults;
 }
 
+QVariantList WifiControl::networkScanResult() const
+{
+    QVariantList list;
+    for (WifiNetwork wifiNetwork : m_scanResults) {
+        list.append(QVariant::fromValue(wifiNetwork));
+    }
+    return list;
+}
+
+
 void WifiControl::startSignalStrengthScanning()
 {
+    if (!isConnected()) {
+        qCDebug(CLASS_LC) << "Not starting SignalStrengthScanning: WiFi is not connected!";
+    }
     m_signalStrengthScanning = true;
     startScanTimer();
 }
@@ -133,6 +145,9 @@ void WifiControl::stopSignalStrengthScanning()
 
 void WifiControl::startWifiStatusScanning()
 {
+    if (!isConnected()) {
+        qCDebug(CLASS_LC) << "Not starting SignalStrengthScanning: WiFi is not connected!";
+    }
     m_wifiStatusScanning = true;
     startScanTimer();
 }
@@ -159,4 +174,21 @@ void WifiControl::stopScanTimer()
         m_timerId = 0;
     }
 }
+
+QString WifiControl::launch(QProcess *process, const QString &command)
+{
+    QStringList arguments;
+    return launch(process, command, arguments);
+}
+
+QString WifiControl::launch(QProcess *process, const QString &command, const QStringList &arguments)
+{
+    // FIXME synchronize launcher
+    process->start(command, arguments);
+    process->waitForFinished(-1);
+    QByteArray bytes = process->readAllStandardOutput();
+    QString output = QString::fromLocal8Bit(bytes);
+    return output;
+}
+
 

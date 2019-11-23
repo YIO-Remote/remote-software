@@ -29,20 +29,25 @@
 #include <QDebug>
 #include <QObject>
 #include <QString>
+#include <QVariant>
 #include <QList>
+#include <QVariantList>
+#include <QProcess>
 
 #include "wifi_status.h"
+#include "wifi_network.h"
 
-class WifiNetwork;
 
 class WifiControl : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString ssid READ ssid NOTIFY networkNameChanged)
-    Q_PROPERTY(QString macAddress READ macAddress NOTIFY macAddressChanged)
-    Q_PROPERTY(QString ipAddress READ ipAddress NOTIFY ipAddressChanged)
-    Q_PROPERTY(int signalStrength READ signalStrength NOTIFY signalStrengthChanged)
-    Q_PROPERTY(ScanStatus scanStatus READ scanStatus NOTIFY scanStatusChanged)
+    // TODO do we need individual properties or would WifiStatus class be better?
+    Q_PROPERTY(QString ssid                   READ ssid              NOTIFY networkNameChanged)
+    Q_PROPERTY(QString macAddress             READ macAddress        NOTIFY macAddressChanged)
+    Q_PROPERTY(QString ipAddress              READ ipAddress         NOTIFY ipAddressChanged)
+    Q_PROPERTY(int signalStrength             READ signalStrength    NOTIFY signalStrengthChanged)
+    Q_PROPERTY(ScanStatus scanStatus          READ scanStatus        NOTIFY scanStatusChanged)
+    Q_PROPERTY(QVariantList networkScanResult READ networkScanResult NOTIFY networksFound)
 
 public:
     static WifiControl& instance();
@@ -61,27 +66,38 @@ public:
 
     virtual bool init() = 0;
 
-    virtual void on() = 0;
-    virtual void off() = 0;
-
+    /**
+     * Resets WiFi connection settings.
+     * Active connection is disconnected and removed.
+     * After disconnection an access point is started for the WiFi connection wizard.
+     */
     Q_INVOKABLE virtual void reset() = 0;
-    Q_INVOKABLE virtual void join(const QString &ssid, const QString &password) = 0;
-    Q_INVOKABLE virtual bool isConnected() = 0;
-    Q_INVOKABLE virtual void startNetworkScan() = 0;
-
-    virtual QString macAddress();
-    virtual QString ssid();
-    virtual int signalStrength();
-    virtual QString ipAddress();
-    virtual ScanStatus scanStatus() const;
 
     /**
-     * Returns the last network scan result
+     * Join the WiFi network with the given ssid
      */
-    Q_INVOKABLE const QList<WifiNetwork>& networkScanResult();
+    Q_INVOKABLE virtual void join(const QString &ssid, const QString &password) = 0;
+
+    /**
+     * Checks if the WiFi connection is established
+     */
+    Q_INVOKABLE virtual bool isConnected() = 0;
+
+    /**
+     * Starts a new scan for available WiFi networks.
+     * Emits scanStatusChanged and finally networksFound if successful.
+     */
+    Q_INVOKABLE virtual void startNetworkScan() = 0;
+
+    virtual QString macAddress() const;
+    virtual QString ssid() const;
+    virtual int signalStrength() const;
+    virtual QString ipAddress() const;
+    virtual ScanStatus scanStatus() const;
+    QList<WifiNetwork>& scanResult();
 
 signals:
-
+    // TODO do we need individual signals or simply use wifiStatusChanged?
     void networkNameChanged(QString ssid);
     void macAddressChanged(QString macAddress);
     void ipAddressChanged(QString ipAddress);
@@ -93,19 +109,37 @@ signals:
     void signalStrengthChanged(int rssi);
 
     /**
-     * Network scan was successful and result is available
-     */
-    void networksFound(const QList<WifiNetwork>& network);
-
-    /**
-     * Network scan status changed
+     * @brief Network scan status changed
+     * @param status the new scan status
      */
     void scanStatusChanged(WifiControl::ScanStatus status);
 
-public slots:
+    /**
+     * @brief Network scan was successful and result is available
+     * @param network List of found WiFi networks
+     */
+    void networksFound(const QList<WifiNetwork>& network); // TODO shouldn't we return a QVariantList for QML?
 
+public slots:
+    /**
+     * Enable WiFi device
+     */
+    virtual void on() = 0;
+
+    /**
+     * Disable WiFi device
+     */
+    virtual void off() = 0;
+
+    /**
+     * @brief Starts observing the WiFi signal strength of the connected network. Emits signalStrengthChanged for every change.
+     */
     void startSignalStrengthScanning();
     void stopSignalStrengthScanning();
+
+    /**
+     * @brief Starts observing the WiFi status if the IP address, MAC address or SSID changes. Emits networkNameChanged, macAddressChanged, ipAddressChanged
+     */
     void startWifiStatusScanning();
     void stopWifiStatusScanning();
 
@@ -117,7 +151,8 @@ protected:
      */
     void setScanStatus(ScanStatus stat);
 
-protected:
+    QString launch(QProcess *process, const QString &command);
+    QString launch(QProcess *process, const QString &command, const QStringList &arguments);
 
     /**
      * @brief Current wifi connection status
@@ -138,22 +173,18 @@ protected:
     bool m_wifiStatusScanning;
 
 private:
+    /**
+     * @brief Returns a QML compatible representation of the WifiNetwork list
+     * @return a QVariantList copy of the WifiNetwork list
+     */
+    QVariantList networkScanResult() const;
+
     int  m_scanInterval;
     int  m_timerId;
 
     void startScanTimer();
     void stopScanTimer();
 
-};
-
-// Plain Old Data class (POD). Requires C++14 or newer!
-class WifiNetwork {
-public:
-    QString name;
-    QString bssid;
-    int signalStrength = -100;
-    bool wpsAvailable = false;
-    bool connected = false;
 };
 
 #endif // WIFICONTROL_H
