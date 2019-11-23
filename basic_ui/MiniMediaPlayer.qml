@@ -107,7 +107,7 @@ Item {
 
     Connections {
         target: buttonHandler
-        enabled: loader_main.state == "visible" ? true : false
+        enabled: loader_main.state == "visible" || miniMediaPlayer.state == "open" ? true : false
 
         onButtonPress: {
             switch (button) {

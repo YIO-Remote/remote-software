@@ -352,7 +352,7 @@ Rectangle {
         width: buttonContainer.width
         height: buttonContainer.height
         asynchronous: true
-        active: false // buttonContainer.state == "open"
+        active: false //buttonContainer.state == "open"
         source: "qrc:/components/remote/ui/Card.qml"
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
@@ -384,6 +384,7 @@ Rectangle {
                 switch (button) {
                 case "top right":
                     buttonContainer.state = "closed"
+                    cardLoader.active = false;
                     break;
                 }
             }

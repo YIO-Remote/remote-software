@@ -53,21 +53,21 @@ Rectangle {
         onTriggered: {
             if (volumeUp) {
                 if (volume.state != "visible") {
-                    volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
+                    volume.volumePosition = obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = mediaPlayers.currentItem.player.obj.volume + 2;
+                var newvolume = obj.volume + 2;
                 if (newvolume > 100) newvolume = 100;
-                mediaPlayers.currentItem.player.obj.setVolume(newvolume);
+                obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             } else {
                 if (volume.state != "visible") {
-                    volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
+                    volume.volumePosition = obj.volume;
                     volume.state = "visible";
                 }
-                newvolume = mediaPlayers.currentItem.player.obj.volume - 2;
+                newvolume = obj.volume - 2;
                 if (newvolume < 0) newvolume = 0;
-                mediaPlayers.currentItem.player.obj.setVolume(newvolume);
+                obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             }
         }
