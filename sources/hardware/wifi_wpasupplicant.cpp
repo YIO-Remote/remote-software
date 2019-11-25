@@ -64,6 +64,8 @@ bool WifiWpaSupplicant::init()
                 wpa_ctrl_get_fd(m_ctrl), QSocketNotifier::Read);
 
             connect(m_ctrlNotifier.get(), SIGNAL(activated(int)), this, SLOT(controlEvent(int)));
+            startSignalStrengthScanning();
+            startWifiStatusScanning();
             startNetworkScan();
         } catch (std::system_error& exc) {
             qCCritical(CLASS_LC) << exc.what();
