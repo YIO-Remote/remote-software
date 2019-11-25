@@ -36,7 +36,6 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiWpaSupplicant");
 WifiWpaSupplicant::WifiWpaSupplicant(QObject *parent)
     : WifiControl(parent)
     , m_ctrl(nullptr)
-    , m_process(new QProcess(this))
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
@@ -64,6 +63,9 @@ bool WifiWpaSupplicant::init()
                 wpa_ctrl_get_fd(m_ctrl), QSocketNotifier::Read);
 
             connect(m_ctrlNotifier.get(), SIGNAL(activated(int)), this, SLOT(controlEvent(int)));
+            // FIXME implement me
+            // TODO use STATUS command
+            m_connected = true;
             startSignalStrengthScanning();
             startWifiStatusScanning();
             startNetworkScan();
@@ -76,19 +78,6 @@ bool WifiWpaSupplicant::init()
         }
     }
     return true;
-}
-
-void WifiWpaSupplicant::on()
-{
-    // TODO make configurable
-    launch(m_process, "systemctl start wpa_supplicant@wlan0.service");
-}
-
-void WifiWpaSupplicant::off()
-{
-    // TODO make configurable
-    // TODO what about TERMINATE command? https://w1.fi/wpa_supplicant/devel/ctrl_iface_page.html
-    launch(m_process, "systemctl stop wpa_supplicant@wlan0.service");
 }
 
 void WifiWpaSupplicant::reset()
@@ -104,13 +93,6 @@ void WifiWpaSupplicant::join(const QString &ssid, const QString &password)
 
     // Does SAVE_CONFIG save the new network into /etc/wpa_supplicant/wpa_supplicant-wlan0.conf? I hope so...
     // Otherwise try: manually save new cfg file & RECONFIGURE command
-}
-
-bool WifiWpaSupplicant::isConnected()
-{
-    // FIXME implement me
-    // TODO use STATUS command
-    return false;
 }
 
 void WifiWpaSupplicant::startNetworkScan()
@@ -167,10 +149,12 @@ void WifiWpaSupplicant::parseEvent(const QString& event) {
         setScanStatus(ScanFailed);
     } else if (event.contains(WPA_EVENT_CONNECTED)) {
         qCDebug(CLASS_LC) << " connected!";
+        m_connected = true;
     } else if (event.contains(WPS_EVENT_AP_AVAILABLE_PBC)) {
         qCDebug(CLASS_LC) << " WPS PBC available!";
     } else if (event.contains(WPA_EVENT_DISCONNECTED)) {
         qCDebug(CLASS_LC) << " disconnected!";
+        m_connected = false;
     } else if (event.contains(WPS_EVENT_ACTIVE)) {
         qCDebug(CLASS_LC) << " Push button Configuration active!";
     } else {

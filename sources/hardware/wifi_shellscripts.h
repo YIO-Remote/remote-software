@@ -42,10 +42,6 @@ public:
     Q_INVOKABLE bool isConnected() override;
     Q_INVOKABLE void startNetworkScan() override;
 
-public slots:
-    void on() override;
-    void off() override;
-
 private:
     void timerEvent(QTimerEvent *event) override;
 
@@ -62,7 +58,8 @@ private:
      */
     QList<WifiNetwork> parseScanresult(const QString& buffer);
 
-    QProcess *m_process;
+    QProcess *m_scriptProcess;
+
 };
 
 #endif // WIFISHELLSCRIPTS_H

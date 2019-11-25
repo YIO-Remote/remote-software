@@ -81,7 +81,7 @@ public:
     /**
      * Checks if the WiFi connection is established
      */
-    Q_INVOKABLE virtual bool isConnected() = 0;
+    Q_INVOKABLE virtual bool isConnected();
 
     /**
      * Starts a new scan for available WiFi networks.
@@ -124,12 +124,12 @@ public slots:
     /**
      * Enable WiFi device
      */
-    virtual void on() = 0;
+    virtual void on();
 
     /**
      * Disable WiFi device
      */
-    virtual void off() = 0;
+    virtual void off();
 
     /**
      * @brief Starts observing the WiFi signal strength of the connected network. Emits signalStrengthChanged for every change.
@@ -151,6 +151,9 @@ protected:
      */
     void setScanStatus(ScanStatus stat);
 
+    void startScanTimer();
+    void stopScanTimer();
+
     QString launch(QProcess *process, const QString &command);
     QString launch(QProcess *process, const QString &command, const QStringList &arguments);
 
@@ -169,6 +172,7 @@ protected:
      */
     QList<WifiNetwork> m_scanResults;
 
+    bool m_connected;
     bool m_signalStrengthScanning;
     bool m_wifiStatusScanning;
 
@@ -179,11 +183,10 @@ private:
      */
     QVariantList networkScanResult() const;
 
+    QProcess *m_process;
+
     int  m_scanInterval;
     int  m_timerId;
-
-    void startScanTimer();
-    void stopScanTimer();
 
 };
 

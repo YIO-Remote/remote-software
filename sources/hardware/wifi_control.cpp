@@ -49,6 +49,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiControl");
 WifiControl::WifiControl(QObject* parent)
     : QObject(parent)
     , m_scanStatus(Idle)
+    , m_process(new QProcess(this))
     , m_scanInterval(10000)         // TODO make scan interval configurable
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
@@ -76,6 +77,39 @@ WifiControl& WifiControl::instance()
     #endif
 
     return singleton;
+}
+
+// should be moved into a generic 'Linux subclass'
+void WifiControl::on()
+{
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+
+    // TODO make configurable
+    launch(m_process, "systemctl start wpa_supplicant@wlan0.service");
+    // TODO emit signal
+    m_connected = true;
+    startScanTimer();
+}
+
+// should be moved into a generic 'Linux subclass'
+void WifiControl::off()
+{
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+
+    stopScanTimer();
+    // TODO make configurable
+    // TODO what about TERMINATE command? https://w1.fi/wpa_supplicant/devel/ctrl_iface_page.html
+    launch(m_process, "systemctl stop wpa_supplicant@wlan0.service");
+    // TODO emit signal
+    m_connected = false;
+}
+
+/**
+ * Default implementation
+ */
+bool WifiControl::isConnected()
+{
+    return m_connected;
 }
 
 QString WifiControl::macAddress() const
@@ -130,6 +164,7 @@ void WifiControl::startSignalStrengthScanning()
 {
     if (!isConnected()) {
         qCDebug(CLASS_LC) << "Not starting SignalStrengthScanning: WiFi is not connected!";
+        return;
     }
     m_signalStrengthScanning = true;
     startScanTimer();
@@ -147,6 +182,7 @@ void WifiControl::startWifiStatusScanning()
 {
     if (!isConnected()) {
         qCDebug(CLASS_LC) << "Not starting SignalStrengthScanning: WiFi is not connected!";
+        return;
     }
     m_wifiStatusScanning = true;
     startScanTimer();

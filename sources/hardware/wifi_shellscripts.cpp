@@ -33,7 +33,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");
 
 WifiShellScripts::WifiShellScripts(QObject *parent) :
     WifiControl(parent),
-    m_process(new QProcess(this))
+    m_scriptProcess(new QProcess(this))
 {
 
 }
@@ -46,39 +46,30 @@ bool WifiShellScripts::init()
     return true;
 }
 
-void WifiShellScripts::on()
-{
-    launch(m_process, "systemctl start wpa_supplicant@wlan0.service");
-}
-
-void WifiShellScripts::off()
-{
-    launch(m_process, "systemctl stop wpa_supplicant@wlan0.service");
-}
-
 void WifiShellScripts::join(const QString &ssid, const QString &password)
 {
     QStringList args;
     args.append(ssid);
     args.append(password);
-    launch(m_process, "/usr/bin/yio-remote/wifi_network_create.sh", args);
+    launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_network_create.sh", args);
 }
 
 void WifiShellScripts::reset()
 {
-    launch(m_process, "/usr/bin/yio-remote/reset-wifi.sh");
+    launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
 }
 
 bool WifiShellScripts::isConnected()
 {
     FileIO fileIO;
-    return ssid() == fileIO.read("/ssid").trimmed();
+    m_connected = ssid() == fileIO.read("/ssid").trimmed();
+    return m_connected;
 }
 
 void WifiShellScripts::startNetworkScan()
 {
     setScanStatus(Scanning);
-    QString scanResult = launch(m_process, "/usr/bin/yio-remote/wifi_network_list.sh");
+    QString scanResult = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_network_list.sh");
     m_scanResults = parseScanresult(scanResult);
 
     setScanStatus(ScanOk);
@@ -118,19 +109,19 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
     if (m_wifiStatusScanning) {
-        QString ssid = launch(m_process, "/usr/bin/yio-remote/wifi_ssid.sh");
+        QString ssid = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_ssid.sh");
         if (ssid != m_wifiStatus.name) {
             m_wifiStatus.name = ssid;
             emit networkNameChanged("dummy");
         }
 
-        QString ipAddress = launch(m_process, "/usr/bin/yio-remote/wifi_ip.sh");
+        QString ipAddress = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_ip.sh");
         if (ipAddress != m_wifiStatus.ipAddress) {
             m_wifiStatus.ipAddress = ipAddress;
             emit ipAddressChanged(ipAddress);
         }
 
-        QString macAddress = launch(m_process, "cat /sys/class/net/wlan0/address");
+        QString macAddress = launch(m_scriptProcess, "cat /sys/class/net/wlan0/address");
         if (macAddress != m_wifiStatus.macAddress) {
             m_wifiStatus.macAddress = macAddress;
             emit macAddressChanged(macAddress);
@@ -138,7 +129,7 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
     }
 
     if (m_signalStrengthScanning) {
-        int value = launch(m_process, "/usr/bin/yio-remote/wifi_rssi.sh").toInt();
+        int value = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_rssi.sh").toInt();
         if (value != m_wifiStatus.signalStrength) {
             m_wifiStatus.signalStrength = value;
             emit signalStrengthChanged(value);

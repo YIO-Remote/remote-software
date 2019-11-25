@@ -60,7 +60,6 @@ public:
 
     Q_INVOKABLE void reset() override;
     Q_INVOKABLE void join(const QString &ssid, const QString &password) override;
-    Q_INVOKABLE bool isConnected() override;
     Q_INVOKABLE void startNetworkScan() override;
 
     /**
@@ -74,8 +73,6 @@ public:
     void connectWpaControlSocket();
 
 public slots:
-    void on() override;
-    void off() override;
 
     /**
      * Data on control channel available
@@ -122,6 +119,7 @@ private:
     void timerEvent(QTimerEvent *event) override;
 
 private:
+
     /**
      * Handle for lower layer wpa_ctrl
      */
@@ -146,8 +144,6 @@ private:
      * Notifier for watching asynchronous events from wpa_ctrl socket
      */
     std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
-
-    QProcess *m_process;
 
     // Only allow WifiControl to create an instance
     friend WifiControl& WifiControl::instance();
