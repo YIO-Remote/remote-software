@@ -66,9 +66,6 @@ public:
     Q_INVOKABLE void                addLoadedEntity     (const QString& entity);
     Q_INVOKABLE QString             getSupportedEntityTranslation (const QString& type);
 
-//    explicit Entities               (QObject *parent = nullptr);
-//    virtual ~Entities();
-
     explicit Entities(QObject *parent = nullptr);
     virtual ~Entities();
 
@@ -77,8 +74,8 @@ public:
 
 signals:
     void mediaplayersPlayingChanged();
-    void mediaplayerAdded();
-    void mediaplayerRemoved();
+//    void mediaplayerAdded();
+//    void mediaplayerRemoved();
 
 private:
     QMap<QString, QObject*>     m_entities;
