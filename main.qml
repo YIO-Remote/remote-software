@@ -353,13 +353,12 @@ ApplicationWindow {
                              //                             loadingScreen.item.state = "loaded";
                              loader_main.item.onItemsLoadedChanged.connect(onLoadingCompleted);
                          }
-    }
 
-    function onLoadingCompleted() {
-        if (loader_main.item.itemsLoaded == loader_main.item.mainNavigation.menuConfig.count)
-            loadingScreen.item.state = "loaded";
+        function onLoadingCompleted() {
+            if (loader_main.item.itemsLoaded == loader_main.item.mainNavigation.menuConfig.count)
+                loadingScreen.item.state = "loaded";
+        }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER
