@@ -20,13 +20,10 @@ Item {
     }
 
     function buttonClicked(buttonId) {
-        wifiNetworkSelected = wifiNetworks[buttonId];
+        wifiNetworkSelected = wifiNetworks[buttonId].name;
         wifiSwipeview.currentIndex += 1;
         popup.height = 200;
     }
-
-    // testing only!!!
-    Component.onCompleted: addNetworks();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NETWORK
