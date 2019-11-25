@@ -29,6 +29,9 @@ Item {
     property int screenOnTime: 0
     property int screenOffTime: 0
 
+    signal standByOn()
+    signal standByOff()
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TOUCH EVENT DETECTOR
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,10 +210,12 @@ Item {
         // if mode is on change processor to ondemand
         if (mode === "on") {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
+            standByOff();
         }
         // if mode is standby change processor to powersave
         if (mode === "standby") {
             standbyLauncher.launch("/usr/bin/yio-remote/powersave.sh");
+            standByOn();
         }
     }
 

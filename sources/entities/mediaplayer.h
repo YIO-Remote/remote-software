@@ -21,6 +21,7 @@ public:
         PLAYING     = int (MediaPlayerDef::States::PLAYING)
     };
     Q_ENUM(States)
+
     // properties
     Q_PROPERTY  (States                     state           READ    state           NOTIFY      stateChanged)
     Q_PROPERTY  (double                     volume          READ    volume          NOTIFY      volumeChanged)
@@ -34,7 +35,7 @@ public:
 
     States                      state()                 { return m_state; }
     MediaPlayerDef::States      getState() override     { return static_cast<MediaPlayerDef::States>(m_state); }
-    double                      volume() override       { return m_volume; }
+    int                         volume() override       { return m_volume; }
     bool                        muted() override        { return m_muted; }
     QString                     mediaType() override    { return m_mediaType; }
     QString                     mediaImage() override   { return m_mediaImage; }
@@ -61,14 +62,14 @@ public:
     Q_INVOKABLE void            stop();
     Q_INVOKABLE void            previous();
     Q_INVOKABLE void            next();
-    Q_INVOKABLE void            setVolume(double value);
+    Q_INVOKABLE void            setVolume(int value);
     Q_INVOKABLE void            volumeUp();
     Q_INVOKABLE void            volumeDown();
 
     // extension for "generic" media browsing
     Q_INVOKABLE void            browse                  (QString command);        // Command item_key, "TOP", "BACK", "PLAY"
     Q_INVOKABLE void            playMedia               (const QString& command, const QString& itemKey); // command PLAY, QUEUE
-    Q_INVOKABLE void            search                  (const QString& searchText, const QString& itemKey); // Search
+    Q_INVOKABLE void            search                  (const QString& searchText);
 
     // only for C++ integrations
     virtual     void*           getSpecificInterface    () override;
@@ -115,7 +116,7 @@ private:
     static QMetaEnum                    s_metaEnum;
 
     States                              m_state;
-    double                              m_volume;
+    int                                 m_volume;
     bool                                m_muted;
     QString                             m_mediaType;
     QString                             m_mediaImage;

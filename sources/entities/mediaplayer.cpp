@@ -47,8 +47,8 @@ bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
             }
             break;
         case MediaPlayerDef::Attributes::VOLUME:
-            if (m_volume != value.toDouble()) {
-                m_volume = value.toDouble();
+            if (m_volume != value.toInt()) {
+                m_volume = value.toInt();
                 chg = true;
                 emit volumeChanged();
             }
@@ -137,7 +137,7 @@ void MediaPlayer::next()
     command("NEXT", "");
 }
 
-void MediaPlayer::setVolume(double value)
+void MediaPlayer::setVolume(int value)
 {
     command("VOLUME_SET", value);
 }
@@ -158,9 +158,9 @@ void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
 {
     command("play:" + cmd, itemKey);
 }
-void MediaPlayer::search(const QString& searchString, const QString& itemKey)
+void MediaPlayer::search(const QString& searchString)
 {
-    command("search:" + searchString, itemKey);
+    command("SEARCH", searchString);
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):

@@ -28,7 +28,7 @@ public:
     virtual ~MediaPlayerInterface  ();
 
     virtual MediaPlayerDef::States      getState() = 0;     // we must use a different name than in the MediaPlayer class
-    virtual double                      volume() = 0;
+    virtual int                         volume() = 0;
     virtual bool                        muted() = 0;
     virtual QString                     mediaType() = 0;
     virtual QString                     mediaImage() = 0;

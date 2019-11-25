@@ -24,6 +24,7 @@ Rectangle {
         onDisconnected: {
             buttonContainer.opacity = 0.3
             buttonContainer.enabled = false
+            buttonContainer.state = "closed"
         }
     }
 
@@ -351,7 +352,7 @@ Rectangle {
         width: buttonContainer.width
         height: buttonContainer.height
         asynchronous: true
-        active: false // buttonContainer.state == "open"
+        active: false //buttonContainer.state == "open"
         source: "qrc:/components/remote/ui/Card.qml"
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
@@ -383,11 +384,14 @@ Rectangle {
                 switch (button) {
                 case "top right":
                     buttonContainer.state = "closed"
+                    cardLoader.active = false;
                     break;
                 }
             }
         }
     }
+
+    property alias closeButtonMouseArea: closeButtonMouseArea
 
     Text {
         id: closeButton
@@ -406,6 +410,7 @@ Rectangle {
         anchors.topMargin: 20
 
         MouseArea {
+            id: closeButtonMouseArea
             width: parent.width + 20
             height: parent.height + 20
             anchors.centerIn: parent

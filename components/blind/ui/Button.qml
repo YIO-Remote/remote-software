@@ -24,6 +24,7 @@ Rectangle {
         onDisconnected: {
             blindButton.opacity = 0.3
             blindButton.enabled = false
+            blindButton.state = "closed"
         }
     }
 
@@ -166,7 +167,7 @@ Rectangle {
 
             originParent = blindButton.parent
 
-            loader_main.state = "hidden"
+//            loader_main.state = "hidden"
             blindButton.state = "open"
         }
     }
@@ -383,7 +384,7 @@ Rectangle {
         asynchronous: true
         active: blindButton.state == "open"
         source: "qrc:/components/blind/ui/Card.qml"
-//        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+        opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {
