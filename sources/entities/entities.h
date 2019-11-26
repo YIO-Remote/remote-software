@@ -23,7 +23,7 @@ class Entities : public QObject , EntitiesInterface
     Q_PROPERTY  (QStringList         supported_entities_translation READ  supported_entities_translation    CONSTANT)
     Q_PROPERTY  (QStringList         loaded_entities        READ    loaded_entities         CONSTANT)
 
-    Q_PROPERTY  (QList<QObject *>    mediaplayersPlaying     READ    mediaplayersPlaying     NOTIFY mediaplayersPlayingChanged)
+    Q_PROPERTY  (QList<QObject *>    mediaplayersPlaying    READ    mediaplayersPlaying     NOTIFY mediaplayersPlayingChanged)
 
 public:
     // get all entities
@@ -74,8 +74,8 @@ public:
 
 signals:
     void mediaplayersPlayingChanged();
-//    void mediaplayerAdded();
-//    void mediaplayerRemoved();
+    void mediaplayerAdded();
+    void mediaplayerRemoved();
 
 private:
     QMap<QString, QObject*>     m_entities;

@@ -15,7 +15,12 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
     m_area(config.value("area").toString()),
     m_friendly_name(config.value("friendly_name").toString()),
     m_integration(config.value("integration").toString()),
-    m_supported_features(config.value("supported_features").toStringList())
+    m_favorite(false),
+    m_supported_features(config.value("supported_features").toStringList()),
+    m_state(0),
+    m_enumState(nullptr),
+    m_enumAttr(nullptr),
+    m_specificInterface(nullptr)
 {
     setObjectName(config.value("entity_id").toString());
 
@@ -64,71 +69,96 @@ QVariantMap Entity::getDataToSave()
 
 bool Entity::update(const QVariantMap &attributes)
 {
-    Q_UNUSED(attributes)
-    return false;
+    bool chg = false;
+    for (QVariantMap::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
+        if (updateAttrByName (iter.key(), iter.value()))
+            chg = true;
+    }
+    return chg;
 }
 bool Entity::updateAttrByName(const QString& name, const QVariant& value)
 {
-    Q_UNUSED(name)
-    Q_UNUSED(value)
+    int attrIndex = getAttrIndex(name);
+    return updateAttrByIndex (attrIndex, value);
+}
+QString Entity::getAttrName (int attrIndex)
+{
+    Q_ASSERT(m_enumAttr != nullptr);
+    return m_enumAttr->valueToKey(attrIndex);
+}
+int Entity::getAttrIndex (const QString& attrName)
+{
+    Q_ASSERT(m_enumAttr != nullptr);
+    return m_enumAttr->keyToValue(attrName.toUpper().toUtf8());
+}
+QStringList Entity::allAttributes ()
+{
+    Q_ASSERT(m_enumAttr != nullptr);
+    QStringList list;
+    for (int i = 0; i < m_enumAttr->keyCount(); i++)
+        list.append(m_enumAttr->key(i));
+    return list;
+}
+QStringList Entity::allStates ()
+{
+    Q_ASSERT(m_enumState != nullptr);
+    QStringList list;
+    for (int i = 0; i < m_enumState->keyCount(); i++)
+        list.append(m_enumState->key(i));
+    return list;
+}
+
+bool Entity::setState (int state) {
+    if (m_state != state) {
+        m_state = state;
+        emit stateChanged();
+        emit onChanged();
+        emit stateTextChanged();
+        return true;
+    }
     return false;
 }
+QString Entity::stateText()
+{
+    Q_ASSERT(m_enumState != nullptr);
+    return m_enumState->valueToKey(m_state);
+}
+bool Entity::setStateText(const QString& stateText)
+{
+    Q_ASSERT(m_enumState != nullptr);
+    return setState (m_enumState->keyToValue(stateText.toUpper().toUtf8()));
+}
+bool Entity::isSupported (const QString& feature)
+{
+    return m_supported_features.contains(feature);
+}
+
 bool Entity::updateAttrByIndex(int idx, const QVariant& value)
 {
     Q_UNUSED(idx)
     Q_UNUSED(value)
+    Q_ASSERT(false);                        // Must be overriden in specific entity
     return false;
 }
-QString Entity::getAttrName (int attrIndex)
-{
-    Q_UNUSED(attrIndex)
-    return "";
+bool Entity::isOn() {
+    return m_state != 0;                    // Otherwise : Override in specific entity
 }
-int Entity::getAttrIndex (const QString& attrName)
-{
-    Q_UNUSED(attrName)
-    return -1;
+bool Entity::supportsOn() {
+    return true;                            // Otherwise : Override in specific entity
+}
+void Entity::turnOn() {
+    command("ON", "");                      // Otherwise : Override in specific entity
+}
+void Entity::turnOff() {
+    command("OFF", "");                     // Otherwise : Override in specific entity
 }
 
-void* Entity::getSpecificInterface()
-{
-    return nullptr;
-}
 void Entity::setFavorite(bool value)
 {
-        QTimer::singleShot(1000, this, [=](){
-
-            QVariantMap c = Config::getInstance()->read();
-            QString p = Config::getInstance()->profile();
-
-            QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
-
-            if (value && f.indexOf(entity_id()) == -1) {
-                f.append(entity_id());
-            }
-
-            if (!value && f.indexOf(entity_id()) > -1) {
-                f.removeAt(f.indexOf(entity_id()));
-            }
-
-            // save to config
-            QVariantMap r = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap();
-            r.insert("favorites", f);
-
-            QVariantMap r2 = c.value("ui_config").toMap().value("profiles").toMap();
-            r2.insert(p, r);
-
-            QVariantMap r3 = c.value("ui_config").toMap();
-            r3.insert("profiles", r2);
-
-            c.insert("ui_config", r3);
-
-            Config::getInstance()->readWrite(c);
-
-            // write to config file
-            Config::getInstance()->getInstance()->writeConfig();
-
-            m_favorite = value;
-            emit favoriteChanged();
-        });
+    QTimer::singleShot(1000, this, [=]() {
+        // Set Favorite
+        Config::getInstance()->setFavorite(entity_id(), value);
+        m_favorite = value;
+        emit favoriteChanged();
+    });
 }
