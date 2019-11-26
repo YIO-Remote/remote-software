@@ -185,7 +185,6 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
             emit mediaplayersPlayingChanged();
-            emit mediaplayersPlayingChanged();
         });
         timer->start(120000);
 
