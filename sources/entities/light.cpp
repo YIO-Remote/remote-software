@@ -6,7 +6,7 @@ LightInterface::~LightInterface()
 {
 }
 
-QString     Light::Type = "light";
+QString Light::Type = "light";
 
 bool Light::updateAttrByIndex (int attrIndex, const QVariant& value)
 {

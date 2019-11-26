@@ -14,8 +14,8 @@ Rectangle {
         parent.height = height;
         parent.anchors.bottom = parent.parent.bottom;
 
-        for (var value in config.read.ui_config.profiles) {
-            var v = config.read.ui_config.profiles[value];
+        for (var value in config.ui_config.profiles) {
+            var v = config.ui_config.profiles[value];
             v["id"] = value
             profileModel.append(v);
         }

@@ -6,7 +6,7 @@ BlindInterface::~BlindInterface()
 {
 }
 
-QString     Blind::Type = "blind";
+QString Blind::Type = "blind";
 
 bool Blind::updateAttrByIndex (int attrIndex, const QVariant& value)
 {

@@ -76,10 +76,10 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
         target: bluetoothArea
-        enabled: config.read.settings.bluetootharea
+        enabled: config.settings.bluetootharea
 
         onCurrentAreaChanged: {
-            var p = config.read.ui_config.profiles[config.profile].pages;
+            var p = config.pages //config.ui_config.profiles[config.profile].pages;
 
             if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name != bluetoothArea.currentArea) {
                 for (var i=0; i<p.length; i++) {

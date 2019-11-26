@@ -6,7 +6,7 @@
 
 MediaPlayerInterface::~MediaPlayerInterface()
 {}
-QString     MediaPlayer::Type = "media_player";
+QString MediaPlayer::Type = "media_player";
 
 bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
 {

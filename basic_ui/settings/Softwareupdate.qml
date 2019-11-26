@@ -55,7 +55,7 @@ Item {
             anchors.rightMargin: 20
             anchors.verticalCenter: softwareUpdateText.verticalCenter
 
-            checked: config.read.settings.softwareupdate
+            checked: config.settings.softwareupdate
             mouseArea.onClicked: {
                 var tmp = config.read
                 tmp.settings.softwareupdate = !tmp.settings.softwareupdate

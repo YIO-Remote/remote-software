@@ -162,7 +162,7 @@ Item {
         standbyBaseTime = getCurrentTime();
 
         // start bluetooth scanning
-        if (config.read.settings.bluetootharea) bluetoothArea.startScan();
+        if (config.settings.bluetootharea) bluetoothArea.startScan();
 
         // reset battery charging screen
         chargingScreen.item.showClock.start();
@@ -260,7 +260,7 @@ Item {
                 displayControl.setmode("standbyon");
 
                 // stop bluetooth scanning
-                if (config.read.settings.bluetootharea) bluetoothArea.stopScan();
+                if (config.settings.bluetootharea) bluetoothArea.stopScan();
 
                 mode = "standby";
 
@@ -269,7 +269,7 @@ Item {
             }
 
             // bluetooth turn off
-            if (time-standbyBaseTime > (standbyTime+20)* 1000 && config.read.settings.bluetootharea) {
+            if (time-standbyBaseTime > (standbyTime+20)* 1000 && config.settings.bluetootharea) {
                 // turn off bluetooth
                 bluetoothArea.turnOff()
             }

@@ -31,14 +31,13 @@ public:
 #endif
     Q_PROPERTY (QVariantMap      config         READ config     WRITE setConfig     NOTIFY configChanged)
     Q_PROPERTY (QString          profile        READ profile    WRITE setProfile    NOTIFY profileChanged)
-    Q_PROPERTY (QVariantMap      settings       READ getSettings)
-    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations)
-    Q_PROPERTY (QVariantMap      entities       READ getAllEntities)
-    Q_PROPERTY (QVariantMap      settings       READ getSettings)
-    Q_PROPERTY (QVariantMap      profiles       READ getProfiles)
-    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig)
-    Q_PROPERTY (QVariantMap      pages          READ getPages)
-    Q_PROPERTY (QVariantMap      groups         READ getGroups)
+    Q_PROPERTY (QVariantMap      settings       READ getSettings                    NOTIFY getSettingsChanged)
+    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations                NOTIFY getIntegrationsChanged)
+    Q_PROPERTY (QVariantMap      entities       READ getAllEntities                 NOTIFY getAllEntitiesChanged)
+    Q_PROPERTY (QVariantMap      profiles       READ getProfiles                    NOTIFY getProfilesChanged)
+    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig                    NOTIFY getUIConfigChanged)
+    Q_PROPERTY (QVariantMap      pages          READ getPages                       NOTIFY getPagesChanged)
+    Q_PROPERTY (QVariantMap      groups         READ getGroups                      NOTIFY getGroupsChanged)
 
     Q_INVOKABLE void readConfig(QString path);
     Q_INVOKABLE void writeConfig();
@@ -144,6 +143,13 @@ public:
 signals:
     void configChanged();
     void profileChanged();
+    void getSettingsChanged();
+    void getIntegrationsChanged();
+    void getAllEntitiesChanged();
+    void getProfilesChanged();
+    void getUIConfigChanged();
+    void getPagesChanged();
+    void getGroupsChanged();
 
 private:
     void syncCache ();
