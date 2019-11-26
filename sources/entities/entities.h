@@ -74,8 +74,6 @@ public:
 
 signals:
     void mediaplayersPlayingChanged();
-    void mediaplayerAdded();
-    void mediaplayerRemoved();
 
 private:
     QMap<QString, QObject*>     m_entities;
