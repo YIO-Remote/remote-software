@@ -48,6 +48,7 @@ public:
     Q_INVOKABLE void            browse                  (QString command);        // Command item_key, "TOP", "BACK", "PLAY"
     Q_INVOKABLE void            playMedia               (const QString& command, const QString& itemKey); // command PLAY, QUEUE
     Q_INVOKABLE void            search                  (const QString& searchText, const QString& itemKey); // Search
+    Q_INVOKABLE void            search                  (const QString& searchText);
 
     bool                        isOn() override         { return m_state == MediaPlayerDef::ON || m_state == MediaPlayerDef::PLAYING; }
     bool                        updateAttrByIndex       (int attrIndex, const QVariant& value) override;
