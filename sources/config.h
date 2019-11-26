@@ -31,19 +31,28 @@ public:
 #endif
     Q_PROPERTY (QVariantMap      config         READ config     WRITE setConfig     NOTIFY configChanged)
     Q_PROPERTY (QString          profile        READ profile    WRITE setProfile    NOTIFY profileChanged)
+    Q_PROPERTY (QVariantMap      settings       READ getSettings)
+    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations)
+    Q_PROPERTY (QVariantMap      entities       READ getAllEntities)
+    Q_PROPERTY (QVariantMap      settings       READ getSettings)
+    Q_PROPERTY (QVariantMap      profiles       READ getProfiles)
+    Q_PROPERTY (QVariantMap      profile        READ getProfile)
+    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig)
+    Q_PROPERTY (QVariantMap      pages          READ getPages)
+    Q_PROPERTY (QVariantMap      groups         READ getGroups)
 
     Q_INVOKABLE void readConfig(QString path);
     Q_INVOKABLE void writeConfig();
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
-    Q_INVOKABLE QVariantMap getIntegrations() {
+    QVariantMap getIntegrations() {
         return m_config["integrations"].toMap();
     }
     Q_INVOKABLE QVariantMap getIntegration(const QString& type) {
         return getIntegrations().value(type).toMap();
     }
-    Q_INVOKABLE QVariantMap getAllEntities() {
+    QVariantMap getAllEntities() {
         return m_config["entities"].toMap();
     }
     Q_INVOKABLE QVariantList getEntities(const QString& type) {
@@ -51,25 +60,25 @@ public:
     }
 
     // Assuming that the following config items are accessed quite often they are cached
-    Q_INVOKABLE QVariantMap& getSettings() {
+    QVariantMap getSettings() {
         return m_cacheSettings;
     }
-    Q_INVOKABLE QVariantMap& getUIConfig() {
+    QVariantMap getUIConfig() {
         return m_cacheUIConfig;
     }
-    Q_INVOKABLE QVariantMap& getProfiles() {
+    QVariantMap getProfiles() {
         return m_cacheUIProfiles;
     }
     Q_INVOKABLE QVariantMap getProfile(const QString& profile) {
         return m_cacheUIProfiles.value(profile).toMap();
     }
-    Q_INVOKABLE QVariantMap& getPages() {
+    QVariantMap getPages() {
         return m_cacheUIPages;
     }
     Q_INVOKABLE QVariantMap getPage(const QString& pageId) {
         return m_cacheUIPages.value(pageId).toMap();
     }
-    Q_INVOKABLE QVariantMap& getGroups() {
+    QVariantMap getGroups() {
         return m_cacheUIGroups;
     }
     Q_INVOKABLE QVariantMap getGroup(const QString& groupId) {
@@ -77,7 +86,7 @@ public:
     }
 
     // The selected, cached profile
-    Q_INVOKABLE QVariantMap& getProfile() {
+    QVariantMap getProfile() {
         return m_cacheUIProfile;
     }
     Q_INVOKABLE QStringList getProfileFavorites() {

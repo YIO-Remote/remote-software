@@ -17,7 +17,7 @@ public:
 #endif
     virtual QVariantMap     config() = 0;
     virtual void            setConfig(const QVariantMap& config) = 0;
-    virtual QVariantMap&    getSettings() = 0;
+    virtual QVariantMap     getSettings() = 0;
     virtual QVariantMap     getIntegrations() = 0;
     virtual QVariantMap     getIntegration(const QString& type) = 0;
     virtual QVariantMap     getAllEntities() = 0;
