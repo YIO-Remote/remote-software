@@ -43,7 +43,7 @@ Item {
 
         Text {
             color: colorText
-            text: qsTr(config.ui_config.groups[groupID].name) + translateHandler.emptyString
+            text: qsTr(config.groups[groupID].name) + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.verticalCenter: parent.verticalCenter
@@ -99,7 +99,7 @@ Item {
         interactive: false
         spacing: 10
 
-        model: config.ui_config.groups[groupID].entities
+        model: config.groups[groupID].entities
         delegate: entityDelegate
     }
 
@@ -114,7 +114,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Component.onCompleted: {
-                var e = entities.get(config.ui_config.groups[groupID].entities[index]);
+                var e = entities.get(config.groups[groupID].entities[index]);
                 this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
             }
         }
