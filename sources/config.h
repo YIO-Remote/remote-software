@@ -36,7 +36,6 @@ public:
     Q_PROPERTY (QVariantMap      entities       READ getAllEntities)
     Q_PROPERTY (QVariantMap      settings       READ getSettings)
     Q_PROPERTY (QVariantMap      profiles       READ getProfiles)
-    Q_PROPERTY (QVariantMap      profile        READ getProfile)
     Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig)
     Q_PROPERTY (QVariantMap      pages          READ getPages)
     Q_PROPERTY (QVariantMap      groups         READ getGroups)
@@ -86,7 +85,7 @@ public:
     }
 
     // The selected, cached profile
-    QVariantMap getProfile() {
+    Q_INVOKABLE QVariantMap getProfile() {
         return m_cacheUIProfile;
     }
     Q_INVOKABLE QStringList getProfileFavorites() {
