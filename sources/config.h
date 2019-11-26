@@ -16,19 +16,6 @@ class Config : public QObject, ConfigInterface
     Q_INTERFACES(ConfigInterface)
 
 public:
-#ifdef CONFIG_COMPATIBLE
-    Q_PROPERTY (QVariantMap      read           READ read                           NOTIFY configChanged)
-    Q_PROPERTY (QVariantMap      write                          WRITE readWrite     NOTIFY configChanged)
-    QVariantMap read()
-    {  return m_config;
-    }
-    void readWrite(QVariantMap config)
-    {
-        m_config = config;
-        syncCache();
-        emit configChanged();
-    }
-#endif
     Q_PROPERTY (QVariantMap      config         READ config     WRITE setConfig     NOTIFY configChanged)
     Q_PROPERTY (QString          profile        READ profile    WRITE setProfile    NOTIFY profileChanged)
     Q_PROPERTY (QVariantMap      settings       READ getSettings                    NOTIFY getSettingsChanged)
