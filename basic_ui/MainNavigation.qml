@@ -66,7 +66,7 @@ Item {
     function savemenuConfig() {
         console.debug("SAVE MENUCONFIG");
 
-        var tmp = config.read;
+        var tmp = config.config;
 
         var newConfig = [];
 
@@ -88,7 +88,7 @@ Item {
         // update the config
         tmp.ui_config.profiles[config.profile].pages = newConfig;
 
-        config.write = tmp;
+        config.config = tmp;
         config.writeConfig();
     }
 

@@ -18,7 +18,7 @@ Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSou
     qInstallMessageHandler(s_messageOutput);
     Config* config = Config::getInstance ();
     if (config != nullptr) {
-        const QVariantMap& map = config->read();
+        const QVariantMap& map = config->config();
         QVariantMap settings = map["settings"].toMap();
         QString log = settings["log"].toString().toLower();
         if (!log.isEmpty()) {

@@ -57,9 +57,9 @@ Item {
 
             checked: config.settings.softwareupdate
             mouseArea.onClicked: {
-                var tmp = config.read
+                var tmp = config.config
                 tmp.settings.softwareupdate = !tmp.settings.softwareupdate
-                config.write = tmp
+                config.config = tmp
                 config.writeConfig();
             }
         }

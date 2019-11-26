@@ -1,6 +1,6 @@
 #ifndef CONFIGINTERFACE_H
 #define CONFIGINTERFACE_H
-#define CONFIG_COMPATIBLE
+//#define CONFIG_COMPATIBLE
 
 #include <QVariant>
 

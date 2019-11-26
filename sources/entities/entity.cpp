@@ -24,7 +24,7 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
 {
     setObjectName(config.value("entity_id").toString());
 
-    QVariantMap c = Config::getInstance()->read();
+    QVariantMap c = Config::getInstance()->config();
     QString p = Config::getInstance()->profile();
 
     QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();

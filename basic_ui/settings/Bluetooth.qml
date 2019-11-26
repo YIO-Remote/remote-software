@@ -63,9 +63,9 @@ Item {
                     bluetoothArea.startScan();
                 }
 
-                var tmp = config.read
+                var tmp = config.config
                 tmp.settings.bluetootharea = !tmp.settings.bluetootharea
-                config.write = tmp;
+                config.config = tmp;
                 config.writeConfig();
             }
         }

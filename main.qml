@@ -221,7 +221,7 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
-        if (config.read == undefined) {
+        if (config.config == undefined) {
             console.debug("Cannot load configuration file");
             // create a temporary standard config
 
@@ -246,7 +246,7 @@ ApplicationWindow {
         translateHandler.selectLanguage(config.language);
 
         // load bluetooth
-        bluetoothArea.init(config.read);
+        bluetoothArea.init(config.config);
         if (config.settings.bluetootharea) {
             bluetoothArea.startScan();
         }

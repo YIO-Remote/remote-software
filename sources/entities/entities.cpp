@@ -36,7 +36,7 @@ QList<QObject *> Entities::list()
 
 void Entities::load()
 {
-    QVariantMap c = Config::getInstance()->read();
+    QVariantMap c = Config::getInstance()->config();
     QVariant entities = c.value("entities");
 
     for (int i=0; i < m_supported_entities.length(); i++)

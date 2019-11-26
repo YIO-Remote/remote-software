@@ -103,7 +103,7 @@ Item {
             }
 
             onValueChanged: {
-                var tmp = config.read;
+                var tmp = config.config;
                 tmp.settings.wifitime = wifioffSlider.value*60;
                 if (setbyUser) {
                     config.write = tmp;
@@ -227,7 +227,7 @@ Item {
             }
 
             onValueChanged: {
-                var tmp = config.read
+                var tmp = config.config
                 tmp.settings.shutdowntime = shutdownSlider.value*60*60
                 if (setbyUser) {
                     config.write = tmp
