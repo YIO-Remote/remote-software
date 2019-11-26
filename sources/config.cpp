@@ -29,3 +29,23 @@ void Config::writeConfig()
 {
     m_jsf->write(m_config);
 }
+
+QObject *Config::getQMLObject(QList<QObject*> nodes,const QString &name)
+{
+    for (int i=0; i < nodes.size(); i++)
+    {
+        if (nodes.at(i) && nodes.at(i)->objectName() == name) {
+            return dynamic_cast<QObject*>(nodes.at(i));
+        } else if (nodes.at(i) && nodes.at(i)->children().size() > 0) {
+            QObject* item = getQMLObject(nodes.at(i)->children(), name);
+            if (item)
+                return item;
+        }
+    }
+    return  nullptr;
+}
+
+QObject *Config::getQMLObject(const QString &name)
+{
+    return getQMLObject(m_engine->rootObjects(), name);
+}

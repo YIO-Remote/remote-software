@@ -7,7 +7,7 @@ Item {
     width:  parent.width
     height: 160
 
-    property double volumePosition
+    property int volumePosition
 
     state: "hidden"
 
@@ -74,7 +74,7 @@ Item {
         Rectangle {
             id: volumeBar
             height: parent.height
-            width: bg.width * volumePosition
+            width: bg.width * volumePosition/100
             color: colorLine
             anchors.left: parent.left
         }

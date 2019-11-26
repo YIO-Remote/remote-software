@@ -47,7 +47,7 @@ public:
 
 
     explicit BluetoothArea(QObject *parent = nullptr);
-    virtual ~BluetoothArea() {}
+    virtual ~BluetoothArea();
 
 
 signals:

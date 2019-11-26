@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("config", &config);
 
     // LOGGER
-    Logger logger(appPath, QtInfoMsg, true, true);
+    Logger logger(appPath, QtDebugMsg, true, true);
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
 

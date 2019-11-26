@@ -235,10 +235,10 @@ ApplicationWindow {
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
 
         // load the integrations
-//        if (integrations.load()) {
-//            // if success, load the entities
-//            entities.load();
-//        }
+        //        if (integrations.load()) {
+        //            // if success, load the entities
+        //            entities.load();
+        //        }
         integrations.load();
 
 
@@ -288,6 +288,7 @@ ApplicationWindow {
 
     StandbyControl {
         id: standbyControl
+        objectName: "standbyControl"
 
         Component.onCompleted: {
             standbyControl.wifiOffTime = Qt.binding(function () { return config.read.settings.wifitime});
@@ -349,10 +350,15 @@ ApplicationWindow {
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready && loadingScreen.item) {
-                             loadingScreen.item.state = "loaded";
+                             //                             loadingScreen.item.state = "loaded";
+                             loader_main.item.onItemsLoadedChanged.connect(onLoadingCompleted);
                          }
-    }
 
+        function onLoadingCompleted() {
+            if (loader_main.item.itemsLoaded == loader_main.item.mainNavigation.menuConfig.count)
+                loadingScreen.item.state = "loaded";
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SECONDARY CONTAINER

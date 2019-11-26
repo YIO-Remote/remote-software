@@ -201,6 +201,13 @@ Item {
                     miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
                     miniMediaPlayerLoader.active = true;
                 }
+
+                if (entities.mediaplayersPlaying.length === 0) {
+                    loader_main.state = "visible";
+                    miniMediaPlayer.height = 0;
+                    miniMediaPlayer.miniMediaPlayerLoader.source = "";
+                    miniMediaPlayer.miniMediaPlayerLoader.active = false;
+                }
             }
         }
 

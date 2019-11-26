@@ -40,6 +40,10 @@ public:
         return m_engine->rootContext()->contextProperty(name);
     }
 
+    // get a QML object, you need to have objectName property of the QML object set to be able to use this
+    QObject *getQMLObject(QList<QObject*> nodes,const QString &name);
+    QObject *getQMLObject(const QString &name);
+
     // profile
     QString profile()
     {

@@ -9,13 +9,13 @@ import "qrc:/basic_ui" as BasicUI
 import MediaPlayerUtils 1.0
 
 Comp.ButtonBase {
-    id: remoteButton
+    id: mediaplayerButton
     icon: "\uE903"
     cardLoader.source: "qrc:/components/media_player/ui/Card.qml"
 
     // override default settings
     title.anchors.verticalCenterOffset: obj.source === "" ? 0 : -15
-    button.enabled: true
+    button.enabled: obj.supported_features.indexOf("TURN_ON") > -1 ? true : false
 
     // include mediaplayer utils
     MediaPlayerUtils {
@@ -39,7 +39,11 @@ Comp.ButtonBase {
         font.weight: Font.Normal
         font.pixelSize: 20
         lineHeight: 1
-        visible: remoteButton.state == "closed" ? true : false
+        visible: mediaplayerButton.state == "closed" ? true : false
+    }
+
+     closeButtonMouseArea.onClicked: {
+        inputPanel.active = false
     }
 
     // album art
@@ -50,13 +54,13 @@ Comp.ButtonBase {
 
     BasicUI.CustomImageLoader {
         id: image
-        visible: remoteButton.state == "closed" ? true : false
+        visible: mediaplayerButton.state == "closed" ? true : false
         width: 80
         height: 80
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.verticalCenter: parent.verticalCenter
-        url: mediaplayerUtils.smallImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
+        url: mediaplayerUtils.smallImage == "" ? "" : mediaplayerUtils.smallImage
 
         layer.enabled: true
         layer.effect: OpacityMask {
@@ -68,17 +72,6 @@ Comp.ButtonBase {
                     radius: cornerRadius/2
                 }
             }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECT TO BUTTONS
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Connections {
-        target: buttonHandler
-        enabled: state == "open" ? true : false
-
-        onButtonPress: {
         }
     }
 }

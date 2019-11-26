@@ -12,7 +12,12 @@
 #include <QtDebug>
 #include <QTimer>
 
-Entities* Entities::s_instance = NULL;
+EntitiesInterface::~EntitiesInterface()
+{
+}
+
+
+Entities* Entities::s_instance = nullptr;
 
 Entities::Entities(QObject *parent) : QObject(parent)
 {
@@ -21,7 +26,7 @@ Entities::Entities(QObject *parent) : QObject(parent)
 
 Entities::~Entities()
 {
-    s_instance = NULL;
+    s_instance = nullptr;
 }
 
 QList<QObject *> Entities::list()
@@ -109,6 +114,10 @@ QObject *Entities::get(const QString& entity_id)
 {
     return m_entities.value(entity_id);
 }
+EntityInterface* Entities::getEntityInterface (const QString& entity_id)
+{
+    return qobject_cast<EntityInterface*>(m_entities.value(entity_id));
+}
 
 void Entities::add(const QString& type, const QVariantMap& config, QObject *integrationObj)
 {
@@ -129,18 +138,17 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
     if (type == "remote") {
         entity = new Remote(config, integrationObj, this);
     }
-    if (entity == nullptr) {
-        qDebug() << "Illegal entity type: " << type;
-    } else {
+    if (entity == nullptr)
+        qDebug() << "Illegal entity type : " << type;
+    else
         m_entities.insert(entity->entity_id(), entity);
-    }
 }
 
 void Entities::update(const QString &entity_id, const QVariantMap& attributes)
 {
     Entity *e = static_cast<Entity*>(m_entities.value(entity_id));
     if (e == nullptr)
-        qDebug() << "Entity not found: " << entity_id;
+        qDebug() << "Entity not found : " << entity_id;
     else
         e->update(attributes);
 }
@@ -162,8 +170,8 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
 
     if (!m_mediaplayersPlaying.contains(entity_id)) {
         m_mediaplayersPlaying.insert(entity_id, o);
-        emit mediaplayersPlayingChanged();;
-        emit mediaplayerAdded();
+        emit mediaplayersPlayingChanged();
+//        emit mediaplayerAdded();
     }
 }
 
@@ -177,8 +185,9 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
             emit mediaplayersPlayingChanged();
+//            emit mediaplayerRemoved();
         });
-         timer->start(120000);
+        timer->start(120000);
 
         m_mediaplayersTimers.insert(entity_id, timer);
     }

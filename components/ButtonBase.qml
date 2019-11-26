@@ -24,6 +24,7 @@ Rectangle {
         onDisconnected: {
             buttonContainer.opacity = 0.3
             buttonContainer.enabled = false
+            buttonContainer.state = "closed"
         }
     }
 
@@ -94,7 +95,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
                 PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
@@ -126,7 +127,8 @@ Rectangle {
         onClicked: {
             haptic.playEffect("click");
             originParent = buttonContainer.parent
-            buttonContainer.state = "open"
+//            buttonContainer.state = "open"
+            cardLoader.active = true;
         }
     }
 
@@ -350,9 +352,15 @@ Rectangle {
         width: buttonContainer.width
         height: buttonContainer.height
         asynchronous: true
-        active: buttonContainer.state == "open"
+        active: false //buttonContainer.state == "open"
         source: "qrc:/components/remote/ui/Card.qml"
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
+
+        onStatusChanged: {
+            if (cardLoader.status == Loader.Ready) {
+                buttonContainer.state = "open";
+            }
+        }
 
         Behavior on opacity {
             NumberAnimation {
@@ -376,11 +384,14 @@ Rectangle {
                 switch (button) {
                 case "top right":
                     buttonContainer.state = "closed"
+                    cardLoader.active = false;
                     break;
                 }
             }
         }
     }
+
+    property alias closeButtonMouseArea: closeButtonMouseArea
 
     Text {
         id: closeButton
@@ -399,6 +410,7 @@ Rectangle {
         anchors.topMargin: 20
 
         MouseArea {
+            id: closeButtonMouseArea
             width: parent.width + 20
             height: parent.height + 20
             anchors.centerIn: parent
@@ -406,6 +418,7 @@ Rectangle {
             onClicked: {
                 haptic.playEffect("click");
                 buttonContainer.state = "closed"
+                cardLoader.active = false;
             }
         }
     }

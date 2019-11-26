@@ -7,6 +7,7 @@ QString Remote::Type = "remote";
 
 bool Remote::update(const QVariantMap &attributes)
 {
+    Q_UNUSED(attributes)
     return false;
 }
 
@@ -155,7 +156,7 @@ void Remote::channelSearch()
     command("CHANNEL_SEARCH", "");
 }
 
-void Remote::favorite()
+void Remote::toFavorite()
 {
     command("FAVORITE", "");
 }

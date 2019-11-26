@@ -2,6 +2,7 @@
 #include <QtDebug>
 
 #include "launcher.h"
+#include "notifications.h"
 
 Launcher::Launcher(QObject *parent) :
     QObject(parent),

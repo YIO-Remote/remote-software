@@ -4,6 +4,10 @@
 #include <QtDebug>
 #include <QTimer>
 
+EntityInterface::~EntityInterface()
+{
+}
+
 Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj, QObject *parent) :
     QObject(parent),
     m_integrationObj(integrationObj),
@@ -11,8 +15,7 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
     m_area(config.value("area").toString()),
     m_friendly_name(config.value("friendly_name").toString()),
     m_integration(config.value("integration").toString()),
-    m_supported_features(config.value("supported_features").toStringList()),
-    m_attributes(config.value("attributes"))
+    m_supported_features(config.value("supported_features").toStringList())
 {
     setObjectName(config.value("entity_id").toString());
 
@@ -34,7 +37,6 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
 Entity::~Entity()
 {
 }
-
 void Entity::command(const QString &command, const QVariant& param)
 {
     QVariant returnedValue;
@@ -56,16 +58,42 @@ QVariantMap Entity::getDataToSave()
     map["integration"] = m_integration;
     map["area"] = m_area;
     map["supported_features"] = m_supported_features;
-//    map["attributes"] = m_attributes;
 
     return map;
 }
 
 bool Entity::update(const QVariantMap &attributes)
 {
+    Q_UNUSED(attributes)
     return false;
 }
+bool Entity::updateAttrByName(const QString& name, const QVariant& value)
+{
+    Q_UNUSED(name)
+    Q_UNUSED(value)
+    return false;
+}
+bool Entity::updateAttrByIndex(int idx, const QVariant& value)
+{
+    Q_UNUSED(idx)
+    Q_UNUSED(value)
+    return false;
+}
+QString Entity::getAttrName (int attrIndex)
+{
+    Q_UNUSED(attrIndex)
+    return "";
+}
+int Entity::getAttrIndex (const QString& attrName)
+{
+    Q_UNUSED(attrName)
+    return -1;
+}
 
+void* Entity::getSpecificInterface()
+{
+    return nullptr;
+}
 void Entity::setFavorite(bool value)
 {
         QTimer::singleShot(1000, this, [=](){

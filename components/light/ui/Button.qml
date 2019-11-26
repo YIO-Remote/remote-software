@@ -24,6 +24,7 @@ Rectangle {
         onDisconnected: {
             lightButton.opacity = 0.3
             lightButton.enabled = false
+            lightButton.state = "closed"
         }
     }
 
@@ -134,7 +135,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: lightButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
                 PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
@@ -390,7 +391,7 @@ Rectangle {
         asynchronous: true
         active: lightButton.state == "open"
         source: getSource() //lightButton.state != "open" ? "" : (obj.supported_features.indexOf("obj.brightness") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
-//        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+        opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {

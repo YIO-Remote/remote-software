@@ -24,6 +24,7 @@ Rectangle {
         onDisconnected: {
             blindButton.opacity = 0.3
             blindButton.enabled = false
+            blindButton.state = "closed"
         }
     }
 
@@ -132,7 +133,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
+                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
                 PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
@@ -166,7 +167,7 @@ Rectangle {
 
             originParent = blindButton.parent
 
-            loader_main.state = "hidden"
+//            loader_main.state = "hidden"
             blindButton.state = "open"
         }
     }
@@ -383,7 +384,7 @@ Rectangle {
         asynchronous: true
         active: blindButton.state == "open"
         source: "qrc:/components/blind/ui/Card.qml"
-//        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+        opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {

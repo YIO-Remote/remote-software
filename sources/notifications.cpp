@@ -2,6 +2,10 @@
 
 #include "notifications.h"
 
+NotificationsInterface::~NotificationsInterface()
+{
+}
+
 Notifications* Notifications::s_instance = NULL;
 
 Notifications::Notifications(QQmlApplicationEngine *engine) :
