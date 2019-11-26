@@ -142,6 +142,10 @@ void MediaPlayer::search(const QString& searchString, const QString& itemKey)
 {
     command("search:" + searchString, itemKey);
 }
+void MediaPlayer::search(const QString& searchString)
+{
+    command("SEARCH", searchString);
+}
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):
     Entity(Type, config, integrationObj, parent)
