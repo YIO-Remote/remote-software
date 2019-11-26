@@ -1,19 +1,19 @@
 #ifndef MEDIAPLAYERINTERFACE_H
 #define MEDIAPLAYERINTERFACE_H
 
-#include "entityinterface.h"
+#include <QObject>
 
 /// This class is a work arround to make the feature enum available in the interface and in the specifc entity class.
 /// Qt cannot create metadata describing an enum contained in the interface
 /// In the specific entity class it is only needed to generically convert the feature enum to a string and back
-class MediaPlayerDef : QObject
+class MediaPlayerDef : public QObject
 {
     Q_OBJECT
 public:
-    enum class Attributes  {  STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, BROWSERESULT };
+    enum Attributes  {  STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, BROWSERESULT };
     Q_ENUM (Attributes)
 
-    enum class States   { OFF=0, ON=1, IDLE=2, PLAYING=3 };
+    enum States   { OFF=0, ON=1, IDLE=2, PLAYING=3 };
     Q_ENUM (States)
 
     explicit MediaPlayerDef (QObject *parent = nullptr) : QObject(parent)
@@ -27,7 +27,6 @@ class MediaPlayerInterface
 public:
     virtual ~MediaPlayerInterface  ();
 
-    virtual MediaPlayerDef::States      getState() = 0;     // we must use a different name than in the MediaPlayer class
     virtual int                         volume() = 0;
     virtual bool                        muted() = 0;
     virtual QString                     mediaType() = 0;

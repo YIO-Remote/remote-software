@@ -1,17 +1,20 @@
 #ifndef LIGHTINTERFACE_H
 #define LIGHTINTERFACE_H
 
-#include "entityinterface.h"
+#include <QObject>
 
 /// This class is a work arround to make the feature enum available in the interface and in the specifc entity class.
 /// Qt cannot create metadata describing an enum contained in the interface
 /// In the specific entity class it is only needed to generically convert the feature enum to a string and back
-class LightDef : QObject
+class LightDef : public QObject
 {
     Q_OBJECT
 public:
-    enum class Attributes { STATE, BRIGHTNESS, COLOR, COLORTEMP };
+    enum Attributes   { STATE, BRIGHTNESS, COLOR, COLORTEMP };
     Q_ENUM (Attributes)
+
+    enum States       { OFF=0, ON=1 };
+    Q_ENUM (States)
 
     explicit LightDef(QObject *parent = nullptr) : QObject(parent)
     {}
@@ -24,10 +27,9 @@ class LightInterface
 public:
     virtual ~LightInterface  ();
 
-    virtual bool    state()         = 0;
-    virtual int     brightness()    = 0;
-    virtual QColor  color()         = 0;
-    virtual int     colorTemp()     = 0;
+    virtual int                 brightness()    = 0;
+    virtual QColor              color()         = 0;
+    virtual int                 colorTemp()     = 0;
 };
 
 QT_BEGIN_NAMESPACE

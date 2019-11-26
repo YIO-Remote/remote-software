@@ -5,12 +5,6 @@
 
 QString Remote::Type = "remote";
 
-bool Remote::update(const QVariantMap &attributes)
-{
-    Q_UNUSED(attributes)
-    return false;
-}
-
 // transport and media controls
 void Remote::play()
 {
@@ -183,7 +177,7 @@ void Remote::muteToggle()
 }
 
 Remote::Remote(QObject *parent) :
-    Entity (Type, QVariantMap(), NULL, parent)
+    Entity (Type, QVariantMap(), nullptr, parent)
 {
 
 }

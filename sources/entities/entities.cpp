@@ -171,7 +171,6 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
     if (!m_mediaplayersPlaying.contains(entity_id)) {
         m_mediaplayersPlaying.insert(entity_id, o);
         emit mediaplayersPlayingChanged();
-//        emit mediaplayerAdded();
     }
 }
 
@@ -185,7 +184,6 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
             emit mediaplayersPlayingChanged();
-//            emit mediaplayerRemoved();
         });
         timer->start(120000);
 
