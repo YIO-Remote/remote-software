@@ -117,7 +117,7 @@ void MediaPlayer::next()
     command("NEXT", "");
 }
 
-void MediaPlayer::setVolume(double value)
+void MediaPlayer::setVolume(int value)
 {
     command("VOLUME_SET", value);
 }
