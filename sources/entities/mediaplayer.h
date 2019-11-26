@@ -40,7 +40,7 @@ public:
     Q_INVOKABLE void            stop();
     Q_INVOKABLE void            previous();
     Q_INVOKABLE void            next();
-    Q_INVOKABLE void            setVolume(double value);
+    Q_INVOKABLE void            setVolume(int value);
     Q_INVOKABLE void            volumeUp();
     Q_INVOKABLE void            volumeDown();
 
