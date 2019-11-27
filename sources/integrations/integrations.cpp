@@ -33,7 +33,7 @@ void Integrations::load()
     Launcher* l = new Launcher();
 
     // read the config
-    QVariantMap c = config->read().value("integrations").toMap();
+    QVariantMap c = config->getIntegrations(); //config->config().value("integrations").toMap();
 
     int i = 0;
 

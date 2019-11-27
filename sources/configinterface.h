@@ -7,15 +7,18 @@
 class ConfigInterface
 {
 public:
-    virtual ~ConfigInterface() {}
+    virtual ~ConfigInterface();
 
-    virtual QVariantMap             read                    () = 0;
-    virtual void                    readWrite               (QVariantMap config) = 0;
-    virtual QVariant                getContextProperty      (const QString& name) = 0;
-    virtual QObject*                getQMLObject            (const QString &name) = 0;
+    virtual QVariantMap     config() = 0;
+    virtual void            setConfig(const QVariantMap& config) = 0;
+    virtual QVariantMap     getSettings() = 0;
+    virtual QVariantMap     getIntegrations() = 0;
+    virtual QVariantMap     getIntegration(const QString& type) = 0;
+    virtual QVariantMap     getAllEntities() = 0;
+    virtual QVariantList    getEntities(const QString& type) = 0;
 
-private:
-    QVariantMap                 m_config;
+    virtual QVariant        getContextProperty (const QString& name) = 0;
+    virtual QObject*        getQMLObject (const QString &name) = 0;
 };
 
 QT_BEGIN_NAMESPACE

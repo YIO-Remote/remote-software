@@ -1,17 +1,20 @@
 #ifndef BLINDINTERFACE_H
 #define BLINDINTERFACE_H
 
-#include "entityinterface.h"
+#include <QObject>
 
 /// This class is a work arround to make the feature enum available in the interface and in the specifc entity class.
 /// Qt cannot create metadata describing an enum contained in the interface
 /// In the specific entity class it is only needed to generically convert the feature enum to a string and back
-class BlindDef : QObject
+class BlindDef : public QObject
 {
     Q_OBJECT
 public:
-    enum class Attributes { STATE, POSITION };
+    enum Attributes {  STATE, POSITION };
     Q_ENUM (Attributes)
+
+    enum States     { OPEN =0, CLOSED=1, MOVING=2 };        // maybe some integration can deliver MOVING, or we simulate by the commands
+    Q_ENUM (States)
 
     explicit BlindDef(QObject *parent = nullptr) : QObject(parent)
     {}
@@ -24,8 +27,7 @@ class BlindInterface
 public:
     virtual ~BlindInterface  ();
 
-    virtual bool    state()         = 0;
-    virtual int     position()      = 0;
+    virtual int                 position()   = 0;
 };
 
 QT_BEGIN_NAMESPACE

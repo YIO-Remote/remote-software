@@ -7,7 +7,7 @@ Flickable {
     //: Name of the settings page
     property string title: qsTr("Favorites") + translateHandler.emptyString
 
-    property var favoritesModel: config.read.ui_config.profiles[config.profile].favorites
+    property var favoritesModel: config.getProfileFavorites() //config.ui_config.profiles[config.profile].favorites
 
     signal scrolledUp()
     signal scrolledDown()

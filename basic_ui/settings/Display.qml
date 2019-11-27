@@ -56,9 +56,9 @@ Item {
 
             checked: standbyControl.display_autobrightness
             mouseArea.onClicked: {
-                var tmp = config.read;
+                var tmp = config.config;
                 tmp.settings.autobrightness = !tmp.settings.autobrightness;
-                config.write = tmp;
+                config.config = tmp;
                 config.writeConfig();
             }
         }
@@ -161,9 +161,9 @@ Item {
 
             checked: darkMode
             mouseArea.onClicked: {
-                var tmp = config.read
+                var tmp = config.config
                 tmp.ui_config.darkmode = !tmp.ui_config.darkmode
-                config.write = tmp;
+                config.config = tmp;
                 config.writeConfig();
             }
         }

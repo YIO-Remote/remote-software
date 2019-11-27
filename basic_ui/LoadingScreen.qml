@@ -44,7 +44,7 @@ Rectangle {
         id: endAnim
         running: false
 
-        PauseAnimation {duration: 3000}
+//        PauseAnimation {duration: 3000}
         PropertyAnimation { target: loadingIconAnim; properties: "running";to: false; duration: 0 }
         PropertyAnimation { target: yio_O; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
         PauseAnimation {duration: 200}

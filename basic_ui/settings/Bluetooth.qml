@@ -54,7 +54,7 @@ Item {
             anchors.rightMargin: 20
             anchors.verticalCenter: bluetoothText.verticalCenter
 
-            checked: config.read.settings.bluetootharea
+            checked: config.settings.bluetootharea
             mouseArea.onClicked: {
                 if (bluetoothButton.checked) {
                  bluetoothArea.stopScan();
@@ -63,9 +63,9 @@ Item {
                     bluetoothArea.startScan();
                 }
 
-                var tmp = config.read
+                var tmp = config.config
                 tmp.settings.bluetootharea = !tmp.settings.bluetootharea
-                config.write = tmp;
+                config.config = tmp;
                 config.writeConfig();
             }
         }

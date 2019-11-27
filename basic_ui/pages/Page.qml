@@ -9,7 +9,7 @@ Flickable {
     property string page
 
     //: Name of the settings page
-    property string title: qsTr(config.read.ui_config.pages[page].name) + translateHandler.emptyString
+    property string title: qsTr(config.pages[page].name) + translateHandler.emptyString
 
     // image background handling
     property string img_url
@@ -17,9 +17,9 @@ Flickable {
     // get the URL from config JSON
     Component.onCompleted: {
         img_url = Qt.binding(function () {
-            if (config.read.ui_config.pages[page].image) {
+            if (config.pages[page].image) {
                 topImage.visible = true;
-                return "file://" + config.read.ui_config.pages[page].image;
+                return "file://" + config.pages[page].image;
             } else {
                 topImage.visible = false;
                 return "";
@@ -158,10 +158,10 @@ Flickable {
 
         Repeater {
             id: groupRepeater
-            model: config.read.ui_config.pages[page].groups
+            model: config.pages[page].groups
 
             Group {
-                groupID: config.read.ui_config.pages[page].groups[index]
+                groupID: config.pages[page].groups[index]
             }
         }
     }

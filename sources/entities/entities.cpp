@@ -36,7 +36,7 @@ QList<QObject *> Entities::list()
 
 void Entities::load()
 {
-    QVariantMap c = Config::getInstance()->read();
+    QVariantMap c = Config::getInstance()->config();
     QVariant entities = c.value("entities");
 
     for (int i=0; i < m_supported_entities.length(); i++)
@@ -171,7 +171,6 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
     if (!m_mediaplayersPlaying.contains(entity_id)) {
         m_mediaplayersPlaying.insert(entity_id, o);
         emit mediaplayersPlayingChanged();
-        emit mediaplayerAdded();
     }
 }
 
@@ -184,7 +183,6 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
         timer->setSingleShot(true);
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
-            emit mediaplayersPlayingChanged();
             emit mediaplayersPlayingChanged();
         });
         timer->start(120000);

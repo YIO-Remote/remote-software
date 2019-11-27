@@ -65,12 +65,12 @@ void YioAPI::sendMessage(QString message)
 
 QVariantMap YioAPI::getConfig()
 {
-    return Config::getInstance()->read();
+    return Config::getInstance()->config();
 }
 
 void YioAPI::setConfig(QVariantMap config)
 {
-    Config::getInstance()->readWrite(config);
+    Config::getInstance()->setConfig(config);
     Config::getInstance()->writeConfig();
 }
 
@@ -114,7 +114,7 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     }
 
     // writeh the config back
-    Config::getInstance()->readWrite(c);
+    Config::getInstance()->setConfig(c);
     Config::getInstance()->writeConfig();
 
     return true;

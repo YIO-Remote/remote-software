@@ -45,15 +45,17 @@ Item {
         // clear the menuConfig
         menuConfig.clear();
 
-        for (var i = 0; i < config.read.ui_config.profiles[config.profile].pages.length; i++) {
+        var pageNames = config.getProfilePages();
+
+        for (var j = 0; j < pageNames.length; j++) {
             var c = {};
-            c.page = config.read.ui_config.profiles[config.profile].pages[i];
-            if (config.read.ui_config.profiles[config.profile].pages[i] == "favorites") {
-                c.friendly_name = qsTr("Favorites") + translateHandler.emptyString;
-            } else if (config.read.ui_config.profiles[config.profile].pages[i] == "settings") {
-                c.friendly_name = qsTr("Settings") + translateHandler.emptyString;
+            c.page = pageNames[j];
+            if (c.page === "favorites") {
+                c.friendly_name = "Favorites";
+            } else if (c.page === "settings") {
+                c.friendly_name = "Settings";
             } else {
-                c.friendly_name = config.read.ui_config.pages[config.read.ui_config.profiles[config.profile].pages[i]].name;
+                c.friendly_name = config.getPage(c.page).name;
             }
 
             // add to listmodel
@@ -64,7 +66,7 @@ Item {
     function savemenuConfig() {
         console.debug("SAVE MENUCONFIG");
 
-        var tmp = config.read;
+        var tmp = config.config;
 
         var newConfig = [];
 
@@ -86,7 +88,7 @@ Item {
         // update the config
         tmp.ui_config.profiles[config.profile].pages = newConfig;
 
-        config.write = tmp;
+        config.config = tmp;
         config.writeConfig();
     }
 

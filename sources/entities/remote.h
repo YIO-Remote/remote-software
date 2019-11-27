@@ -12,8 +12,6 @@ class Remote : public Entity
 
 public:
     Q_PROPERTY  (QVariantList   commands       READ    commands       NOTIFY commandsChanged)
-    Q_INVOKABLE bool            update(const QVariantMap& attributes) override;
-
     QVariantList                commands() const { return m_commands; }
 
     // transport and media controls
@@ -58,6 +56,9 @@ public:
     Q_INVOKABLE void            volumeUp();
     Q_INVOKABLE void            volumeDown();
     Q_INVOKABLE void            muteToggle();
+
+    void                        turnOn() override               { powerOn (); }
+    void                        turnOff() override              { powerOff (); }
 
 
     explicit Remote(QObject *parent = nullptr);
