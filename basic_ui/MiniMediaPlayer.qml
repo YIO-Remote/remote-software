@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
+import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
 
 Item {
@@ -529,7 +530,7 @@ Item {
         width: 120
         height: 120
 
-        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == 3 ? true : false
+        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ? true : false
 
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -577,7 +578,7 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == 3) {
+                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ) {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
                 } else {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();

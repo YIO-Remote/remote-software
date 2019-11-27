@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -226,11 +226,11 @@ Rectangle {
         spacing: {
             var i = 0;
 
-            if (obj.supported_features.indexOf("SEARCH") > -1)
+            if (obj.isSupported("SEARCH"))
                 i++;
-            if (obj.supported_features.indexOf("LIST") > -1)
+            if (obj.isSupported("LIST"))
                 i++;
-            if (obj.supported_features.indexOf("SPEAKER_CONTROL") > -1)
+            if (obj.isSupported("SPEAKER_CONTROL"))
                 i++;
 
             if (i === 0)
@@ -269,7 +269,7 @@ Rectangle {
 
         // search
         Text {
-            visible: obj.supported_features.indexOf("SEARCH") > -1 ? true : false
+            visible: obj.isSupported("SEARCH") ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
             text: "\uE90C"
@@ -294,7 +294,7 @@ Rectangle {
 
         // playlists
         Text {
-            visible: obj.supported_features.indexOf("LIST") > -1 ? true : false
+            visible: obj.isSupported("LIST") ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
             text: "\uE907"
@@ -319,7 +319,7 @@ Rectangle {
 
         // speakers
         Text {
-            visible: obj.supported_features.indexOf("SPEAKER_CONTROL") > -1 ? true : false
+            visible: obj.isSupported("SPEAKER_CONTROL") ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
             text: "\uE90D"

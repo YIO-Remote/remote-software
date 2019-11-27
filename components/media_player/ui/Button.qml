@@ -1,11 +1,12 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/components" as Comp
 import "qrc:/basic_ui" as BasicUI
 
+import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
 
 Comp.ButtonBase {
@@ -15,7 +16,7 @@ Comp.ButtonBase {
 
     // override default settings
     title.anchors.verticalCenterOffset: obj.source === "" ? 0 : -15
-    button.enabled: obj.supported_features.indexOf("TURN_ON") > -1 ? true : false
+    button.enabled: obj.isSupported("TURN_ON") ? true : false
 
     // include mediaplayer utils
     MediaPlayerUtils {
