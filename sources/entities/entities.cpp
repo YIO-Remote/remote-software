@@ -166,7 +166,7 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
         timer->stop();
     }
 
-    QObject *o = m_entities.value(entity_id);
+    QObject *o = get(entity_id);
 
     if (!m_mediaplayersPlaying.contains(entity_id)) {
         m_mediaplayersPlaying.insert(entity_id, o);

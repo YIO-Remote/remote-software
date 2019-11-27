@@ -23,6 +23,8 @@ public:
     Q_PROPERTY  (QString                    source          READ    source          NOTIFY      sourceChanged)
     Q_PROPERTY  (QVariant                   browseResult    READ    browseResult    NOTIFY      browseResultChanged)
 
+    Q_PROPERTY  (QVariant                   searchResult    READ    searchResult    NOTIFY      searchResultChanged)
+
     int                         volume() override       { return m_volume; }
     bool                        muted() override        { return m_muted; }
     QString                     mediaType() override    { return m_mediaType; }
@@ -33,6 +35,7 @@ public:
 
     // extension for "generic" media browsing
     QVariant                    browseResult() override { return m_browseResult; }
+    QVariant                    searchResult() override { return m_searchResult; }
 
     // update an entity's attributes
     Q_INVOKABLE void            play();
@@ -67,6 +70,7 @@ signals:
     void mediaImageChanged();
     void sourceChanged();
     void browseResultChanged();
+    void searchResultChanged();
 
 public:
     static QString Type;
@@ -92,13 +96,22 @@ private:
     QString                     m_mediaArtist;
     QString                     m_source;
 
+    QVariant                    m_searchResult;
+    /*                         {
+     *                         tracks:          array of {id, title, subtitle, image_url, array of commands}
+     *                         artists:         array of {id, title, subtitle, image_url, array of commands}
+     *                         albums:          array of {id, title, subtitle, image_url, array of commands}
+     *                         playlists:       array of {id, title, subtitle, image_url, array of commands}
+     *                         }
+    */
+
     // extension for "generic" media browsing
     QVariant                    m_browseResult;         // Better to return in one structure (perf, synchronisation) :
-                                                        // items :          Array of { item_key, title, sub_title, image_url, input_prompt for search }
-                                                        // playCommands:    Array of play commands for the items like PLAY, QUEUE
-                                                        // type:            Item type Genre, Album, Artist, Track, Playlist, Radio
-                                                        // title:           Name of the genre, album, artist, track
-                                                        // level:           Top is 0
+    // items :          Array of { item_key, title, sub_title, image_url, input_prompt for search }
+    // playCommands:    Array of play commands for the items like PLAY, QUEUE
+    // type:            Item type Genre, Album, Artist, Track, Playlist, Radio
+    // title:           Name of the genre, album, artist, track
+    // level:           Top is 0
 };
 
 #endif // MEDIAPLAYER_H

@@ -32,6 +32,16 @@ Flickable {
         }
     }
 
+    function onSearch() {
+        obj.search(searchTextField.text);
+        searchResultsTitle.text = searchTextField.text;
+        recentSearches.state = "hidden";
+        recentSearchesModel.insert(0, {"searchString":searchTextField.text});
+        searchTextField.focus = false;
+        itemFlickable.contentY = 230;
+        searchTextField.text = "";
+    }
+
     Rectangle {
         id: searchContainer
         width: parent.width - 60
@@ -61,12 +71,7 @@ Flickable {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    obj.search(searchTextField.text);
-                    recentSearches.state = "hidden";
-                    recentSearchesModel.insert(0, {"searchString":searchTextField.text});
-                    searchTextField.focus = false;
-                    itemFlickable.contentY = 200;
-                    searchTextField.text = "";
+                    onSearch();
                 }
             }
         }
@@ -91,11 +96,7 @@ Flickable {
             }
 
             onAccepted: {
-                obj.search(searchTextField.text)
-                recentSearches.state = "hidden";
-                recentSearchesModel.insert(0, {"searchString":searchTextField.text});
-                itemFlickable.contentY = 200;
-                searchTextField.text = "";
+                onSearch();
             }
 
             onFocusChanged: {
@@ -111,6 +112,11 @@ Flickable {
 
     ListModel {
         id: recentSearchesModel
+
+        onCountChanged: {
+            if (count == 0)
+                recentSearches.state = "hidden";
+        }
     }
 
     Item {
@@ -156,8 +162,7 @@ Flickable {
             text: qsTr("Recent searches") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.top: parent.top
-            font.family: "Open Sans Bold"
-            font.weight: Font.Normal
+            font.family: "Open Sans "
             font.pixelSize: 27
             lineHeight: 1
         }
@@ -168,8 +173,7 @@ Flickable {
             text: qsTr("Clear") + translateHandler.emptyString
             anchors.right: parent.right
             anchors.top: parent.top
-            font.family: "Open Sans Bold"
-            font.weight: Font.Normal
+            font.family: "Open Sans"
             font.pixelSize: 27
             lineHeight: 1
 
@@ -202,8 +206,7 @@ Flickable {
                     color: colorText
                     text: searchString
                     font.family: "Open Sans"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
+                    font.pixelSize: 25
                     lineHeight: 1
                 }
 
@@ -212,8 +215,9 @@ Flickable {
                     onClicked: {
                         haptic.playEffect("click");
                         obj.search(searchString);
+                        searchResultsTitle.text = searchString;
                         recentSearches.state = "hidden";
-                        itemFlickable.contentY = 200;
+                        itemFlickable.contentY = 230;
                     }
                 }
 
@@ -231,9 +235,27 @@ Flickable {
 
     Item {
         id: searchResults
-        width: parent.width
+        width: parent.width-60
         height: 200
         anchors.top: recentSearches.bottom
         anchors.topMargin: 40
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Text {
+            id: searchResultsTitle
+            color: colorText
+            anchors.left: parent.left
+            anchors.top: parent.top
+            font.family: "Open Sans "
+            font.pixelSize: 30
+            lineHeight: 1
+        }
+
+        Flow {
+            id: tags
+            width: parent.width
+
+        }
+
     }
 }

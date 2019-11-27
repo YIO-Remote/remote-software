@@ -37,6 +37,7 @@ public:
 
     // extension for "generic" media browsing
     virtual QVariant                    browseResult() = 0;
+    virtual QVariant                    searchResult() = 0;
 };
 
 QT_BEGIN_NAMESPACE
