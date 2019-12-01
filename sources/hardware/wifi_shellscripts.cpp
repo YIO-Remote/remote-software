@@ -46,17 +46,41 @@ bool WifiShellScripts::init()
     return true;
 }
 
-void WifiShellScripts::join(const QString &ssid, const QString &password)
+void WifiShellScripts::on()
+{
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+
+    // TODO make configurable
+    launch(m_scriptProcess, "systemctl start wpa_supplicant@wlan0.service");
+    // TODO emit signal
+    startScanTimer();
+    setConnected(true);
+}
+
+void WifiShellScripts::off()
+{
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+
+    stopScanTimer();
+    // TODO make configurable
+    launch(m_scriptProcess, "systemctl stop wpa_supplicant@wlan0.service");
+    setConnected(false);
+}
+
+
+bool WifiShellScripts::join(const QString &ssid, const QString &password)
 {
     QStringList args;
     args.append(ssid);
     args.append(password);
     launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_network_create.sh", args);
+    return true;
 }
 
-void WifiShellScripts::reset()
+bool WifiShellScripts::reset()
 {
     launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
+    return true;
 }
 
 bool WifiShellScripts::isConnected()

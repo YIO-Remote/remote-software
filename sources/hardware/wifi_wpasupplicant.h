@@ -1,9 +1,17 @@
 /******************************************************************************
  *
  * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ *
+ * Third party work used:
+ *
+ * DigitalRooster - QT/QML internet radio, podcast player and alarmclock.
  * Copyright (C) 2018 Thomas Ruschival <thomas@ruschival.de>
- *                    wpa_supplicant integration code based on
- *                    https://github.com/truschival/DigitalRoosterGui
+ * Licensed under GPL 3.0 or later.
+ *
+ * wpaCute - A graphical wpa_supplicant front end.
+ * Copyright (C) 2018 loh.tar@googlemail.com
+ * Licensed under BSD license.
+ *
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -31,6 +39,7 @@
 #include <QString>
 #include <QStringRef>
 #include <QList>
+#include <QProcess>
 
 #include <memory>
 #include <mutex>
@@ -40,9 +49,7 @@
 #include "wpa_ctrl.h"
 
 /**
- * Function to register as callback
- * @param buf
- * @param len
+ * Function to register as callback for the wpa_supplicant control interface
  */
 void wpa_msg_cb(char* buf, size_t len);
 
@@ -58,21 +65,38 @@ public:
 
     bool init() override;
 
-    Q_INVOKABLE void reset() override;
-    Q_INVOKABLE void join(const QString &ssid, const QString &password) override;
+    Q_INVOKABLE bool reset() override;
+    Q_INVOKABLE bool join(const QString &ssid, const QString &password) override;
     Q_INVOKABLE void startNetworkScan() override;
 
     /**
-      * Trigger Push Button Configuration (PBC) authentication with given network
+      * TESTING ONLY! Proof of concept implementation for interactive authentication.
+      * Callback method for signal authenticationRequest().
       */
-    void wpsPushButtonConfigurationAuth(const WifiNetwork& network);
+    Q_INVOKABLE void authenticationResponse(const QString& type, int networkId, const QString& response);
 
     /**
-     * Connect to wpa control interface socket
+      * Trigger Push Button Configuration (PBC) authentication with given network
+      * @return false if authentication request couldn't be sent
+      */
+    bool wpsPushButtonConfigurationAuth(const WifiNetwork& network);
+
+signals:
+
+    /**
+     * @brief authenticationRequest TESTING ONLY! Proof of concept implementation for interactive authentication request.
+     * @param type Authorization type: "PASSWORD", "NEW_PASSWORD", "IDENTITY", "PASSPHRASE", "OTP"
+     * @param networkId Network Id, must be used in authenticationResponse
+     * @param text Human readable authorization information
      */
-    void connectWpaControlSocket();
+    void authenticationRequest(QString type, int networkId, QString text);
 
 public slots:
+
+    virtual void on() override;
+    virtual void off() override;
+
+protected slots:
 
     /**
      * Data on control channel available
@@ -83,42 +107,95 @@ private:
     explicit WifiWpaSupplicant(QObject *parent = nullptr);
 
     /**
-     * Tokenize a single line of scan results and interpret fields as WifiNetwork
-     * @param line refernce to string in scan_results
-     * @return WifiNetwork data object
+     * @brief setNetworkParam Helper method to set a network parameter with SET_NETWORK
+     * @param networkId Network identification
+     * @param parm Parameter name
+     * @param val Value to set for parameter
+     * @param quote true = quote value
+     * @return false if parameter could not be set
      */
-    WifiNetwork lineToNetwork(const QStringRef& line);
+    bool setNetworkParam(const QString& networkId, const QString& parm, const QString& val, bool quote = false);
 
     /**
-     * Tokenize a buffer returned by wpa_ctrl SCAN_RESULT into a list of WifiNetworks
-     * @param buffer result
-     * @param len buffer length
+     * Connect to wpa control interface socket
+     * @param wpaSupplicantSocketPath Path to management socket e.g. /var/lib/wpa_supplicant/wlan0
+     * @return false if operation failed
      */
-    QList<WifiNetwork> parseScanresult(const char* buffer);
+    bool connectWpaControlSocket(const QString &wpaSupplicantSocketPath);
 
+    /**
+     * @brief parseStatus Parse a STATUS response message
+     * @param buffer Response message
+     * @return Result as WifiStatus object
+     */
     WifiStatus parseStatus(const char* buffer);
 
+    /**
+     * @brief parseSignalStrength Parse a SIGNAL_POLL response message
+     * @param buffer Response message
+     * @return The parsed rssi value
+     */
     int parseSignalStrength(const char* buffer);
 
     /**
-     * Send read scan_results from wpa_ctrl
+     * @brief processCtrlReq TESTING ONLY! Proof of concept implementation for interactive authentication request.
+     * @details Emits authenticationRequest to retrieve the required authentication from the client
+     * @param req the authentication request message to process
+     */
+    void processCtrlReq(const QString& req);
+
+    /**
+     * @brief readScanResults Send read scan_results from wpa_ctrl
      */
     void readScanResults();
 
     /**
-     * Issue a command, modifies reply and m_replySize
-     * @param cmd wpa_supplicant command
+     * @brief addBSS Get detailed per-BSS scan results.
+     * @details BSS command can be used to iterate through scan results one BSS at a time and to fetch
+     *          all information from the found BSSes. This provides access to the same data that is
+     *          available through SCAN_RESULTS but in a way that avoids problems with large number of
+     *          scan results not fitting in the ctrl_iface messages.
+     * @param networkId the network index, 0 based
+     * @return false if no information could be retrieved
      */
-    void requestWrapper(const QString& cmd);
+    bool addBSS(int networkId);
 
     /**
-     * Interpret event string from wpa_socket monitor
+     * @brief getAuthenticationFromFlags Parse authentication flags
+     * @param flags authentication flags
+     * @param networkId optional network identification to retrieve more information if required
+     * @return Authentication enumeration
      */
-    void parseEvent(const QString& event);
+    WifiNetwork::Authentication getAuthenticationFromFlags(const QString& flags, int networkId = -1);
+
+    /**
+     * @brief controlRequest Issue a command to wpa_supplicant without returning the response message
+     * @param cmd wpa_supplicant command
+     * @return true on success
+     */
+    bool controlRequest(const QString& cmd);
+    /**
+     * @brief controlRequest Issue a command to wpa_supplicant and store the response in buf
+     * @param cmd wpa_supplicant command
+     * @param buf Response buffer
+     * @param buflen Response buffer length
+     * @return true on success
+     */
+    bool controlRequest(const QString& cmd, char* buf, const size_t buflen);
+
+    /**
+     * @brief parseEvent Interpret event string from wpa_socket monitor
+     * @param msg Event string
+     */
+    void parseEvent(char* msg);
+
+    /**
+     * @brief checkConnection Issue a STATUS command to check the WiFi connection
+     * @return true if the WiFi connection is established
+     */
+    bool checkConnection();
 
     void timerEvent(QTimerEvent *event) override;
-
-private:
 
     /**
      * Handle for lower layer wpa_ctrl
@@ -126,24 +203,18 @@ private:
     struct wpa_ctrl* m_ctrl;
 
     /**
-     * Buffer to hold reply of command
-     */
-    char m_reply[2048] = {};
-
-    /**
      * Mutex to protect concurrent access to wpa_ctrl and buffers m_reply or m_replySize
      */
     mutable std::mutex m_wpaMutex;
 
     /**
-     * Path to management socket e.g. /var/lib/wpa_supplicant/wlan0
-     */
-    QString m_wpaSupplicantSocketPath;
-
-    /**
      * Notifier for watching asynchronous events from wpa_ctrl socket
      */
     std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
+
+    QString m_wifiOnScript;
+    QString m_wifiOffScript;
+    QProcess *m_scriptProcess;
 
     // Only allow WifiControl to create an instance
     friend WifiControl& WifiControl::instance();

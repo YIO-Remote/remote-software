@@ -55,15 +55,17 @@ void WifiMock::off()
     qCDebug(CLASS_LC) << "off";
 }
 
-void WifiMock::reset()
+bool WifiMock::reset()
 {
     qCDebug(CLASS_LC) << "reset";
+    return true;
 }
 
-void WifiMock::join(const QString &ssid, const QString &password)
+bool WifiMock::join(const QString &ssid, const QString &password)
 {
     Q_UNUSED(password)
     qCDebug(CLASS_LC) << "join " << ssid;
+    return true;
 }
 
 bool WifiMock::isConnected()

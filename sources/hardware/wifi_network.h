@@ -29,40 +29,100 @@
 // unfortunatley we can't use the minimalistic C++ 14 POD classes for QML interaction :-(
 
 /**
- * @brief Immutable value class for WiFi network information
+ * @brief Immutable value class for WiFi network information.
  */
 class WifiNetwork {
     Q_GADGET
-    Q_PROPERTY (QString  name           READ name           CONSTANT)
-    Q_PROPERTY (QString  bssid          READ bssid          CONSTANT)
-    Q_PROPERTY (int      signalStrength READ signalStrength CONSTANT)
-    Q_PROPERTY (bool     wpsAvailable   READ isWpsAvailable CONSTANT)
-    Q_PROPERTY (bool     connected      READ isConnected    CONSTANT)
+    Q_PROPERTY (QString         name           READ name           CONSTANT)
+    Q_PROPERTY (QString         bssid          READ bssid          CONSTANT)
+    Q_PROPERTY (int             rssi           READ rssi           CONSTANT)
+    Q_PROPERTY (SignalStrength  signalStrength READ signalStrength CONSTANT)
+    Q_PROPERTY (bool            encrypted      READ isEncrypted    CONSTANT)
+    Q_PROPERTY (Authentication  authentication READ authentication CONSTANT)
+    Q_PROPERTY (bool            wpsAvailable   READ isWpsAvailable CONSTANT)
+    Q_PROPERTY (bool            connected      READ isConnected    CONSTANT)
 
 public:
+    enum Authentication {
+        NoneOpen,
+        NoneWep,
+        NoneWepShared,
+        IEEE8021X,
+        WPA_PSK,
+        WPA_EAP,
+        WPA2_PSK,
+        WPA2_EAP
+    };
+    Q_ENUM (Authentication)
+
+    enum SignalStrength {
+        None,
+        Weak,
+        Ok,
+        Good,
+        Excellent
+    };
+    Q_ENUM (SignalStrength)
+
     WifiNetwork() {}
-    WifiNetwork(QString name, QString bssid, int signalStrength, bool wpsAvailable = false, bool connected = false)
+    WifiNetwork(QString name, QString bssid, int rssi,
+                Authentication auth = WPA_PSK,
+                bool wpsAvailable = false,
+                bool connected = false)
         : m_name(name)
         , m_bssid(bssid)
-        , m_signalStrength(signalStrength)
+        , m_rssi(rssi)
+        , m_authentication(auth)
         , m_wpsAvailable(wpsAvailable)
         , m_connected(connected) {}
 
-    QString name () const { return m_name; }
-    QString bssid () const { return m_bssid; }
-    int     signalStrength () const { return m_signalStrength; }
+    /**
+     * @brief name Service set ID (SSID) of the network.
+     */
+    QString name() const { return m_name; }
+
+    /**
+     * @brief bssid Network basic service set identifier (BSSID).
+     */
+    QString bssid() const { return m_bssid; }
+
+    /**
+     * @brief rssi Signal strength in dBm. This might not be true for all wpa_supplicant drivers.
+     */
+    int     rssi() const { return m_rssi; }
+
+    /**
+     * @brief isEncrypted Convenience method for the client if the network is open or needs authentication.
+     */
+    bool    isEncrypted() const { return m_authentication != NoneOpen; } // what about NoneWep?
+
+    Authentication authentication() const { return m_authentication; }
+
     bool    isWpsAvailable() const { return m_wpsAvailable; }
+
     bool    isConnected() const { return m_connected; }
+
+    SignalStrength signalStrength() const {
+        // Calibration is based on "various Internet sources", taken from wpa_cute project
+        if (m_rssi >= -60)
+            return Excellent;
+        else if (m_rssi >= -68)
+            return Good;
+        else if (m_rssi >= -76)
+            return Ok;
+        else if (m_rssi >= -84)
+            return Weak;
+        else
+            return None;
+    }
 
 private:
     QString m_name;
     QString m_bssid;
-    int m_signalStrength = -100;
+    int m_rssi = -100;
+    Authentication m_authentication = WPA_PSK;
     bool m_wpsAvailable = false;
     bool m_connected = false;
 };
-
-//Q_DECLARE_METATYPE(WifiNetwork) // doesn't seem required?
-
 
 #endif // WIFINETWORK_H

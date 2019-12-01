@@ -71,12 +71,12 @@ public:
      * Active connection is disconnected and removed.
      * After disconnection an access point is started for the WiFi connection wizard.
      */
-    Q_INVOKABLE virtual void reset() = 0;
+    Q_INVOKABLE virtual bool reset() = 0;
 
     /**
      * Join the WiFi network with the given ssid
      */
-    Q_INVOKABLE virtual void join(const QString &ssid, const QString &password) = 0;
+    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password) = 0;
 
     /**
      * Checks if the WiFi connection is established
@@ -95,6 +95,8 @@ public:
     virtual QString ipAddress() const;
     virtual ScanStatus scanStatus() const;
     QList<WifiNetwork>& scanResult();
+    int maxScanResults() const;
+    void setMaxScanResults(int number);
 
 signals:
     // TODO do we need individual signals or simply use wifiStatusChanged?
@@ -124,12 +126,12 @@ public slots:
     /**
      * Enable WiFi device
      */
-    virtual void on();
+    virtual void on() = 0;
 
     /**
      * Disable WiFi device
      */
-    virtual void off();
+    virtual void off() = 0;
 
     /**
      * @brief Starts observing the WiFi signal strength of the connected network. Emits signalStrengthChanged for every change.
@@ -145,6 +147,8 @@ public slots:
 
 protected:
     WifiControl(QObject* parent = nullptr);
+
+    virtual void setConnected(bool connected);
 
     /**
      * Sets scan status and emits scanStatusChanged signal
@@ -172,18 +176,17 @@ protected:
      */
     QList<WifiNetwork> m_scanResults;
 
-    bool m_connected;
     bool m_signalStrengthScanning;
     bool m_wifiStatusScanning;
 
 private:
+    bool m_connected;
     /**
      * @brief Returns a QML compatible representation of the WifiNetwork list
      * @return a QVariantList copy of the WifiNetwork list
      */
     QVariantList networkScanResult() const;
-
-    QProcess *m_process;
+    int m_maxScanResults;
 
     int  m_scanInterval;
     int  m_timerId;

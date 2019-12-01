@@ -37,7 +37,7 @@
     #include "wifi_mock.h"
 #endif
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "WifiControl");
+static Q_LOGGING_CATEGORY(CLASS_LC, "WifiCtrl");
 
 /*!
     \class WifiControl
@@ -49,7 +49,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiControl");
 WifiControl::WifiControl(QObject* parent)
     : QObject(parent)
     , m_scanStatus(Idle)
-    , m_process(new QProcess(this))
+    , m_maxScanResults(50)
     , m_scanInterval(10000)         // TODO make scan interval configurable
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
@@ -79,37 +79,22 @@ WifiControl& WifiControl::instance()
     return singleton;
 }
 
-// should be moved into a generic 'Linux subclass'
-void WifiControl::on()
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-
-    // TODO make configurable
-    launch(m_process, "systemctl start wpa_supplicant@wlan0.service");
-    // TODO emit signal
-    m_connected = true;
-    startScanTimer();
-}
-
-// should be moved into a generic 'Linux subclass'
-void WifiControl::off()
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-
-    stopScanTimer();
-    // TODO make configurable
-    // TODO what about TERMINATE command? https://w1.fi/wpa_supplicant/devel/ctrl_iface_page.html
-    launch(m_process, "systemctl stop wpa_supplicant@wlan0.service");
-    // TODO emit signal
-    m_connected = false;
-}
-
 /**
  * Default implementation
  */
 bool WifiControl::isConnected()
 {
     return m_connected;
+}
+
+void WifiControl::setConnected(bool connected)
+{
+    if (connected == m_connected) {
+        return;
+    }
+    qCDebug(CLASS_LC) << "Connection status changed to:" << connected;
+    m_connected = connected;
+    // TODO emit signal on connection status change?
 }
 
 QString WifiControl::macAddress() const
@@ -140,7 +125,7 @@ WifiControl::ScanStatus WifiControl::scanStatus() const
 
 void WifiControl::setScanStatus(ScanStatus stat)
 {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    qCDebug(CLASS_LC) << Q_FUNC_INFO << stat;
     m_scanStatus = stat;
     scanStatusChanged(m_scanStatus);
 }
@@ -159,13 +144,19 @@ QVariantList WifiControl::networkScanResult() const
     return list;
 }
 
+int WifiControl::maxScanResults() const
+{
+    return m_maxScanResults;
+}
+
+void WifiControl::setMaxScanResults(int number)
+{
+    m_maxScanResults = number;
+}
+
 
 void WifiControl::startSignalStrengthScanning()
 {
-    if (!isConnected()) {
-        qCDebug(CLASS_LC) << "Not starting SignalStrengthScanning: WiFi is not connected!";
-        return;
-    }
     m_signalStrengthScanning = true;
     startScanTimer();
 }
@@ -180,10 +171,6 @@ void WifiControl::stopSignalStrengthScanning()
 
 void WifiControl::startWifiStatusScanning()
 {
-    if (!isConnected()) {
-        qCDebug(CLASS_LC) << "Not starting SignalStrengthScanning: WiFi is not connected!";
-        return;
-    }
     m_wifiStatusScanning = true;
     startScanTimer();
 }
@@ -219,9 +206,11 @@ QString WifiControl::launch(QProcess *process, const QString &command)
 
 QString WifiControl::launch(QProcess *process, const QString &command, const QStringList &arguments)
 {
-    // FIXME synchronize launcher
+    qCDebug(CLASS_LC) << Q_FUNC_INFO << command;
+
+    // TODO should launcher be synchronized? i.e. guarded by a mutex? --> shell script launching needs rework anyways and should soon be deprecated for most tasks.
     process->start(command, arguments);
-    process->waitForFinished(-1);
+    process->waitForFinished(-1);  // FIXME use timeout. Infinite is never a good idea.
     QByteArray bytes = process->readAllStandardOutput();
     QString output = QString::fromLocal8Bit(bytes);
     return output;
