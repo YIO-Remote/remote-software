@@ -9,7 +9,7 @@ Flickable {
     height: parent.height-60
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: 260 + searchContainer.height + recentSearches.height + searchResults.height
+    contentHeight: 280 + searchContainer.height + recentSearches.height + searchResults.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
 
@@ -331,6 +331,7 @@ Flickable {
             orientation: ListView.Horizontal
             spacing: 30
             clip: true
+            cacheBuffer: 4000
 
             delegate: albumThumbnail
         }
@@ -341,7 +342,7 @@ Flickable {
 
         Item {
             width: childrenRect.width
-            height: childrenRect.height
+            height: childrenRect.heigh
 
             Image {
                 id: albumImage
