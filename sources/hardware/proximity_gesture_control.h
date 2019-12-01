@@ -82,7 +82,10 @@ public:
 #ifdef __arm__
         if (m_init_success) {
             m_proximity = apds.readProximity();
-            qDebug() << "Proximity" << m_proximity;
+            if (m_proximity > 0) {
+                // prevent log flooding while docking
+                qDebug() << "Proximity" << m_proximity;
+            }
 
             if (m_proximityDetection) {
 
@@ -110,7 +113,7 @@ public:
 #ifdef __arm__
         // intialize the sensor
         if (!apds.begin()) {
-            qDebug() << "Cannot initialise the APDS9960 sensor";
+            qCritical() << "Cannot initialise the APDS9960 sensor";
             //: Error message that shows up as notification when light value cannot be read
 //            m_apds9960Error = tr("Cannot initialize the proximity sensor. Please restart the remote.");
             m_init_success = false;

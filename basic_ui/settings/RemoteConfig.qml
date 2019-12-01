@@ -62,6 +62,7 @@ Item {
 
             checked: false
             mouseArea.onClicked: {
+                // TODO create a web server launcher class or at least a configurable command instead of launching hard coded shell scripts from QML
                 if (remoteConfigButton.checked) {
                     remoteConfigLauncher.launch("systemctl start lighttpd.service");
                     remoteConfigButton.checked = true;

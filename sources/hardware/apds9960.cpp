@@ -22,6 +22,7 @@ bool APDS9960::check()
 
 bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain)
 {
+    // TODO make i2c device configurable
     _fd = wiringPiI2CSetupInterface("/dev/i2c-3", APDS9960_ADDRESS);
     if(_fd == -1) {
         return false;

@@ -83,8 +83,10 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 mouseArea.onClicked: {
+                    // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("fbv -d 1 /bye.png")
                     buttonHandler.interruptHandler.shutdown();
+                    // TODO create a system device class for shutdown instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("halt");
                 }
             }
@@ -291,6 +293,7 @@ Item {
                 anchors.leftMargin: 20
 
                 mouseArea.onClicked: {
+                    // TODO create a system device class for reboot instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("reboot");
                 }
             }
@@ -344,7 +347,9 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 mouseArea.onClicked: {
+                    // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("fbv -d 1 /bye.png")
+                    // TODO create a system device class for reboot instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("reboot");
                 }
             }

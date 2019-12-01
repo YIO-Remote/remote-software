@@ -199,6 +199,7 @@ ApplicationWindow {
                 if (updateAvailable) {
                     var hour = new Date().getHours();
                     if (hour >= 3 && hour <= 5) {
+                        // TODO create a update service class instead of launching hard coded shell scripts from QML
                         fileio.write("/usr/bin/updateURL", updateURL);
                         mainLauncher.launch("systemctl restart update.service");
                         Qt.quit();

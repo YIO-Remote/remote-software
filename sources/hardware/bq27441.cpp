@@ -6,6 +6,7 @@ BQ27441::BQ27441()
 {
 #ifdef __arm__
     /* Initialize I2C */
+    // TODO make i2c device configurable
     bus = wiringPiI2CSetupInterface("/dev/i2c-3", BQ27441_I2C_ADDRESS);
 
     uint16_t bq27441_device_id;
@@ -17,7 +18,7 @@ BQ27441::BQ27441()
     if (bq27441_device_id != BQ27441_DEVICE_ID)
     {
         m_init = false;
-        qDebug() << "Error: Unable to communicate with BQ27441.";
+        qCritical() << "Error: Unable to communicate with BQ27441.";
         Notifications::getInstance()->add(true,tr("Cannot initialize the battery sensor. Please restart the remote."));
     } else {
         m_init = true;
