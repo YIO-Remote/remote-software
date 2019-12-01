@@ -91,7 +91,8 @@ int main(int argc, char *argv[])
 
     // DRIVERS
     WifiControl::instance().init();
-    engine.rootContext()->setContextProperty("wifi", &WifiControl::instance());
+    WifiControl* wifiControl = &WifiControl::instance();
+    engine.rootContext()->setContextProperty("wifi", wifiControl);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
@@ -127,8 +128,20 @@ int main(int argc, char *argv[])
     engine.addImportPath("qrc:/");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
+    if (engine.rootObjects().isEmpty()) {
         return -1;
+    }
+
+    // FIXME move initialization code to a device driver factory
+    QObject* standbyControl = config.getQMLObject("standbyControl");
+    if (standbyControl == nullptr) {
+        qCritical() << "Error looking up QML object:" << "standbyControl";
+    } else {
+        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
+        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
+        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
+        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
+    }
 
     return app.exec();
 }
