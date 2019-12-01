@@ -2,6 +2,7 @@
 #define MEDIAPLAYERINTERFACE_H
 
 #include <QObject>
+#include "../remote-software/components/media_player/sources/searchmodel_mediaplayer.h"
 
 /// This class is a work arround to make the feature enum available in the interface and in the specifc entity class.
 /// Qt cannot create metadata describing an enum contained in the interface
@@ -10,7 +11,7 @@ class MediaPlayerDef : public QObject
 {
     Q_OBJECT
 public:
-    enum Attributes  {  STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, BROWSERESULT };
+    enum Attributes  {  STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, BROWSERESULT, SEARCHRESULT };
     Q_ENUM (Attributes)
 
     enum States   { OFF=0, ON=1, IDLE=2, PLAYING=3 };
@@ -37,7 +38,7 @@ public:
 
     // extension for "generic" media browsing
     virtual QVariant                    browseResult() = 0;
-    virtual QVariant                    searchResult() = 0;
+    virtual void                        setModel(QObject* model) = 0;
 };
 
 QT_BEGIN_NAMESPACE

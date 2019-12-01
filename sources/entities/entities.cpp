@@ -160,17 +160,17 @@ QList<QObject *> Entities::mediaplayersPlaying()
 
 void Entities::addMediaplayersPlaying(const QString &entity_id)
 {
+    QObject *o = get(entity_id);
+
+    if (!m_mediaplayersPlaying.contains(entity_id) && o) {
+        m_mediaplayersPlaying.insert(entity_id, o);
+        emit mediaplayersPlayingChanged();
+    }
+
     // check if there is a timer active to remove the media player
     QTimer* timer = m_mediaplayersTimers.value(entity_id);
     if (timer) {
         timer->stop();
-    }
-
-    QObject *o = get(entity_id);
-
-    if (!m_mediaplayersPlaying.contains(entity_id)) {
-        m_mediaplayersPlaying.insert(entity_id, o);
-        emit mediaplayersPlayingChanged();
     }
 }
 

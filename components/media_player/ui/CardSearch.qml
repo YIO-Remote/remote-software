@@ -6,10 +6,10 @@ import "qrc:/basic_ui" as BasicUI
 Flickable {
     id: itemFlickable
     width: parent.width
-    height: parent.height
+    height: parent.height-60
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
-    contentHeight: 100 + searchContainer.height + recentSearches.height + searchResults.height
+    contentHeight: 260 + searchContainer.height + recentSearches.height + searchResults.height
     boundsBehavior: Flickable.DragAndOvershootBounds
     flickableDirection: Flickable.VerticalFlick
 
@@ -236,7 +236,7 @@ Flickable {
     Item {
         id: searchResults
         width: parent.width-60
-        height: 200
+        height: childrenRect.height
         anchors.top: recentSearches.bottom
         anchors.topMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
@@ -246,7 +246,7 @@ Flickable {
             color: colorText
             anchors.left: parent.left
             anchors.top: parent.top
-            font.family: "Open Sans "
+            font.family: "Open Sans Bold"
             font.pixelSize: 30
             lineHeight: 1
         }
@@ -254,8 +254,198 @@ Flickable {
         Flow {
             id: tags
             width: parent.width
+            anchors.top: searchResultsTitle.bottom
+            anchors.topMargin: 30
 
         }
 
+        ListView {
+            id: searchResultsList
+            width: parent.width
+            height: childrenRect.height
+            anchors.top: tags.bottom
+            anchors.topMargin: 40
+            interactive: false
+            spacing: 40
+
+            model: obj.model
+
+            delegate:
+                Item {
+                width: parent.width
+                height: childrenRect.height
+
+                // Title
+                Text {
+                    id: searchResultsListHeader
+                    text: {
+                        if (title == "albums")
+                            return qsTr("Albums") + translateHandler.emptyString
+                        else if (title == "tracks")
+                            return qsTr("Tracks") + translateHandler.emptyString
+                        else if (title == "artists")
+                            return qsTr("Artists") + translateHandler.emptyString
+                        else if (title == "playlists")
+                            return qsTr("Playlists") + translateHandler.emptyString
+                    }
+                    color: colorText
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    font.family: "Open Sans Bold"
+                    font.pixelSize: 27
+                    lineHeight: 1
+                }
+
+                // Listview
+                Loader {
+                    id: listViewLoader
+                    anchors.top: searchResultsListHeader.bottom
+                    anchors.topMargin: 40
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    sourceComponent: {
+                        if (title == "albums")
+                            return albumList
+                        else if (title == "tracks")
+                            return trackList
+                        else if (title == "artists")
+                            return trackList
+                        else if (title == "playlists")
+                            return albumList
+                    }
+
+                    Component.onCompleted: {
+                        item.model = item_data;
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: albumList
+
+        ListView {
+            id: albumListView
+            width: itemFlickable.width-60
+            height: 260
+            orientation: ListView.Horizontal
+            spacing: 30
+            clip: true
+
+            delegate: albumThumbnail
+        }
+    }
+
+    Component {
+        id: albumThumbnail
+
+        Item {
+            width: childrenRect.width
+            height: childrenRect.height
+
+            Image {
+                id: albumImage
+                source: item_image
+                width: 160
+                height: 160
+                fillMode: Image.PreserveAspectCrop
+                asynchronous: true
+            }
+
+            Text {
+                id: albumTitleText
+                text: item_title
+                elide: Text.ElideRight
+                width: albumImage.width
+                wrapMode: Text.NoWrap
+                color: colorText
+                anchors.left: parent.left
+                anchors.top: albumImage.bottom
+                anchors.topMargin: 20
+                font.family: "Open Sans"
+                font.pixelSize: 25
+                lineHeight: 1
+            }
+
+            Text {
+                id: albumSubTitleText
+                text: item_subtitle
+                elide: Text.ElideRight
+                width: albumImage.width
+                wrapMode: Text.NoWrap
+                color: colorText
+                opacity: 0.6
+                anchors.left: parent.left
+                anchors.top: albumTitleText.bottom
+                anchors.topMargin: 5
+                font.family: "Open Sans"
+                font.pixelSize: 20
+                lineHeight: 1
+            }
+        }
+    }
+
+    Component {
+        id: trackList
+
+        ListView {
+            id: trackListView
+            width: itemFlickable.width-60
+            height: childrenRect.height
+            spacing: 20
+            interactive: false
+
+            delegate: trackThumbnail
+        }
+    }
+
+    Component {
+        id: trackThumbnail
+
+        Item {
+            width: childrenRect.width
+            height: childrenRect.height
+
+            Image {
+                id: albumImage
+                source: item_image
+                width: 80
+                height: 80
+                fillMode: Image.PreserveAspectCrop
+                asynchronous: true
+            }
+
+            Text {
+                id: albumTitleText
+                text: item_title
+                elide: Text.ElideRight
+                width: itemFlickable.width-60-albumImage.width-20
+                wrapMode: Text.NoWrap
+                color: colorText
+                anchors.left: albumImage.right
+                anchors.leftMargin: 20
+                anchors.top: albumImage.top
+                anchors.topMargin: item_subtitle == "" ? 28 : 14
+                font.family: "Open Sans"
+                font.pixelSize: 25
+                lineHeight: 1
+            }
+
+            Text {
+                id: albumSubTitleText
+                text: item_subtitle
+                elide: Text.ElideRight
+                width: itemFlickable.width-60-albumImage.width-20
+                wrapMode: Text.NoWrap
+                color: colorText
+                opacity: 0.6
+                anchors.left: albumTitleText.left
+                anchors.top: albumTitleText.bottom
+                anchors.topMargin: 5
+                font.family: "Open Sans"
+                font.pixelSize: 20
+                lineHeight: 1
+            }
+        }
     }
 }

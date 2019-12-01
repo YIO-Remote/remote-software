@@ -22,8 +22,7 @@ public:
     Q_PROPERTY  (QString                    mediaImage      READ    mediaImage      NOTIFY      mediaImageChanged)
     Q_PROPERTY  (QString                    source          READ    source          NOTIFY      sourceChanged)
     Q_PROPERTY  (QVariant                   browseResult    READ    browseResult    NOTIFY      browseResultChanged)
-
-    Q_PROPERTY  (QVariant                   searchResult    READ    searchResult    NOTIFY      searchResultChanged)
+    Q_PROPERTY  (QObject*                   model           READ    model           NOTIFY      modelChanged)
 
     int                         volume() override       { return m_volume; }
     bool                        muted() override        { return m_muted; }
@@ -35,7 +34,7 @@ public:
 
     // extension for "generic" media browsing
     QVariant                    browseResult() override { return m_browseResult; }
-    QVariant                    searchResult() override { return m_searchResult; }
+    QObject*                    model() { return m_model; }
 
     // update an entity's attributes
     Q_INVOKABLE void            play();
@@ -52,6 +51,8 @@ public:
     Q_INVOKABLE void            playMedia               (const QString& command, const QString& itemKey); // command PLAY, QUEUE
     Q_INVOKABLE void            search                  (const QString& searchText, const QString& itemKey); // Search
     Q_INVOKABLE void            search                  (const QString& searchText);
+
+    void                        setModel(QObject* model) override;
 
     bool                        isOn() override         { return m_state == MediaPlayerDef::ON || m_state == MediaPlayerDef::PLAYING; }
     bool                        updateAttrByIndex       (int attrIndex, const QVariant& value) override;
@@ -70,7 +71,7 @@ signals:
     void mediaImageChanged();
     void sourceChanged();
     void browseResultChanged();
-    void searchResultChanged();
+    void modelChanged();
 
 public:
     static QString Type;
@@ -96,11 +97,11 @@ private:
     QString                     m_mediaArtist;
     QString                     m_source;
 
-    QVariant                    m_searchResult;
+    QObject*                    m_model = nullptr;
     /*                         {
+     *                         albums:          array of {id, title, subtitle, image_url, array of commands}
      *                         tracks:          array of {id, title, subtitle, image_url, array of commands}
      *                         artists:         array of {id, title, subtitle, image_url, array of commands}
-     *                         albums:          array of {id, title, subtitle, image_url, array of commands}
      *                         playlists:       array of {id, title, subtitle, image_url, array of commands}
      *                         }
     */
