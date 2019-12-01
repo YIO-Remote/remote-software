@@ -93,19 +93,6 @@ Item {
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Launcher { id: standbyLauncher }
-    Launcher { id: wifiLauncher }
-
-    function wifiHandler(state) {
-        var cmd;
-
-        if (state === "on") {
-            cmd = "systemctl start wpa_supplicant@wlan0.service"
-            wifiLauncher.launch(cmd);
-        } else {
-            cmd = "systemctl stop wpa_supplicant@wlan0.service"
-            wifiLauncher.launch(cmd);
-        }
-    }
 
     function getCurrentTime(){
         const timeSizeReduction = 1570881231088;
@@ -137,7 +124,7 @@ Item {
                 break;
 
             case "wifi_off":
-                wifiHandler("on")
+                wifi.on()
 
                 // turn off standby
                 if (displayControl.setmode("standbyoff")) {
@@ -207,6 +194,7 @@ Item {
 
     onModeChanged: {
         console.debug("Mode changed: " + mode);
+        // TODO create a device class for power saving instead of launching hard coded shell scripts from QML
         // if mode is on change processor to ondemand
         if (mode === "on") {
             standbyLauncher.launch("/usr/bin/yio-remote/ondemand.sh");
@@ -284,14 +272,14 @@ Item {
                 api.stop();
 
                 // turn off wifi
-                wifiHandler("off")
+                wifi.off()
 
                 mode = "wifi_off";
             }
 
             // mode = shutdown
             if (time-standbyBaseTime > shutdownTime * 1000 && shutdownTime != 0 && (mode == "standby" || mode =="wifi_off") && battery_averagepower <= 0) {
-                logger.write("TIMER SHUTDOWN initated");
+                logger.write("TIMER SHUTDOWN initiated");
                 logger.write("time variable: " + time);
                 logger.write("standbyBaseTime variable: " + standbyBaseTime);
                 logger.write("shutdownTime variable:" + shutdownTime);
