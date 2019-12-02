@@ -38,12 +38,12 @@ class WifiNetwork {
     Q_PROPERTY (int             rssi           READ rssi           CONSTANT)
     Q_PROPERTY (SignalStrength  signalStrength READ signalStrength CONSTANT)
     Q_PROPERTY (bool            encrypted      READ isEncrypted    CONSTANT)
-    Q_PROPERTY (Authentication  authentication READ authentication CONSTANT)
+    Q_PROPERTY (Security        security       READ security CONSTANT)
     Q_PROPERTY (bool            wpsAvailable   READ isWpsAvailable CONSTANT)
     Q_PROPERTY (bool            connected      READ isConnected    CONSTANT)
 
 public:
-    enum Authentication {
+    enum Security {
         NoneOpen,
         NoneWep,
         NoneWepShared,
@@ -53,7 +53,7 @@ public:
         WPA2_PSK,
         WPA2_EAP
     };
-    Q_ENUM (Authentication)
+    Q_ENUM (Security)
 
     enum SignalStrength {
         None,
@@ -66,13 +66,13 @@ public:
 
     WifiNetwork() {}
     WifiNetwork(QString name, QString bssid, int rssi,
-                Authentication auth = WPA_PSK,
+                Security security = WPA_PSK,
                 bool wpsAvailable = false,
                 bool connected = false)
         : m_name(name)
         , m_bssid(bssid)
         , m_rssi(rssi)
-        , m_authentication(auth)
+        , m_security(security)
         , m_wpsAvailable(wpsAvailable)
         , m_connected(connected) {}
 
@@ -94,9 +94,9 @@ public:
     /**
      * @brief isEncrypted Convenience method for the client if the network is open or needs authentication.
      */
-    bool    isEncrypted() const { return m_authentication != NoneOpen; } // what about NoneWep?
+    bool    isEncrypted() const { return m_security != NoneOpen; } // what about NoneWep?
 
-    Authentication authentication() const { return m_authentication; }
+    Security security() const { return m_security; }
 
     bool    isWpsAvailable() const { return m_wpsAvailable; }
 
@@ -120,7 +120,7 @@ private:
     QString m_name;
     QString m_bssid;
     int m_rssi = -100;
-    Authentication m_authentication = WPA_PSK;
+    Security m_security = WPA_PSK;
     bool m_wpsAvailable = false;
     bool m_connected = false;
 };

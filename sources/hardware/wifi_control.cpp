@@ -79,6 +79,30 @@ WifiControl& WifiControl::instance()
     return singleton;
 }
 
+bool WifiControl::validateAuthentication(WifiNetwork::Security security, const QString &preSharedKey)
+{
+    switch (security) {
+    case WifiNetwork::Security::IEEE8021X :
+    case WifiNetwork::Security::WPA_EAP :
+    case WifiNetwork::Security::WPA2_EAP :
+        qWarning(CLASS_LC) << "Authentication mode not supported:" << security;
+        return false;
+    default:
+        break;
+    }
+
+    if (security == WifiNetwork::Security::WPA_PSK
+            || security == WifiNetwork::Security::WPA2_PSK) {
+        if (preSharedKey.length() < 8 || preSharedKey.length() > 64) {
+            qWarning(CLASS_LC) << "WPA Pre-Shared Key Error:"
+                << "WPA-PSK requires a passphrase of 8 to 63 characters or 64 hex digit PSK";
+            return false;
+        }
+    }
+
+    return true;
+}
+
 /**
  * Default implementation
  */

@@ -76,7 +76,7 @@ public:
     /**
      * Join the WiFi network with the given ssid
      */
-    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password) = 0;
+    Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) = 0;
 
     /**
      * Checks if the WiFi connection is established
@@ -147,6 +147,11 @@ public slots:
 
 protected:
     WifiControl(QObject* parent = nullptr);
+
+    /**
+     * @brief validateAuthentication Validates the authentication mode and pre shared key
+     */
+    bool validateAuthentication(WifiNetwork::Security security, const QString &preSharedKey);
 
     virtual void setConnected(bool connected);
 

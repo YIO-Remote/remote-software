@@ -37,7 +37,7 @@ public:
     bool init() override;
 
     Q_INVOKABLE bool reset() override;
-    Q_INVOKABLE bool join(const QString &ssid, const QString &password) override;
+    Q_INVOKABLE bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
     Q_INVOKABLE bool isConnected() override;
     Q_INVOKABLE void startNetworkScan() override;
 

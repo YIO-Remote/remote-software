@@ -66,7 +66,7 @@ public:
     bool init() override;
 
     Q_INVOKABLE bool reset() override;
-    Q_INVOKABLE bool join(const QString &ssid, const QString &password) override;
+    Q_INVOKABLE bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
     Q_INVOKABLE void startNetworkScan() override;
 
     /**
@@ -161,12 +161,12 @@ private:
     bool addBSS(int networkId);
 
     /**
-     * @brief getAuthenticationFromFlags Parse authentication flags
-     * @param flags authentication flags
+     * @brief getSecurityFromFlags Parse security flags
+     * @param flags security flags
      * @param networkId optional network identification to retrieve more information if required
-     * @return Authentication enumeration
+     * @return Security enumeration
      */
-    WifiNetwork::Authentication getAuthenticationFromFlags(const QString& flags, int networkId = -1);
+    WifiNetwork::Security getSecurityFromFlags(const QString& flags, int networkId = -1);
 
     /**
      * @brief controlRequest Issue a command to wpa_supplicant without returning the response message

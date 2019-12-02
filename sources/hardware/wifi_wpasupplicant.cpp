@@ -74,7 +74,7 @@ QDebug operator<<(QDebug debug, const WifiNetwork& wn)
                     << "signal: " << wn.rssi() << ", "
                     << "signalStrength: " << wn.signalStrength() << ", "
                     << "encrypted: " << wn.isEncrypted() << ", "
-                    << "authentication: " << wn.authentication() << ", "
+                    << "security: " << wn.security() << ", "
                     << "wpsAvailable: " << wn.isWpsAvailable() << ", "
                     << "connected: " << wn.isConnected()
                     << ")";
@@ -166,10 +166,37 @@ bool WifiWpaSupplicant::reset()
     return true;
 }
 
-bool WifiWpaSupplicant::join(const QString &ssid, const QString &password)
+bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security, const QString &password)
 {
-    // TODO test me!
-    // ALso see: https://github.com/loh-tar/wpa-cute/blob/master/src/networkconfig.cpp#L198
+    // For more details about network creation & security option see:
+    // https://github.com/loh-tar/wpa-cute/blob/master/src/networkconfig.cpp#L198
+
+    if (!validateAuthentication(security, password)) {
+        return false;
+    }
+
+    QString keyMgmnt = "NONE";
+    QString authAlg;
+
+    switch (security) {
+    case WifiNetwork::Security::NoneOpen :
+        break;
+    // TODO either test NoneWep & NoneWepShared or remove them. Do we even need to distinguish them?
+    case WifiNetwork::Security::NoneWep  :
+        break;
+    case WifiNetwork::Security::NoneWepShared :
+        authAlg = "SHARED";
+        break;
+    case WifiNetwork::Security::WPA_PSK  :
+        keyMgmnt = "WPA-PSK";
+        break;
+    case WifiNetwork::Security::WPA2_PSK :
+        keyMgmnt = "WPA2_PSK";
+        break;
+    default :
+        qWarning(CLASS_LC) << "Authentication mode not (yet) implemented:" << security;
+        return false;
+    }
 
     size_t len(2048);
     char buf[len];
@@ -182,19 +209,24 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password)
     }
     QString networkId = QString(buf);
 
-    // KISS: WPA-PSK is good enough to start with, other options can always be implemented later
     if (!setNetworkParam(networkId, "ssid", ssid, true)) {
         return false;
     }
-    if (!setNetworkParam(networkId, "key_mgmt", "WPA-PSK")) {
-        return false;
+
+    if (!authAlg.isEmpty()) {
+        if (!setNetworkParam(id, "auth_alg", authAlg)) {
+            return false;
+        }
     }
-    if (!setNetworkParam(networkId, "psk", password, password.length() != 64)) {
+
+    if (!setNetworkParam(networkId, "key_mgmt", keyMgmnt)) {
         return false;
     }
 
-    if (!controlRequest("SAVE_CONFIG", buf, len)) {
-        return false;
+    if (!password.isEmpty()) {
+        if (!setNetworkParam(networkId, "psk", password, password.length() != 64)) {
+            return false;
+        }
     }
 
     QString cmd = "ENABLE_NETWORK %1";
@@ -202,6 +234,11 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password)
         return false;
     }
 
+    if (!controlRequest("SAVE_CONFIG", buf, len)) {
+        return false;
+    }
+
+    // not sure if required, but should make sure the connection is really established
     controlRequest("REASSOCIATE", buf, len);
 
     return true;
@@ -277,7 +314,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
     QString response = QString::fromLocal8Bit(buf);
     qCDebug(CLASS_LC()) << cmd << "response:" << response;
 
-    if (response.startsWith("FAIL\n")) {
+    if (response.startsWith("FAIL")) {
         return false;
     }
 
@@ -463,8 +500,8 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
         }
     }
 
-    WifiNetwork::Authentication auth = getAuthenticationFromFlags(flags, networkId);
-    WifiNetwork network {ssid, bssid, level, auth, flags.contains("[WPS")};
+    WifiNetwork::Security security = getSecurityFromFlags(flags, networkId);
+    WifiNetwork network {ssid, bssid, level, security, flags.contains("[WPS")};
     qCDebug(CLASS_LC) << "Network found:" << network;
 
     m_scanResults.append(network);
@@ -472,11 +509,11 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
     return true;
 }
 
-WifiNetwork::Authentication WifiWpaSupplicant::getAuthenticationFromFlags(const QString& flags, int networkId)
+WifiNetwork::Security WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int networkId)
 {
-    // Partial implementation of authentication flags, e.g. no support for EAP
+    // Partial implementation of security flags, e.g. no support for EAP
     // Sufficiant for now...
-    WifiNetwork::Authentication auth;
+    WifiNetwork::Security auth;
     if (flags.indexOf("[WPA2-EAP") >= 0) {
         auth = WifiNetwork::WPA2_EAP;
     } else if (flags.indexOf("[WPA-EAP") >= 0) {

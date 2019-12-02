@@ -68,8 +68,12 @@ void WifiShellScripts::off()
 }
 
 
-bool WifiShellScripts::join(const QString &ssid, const QString &password)
+bool WifiShellScripts::join(const QString &ssid, WifiNetwork::Security authentication, const QString &password)
 {
+    if (!validateAuthentication(authentication, password)) {
+        return false;
+    }
+
     QStringList args;
     args.append(ssid);
     args.append(password);
