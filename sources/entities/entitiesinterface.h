@@ -9,25 +9,20 @@ class EntitiesInterface
 public:
     virtual ~EntitiesInterface  ();
 
-    virtual QList<QObject *>    list        () = 0;
-
     // get entites by type
-    virtual QList<QObject *>    getByType   (const QString& type) = 0;
+    virtual QList<EntityInterface *>    getByType           (const QString& type) = 0;
 
     // get entites by area
-    virtual QList<QObject *>    getByArea   (const QString& area) = 0;
+    virtual QList<EntityInterface *>    getByArea           (const QString& area) = 0;
 
     // get entities by integration
-    virtual QList<QObject *>    getByIntegration (const QString& integration) = 0;
-
-    // get entity by entity_id
-    virtual QObject*            get         (const QString& entity_id) = 0;
+    virtual QList<EntityInterface *>    getByIntegration    (const QString& integration) = 0;
 
     // update an entity's attributes
-    virtual void                update      (const QString& entity_id, const QVariantMap& attributes) = 0;
+    virtual void                        update              (const QString& entity_id, const QVariantMap& attributes) = 0;
 
     // get entity interface by entity_id
-    virtual EntityInterface*    getEntityInterface(const QString& entity_id) = 0;
+    virtual EntityInterface*            getEntityInterface  (const QString& entity_id) = 0;
 };
 
 QT_BEGIN_NAMESPACE
