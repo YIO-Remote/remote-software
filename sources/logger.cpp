@@ -1,5 +1,6 @@
-#include "logger.h"
 #include <iostream>
+#include <QDir>
+#include "logger.h"
 #include "config.h"
 
 Logger*     Logger::s_instance      = nullptr;
@@ -10,16 +11,18 @@ Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSou
     m_debug(debug),
     m_showSource(showSource),
     m_logCat("yio"),
-    m_directory(path),
+    m_directory(path + "/log"),
     m_file(nullptr)
 {
     s_instance = this;
 
+    if (!QDir(m_directory).exists())
+        QDir().mkdir(m_directory);
+
     qInstallMessageHandler(s_messageOutput);
     Config* config = Config::getInstance ();
     if (config != nullptr) {
-        const QVariantMap& map = config->config();
-        QVariantMap settings = map["settings"].toMap();
+        QVariantMap settings = config->getSettings();
         QString log = settings["log"].toString().toLower();
         if (!log.isEmpty()) {
             if (log == "debug")
