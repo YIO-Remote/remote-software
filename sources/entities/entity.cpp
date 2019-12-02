@@ -22,21 +22,11 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
     m_enumAttr(nullptr),
     m_specificInterface(nullptr)
 {
-    setObjectName(config.value("entity_id").toString());
+    QString entityId = config.value("entity_id").toString();
+    setObjectName(entityId);
 
-    QVariantMap c = Config::getInstance()->config();
-    QString p = Config::getInstance()->profile();
-
-    QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
-
-    m_favorite = false;
-
-    for (int i = 0; i < f.length(); i++)
-    {
-        if (f[i].toString() == config.value("entity_id").toString()) {
-            m_favorite = true;
-        }
-    }
+    QStringList f = Config::getInstance()->getProfileFavorites();
+    m_favorite = f.contains(entityId);
 }
 
 Entity::~Entity()
