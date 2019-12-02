@@ -6,7 +6,7 @@
 Logger*     Logger::s_instance      = nullptr;
 QStringList Logger::s_msgTypeString = { "DEBUG", "WARN ", "CRIT ", "FATAL", "INFO " };      // parallel to QMsgType
 
-Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSource, QObject *parent) :
+Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSource, int purgeHours, QObject *parent) :
     QObject(parent),
     m_debug(debug),
     m_showSource(showSource),
@@ -32,9 +32,9 @@ Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSou
             else if (log == "warning")
                 logLevel = QtWarningMsg;
         }
-     }
-
+    }
     setLogLevel(logLevel);
+    purgeFiles(purgeHours);
 }
 Logger::~Logger() {
     if (m_file != nullptr) {
@@ -110,6 +110,26 @@ void Logger::writeWarning(const QString& msg)
 {
     if (m_logCat.isEnabled(QtWarningMsg))
         output (s_msgTypeString[QtWarningMsg] + ": qml " + msg);
+}
+void Logger::purgeFiles (int purgeHours)
+{
+    QDir        dir(m_directory);
+    QDateTime   dt = QDateTime::currentDateTime();
+    dt = dt.addSecs( - purgeHours * 3600);
+    QStringList fileNames = dir.entryList(QStringList("*.log"), QDir::Files);
+    for (QStringList::iterator i = fileNames.begin(); i != fileNames.end(); ++i) {
+        try {
+            int idx = i->lastIndexOf('.');
+            if (idx > 0) {
+                QDateTime filedt = QDateTime::fromString(i->left(idx), "yyyy-MM-dd-HH");
+                if (filedt < dt) {
+                    dir.remove(*i);
+                }
+            }
+        }
+        catch (...) {
+        }
+    }
 }
 void Logger::writeFile(const QString& msg)
 {
