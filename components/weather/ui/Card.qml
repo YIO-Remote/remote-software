@@ -10,16 +10,6 @@ Rectangle {
     height: parent.height
     color: colorDark
 
-    property var    forecast:       obj.forecast
-
-    onForecastChanged: {
-        listItems.clear();
-        for (var i = 0; i < forecast.length; i++) {
-            var item = forecast[i];
-            listItems.append(item);
-        }
-    }
-
     /////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS (with long press detection)
     /////////////////////////////////////////////////////////////////////////////////////
@@ -68,21 +58,6 @@ Rectangle {
     /////////////////////////////////////////////////////////////////////////////////////
     // Items List
     /////////////////////////////////////////////////////////////////////////////////////
-    ListModel {
-        id: listItems
-        /*
-        ListElement {
-            date: "today"
-            description: "description"
-            imageurl: "imageurl"
-            temp: "temp"
-            rain: "rain"
-            snow: "snow"
-            wind: "wind"
-            humidity: "humidity"
-        }
-        */
-    }
     Component {
         id: listDelegate
         Item {
@@ -215,7 +190,7 @@ Rectangle {
             margins: 10
         }
         clip: true
-        model: listItems
+        model: obj.forecast
         delegate: listDelegate
     }
 

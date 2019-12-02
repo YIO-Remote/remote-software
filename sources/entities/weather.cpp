@@ -1,6 +1,10 @@
 #include <QQmlApplicationEngine>
 #include "weather.h"
 
+WeatherInterface::~WeatherInterface()
+{
+}
+
 QString     Weather::Type = "weather";
 
 bool Weather::updateAttrByIndex (int attrIndex, const QVariant& value)
@@ -13,6 +17,7 @@ bool Weather::updateAttrByIndex (int attrIndex, const QVariant& value)
             else
                 chg = setState(value.toInt());
             break;
+        /*
         case WeatherDef::CURRENT:
             m_current = value.toMap();
             chg = true;
@@ -23,12 +28,16 @@ bool Weather::updateAttrByIndex (int attrIndex, const QVariant& value)
             chg = true;
             emit forecastChanged();
             break;
+        */
+        default:
+            break;
     }
     return chg;
 }
 
 Weather::Weather(const QVariantMap& config, QObject* integrationObj, QObject *parent):
-    Entity (Type, config, integrationObj, parent)
+    Entity (Type, config, integrationObj, parent),
+    m_current(parent)
 {
     static QMetaEnum metaEnumAttr;
     static QMetaEnum metaEnumState;
@@ -41,6 +50,17 @@ Weather::Weather(const QVariantMap& config, QObject* integrationObj, QObject *pa
     }
     m_enumAttr = &metaEnumAttr;
     m_enumState = &metaEnumState;
-    m_specificInterface = nullptr;
+    m_specificInterface = qobject_cast<WeatherInterface*>(this);
+}
+void Weather::setCurrent  (const WeatherItem &current)
+{
+    m_current.setDate(current.date());
+    m_current.setDescription(current.description());
+    m_current.setImageurl(current.imageurl());
+    m_current.setTemp(current.temp());
+    m_current.setRain(current.rain());
+    m_current.setSnow(current.snow());
+    m_current.setWind(current.wind());
+    m_current.setHumidity(current.humidity());
 }
 
