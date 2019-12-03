@@ -34,12 +34,13 @@ public:
     explicit WifiMock(QObject *parent = nullptr);
     virtual ~WifiMock() override;
 
-    bool init() override;
+    virtual bool init() override;
 
-    Q_INVOKABLE bool reset() override;
-    Q_INVOKABLE bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
-    Q_INVOKABLE bool isConnected() override;
-    Q_INVOKABLE void startNetworkScan() override;
+    Q_INVOKABLE virtual bool reset() override;
+    Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
+    Q_INVOKABLE virtual bool isConnected() override;
+    Q_INVOKABLE virtual void startNetworkScan() override;
+    Q_INVOKABLE virtual bool startAccessPoint() override;
 
     QString macAddress() const override;
     QString ssid() const override;
@@ -47,11 +48,11 @@ public:
     QString ipAddress() const override;
 
 public slots:
-    void on() override;
-    void off() override;
+    virtual void on() override;
+    virtual void off() override;
 
 private:
-    void timerEvent(QTimerEvent *event) override;
+    virtual void timerEvent(QTimerEvent *event) override;
 
 };
 

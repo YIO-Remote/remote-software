@@ -67,27 +67,31 @@ public:
     virtual bool init() = 0;
 
     /**
-     * Resets WiFi connection settings.
-     * Active connection is disconnected and removed.
-     * After disconnection an access point is started for the WiFi connection wizard.
+     * @brief Resets all WiFi connection settings.
+     * @details An active connection is disconnected and all known networks are removed.
      */
     Q_INVOKABLE virtual bool reset() = 0;
 
     /**
-     * Join the WiFi network with the given ssid
+     * @brief Joins the WiFi network with the given ssid. The network will be added to the known networks.
      */
     Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) = 0;
 
     /**
-     * Checks if the WiFi connection is established
+     * @brief Checks if the WiFi connection is established
      */
     Q_INVOKABLE virtual bool isConnected();
 
     /**
-     * Starts a new scan for available WiFi networks.
-     * Emits scanStatusChanged and finally networksFound if successful.
+     * @brief Starts a new scan for available WiFi networks.
+     *        Emits scanStatusChanged and finally networksFound if successful.
      */
     Q_INVOKABLE virtual void startNetworkScan() = 0;
+
+    /**
+     * @brief Starts an access point for the WiFi connection wizard.
+     */
+    Q_INVOKABLE virtual bool startAccessPoint() = 0;
 
     virtual QString macAddress() const;
     virtual QString ssid() const;
@@ -124,12 +128,12 @@ signals:
 
 public slots:
     /**
-     * Enable WiFi device
+     * @brief Enable WiFi device
      */
     virtual void on() = 0;
 
     /**
-     * Disable WiFi device
+     * @brief Disable WiFi device
      */
     virtual void off() = 0;
 
@@ -156,7 +160,7 @@ protected:
     virtual void setConnected(bool connected);
 
     /**
-     * Sets scan status and emits scanStatusChanged signal
+     * @brief Sets scan status and emits scanStatusChanged signal
      */
     void setScanStatus(ScanStatus stat);
 

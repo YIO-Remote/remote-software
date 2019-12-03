@@ -63,11 +63,12 @@ public:
      */
     virtual ~WifiWpaSupplicant() override;
 
-    bool init() override;
+    virtual bool init() override;
 
-    Q_INVOKABLE bool reset() override;
-    Q_INVOKABLE bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
-    Q_INVOKABLE void startNetworkScan() override;
+    Q_INVOKABLE virtual bool reset() override;
+    Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
+    Q_INVOKABLE virtual void startNetworkScan() override;
+    Q_INVOKABLE virtual bool startAccessPoint() override;
 
     /**
       * TESTING ONLY! Proof of concept implementation for interactive authentication.
@@ -115,6 +116,8 @@ private:
      * @return false if parameter could not be set
      */
     bool setNetworkParam(const QString& networkId, const QString& parm, const QString& val, bool quote = false);
+
+    bool writeWepKey(const QString& networkId, const QString& value, int keyId);
 
     /**
      * Connect to wpa control interface socket
@@ -168,6 +171,8 @@ private:
      */
     WifiNetwork::Security getSecurityFromFlags(const QString& flags, int networkId = -1);
 
+    QList<WifiNetwork>& getConfiguredNetworks();
+
     /**
      * @brief controlRequest Issue a command to wpa_supplicant without returning the response message
      * @param cmd wpa_supplicant command
@@ -195,7 +200,7 @@ private:
      */
     bool checkConnection();
 
-    void timerEvent(QTimerEvent *event) override;
+    virtual void timerEvent(QTimerEvent *event) override;
 
     /**
      * Handle for lower layer wpa_ctrl

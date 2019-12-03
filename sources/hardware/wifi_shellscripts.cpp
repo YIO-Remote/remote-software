@@ -83,6 +83,7 @@ bool WifiShellScripts::join(const QString &ssid, WifiNetwork::Security authentic
 
 bool WifiShellScripts::reset()
 {
+    // TODO this also starts the AP! Only reset wpa_supplicant
     launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
     return true;
 }
@@ -104,7 +105,15 @@ void WifiShellScripts::startNetworkScan()
     emit networksFound(m_scanResults);
 }
 
-WifiNetwork WifiShellScripts::lineToNetwork(const QStringRef& line) {
+bool WifiShellScripts::startAccessPoint()
+{
+    qCDebug(CLASS_LC) << "Resettin WiFi and starting access point...";
+
+    launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
+    return true;
+}
+
+WifiNetwork WifiShellScripts::lineToNetwork(int index, const QStringRef& line) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
     QVector<QStringRef> list = line.split(",");
 
@@ -112,7 +121,7 @@ WifiNetwork WifiShellScripts::lineToNetwork(const QStringRef& line) {
         auto name = list.at(1).toString();
         auto signal = list.at(0).toInt();
         qCDebug(CLASS_LC) << "network:" << name << signal;
-        WifiNetwork nw { name, "", signal };
+        WifiNetwork nw { QVariant(index).toString(), name, "", signal };
         return nw;
     } else {
         throw std::runtime_error("parse error");
@@ -124,7 +133,7 @@ QList<WifiNetwork> WifiShellScripts::parseScanresult(const QString& buffer) {
     QList<WifiNetwork> cont;
     for (int i = 0; i < lines.length() - 1; i++) {
         try {
-            cont.append(lineToNetwork(lines[i]));
+            cont.append(lineToNetwork(i, lines[i]));
         } catch (std::exception& e) {
             setScanStatus(ScanFailed);
             qCCritical(CLASS_LC) << e.what() << lines[i];

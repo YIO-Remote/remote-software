@@ -109,12 +109,18 @@ void WifiMock::startNetworkScan()
     setScanStatus(Scanning);
 
     m_scanResults.clear();
-    m_scanResults.append({ "Mock Net", "34:31:c4:e1:d3:97", -77, WifiNetwork::Security::WPA_PSK });
-    m_scanResults.append({ "Guest Network", "33:31:44:55:66:77", -66, WifiNetwork::Security::NoneOpen });
+    m_scanResults.append({ "0", "Mock Net", "34:31:c4:e1:d3:97", -77, WifiNetwork::Security::WPA_PSK });
+    m_scanResults.append({ "1", "Guest Network", "33:31:44:55:66:77", -66, WifiNetwork::Security::NoneOpen });
 
     setScanStatus(ScanOk);
 
     emit networksFound(m_scanResults);
+}
+
+bool WifiMock::startAccessPoint()
+{
+    qCDebug(CLASS_LC) << "startAccessPoint";
+    return false;
 }
 
 void WifiMock::timerEvent(QTimerEvent *event)

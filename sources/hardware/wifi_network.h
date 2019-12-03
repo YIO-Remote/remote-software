@@ -33,17 +33,19 @@
  */
 class WifiNetwork {
     Q_GADGET
+    Q_PROPERTY (QString         id             READ id             CONSTANT)
     Q_PROPERTY (QString         name           READ name           CONSTANT)
     Q_PROPERTY (QString         bssid          READ bssid          CONSTANT)
     Q_PROPERTY (int             rssi           READ rssi           CONSTANT)
     Q_PROPERTY (SignalStrength  signalStrength READ signalStrength CONSTANT)
     Q_PROPERTY (bool            encrypted      READ isEncrypted    CONSTANT)
-    Q_PROPERTY (Security        security       READ security CONSTANT)
+    Q_PROPERTY (Security        security       READ security       CONSTANT)
     Q_PROPERTY (bool            wpsAvailable   READ isWpsAvailable CONSTANT)
     Q_PROPERTY (bool            connected      READ isConnected    CONSTANT)
 
 public:
     enum Security {
+        Default,
         NoneOpen,
         NoneWep,
         NoneWepShared,
@@ -65,16 +67,22 @@ public:
     Q_ENUM (SignalStrength)
 
     WifiNetwork() {}
-    WifiNetwork(QString name, QString bssid, int rssi,
+    WifiNetwork(QString id, QString name, QString bssid, int rssi,
                 Security security = WPA_PSK,
                 bool wpsAvailable = false,
                 bool connected = false)
-        : m_name(name)
+        : m_id(id)
+        , m_name(name)
         , m_bssid(bssid)
         , m_rssi(rssi)
         , m_security(security)
         , m_wpsAvailable(wpsAvailable)
         , m_connected(connected) {}
+
+    /**
+     * @brief id Network identification
+     */
+    QString id() const { return m_id; }
 
     /**
      * @brief name Service set ID (SSID) of the network.
@@ -117,6 +125,7 @@ public:
     }
 
 private:
+    QString m_id;
     QString m_name;
     QString m_bssid;
     int m_rssi = -100;

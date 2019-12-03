@@ -91,7 +91,8 @@ bool WifiControl::validateAuthentication(WifiNetwork::Security security, const Q
         break;
     }
 
-    if (security == WifiNetwork::Security::WPA_PSK
+    if (security == WifiNetwork::Security::Default
+            || security == WifiNetwork::Security::WPA_PSK
             || security == WifiNetwork::Security::WPA2_PSK) {
         if (preSharedKey.length() < 8 || preSharedKey.length() > 64) {
             qWarning(CLASS_LC) << "WPA Pre-Shared Key Error:"

@@ -35,22 +35,24 @@ class WifiShellScripts : public WifiControl
 public:
     explicit WifiShellScripts(QObject *parent = nullptr);
 
-    bool init() override;
+    virtual bool init() override;
 
-    Q_INVOKABLE bool reset() override;
-    Q_INVOKABLE bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
-    Q_INVOKABLE bool isConnected() override;
-    Q_INVOKABLE void startNetworkScan() override;
+    Q_INVOKABLE virtual bool reset() override;
+    Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
+    Q_INVOKABLE virtual bool isConnected() override;
+    Q_INVOKABLE virtual void startNetworkScan() override;
+    Q_INVOKABLE virtual bool startAccessPoint() override;
 
 private:
-    void timerEvent(QTimerEvent *event) override;
+    virtual void timerEvent(QTimerEvent *event) override;
 
     /**
      * Tokenize a single line of scan results and interpret fields as WifiNetwork
-     * @param line refernce to string in scan_results
+     * @param index line number
+     * @param line reference to string in scan results
      * @return WifiNetwork data object
      */
-    WifiNetwork lineToNetwork(const QStringRef& line);
+    WifiNetwork lineToNetwork(int index, const QStringRef& line);
 
     /**
      * Tokenize a buffer returned by the shell script into a list of WifiNetworks
