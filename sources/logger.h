@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE void    writeDebug     (const QString& msg);
     Q_INVOKABLE void    writeInfo      (const QString& msg);
     Q_INVOKABLE void    writeWarning   (const QString& msg);
+    Q_INVOKABLE void    purgeFiles     (int purgeHours);
 
     // path :       directory for log file, if empty no log file
     // logLevel :   default log level, will be overwritten by config setting.log
@@ -37,7 +38,6 @@ public:
     { return s_instance; }
 
 private:
-    void                purgeFiles      (int purgeHours);
     void                output          (const QString& msg);
     void                writeFile       (const QString& msg);
     void                messageOutput   (QtMsgType type,  const QMessageLogContext &context, const QString& msg);
