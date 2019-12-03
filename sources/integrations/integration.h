@@ -25,6 +25,11 @@ public:
 //    Q_PROPERTY(QString      type            READ type           WRITE setType)
     Q_PROPERTY(QString      friendlyName    READ friendlyName   WRITE setFriendlyName)
 
+    Q_INVOKABLE virtual void        connect()       = 0;            // Must be implemented by integration
+    Q_INVOKABLE virtual void        disconnect()    = 0;            // Must be implemented by integration
+    Q_INVOKABLE virtual void        enterStandby()  {}              // Can be overriden by integration
+    Q_INVOKABLE virtual void        leaveStandby()  {}              // Can be overriden by integration
+
     ~Integration() {}
 
     // get the if the state
