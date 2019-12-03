@@ -36,10 +36,13 @@ public:
 private:
     bool eventFilter(QObject *obj, QEvent *event)
     {
+        Q_UNUSED(obj)
         switch (event->type()) {
         case QEvent::TouchBegin:
         case QEvent::MouseButtonPress:
             emit detectedChanged();
+            break;
+        default:
             break;
         }
         return QQuickItem::eventFilter(this, event);
