@@ -58,6 +58,13 @@ void WifiMock::off()
 bool WifiMock::reset()
 {
     qCDebug(CLASS_LC) << "reset";
+    // just make sure all timers are running
+    return init();
+}
+
+bool WifiMock::clearConfiguredNetworks()
+{
+    qCDebug(CLASS_LC) << "clearConfiguredNetworks";
     return true;
 }
 

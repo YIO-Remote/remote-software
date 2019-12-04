@@ -64,13 +64,24 @@ public:
     };
     Q_ENUM(ScanStatus)
 
+    /**
+     * @brief init Initializes the driver.
+     * @details Intended to be a one-time initialization after driver creation.
+     * @return true if initialization succeeded
+     */
     virtual bool init() = 0;
 
     /**
-     * @brief Resets all WiFi connection settings.
-     * @details An active connection is disconnected and all known networks are removed.
+     * @brief reset Resets and re-initializes the driver. An active WiFi connection will be disconnected and reassociated.
+     * @return true if reassociation succeeded
      */
     Q_INVOKABLE virtual bool reset() = 0;
+
+    /**
+     * @brief Resets all WiFi connection settings.
+     * @details An active connection is disconnected, all known networks are removed and the empty network configuration is saved.
+     */
+    Q_INVOKABLE virtual bool clearConfiguredNetworks() = 0;
 
     /**
      * @brief Joins the WiFi network with the given ssid. The network will be added to the known networks.

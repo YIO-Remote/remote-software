@@ -148,6 +148,21 @@ void WifiWpaSupplicant::off()
 
 bool WifiWpaSupplicant::reset()
 {
+    if (m_ctrl) {
+        if (m_ctrlNotifier) {
+            m_ctrlNotifier->setEnabled(false);
+            m_ctrlNotifier->disconnect();
+        }
+        wpa_ctrl_detach(m_ctrl);
+        wpa_ctrl_close(m_ctrl);
+        m_ctrl = nullptr;
+    }
+
+    return init();
+}
+
+bool WifiWpaSupplicant::clearConfiguredNetworks()
+{
     qCDebug(CLASS_LC) << "Disconnecting and removing all networks...";
 
     if (!controlRequest("DISCONNECT")) {

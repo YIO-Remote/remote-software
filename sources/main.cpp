@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
     // DRIVERS
+    // TODO think about device driver factory, pass configuration object to driver
     WifiControl::instance().init();
     WifiControl* wifiControl = &WifiControl::instance();
     engine.rootContext()->setContextProperty("wifi", wifiControl);

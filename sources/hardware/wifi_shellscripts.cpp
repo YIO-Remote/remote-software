@@ -68,6 +68,19 @@ void WifiShellScripts::off()
 }
 
 
+bool WifiShellScripts::reset()
+{
+    // just make sure all timers are running
+    return init();
+}
+
+bool WifiShellScripts::clearConfiguredNetworks()
+{
+    // TODO this also starts the AP! Only reset wpa_supplicant
+    launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
+    return true;
+}
+
 bool WifiShellScripts::join(const QString &ssid, WifiNetwork::Security authentication, const QString &password)
 {
     if (!validateAuthentication(authentication, password)) {
@@ -78,13 +91,6 @@ bool WifiShellScripts::join(const QString &ssid, WifiNetwork::Security authentic
     args.append(ssid);
     args.append(password);
     launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_network_create.sh", args);
-    return true;
-}
-
-bool WifiShellScripts::reset()
-{
-    // TODO this also starts the AP! Only reset wpa_supplicant
-    launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
     return true;
 }
 
