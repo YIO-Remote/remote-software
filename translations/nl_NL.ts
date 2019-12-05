@@ -147,7 +147,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation> Verbinding verbroken</translation>
+      <translation> - Verbinding verbroken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
@@ -348,7 +348,7 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation>Automatisch zoeken naar updates en bijwerken wanneer er een nieuwe software versie beschikbaar is.
+      <translation>Automatisch zoeken naar updates en bijwerken wanneer een nieuwe software versie beschikbaar is.
 Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
     </message>
     <message>
