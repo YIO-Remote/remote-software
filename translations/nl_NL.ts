@@ -356,7 +356,7 @@ Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
       <source>New software is available.
 YIO remote </source>
       <translation>Nieuwe softwareversie is beschikbaar.
-YIO Afstandsbediening </translation>
+YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
@@ -371,7 +371,7 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>YIO Remote </source>
-      <translation>YIO Afstandsbediening </translation>
+      <translation>YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
