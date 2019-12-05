@@ -5,15 +5,11 @@
 #include "../notifications.h"
 #include "../yioapi.h"
 
-#include <QJsonArray>
-#include <QQuickItem>
-#include <QTimer>
-
 Integrations* Integrations::s_instance = nullptr;
 
 Integrations::Integrations(QQmlApplicationEngine *engine, const QString& appPath) :
-    m_engine(engine),
-    m_appPath(appPath)
+    m_appPath(appPath),
+    m_engine(engine)
 {
     s_instance = this;
 }

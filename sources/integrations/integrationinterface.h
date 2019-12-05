@@ -13,7 +13,10 @@ public:
     virtual ~IntegrationInterface() {}
 
     // create an integration and return the object
-    virtual void create  (const QVariantMap& configurations, QObject *entities, QObject *notifications, QObject* api, QObject *configObj) = 0;
+    virtual void create         (const QVariantMap& configurations, QObject *entities, QObject *notifications, QObject* api, QObject *configObj) = 0;
+
+    // enable log category
+    virtual void setLogEnabled  (QtMsgType msgType, bool enable) = 0;
 
 signals:
     void createDone(QMap<QObject *, QVariant> map);
