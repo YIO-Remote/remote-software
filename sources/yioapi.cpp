@@ -342,7 +342,7 @@ void YioAPI::processMessage(QString message)
                 logger->setShowSourcePos(true);
             }
             else if (logAction == "hidesource") {
-                logger->setShowSourcePos(true);
+                logger->setShowSourcePos(false);
             }
             else if (logAction == "purge") {
                 int hours = 24;
