@@ -152,7 +152,7 @@ if(!defined($$QMAKE_LRELEASE, var)) {
     unix|mac:QMAKE_LRELEASE = $$system(which lrelease)
 }
 
-exists($$QMAKE_LUPDATE) {
+defined($$QMAKE_LUPDATE):exists($$QMAKE_LUPDATE)) {
     message("Using Qt linguist tools: '$$QMAKE_LUPDATE', '$$QMAKE_LRELEASE'")
     command = $$QMAKE_LUPDATE remote.pro
     system($$command) | error("Failed to run: $$command")
