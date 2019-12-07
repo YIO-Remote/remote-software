@@ -32,12 +32,8 @@ public:
     Q_INVOKABLE void        leaveStandby()  {}              // Can be overriden by integration
     Q_INVOKABLE void        sendCommand     (const QString& type, const QString& entity_id, const QString& command, const QVariant& param) = 0;
 
-    void        setup  	    (const QVariantMap& config, QObject *entities, QObject *notifications, QObject* api, QObject *configObj)
+    void                    setup  	    (const QVariantMap& config, QObject *entities)
     {
-        Q_UNUSED(config)
-        Q_UNUSED(notifications)
-        Q_UNUSED(api)
-        Q_UNUSED(configObj)
         for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
             if (iter.key() == "friendly_name")
                 m_friendlyName = iter.value().toString();
