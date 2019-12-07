@@ -36,7 +36,7 @@ public:
     virtual QString                     source() = 0;
 
     // extension for "generic" media browsing
-    virtual QVariant                    browseResult() = 0;
+    virtual void                        setModel(QObject* model) = 0;
 };
 
 QT_BEGIN_NAMESPACE

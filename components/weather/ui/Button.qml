@@ -14,16 +14,18 @@ Rectangle {
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj.integrationObj //integrations.getByType(obj.integration) //integration[obj.integration].obj
+        target: obj // obj.integrationObj //integration[obj.integration].obj
 
-        onConnected: {
-            weatherButton.opacity = 1
-            weatherButton.enabled = true
-        }
-
-        onDisconnected: {
-            weatherButton.opacity = 0.3
-            weatherButton.enabled = false
+        onConnectedChanged: {
+            if (obj.connected) {
+                weatherButton.opacity = 1
+                weatherButton.enabled = true
+            }
+            else {
+                weatherButton.opacity = 0.3
+                weatherButton.enabled = false
+                weatherButton.state = "closed"
+            }
         }
     }
 

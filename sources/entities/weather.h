@@ -43,7 +43,7 @@ public:
     bool                            isOn() override         { return m_state == WeatherDef::ONLINE; }
     bool                            supportsOn() override   { return false; }
 
-    Weather (const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
+    Weather (const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent = nullptr);
 
     void setForecast    (QObject *model) override           { m_forecast = model; }
     void setCurrent     (const WeatherItem &current) override;

@@ -5,14 +5,16 @@
 #include <QString>
 #include <QVariant>
 #include "entity.h"
+#include "remoteinterface.h"
 
-class Remote : public Entity
+class Remote : public Entity, RemoteInterface
 {
     Q_OBJECT
-
+    Q_INTERFACES(RemoteInterface)
 public:
     Q_PROPERTY  (QVariantList   commands       READ    commands       NOTIFY commandsChanged)
-    QVariantList                commands() const { return m_commands; }
+
+    QVariantList                commands() override { return m_commands; }
 
     // transport and media controls
     Q_INVOKABLE void            play();
@@ -62,7 +64,7 @@ public:
 
 
     explicit Remote(QObject *parent = nullptr);
-    Remote(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
+    Remote(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent = nullptr);
 
 signals:
     void commandsChanged();

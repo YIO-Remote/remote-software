@@ -49,7 +49,7 @@ void Blind::setPosition(int value)
      command("POSITION", value);
 }
 
-Blind::Blind(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+Blind::Blind(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
     Entity (Type, config, integrationObj, parent)
 {
     static QMetaEnum metaEnumAttr;

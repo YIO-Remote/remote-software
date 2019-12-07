@@ -183,7 +183,7 @@
         <file>sources/hardware/proximity_gesture_control.h</file>
         <file>sources/hardware/touchdetect.h</file>
         <file>sources/integrations/integration.h</file>
-        <file>sources/integrations/integrationinterface.h</file>
+        <file>sources/integrations/plugininterface.h</file>
         <file>sources/integrations/integrations.cpp</file>
         <file>sources/integrations/integrations.h</file>
         <file>sources/bluetootharea.cpp</file>

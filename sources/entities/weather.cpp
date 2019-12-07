@@ -35,7 +35,7 @@ bool Weather::updateAttrByIndex (int attrIndex, const QVariant& value)
     return chg;
 }
 
-Weather::Weather(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+Weather::Weather(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
     Entity (Type, config, integrationObj, parent),
     m_current(parent)
 {

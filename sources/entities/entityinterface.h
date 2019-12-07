@@ -2,6 +2,7 @@
 #define ENTITYINTERFACE_H
 
 #include <QVariant>
+#include "../integrations/integrationinterface.h"
 
 /// This interface is used to access an entity from the integrations
 class EntityInterface
@@ -15,10 +16,12 @@ public:
     virtual QString         friendly_name       () = 0;
     virtual QString         entity_id           () = 0;
     virtual QString         integration         () = 0;
-    virtual QObject*        integrationObj      () = 0;
     virtual QStringList     supported_features  () = 0;
     virtual bool            favorite            () = 0;
     virtual void            setFavorite         (bool value)  = 0;
+    virtual IntegrationInterface* integrationObj() = 0;
+
+    // State handling functions
     virtual int             state               () = 0;
     virtual bool            setState            (int value) = 0;
     virtual QString         stateText           () = 0;

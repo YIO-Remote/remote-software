@@ -66,7 +66,7 @@ void Logger::setCategoryLogLevel (const QString& category, int logLevel)
     // set integrations loglevel
     defineLogCategory(category, logLevel);
 }
-void Logger::defineLogCategory (const QString& category, int level, QLoggingCategory* loggingCategory, IntegrationInterface* plugin)
+void Logger::defineLogCategory (const QString& category, int level, QLoggingCategory* loggingCategory, PluginInterface* plugin)
 {
     QtMsgType logLevel = static_cast<QtMsgType>(level);
     SCategory* cat = m_categories.value(category);

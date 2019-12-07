@@ -21,6 +21,9 @@ public:
     // update an entity's attributes
     virtual void                        update              (const QString& entity_id, const QVariantMap& attributes) = 0;
 
+    // set connected
+    virtual void                        setConnected        (const QString& integationId, bool connected) = 0;
+
     // get entity interface by entity_id
     virtual EntityInterface*            getEntityInterface  (const QString& entity_id) = 0;
 };

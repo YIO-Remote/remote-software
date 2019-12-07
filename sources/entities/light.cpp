@@ -6,7 +6,7 @@ LightInterface::~LightInterface()
 {
 }
 
-QString Light::Type = "light";
+QString     Light::Type = "light";
 
 bool Light::updateAttrByIndex (int attrIndex, const QVariant& value)
 {
@@ -69,7 +69,7 @@ void Light::setColorTemp(int value)
     command("COLORTEMP", value);
 }
 
-Light::Light(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+Light::Light(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
     Entity (Type, config, integrationObj, parent)
 {
     static QMetaEnum metaEnumAttr;

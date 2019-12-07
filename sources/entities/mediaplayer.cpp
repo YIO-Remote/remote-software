@@ -138,16 +138,12 @@ void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
 {
     command("play:" + cmd, itemKey);
 }
-void MediaPlayer::search(const QString& searchString, const QString& itemKey)
-{
-    command("search:" + searchString, itemKey);
-}
 void MediaPlayer::search(const QString& searchString)
 {
     command("SEARCH", searchString);
 }
 
-MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+MediaPlayer::MediaPlayer(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
     Entity(Type, config, integrationObj, parent)
 {
     static QMetaEnum metaEnumAttr;

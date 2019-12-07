@@ -9,6 +9,8 @@
 #include <QMap>
 #include <QtDebug>
 
+#include "../integrations/integrationinterface.h"
+#include "entity.h"
 #include "entitiesinterface.h"
 
 class Entities : public QObject , EntitiesInterface
@@ -35,11 +37,12 @@ public:
     // get entity by entity_id
     Q_INVOKABLE QObject*            get                 (const QString& entity_id);
 
-    // add an entity
-    Q_INVOKABLE void                add                 (const QString& type, const QVariantMap& config, QObject *integrationObj);
 
     // update an entity
     Q_INVOKABLE void                update              (const QString& entity_id, const QVariantMap& attributes);
+
+    // add an entity
+    void                            add                 (const QString& type, const QVariantMap& config, IntegrationInterface* integrationObj);
 
     // get entites by type
     QList<EntityInterface *>        getByType           (const QString& type);
@@ -55,6 +58,9 @@ public:
 
     // get entity interface
     EntityInterface*                getEntityInterface  (const QString& entity_id);
+
+    // set connected
+    void                            setConnected        (const QString& integrationId, bool connected);
 
     QStringList                     supported_entities  () { return m_supported_entities; }
     QStringList                     supported_entities_translation () { return m_supported_entities_translation; }
@@ -77,7 +83,7 @@ signals:
     void mediaplayersPlayingChanged();
 
 private:
-    QMap<QString, QObject*>     m_entities;
+    QMap<QString, Entity*>      m_entities;
     QStringList                 m_supported_entities = {"light","blind","media_player","remote", "weather" };
     QStringList                 m_supported_entities_translation = {tr("Lights"), tr("Blinds"), tr("Media"), tr("Remote")};
     QStringList                 m_loaded_entities;

@@ -32,7 +32,7 @@ public:
     int                         colorTemp() override    { return m_colorTemp; }
     bool                        isOn() override         { return m_state == LightDef::ON; }
 
-    explicit Light(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
+    explicit Light(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent = nullptr);
 
 signals:
     void brightnessChanged();

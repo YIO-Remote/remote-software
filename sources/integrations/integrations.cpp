@@ -5,6 +5,9 @@
 #include "../notifications.h"
 #include "../yioapi.h"
 
+IntegrationsInterface::~IntegrationsInterface()
+{}
+
 Integrations* Integrations::s_instance = nullptr;
 
 Integrations::Integrations(QQmlApplicationEngine *engine, const QString& appPath) :
@@ -47,9 +50,9 @@ void Integrations::load()
         QString type = iter.key();
 
         // create instances of the integration based on how many are defined in the config
-        IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
+        PluginInterface *interface = qobject_cast<PluginInterface *>(obj);
         if (interface) {
-            connect(interface, &IntegrationInterface::createDone, this, &Integrations::onCreateDone);
+            connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
 
             interface->create(map, entities, notifications, api, config);
             i++;
@@ -69,9 +72,9 @@ void Integrations::load()
         QString type = defaultIntegrations[k];
 
         // create instances of the integration, no config needed for built in integrations
-        IntegrationInterface *interface = qobject_cast<IntegrationInterface *>(obj);
+        PluginInterface *interface = qobject_cast<PluginInterface *>(obj);
         if (interface) {
-            connect(interface, &IntegrationInterface::createDone, this, &Integrations::onCreateDone);
+            connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
 
             QVariantMap map;
             map.insert("type", defaultIntegrations[k]);

@@ -21,7 +21,7 @@ public:
     Q_PROPERTY  (QString                    mediaArtist     READ    mediaArtist     NOTIFY      mediaArtistChanged)
     Q_PROPERTY  (QString                    mediaImage      READ    mediaImage      NOTIFY      mediaImageChanged)
     Q_PROPERTY  (QString                    source          READ    source          NOTIFY      sourceChanged)
-    Q_PROPERTY  (QVariant                   browseResult    READ    browseResult    NOTIFY      browseResultChanged)
+    Q_PROPERTY  (QObject*                   model           READ    model           NOTIFY      modelChanged)
 
     int                         volume() override       { return m_volume; }
     bool                        muted() override        { return m_muted; }
@@ -30,9 +30,6 @@ public:
     QString                     mediaTitle() override   { return m_mediaTitle; }
     QString                     mediaArtist() override  { return m_mediaArtist; }
     QString                     source() override       { return m_source; }
-
-    // extension for "generic" media browsing
-    QVariant                    browseResult() override { return m_browseResult; }
 
     // update an entity's attributes
     Q_INVOKABLE void            play();
@@ -47,8 +44,17 @@ public:
     // extension for "generic" media browsing
     Q_INVOKABLE void            browse                  (QString command);        // Command item_key, "TOP", "BACK", "PLAY"
     Q_INVOKABLE void            playMedia               (const QString& command, const QString& itemKey); // command PLAY, QUEUE
-    Q_INVOKABLE void            search                  (const QString& searchText, const QString& itemKey); // Search
-    Q_INVOKABLE void            search                  (const QString& searchText);
+    Q_INVOKABLE void            search                  (const QString& searchText); // Search
+
+    void                        setModel(QObject* model) override
+    {
+        m_model = model;
+        emit modelChanged();
+    }
+    QObject* model () {
+        return m_model;
+    }
+
 
     bool                        isOn() override         { return m_state == MediaPlayerDef::ON || m_state == MediaPlayerDef::PLAYING; }
     bool                        updateAttrByIndex       (int attrIndex, const QVariant& value) override;
@@ -56,7 +62,7 @@ public:
     void                        turnOff                 () override;
 
     // constructor
-    MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
+    MediaPlayer(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent = nullptr);
 
 signals:
     void volumeChanged();
@@ -67,6 +73,7 @@ signals:
     void mediaImageChanged();
     void sourceChanged();
     void browseResultChanged();
+    void modelChanged();
 
 public:
     static QString Type;
@@ -99,6 +106,7 @@ private:
                                                         // type:            Item type Genre, Album, Artist, Track, Playlist, Radio
                                                         // title:           Name of the genre, album, artist, track
                                                         // level:           Top is 0
+    QObject*                    m_model = nullptr;
 };
 
 #endif // MEDIAPLAYER_H

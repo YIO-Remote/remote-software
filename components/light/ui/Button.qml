@@ -8,23 +8,23 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: lightButton
 
-    property var obj
-
+    property var    obj
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj.integrationObj //integration[obj.integration].obj
+        target: obj // obj.integrationObj //integration[obj.integration].obj
 
-        onConnected: {
-            lightButton.opacity = 1
-            lightButton.enabled = true
-        }
-
-        onDisconnected: {
-            lightButton.opacity = 0.3
-            lightButton.enabled = false
-            lightButton.state = "closed"
+        onConnectedChanged: {
+            if (obj.connected) {
+                lightButton.opacity = 1
+                lightButton.enabled = true
+            }
+            else {
+                lightButton.opacity = 0.3
+                lightButton.enabled = false
+                lightButton.state = "closed"
+            }
         }
     }
 

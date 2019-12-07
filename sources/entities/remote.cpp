@@ -3,6 +3,10 @@
 #include "remote.h"
 #include "../yioapi.h"
 
+RemoteInterface::~RemoteInterface()
+{
+}
+
 QString Remote::Type = "remote";
 
 // transport and media controls
@@ -182,9 +186,10 @@ Remote::Remote(QObject *parent) :
 
 }
 
-Remote::Remote(const QVariantMap& config, QObject* integrationObj, QObject *parent):
+Remote::Remote(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
     Entity (Type, config, integrationObj, parent)
 {
+    m_specificInterface = qobject_cast<RemoteInterface*>(this);
     m_commands = config.value("commands").toJsonArray().toVariantList();
     emit commandsChanged();
 }

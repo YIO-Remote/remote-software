@@ -1,31 +1,26 @@
 #ifndef INTEGRATIONINTERFACE_H
 #define INTEGRATIONINTERFACE_H
 
-#include <QString>
-#include <QVariantMap>
+#include <QVariant>
 
-// This interface is implemented by the integration .so files, it is used by the entities to operate the integration
-class IntegrationInterface : public QObject
+class IntegrationInterface
 {
-    Q_OBJECT
-
 public:
-    virtual ~IntegrationInterface() {}
+    virtual ~IntegrationInterface();
 
-    // create an integration and return the object
-    virtual void create         (const QVariantMap& configurations, QObject *entities, QObject *notifications, QObject* api, QObject *configObj) = 0;
+    virtual void        connect()       = 0;            // Must be implemented by integration
+    virtual void        disconnect()    = 0;            // Must be implemented by integration
+    virtual void        enterStandby()  = 0;            // Can be overriden by integration
+    virtual void        leaveStandby()  = 0;            // Can be overriden by integration
+    virtual void        sendCommand     (const QString& type, const QString& entity_id, const QString& command, const QVariant& param) = 0;
 
-    // enable log category
-    virtual void setLogEnabled  (QtMsgType msgType, bool enable) = 0;
-
-signals:
-    void createDone(QMap<QObject *, QVariant> map);
-
+    virtual int         state           () = 0;
+    virtual QString     integrationId   () = 0;
+    virtual QString     friendlyName    () = 0;
 };
 
 QT_BEGIN_NAMESPACE
 #define IntegrationInterface_iid "YIO.IntegrationInterface"
 Q_DECLARE_INTERFACE(IntegrationInterface, IntegrationInterface_iid)
 QT_END_NAMESPACE
-
 #endif // INTEGRATIONINTERFACE_H

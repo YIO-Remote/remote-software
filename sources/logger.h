@@ -11,7 +11,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-#include "integrations/integrationinterface.h"
+#include "integrations/plugininterface.h"
 
 class Logger : public QObject
 {
@@ -70,10 +70,10 @@ public:
 
     // for use from C++ to register a Logging category
     // used by integrations to register plugin logging
-    void                defineLogCategory   (const QString& category, int level, QLoggingCategory* loggingCategory = nullptr, IntegrationInterface* plugin = nullptr);
+    void                defineLogCategory   (const QString& category, int level, QLoggingCategory* loggingCategory = nullptr, PluginInterface* plugin = nullptr);
 private:
     struct SCategory {
-        SCategory(QtMsgType logLevel, QLoggingCategory* logCategory = nullptr, IntegrationInterface* plugin = nullptr) :
+        SCategory(QtMsgType logLevel, QLoggingCategory* logCategory = nullptr, PluginInterface* plugin = nullptr) :
             logCategory(logCategory),
             plugin(plugin),
             logLevel(logLevel),
@@ -82,7 +82,7 @@ private:
             memset (count, 0, sizeof(count));
         }
         QLoggingCategory*       logCategory;                            // logCategory
-        IntegrationInterface*   plugin;                                 // plugin
+        PluginInterface*        plugin;                                 // plugin
         QtMsgType               logLevel;                               // !!ored with overall log level
         quint16                 logLevelMask;                           // required because QtMsgType has strange sorting
         quint16                 count[QtMsgType::QtInfoMsg + 1];        // counts errors per msg type

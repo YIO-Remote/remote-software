@@ -8,23 +8,24 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: blindButton
 
-    property var obj
+    property var    obj
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj.integrationObj //integrations.getByType(obj.integration) //integration[obj.integration].obj
+        target: obj // obj.integrationObj //integration[obj.integration].obj
 
-        onConnected: {
-            blindButton.opacity = 1
-            blindButton.enabled = true
-        }
-
-        onDisconnected: {
-            blindButton.opacity = 0.3
-            blindButton.enabled = false
-            blindButton.state = "closed"
+        onConnectedChanged: {
+            if (obj.connected) {
+                blindButton.opacity = 1
+                blindButton.enabled = true
+            }
+            else {
+                blindButton.opacity = 0.3
+                blindButton.enabled = false
+                blindButton.state = "closed"
+            }
         }
     }
 

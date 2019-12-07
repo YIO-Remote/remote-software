@@ -8,7 +8,7 @@ EntityInterface::~EntityInterface()
 {
 }
 
-Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj, QObject *parent) :
+Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent) :
     QObject(parent),
     m_integrationObj(integrationObj),
     m_type(type),
@@ -34,12 +34,15 @@ Entity::~Entity()
 }
 void Entity::command(const QString &command, const QVariant& param)
 {
+    /*
     QVariant returnedValue;
     QMetaObject::invokeMethod(m_integrationObj, "sendCommand", Qt::AutoConnection,
                               Q_ARG(QString, m_type),
                               Q_ARG(QString, QString(entity_id())),
                               Q_ARG(QString, command),
                               Q_ARG(QVariant, param));
+    */
+    m_integrationObj->sendCommand(m_type, entity_id(), command, param);
 }
 
 QVariantMap Entity::getDataToSave()
@@ -141,6 +144,13 @@ void Entity::turnOn() {
 }
 void Entity::turnOff() {
     command("OFF", "");                     // Otherwise : Override in specific entity
+}
+void Entity::setConnected(bool value)
+{
+    if (m_connected != value) {
+        m_connected = value;
+        emit connectedChanged();
+    }
 }
 
 void Entity::setFavorite(bool value)
