@@ -143,16 +143,16 @@ exists($$(QTDIR)/bin/lrelease):QMAKE_LRELEASE *= $$(QTDIR)/bin/lrelease
 exists($$(QT_LINGUIST_DIR)/lupdate):QMAKE_LUPDATE *= $$(QT_LINGUIST_DIR)/lupdate
 exists($$(QT_LINGUIST_DIR)/lrelease):QMAKE_LRELEASE *= $$(QT_LINGUIST_DIR)/lrelease
 # 5.) Last option: check path, plain and simple. (Would most likely be enough on most systems...)
-if(!defined($$QMAKE_LUPDATE, var)) {
+if(isEmpty(QMAKE_LUPDATE)) {
     win32:QMAKE_LUPDATE    = $$system(where lupdate)
     unix|mac:QMAKE_LUPDATE = $$system(which lupdate)
 }
-if(!defined($$QMAKE_LRELEASE, var)) {
+if(isEmpty(QMAKE_LRELEASE)) {
     win32:QMAKE_LRELEASE    = $$system(where lrelease)
     unix|mac:QMAKE_LRELEASE = $$system(which lrelease)
 }
 
-defined($$QMAKE_LUPDATE):exists($$QMAKE_LUPDATE) {
+!isEmpty(QMAKE_LUPDATE):exists("$$QMAKE_LUPDATE") {
     message("Using Qt linguist tools: '$$QMAKE_LUPDATE', '$$QMAKE_LRELEASE'")
     command = $$QMAKE_LUPDATE remote.pro
     system($$command) | error("Failed to run: $$command")
