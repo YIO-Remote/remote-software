@@ -215,13 +215,6 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        width: parent.width
-        height: 100
-        anchors.bottom: parent.bottom
-        color: colorDark
-    }
-
     // BOTTOM MENU
     Grid {
         id: bottomMenu

@@ -35,7 +35,7 @@ Item {
             opacity: 0.5
             text: obj.source
             elide: Text.ElideRight
-            wrapMode: Text.WordWrap
+            wrapMode: Text.NoWrap
             width: title.width
             anchors.left: title.left
             anchors.top: title.bottom

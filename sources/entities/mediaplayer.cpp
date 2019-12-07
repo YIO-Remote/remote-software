@@ -134,9 +134,9 @@ void MediaPlayer::browse(QString cmd)
 {
     command("BROWSE", cmd);
 }
-void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
+void MediaPlayer::playMedia(const QString& itemKey)
 {
-    command("play:" + cmd, itemKey);
+    command("PLAY", itemKey);
 }
 void MediaPlayer::search(const QString& searchString, const QString& itemKey)
 {
@@ -147,10 +147,16 @@ void MediaPlayer::search(const QString& searchString)
     command("SEARCH", searchString);
 }
 
-void MediaPlayer::setModel(QObject *model)
+void MediaPlayer::setSearchModel(QObject *model)
 {
-    m_model = model;
-    emit modelChanged();
+    m_searchModel = model;
+    emit searchModelChanged();
+}
+
+void MediaPlayer::setBrowseModel(QObject *model)
+{
+    m_browseModel = model;
+    emit browseModelChanged();
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):
