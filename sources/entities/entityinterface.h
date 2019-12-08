@@ -29,6 +29,10 @@ public:
     virtual bool            isOn                () = 0;
     virtual bool            supportsOn          () = 0;
 
+    // connected state
+    virtual bool            connected           () = 0;
+    virtual void            setConnected        (bool value) = 0;
+
     // update an entity's attributes
     virtual bool            update              (const QVariantMap& attributes) = 0;
     virtual bool            updateAttrByName    (const QString& attrName, const QVariant& value) = 0;
