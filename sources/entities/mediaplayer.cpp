@@ -144,7 +144,9 @@ void MediaPlayer::search(const QString& searchString)
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
-    Entity(Type, config, integrationObj, parent)
+    Entity(Type, config, integrationObj, parent),
+    m_volume(0),
+    m_muted(false)
 {
     static QMetaEnum metaEnumAttr;
     static QMetaEnum metaEnumState;
