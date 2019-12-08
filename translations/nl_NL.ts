@@ -31,7 +31,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation>Gemiddelde stroom</translation>
+      <translation>Gemiddeld stroomverbruik</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
@@ -50,7 +50,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
       <source>Area detection</source>
-      <translation>Herkenning van omgeving</translation>
+      <translation>Gebied detectie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
@@ -147,7 +147,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation> Verbinding verbroken</translation>
+      <translation> - Verbinding verbroken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
@@ -162,7 +162,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
@@ -348,7 +348,7 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation>Automatisch zoeken naar updates en bijwerken wanneer er een nieuwe software versie beschikbaar is.
+      <translation>Automatisch zoeken naar updates en bijwerken wanneer een nieuwe software versie beschikbaar is.
 Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
     </message>
     <message>
@@ -356,7 +356,7 @@ Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
       <source>New software is available.
 YIO remote </source>
       <translation>Nieuwe softwareversie is beschikbaar.
-YIO Afstandsbediening </translation>
+YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
@@ -371,7 +371,7 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>YIO Remote </source>
-      <translation>YIO Afstandsbediening </translation>
+      <translation>YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
