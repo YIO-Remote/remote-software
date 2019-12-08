@@ -70,7 +70,9 @@ void Light::setColorTemp(int value)
 }
 
 Light::Light(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
-    Entity (Type, config, integrationObj, parent)
+    Entity (Type, config, integrationObj, parent),
+    m_brightness(0),
+    m_colorTemp(0)
 {
     static QMetaEnum metaEnumAttr;
     static QMetaEnum metaEnumState;
