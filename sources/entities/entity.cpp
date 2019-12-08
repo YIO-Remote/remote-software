@@ -16,6 +16,7 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
     m_friendly_name(config.value("friendly_name").toString()),
     m_integration(config.value("integration").toString()),
     m_favorite(false),
+    m_connected(false),
     m_supported_features(config.value("supported_features").toStringList()),
     m_state(0),
     m_enumState(nullptr),
