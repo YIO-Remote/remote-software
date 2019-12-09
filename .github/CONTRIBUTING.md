@@ -41,3 +41,7 @@ Current reviewers:
 - @martonborzak
 - @nklerk
 - @zehnm
+
+
+## Translations
+YIO has multi language support. You can help to add/complete your local language by contributing at https://translate.yio-remote.com/
