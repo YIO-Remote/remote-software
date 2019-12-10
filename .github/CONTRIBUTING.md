@@ -32,7 +32,7 @@ If you are ready with your code and you know it works, submit a pull request(PR)
 - Provide evidence that your code works.
 - Make sure your author field is properly filled out with your full name and email address, so we can include you in the credits.
 
-Submitting a pull request is no guarantee it will be accepted, but contributors will do their best to help move your pull request towards release.
+Submitting a pull request is no guarantee it will be accepted, but reviewers will do their best to help move your pull request towards release. Conflicting pull requests will be closed.
 
 ## Reviewing pull requests
 As a reviewer you need to be familiar with the YIO Remote software architecture and be updated on the latest milestones. You as a reviewer are responsible for only accepting pull requests that are tested.
