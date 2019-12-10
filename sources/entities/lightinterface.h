@@ -10,11 +10,17 @@ class LightDef : public QObject
 {
     Q_OBJECT
 public:
-    enum Attributes   { STATE, BRIGHTNESS, COLOR, COLORTEMP };
+    enum Attributes     { STATE, BRIGHTNESS, COLOR, COLORTEMP };
     Q_ENUM (Attributes)
 
-    enum States       { OFF=0, ON=1 };
+    enum States         { OFF=0, ON=1 };
     Q_ENUM (States)
+
+    enum Features       { F_BRIGHTNESS, F_COLOR, F_COLORTEMP };
+    Q_ENUM (Features)
+
+    enum Commands       { C_OFF, C_ON, C_TOGGLE, C_BRIGHTNESS, C_COLOR, C_COLORTEMP };
+    Q_ENUM (Commands)
 
     explicit LightDef(QObject *parent = nullptr) : QObject(parent)
     {}

@@ -12,7 +12,7 @@ public:
     virtual void        disconnect()    = 0;            // Must be implemented by integration
     virtual void        enterStandby()  = 0;            // Can be overriden by integration
     virtual void        leaveStandby()  = 0;            // Can be overriden by integration
-    virtual void        sendCommand     (const QString& type, const QString& entity_id, const QString& command, const QVariant& param) = 0;
+    virtual void        sendCommand     (const QString& type, const QString& entity_id, int command, const QVariant& param) = 0;
 
     virtual int         state           () = 0;
     virtual QString     integrationId   () = 0;

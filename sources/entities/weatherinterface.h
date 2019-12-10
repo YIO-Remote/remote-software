@@ -10,11 +10,17 @@ class WeatherDef : public QObject
 {
     Q_OBJECT
 public:
-    enum Attributes {  STATE, CURRENT, FORECAST };
+    enum Attributes     {   STATE, CURRENT, FORECAST };
     Q_ENUM (Attributes)
 
-    enum States     { OFFLINE, ONLINE };
+    enum States         {   OFFLINE, ONLINE };
     Q_ENUM (States)
+
+    enum Features       {   F_DETAIL };
+    Q_ENUM (Features)
+
+    enum Commands       {   C_SETLOCATION };
+    Q_ENUM (Commands)
 
     explicit WeatherDef(QObject *parent = nullptr) : QObject(parent)
     {}

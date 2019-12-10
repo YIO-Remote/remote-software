@@ -14,14 +14,14 @@ class MediaPlayer : public Entity, MediaPlayerInterface
     Q_INTERFACES(MediaPlayerInterface)
 public:
     // properties
-    Q_PROPERTY  (int                        volume          READ    volume          NOTIFY      volumeChanged)
-    Q_PROPERTY  (bool                       muted           READ    muted           NOTIFY      mutedChanged)
-    Q_PROPERTY  (QString                    mediaType       READ    mediaType       NOTIFY      mediaTypeChanged)
-    Q_PROPERTY  (QString                    mediaTitle      READ    mediaTitle      NOTIFY      mediaTitleChanged)
-    Q_PROPERTY  (QString                    mediaArtist     READ    mediaArtist     NOTIFY      mediaArtistChanged)
-    Q_PROPERTY  (QString                    mediaImage      READ    mediaImage      NOTIFY      mediaImageChanged)
-    Q_PROPERTY  (QString                    source          READ    source          NOTIFY      sourceChanged)
-    Q_PROPERTY  (QObject*                   model           READ    model           NOTIFY      modelChanged)
+    Q_PROPERTY  (int            volume          READ    volume          NOTIFY      volumeChanged)
+    Q_PROPERTY  (bool           muted           READ    muted           NOTIFY      mutedChanged)
+    Q_PROPERTY  (QString        mediaType       READ    mediaType       NOTIFY      mediaTypeChanged)
+    Q_PROPERTY  (QString        mediaTitle      READ    mediaTitle      NOTIFY      mediaTitleChanged)
+    Q_PROPERTY  (QString        mediaArtist     READ    mediaArtist     NOTIFY      mediaArtistChanged)
+    Q_PROPERTY  (QString        mediaImage      READ    mediaImage      NOTIFY      mediaImageChanged)
+    Q_PROPERTY  (QString        source          READ    source          NOTIFY      sourceChanged)
+    Q_PROPERTY  (QObject*       model           READ    model           NOTIFY      modelChanged)
 
     int                         volume() override       { return m_volume; }
     bool                        muted() override        { return m_muted; }
@@ -45,6 +45,7 @@ public:
     Q_INVOKABLE void            browse                  (QString command);        // Command item_key, "TOP", "BACK", "PLAY"
     Q_INVOKABLE void            playMedia               (const QString& command, const QString& itemKey); // command PLAY, QUEUE
     Q_INVOKABLE void            search                  (const QString& searchText); // Search
+    Q_INVOKABLE void            searchItem              (const QString& searchText, const QString& itemKey); // Search
 
     void                        setModel(QObject* model) override
     {

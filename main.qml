@@ -8,6 +8,8 @@ import JsonFile 1.0
 import Haptic 1.0
 import Battery 1.0
 
+import Entity.Remote 1.0            // @@@RIC
+
 import "qrc:/scripts/softwareupdate.js" as JSUpdate
 import "qrc:/basic_ui" as BasicUI
 
@@ -90,7 +92,8 @@ ApplicationWindow {
                 if (battery_averagepower == 0 && battery_level == 1) {
                     // signal with the dock that the remote is fully charged
                     var obj = integrations.get(config.settings.paired_dock);
-                    obj.sendCommand("dock", "", "REMOTE_CHARGED", "");
+                    //@@@RIC obj.sendCommand("dock", "", "REMOTE_CHARGED", "");
+                    obj.sendCommand("dock", "", Remote.C_REMOTE_CHARGED, "");
                 }
 
                 console.debug("Average power:" + battery_averagepower + "mW");
@@ -431,7 +434,8 @@ ApplicationWindow {
 
             // signal with the dock that it is low battery
             var obj = integrations.get(config.settings.paired_dock);
-            obj.sendCommand("dock", "", "REMOTE_LOWBATTERY", "");
+            //@@@RIC obj.sendCommand("dock", "", "REMOTE_LOWBATTERY", "");
+            obj.sendCommand("dock", "", Remote.C_REMOTE_LOWBATTERY, "");
         }
         if (battery_level > 0.2) {
             wasBatteryWarning = false;

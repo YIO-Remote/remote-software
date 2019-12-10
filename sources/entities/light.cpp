@@ -43,30 +43,37 @@ bool Light::updateAttrByIndex (int attrIndex, const QVariant& value)
     return chg;
 }
 
+void Light::turnOn ()
+{
+    command(LightDef::C_ON, "");
+}
+void Light::turnOff ()
+{
+    command(LightDef::C_OFF, "");
+}
 void Light::toggle()
 {
-//    command("TOGGLE", "");
-    if (state()) {
-        command("OFF", "");
+    if (state() == LightDef::ON) {
+        turnOff();
     }
     else {
-        command("ON", "");
+        turnOn();
     }
 }
 
 void Light::setBrightness(int value)
 {
-    command("BRIGHTNESS", value);
+    command(LightDef::C_BRIGHTNESS, value);
 }
 
 void Light::setColor(QColor value)
 {
-    command("COLOR", QVariant(value));
+    command(LightDef::C_COLOR, QVariant(value));
 }
 
 void Light::setColorTemp(int value)
 {
-    command("COLORTEMP", value);
+    command(LightDef::C_COLORTEMP, value);
 }
 
 Light::Light(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
@@ -75,15 +82,24 @@ Light::Light(const QVariantMap& config, IntegrationInterface* integrationObj, QO
     m_colorTemp(0)
 {
     static QMetaEnum metaEnumAttr;
+    static QMetaEnum metaEnumFeatures;
+    static QMetaEnum metaEnumCommands;
     static QMetaEnum metaEnumState;
     if (!metaEnumAttr.isValid()) {
         int index = LightDef::staticMetaObject.indexOfEnumerator("Attributes");
         metaEnumAttr = LightDef::staticMetaObject.enumerator(index);
         index = LightDef::staticMetaObject.indexOfEnumerator("States");
         metaEnumState = LightDef::staticMetaObject.enumerator(index);
+        index = LightDef::staticMetaObject.indexOfEnumerator("Features");
+        metaEnumFeatures = LightDef::staticMetaObject.enumerator(index);
+        index = LightDef::staticMetaObject.indexOfEnumerator("Commands");
+        metaEnumCommands = LightDef::staticMetaObject.enumerator(index);
         qmlRegisterUncreatableType<LightDef>("Entity.Light", 1, 0, "Light", "Not creatable as it is an enum type.");
     }
     m_enumAttr = &metaEnumAttr;
+    m_enumFeatures = &metaEnumFeatures;
+    m_enumCommands = &metaEnumCommands;
     m_enumState = &metaEnumState;
     m_specificInterface = qobject_cast<LightInterface*>(this);
+    initializeSupportedFeatures(config);
 }

@@ -15,9 +15,9 @@ class Light : public Entity, LightInterface
     Q_INTERFACES(LightInterface)
 
 public:
-    Q_PROPERTY  (int                brightness  READ    brightness  NOTIFY brightnessChanged)
-    Q_PROPERTY  (QColor             color       READ    color       NOTIFY colorChanged)
-    Q_PROPERTY  (int                colorTemp   READ    colorTemp   NOTIFY colorTempChanged)
+    Q_PROPERTY  (int            brightness  READ    brightness  NOTIFY brightnessChanged)
+    Q_PROPERTY  (QColor         color       READ    color       NOTIFY colorChanged)
+    Q_PROPERTY  (int            colorTemp   READ    colorTemp   NOTIFY colorTempChanged)
 
     // light commands
     Q_INVOKABLE void            toggle                  ();
@@ -27,6 +27,8 @@ public:
 
     bool                        updateAttrByIndex       (int attrIndex, const QVariant& value) override;
 
+    void                        turnOn() override;
+    void                        turnOff() override;
     int                         brightness() override   { return m_brightness; }
     QColor                      color() override        { return m_color; }
     int                         colorTemp() override    { return m_colorTemp; }

@@ -8,6 +8,7 @@
 #include "weather.h"
 #include "../config.h"
 #include "../integrations/integrations.h"
+#include "remote.h"
 
 #include <QJsonArray>
 #include <QtDebug>
@@ -23,6 +24,9 @@ Entities* Entities::s_instance = nullptr;
 Entities::Entities(QObject *parent) : QObject(parent)
 {
     s_instance = this;
+
+    // Remote is special. Register class before entity creation (for use in Main.qml)
+    Remote::staticInitialize();
 }
 
 Entities::~Entities()

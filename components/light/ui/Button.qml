@@ -2,6 +2,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Entity.Light 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
@@ -375,9 +377,9 @@ Rectangle {
     function getSource() {
         if (lightButton.state != "open") {
             return "";
-        } else if (obj.supported_features.indexOf("COLOR") > -1) {
+        } else if (obj.isSupported(Light.F_COLOR)) {
             return "qrc:/components/light/ui/CardColor.qml";
-        } else if (obj.supported_features.indexOf("BRIGHTNESS") > -1) {
+        } else if (obj.isSupported(Light.F_BRIGHTNESS)) {
             return "qrc:/components/light/ui/CardDimmable.qml";
         } else {
             return "qrc:/components/light/ui/CardSwitch.qml";

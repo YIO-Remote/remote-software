@@ -22,17 +22,17 @@ public:
 
     Q_ENUM(states)
 
-    Q_PROPERTY(int          state           READ state          WRITE setState          NOTIFY stateChanged)
-    Q_PROPERTY(QString      integrationId   READ integrationId  WRITE setIntegrationId  NOTIFY integrationIdChanged)
-    Q_PROPERTY(QString      friendlyName    READ friendlyName   WRITE setFriendlyName)
+    Q_PROPERTY(int              state           READ state          WRITE setState          NOTIFY stateChanged)
+    Q_PROPERTY(QString          integrationId   READ integrationId  WRITE setIntegrationId  NOTIFY integrationIdChanged)
+    Q_PROPERTY(QString          friendlyName    READ friendlyName   WRITE setFriendlyName)
 
-    Q_INVOKABLE void        connect()       = 0;            // Must be implemented by integration
-    Q_INVOKABLE void        disconnect()    = 0;            // Must be implemented by integration
-    Q_INVOKABLE void        enterStandby()  {}              // Can be overriden by integration
-    Q_INVOKABLE void        leaveStandby()  {}              // Can be overriden by integration
-    Q_INVOKABLE void        sendCommand     (const QString& type, const QString& entity_id, const QString& command, const QVariant& param) = 0;
+    Q_INVOKABLE void            connect()       = 0;            // Must be implemented by integration
+    Q_INVOKABLE void            disconnect()    = 0;            // Must be implemented by integration
+    Q_INVOKABLE void            enterStandby()  {}              // Can be overriden by integration
+    Q_INVOKABLE void            leaveStandby()  {}              // Can be overriden by integration
+    Q_INVOKABLE void            sendCommand     (const QString& type, const QString& entity_id, int command, const QVariant& param) = 0;
 
-    void                    setup  	    (const QVariantMap& config, QObject *entities)
+    void                        setup           (const QVariantMap& config, QObject *entities)
     {
         for (QVariantMap::const_iterator iter = config.begin(); iter != config.end(); ++iter) {
             if (iter.key() == "friendly_name")

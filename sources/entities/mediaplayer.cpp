@@ -84,63 +84,73 @@ bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
 
 void MediaPlayer::turnOn()
 {
-    command("TURNON", "");
+    command(MediaPlayerDef::C_TURNON, "");
 }
 
 void MediaPlayer::turnOff()
 {
-    command("TURNOFF", "");
+    command(MediaPlayerDef::C_TURNOFF, "");
 }
 
 void MediaPlayer::play()
 {
-    command("PLAY", "");
+    command(MediaPlayerDef::C_PLAY, "");
 }
 
 void MediaPlayer::pause()
 {
-    command("PAUSE", "");
+    command(MediaPlayerDef::C_PAUSE, "");
 }
 
 void MediaPlayer::stop()
 {
-    command("STOP", "");
+    command(MediaPlayerDef::C_STOP, "");
 }
 
 void MediaPlayer::previous()
 {
-    command("PREVIOUS", "");
+    command(MediaPlayerDef::C_PREVIOUS, "");
 }
 
 void MediaPlayer::next()
 {
-    command("NEXT", "");
+    command(MediaPlayerDef::C_NEXT, "");
 }
 
 void MediaPlayer::setVolume(int value)
 {
-    command("VOLUME_SET", value);
+    command(MediaPlayerDef::C_VOLUME_SET, value);
 }
 void MediaPlayer::volumeUp()
 {
-    command("VOLUME_UP", "");
+    command(MediaPlayerDef::C_VOLUME_UP, "");
 }
 void MediaPlayer::volumeDown()
 {
-    command("VOLUME_DOWN", "");
+    command(MediaPlayerDef::C_VOLUME_DOWN, "");
 }
 // extension for "generic" media browsing
 void MediaPlayer::browse(QString cmd)
 {
-    command("BROWSE", cmd);
+    command(MediaPlayerDef::C_BROWSE, cmd);
 }
 void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
 {
-    command("play:" + cmd, itemKey);
+    QVariantMap ccmd;
+    ccmd["key"] = itemKey;
+    ccmd["command"] = cmd;
+    command(MediaPlayerDef::C_PLAY_ITEM, ccmd);
 }
 void MediaPlayer::search(const QString& searchString)
 {
-    command("SEARCH", searchString);
+    command(MediaPlayerDef::C_SEARCH, searchString);
+}
+void MediaPlayer::searchItem(const QString &searchText, const QString &itemKey)
+{
+    QVariantMap ccmd;
+    ccmd["key"] = itemKey;
+    ccmd["text"] = searchText;
+    command(MediaPlayerDef::C_SEARCH_ITEM, ccmd);
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
@@ -149,16 +159,25 @@ MediaPlayer::MediaPlayer(const QVariantMap& config, IntegrationInterface* integr
     m_muted(false)
 {
     static QMetaEnum metaEnumAttr;
+    static QMetaEnum metaEnumFeatures;
+    static QMetaEnum metaEnumCommands;
     static QMetaEnum metaEnumState;
     if (!metaEnumAttr.isValid()) {
         int index = MediaPlayerDef::staticMetaObject.indexOfEnumerator("Attributes");
         metaEnumAttr = MediaPlayerDef::staticMetaObject.enumerator(index);
         index = MediaPlayerDef::staticMetaObject.indexOfEnumerator("States");
         metaEnumState = MediaPlayerDef::staticMetaObject.enumerator(index);
+        index = MediaPlayerDef::staticMetaObject.indexOfEnumerator("Features");
+        metaEnumFeatures = MediaPlayerDef::staticMetaObject.enumerator(index);
+        index = MediaPlayerDef::staticMetaObject.indexOfEnumerator("Commands");
+        metaEnumCommands = MediaPlayerDef::staticMetaObject.enumerator(index);
         qmlRegisterUncreatableType<MediaPlayerDef>("Entity.MediaPlayer", 1, 0, "MediaPlayer", "Not creatable as it is an enum type.");
     }
     m_enumAttr = &metaEnumAttr;
+    m_enumFeatures = &metaEnumFeatures;
+    m_enumCommands = &metaEnumCommands;
     m_enumState = &metaEnumState;
     m_specificInterface = qobject_cast<MediaPlayerInterface*>(this);
+    initializeSupportedFeatures(config);
 }
 
