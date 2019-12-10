@@ -45,7 +45,7 @@ public:
 
     Weather (const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent = nullptr);
 
-    void setForecast    (QObject *model) override           { m_forecast = model; }
+    void setForecast    (QObject *model) override;
     void setCurrent     (const WeatherItem &current) override;
 signals:
     void currentChanged();

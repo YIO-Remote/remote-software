@@ -71,5 +71,11 @@ void Weather::setCurrent  (const WeatherItem &current)
     m_current.setSnow(current.snow());
     m_current.setWind(current.wind());
     m_current.setHumidity(current.humidity());
-}
 
+    emit currentChanged();
+}
+void Weather::setForecast(QObject *model)
+{
+    m_forecast = model;
+    emit forecastChanged();
+}
