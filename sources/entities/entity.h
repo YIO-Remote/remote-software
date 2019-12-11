@@ -49,9 +49,6 @@ public:
     // check for feature
     Q_INVOKABLE bool            isSupported         (int feature);                          // Use Feature enum F_XXXXX
 
-    // get the data of an entity to save in config.json
-    Q_INVOKABLE QVariantMap     getDataToSave       ();
-
     // update an entity with attributes from integration hub, return true in case of change
     Q_INVOKABLE bool            update              (const QVariantMap& attributes);
     Q_INVOKABLE bool            updateAttrByName    (const QString& name, const QVariant& value);

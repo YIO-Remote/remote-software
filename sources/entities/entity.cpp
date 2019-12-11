@@ -41,21 +41,6 @@ void Entity::command(int command, const QVariant& param)
     m_integrationObj->sendCommand(m_type, entity_id(), command, param);
 }
 
-QVariantMap Entity::getDataToSave()
-{
-    QVariantMap map;
-
-    map["type"] = m_type;
-    map["entity_id"] = entity_id();
-    map["favorite"] = m_favorite;
-    map["friendly_name"] = m_friendly_name;
-    map["integration"] = m_integration;
-    map["area"] = m_area;
-    map["supported_features"] = supported_features();
-
-    return map;
-}
-
 bool Entity::update(const QVariantMap &attributes)
 {
     bool chg = false;
@@ -89,7 +74,6 @@ int Entity::getFeatureIndex (const QString& featureName)
 {
     Q_ASSERT(m_enumFeatures != nullptr);
     QString name = featureName;
-    bool ok;
     return m_enumFeatures->keyToValue(name.prepend("F_").toUpper().toUtf8());
 }
 
