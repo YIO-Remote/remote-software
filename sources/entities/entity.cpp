@@ -24,6 +24,8 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
     m_enumCommands(nullptr),
     m_specificInterface(nullptr)
 {
+    memset (m_supported_features, 0, sizeof (m_supported_features));
+
     QString entityId = config.value("entity_id").toString();
     setObjectName(entityId);
 
@@ -87,6 +89,7 @@ int Entity::getFeatureIndex (const QString& featureName)
 {
     Q_ASSERT(m_enumFeatures != nullptr);
     QString name = featureName;
+    bool ok;
     return m_enumFeatures->keyToValue(name.prepend("F_").toUpper().toUtf8());
 }
 
@@ -122,13 +125,17 @@ QStringList Entity::allCommands ()
 }
 bool Entity::isSupported (int feature)
 {
-    return m_supported_features.contains(feature);
+    int byte = feature / 8;
+    int bit  = feature % 8;
+    Q_ASSERT(byte < int(sizeof (m_supported_features)));
+    return !!(m_supported_features[byte] & (1 << bit));
 }
 
 QStringList Entity::supported_features() {
     QStringList list;
-    foreach (const int &feature, m_supported_features) {
-        list.append (getFeatureName(feature));
+    for (int i = 0; i < MAX_FEATURES; i++) {
+        if (isSupported(i))
+            list.append (getFeatureName(i));
     }
     return list;
 }
@@ -208,6 +215,14 @@ void Entity::initializeSupportedFeatures(const QVariantMap &config)
 {
     QStringList features = config.value("supported_features").toStringList();
     for (int i = 0; i < features.length(); i++) {
-        m_supported_features.insert(getFeatureIndex(features[i]));
+       int feature = getFeatureIndex(features[i]);
+       if (feature < 0) {
+           qWarning () << "not defined feature" << features[i];
+           continue;
+       }
+       int byte = feature / 8;
+       int bit  = feature % 8;
+       Q_ASSERT(byte < int(sizeof (m_supported_features)));
+       m_supported_features[byte] |= (1 << bit);
     }
 }

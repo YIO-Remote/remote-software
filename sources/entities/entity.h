@@ -21,6 +21,8 @@ public:
     explicit Entity (const QString& type, const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent = nullptr);
     virtual ~Entity ();
 
+    static const  int           MAX_FEATURES = 96;  // Maximum number of features, must be increased if too small
+
     Q_PROPERTY	(QString        type                READ type               CONSTANT)
     Q_PROPERTY	(QString        friendly_name       READ friendly_name      CONSTANT)
     Q_PROPERTY	(QString        entity_id           READ entity_id          CONSTANT)
@@ -109,7 +111,7 @@ protected:
     QString                 m_integration;
     bool                    m_favorite;
     bool                    m_connected;
-    QSet<int>               m_supported_features;
+    quint8                  m_supported_features[(MAX_FEATURES + 7) / 8];
     int                     m_state;
     QMetaEnum*              m_enumState;
     QMetaEnum*              m_enumAttr;
