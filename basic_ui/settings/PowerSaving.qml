@@ -103,10 +103,10 @@ Item {
             }
 
             onValueChanged: {
-                var tmp = config.config;
-                tmp.settings.wifitime = wifioffSlider.value*60;
+                var tmp = config.settings;
+                tmp.wifitime = wifioffSlider.value*60;
                 if (setbyUser) {
-                    config.write = tmp;
+                    config.settings = tmp;
                     setbyUser = false;
                 }
             }
@@ -115,11 +115,11 @@ Item {
                 setbyUser = true;
             }
 
-            onPressedChanged: {
-                if (!this.pressed) {
-                    config.writeConfig();
-                }
-            }
+//            onPressedChanged: {
+//                if (!this.pressed) {
+//                    config.writeConfig();
+//                }
+//            }
         }
 
         Text {
@@ -227,10 +227,10 @@ Item {
             }
 
             onValueChanged: {
-                var tmp = config.config
-                tmp.settings.shutdowntime = shutdownSlider.value*60*60
+                var tmp = config.settings
+                tmp.shutdowntime = shutdownSlider.value*60*60
                 if (setbyUser) {
-                    config.write = tmp
+                    config.settings = tmp
                     setbyUser = false;
                 }
             }
@@ -239,11 +239,11 @@ Item {
                 setbyUser = true;
             }
 
-            onPressedChanged: {
-                if (!this.pressed) {
-                    config.writeConfig();
-                }
-            }
+//            onPressedChanged: {
+//                if (!this.pressed) {
+//                    config.writeConfig();
+//                }
+//            }
         }
 
         Text {

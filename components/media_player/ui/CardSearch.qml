@@ -18,9 +18,19 @@ Rectangle {
         searchTextField.text = "";
     }
 
-    function loadAlbum(album) {
-        swipeView.currentIndex = 1;
-        albumLoader.setSource("qrc:/components/media_player/ui/AlbumView.qml", { "albumId": album })
+    function load(album, type) {
+        swipeView.currentIndex++;
+        if (type === "album") {
+            obj.getAlbum(album);
+            obj.browseModelChanged.connect(function(model) {
+                if (model.count != 0 && albumLoader) {
+                    if (albumLoader.source != "qrc:/components/media_player/ui/AlbumView.qml")
+                        albumLoader.setSource("qrc:/components/media_player/ui/AlbumView.qml", { "albumModel": model })
+                    else if (albumLoader.item)
+                        albumLoader.item.albumModel = model;
+                }
+            });
+        }
     }
 
     property alias albumLoader: albumLoader
@@ -337,9 +347,9 @@ Rectangle {
                                         return albumList
                                 }
 
-                                Component.onCompleted: {
-                                    item.model = item_data;
-                                }
+                                onStatusChanged: if (listViewLoader.status == Loader.Ready && listViewLoader.item) {
+                                                     item.model = item_data;
+                                                 }
                             }
                         }
                     }
@@ -417,7 +427,7 @@ Rectangle {
 
                             onClicked: {
                                 haptic.playEffect("click");
-                                loadAlbum(item_key);
+                                load(item_key, item_type);
                             }
                         }
                     }
@@ -495,9 +505,7 @@ Rectangle {
 
                             onClicked: {
                                 haptic.playEffect("click");
-
-                                if (item_type == "track")
-                                    obj.playMedia(item_key)
+                                obj.playMedia(item_key, item_type);
                             }
                         }
                     }

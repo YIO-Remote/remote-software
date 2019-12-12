@@ -16,18 +16,19 @@ class Config : public QObject, ConfigInterface
     Q_INTERFACES(ConfigInterface)
 
 public:
-    Q_PROPERTY (QVariantMap      config         READ config     WRITE setConfig     NOTIFY configChanged)
-    Q_PROPERTY (QString          profile        READ profile    WRITE setProfile    NOTIFY profileChanged)
-    Q_PROPERTY (QVariantMap      settings       READ getSettings                    NOTIFY getSettingsChanged)
-    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations                NOTIFY getIntegrationsChanged)
-    Q_PROPERTY (QVariantMap      entities       READ getAllEntities                 NOTIFY getAllEntitiesChanged)
-    Q_PROPERTY (QVariantMap      profiles       READ getProfiles                    NOTIFY getProfilesChanged)
-    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig                    NOTIFY getUIConfigChanged)
-    Q_PROPERTY (QVariantMap      pages          READ getPages                       NOTIFY getPagesChanged)
-    Q_PROPERTY (QVariantMap      groups         READ getGroups                      NOTIFY getGroupsChanged)
+    Q_PROPERTY (QVariantMap      config         READ config         WRITE setConfig             NOTIFY configChanged)
+    Q_PROPERTY (QString          profile        READ profile        WRITE setProfile            NOTIFY profileChanged)
+    Q_PROPERTY (QVariantMap      settings       READ getSettings    WRITE setSettings           NOTIFY getSettingsChanged)
+    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations                            NOTIFY getIntegrationsChanged)
+    Q_PROPERTY (QVariantMap      entities       READ getAllEntities                             NOTIFY getAllEntitiesChanged)
+    Q_PROPERTY (QVariantMap      profiles       READ getProfiles                                NOTIFY getProfilesChanged)
+    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig                                NOTIFY getUIConfigChanged)
+    Q_PROPERTY (QVariantMap      pages          READ getPages                                   NOTIFY getPagesChanged)
+    Q_PROPERTY (QVariantMap      groups         READ getGroups                                  NOTIFY getGroupsChanged)
 
     Q_INVOKABLE void readConfig(QString path);
     Q_INVOKABLE void writeConfig();
+    Q_INVOKABLE void writeConfig(const bool sync);
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
@@ -48,6 +49,14 @@ public:
     QVariantMap getSettings() {
         return m_cacheSettings;
     }
+
+    void setSettings(const QVariantMap& config) {
+        m_config.insert("settings", config);
+        m_cacheSettings = config;
+        emit getSettingsChanged();
+        writeConfig(false);
+    }
+
     QVariantMap getUIConfig() {
         return m_cacheUIConfig;
     }

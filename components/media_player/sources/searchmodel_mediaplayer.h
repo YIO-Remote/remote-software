@@ -120,7 +120,7 @@ signals:
 
 private:
     int                          m_count;
-    QList<SearchModelListItem>  m_data;
+    QList<SearchModelListItem>   m_data;
 };
 
 #endif // SEARCHMODEL_MEDIAPLAYER_H
