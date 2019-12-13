@@ -119,6 +119,14 @@ bool WifiShellScripts::startAccessPoint()
     return true;
 }
 
+QString WifiMock::countryCode() {
+    return "";
+}
+
+void WifiMock::setCountryCode(QString &countryCode) {
+    qCWarning("setCountryCode not implemented!")
+}
+
 WifiNetwork WifiShellScripts::lineToNetwork(int index, const QStringRef& line) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
     QVector<QStringRef> list = line.split(",");

@@ -43,10 +43,12 @@ public:
     Q_INVOKABLE virtual void startNetworkScan() override;
     Q_INVOKABLE virtual bool startAccessPoint() override;
 
-    QString macAddress() const override;
-    QString ssid() const override;
-    int signalStrength() const override;
-    QString ipAddress() const override;
+    virtual QString countryCode() override;
+    virtual void setCountryCode(QString &countryCode) override;
+    virtual QString macAddress() const override;
+    virtual QString ssid() const override;
+    virtual int signalStrength() const override;
+    virtual QString ipAddress() const override;
 
 public slots:
     virtual void on() override;
@@ -55,6 +57,7 @@ public slots:
 private:
     virtual void timerEvent(QTimerEvent *event) override;
 
+    QString m_countryCode;
 };
 
 #endif // WIFIMOCK_H

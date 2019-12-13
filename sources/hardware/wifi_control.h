@@ -41,6 +41,7 @@
 class WifiControl : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString countryCode            READ countryCode       WRITE setCountryCode)
     // TODO do we need individual properties or would WifiStatus class be better?
     Q_PROPERTY(QString ssid                   READ ssid              NOTIFY networkNameChanged)
     Q_PROPERTY(QString macAddress             READ macAddress        NOTIFY macAddressChanged)
@@ -103,6 +104,18 @@ public:
      * @brief Starts an access point for the WiFi connection wizard.
      */
     Q_INVOKABLE virtual bool startAccessPoint() = 0;
+
+    /**
+     * @brief countryCode Returns the configured country code in which the device is operating
+     * @return ISO/IEC alpha2 country code
+     */
+    virtual QString countryCode() = 0;
+
+    /**
+     * @brief setCountryCode Sets the country code in which the device is operating
+     * @param countryCode ISO/IEC alpha2 country code
+     */
+    virtual void setCountryCode(QString &countryCode) = 0;
 
     virtual QString macAddress() const;
     virtual QString ssid() const;

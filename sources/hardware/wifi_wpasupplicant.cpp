@@ -321,6 +321,22 @@ bool WifiWpaSupplicant::startAccessPoint()
     return false;
 }
 
+QString WifiWpaSupplicant::countryCode() {
+    char buf[WPA_BUF_SIZE];
+    if (!controlRequest("GET country", buf, WPA_BUF_SIZE)) {
+        return "";
+    }
+
+    return QString(buf);
+}
+
+void WifiWpaSupplicant::setCountryCode(QString &countryCode) {
+    QString cmd = "SET country %1";
+    if (controlRequest(cmd.arg(countryCode.toUpper()))) {
+        controlRequest("SAVE_CONFIG");
+    }
+}
+
 /****************************************************************************/
 bool WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& network) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;

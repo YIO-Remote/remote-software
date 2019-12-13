@@ -44,6 +44,9 @@ public:
     Q_INVOKABLE virtual void startNetworkScan() override;
     Q_INVOKABLE virtual bool startAccessPoint() override;
 
+    virtual QString countryCode() override;
+    virtual void setCountryCode(QString &countryCode) override;
+
 private:
     virtual void timerEvent(QTimerEvent *event) override;
 

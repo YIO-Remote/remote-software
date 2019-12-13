@@ -28,6 +28,7 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiMock");
 
 WifiMock::WifiMock(QObject *parent) : WifiControl(parent)
+  , m_countryCode("CH")
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
@@ -128,6 +129,14 @@ bool WifiMock::startAccessPoint()
 {
     qCDebug(CLASS_LC) << "startAccessPoint";
     return false;
+}
+
+QString WifiMock::countryCode() {
+    return m_countryCode;
+}
+
+void WifiMock::setCountryCode(QString &countryCode) {
+    m_countryCode = countryCode;
 }
 
 void WifiMock::timerEvent(QTimerEvent *event)

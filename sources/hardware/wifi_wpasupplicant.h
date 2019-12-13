@@ -71,6 +71,9 @@ public:
     Q_INVOKABLE virtual void startNetworkScan() override;
     Q_INVOKABLE virtual bool startAccessPoint() override;
 
+    virtual QString countryCode() override;
+    virtual void setCountryCode(QString &countryCode) override;
+
     /**
       * TESTING ONLY! Proof of concept implementation for interactive authentication.
       * Callback method for signal authenticationRequest().
