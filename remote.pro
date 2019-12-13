@@ -86,14 +86,16 @@ linux {
             CONFIG_CTRL_IFACE=1 \
             CONFIG_CTRL_IFACE_UNIX=1
 
-        INCLUDEPATH += wpa_supplicant/src
+        INCLUDEPATH += wpa_supplicant/src wpa_supplicant/src/utils
 
         HEADERS += \
             sources/hardware/wifi_wpasupplicant.h
 
         SOURCES += \
             sources/hardware/wifi_wpasupplicant.cpp \
-            wpa_supplicant/src/wpa_ctrl.c
+            wpa_supplicant/src/common/wpa_ctrl.c \
+            wpa_supplicant/src/utils/os_unix.c
+
     } else {
         HEADERS += sources/hardware/wifi_shellscripts.h \
             sources/hardware/wifi_mock.h

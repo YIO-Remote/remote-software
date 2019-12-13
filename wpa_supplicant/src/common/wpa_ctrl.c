@@ -6,184 +6,32 @@
  * See README for more details.
  */
 
-#include <errno.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <time.h>
-#include "wpa_ctrl.h"
+#include "includes.h"
 
 #ifdef CONFIG_CTRL_IFACE
 
 #ifdef CONFIG_CTRL_IFACE_UNIX
-#include <fcntl.h>
-#include <net/if.h>
-#include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <fcntl.h>
 #endif /* CONFIG_CTRL_IFACE_UNIX */
-
 #ifdef CONFIG_CTRL_IFACE_UDP_REMOTE
 #include <netdb.h>
 #endif /* CONFIG_CTRL_IFACE_UDP_REMOTE */
 
 #ifdef ANDROID
-#include "private/android_filesystem_config.h"
-#include <cutils/sockets.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <cutils/sockets.h>
+#include "private/android_filesystem_config.h"
 #endif /* ANDROID */
 
 #ifdef CONFIG_CTRL_IFACE_UDP_IPV6
 #include <net/if.h>
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
 
-#define os_malloc(size) malloc(size)
-#define os_memset(s, c, n) memset(s, c, n)
-#define os_free(ptr) free(ptr)
-#define os_snprintf snprintf
-#define os_getpid getpid
-#define os_memcmp(s1, s2, n) memcmp(s1, s2, n)
-
-// Modifications Thomas Ruschival
-#define os_zalloc(s) calloc(1, s)
-
-#define os_strncmp(s1, s2, n) strncmp((s1), (s2), (n))
-typedef long os_time_t;
-
-/**
- * os_sleep - Sleep (sec, usec)
- * @sec: Number of seconds to sleep
- * @usec: Number of microseconds to sleep
- */
-static inline void os_sleep(os_time_t sec, os_time_t usec) {
-    if (sec)
-        sleep(sec);
-    if (usec)
-        usleep(usec);
-}
-
-struct os_time {
-    os_time_t sec;
-    os_time_t usec;
-};
-
-struct os_reltime {
-    os_time_t sec;
-    os_time_t usec;
-};
-
-
-/**
- * os_get_reltime - Get relative time (sec, usec)
- * @t: Pointer to buffer for the time
- * Returns: 0 on success, -1 on failure
- */
-int os_get_reltime(struct os_reltime* t) {
-#ifndef __MACH__
-#if defined(CLOCK_BOOTTIME)
-    static clockid_t clock_id = CLOCK_BOOTTIME;
-#elif defined(CLOCK_MONOTONIC)
-    static clockid_t clock_id = CLOCK_MONOTONIC;
-#else
-    static clockid_t clock_id = CLOCK_REALTIME;
-#endif
-    struct timespec ts;
-    int res;
-
-    while (1) {
-        res = clock_gettime(clock_id, &ts);
-        if (res == 0) {
-            t->sec = ts.tv_sec;
-            t->usec = ts.tv_nsec / 1000;
-            return 0;
-        }
-        switch (clock_id) {
-#ifdef CLOCK_BOOTTIME
-        case CLOCK_BOOTTIME:
-            clock_id = CLOCK_MONOTONIC;
-            break;
-#endif
-#ifdef CLOCK_MONOTONIC
-        case CLOCK_MONOTONIC:
-            clock_id = CLOCK_REALTIME;
-            break;
-#endif
-        case CLOCK_REALTIME:
-            return -1;
-        }
-    }
-#else  /* __MACH__ */
-    uint64_t abstime, nano;
-    static mach_timebase_info_data_t info = {0, 0};
-
-    if (!info.denom) {
-        if (mach_timebase_info(&info) != KERN_SUCCESS)
-            return -1;
-    }
-
-    abstime = mach_absolute_time();
-    nano = (abstime * info.numer) / info.denom;
-
-    t->sec = nano / NSEC_PER_SEC;
-    t->usec = (nano - (((uint64_t)t->sec) * NSEC_PER_SEC)) / NSEC_PER_USEC;
-
-    return 0;
-#endif /* __MACH__ */
-}
-
-
-static inline void os_reltime_sub(
-    struct os_reltime* a, struct os_reltime* b, struct os_reltime* res) {
-    res->sec = a->sec - b->sec;
-    res->usec = a->usec - b->usec;
-    if (res->usec < 0) {
-        res->sec--;
-        res->usec += 1000000;
-    }
-}
-
-
-static inline int os_reltime_expired(
-    struct os_reltime* now, struct os_reltime* ts, os_time_t timeout_secs) {
-    struct os_reltime age;
-
-    os_reltime_sub(now, ts, &age);
-    return (age.sec > timeout_secs) ||
-        (age.sec == timeout_secs && age.usec > 0);
-}
-
-
-// from src/os.h
-static inline int os_snprintf_error(size_t size, int res) {
-    return res < 0 || (unsigned int)res >= size;
-}
-
-
-size_t os_strlcpy(char* dest, const char* src, size_t siz) {
-    const char* s = src;
-    size_t left = siz;
-
-    if (left) {
-        /* Copy string up to the maximum size of the dest buffer */
-        while (--left != 0) {
-            if ((*dest++ = *s++) == '\0')
-                break;
-        }
-    }
-
-    if (left == 0) {
-        /* Not enough room for the string; force NUL-termination */
-        if (siz != 0)
-            *dest = '\0';
-        while (*s++)
-            ; /* determine total src string length */
-    }
-
-    return s - src - 1;
-}
+#include "wpa_ctrl.h"
+#include "common.h"
 
 
 #if defined(CONFIG_CTRL_IFACE_UNIX) || defined(CONFIG_CTRL_IFACE_UDP)
@@ -206,13 +54,13 @@ struct wpa_ctrl {
 #ifdef CONFIG_CTRL_IFACE_UDP_IPV6
     struct sockaddr_in6 local;
     struct sockaddr_in6 dest;
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
     struct sockaddr_in local;
     struct sockaddr_in dest;
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
-    char* cookie;
-    char* remote_ifname;
-    char* remote_ip;
+    char *cookie;
+    char *remote_ifname;
+    char *remote_ip;
 #endif /* CONFIG_CTRL_IFACE_UDP */
 #ifdef CONFIG_CTRL_IFACE_UNIX
     int s;
@@ -235,13 +83,16 @@ struct wpa_ctrl {
 #endif /* CONFIG_CTRL_IFACE_CLIENT_PREFIX */
 
 
-struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
+struct wpa_ctrl * wpa_ctrl_open(const char *ctrl_path)
+{
     return wpa_ctrl_open2(ctrl_path, NULL);
 }
 
 
-struct wpa_ctrl* wpa_ctrl_open2(const char* ctrl_path, const char* cli_path) {
-    struct wpa_ctrl* ctrl;
+struct wpa_ctrl * wpa_ctrl_open2(const char *ctrl_path,
+                 const char *cli_path)
+{
+    struct wpa_ctrl *ctrl;
     static int counter = 0;
     int ret;
     size_t res;
@@ -265,14 +116,16 @@ struct wpa_ctrl* wpa_ctrl_open2(const char* ctrl_path, const char* cli_path) {
     counter++;
 try_again:
     if (cli_path && cli_path[0] == '/') {
-        ret = os_snprintf(ctrl->local.sun_path, sizeof(ctrl->local.sun_path),
-            "%s/" CONFIG_CTRL_IFACE_CLIENT_PREFIX "%d-%d", cli_path,
-            (int)getpid(), counter);
+        ret = os_snprintf(ctrl->local.sun_path,
+                  sizeof(ctrl->local.sun_path),
+                  "%s/" CONFIG_CTRL_IFACE_CLIENT_PREFIX "%d-%d",
+                  cli_path, (int) getpid(), counter);
     } else {
-        ret = os_snprintf(ctrl->local.sun_path, sizeof(ctrl->local.sun_path),
-            CONFIG_CTRL_IFACE_CLIENT_DIR "/" CONFIG_CTRL_IFACE_CLIENT_PREFIX
-                                         "%d-%d",
-            (int)getpid(), counter);
+        ret = os_snprintf(ctrl->local.sun_path,
+                  sizeof(ctrl->local.sun_path),
+                  CONFIG_CTRL_IFACE_CLIENT_DIR "/"
+                  CONFIG_CTRL_IFACE_CLIENT_PREFIX "%d-%d",
+                  (int) getpid(), counter);
     }
     if (os_snprintf_error(sizeof(ctrl->local.sun_path), ret)) {
         close(ctrl->s);
@@ -280,8 +133,8 @@ try_again:
         return NULL;
     }
     tries++;
-    if (bind(ctrl->s, (struct sockaddr*)&ctrl->local, sizeof(ctrl->local)) <
-        0) {
+    if (bind(ctrl->s, (struct sockaddr *) &ctrl->local,
+            sizeof(ctrl->local)) < 0) {
         if (errno == EADDRINUSE && tries < 2) {
             /*
              * getpid() returns unique identifier for this instance
@@ -304,8 +157,10 @@ try_again:
     chown(ctrl->local.sun_path, AID_SYSTEM, AID_WIFI);
 
     if (os_strncmp(ctrl_path, "@android:", 9) == 0) {
-        if (socket_local_client_connect(ctrl->s, ctrl_path + 9,
-                ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_DGRAM) < 0) {
+        if (socket_local_client_connect(
+                ctrl->s, ctrl_path + 9,
+                ANDROID_SOCKET_NAMESPACE_RESERVED,
+                SOCK_DGRAM) < 0) {
             close(ctrl->s);
             unlink(ctrl->local.sun_path);
             os_free(ctrl);
@@ -323,8 +178,10 @@ try_again:
     if (*ctrl_path != '/') {
         char buf[21];
         os_snprintf(buf, sizeof(buf), "wpa_%s", ctrl_path);
-        if (socket_local_client_connect(ctrl->s, buf,
-                ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_DGRAM) < 0) {
+        if (socket_local_client_connect(
+                ctrl->s, buf,
+                ANDROID_SOCKET_NAMESPACE_RESERVED,
+                SOCK_DGRAM) < 0) {
             close(ctrl->s);
             unlink(ctrl->local.sun_path);
             os_free(ctrl);
@@ -338,18 +195,18 @@ try_again:
     if (os_strncmp(ctrl_path, "@abstract:", 10) == 0) {
         ctrl->dest.sun_path[0] = '\0';
         os_strlcpy(ctrl->dest.sun_path + 1, ctrl_path + 10,
-            sizeof(ctrl->dest.sun_path) - 1);
+               sizeof(ctrl->dest.sun_path) - 1);
     } else {
-        res = os_strlcpy(
-            ctrl->dest.sun_path, ctrl_path, sizeof(ctrl->dest.sun_path));
+        res = os_strlcpy(ctrl->dest.sun_path, ctrl_path,
+                 sizeof(ctrl->dest.sun_path));
         if (res >= sizeof(ctrl->dest.sun_path)) {
             close(ctrl->s);
             os_free(ctrl);
             return NULL;
         }
     }
-    if (connect(ctrl->s, (struct sockaddr*)&ctrl->dest, sizeof(ctrl->dest)) <
-        0) {
+    if (connect(ctrl->s, (struct sockaddr *) &ctrl->dest,
+            sizeof(ctrl->dest)) < 0) {
         close(ctrl->s);
         unlink(ctrl->local.sun_path);
         os_free(ctrl);
@@ -373,7 +230,8 @@ try_again:
 }
 
 
-void wpa_ctrl_close(struct wpa_ctrl* ctrl) {
+void wpa_ctrl_close(struct wpa_ctrl *ctrl)
+{
     if (ctrl == NULL)
         return;
     unlink(ctrl->local.sun_path);
@@ -391,20 +249,21 @@ void wpa_ctrl_close(struct wpa_ctrl* ctrl) {
  * event of crashes that prevented them from being removed as part
  * of the normal orderly shutdown.
  */
-void wpa_ctrl_cleanup(void) {
-    DIR* dir;
+void wpa_ctrl_cleanup(void)
+{
+    DIR *dir;
     struct dirent entry;
-    struct dirent* result;
+    struct dirent *result;
     size_t dirnamelen;
     size_t maxcopy;
     char pathname[PATH_MAX];
-    char* namep;
+    char *namep;
 
     if ((dir = opendir(CONFIG_CTRL_IFACE_CLIENT_DIR)) == NULL)
         return;
 
-    dirnamelen = (size_t)os_snprintf(
-        pathname, sizeof(pathname), "%s/", CONFIG_CTRL_IFACE_CLIENT_DIR);
+    dirnamelen = (size_t) os_snprintf(pathname, sizeof(pathname), "%s/",
+                      CONFIG_CTRL_IFACE_CLIENT_DIR);
     if (dirnamelen >= sizeof(pathname)) {
         closedir(dir);
         return;
@@ -422,7 +281,8 @@ void wpa_ctrl_cleanup(void) {
 #else /* CONFIG_CTRL_IFACE_UNIX */
 
 #ifdef ANDROID
-void wpa_ctrl_cleanup(void) {
+void wpa_ctrl_cleanup(void)
+{
 }
 #endif /* ANDROID */
 
@@ -431,12 +291,13 @@ void wpa_ctrl_cleanup(void) {
 
 #ifdef CONFIG_CTRL_IFACE_UDP
 
-struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
-    struct wpa_ctrl* ctrl;
+struct wpa_ctrl * wpa_ctrl_open(const char *ctrl_path)
+{
+    struct wpa_ctrl *ctrl;
     char buf[128];
     size_t len;
 #ifdef CONFIG_CTRL_IFACE_UDP_REMOTE
-    struct hostent* h;
+    struct hostent *h;
 #endif /* CONFIG_CTRL_IFACE_UDP_REMOTE */
 
     ctrl = os_zalloc(sizeof(*ctrl));
@@ -445,7 +306,7 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
 
 #ifdef CONFIG_CTRL_IFACE_UDP_IPV6
     ctrl->s = socket(PF_INET6, SOCK_DGRAM, 0);
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
     ctrl->s = socket(PF_INET, SOCK_DGRAM, 0);
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
     if (ctrl->s < 0) {
@@ -458,20 +319,20 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
     ctrl->local.sin6_family = AF_INET6;
 #ifdef CONFIG_CTRL_IFACE_UDP_REMOTE
     ctrl->local.sin6_addr = in6addr_any;
-#else  /* CONFIG_CTRL_IFACE_UDP_REMOTE */
+#else /* CONFIG_CTRL_IFACE_UDP_REMOTE */
     inet_pton(AF_INET6, "::1", &ctrl->local.sin6_addr);
 #endif /* CONFIG_CTRL_IFACE_UDP_REMOTE */
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
     ctrl->local.sin_family = AF_INET;
 #ifdef CONFIG_CTRL_IFACE_UDP_REMOTE
     ctrl->local.sin_addr.s_addr = INADDR_ANY;
-#else  /* CONFIG_CTRL_IFACE_UDP_REMOTE */
+#else /* CONFIG_CTRL_IFACE_UDP_REMOTE */
     ctrl->local.sin_addr.s_addr = htonl((127 << 24) | 1);
 #endif /* CONFIG_CTRL_IFACE_UDP_REMOTE */
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
 
-    if (bind(ctrl->s, (struct sockaddr*)&ctrl->local, sizeof(ctrl->local)) <
-        0) {
+    if (bind(ctrl->s, (struct sockaddr *) &ctrl->local,
+         sizeof(ctrl->local)) < 0) {
         close(ctrl->s);
         os_free(ctrl);
         return NULL;
@@ -481,7 +342,7 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
     ctrl->dest.sin6_family = AF_INET6;
     inet_pton(AF_INET6, "::1", &ctrl->dest.sin6_addr);
     ctrl->dest.sin6_port = htons(WPA_CTRL_IFACE_PORT);
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
     ctrl->dest.sin_family = AF_INET;
     ctrl->dest.sin_addr.s_addr = htonl((127 << 24) | 1);
     ctrl->dest.sin_port = htons(WPA_CTRL_IFACE_PORT);
@@ -492,7 +353,7 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
         char *port, *name;
         int port_id;
 #ifdef CONFIG_CTRL_IFACE_UDP_IPV6
-        char* scope;
+        char *scope;
         int scope_id = 0;
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
 
@@ -504,7 +365,7 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
         }
 #ifdef CONFIG_CTRL_IFACE_UDP_IPV6
         port = os_strchr(name, ',');
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
         port = os_strchr(name, ':');
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
 
@@ -521,7 +382,7 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
             scope[0] = '\0';
         }
         h = gethostbyname2(name, AF_INET6);
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
         h = gethostbyname(name);
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
         ctrl->remote_ip = os_strdup(name);
@@ -537,7 +398,7 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
         ctrl->dest.sin6_scope_id = scope_id;
         ctrl->dest.sin6_port = htons(port_id);
         os_memcpy(&ctrl->dest.sin6_addr, h->h_addr, h->h_length);
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
         ctrl->dest.sin_port = htons(port_id);
         os_memcpy(&ctrl->dest.sin_addr.s_addr, h->h_addr, h->h_length);
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
@@ -545,18 +406,20 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
         ctrl->remote_ip = os_strdup("localhost");
 #endif /* CONFIG_CTRL_IFACE_UDP_REMOTE */
 
-    if (connect(ctrl->s, (struct sockaddr*)&ctrl->dest, sizeof(ctrl->dest)) <
-        0) {
+    if (connect(ctrl->s, (struct sockaddr *) &ctrl->dest,
+            sizeof(ctrl->dest)) < 0) {
 #ifdef CONFIG_CTRL_IFACE_UDP_IPV6
         char addr[INET6_ADDRSTRLEN];
         wpa_printf(MSG_ERROR, "connect(%s:%d) failed: %s",
-            inet_ntop(
-                AF_INET6, &ctrl->dest.sin6_addr, addr, sizeof(ctrl->dest)),
-            ntohs(ctrl->dest.sin6_port), strerror(errno));
-#else  /* CONFIG_CTRL_IFACE_UDP_IPV6 */
+               inet_ntop(AF_INET6, &ctrl->dest.sin6_addr, addr,
+                     sizeof(ctrl->dest)),
+               ntohs(ctrl->dest.sin6_port),
+               strerror(errno));
+#else /* CONFIG_CTRL_IFACE_UDP_IPV6 */
         wpa_printf(MSG_ERROR, "connect(%s:%d) failed: %s",
-            inet_ntoa(ctrl->dest.sin_addr), ntohs(ctrl->dest.sin_port),
-            strerror(errno));
+               inet_ntoa(ctrl->dest.sin_addr),
+               ntohs(ctrl->dest.sin_port),
+               strerror(errno));
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
         close(ctrl->s);
         os_free(ctrl->remote_ip);
@@ -579,16 +442,18 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
 }
 
 
-char* wpa_ctrl_get_remote_ifname(struct wpa_ctrl* ctrl) {
+char * wpa_ctrl_get_remote_ifname(struct wpa_ctrl *ctrl)
+{
 #define WPA_CTRL_MAX_PS_NAME 100
     static char ps[WPA_CTRL_MAX_PS_NAME] = {};
-    os_snprintf(ps, WPA_CTRL_MAX_PS_NAME, "%s/%s", ctrl->remote_ip,
-        ctrl->remote_ifname);
+    os_snprintf(ps, WPA_CTRL_MAX_PS_NAME, "%s/%s",
+            ctrl->remote_ip, ctrl->remote_ifname);
     return ps;
 }
 
 
-void wpa_ctrl_close(struct wpa_ctrl* ctrl) {
+void wpa_ctrl_close(struct wpa_ctrl *ctrl)
+{
     close(ctrl->s);
     os_free(ctrl->cookie);
     os_free(ctrl->remote_ifname);
@@ -600,19 +465,21 @@ void wpa_ctrl_close(struct wpa_ctrl* ctrl) {
 
 
 #ifdef CTRL_IFACE_SOCKET
-int wpa_ctrl_request(struct wpa_ctrl* ctrl, const char* cmd, size_t cmd_len,
-    char* reply, size_t* reply_len, void (*msg_cb)(char* msg, size_t len)) {
+int wpa_ctrl_request(struct wpa_ctrl *ctrl, const char *cmd, size_t cmd_len,
+             char *reply, size_t *reply_len,
+             void (*msg_cb)(char *msg, size_t len))
+{
     struct timeval tv;
     struct os_reltime started_at;
     int res;
     fd_set rfds;
-    const char* _cmd;
-    char* cmd_buf = NULL;
+    const char *_cmd;
+    char *cmd_buf = NULL;
     size_t _cmd_len;
 
 #ifdef CONFIG_CTRL_IFACE_UDP
     if (ctrl->cookie) {
-        char* pos;
+        char *pos;
         _cmd_len = os_strlen(ctrl->cookie) + 1 + cmd_len;
         cmd_buf = os_malloc(_cmd_len);
         if (cmd_buf == NULL)
@@ -635,7 +502,8 @@ int wpa_ctrl_request(struct wpa_ctrl* ctrl, const char* cmd, size_t cmd_len,
     started_at.usec = 0;
 retry_send:
     if (send(ctrl->s, _cmd, _cmd_len, 0) < 0) {
-        if (errno == EAGAIN || errno == EBUSY || errno == EWOULDBLOCK) {
+        if (errno == EAGAIN || errno == EBUSY || errno == EWOULDBLOCK)
+        {
             /*
              * Must be a non-blocking socket... Try for a bit
              * longer before giving up.
@@ -680,7 +548,7 @@ retry_send:
                 if (msg_cb) {
                     /* Make sure the message is nul
                      * terminated. */
-                    if ((size_t)res == *reply_len)
+                    if ((size_t) res == *reply_len)
                         res = (*reply_len) - 1;
                     reply[res] = '\0';
                     msg_cb(reply, res);
@@ -698,13 +566,14 @@ retry_send:
 #endif /* CTRL_IFACE_SOCKET */
 
 
-static int wpa_ctrl_attach_helper(struct wpa_ctrl* ctrl, int attach) {
+static int wpa_ctrl_attach_helper(struct wpa_ctrl *ctrl, int attach)
+{
     char buf[10];
     int ret;
     size_t len = 10;
 
-    ret = wpa_ctrl_request(
-        ctrl, attach ? "ATTACH" : "DETACH", 6, buf, &len, NULL);
+    ret = wpa_ctrl_request(ctrl, attach ? "ATTACH" : "DETACH", 6,
+                   buf, &len, NULL);
     if (ret < 0)
         return ret;
     if (len == 3 && os_memcmp(buf, "OK\n", 3) == 0)
@@ -713,19 +582,22 @@ static int wpa_ctrl_attach_helper(struct wpa_ctrl* ctrl, int attach) {
 }
 
 
-int wpa_ctrl_attach(struct wpa_ctrl* ctrl) {
+int wpa_ctrl_attach(struct wpa_ctrl *ctrl)
+{
     return wpa_ctrl_attach_helper(ctrl, 1);
 }
 
 
-int wpa_ctrl_detach(struct wpa_ctrl* ctrl) {
+int wpa_ctrl_detach(struct wpa_ctrl *ctrl)
+{
     return wpa_ctrl_attach_helper(ctrl, 0);
 }
 
 
 #ifdef CTRL_IFACE_SOCKET
 
-int wpa_ctrl_recv(struct wpa_ctrl* ctrl, char* reply, size_t* reply_len) {
+int wpa_ctrl_recv(struct wpa_ctrl *ctrl, char *reply, size_t *reply_len)
+{
     int res;
 
     res = recv(ctrl->s, reply, *reply_len, 0);
@@ -736,7 +608,8 @@ int wpa_ctrl_recv(struct wpa_ctrl* ctrl, char* reply, size_t* reply_len) {
 }
 
 
-int wpa_ctrl_pending(struct wpa_ctrl* ctrl) {
+int wpa_ctrl_pending(struct wpa_ctrl *ctrl)
+{
     struct timeval tv;
     fd_set rfds;
     tv.tv_sec = 0;
@@ -748,7 +621,8 @@ int wpa_ctrl_pending(struct wpa_ctrl* ctrl) {
 }
 
 
-int wpa_ctrl_get_fd(struct wpa_ctrl* ctrl) {
+int wpa_ctrl_get_fd(struct wpa_ctrl *ctrl)
+{
     return ctrl->s;
 }
 
@@ -762,8 +636,9 @@ int wpa_ctrl_get_fd(struct wpa_ctrl* ctrl) {
 #endif
 #define NAMED_PIPE_PREFIX TEXT("\\\\.\\pipe\\") TEXT(WPA_SUPPLICANT_NAMED_PIPE)
 
-struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
-    struct wpa_ctrl* ctrl;
+struct wpa_ctrl * wpa_ctrl_open(const char *ctrl_path)
+{
+    struct wpa_ctrl *ctrl;
     DWORD mode;
     TCHAR name[256];
     int i, ret;
@@ -777,12 +652,14 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
     if (ctrl_path == NULL)
         ret = _snwprintf(name, 256, NAMED_PIPE_PREFIX);
     else
-        ret = _snwprintf(name, 256, NAMED_PIPE_PREFIX TEXT("-%S"), ctrl_path);
-#else  /* UNICODE */
+        ret = _snwprintf(name, 256, NAMED_PIPE_PREFIX TEXT("-%S"),
+                 ctrl_path);
+#else /* UNICODE */
     if (ctrl_path == NULL)
         ret = os_snprintf(name, 256, NAMED_PIPE_PREFIX);
     else
-        ret = os_snprintf(name, 256, NAMED_PIPE_PREFIX "-%s", ctrl_path);
+        ret = os_snprintf(name, 256, NAMED_PIPE_PREFIX "-%s",
+                  ctrl_path);
 #endif /* UNICODE */
     if (os_snprintf_error(256, ret)) {
         os_free(ctrl);
@@ -790,8 +667,8 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
     }
 
     for (i = 0; i < 10; i++) {
-        ctrl->pipe = CreateFile(name, GENERIC_READ | GENERIC_WRITE, 0, NULL,
-            OPEN_EXISTING, 0, NULL);
+        ctrl->pipe = CreateFile(name, GENERIC_READ | GENERIC_WRITE, 0,
+                    NULL, OPEN_EXISTING, 0, NULL);
         /*
          * Current named pipe server side in wpa_supplicant is
          * re-opening the pipe for new clients only after the previous
@@ -820,14 +697,17 @@ struct wpa_ctrl* wpa_ctrl_open(const char* ctrl_path) {
 }
 
 
-void wpa_ctrl_close(struct wpa_ctrl* ctrl) {
+void wpa_ctrl_close(struct wpa_ctrl *ctrl)
+{
     CloseHandle(ctrl->pipe);
     os_free(ctrl);
 }
 
 
-int wpa_ctrl_request(struct wpa_ctrl* ctrl, const char* cmd, size_t cmd_len,
-    char* reply, size_t* reply_len, void (*msg_cb)(char* msg, size_t len)) {
+int wpa_ctrl_request(struct wpa_ctrl *ctrl, const char *cmd, size_t cmd_len,
+             char *reply, size_t *reply_len,
+             void (*msg_cb)(char *msg, size_t len))
+{
     DWORD written;
     DWORD readlen = *reply_len;
 
@@ -842,7 +722,8 @@ int wpa_ctrl_request(struct wpa_ctrl* ctrl, const char* cmd, size_t cmd_len,
 }
 
 
-int wpa_ctrl_recv(struct wpa_ctrl* ctrl, char* reply, size_t* reply_len) {
+int wpa_ctrl_recv(struct wpa_ctrl *ctrl, char *reply, size_t *reply_len)
+{
     DWORD len = *reply_len;
     if (!ReadFile(ctrl->pipe, reply, *reply_len, &len, NULL))
         return -1;
@@ -851,7 +732,8 @@ int wpa_ctrl_recv(struct wpa_ctrl* ctrl, char* reply, size_t* reply_len) {
 }
 
 
-int wpa_ctrl_pending(struct wpa_ctrl* ctrl) {
+int wpa_ctrl_pending(struct wpa_ctrl *ctrl)
+{
     DWORD left;
 
     if (!PeekNamedPipe(ctrl->pipe, NULL, 0, NULL, &left, NULL))
@@ -860,7 +742,8 @@ int wpa_ctrl_pending(struct wpa_ctrl* ctrl) {
 }
 
 
-int wpa_ctrl_get_fd(struct wpa_ctrl* ctrl) {
+int wpa_ctrl_get_fd(struct wpa_ctrl *ctrl)
+{
     return -1;
 }
 

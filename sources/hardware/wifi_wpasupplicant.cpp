@@ -39,7 +39,7 @@
 #include <exception>
 
 #include "wifi_wpasupplicant.h"
-#include "wpa_ctrl.h"
+#include "common/wpa_ctrl.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
@@ -175,7 +175,7 @@ bool WifiWpaSupplicant::clearConfiguredNetworks()
         return false;
     }
 
-    if (!controlRequest("SAVE_CONFIG")) {
+    if (!saveConfiguration()) {
         return false;
     }
 
@@ -188,6 +188,8 @@ bool WifiWpaSupplicant::clearConfiguredNetworks()
 
 bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security, const QString &password)
 {
+    qCDebug(CLASS_LC) << ssid << security;
+
     // For more details about network creation & security option see:
     // https://github.com/loh-tar/wpa-cute/blob/master/src/networkconfig.cpp#L198
 
@@ -198,8 +200,12 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
     QString keyMgmnt;
     QString authAlg;
 
+    // KISS: as long as we don't need EAP this simple logic is "good enough".
+    // Even though it's a classical OCP violation: different security should be handled in their own specialized classes!
+    // Note: EAP is validated & rejected in above's validateAuthentication call
     switch (security) {
     case WifiNetwork::Security::Default :
+        keyMgmnt = "WPA-PSK";
         break;
     case WifiNetwork::Security::NoneOpen :
         keyMgmnt = "NONE";
@@ -216,7 +222,7 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
         keyMgmnt = "WPA-PSK";
         break;
     case WifiNetwork::Security::WPA2_PSK :
-        keyMgmnt = "WPA2_PSK";
+        keyMgmnt = "WPA-PSK";
         break;
     default :
         qWarning(CLASS_LC) << "Authentication mode not (yet) implemented:" << security;
@@ -224,20 +230,28 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
     }
 
     char buf[WPA_BUF_SIZE];
-    QList<WifiNetwork> networks = WifiWpaSupplicant::getConfiguredNetworks();
-
-    // FIXME don't remove all networks, but check first if the SSID is already configured
-    QString cmd = "REMOVE_NETWORK %1";
-    // TODO check if ssid is within networks and get its networkId
-
-    if (!controlRequest("REMOVE_NETWORK all", buf, WPA_BUF_SIZE)) {
-        return false;
+    QString cmd;
+    // TODO make configurable
+    bool removeNetworksBeforeJoin = false;
+    if (removeNetworksBeforeJoin) {
+        if (!controlRequest("REMOVE_NETWORK all", buf, WPA_BUF_SIZE)) {
+            return false;
+        }
+    } else {
+        cmd = "REMOVE_NETWORK %1";
+        QList<WifiNetwork> networks = WifiWpaSupplicant::getConfiguredNetworks();
+        for (WifiNetwork network : networks) {
+            if (network.name() == ssid) {
+                controlRequest(cmd.arg(network.id()), buf, WPA_BUF_SIZE);
+            }
+        }
     }
 
     if (!controlRequest("ADD_NETWORK", buf, WPA_BUF_SIZE)) {
         return false;
     }
     QString networkId = QString(buf);
+    networkId.remove('\n');
 
     if (!setNetworkParam(networkId, "ssid", ssid, true)) {
         return false;
@@ -256,8 +270,12 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
     }
 
     if (security == WifiNetwork::Security::NoneWep || security == WifiNetwork::Security::NoneWepShared) {
-        writeWepKey(networkId, password, 0);
-        setNetworkParam(networkId, "wep_tx_keyidx", "0");
+        if (!writeWepKey(networkId, password, 0)) {
+            return false;
+        }
+        if (!setNetworkParam(networkId, "wep_tx_keyidx", "0")) {
+            return false;
+        }
     } else if (!password.isEmpty()) {
         if (!setNetworkParam(networkId, "psk", password, password.length() != 64)) {
             return false;
@@ -266,6 +284,7 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
 
     cmd = "ENABLE_NETWORK %1";
     if (!controlRequest(cmd.arg(networkId), buf, WPA_BUF_SIZE)) {
+        controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
         return false;
     }
 
@@ -273,7 +292,7 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
     // - start timer to call STATUS and check for 'wpa_state=COMPLETED'
     // - repeat 3 times and pause 3s in between
     // - emit signal for connection result
-    if (!controlRequest("SAVE_CONFIG", buf, WPA_BUF_SIZE)) {
+    if (!saveConfiguration()) {
         return false;
     }
 
@@ -291,7 +310,12 @@ bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString&
     else
         cmd = "SET_NETWORK %1 %2 %3";
 
-    return controlRequest(cmd.arg(networkId).arg(parm).arg(val));
+    if (!controlRequest(cmd.arg(networkId).arg(parm).arg(val))) {
+        controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
+        return false;
+    }
+
+    return true;
 }
 
 bool WifiWpaSupplicant::writeWepKey(const QString& networkId, const QString& value, int keyId)
@@ -389,7 +413,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
     QString response = QString::fromLocal8Bit(buf);
     qCDebug(CLASS_LC()) << cmd << "response:" << response;
 
-    if (response.startsWith("FAIL")) {
+    if (response.startsWith("FAIL\n")) {
         return false;
     }
 
@@ -429,6 +453,7 @@ void WifiWpaSupplicant::parseEvent(char* msg) {
             pos = msg;
         }
     }
+    Q_UNUSED(priority)
 
     QString event = QString::fromLocal8Bit(pos);
 
@@ -677,9 +702,9 @@ int WifiWpaSupplicant::parseSignalStrength(const char* buffer) {
 
     /* In order to eliminate signal strength fluctuations, try
      * to obtain averaged RSSI value in the first place. */
-    if ((rssi = strstr(buffer, "AVG_RSSI=")) != NULL)
+    if ((rssi = strstr(buffer, "AVG_RSSI=")) != nullptr)
         rssiValue = atoi(&rssi[sizeof("AVG_RSSI")]);
-    else if ((rssi = strstr(buffer, "RSSI=")) != NULL)
+    else if ((rssi = strstr(buffer, "RSSI=")) != nullptr)
         rssiValue = atoi(&rssi[sizeof("RSSI")]);
     else {
         qCDebug(CLASS_LC) << "Failed to get RSSI value";
@@ -697,6 +722,15 @@ bool WifiWpaSupplicant::checkConnection()
 
     WifiStatus wifiStatus = parseStatus(buf);
     setConnected(wifiStatus.connected);
+    return true;
+}
+
+bool WifiWpaSupplicant::saveConfiguration() {
+    if (!controlRequest("SAVE_CONFIG")) {
+        qCWarning(CLASS_LC) << "Error saving current wpa_supplicant configuration! Please verify that /etc/wpa_supplicant/wpa_supplicant-wlan0.conf has 'update_config=1' set. Otherwise the configration cannot be persisted!";
+        controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
+        return false;
+    }
     return true;
 }
 

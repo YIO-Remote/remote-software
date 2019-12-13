@@ -46,7 +46,7 @@
 #include <thread>
 
 #include "wifi_control.h"
-#include "wpa_ctrl.h"
+#include "common/wpa_ctrl.h"
 
 /**
  * Function to register as callback for the wpa_supplicant control interface
@@ -113,6 +113,7 @@ private:
 
     /**
      * @brief setNetworkParam Helper method to set a network parameter with SET_NETWORK
+     * @details If the parameter setting fails the wpa_supplicant configuration is re-read to restore the previous configuration state!
      * @param networkId Network identification
      * @param parm Parameter name
      * @param val Value to set for parameter
@@ -203,6 +204,13 @@ private:
      * @return true if the WiFi connection is established
      */
     bool checkConnection();
+
+    /**
+     * @brief saveConfiguration Persist configuration with SAVE_CONFIG and check result
+     * @details If the parameter setting fails the wpa_supplicant configuration is re-read to restore the previous configuration state!
+     * @return true if configuation was saved
+     */
+    bool saveConfiguration();
 
     virtual void timerEvent(QTimerEvent *event) override;
 

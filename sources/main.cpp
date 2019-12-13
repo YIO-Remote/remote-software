@@ -89,9 +89,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
+    qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork", "Not creatable as it is an enum type");
+    qRegisterMetaType<WifiNetwork::Security>("WifiNetworkSecurity");
+
+
     // DRIVERS
     // TODO think about device driver factory, pass configuration object to driver
-    WifiControl::instance().init();
     WifiControl* wifiControl = &WifiControl::instance();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
 
@@ -114,6 +117,10 @@ int main(int argc, char *argv[])
     // NOTIFICATIONS
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
+
+    if (!wifiControl->init()) {
+        notifications.add(true, QObject::tr("WiFi device was not found."));
+    }
 
     // FILE IO
     FileIO fileIO;
