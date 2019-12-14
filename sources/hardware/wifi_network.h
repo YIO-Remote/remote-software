@@ -26,6 +26,9 @@
 #include <QObject>
 #include <QString>
 
+#include "wifi_security.h"
+#include "wifi_signal.h"
+
 // unfortunatley we can't use the minimalistic C++ 14 POD classes for QML interaction :-(
 
 /**
@@ -39,36 +42,14 @@ class WifiNetwork {
     Q_PROPERTY (int             rssi           READ rssi           CONSTANT)
     Q_PROPERTY (SignalStrength  signalStrength READ signalStrength CONSTANT)
     Q_PROPERTY (bool            encrypted      READ isEncrypted    CONSTANT)
-    Q_PROPERTY (Security        security       READ security       CONSTANT)
+    Q_PROPERTY (WifiSecurity    security       READ security       CONSTANT)
     Q_PROPERTY (bool            wpsAvailable   READ isWpsAvailable CONSTANT)
     Q_PROPERTY (bool            connected      READ isConnected    CONSTANT)
 
 public:
-    enum Security {
-        Default,
-        NoneOpen,
-        NoneWep,
-        NoneWepShared,
-        IEEE8021X,
-        WPA_PSK,
-        WPA_EAP,
-        WPA2_PSK,
-        WPA2_EAP
-    };
-    Q_ENUM (Security)
-
-    enum SignalStrength {
-        None,
-        Weak,
-        Ok,
-        Good,
-        Excellent
-    };
-    Q_ENUM (SignalStrength)
-
     WifiNetwork() {}
     WifiNetwork(QString id, QString name, QString bssid, int rssi,
-                Security security = WPA_PSK,
+                WifiSecurity security = WifiSecurity::WPA_PSK,
                 bool wpsAvailable = false,
                 bool connected = false)
         : m_id(id)
@@ -102,26 +83,16 @@ public:
     /**
      * @brief isEncrypted Convenience method for the client if the network is open or needs authentication.
      */
-    bool    isEncrypted() const { return m_security != NoneOpen; } // what about NoneWep?
+    bool    isEncrypted() const { return m_security != WifiSecurity::NONE_OPEN; } // what about NoneWep?
 
-    Security security() const { return m_security; }
+    WifiSecurity security() const { return m_security; }
 
     bool    isWpsAvailable() const { return m_wpsAvailable; }
 
     bool    isConnected() const { return m_connected; }
 
     SignalStrength signalStrength() const {
-        // Calibration is based on "various Internet sources", taken from wpa_cute project
-        if (m_rssi >= -60)
-            return Excellent;
-        else if (m_rssi >= -68)
-            return Good;
-        else if (m_rssi >= -76)
-            return Ok;
-        else if (m_rssi >= -84)
-            return Weak;
-        else
-            return None;
+        return SignalStrengthEnum::fromRssi(m_rssi);
     }
 
 private:
@@ -129,7 +100,7 @@ private:
     QString m_name;
     QString m_bssid;
     int m_rssi = -100;
-    Security m_security = WPA_PSK;
+    WifiSecurity m_security = WifiSecurity::WPA_PSK;
     bool m_wpsAvailable = false;
     bool m_connected = false;
 };

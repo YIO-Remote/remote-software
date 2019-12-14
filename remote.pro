@@ -37,8 +37,14 @@ HEADERS += \
     sources/configinterface.h \
     sources/entities/remote.h \
     sources/fileio.h \
+    sources/hardware/hardwarefactory.h \
+    sources/hardware/hardwarefactory_rpi0.h \
+    sources/hardware/systemservice.h \
+    sources/hardware/systemservice_mock.h \
     sources/hardware/wifi_control.h \
     sources/hardware/wifi_network.h \
+    sources/hardware/wifi_security.h \
+    sources/hardware/wifi_signal.h \
     sources/hardware/wifi_status.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
@@ -75,6 +81,10 @@ SOURCES += \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/remote.cpp \
+    sources/hardware/hardwarefactory.cpp \
+    sources/hardware/hardwarefactory_rpi0.cpp \
+    sources/hardware/systemservice.cpp \
+    sources/hardware/systemservice_mock.cpp \
     sources/hardware/wifi_control.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \

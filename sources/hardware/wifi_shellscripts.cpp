@@ -81,9 +81,9 @@ bool WifiShellScripts::clearConfiguredNetworks()
     return true;
 }
 
-bool WifiShellScripts::join(const QString &ssid, WifiNetwork::Security authentication, const QString &password)
+bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSecurity security)
 {
-    if (!validateAuthentication(authentication, password)) {
+    if (!validateAuthentication(security, password)) {
         return false;
     }
 
@@ -97,8 +97,7 @@ bool WifiShellScripts::join(const QString &ssid, WifiNetwork::Security authentic
 bool WifiShellScripts::isConnected()
 {
     FileIO fileIO;
-    m_connected = ssid() == fileIO.read("/ssid").trimmed();
-    return m_connected;
+    return ssid() == fileIO.read("/ssid").trimmed();
 }
 
 void WifiShellScripts::startNetworkScan()
@@ -113,18 +112,18 @@ void WifiShellScripts::startNetworkScan()
 
 bool WifiShellScripts::startAccessPoint()
 {
-    qCDebug(CLASS_LC) << "Resettin WiFi and starting access point...";
+    qCDebug(CLASS_LC) << "Resetting WiFi and starting access point...";
 
     launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
     return true;
 }
 
-QString WifiMock::countryCode() {
+QString WifiShellScripts::countryCode() {
     return "";
 }
 
-void WifiMock::setCountryCode(QString &countryCode) {
-    qCWarning("setCountryCode not implemented!")
+void WifiShellScripts::setCountryCode(QString &countryCode) {
+    qCWarning(CLASS_LC) << "setCountryCode not implemented! Requested:" << countryCode;
 }
 
 WifiNetwork WifiShellScripts::lineToNetwork(int index, const QStringRef& line) {

@@ -1,9 +1,6 @@
 /******************************************************************************
  *
  * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
- * Copyright (C) 2018 Thomas Ruschival <thomas@ruschival.de>
- *                    wpa_supplicant integration code based on
- *                    https://github.com/truschival/DigitalRoosterGui
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -27,25 +24,8 @@
 
 #include "wifi_control.h"
 
-#if defined (CONFIG_WPA_SUPPLICANT)
-    #include "wifi_wpasupplicant.h"
-#elif defined (Q_OS_LINUX) && defined (USE_WPA_SUPPLICANT)
-    #include "wifi_wpasupplicant.h"
-#elif defined (Q_OS_LINUX)
-    #include "wifi_shellscripts.h"
-#else
-    #include "wifi_mock.h"
-#endif
-
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiCtrl");
 
-/*!
-    \class WifiControl
-
-    \brief Abstract WiFi control interface
-
-    \details wpa_supplicant integration code is based on https://github.com/truschival/DigitalRoosterGui
-*/
 WifiControl::WifiControl(QObject* parent)
     : QObject(parent)
     , m_scanStatus(Idle)
@@ -61,39 +41,21 @@ WifiControl::~WifiControl()
     stopScanTimer();
 }
 
-WifiControl& WifiControl::instance()
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-
-    // TODO think about a redesign: device factory?
-    #if defined (CONFIG_WPA_SUPPLICANT)
-        static WifiWpaSupplicant singleton;
-    #elif defined (Q_OS_LINUX) && defined (USE_WPA_SUPPLICANT)
-        static WifiWpaSupplicant singleton;
-    #elif defined (Q_OS_LINUX)
-        static WifiShellScripts singleton;
-    #else
-        static WifiMock singleton;
-    #endif
-
-    return singleton;
-}
-
-bool WifiControl::validateAuthentication(WifiNetwork::Security security, const QString &preSharedKey)
+bool WifiControl::validateAuthentication(WifiSecurity security, const QString &preSharedKey)
 {
     switch (security) {
-    case WifiNetwork::Security::IEEE8021X :
-    case WifiNetwork::Security::WPA_EAP :
-    case WifiNetwork::Security::WPA2_EAP :
+    case WifiSecurity::IEEE8021X :
+    case WifiSecurity::WPA_EAP :
+    case WifiSecurity::WPA2_EAP :
         qWarning(CLASS_LC) << "Authentication mode not supported:" << security;
         return false;
     default:
         break;
     }
 
-    if (security == WifiNetwork::Security::Default
-            || security == WifiNetwork::Security::WPA_PSK
-            || security == WifiNetwork::Security::WPA2_PSK) {
+    if (security == WifiSecurity::DEFAULT
+            || security == WifiSecurity::WPA_PSK
+            || security == WifiSecurity::WPA2_PSK) {
         if (preSharedKey.length() < 8 || preSharedKey.length() > 64) {
             qWarning(CLASS_LC) << "WPA Pre-Shared Key Error:"
                 << "WPA-PSK requires a passphrase of 8 to 63 characters or 64 hex digit PSK";

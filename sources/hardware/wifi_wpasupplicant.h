@@ -58,6 +58,8 @@ class WifiWpaSupplicant : public WifiControl
 {
     Q_OBJECT
 public:
+    explicit WifiWpaSupplicant(QObject *parent = nullptr);
+
     /**
      * Destructor must close wpa_cli
      */
@@ -67,7 +69,7 @@ public:
 
     Q_INVOKABLE virtual bool reset() override;
     Q_INVOKABLE virtual bool clearConfiguredNetworks() override;
-    Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
+    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password, WifiSecurity security = WifiSecurity::DEFAULT) override;
     Q_INVOKABLE virtual void startNetworkScan() override;
     Q_INVOKABLE virtual bool startAccessPoint() override;
 
@@ -109,7 +111,6 @@ protected slots:
     void controlEvent(int fd);
 
 private:
-    explicit WifiWpaSupplicant(QObject *parent = nullptr);
 
     /**
      * @brief setNetworkParam Helper method to set a network parameter with SET_NETWORK
@@ -174,7 +175,7 @@ private:
      * @param networkId optional network identification to retrieve more information if required
      * @return Security enumeration
      */
-    WifiNetwork::Security getSecurityFromFlags(const QString& flags, int networkId = -1);
+    WifiSecurity getSecurityFromFlags(const QString& flags, int networkId = -1);
 
     QList<WifiNetwork>& getConfiguredNetworks();
 
@@ -207,10 +208,10 @@ private:
 
     /**
      * @brief saveConfiguration Persist configuration with SAVE_CONFIG and check result
-     * @details If the parameter setting fails the wpa_supplicant configuration is re-read to restore the previous configuration state!
+     * @param resetCfgIfFailed true = if the configuration cannot be saved the wpa_supplicant configuration is re-read to restore the previous configuration state!
      * @return true if configuation was saved
      */
-    bool saveConfiguration();
+    bool saveConfiguration(bool resetCfgIfFailed = true);
 
     virtual void timerEvent(QTimerEvent *event) override;
 
@@ -233,8 +234,6 @@ private:
     QString m_wifiOffScript;
     QProcess *m_scriptProcess;
 
-    // Only allow WifiControl to create an instance
-    friend WifiControl& WifiControl::instance();
 };
 
 #endif // WIFIWPASUPPLICANT_H

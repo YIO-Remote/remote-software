@@ -29,6 +29,9 @@
 
 #include "wifi_control.h"
 
+/**
+ * @brief Deprecated WifiControl implementation using the legacy shell scripts
+ */
 class WifiShellScripts : public WifiControl
 {
     Q_OBJECT
@@ -39,13 +42,18 @@ public:
 
     Q_INVOKABLE virtual bool reset() override;
     Q_INVOKABLE virtual bool clearConfiguredNetworks() override;
-    Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) override;
+    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password, WifiSecurity security = WifiSecurity::DEFAULT) override;
     Q_INVOKABLE virtual bool isConnected() override;
     Q_INVOKABLE virtual void startNetworkScan() override;
     Q_INVOKABLE virtual bool startAccessPoint() override;
 
     virtual QString countryCode() override;
     virtual void setCountryCode(QString &countryCode) override;
+
+public slots:
+
+    virtual void on() override;
+    virtual void off() override;
 
 private:
     virtual void timerEvent(QTimerEvent *event) override;

@@ -33,6 +33,7 @@
 
 #include <QLoggingCategory>
 #include <QVector>
+#include <QThread>
 
 #include <cstdio>
 #include <cerrno>
@@ -186,9 +187,9 @@ bool WifiWpaSupplicant::clearConfiguredNetworks()
     return true;
 }
 
-bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security, const QString &password)
+bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiSecurity security)
 {
-    qCDebug(CLASS_LC) << ssid << security;
+    qCDebug(CLASS_LC) << "Joining network:" << ssid << security;
 
     // For more details about network creation & security option see:
     // https://github.com/loh-tar/wpa-cute/blob/master/src/networkconfig.cpp#L198
@@ -204,28 +205,27 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
     // Even though it's a classical OCP violation: different security should be handled in their own specialized classes!
     // Note: EAP is validated & rejected in above's validateAuthentication call
     switch (security) {
-    case WifiNetwork::Security::Default :
-        keyMgmnt = "WPA-PSK";
+    case WifiSecurity::DEFAULT :
         break;
-    case WifiNetwork::Security::NoneOpen :
+    case WifiSecurity::NONE_OPEN :
         keyMgmnt = "NONE";
         break;
     // TODO either test NoneWep & NoneWepShared or remove them. Do we even need to distinguish them?
-    case WifiNetwork::Security::NoneWep  :
+    case WifiSecurity::NONE_WEP  :
         keyMgmnt = "NONE";
         break;
-    case WifiNetwork::Security::NoneWepShared :
+    case WifiSecurity::NONE_WEP_SHARED :
         keyMgmnt = "NONE";
         authAlg = "SHARED";
         break;
-    case WifiNetwork::Security::WPA_PSK  :
+    case WifiSecurity::WPA_PSK  :
         keyMgmnt = "WPA-PSK";
         break;
-    case WifiNetwork::Security::WPA2_PSK :
+    case WifiSecurity::WPA2_PSK :
         keyMgmnt = "WPA-PSK";
         break;
     default :
-        qWarning(CLASS_LC) << "Authentication mode not (yet) implemented:" << security;
+        qCWarning(CLASS_LC) << "Authentication mode not (yet) implemented:" << security;
         return false;
     }
 
@@ -269,7 +269,7 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
         }
     }
 
-    if (security == WifiNetwork::Security::NoneWep || security == WifiNetwork::Security::NoneWepShared) {
+    if (security == WifiSecurity::NONE_WEP || security == WifiSecurity::NONE_WEP_SHARED) {
         if (!writeWepKey(networkId, password, 0)) {
             return false;
         }
@@ -288,18 +288,22 @@ bool WifiWpaSupplicant::join(const QString &ssid, WifiNetwork::Security security
         return false;
     }
 
-    // TODO only save configuration after connection has been successfully established
-    // - start timer to call STATUS and check for 'wpa_state=COMPLETED'
-    // - repeat 3 times and pause 3s in between
-    // - emit signal for connection result
-    if (!saveConfiguration()) {
-        return false;
+    // wait for successful connection and save configuration once connected.
+    // TODO asynchronous check using a timer. Return immediately and notify caller with signal.
+    int retries = 5; // TODO make configurable
+    for (int i = 0; i < retries; i++) {
+        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i+1) << "/" << retries << ")";
+
+        if (checkConnection()) {
+            bool resetIfFailed = false;
+            return saveConfiguration(resetIfFailed);
+        }
+
+        QThread::currentThread()->sleep(3);
     }
 
-    // not sure if required, but should make sure the connection is really established
-    // controlRequest("REASSOCIATE", buf, WPA_BUF_SIZE);
-
-    return true;
+    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << retries << "retries";
+    return false;
 }
 
 bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString& parm, const QString& val, bool quote/* = false*/)
@@ -394,6 +398,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd) {
 
 bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buflen) {
     if (!m_ctrl) {
+        qCDebug(CLASS_LC) << "Not initialized. Ignoring control request:" << cmd;
         return false;
     }
 
@@ -411,7 +416,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
 
     // check response, e.g. when requesting information from an invalid network id
     QString response = QString::fromLocal8Bit(buf);
-    qCDebug(CLASS_LC()) << cmd << "response:" << response;
+    qCDebug(CLASS_LC) << cmd << "response:" << response;
 
     if (response.startsWith("FAIL\n")) {
         return false;
@@ -599,7 +604,7 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
         }
     }
 
-    WifiNetwork::Security security = getSecurityFromFlags(flags, networkId);
+    WifiSecurity security = getSecurityFromFlags(flags, networkId);
     WifiNetwork network { id, ssid, bssid, level, security, flags.contains("[WPS") };
     qCDebug(CLASS_LC) << "Network found:" << network;
 
@@ -608,34 +613,34 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
     return true;
 }
 
-WifiNetwork::Security WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int networkId)
+WifiSecurity WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int networkId)
 {
     // Partial implementation of security flags, e.g. no support for EAP
     // Sufficiant for now...
-    WifiNetwork::Security auth;
+    WifiSecurity auth;
     if (flags.indexOf("[WPA2-EAP") >= 0) {
-        auth = WifiNetwork::WPA2_EAP;
+        auth = WifiSecurity::WPA2_EAP;
     } else if (flags.indexOf("[WPA-EAP") >= 0) {
-        auth = WifiNetwork::WPA_EAP;
+        auth = WifiSecurity::WPA_EAP;
     } else if (flags.indexOf("[WPA2-PSK") >= 0) {
-        auth = WifiNetwork::WPA2_PSK;
+        auth = WifiSecurity::WPA2_PSK;
     } else if (flags.indexOf("[WPA-PSK") >= 0) {
-        auth = WifiNetwork::WPA_PSK;
+        auth = WifiSecurity::WPA_PSK;
     } else {
-        auth = WifiNetwork::NoneOpen;
+        auth = WifiSecurity::NONE_OPEN;
     }
 
     // UNTESTED WEP implementation. Shouldn't be used anymore anyways...
     if (flags.indexOf("WEP") >= 0) {
-        if (auth == WifiNetwork::NoneOpen) {
-            auth = WifiNetwork::NoneWep;
+        if (auth == WifiSecurity::NONE_OPEN) {
+            auth = WifiSecurity::NONE_WEP;
         }
         if (networkId >= 0) {
             char buf[WPA_BUF_SIZE];
             QString cmd = "GET_NETWORK %1 auth_alg";
             if (controlRequest(cmd.arg(networkId), buf, WPA_BUF_SIZE)) {
                 if (strcmp(buf, "SHARED") == 0) {
-                    auth = WifiNetwork::NoneWepShared;
+                    auth = WifiSecurity::NONE_WEP_SHARED;
                 }
             }
         }
@@ -660,7 +665,7 @@ QList<WifiNetwork> &WifiWpaSupplicant::getConfiguredNetworks()
         if (!data.at(0).contains(QRegExp("^[0-9]+$")))
             continue;
 
-        WifiNetwork wn {data.at(0), data.at(1), data.at(2), 0, WifiNetwork::Security::Default, false, data.at(3).contains("[CURRENT]") };
+        WifiNetwork wn {data.at(0), data.at(1), data.at(2), 0, WifiSecurity::DEFAULT, false, data.at(3).contains("[CURRENT]") };
         networks.append(wn);
     }
 
@@ -680,14 +685,14 @@ WifiStatus WifiWpaSupplicant::parseStatus(const char* buffer) {
             auto value = lines[i].mid(pos + 1);
             if ("bssid" == key) {
                 wifiStatus.bssid = value.toString();
-                // TODO is there a better way to determine if we are connected to an AP?
-                wifiStatus.connected = !wifiStatus.bssid.isEmpty();
             } else if ("ssid" == key) {
                 wifiStatus.name = value.toString();
             } else if ("ip_address" == key) {
                 wifiStatus.ipAddress = value.toString();
             } else if ("address" == key) {
                 wifiStatus.macAddress = value.toString();
+            } else if ("wpa_state" == key) {
+                wifiStatus.connected = value == "COMPLETED";
             }
         }
     }
@@ -725,10 +730,12 @@ bool WifiWpaSupplicant::checkConnection()
     return true;
 }
 
-bool WifiWpaSupplicant::saveConfiguration() {
+bool WifiWpaSupplicant::saveConfiguration(bool resetCfgIfFailed) {
     if (!controlRequest("SAVE_CONFIG")) {
         qCWarning(CLASS_LC) << "Error saving current wpa_supplicant configuration! Please verify that /etc/wpa_supplicant/wpa_supplicant-wlan0.conf has 'update_config=1' set. Otherwise the configration cannot be persisted!";
-        controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
+        if (resetCfgIfFailed) {
+            controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
+        }
         return false;
     }
     return true;

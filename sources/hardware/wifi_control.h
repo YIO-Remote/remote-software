@@ -1,9 +1,6 @@
 /******************************************************************************
  *
  * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
- * Copyright (C) 2018 Thomas Ruschival <thomas@ruschival.de>
- *                    wpa_supplicant integration code based on
- *                    https://github.com/truschival/DigitalRoosterGui
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -37,7 +34,9 @@
 #include "wifi_status.h"
 #include "wifi_network.h"
 
-
+/**
+ * @brief Abstract WiFi control interface
+ */
 class WifiControl : public QObject
 {
     Q_OBJECT
@@ -51,7 +50,6 @@ class WifiControl : public QObject
     Q_PROPERTY(QVariantList networkScanResult READ networkScanResult NOTIFY networksFound)
 
 public:
-    static WifiControl& instance();
     virtual ~WifiControl();
 
     /**
@@ -87,7 +85,7 @@ public:
     /**
      * @brief Joins the WiFi network with the given ssid. The network will be added to the known networks.
      */
-    Q_INVOKABLE virtual bool join(const QString &ssid, WifiNetwork::Security security, const QString &password) = 0;
+    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password, WifiSecurity security = WifiSecurity::DEFAULT) = 0;
 
     /**
      * @brief Checks if the WiFi connection is established
@@ -179,7 +177,7 @@ protected:
     /**
      * @brief validateAuthentication Validates the authentication mode and pre shared key
      */
-    bool validateAuthentication(WifiNetwork::Security security, const QString &preSharedKey);
+    bool validateAuthentication(WifiSecurity security, const QString &preSharedKey);
 
     virtual void setConnected(bool connected);
 

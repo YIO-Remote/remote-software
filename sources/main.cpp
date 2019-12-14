@@ -32,6 +32,7 @@
 #include "jsonfile.h"
 #include "translation.h"
 
+#include "hardware/hardwarefactory.h"
 #include "hardware/display_control.h"
 #include "hardware/touchdetect.h"
 #include "hardware/interrupt_handler.h"
@@ -112,12 +113,16 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
     qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork", "Not creatable as it is an enum type");
-    qRegisterMetaType<WifiNetwork::Security>("WifiNetworkSecurity");
+    qmlRegisterUncreatableType<WifiSecurityEnum>("WifiControl", 1, 0, "WifiSecurityEnum", "Not creatable as it is an enum type");
+    qRegisterMetaType<WifiSecurity>("WifiSecurity");
+    qmlRegisterUncreatableType<SignalStrengthEnum>("WifiControl", 1, 0, "SignalStrengthEnum", "Not creatable as it is an enum type");
+    qRegisterMetaType<SignalStrength>("SignalStrength");
 
 
     // DRIVERS
-    // TODO think about device driver factory, pass configuration object to driver
-    WifiControl* wifiControl = &WifiControl::instance();
+    // TODO pass configuration object to driver
+    HardwareFactory *hwFactory = HardwareFactory::getFactory();
+    WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
 
     // BLUETOOTH AREA
@@ -140,6 +145,7 @@ int main(int argc, char *argv[])
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
+    // TODO put initialization into factory
     if (!wifiControl->init()) {
         notifications.add(true, QObject::tr("WiFi device was not found."));
     }
