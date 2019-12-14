@@ -75,6 +75,7 @@ translations/*.ts
 translations/*.qm
 !translations/en_US.ts
 *.user
+*.user.*
 *.dylib
 *.o
 *.bak
