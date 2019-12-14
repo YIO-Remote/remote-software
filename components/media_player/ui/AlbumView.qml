@@ -6,6 +6,7 @@ import MediaPlayerUtils 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Item {
+    id: main
     width: parent.width
     height: parent.height
 
@@ -142,13 +143,25 @@ Item {
                 height: 80
 
                 Text {
+                    id: trackNumber
+                    text: index+1
+                    color: colorText
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.family: "Open Sans"
+                    font.pixelSize: 25
+                    lineHeight: 1
+                }
+
+                Text {
                     id: albumTitleText
                     text: item_title
                     elide: Text.ElideRight
-                    width: parent.width-60
+                    width: parent.width-100
                     wrapMode: Text.NoWrap
                     color: colorText
                     anchors.left: parent.left
+                    anchors.leftMargin: 45
                     anchors.top: parent.top
                     font.family: "Open Sans"
                     font.pixelSize: 25
@@ -159,7 +172,7 @@ Item {
                     id: albumSubTitleText
                     text: item_subtitle
                     elide: Text.ElideRight
-                    width: parent.width-60
+                    width: albumTitleText.width
                     wrapMode: Text.NoWrap
                     color: colorText
                     opacity: 0.6
@@ -177,6 +190,17 @@ Item {
                     onClicked: {
                         haptic.playEffect("click");
                         obj.playMedia(item_key, item_type);
+                    }
+                }
+
+                BasicUI.ContextMenuIcon {
+                    colorBg: mediaplayerUtils.pixelColor
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    mouseArea.onClicked: {
+                        haptic.playEffect("click");
+                        contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": main.width, "id": item_key, "type": item_type, "list": item_commands })
                     }
                 }
             }

@@ -163,6 +163,9 @@ Rectangle {
         onCurrentIndexChanged: {
             if (cardSwipeView.currentIndex != features.indexOf("SEARCH"))
                 looseFocus();
+            currentItem.item.swipeView.currentIndex = 0;
+            if (currentItem.item.swipeView.currentItem.itemFlickable)
+                currentItem.item.swipeView.currentItem.itemFlickable.contentY = 0;
         }
 
         Item {
@@ -173,6 +176,7 @@ Rectangle {
             id: cardRepeater
 
             Loader {
+                id: loader
                 asynchronous: true
                 sourceComponent: {
                     if (card.features.indexOf("SEARCH")-1 == index ) {
@@ -200,10 +204,7 @@ Rectangle {
 
         Component {
             id: cardList
-            Rectangle {
-                anchors.fill: parent
-                color: "blue"
-            }
+            CardPlaylists {}
         }
 
         Component {
@@ -343,4 +344,16 @@ Rectangle {
         }
     }
 
+    property alias contextMenuLoader: contextMenuLoader
+
+    Loader {
+        id: contextMenuLoader
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+
+        onStatusChanged: {
+            if (contextMenuLoader.status == Loader.Ready)
+                contextMenuLoader.item.state = "open"
+        }
+    }
 }

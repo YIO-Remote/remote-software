@@ -11,7 +11,7 @@ class MediaPlayerDef : public QObject
 {
     Q_OBJECT
 public:
-    enum Attributes  {  STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, BROWSERESULT, SEARCHRESULT };
+    enum Attributes  {  STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, MEDIADURATION, MEDIAPROGRESS, BROWSERESULT, SEARCHRESULT };
     Q_ENUM (Attributes)
 
     enum States   { OFF=0, ON=1, IDLE=2, PLAYING=3 };
@@ -29,6 +29,8 @@ public:
     virtual ~MediaPlayerInterface  ();
 
     virtual int                         volume() = 0;
+    virtual int                         mediaDuration() = 0;
+    virtual int                         mediaProgress() = 0;
     virtual bool                        muted() = 0;
     virtual QString                     mediaType() = 0;
     virtual QString                     mediaImage() = 0;

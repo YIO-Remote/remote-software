@@ -114,7 +114,17 @@ Item {
         color: "#000000"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: artist.bottom
-        anchors.topMargin: 30
+        anchors.topMargin: 20
+
+        Rectangle {
+            width: parent.width*(obj.mediaProgress/obj.mediaDuration)
+            height: parent.height
+            color: colorLine
+
+            Behavior on width {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
+        }
     }
 
     Item {

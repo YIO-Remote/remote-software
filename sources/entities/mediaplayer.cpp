@@ -73,6 +73,20 @@ bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
             emit mediaImageChanged();
         }
         break;
+    case MediaPlayerDef::MEDIADURATION:
+        if (m_mediaDuration != value.toInt()) {
+            m_mediaDuration = value.toInt();
+            chg = true;
+            emit mediaDurationChanged();
+        }
+        break;
+    case MediaPlayerDef::MEDIAPROGRESS:
+        if (m_mediaProgress != value.toInt()) {
+            m_mediaProgress = value.toInt();
+            chg = true;
+            emit mediaProgressChanged();
+        }
+        break;
     case MediaPlayerDef::BROWSERESULT:
         m_browseResult = value;
         chg = true;
@@ -90,6 +104,11 @@ void MediaPlayer::turnOn()
 void MediaPlayer::turnOff()
 {
     command("TURNOFF", "");
+}
+
+void MediaPlayer::setrecentSearches(QVariant list)
+{
+    m_recentSearches = list;
 }
 
 void MediaPlayer::play()
@@ -153,6 +172,11 @@ void MediaPlayer::search(const QString& searchString)
 void MediaPlayer::getAlbum(const QString &id)
 {
     command("GETALBUM", id);
+}
+
+void MediaPlayer::getPlaylist(const QString &id)
+{
+    command("GETPLAYLIST", id);
 }
 
 void MediaPlayer::setSearchModel(QObject *model)

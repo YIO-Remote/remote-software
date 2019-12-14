@@ -214,5 +214,9 @@
         <file>components/media_player/ui/CardHome.qml</file>
         <file>components/media_player/ui/CardSearch.qml</file>
         <file>components/media_player/ui/AlbumView.qml</file>
+        <file>basic_ui/ContextMenuIcon.qml</file>
+        <file>basic_ui/ContextMenu.qml</file>
+        <file>basic_ui/Tag.qml</file>
+        <file>components/media_player/ui/CardPlaylists.qml</file>
     </qresource>
 </RCC>

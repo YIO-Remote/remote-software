@@ -12,7 +12,7 @@ Rectangle {
         obj.search(searchTextField.text);
         searchResultsTitle.text = searchTextField.text;
         recentSearches.state = "hidden";
-        recentSearchesModel.insert(0, {"searchString":searchTextField.text});
+        obj.recentSearches.insert(0, {"searchString":searchTextField.text});
         searchTextField.focus = false;
         itemFlickable.contentY = 230;
         searchTextField.text = "";
@@ -22,18 +22,25 @@ Rectangle {
         swipeView.currentIndex++;
         if (type === "album") {
             obj.getAlbum(album);
-            obj.browseModelChanged.connect(function(model) {
-                if (model.count != 0 && albumLoader) {
-                    if (albumLoader.source != "qrc:/components/media_player/ui/AlbumView.qml")
-                        albumLoader.setSource("qrc:/components/media_player/ui/AlbumView.qml", { "albumModel": model })
-                    else if (albumLoader.item)
-                        albumLoader.item.albumModel = model;
-                }
-            });
+            obj.browseModelChanged.connect(onBrowseModelChanged);
+        } else if (type == "playlist") {
+            obj.getPlaylist(album);
+            obj.browseModelChanged.connect(onBrowseModelChanged);
         }
     }
 
+    function onBrowseModelChanged(model) {
+        if (model.count != 0 && albumLoader) {
+            if (albumLoader.source != "qrc:/components/media_player/ui/AlbumView.qml")
+                albumLoader.setSource("qrc:/components/media_player/ui/AlbumView.qml", { "albumModel": model })
+            else if (albumLoader.item)
+                albumLoader.item.albumModel = model;
+        }
+        obj.browseModelChanged.disconnect(onBrowseModelChanged);
+    }
+
     property alias albumLoader: albumLoader
+    property alias swipeView: swipeView
 
     SwipeView {
         id: swipeView
@@ -143,12 +150,13 @@ Rectangle {
                     }
                 }
 
-                ListModel {
-                    id: recentSearchesModel
+                Connections {
+                    target: obj.recentSearches
 
                     onCountChanged: {
-                        if (count == 0)
+                        if (obj.recentSearches.count == 0) {
                             recentSearches.state = "hidden";
+                        }
                     }
                 }
 
@@ -210,7 +218,7 @@ Rectangle {
                         font.pixelSize: 27
                         lineHeight: 1
 
-                        visible: recentSearchesModel.count > 0 ? true : false
+                        visible: obj.recentSearches.count > 0 ? true : false
                         enabled: visible
 
                         MouseArea {
@@ -219,13 +227,13 @@ Rectangle {
 
                             onClicked: {
                                 haptic.playEffect("click");
-                                recentSearchesModel.clear();
+                                obj.recentSearches.clear();
                             }
                         }
                     }
 
                     ListView {
-                        model: recentSearchesModel
+                        model: obj.recentSearches
                         anchors.top: recentSearchesTitle.bottom
                         anchors.topMargin: 40
                         height: childrenRect.height
@@ -284,12 +292,91 @@ Rectangle {
                         lineHeight: 1
                     }
 
-                    // TODO
                     Flow {
                         id: tags
                         width: parent.width
                         anchors.top: searchResultsTitle.bottom
                         anchors.topMargin: 30
+                        visible: searchResultsList.count != 0 ? true : false
+                        spacing: 20
+
+                        property var modelHeights: ({})
+
+                        BasicUI.Tag {
+                            id: tagAll
+                            tag: "All"
+                            selected: {
+                                var selectedItem = true;
+                                for (var i=0; i<tagRepeater.count; i++) {
+                                    if (!tagRepeater.itemAt(i).selected) {
+                                        selectedItem = false;
+                                    }
+                                }
+                                return selectedItem;
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    if (tagAll.selected) {
+                                        for (var i=0; i<tagRepeater.count; i++) {
+                                            tagRepeater.itemAt(i).selected = false;
+                                        }
+                                    } else {
+                                        for (var i=0; i<tagRepeater.count; i++) {
+                                            tagRepeater.itemAt(i).selected = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Repeater {
+                            id: tagRepeater
+                            model: obj.searchModel
+
+                            BasicUI.Tag {
+                                id: tagItem
+                                tag: {
+                                    if (title == "albums")
+                                        return qsTr("Albums") + translateHandler.emptyString
+                                    else if (title == "tracks")
+                                        return qsTr("Tracks") + translateHandler.emptyString
+                                    else if (title == "artists")
+                                        return qsTr("Artists") + translateHandler.emptyString
+                                    else if (title == "playlists")
+                                        return qsTr("Playlists") + translateHandler.emptyString
+                                }
+                                selected: true
+
+                                onSelectedChanged: {
+                                    if (!selected) {
+                                        searchResultsList.currentIndex = index;
+
+                                        tags.modelHeights[index] = searchResultsList.currentItem.height;
+
+                                        searchResultsList.currentItem.visible = false;
+                                        searchResultsList.currentItem.height = 0 - searchResultsList.spacing;
+                                    } else {
+                                        searchResultsList.currentIndex = index;
+
+                                        searchResultsList.currentItem.height = tags.modelHeights[index];
+                                        searchResultsList.currentItem.visible = true;
+                                    }
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: {
+                                        if (selected) {
+                                            selected = false;
+                                        } else {
+                                            selected = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                     }
 
@@ -451,7 +538,8 @@ Rectangle {
                     id: trackThumbnail
 
                     Item {
-                        width: childrenRect.width
+                        id: trackThumbnailItem
+                        width: parent.width
                         height: 80 //childrenRect.height
 
                         Rectangle {
@@ -471,7 +559,7 @@ Rectangle {
                             id: albumTitleText
                             text: item_title
                             elide: Text.ElideRight
-                            width: itemFlickable.width-60-albumImage.width-20
+                            width: itemFlickable.width-60-albumImage.width-20-60
                             wrapMode: Text.NoWrap
                             color: colorText
                             anchors.left: albumImage.right
@@ -488,7 +576,7 @@ Rectangle {
                             text: item_subtitle
                             elide: Text.ElideRight
                             visible: item_subtitle == "" ? false : true
-                            width: itemFlickable.width-60-albumImage.width-20
+                            width: albumTitleText.width
                             wrapMode: Text.NoWrap
                             color: colorText
                             opacity: 0.6
@@ -506,6 +594,16 @@ Rectangle {
                             onClicked: {
                                 haptic.playEffect("click");
                                 obj.playMedia(item_key, item_type);
+                            }
+                        }
+
+                        BasicUI.ContextMenuIcon {
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            mouseArea.onClicked: {
+                                haptic.playEffect("click");
+                                contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
                             }
                         }
                     }

@@ -34,7 +34,7 @@ private:
     QVariant            m_commands;
 };
 
-class Model : public QAbstractListModel
+class ListModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count WRITE setCount NOTIFY countChanged)
@@ -45,8 +45,8 @@ public:
         TitleRole, SubTitleRole, TypeRole, ImageUrlRole, CommandsRole
     };
 
-    explicit Model(QObject *parent = nullptr);
-    ~Model() {}
+    explicit ListModel(QObject *parent = nullptr);
+    ~ListModel() {}
 
     int                     count() const;
     int                     rowCount(const QModelIndex &p = QModelIndex()) const;
@@ -113,7 +113,7 @@ private:
     QString         m_subtitle;
     QString         m_type;
     QString         m_imageUrl;
-    QObject*        m_model = new Model();
+    QObject*        m_model = new ListModel();
     QStringList     m_commands;
 };
 

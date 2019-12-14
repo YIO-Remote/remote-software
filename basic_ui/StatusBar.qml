@@ -23,6 +23,7 @@ Item {
 
     Connections {
         target: loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item
+        ignoreUnknownSignals: true
 
         onScrollupBegin: {
             bg.opacity = 1;

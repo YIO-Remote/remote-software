@@ -23,6 +23,15 @@ Comp.ButtonBase {
         id: mediaplayerUtils
     }
 
+    ListModel {
+        id: recentSearches
+
+        Component.onCompleted: {
+            obj.recentSearches = recentSearches;
+        }
+    }
+
+
     // additional UI elements
     Text {
         id: info
@@ -43,7 +52,7 @@ Comp.ButtonBase {
         visible: mediaplayerButton.state == "closed" ? true : false
     }
 
-     closeButtonMouseArea.onClicked: {
+    closeButtonMouseArea.onClicked: {
         inputPanel.active = false
     }
 

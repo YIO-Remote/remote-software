@@ -1,24 +1,24 @@
 #include "albummodel_mediaplayer.h"
 
-Model::Model(QObject *parent) :
+ListModel::ListModel(QObject *parent) :
     QAbstractListModel(parent),
     m_count(0)
 {
 
 }
 
-int Model::count() const
+int ListModel::count() const
 {
     return m_count;
 }
 
-int Model::rowCount(const QModelIndex &p) const
+int ListModel::rowCount(const QModelIndex &p) const
 {
     Q_UNUSED(p)
     return m_data.size();
 }
 
-QVariant Model::data(const QModelIndex &index, int role) const
+QVariant ListModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_data.count())
         return QVariant();
@@ -34,7 +34,7 @@ QVariant Model::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QHash<int, QByteArray> Model::roleNames() const {
+QHash<int, QByteArray> ListModel::roleNames() const {
     QHash<int, QByteArray> roles;
     roles[KeyRole] = "item_key";
     roles[TitleRole] = "item_title";
@@ -45,7 +45,7 @@ QHash<int, QByteArray> Model::roleNames() const {
     return roles;
 }
 
-void Model::append(ModelItem& o)
+void ListModel::append(ModelItem& o)
 {
     int i = m_data.size();
     beginInsertRows(QModelIndex(), i, i);
@@ -57,7 +57,7 @@ void Model::append(ModelItem& o)
     endInsertRows();
 }
 
-void Model::setCount(int count)
+void ListModel::setCount(int count)
 {
     if (m_count == count)
         return;
@@ -68,7 +68,7 @@ void Model::setCount(int count)
 
 void BrowseModel::addItem(const QString &key, const QString &title, const QString &subtitle, const QString &type, const QString &imageUrl, const QVariant &commands)
 {
-    Model* model = static_cast<Model*>(m_model);
+    ListModel* model = static_cast<ListModel*>(m_model);
     ModelItem item = ModelItem(key, title, subtitle, type, imageUrl, commands);
     model->append(item);
     emit modelChanged();
