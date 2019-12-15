@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 #include <QtDebug>
 #include <QQmlApplicationEngine>
 
@@ -73,10 +95,19 @@ bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
                 emit mediaImageChanged();
             }
             break;
-        case MediaPlayerDef::BROWSERESULT:
-            m_browseResult = value;
-            chg = true;
-            emit browseResultChanged();
+        case MediaPlayerDef::MEDIADURATION:
+            if (m_mediaDuration != value.toInt()) {
+                m_mediaDuration = value.toInt();
+                chg = true;
+                emit mediaDurationChanged();
+            }
+            break;
+        case MediaPlayerDef::MEDIAPROGRESS:
+            if (m_mediaProgress != value.toInt()) {
+                m_mediaProgress = value.toInt();
+                chg = true;
+                emit mediaProgressChanged();
+            }
             break;
         }
     return chg;
@@ -90,6 +121,11 @@ void MediaPlayer::turnOn()
 void MediaPlayer::turnOff()
 {
     command(MediaPlayerDef::C_TURNOFF, "");
+}
+
+void MediaPlayer::setrecentSearches(QVariant list)
+{
+    m_recentSearches = list;
 }
 
 void MediaPlayer::play()
@@ -134,29 +170,51 @@ void MediaPlayer::browse(QString cmd)
 {
     command(MediaPlayerDef::C_BROWSE, cmd);
 }
-void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
+void MediaPlayer::playMedia(const QString &itemKey, const QString &type)
 {
-    QVariantMap ccmd;
-    ccmd["key"] = itemKey;
-    ccmd["command"] = cmd;
-    command(MediaPlayerDef::C_PLAY_ITEM, ccmd);
+    QVariantMap map;
+    map.insert("type", type);
+    map.insert("id", itemKey);
+    command(MediaPlayerDef::C_PLAY_ITEM, map);
+}
+void MediaPlayer::search(const QString &searchText, const QString &itemKey)
+{
+    QVariantMap map;
+    map["id"] = itemKey;
+    map["text"] = searchText;
+    command(MediaPlayerDef::C_SEARCH_ITEM, map);
 }
 void MediaPlayer::search(const QString& searchString)
 {
     command(MediaPlayerDef::C_SEARCH, searchString);
 }
-void MediaPlayer::searchItem(const QString &searchText, const QString &itemKey)
+void MediaPlayer::getAlbum(const QString &id)
 {
-    QVariantMap ccmd;
-    ccmd["key"] = itemKey;
-    ccmd["text"] = searchText;
-    command(MediaPlayerDef::C_SEARCH_ITEM, ccmd);
+    command(MediaPlayerDef::C_GETALBUM, id);
+}
+void MediaPlayer::getPlaylist(const QString &id)
+{
+    command(MediaPlayerDef::C_GETPLAYLIST, id);
+}
+
+void MediaPlayer::setSearchModel(QObject *model)
+{
+    m_searchModel = model;
+    emit searchModelChanged();
+}
+
+void MediaPlayer::setBrowseModel(QObject *model)
+{
+    m_browseModel = model;
+    emit browseModelChanged();
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
     Entity(Type, config, integrationObj, parent),
     m_volume(0),
-    m_muted(false)
+    m_muted(false),
+    m_searchModel(nullptr),
+    m_browseModel(nullptr)
 {
     static QMetaEnum metaEnumAttr;
     static QMetaEnum metaEnumFeatures;
