@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 #include "entities.h"
 #include "entity.h"
 
@@ -36,7 +58,7 @@ QList<QObject *> Entities::list()
 
 void Entities::load()
 {
-    QVariantMap c = Config::getInstance()->read();
+    QVariantMap c = Config::getInstance()->config();
     QVariant entities = c.value("entities");
 
     for (int i=0; i < m_supported_entities.length(); i++)
@@ -58,51 +80,51 @@ void Entities::load()
     }
 }
 
-QList<QObject *> Entities::getByType(const QString& type)
+QList<EntityInterface *> Entities::getByType(const QString& type)
 {
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("type") == type) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
         }
     }
     return e;
 }
 
-QList<QObject *> Entities::getByArea(const QString& area)
+QList<EntityInterface *> Entities::getByArea(const QString& area)
 {
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("area") == area) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
         }
     }
     return e;
 }
 
-QList<QObject *> Entities::getByAreaType(const QString &area, const QString &type)
+QList<EntityInterface *> Entities::getByAreaType(const QString &area, const QString &type)
 {
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("area") == area && value->property("type") == type) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
         }
     }
     return e;
 }
 
-QList<QObject *> Entities::getByIntegration(const QString& integration)
+QList<EntityInterface *> Entities::getByIntegration(const QString& integration)
 {
     qDebug() << "CALLED";
 
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("integration") == integration) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
 
             qDebug() << e;
         }
@@ -164,14 +186,15 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
     QTimer* timer = m_mediaplayersTimers.value(entity_id);
     if (timer) {
         timer->stop();
+        timer->deleteLater();
+        m_mediaplayersTimers.remove(entity_id);
     }
 
-    QObject *o = m_entities.value(entity_id);
+    QObject *o = get(entity_id);
 
-    if (!m_mediaplayersPlaying.contains(entity_id)) {
+    if (!m_mediaplayersPlaying.contains(entity_id) && o) {
         m_mediaplayersPlaying.insert(entity_id, o);
         emit mediaplayersPlayingChanged();
-//        emit mediaplayerAdded();
     }
 }
 
@@ -185,7 +208,6 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
         connect(timer, &QTimer::timeout, this, [=](){
             m_mediaplayersPlaying.remove(entity_id);
             emit mediaplayersPlayingChanged();
-//            emit mediaplayerRemoved();
         });
         timer->start(120000);
 

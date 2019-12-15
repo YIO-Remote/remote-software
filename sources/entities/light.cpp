@@ -1,53 +1,60 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 #include <QtDebug>
+#include <QQmlApplicationEngine>
 #include "light.h"
 
 LightInterface::~LightInterface()
 {
 }
 
-QMetaEnum   Light::s_metaEnum;
-QString     Light::Type = "light";
+QString Light::Type = "light";
 
-bool Light::update(const QVariantMap &attributes)
-{
-    bool chg = false;
-    for (QVariantMap::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
-        if (updateAttrByName (iter.key(), iter.value()))
-            chg = true;
-    }
-    return chg;
-}
-bool Light::updateAttrByName (const QString& name, const QVariant& value)
-{
-    int attrIndex = getAttrIndex(name);
-    return updateAttrByIndex (attrIndex, value);
-}
 bool Light::updateAttrByIndex (int attrIndex, const QVariant& value)
 {
     bool chg = false;
-    switch (static_cast<LightDef::Attributes>(attrIndex)) {
-        case LightDef::Attributes::STATE:
-            if (m_state != value.toBool()) {
-                m_state = value.toBool();
-                chg = true;
-                emit stateChanged();
-            }
+    switch (attrIndex) {
+        case LightDef::STATE:
+            if (value.type() == QVariant::String)
+                chg = setStateText(value.toString());
+            else
+                chg = setState(value.toInt());
             break;
-        case LightDef::Attributes::BRIGHTNESS:
+        case LightDef::BRIGHTNESS:
             if (m_brightness != value.toInt()) {
                 m_brightness = value.toInt();
                 chg = true;
                 emit brightnessChanged();
             }
             break;
-        case LightDef::Attributes::COLOR:
+        case LightDef::COLOR:
            if (m_color != value) {
                 m_color = QColor(value.toString());
                 chg = true;
                 emit colorChanged();
             }
             break;
-        case LightDef::Attributes::COLORTEMP:
+        case LightDef::COLORTEMP:
            if (m_colorTemp != value) {
                 m_colorTemp = value.toInt();
                 chg = true;
@@ -56,11 +63,6 @@ bool Light::updateAttrByIndex (int attrIndex, const QVariant& value)
             break;
         }
     return chg;
-}
-
-void* Light::getSpecificInterface()
-{
-    return qobject_cast<LightInterface*>(this);
 }
 
 void Light::toggle()
@@ -72,16 +74,6 @@ void Light::toggle()
     else {
         command("ON", "");
     }
-}
-
-void Light::turnOn()
-{
-    command("ON", "");
-}
-
-void Light::turnOff()
-{
-    command("OFF", "");
 }
 
 void Light::setBrightness(int value)
@@ -102,23 +94,16 @@ void Light::setColorTemp(int value)
 Light::Light(const QVariantMap& config, QObject* integrationObj, QObject *parent):
     Entity (Type, config, integrationObj, parent)
 {
-    if (!s_metaEnum.isValid()) {
+    static QMetaEnum metaEnumAttr;
+    static QMetaEnum metaEnumState;
+    if (!metaEnumAttr.isValid()) {
         int index = LightDef::staticMetaObject.indexOfEnumerator("Attributes");
-        s_metaEnum = LightDef::staticMetaObject.enumerator(index);
+        metaEnumAttr = LightDef::staticMetaObject.enumerator(index);
+        index = LightDef::staticMetaObject.indexOfEnumerator("States");
+        metaEnumState = LightDef::staticMetaObject.enumerator(index);
+        qmlRegisterUncreatableType<LightDef>("Entity.Light", 1, 0, "Light", "Not creatable as it is an enum type.");
     }
-}
-QStringList Light::allAttributes ()
-{
-    QStringList list;
-    for (int i = 0; i < s_metaEnum.keyCount(); i++)
-        list.append(s_metaEnum.key(i));
-    return list;
-}
-QString Light::getAttrName(int attrIndex)
-{
-    return s_metaEnum.valueToKey(static_cast<int>(attrIndex));
-}
-int Light::getAttrIndex(const QString& str)
-{
-    return s_metaEnum.keyToValue(str.toUpper().toUtf8());
+    m_enumAttr = &metaEnumAttr;
+    m_enumState = &metaEnumState;
+    m_specificInterface = qobject_cast<LightInterface*>(this);
 }

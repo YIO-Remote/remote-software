@@ -1,3 +1,26 @@
+###############################################################################
+ #
+ # Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ # Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ #
+ # This file is part of the YIO-Remote software project.
+ #
+ # YIO-Remote software is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # YIO-Remote software is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ #
+ # SPDX-License-Identifier: GPL-3.0-or-later
+ #############################################################################/
+
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++11 disable-desktop qtquickcompiler
 
@@ -7,6 +30,8 @@ include(qmake-target-platform.pri)
 include(qmake-destination-path.pri)
 
 HEADERS += \
+    components/media_player/sources/albummodel_mediaplayer.h \
+    components/media_player/sources/searchmodel_mediaplayer.h \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
     sources/configinterface.h \
@@ -44,6 +69,8 @@ HEADERS += \
     sources/yioapiinterface.h
 
 SOURCES += \
+    components/media_player/sources/albummodel_mediaplayer.cpp \
+    components/media_player/sources/searchmodel_mediaplayer.cpp \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/remote.cpp \
@@ -143,16 +170,16 @@ exists($$(QTDIR)/bin/lrelease):QMAKE_LRELEASE *= $$(QTDIR)/bin/lrelease
 exists($$(QT_LINGUIST_DIR)/lupdate):QMAKE_LUPDATE *= $$(QT_LINGUIST_DIR)/lupdate
 exists($$(QT_LINGUIST_DIR)/lrelease):QMAKE_LRELEASE *= $$(QT_LINGUIST_DIR)/lrelease
 # 5.) Last option: check path, plain and simple. (Would most likely be enough on most systems...)
-if(!defined($$QMAKE_LUPDATE, var)) {
+if(isEmpty(QMAKE_LUPDATE)) {
     win32:QMAKE_LUPDATE    = $$system(where lupdate)
     unix|mac:QMAKE_LUPDATE = $$system(which lupdate)
 }
-if(!defined($$QMAKE_LRELEASE, var)) {
+if(isEmpty(QMAKE_LRELEASE)) {
     win32:QMAKE_LRELEASE    = $$system(where lrelease)
     unix|mac:QMAKE_LRELEASE = $$system(which lrelease)
 }
 
-exists($$QMAKE_LUPDATE) {
+!isEmpty(QMAKE_LUPDATE):exists("$$QMAKE_LUPDATE") {
     message("Using Qt linguist tools: '$$QMAKE_LUPDATE', '$$QMAKE_LRELEASE'")
     command = $$QMAKE_LUPDATE remote.pro
     system($$command) | error("Failed to run: $$command")

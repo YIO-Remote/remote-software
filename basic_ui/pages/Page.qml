@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
@@ -9,7 +31,7 @@ Flickable {
     property string page
 
     //: Name of the settings page
-    property string title: qsTr(config.read.ui_config.pages[page].name) + translateHandler.emptyString
+    property string title: qsTr(config.pages[page].name) + translateHandler.emptyString
 
     // image background handling
     property string img_url
@@ -17,9 +39,9 @@ Flickable {
     // get the URL from config JSON
     Component.onCompleted: {
         img_url = Qt.binding(function () {
-            if (config.read.ui_config.pages[page].image) {
+            if (config.pages[page].image) {
                 topImage.visible = true;
-                return "file://" + config.read.ui_config.pages[page].image;
+                return "file://" + config.pages[page].image;
             } else {
                 topImage.visible = false;
                 return "";
@@ -158,10 +180,10 @@ Flickable {
 
         Repeater {
             id: groupRepeater
-            model: config.read.ui_config.pages[page].groups
+            model: config.pages[page].groups
 
             Group {
-                groupID: config.read.ui_config.pages[page].groups[index]
+                groupID: config.pages[page].groups[index]
             }
         }
     }

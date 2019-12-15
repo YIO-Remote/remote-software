@@ -1,4 +1,26 @@
-﻿#ifndef ENTITIES_H
+﻿/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
+#ifndef ENTITIES_H
 #define ENTITIES_H
 
 #include <QObject>
@@ -23,7 +45,7 @@ class Entities : public QObject , EntitiesInterface
     Q_PROPERTY  (QStringList         supported_entities_translation READ  supported_entities_translation    CONSTANT)
     Q_PROPERTY  (QStringList         loaded_entities        READ    loaded_entities         CONSTANT)
 
-    Q_PROPERTY  (QList<QObject *>    mediaplayersPlaying     READ    mediaplayersPlaying     NOTIFY mediaplayersPlayingChanged)
+    Q_PROPERTY  (QList<QObject *>    mediaplayersPlaying    READ    mediaplayersPlaying     NOTIFY mediaplayersPlayingChanged)
 
 public:
     // get all entities
@@ -33,16 +55,16 @@ public:
     Q_INVOKABLE void                load                ();
 
     // get entites by type
-    Q_INVOKABLE QList<QObject *>    getByType           (const QString& type);
+    Q_INVOKABLE QList<EntityInterface *>    getByType           (const QString& type);
 
     // get entites by area
-    Q_INVOKABLE QList<QObject *>    getByArea           (const QString& area);
+    Q_INVOKABLE QList<EntityInterface *>    getByArea           (const QString& area);
 
     // get entites by area and type
-    Q_INVOKABLE QList<QObject *>    getByAreaType       (const QString& area, const QString& type);
+    Q_INVOKABLE QList<EntityInterface *>    getByAreaType       (const QString& area, const QString& type);
 
     // get entities by integration
-    Q_INVOKABLE QList<QObject *>    getByIntegration    (const QString& integration);
+    Q_INVOKABLE QList<EntityInterface *>    getByIntegration    (const QString& integration);
 
     // get entity by entity_id
     Q_INVOKABLE QObject*            get                 (const QString& entity_id);
@@ -74,8 +96,6 @@ public:
 
 signals:
     void mediaplayersPlayingChanged();
-//    void mediaplayerAdded();
-//    void mediaplayerRemoved();
 
 private:
     QMap<QString, QObject*>     m_entities;

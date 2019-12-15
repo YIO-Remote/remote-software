@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtQuick.VirtualKeyboard 2.2
@@ -89,7 +111,7 @@ ApplicationWindow {
                 // charging is done
                 if (battery_averagepower == 0 && battery_level == 1) {
                     // signal with the dock that the remote is fully charged
-                    var obj = integrations.get(config.read.settings.paired_dock);
+                    var obj = integrations.get(config.settings.paired_dock);
                     obj.sendCommand("dock", "", "REMOTE_CHARGED", "");
                 }
 
@@ -193,7 +215,7 @@ ApplicationWindow {
         triggeredOnStart: true
 
         onTriggered: {
-            if (config.read.settings.softwareupdate) {
+            if (config.settings.softwareupdate) {
                 JSUpdate.checkForUpdate();
 
                 if (updateAvailable) {
@@ -221,7 +243,7 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
-        if (config.read == undefined) {
+        if (config.config == undefined) {
             console.debug("Cannot load configuration file");
             // create a temporary standard config
 
@@ -230,9 +252,9 @@ ApplicationWindow {
         }
 
         // change dark mode to the configured value
-        darkMode = Qt.binding(function () { return config.read.ui_config.darkmode});
-        standbyControl.display_autobrightness = Qt.binding(function() { return config.read.settings.autobrightness })
-        standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.read.settings.proximity })
+        darkMode = Qt.binding(function () { return config.ui_config.darkmode});
+        standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
+        standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
         // load the integrations
         //        if (integrations.load()) {
@@ -243,11 +265,11 @@ ApplicationWindow {
 
 
         // set the language
-        translateHandler.selectLanguage(config.read.language);
+        translateHandler.selectLanguage(config.language);
 
         // load bluetooth
-        bluetoothArea.init(config.read);
-        if (config.read.settings.bluetootharea) {
+        bluetoothArea.init(config.config);
+        if (config.settings.bluetootharea) {
             bluetoothArea.startScan();
         }
 
@@ -291,8 +313,8 @@ ApplicationWindow {
         objectName: "standbyControl"
 
         Component.onCompleted: {
-            standbyControl.wifiOffTime = Qt.binding(function () { return config.read.settings.wifitime});
-            standbyControl.shutdownTime = Qt.binding(function () { return config.read.settings.shutdowntime});
+            standbyControl.wifiOffTime = Qt.binding(function () { return config.settings.wifitime});
+            standbyControl.shutdownTime = Qt.binding(function () { return config.settings.shutdowntime});
         }
     }
 
@@ -430,7 +452,7 @@ ApplicationWindow {
             standbyControl.touchDetected = true;
 
             // signal with the dock that it is low battery
-            var obj = integrations.get(config.read.settings.paired_dock);
+            var obj = integrations.get(config.settings.paired_dock);
             obj.sendCommand("dock", "", "REMOTE_LOWBATTERY", "");
         }
         if (battery_level > 0.2) {

@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 
@@ -36,7 +58,7 @@ Item {
         Text {
             id: wifioffText
             color: colorText
-            text: config.read.settings.wifitime == 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(config.read.settings.wifitime/60) + translateHandler.emptyString
+            text: config.settings.wifitime == 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(config.settings.wifitime/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -103,10 +125,10 @@ Item {
             }
 
             onValueChanged: {
-                var tmp = config.read;
-                tmp.settings.wifitime = wifioffSlider.value*60;
+                var tmp = config.settings;
+                tmp.wifitime = wifioffSlider.value*60;
                 if (setbyUser) {
-                    config.write = tmp;
+                    config.settings = tmp;
                     setbyUser = false;
                 }
             }
@@ -115,11 +137,11 @@ Item {
                 setbyUser = true;
             }
 
-            onPressedChanged: {
-                if (!this.pressed) {
-                    config.writeConfig();
-                }
-            }
+//            onPressedChanged: {
+//                if (!this.pressed) {
+//                    config.writeConfig();
+//                }
+//            }
         }
 
         Text {
@@ -160,7 +182,7 @@ Item {
         Text {
             id: shutdownText
             color: colorText
-            text: config.read.settings.shutdowntime == 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(config.read.settings.shutdowntime/60/60) + translateHandler.emptyString
+            text: config.settings.shutdowntime == 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(config.settings.shutdowntime/60/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
             anchors.left: parent.left
@@ -227,10 +249,10 @@ Item {
             }
 
             onValueChanged: {
-                var tmp = config.read
-                tmp.settings.shutdowntime = shutdownSlider.value*60*60
+                var tmp = config.settings
+                tmp.shutdowntime = shutdownSlider.value*60*60
                 if (setbyUser) {
-                    config.write = tmp
+                    config.settings = tmp
                     setbyUser = false;
                 }
             }
@@ -239,11 +261,11 @@ Item {
                 setbyUser = true;
             }
 
-            onPressedChanged: {
-                if (!this.pressed) {
-                    config.writeConfig();
-                }
-            }
+//            onPressedChanged: {
+//                if (!this.pressed) {
+//                    config.writeConfig();
+//                }
+//            }
         }
 
         Text {

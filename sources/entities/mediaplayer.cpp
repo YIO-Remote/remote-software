@@ -1,106 +1,122 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 #include <QtDebug>
+#include <QQmlApplicationEngine>
 
 #include "mediaplayer.h"
 #include "entities.h"
 
 MediaPlayerInterface::~MediaPlayerInterface()
 {}
-QMetaEnum   MediaPlayer::s_metaEnum;
-QString     MediaPlayer::Type = "media_player";
+QString MediaPlayer::Type = "media_player";
 
-bool MediaPlayer::update(const QVariantMap &attributes)
+bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
 {
     bool chg = false;
-    for (QVariantMap::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
-        if (updateAttrByName (iter.key(), iter.value()))
+    switch (attrIndex) {
+    case MediaPlayerDef::STATE:
+        if (value.type() == QVariant::String)
+            chg = setStateText(value.toString());
+        else
+            chg = setState(value.toInt());
+        if (chg) {
+            if (m_state == MediaPlayerDef::PLAYING)
+                Entities::getInstance()->addMediaplayersPlaying(entity_id());
+            else if (m_state == MediaPlayerDef::IDLE || m_state == MediaPlayerDef::OFF)
+                Entities::getInstance()->removeMediaplayersPlaying(entity_id());
+        }
+        break;
+    case MediaPlayerDef::SOURCE:
+        if (m_source != value.toString()) {
+            m_source = value.toString();
             chg = true;
+            emit sourceChanged();
+        }
+        break;
+    case MediaPlayerDef::VOLUME:
+        if (m_volume != value.toInt()) {
+            m_volume = value.toInt();
+            chg = true;
+            emit volumeChanged();
+        }
+        break;
+    case MediaPlayerDef::MUTED:
+        if (m_muted != value.toBool()) {
+            m_muted = value.toBool();
+            chg = true;
+            emit mutedChanged();
+        }
+        break;
+    case MediaPlayerDef::MEDIATYPE:
+        if (m_mediaType != value.toString()) {
+            m_mediaType = value.toString();
+            chg = true;
+            emit mediaTypeChanged();
+        }
+        break;
+    case MediaPlayerDef::MEDIATITLE:
+        if (m_mediaTitle != value.toString()) {
+            m_mediaTitle = value.toString();
+            chg = true;
+            emit mediaTitleChanged();
+        }
+        break;
+    case MediaPlayerDef::MEDIAARTIST:
+        if (m_mediaArtist != value.toString()) {
+            m_mediaArtist = value.toString();
+            chg = true;
+            emit mediaArtistChanged();
+        }
+        break;
+    case MediaPlayerDef::MEDIAIMAGE:
+        if (m_mediaImage != value.toString()) {
+            m_mediaImage = value.toString();
+            chg = true;
+            emit mediaImageChanged();
+        }
+        break;
+    case MediaPlayerDef::MEDIADURATION:
+        if (m_mediaDuration != value.toInt()) {
+            m_mediaDuration = value.toInt();
+            chg = true;
+            emit mediaDurationChanged();
+        }
+        break;
+    case MediaPlayerDef::MEDIAPROGRESS:
+        if (m_mediaProgress != value.toInt()) {
+            m_mediaProgress = value.toInt();
+            chg = true;
+            emit mediaProgressChanged();
+        }
+        break;
+    case MediaPlayerDef::BROWSERESULT:
+        m_browseResult = value;
+        chg = true;
+        emit browseResultChanged();
+        break;
     }
     return chg;
 }
-bool MediaPlayer::updateAttrByName (const QString& name, const QVariant& value)
-{
-    int attrIndex = getAttrIndex(name);
-    return updateAttrByIndex (attrIndex, value);
-}
-bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
-{
-    bool    chg = false;
-    States  state;
-    switch (static_cast<MediaPlayerDef::Attributes>(attrIndex)) {
-        case MediaPlayerDef::Attributes::STATE:
-            state = static_cast<States>(value.toInt());
-            if (m_state != state) {
-                m_state = state;
-                if (m_state == States::PLAYING)
-                    Entities::getInstance()->addMediaplayersPlaying(entity_id());
-                else if (m_state == States::IDLE || m_state == States::OFF)
-                    Entities::getInstance()->removeMediaplayersPlaying(entity_id());
-                chg = true;
-                emit stateChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::SOURCE:
-            if (m_source != value.toString()) {
-                m_source = value.toString();
-                chg = true;
-                emit sourceChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::VOLUME:
-            if (m_volume != value.toInt()) {
-                m_volume = value.toInt();
-                chg = true;
-                emit volumeChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::MUTED:
-            if (m_muted != value.toBool()) {
-                m_muted = value.toBool();
-                chg = true;
-                emit mutedChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::MEDIATYPE:
-            if (m_mediaType != value.toString()) {
-                m_mediaType = value.toString();
-                chg = true;
-                emit mediaTypeChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::MEDIATITLE:
-            if (m_mediaTitle != value.toString()) {
-                m_mediaTitle = value.toString();
-                chg = true;
-                emit mediaTitleChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::MEDIAARTIST:
-            if (m_mediaArtist != value.toString()) {
-                m_mediaArtist = value.toString();
-                chg = true;
-                emit mediaArtistChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::MEDIAIMAGE:
-            if (m_mediaImage != value.toString()) {
-                m_mediaImage = value.toString();
-                chg = true;
-                emit mediaImageChanged();
-            }
-            break;
-        case MediaPlayerDef::Attributes::BROWSERESULT:
-            m_browseResult = value;
-            chg = true;
-            emit browseResultChanged();
-            break;
-        }
-    return chg;
-}
-void* MediaPlayer::getSpecificInterface()
-{
-    return qobject_cast<MediaPlayerInterface*>(this);
-}
-
 
 void MediaPlayer::turnOn()
 {
@@ -110,6 +126,11 @@ void MediaPlayer::turnOn()
 void MediaPlayer::turnOff()
 {
     command("TURNOFF", "");
+}
+
+void MediaPlayer::setrecentSearches(QVariant list)
+{
+    m_recentSearches = list;
 }
 
 void MediaPlayer::play()
@@ -154,38 +175,57 @@ void MediaPlayer::browse(QString cmd)
 {
     command("BROWSE", cmd);
 }
-void MediaPlayer::playMedia(const QString& cmd, const QString& itemKey)
+void MediaPlayer::playMedia(const QString &itemKey, const QString &type)
 {
-    command("play:" + cmd, itemKey);
+    QVariantMap map;
+    map.insert("type", type);
+    map.insert("id", itemKey);
+    command("PLAY", map);
+}
+void MediaPlayer::search(const QString& searchString, const QString& itemKey)
+{
+    command("search:" + searchString, itemKey);
 }
 void MediaPlayer::search(const QString& searchString)
 {
     command("SEARCH", searchString);
 }
 
+void MediaPlayer::getAlbum(const QString &id)
+{
+    command("GETALBUM", id);
+}
+
+void MediaPlayer::getPlaylist(const QString &id)
+{
+    command("GETPLAYLIST", id);
+}
+
+void MediaPlayer::setSearchModel(QObject *model)
+{
+    m_searchModel = model;
+    emit searchModelChanged();
+}
+
+void MediaPlayer::setBrowseModel(QObject *model)
+{
+    emit browseModelChanged(model);
+}
+
 MediaPlayer::MediaPlayer(const QVariantMap& config, QObject* integrationObj, QObject *parent):
     Entity(Type, config, integrationObj, parent)
 {
-    if (!s_metaEnum.isValid()) {
+    static QMetaEnum metaEnumAttr;
+    static QMetaEnum metaEnumState;
+    if (!metaEnumAttr.isValid()) {
         int index = MediaPlayerDef::staticMetaObject.indexOfEnumerator("Attributes");
-        s_metaEnum = MediaPlayerDef::staticMetaObject.enumerator(index);
+        metaEnumAttr = MediaPlayerDef::staticMetaObject.enumerator(index);
+        index = MediaPlayerDef::staticMetaObject.indexOfEnumerator("States");
+        metaEnumState = MediaPlayerDef::staticMetaObject.enumerator(index);
+        qmlRegisterUncreatableType<MediaPlayerDef>("Entity.MediaPlayer", 1, 0, "MediaPlayer", "Not creatable as it is an enum type.");
     }
+    m_enumAttr = &metaEnumAttr;
+    m_enumState = &metaEnumState;
+    m_specificInterface = qobject_cast<MediaPlayerInterface*>(this);
 }
-
-QStringList MediaPlayer::allAttributes ()
-{
-    QStringList list;
-    for (int i = 0; i < s_metaEnum.keyCount(); i++)
-        list.append(s_metaEnum.key(i));
-    return list;
-}
-QString MediaPlayer::getAttrName(int attrIndex)
-{
-    return s_metaEnum.valueToKey(static_cast<int>(attrIndex));
-}
-int MediaPlayer::getAttrIndex(const QString& str)
-{
-    return s_metaEnum.keyToValue(str.toUpper().toUtf8());
-}
-
 

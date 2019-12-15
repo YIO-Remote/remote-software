@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 #ifndef BLIND_H
 #define BLIND_H
 
@@ -14,18 +36,9 @@ class Blind : public Entity, BlindInterface
     Q_INTERFACES(BlindInterface)
 
 public:
-
-    Q_PROPERTY  (bool           state       READ    state       NOTIFY stateChanged)
-    Q_PROPERTY  (int            position    READ    position    NOTIFY positionChanged)
+    Q_PROPERTY  (int                position    READ    position    NOTIFY positionChanged)
 
     // update an entity's attributes
-    Q_INVOKABLE bool            update              (const QVariantMap& attributes) override;
-    Q_INVOKABLE bool            updateAttrByName    (const QString& name, const QVariant& value) override;
-    Q_INVOKABLE bool            updateAttrByIndex   (int attrIndex, const QVariant& value) override;
-
-    // attribute name and index
-    Q_INVOKABLE QString         getAttrName         (int attrIndex) override;
-    Q_INVOKABLE int             getAttrIndex        (const QString& attrName) override;
 
     // blind commands
     Q_INVOKABLE void            close();
@@ -33,34 +46,21 @@ public:
     Q_INVOKABLE void            stop();
     Q_INVOKABLE void            setPosition(int value);
 
-    // only for C++ integrations
-    virtual     void*           getSpecificInterface() override;
+    bool                        updateAttrByIndex   (int attrIndex, const QVariant& value) override;
+
+    void                        turnOn() override               { open (); }
+    void                        turnOff() override              { close (); }
+    int                         position() override             { return m_position; }
+    bool                        isOn() override                 { return m_state == BlindDef::CLOSED; }
 
     Blind(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
 
-    bool                        state() override    { return m_state; }
-    int                         position() override { return m_position; }
-
 signals:
-    void stateChanged();
     void positionChanged();
 
 public:
     static QString Type;
-
-    static QStringList&         AllAttributes()
-    {
-        static QStringList s;
-        if (s.count() == 0)
-            s.append(allAttributes());
-        return s;
-    }
-
 private:
-    static QStringList          allAttributes();
-    static QMetaEnum            s_metaEnum;
-
-    bool                        m_state;
     int                         m_position;
 };
 

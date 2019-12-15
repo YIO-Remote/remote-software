@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -25,6 +25,7 @@ Rectangle {
             buttonContainer.opacity = 0.3
             buttonContainer.enabled = false
             buttonContainer.state = "closed"
+            cardLoader.active = false;
         }
     }
 
@@ -75,7 +76,7 @@ Rectangle {
         },
         State {
             name: "open"
-            PropertyChanges {target: buttonContainer; width: 440; height: 720}
+            PropertyChanges {target: buttonContainer; width: 480; height: 720}
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
         }
