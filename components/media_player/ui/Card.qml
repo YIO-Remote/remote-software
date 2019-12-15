@@ -179,6 +179,7 @@ Rectangle {
 
             Loader {
                 id: loader
+                active: SwipeView.isCurrentItem || SwipeView.isPreviousItem || SwipeView.isNextItem
                 asynchronous: true
                 sourceComponent: {
                     if (card.features.indexOf("SEARCH")-1 == index ) {

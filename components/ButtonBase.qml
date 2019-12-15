@@ -25,6 +25,7 @@ Rectangle {
                 buttonContainer.opacity = 0.3
                 buttonContainer.enabled = false
                 buttonContainer.state = "closed"
+                cardLoader.active = false;
             }
         }
     }

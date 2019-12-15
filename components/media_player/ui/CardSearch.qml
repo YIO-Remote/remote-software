@@ -45,7 +45,8 @@ Rectangle {
         if (!isCurrentItem) {
             searchResults.visible = false;
             itemFlickable.contentY = 0;
-            obj.searchModel.clear();
+            if (obj.searchModel.count !== 0)
+                obj.searchModel.clear();
         }
     }
 
