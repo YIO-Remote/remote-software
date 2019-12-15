@@ -22,7 +22,7 @@
  #############################################################################/
 
 QT += qml quick websockets quickcontrols2 bluetooth
-CONFIG += c++11 disable-desktop # qtquickcompiler
+CONFIG += c++11 disable-desktop qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
