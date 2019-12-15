@@ -51,6 +51,7 @@ public:
     {
         return m_data.at(index)->item_model();
     }
+    Q_INVOKABLE void clear();
 
 public slots:
     void setCount(int count);

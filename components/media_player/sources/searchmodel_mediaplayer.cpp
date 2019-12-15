@@ -60,6 +60,13 @@ void SearchModel::insert(SearchModelItem* o, int i)
     endInsertRows();
 }
 
+void SearchModel::clear()
+{
+    beginResetModel();
+    m_data.clear();
+    endResetModel();
+}
+
 void SearchModel::setCount(int count)
 {
     if (m_count == count)

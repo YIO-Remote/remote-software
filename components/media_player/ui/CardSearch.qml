@@ -11,11 +11,11 @@ Rectangle {
     function onSearch() {
         obj.search(searchTextField.text);
         searchResultsTitle.text = searchTextField.text;
-        recentSearches.state = "hidden";
         obj.recentSearches.insert(0, {"searchString":searchTextField.text});
         searchTextField.focus = false;
-        itemFlickable.contentY = 230;
         searchTextField.text = "";
+        searchResults.visible = true;
+        itemFlickable.contentY = 290 + recentSearches.height;
     }
 
     function load(album, type) {
@@ -23,20 +23,30 @@ Rectangle {
         if (type === "album") {
             obj.getAlbum(album);
             obj.browseModelChanged.connect(onBrowseModelChanged);
-        } else if (type == "playlist") {
+        } else if (type === "playlist") {
             obj.getPlaylist(album);
             obj.browseModelChanged.connect(onBrowseModelChanged);
         }
     }
 
     function onBrowseModelChanged(model) {
-        if (model.count != 0 && albumLoader) {
+        if (model.count !== 0 && albumLoader) {
             if (albumLoader.source != "qrc:/components/media_player/ui/AlbumView.qml")
                 albumLoader.setSource("qrc:/components/media_player/ui/AlbumView.qml", { "albumModel": model })
             else if (albumLoader.item)
                 albumLoader.item.albumModel = model;
         }
         obj.browseModelChanged.disconnect(onBrowseModelChanged);
+    }
+
+    property bool isCurrentItem: parent._currentItem
+
+    onIsCurrentItemChanged: {
+        if (!isCurrentItem) {
+            searchResults.visible = false;
+            itemFlickable.contentY = 0;
+            obj.searchModel.clear();
+        }
     }
 
     property alias albumLoader: albumLoader
@@ -80,6 +90,19 @@ Rectangle {
                     onLooseFocus: {
                         searchTextField.focus = false;
                     }
+                }
+
+                Text {
+                    id: title
+                    color: colorText
+                    text: qsTr("Search") + translateHandler.emptyString
+                    anchors.left: parent.left
+                    anchors.leftMargin: 30
+                    anchors.top: parent.top
+                    anchors.topMargin: 30
+                    font.family: "Open Sans Bold"
+                    font.pixelSize: 40
+                    lineHeight: 1
                 }
 
                 Rectangle {
@@ -142,20 +165,9 @@ Rectangle {
                         onFocusChanged: {
                             if (focus) {
                                 inputPanel.active = true
-                                recentSearches.state = "visible";
                                 itemFlickable.contentY = 0;
                             } else
                                 inputPanel.active = false
-                        }
-                    }
-                }
-
-                Connections {
-                    target: obj.recentSearches
-
-                    onCountChanged: {
-                        if (obj.recentSearches.count == 0) {
-                            recentSearches.state = "hidden";
                         }
                     }
                 }
@@ -167,7 +179,7 @@ Rectangle {
                     anchors.top: searchContainer.bottom
                     anchors.topMargin: 40
                     anchors.horizontalCenter: parent.horizontalCenter
-                    state: "visible"
+                    state: obj.recentSearches.count === 0 ? "hidden" : "visible"
 
                     states:[
                         State {
@@ -257,8 +269,8 @@ Rectangle {
                                     haptic.playEffect("click");
                                     obj.search(searchString);
                                     searchResultsTitle.text = searchString;
-                                    recentSearches.state = "hidden";
-                                    itemFlickable.contentY = 230;
+                                    itemFlickable.contentY = 230 + recentSearches.height;
+                                    searchResults.visible = true;
                                 }
                             }
 
@@ -276,6 +288,7 @@ Rectangle {
 
                 Item {
                     id: searchResults
+                    visible: false
                     width: parent.width-60
                     height: childrenRect.height
                     anchors.top: recentSearches.bottom
@@ -323,7 +336,7 @@ Rectangle {
                                             tagRepeater.itemAt(i).selected = false;
                                         }
                                     } else {
-                                        for (var i=0; i<tagRepeater.count; i++) {
+                                        for (i=0; i<tagRepeater.count; i++) {
                                             tagRepeater.itemAt(i).selected = true;
                                         }
                                     }
@@ -338,13 +351,13 @@ Rectangle {
                             BasicUI.Tag {
                                 id: tagItem
                                 tag: {
-                                    if (title == "albums")
+                                    if (title === "albums")
                                         return qsTr("Albums") + translateHandler.emptyString
-                                    else if (title == "tracks")
+                                    else if (title === "tracks")
                                         return qsTr("Tracks") + translateHandler.emptyString
-                                    else if (title == "artists")
+                                    else if (title === "artists")
                                         return qsTr("Artists") + translateHandler.emptyString
-                                    else if (title == "playlists")
+                                    else if (title === "playlists")
                                         return qsTr("Playlists") + translateHandler.emptyString
                                 }
                                 selected: true
@@ -400,13 +413,13 @@ Rectangle {
                             Text {
                                 id: searchResultsListHeader
                                 text: {
-                                    if (title == "albums")
+                                    if (title === "albums")
                                         return qsTr("Albums") + translateHandler.emptyString
-                                    else if (title == "tracks")
+                                    else if (title === "tracks")
                                         return qsTr("Tracks") + translateHandler.emptyString
-                                    else if (title == "artists")
+                                    else if (title === "artists")
                                         return qsTr("Artists") + translateHandler.emptyString
-                                    else if (title == "playlists")
+                                    else if (title === "playlists")
                                         return qsTr("Playlists") + translateHandler.emptyString
                                 }
                                 color: colorText
@@ -424,13 +437,13 @@ Rectangle {
                                 anchors.topMargin: 40
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 sourceComponent: {
-                                    if (title == "albums")
+                                    if (title === "albums")
                                         return albumList
-                                    else if (title == "tracks")
+                                    else if (title === "tracks")
                                         return trackList
-                                    else if (title == "artists")
+                                    else if (title === "artists")
                                         return trackList
-                                    else if (title == "playlists")
+                                    else if (title === "playlists")
                                         return albumList
                                 }
 
@@ -454,6 +467,15 @@ Rectangle {
                         clip: true
 
                         delegate: albumThumbnail
+
+                        populate: Transition {
+                            id: popTransition
+                            SequentialAnimation {
+                                PropertyAction { property: "opacity"; value: 0 }
+                                PauseAnimation { duration: popTransition.ViewTransition.index*100 }
+                                NumberAnimation { properties: "opacity"; from: 0; to: 1; duration: 300; easing.type: Easing.InExpo }
+                            }
+                        }
                     }
                 }
 

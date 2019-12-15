@@ -76,7 +76,7 @@ Rectangle {
         },
         State {
             name: "open"
-            PropertyChanges {target: buttonContainer; width: 440; height: 720}
+            PropertyChanges {target: buttonContainer; width: 480; height: 720}
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
         }

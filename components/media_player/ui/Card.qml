@@ -163,9 +163,9 @@ Rectangle {
         onCurrentIndexChanged: {
             if (cardSwipeView.currentIndex != features.indexOf("SEARCH"))
                 looseFocus();
-            currentItem.item.swipeView.currentIndex = 0;
-            if (currentItem.item.swipeView.currentItem.itemFlickable)
-                currentItem.item.swipeView.currentItem.itemFlickable.contentY = 0;
+            if (currentItem.item) {
+                currentItem.item.swipeView.currentIndex = 0;
+            }
         }
 
         Item {
@@ -189,6 +189,8 @@ Rectangle {
                         return cardSpeakerControl;
                     }
                 }
+
+                property bool _currentItem: SwipeView.isCurrentItem
             }
         }
 
@@ -263,7 +265,8 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = 0;
+//                    cardSwipeView.currentIndex = 0;
+                    cardSwipeView.setCurrentIndex(0);
                 }
             }
         }
@@ -288,7 +291,8 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
+//                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
+                    cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
                 }
             }
         }
@@ -313,7 +317,8 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = features.indexOf("LIST");
+//                    cardSwipeView.currentIndex = features.indexOf("LIST");
+                    cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
                 }
             }
         }
@@ -338,7 +343,8 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
+//                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
+                    cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
                 }
             }
         }

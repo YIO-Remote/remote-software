@@ -28,6 +28,8 @@ Item {
         }
     }
 
+    property alias itemFlickable: itemFlickable
+
     Flickable {
         id: itemFlickable
         width: parent.width
