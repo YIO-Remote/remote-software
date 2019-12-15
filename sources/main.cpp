@@ -112,16 +112,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
-    qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork", "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum", "Not creatable as it is an enum type");
+    qRegisterMetaType<SystemServiceName>("SystemServiceName");
+    qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork", "Not creatable as it is an information object only");
     qmlRegisterUncreatableType<WifiSecurityEnum>("WifiControl", 1, 0, "WifiSecurityEnum", "Not creatable as it is an enum type");
     qRegisterMetaType<WifiSecurity>("WifiSecurity");
     qmlRegisterUncreatableType<SignalStrengthEnum>("WifiControl", 1, 0, "SignalStrengthEnum", "Not creatable as it is an enum type");
     qRegisterMetaType<SignalStrength>("SignalStrength");
 
-
     // DRIVERS
-    // TODO pass configuration object to driver
-    HardwareFactory *hwFactory = HardwareFactory::getFactory();
+    // TODO use a hardware specific / advanced configuration object for low-level configuration
+    HardwareFactory *hwFactory = HardwareFactory::build((ConfigInterface *)&config);
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
 

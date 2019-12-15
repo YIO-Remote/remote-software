@@ -38,9 +38,12 @@ HEADERS += \
     sources/entities/remote.h \
     sources/fileio.h \
     sources/hardware/hardwarefactory.h \
+    sources/hardware/hardwarefactory_mock.h \
     sources/hardware/hardwarefactory_rpi0.h \
+    sources/hardware/systemd.h \
     sources/hardware/systemservice.h \
     sources/hardware/systemservice_mock.h \
+    sources/hardware/systemservice_name.h \
     sources/hardware/wifi_control.h \
     sources/hardware/wifi_network.h \
     sources/hardware/wifi_security.h \
@@ -82,7 +85,9 @@ SOURCES += \
     sources/config.cpp \
     sources/entities/remote.cpp \
     sources/hardware/hardwarefactory.cpp \
+    sources/hardware/hardwarefactory_mock.cpp \
     sources/hardware/hardwarefactory_rpi0.cpp \
+    sources/hardware/systemd.cpp \
     sources/hardware/systemservice.cpp \
     sources/hardware/systemservice_mock.cpp \
     sources/hardware/wifi_control.cpp \

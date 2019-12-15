@@ -20,21 +20,36 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICEMOCK_H
-#define SYSTEMSERVICEMOCK_H
+#ifndef SYSTEMSERVICENAME_ENUM_H
+#define SYSTEMSERVICENAME_ENUM_H
 
-#include "systemservice.h"
+#include <QObject>
 
-class SystemServiceMock : public SystemService
-{
-    Q_OBJECT
+/**
+ * @brief Enum class for system services
+ * @details Dedicated class for improved QML usability based on https://qml.guide/enums-in-qt-qml/
+ */
+class SystemServiceNameEnum {
+    Q_GADGET
+
 public:
-    SystemServiceMock(QObject *parent = nullptr);
+    enum Value {
+        WIFI,
+        WEBSERVER,
+        DHCP,
+        DNS,
+        NETWORKING,
+        NTP,
+        ZEROCONF,
+        SHUTDOWN,
+        YIO_UPDATE
+    };
+    Q_ENUM (Value)
 
-    // SystemService interface
-public:
-    virtual bool startService(SystemServiceName serviceName) override;
-    virtual bool stopService(SystemServiceName serviceName) override;
+private:
+    explicit SystemServiceNameEnum() {}
 };
 
-#endif // SYSTEMSERVICEMOCK_H
+typedef SystemServiceNameEnum::Value SystemServiceName;
+
+#endif // SYSTEMSERVICENAME_ENUM_H

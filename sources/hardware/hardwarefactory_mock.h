@@ -20,21 +20,21 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICEMOCK_H
-#define SYSTEMSERVICEMOCK_H
+#ifndef HARDWAREFACTORYMOCK_H
+#define HARDWAREFACTORYMOCK_H
 
-#include "systemservice.h"
+#include "hardwarefactory.h"
 
-class SystemServiceMock : public SystemService
+class HardwareFactoryMock : public HardwareFactory
 {
     Q_OBJECT
 public:
-    SystemServiceMock(QObject *parent = nullptr);
+    HardwareFactoryMock(ConfigInterface *config, QObject* parent = nullptr);
 
-    // SystemService interface
+    // HardwareFactory interface
 public:
-    virtual bool startService(SystemServiceName serviceName) override;
-    virtual bool stopService(SystemServiceName serviceName) override;
+    virtual WifiControl *getWifiControl() override;
+    virtual SystemService *getSystemService() override;
 };
 
-#endif // SYSTEMSERVICEMOCK_H
+#endif // HARDWAREFACTORYMOCK_H

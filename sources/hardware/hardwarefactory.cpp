@@ -20,18 +20,44 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include <QLoggingCategory>
+#include <QtDebug>
+
 #include "hardwarefactory.h"
 
 #include "hardwarefactory_rpi0.h"
+#include "hardwarefactory_mock.h"
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "HwFactory");
+
+HardwareFactory* HardwareFactory::s_instance = nullptr;
 
 HardwareFactory::HardwareFactory(QObject *parent) : QObject(parent)
-{
+{}
 
+HardwareFactory::~HardwareFactory()
+{
+    s_instance = nullptr;
 }
 
-HardwareFactory* HardwareFactory::getFactory()
+HardwareFactory* HardwareFactory::build(ConfigInterface *config)
 {
-    static HardwareFactoryRPi0 singleton;
+    if (s_instance != nullptr) {
+        qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow! HardwareFactory already initialized, ignoring build() call.";
+        return s_instance;
+    }
 
-    return &singleton;
+    // KISS: sufficient for now, custom logic possible with config interface when needed.
+#if defined (Q_OS_LINUX)
+    s_instance = new HardwareFactoryRPi0(config);
+#else // anyone wants to write Android, macOS or Windows factories?
+    s_instance = new HardwareFactoryMock(config);
+#endif
+
+    return s_instance;
+}
+
+HardwareFactory* HardwareFactory::instance()
+{
+    return s_instance;
 }

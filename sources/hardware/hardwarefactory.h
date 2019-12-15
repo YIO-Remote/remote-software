@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include "../configinterface.h"
 #include "systemservice.h"
 #include "wifi_control.h"
 
@@ -32,9 +33,19 @@ class HardwareFactory : public QObject
 {
     Q_OBJECT
 public:
-    HardwareFactory(QObject *parent = nullptr);
+    /**
+     * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
+     * @details This operation must be called once before using the singleton instance() accessor.
+     * @param config The configuration interface to retrieve build configuration options.
+     * @return The concrete instance or nullptr if construction failed. In this case the application should be terminated.
+     */
+    static HardwareFactory* build(ConfigInterface *config);
 
-    static HardwareFactory* getFactory();
+    /**
+     * @brief instance Returns a concrete HardwareFactory implementation
+     * @return The hardware factory or nullptr if the factory has not yet been initialized
+     */
+    static HardwareFactory* instance();
 
     virtual WifiControl* getWifiControl() = 0;
 
@@ -42,6 +53,12 @@ public:
 
 signals:
 
+protected:
+    HardwareFactory(QObject *parent = nullptr);
+    virtual ~HardwareFactory();
+
+private:
+    static HardwareFactory* s_instance;
 };
 
 #endif // HARDWAREFACTORY_H

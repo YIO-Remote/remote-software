@@ -29,13 +29,17 @@ class HardwareFactoryRPi0 : public HardwareFactory
 {
     Q_OBJECT
 public:
-    HardwareFactoryRPi0(QObject* parent = nullptr);
+    HardwareFactoryRPi0(ConfigInterface *config, QObject* parent = nullptr);
 
     // HardwareFactory interface
 public:
     virtual WifiControl *getWifiControl() override;
 
     virtual SystemService *getSystemService() override;
+
+private:
+    WifiControl   *p_wifiControl;
+    SystemService *p_systemService;
 };
 
 #endif // HARDWAREFACTORYRPI0_H

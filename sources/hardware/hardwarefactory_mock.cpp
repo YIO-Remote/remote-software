@@ -20,21 +20,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICEMOCK_H
-#define SYSTEMSERVICEMOCK_H
+#include <QLoggingCategory>
+#include <QtDebug>
 
-#include "systemservice.h"
+#include "systemservice_mock.h"
+#include "wifi_mock.h"
 
-class SystemServiceMock : public SystemService
+#include "hardwarefactory_mock.h"
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "HwMock");
+
+HardwareFactoryMock::HardwareFactoryMock(ConfigInterface *config, QObject *parent) : HardwareFactory(parent)
 {
-    Q_OBJECT
-public:
-    SystemServiceMock(QObject *parent = nullptr);
+    Q_UNUSED(config)
 
-    // SystemService interface
-public:
-    virtual bool startService(SystemServiceName serviceName) override;
-    virtual bool stopService(SystemServiceName serviceName) override;
-};
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+}
 
-#endif // SYSTEMSERVICEMOCK_H
+
+WifiControl *HardwareFactoryMock::getWifiControl()
+{
+    static WifiMock singleton;
+    return &singleton;
+}
+
+SystemService *HardwareFactoryMock::getSystemService()
+{
+    static SystemServiceMock singleton;
+    return &singleton;
+}

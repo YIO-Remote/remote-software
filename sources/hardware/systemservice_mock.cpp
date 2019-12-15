@@ -33,13 +33,13 @@ SystemServiceMock::SystemServiceMock(QObject *parent) : SystemService(parent)
 }
 
 
-bool SystemServiceMock::startService(QString &serviceName)
+bool SystemServiceMock::startService(SystemServiceName serviceName)
 {
     qCDebug(CLASS_LC) << "start service:" << serviceName;
     return true;
 }
 
-bool SystemServiceMock::stopService(QString &serviceName)
+bool SystemServiceMock::stopService(SystemServiceName serviceName)
 {
     qCDebug(CLASS_LC) << "stop service:" << serviceName;
     return true;

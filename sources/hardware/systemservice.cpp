@@ -30,7 +30,7 @@ SystemService::SystemService(QObject *parent) : QObject(parent)
 /**
  * @brief SystemService::restartService default implementation: stops and starts service
  */
-bool SystemService::restartService(QString &serviceName)
+bool SystemService::restartService(SystemServiceName serviceName)
 {
     stopService(serviceName);
     return startService(serviceName);
@@ -39,7 +39,7 @@ bool SystemService::restartService(QString &serviceName)
 /**
  * @brief SystemService::reloadService default implementation: stops and starts service
  */
-bool SystemService::reloadService(QString &serviceName)
+bool SystemService::reloadService(SystemServiceName serviceName)
 {
     stopService(serviceName);
     return startService(serviceName);

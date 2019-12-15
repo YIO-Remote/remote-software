@@ -25,6 +25,8 @@
 
 #include <QObject>
 
+#include "systemservice_name.h"
+
 class SystemService : public QObject
 {
     Q_OBJECT
@@ -36,28 +38,28 @@ public:
      * @param serviceName the name of the service
      * @return true if the service was started successfully
      */
-    virtual bool startService(QString &serviceName) = 0;
+    virtual bool startService(SystemServiceName serviceName) = 0;
 
     /**
      * @brief stopService Stopps the given service
      * @param serviceName the name of the service
      * @return true if the service was stopped successfully
      */
-    virtual bool stopService(QString &serviceName) = 0;
+    virtual bool stopService(SystemServiceName serviceName) = 0;
 
     /**
      * @brief restartService Restarts the given service
      * @param serviceName the name of the service
      * @return true if the service was restarted successfully
      */
-    virtual bool restartService(QString &serviceName);
+    virtual bool restartService(SystemServiceName serviceName);
 
     /**
      * @brief reloadService Reloads the configuration of the given service
      * @param serviceName the name of the service
      * @return true if the service was reloaded successfully
      */
-    virtual bool reloadService(QString &serviceName);
+    virtual bool reloadService(SystemServiceName serviceName);
 
 signals:
 

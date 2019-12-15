@@ -24,41 +24,51 @@
 #include <QtDebug>
 
 #include "hardwarefactory_rpi0.h"
-#include "systemservice_mock.h"
+#include "systemservice_name.h"
+#include "systemd.h"
 
 #if defined (CONFIG_WPA_SUPPLICANT)
     #include "wifi_wpasupplicant.h"
-#elif defined (Q_OS_LINUX)
-    #include "wifi_shellscripts.h"
 #else
-    #include "wifi_mock.h"
+    #include "wifi_shellscripts.h"
 #endif
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
 
-HardwareFactoryRPi0::HardwareFactoryRPi0(QObject *parent) : HardwareFactory(parent)
+HardwareFactoryRPi0::HardwareFactoryRPi0(ConfigInterface *config, QObject *parent) : HardwareFactory(parent)
 {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-}
+    Q_UNUSED(config)
 
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+
+    // KISS: sufficient for now, custom logic possible with config interface when needed.
+#if defined (CONFIG_WPA_SUPPLICANT)
+    p_wifiControl = new WifiWpaSupplicant(this);
+#else
+    p_wifiControl = new WifiShellScripts(this);
+#endif
+
+    QMap<SystemServiceName, QString> serviceNameMap;
+    serviceNameMap.insert(SystemServiceName::WIFI, "wpa_supplicant@wlan0.service");
+    serviceNameMap.insert(SystemServiceName::DNS, "systemd-resolved.service");
+    serviceNameMap.insert(SystemServiceName::WEBSERVER, "lighttpd.service");
+    serviceNameMap.insert(SystemServiceName::NTP, "systemd-timesyncd.service");
+    serviceNameMap.insert(SystemServiceName::DHCP, "dhcpcd.service");
+    serviceNameMap.insert(SystemServiceName::SHUTDOWN, "shutdown.service");
+    serviceNameMap.insert(SystemServiceName::YIO_UPDATE, "update.service");
+    serviceNameMap.insert(SystemServiceName::NETWORKING, "lighttpd.service");
+    serviceNameMap.insert(SystemServiceName::ZEROCONF, "avahi-daemon");
+    serviceNameMap.insert(SystemServiceName::NETWORKING, "systemd-networkd");
+
+    p_systemService = new Systemd(serviceNameMap, this);
+}
 
 WifiControl *HardwareFactoryRPi0::getWifiControl()
 {
-#if defined (CONFIG_WPA_SUPPLICANT)
-    static WifiWpaSupplicant singleton;
-#elif defined (Q_OS_LINUX)
-    static WifiShellScripts singleton;
-#else
-    static WifiMock singleton;
-#endif
-
-    return &singleton;
+    return p_wifiControl;
 }
-
 
 SystemService *HardwareFactoryRPi0::getSystemService()
 {
-    static SystemServiceMock singleton;
-
-    return &singleton;
+    return p_systemService;
 }

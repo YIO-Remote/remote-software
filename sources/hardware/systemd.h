@@ -20,21 +20,31 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICEMOCK_H
-#define SYSTEMSERVICEMOCK_H
+#ifndef SYSTEMD_H
+#define SYSTEMD_H
+
+#include <QObject>
+#include <QMap>
 
 #include "systemservice.h"
 
-class SystemServiceMock : public SystemService
+class Systemd : public SystemService
 {
     Q_OBJECT
 public:
-    SystemServiceMock(QObject *parent = nullptr);
+    Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
 
     // SystemService interface
 public:
     virtual bool startService(SystemServiceName serviceName) override;
     virtual bool stopService(SystemServiceName serviceName) override;
+    virtual bool restartService(SystemServiceName serviceName) override;
+    virtual bool reloadService(SystemServiceName serviceName) override;
+
+private:
+    bool launch(const QString &command);
+
+    QMap<SystemServiceName, QString> m_serviceNameMap;
 };
 
-#endif // SYSTEMSERVICEMOCK_H
+#endif // SYSTEMD_H
