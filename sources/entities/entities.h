@@ -55,16 +55,16 @@ public:
     Q_INVOKABLE void                load                ();
 
     // get entites by type
-    Q_INVOKABLE QList<QObject *>    getByType           (const QString& type);
+    Q_INVOKABLE QList<EntityInterface *>    getByType           (const QString& type);
 
     // get entites by area
-    Q_INVOKABLE QList<QObject *>    getByArea           (const QString& area);
+    Q_INVOKABLE QList<EntityInterface *>    getByArea           (const QString& area);
 
     // get entites by area and type
-    Q_INVOKABLE QList<QObject *>    getByAreaType       (const QString& area, const QString& type);
+    Q_INVOKABLE QList<EntityInterface *>    getByAreaType       (const QString& area, const QString& type);
 
     // get entities by integration
-    Q_INVOKABLE QList<QObject *>    getByIntegration    (const QString& integration);
+    Q_INVOKABLE QList<EntityInterface *>    getByIntegration    (const QString& integration);
 
     // get entity by entity_id
     Q_INVOKABLE QObject*            get                 (const QString& entity_id);

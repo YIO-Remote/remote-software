@@ -85,6 +85,16 @@ void Config::writeConfig()
     m_jsf->write(m_config);
 }
 
+void Config::writeConfig(const bool sync)
+{
+    if (sync) {
+        syncCache();
+        m_jsf->write(m_config);
+    } else {
+        m_jsf->write(m_config);
+    }
+}
+
 QObject *Config::getQMLObject(QList<QObject*> nodes,const QString &name)
 {
     for (int i=0; i < nodes.size(); i++)

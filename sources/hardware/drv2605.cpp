@@ -52,19 +52,19 @@ void drv2605::playEffect(QString effect)
 {
 #ifdef __arm__
     if (effect == "click") {
-        setWaveform(0, 2);
+        setWaveform(0, 1);
         go();
     }
     if (effect == "bump") {
-        setWaveform(0, 26);
+        setWaveform(0, 24);
         go();
     }
     if (effect == "press") {
-        setWaveform(0, 111);
+        setWaveform(0, 86);
         go();
     }
     if (effect == "buzz") {
-        setWaveform(0, 48);
+        setWaveform(0, 47);
         go();
     }
 #endif

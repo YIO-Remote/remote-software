@@ -80,51 +80,51 @@ void Entities::load()
     }
 }
 
-QList<QObject *> Entities::getByType(const QString& type)
+QList<EntityInterface *> Entities::getByType(const QString& type)
 {
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("type") == type) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
         }
     }
     return e;
 }
 
-QList<QObject *> Entities::getByArea(const QString& area)
+QList<EntityInterface *> Entities::getByArea(const QString& area)
 {
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("area") == area) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
         }
     }
     return e;
 }
 
-QList<QObject *> Entities::getByAreaType(const QString &area, const QString &type)
+QList<EntityInterface *> Entities::getByAreaType(const QString &area, const QString &type)
 {
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("area") == area && value->property("type") == type) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
         }
     }
     return e;
 }
 
-QList<QObject *> Entities::getByIntegration(const QString& integration)
+QList<EntityInterface *> Entities::getByIntegration(const QString& integration)
 {
     qDebug() << "CALLED";
 
-    QList<QObject *> e;
+    QList<EntityInterface *> e;
     foreach (QObject *value, m_entities)
     {
         if (value->property("integration") == integration) {
-            e.append(m_entities.value(value->property("entity_id").toString()));
+            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
 
             qDebug() << e;
         }
@@ -186,11 +186,13 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
     QTimer* timer = m_mediaplayersTimers.value(entity_id);
     if (timer) {
         timer->stop();
+        timer->deleteLater();
+        m_mediaplayersTimers.remove(entity_id);
     }
 
-    QObject *o = m_entities.value(entity_id);
+    QObject *o = get(entity_id);
 
-    if (!m_mediaplayersPlaying.contains(entity_id)) {
+    if (!m_mediaplayersPlaying.contains(entity_id) && o) {
         m_mediaplayersPlaying.insert(entity_id, o);
         emit mediaplayersPlayingChanged();
     }

@@ -218,17 +218,17 @@ Item {
             target: entities
 
             onMediaplayersPlayingChanged: {
-                if (!miniMediaPlayerLoader.active) {
+                if (!miniMediaPlayerLoader.active && entities.mediaplayersPlaying.length !== 0) {
                     miniMediaPlayer.height = 90;
                     miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
                     miniMediaPlayerLoader.active = true;
                 }
 
-                if (entities.mediaplayersPlaying.length === 0) {
+                if (entities.mediaplayersPlaying.length === 0 && miniMediaPlayer.miniMediaPlayerLoader.active) {
                     loader_main.state = "visible";
                     miniMediaPlayer.height = 0;
-                    miniMediaPlayer.miniMediaPlayerLoader.source = "";
                     miniMediaPlayer.miniMediaPlayerLoader.active = false;
+                    miniMediaPlayer.miniMediaPlayerLoader.source = "";
                 }
             }
         }

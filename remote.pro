@@ -30,6 +30,8 @@ include(qmake-target-platform.pri)
 include(qmake-destination-path.pri)
 
 HEADERS += \
+    components/media_player/sources/albummodel_mediaplayer.h \
+    components/media_player/sources/searchmodel_mediaplayer.h \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
     sources/configinterface.h \
@@ -67,6 +69,8 @@ HEADERS += \
     sources/yioapiinterface.h
 
 SOURCES += \
+    components/media_player/sources/albummodel_mediaplayer.cpp \
+    components/media_player/sources/searchmodel_mediaplayer.cpp \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/remote.cpp \

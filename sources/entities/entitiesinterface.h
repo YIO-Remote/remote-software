@@ -34,13 +34,13 @@ public:
     virtual QList<QObject *>    list        () = 0;
 
     // get entites by type
-    virtual QList<QObject *>    getByType   (const QString& type) = 0;
+    virtual QList<EntityInterface *>    getByType   (const QString& type) = 0;
 
     // get entites by area
-    virtual QList<QObject *>    getByArea   (const QString& area) = 0;
+    virtual QList<EntityInterface *>    getByArea   (const QString& area) = 0;
 
     // get entities by integration
-    virtual QList<QObject *>    getByIntegration (const QString& integration) = 0;
+    virtual QList<EntityInterface *>    getByIntegration (const QString& integration) = 0;
 
     // get entity by entity_id
     virtual QObject*            get         (const QString& entity_id) = 0;
