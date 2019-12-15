@@ -29,6 +29,7 @@
 #include <QtDebug>
 
 #include "integrationsinterface.h"
+#include "plugininterface.h"
 
 class Integrations : public QObject, IntegrationsInterface
 {
@@ -64,7 +65,7 @@ public:
     // get the type of integration by id
     Q_INVOKABLE QString                 getType                 (const QString& id);
 
-    explicit Integrations(QQmlApplicationEngine *engine = NULL, const QString& appPath = "");
+    explicit Integrations(QQmlApplicationEngine *engine = nullptr, const QString& appPath = "");
     virtual ~Integrations();
 
     static Integrations*       getInstance     ()

@@ -27,8 +27,10 @@
 #include "blind.h"
 #include "mediaplayer.h"
 #include "remote.h"
+#include "weather.h"
 #include "../config.h"
 #include "../integrations/integrations.h"
+#include "remote.h"
 
 #include <QJsonArray>
 #include <QtDebug>
@@ -44,6 +46,9 @@ Entities* Entities::s_instance = nullptr;
 Entities::Entities(QObject *parent) : QObject(parent)
 {
     s_instance = this;
+
+    // Remote is special. Register class before entity creation (for use in Main.qml)
+    Remote::staticInitialize();
 }
 
 Entities::~Entities()
@@ -53,26 +58,31 @@ Entities::~Entities()
 
 QList<QObject *> Entities::list()
 {
-    return m_entities.values();
+    // This is ued in rare cases (until now not at all).
+    // Overhead of creating this QList is justified compared to the advantage dealing with Entity* instead of QObject*
+    QList<QObject*> entities;
+    for (QMap<QString, Entity*>::iterator i = m_entities.begin(); i != m_entities.end(); ++i) {
+        entities.append(i.value());
+    }
+    return entities;
 }
 
 void Entities::load()
 {
-    QVariantMap c = Config::getInstance()->config();
-    QVariant entities = c.value("entities");
+    QVariantMap entities = Config::getInstance()->getAllEntities();
 
     for (int i=0; i < m_supported_entities.length(); i++)
     {
-        if (entities.toMap().contains(m_supported_entities[i])) {
+        if (entities.contains(m_supported_entities[i])) {
 
-            QVariantList type = entities.toMap().value(m_supported_entities[i]).toJsonArray().toVariantList();
+            QVariantList type = entities.value(m_supported_entities[i]).toJsonArray().toVariantList();
 
             for (int k=0; k < type.length(); k++)
             {
                 QVariantMap map = type[k].toMap();
                 QObject* obj = Integrations::getInstance()->get(map.value("integration").toString());
-
-                add(m_supported_entities[i], map, obj);
+                IntegrationInterface *integration = qobject_cast<IntegrationInterface*>(obj);
+                add(m_supported_entities[i], map, integration);
                 addLoadedEntity(m_supported_entities[i]);
             }
 
@@ -92,13 +102,13 @@ QList<EntityInterface *> Entities::getByType(const QString& type)
     return e;
 }
 
+// TODO this function might be removed
 QList<EntityInterface *> Entities::getByArea(const QString& area)
 {
     QList<EntityInterface *> e;
-    foreach (QObject *value, m_entities)
-    {
-        if (value->property("area") == area) {
-            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
+    for (QMap<QString, Entity*>::iterator i = m_entities.begin(); i != m_entities.end(); ++i) {
+        if (i.value()->area() == area) {
+            e.append(qobject_cast<EntityInterface*>(i.value()));
         }
     }
     return e;
@@ -107,10 +117,9 @@ QList<EntityInterface *> Entities::getByArea(const QString& area)
 QList<EntityInterface *> Entities::getByAreaType(const QString &area, const QString &type)
 {
     QList<EntityInterface *> e;
-    foreach (QObject *value, m_entities)
-    {
-        if (value->property("area") == area && value->property("type") == type) {
-            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
+    for (QMap<QString, Entity*>::iterator i = m_entities.begin(); i != m_entities.end(); ++i) {
+        if (i.value()->area() == area && i.value()->type() == type) {
+            e.append(qobject_cast<EntityInterface*>(i.value()));
         }
     }
     return e;
@@ -118,18 +127,21 @@ QList<EntityInterface *> Entities::getByAreaType(const QString &area, const QStr
 
 QList<EntityInterface *> Entities::getByIntegration(const QString& integration)
 {
-    qDebug() << "CALLED";
-
     QList<EntityInterface *> e;
-    foreach (QObject *value, m_entities)
-    {
-        if (value->property("integration") == integration) {
-            e.append(qobject_cast<EntityInterface*>(m_entities.value(value->property("entity_id").toString())));
-
-            qDebug() << e;
+    for (QMap<QString, Entity*>::iterator i = m_entities.begin(); i != m_entities.end(); ++i) {
+        if (i.value()->integration() == integration) {
+            e.append(qobject_cast<EntityInterface*>(i.value()));
         }
     }
     return e;
+}
+void Entities::setConnected (const QString& integrationId, bool connected)
+{
+    for (QMap<QString, Entity*>::iterator i = m_entities.begin(); i != m_entities.end(); ++i) {
+        if (i.value()->integration() == integrationId) {
+            i.value()->setConnected(connected);
+        }
+    }
 }
 
 QObject *Entities::get(const QString& entity_id)
@@ -141,7 +153,7 @@ EntityInterface* Entities::getEntityInterface (const QString& entity_id)
     return qobject_cast<EntityInterface*>(m_entities.value(entity_id));
 }
 
-void Entities::add(const QString& type, const QVariantMap& config, QObject *integrationObj)
+void Entities::add(const QString& type, const QVariantMap& config, IntegrationInterface *integrationObj)
 {
     Entity *entity = nullptr;
     // Light entity
@@ -149,16 +161,20 @@ void Entities::add(const QString& type, const QVariantMap& config, QObject *inte
         entity = new Light(config, integrationObj, this);
     }
     // Blind entity
-    if (type == "blind") {
+    else if (type == "blind") {
         entity = new Blind(config, integrationObj, this);
     }
     // Media player entity
-    if (type == "media_player") {
+    else if (type == "media_player") {
         entity = new MediaPlayer(config, integrationObj, this);
     }
     // Remote entity
-    if (type == "remote") {
+    else if (type == "remote") {
         entity = new Remote(config, integrationObj, this);
+    }
+    // Weather entity
+    else if (type == "weather") {
+        entity = new Weather(config, integrationObj, this);
     }
     if (entity == nullptr)
         qDebug() << "Illegal entity type : " << type;

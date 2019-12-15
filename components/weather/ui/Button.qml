@@ -1,25 +1,3 @@
-/******************************************************************************
- *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
- *
- * This file is part of the YIO-Remote software project.
- *
- * YIO-Remote software is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * YIO-Remote software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
- *
- * SPDX-License-Identifier: GPL-3.0-or-later
- *****************************************************************************/
-
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
@@ -28,9 +6,9 @@ import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: blindButton
+    id: weatherButton
 
-    property var    obj
+    property var obj
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
@@ -40,13 +18,13 @@ Rectangle {
 
         onConnectedChanged: {
             if (obj.connected) {
-                blindButton.opacity = 1
-                blindButton.enabled = true
+                weatherButton.opacity = 1
+                weatherButton.enabled = true
             }
             else {
-                blindButton.opacity = 0.3
-                blindButton.enabled = false
-                blindButton.state = "closed"
+                weatherButton.opacity = 0.3
+                weatherButton.enabled = false
+                weatherButton.state = "closed"
             }
         }
     }
@@ -65,25 +43,10 @@ Rectangle {
         onButtonPress: {
             var tmp;
 
-            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
+            if (standbyControl.mode === "on" || standbyControl.mode === "dim") {
                 switch (button) {
-                case "dpad up":
-                    if (obj.supported_features.indexOf("OPEN") > -1) {
-                        obj.open();
-                    }
-                    break;
-                case "dpad down":
-                    if (obj.supported_features.indexOf("CLOSE") > -1) {
-                        obj.close();
-                    }
-                    break;
-                case "dpad middle":
-                    if (obj.supported_features.indexOf("STOP") > -1) {
-                        obj.stop();
-                    }
-                    break;
                 case "top right":
-                    blindButton.state = "closed"
+                    weatherButton.state = "closed"
                     loader_main.state = "visible"
                     break;
                 }
@@ -101,7 +64,7 @@ Rectangle {
     color: colorDark
     radius: cornerRadius
 
-    property var originParent: blindButton.parent
+    property var originParent: weatherButton.parent
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
@@ -110,8 +73,8 @@ Rectangle {
     layer.enabled: true
     layer.effect: OpacityMask {
         maskSource: Item {
-            width: blindButton.width
-            height: blindButton.height
+            width: weatherButton.width
+            height: weatherButton.height
             Rectangle {
                 anchors.fill: parent
                 radius: cornerRadius
@@ -128,16 +91,14 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: blindButton; width: 460; height: 125; scale: 1}
-            PropertyChanges {target: button; _opacity: 1}
-            ParentChange { target: blindButton; parent: originParent; scale: 1}
+            PropertyChanges {target: weatherButton; width: 460; height: 125; scale: 1}
+            ParentChange { target: weatherButton; parent: originParent; scale: 1}
             PropertyChanges {target: loader_main; state: "visible" }
         },
         State {
             name: "open"
-            PropertyChanges {target: blindButton; width: 440; height: 720}
-            PropertyChanges {target: button; _opacity: 0}
-            ParentChange { target: blindButton; parent: contentWrapper; x: 20; y: 80; scale: 1}
+            PropertyChanges {target: weatherButton; width: 440; height: 720}
+            ParentChange { target: weatherButton; parent: contentWrapper; x: 20; y: 80; scale: 1}
             PropertyChanges {target: loader_main; state: "hidden" }
         }
     ]
@@ -146,8 +107,7 @@ Rectangle {
         Transition {
             to: "closed"
             ParallelAnimation {
-                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: weatherButton; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutExpo; duration: 300 }
                 }
@@ -156,8 +116,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: blindButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
-                PropertyAnimation { target: button; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: weatherButton; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x, y, scale"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }
@@ -177,7 +136,7 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        enabled: blindButton.state == "open" ? false : true
+        enabled: weatherButton.state == "open" ? false : true
 
         onPressAndHold: {
             haptic.playEffect("press");
@@ -188,10 +147,10 @@ Rectangle {
         onClicked: {
             haptic.playEffect("click");
 
-            originParent = blindButton.parent
+            originParent = weatherButton.parent
 
-//            loader_main.state = "hidden"
-            blindButton.state = "open"
+            loader_main.state = "hidden"
+            weatherButton.state = "open"
         }
     }
 
@@ -225,7 +184,7 @@ Rectangle {
         Text {
             id: icon
             color: colorText
-            text: "\uE914"
+            text: "\uE901"
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -236,25 +195,22 @@ Rectangle {
             anchors.leftMargin: 20
             anchors.verticalCenter: parent.verticalCenter
         }
-
-    }
-
-    BasicUI.CustomSwitch {
-        id: button
-
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-
-        checked: obj.state
-        mouseArea.enabled: blindButton.state == "open" ? false: true
-        mouseArea.onClicked: {
-            if (obj.state) {
-                obj.close();
-            } else {
-                obj.open();
-            }
+        Text {
+            id: temp
+            color: colorText
+            text: obj.current.temp
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
+            wrapMode: Text.WordWrap
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.verticalCenter: parent.verticalCenter
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
         }
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -402,12 +358,12 @@ Rectangle {
 
     Loader {
         id: cardLoader
-        width: blindButton.width
-        height: blindButton.height
+        width: weatherButton.width
+        height: weatherButton.height
         asynchronous: true
-        active: blindButton.state == "open"
-        source: "qrc:/components/blind/ui/Card.qml"
-        opacity: cardLoader.status == Loader.Ready ? 1 : 0
+        active: weatherButton.state == "open"
+        source: "qrc:/components/weather/ui/Card.qml"
+//        opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {

@@ -53,7 +53,7 @@ public:
     int                         position() override             { return m_position; }
     bool                        isOn() override                 { return m_state == BlindDef::CLOSED; }
 
-    Blind(const QVariantMap& config, QObject* integrationObj, QObject *parent = nullptr);
+    Blind(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent = nullptr);
 
 signals:
     void positionChanged();

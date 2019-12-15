@@ -53,39 +53,49 @@ bool Blind::updateAttrByIndex (int attrIndex, const QVariant& value)
 
 void Blind::close()
 {
-    command("CLOSE", "");
+    command(BlindDef::C_CLOSE, "");
 }
 
 void Blind::open()
 {
-    command("OPEN", "");
+    command(BlindDef::C_OPEN, "");
 }
 
 void Blind::stop()
 {
-    command("STOP", "");
+    command(BlindDef::C_STOP, "");
 }
 
 void Blind::setPosition(int value)
 {
-     command("POSITION", value);
+     command(BlindDef::C_STOP, value);
 }
 
-Blind::Blind(const QVariantMap& config, QObject* integrationObj, QObject *parent):
-    Entity (Type, config, integrationObj, parent)
+Blind::Blind(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
+    Entity (Type, config, integrationObj, parent),
+    m_position(0)
 {
     static QMetaEnum metaEnumAttr;
+    static QMetaEnum metaEnumFeatures;
+    static QMetaEnum metaEnumCommands;
     static QMetaEnum metaEnumState;
     if (!metaEnumAttr.isValid()) {
         int index = BlindDef::staticMetaObject.indexOfEnumerator("Attributes");
         metaEnumAttr = BlindDef::staticMetaObject.enumerator(index);
         index = BlindDef::staticMetaObject.indexOfEnumerator("States");
         metaEnumState = BlindDef::staticMetaObject.enumerator(index);
+        index = BlindDef::staticMetaObject.indexOfEnumerator("Features");
+        metaEnumFeatures = BlindDef::staticMetaObject.enumerator(index);
+        index = BlindDef::staticMetaObject.indexOfEnumerator("Commands");
+        metaEnumCommands = BlindDef::staticMetaObject.enumerator(index);
         qmlRegisterUncreatableType<BlindDef>("Entity.Blind", 1, 0, "Blind", "Not creatable as it is an enum type.");
     }
     m_enumAttr = &metaEnumAttr;
+    m_enumFeatures = &metaEnumFeatures;
+    m_enumCommands = &metaEnumCommands;
     m_enumState = &metaEnumState;
     m_specificInterface = qobject_cast<BlindInterface*>(this);
+    initializeSupportedFeatures(config);
 }
 
 
