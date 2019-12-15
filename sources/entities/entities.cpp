@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 #include "entities.h"
 #include "entity.h"
 
@@ -80,6 +102,7 @@ QList<EntityInterface *> Entities::getByType(const QString& type)
     return e;
 }
 
+// TODO this function might be removed
 QList<EntityInterface *> Entities::getByArea(const QString& area)
 {
     QList<EntityInterface *> e;
@@ -179,11 +202,13 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
     QTimer* timer = m_mediaplayersTimers.value(entity_id);
     if (timer) {
         timer->stop();
+        timer->deleteLater();
+        m_mediaplayersTimers.remove(entity_id);
     }
 
-    QObject *o = m_entities.value(entity_id);
+    QObject *o = get(entity_id);
 
-    if (!m_mediaplayersPlaying.contains(entity_id)) {
+    if (!m_mediaplayersPlaying.contains(entity_id) && o) {
         m_mediaplayersPlaying.insert(entity_id, o);
         emit mediaplayersPlayingChanged();
     }

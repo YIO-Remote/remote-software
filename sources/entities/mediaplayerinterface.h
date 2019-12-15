@@ -24,6 +24,7 @@
 #define MEDIAPLAYERINTERFACE_H
 
 #include <QObject>
+#include "../remote-software/components/media_player/sources/searchmodel_mediaplayer.h"
 
 /// This class is a work arround to make the feature enum available in the interface and in the specifc entity class.
 /// Qt cannot create metadata describing an enum contained in the interface

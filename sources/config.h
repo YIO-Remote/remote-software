@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 #ifndef CONFIG_H
 #define CONFIG_H
 
@@ -16,18 +38,19 @@ class Config : public QObject, ConfigInterface
     Q_INTERFACES(ConfigInterface)
 
 public:
-    Q_PROPERTY (QVariantMap      config         READ config     WRITE setConfig     NOTIFY configChanged)
-    Q_PROPERTY (QString          profile        READ profile    WRITE setProfile    NOTIFY profileChanged)
-    Q_PROPERTY (QVariantMap      settings       READ getSettings                    NOTIFY settingsChanged)
-    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations                CONSTANT)
-    Q_PROPERTY (QVariantMap      entities       READ getAllEntities                 CONSTANT)
-    Q_PROPERTY (QVariantMap      profiles       READ getProfiles                    NOTIFY profilesChanged)
-    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig                    NOTIFY uiConfigChanged)
-    Q_PROPERTY (QVariantMap      pages          READ getPages                       NOTIFY pagesChanged)
-    Q_PROPERTY (QVariantMap      groups         READ getGroups                      NOTIFY groupsChanged)
+    Q_PROPERTY (QVariantMap      config         READ config               WRITE setConfig       NOTIFY configChanged)
+    Q_PROPERTY (QString          profile        READ profile              WRITE setProfile      NOTIFY profileChanged)
+    Q_PROPERTY (QVariantMap      settings       READ getSettings          WRITE setSettings     NOTIFY getSettingsChanged)
+    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations                            CONSTANT)
+    Q_PROPERTY (QVariantMap      entities       READ getAllEntities                             CONSTANT)
+    Q_PROPERTY (QVariantMap      profiles       READ getProfiles                                NOTIFY getProfilesChanged)
+    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig                                NOTIFY getUIConfigChanged)
+    Q_PROPERTY (QVariantMap      pages          READ getPages                                   NOTIFY getPagesChanged)
+    Q_PROPERTY (QVariantMap      groups         READ getGroups                                  NOTIFY getGroupsChanged)
 
     Q_INVOKABLE void readConfig(QString path);
     Q_INVOKABLE void writeConfig();
+    Q_INVOKABLE void writeConfig(const bool sync);
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
@@ -48,6 +71,14 @@ public:
     QVariantMap getSettings() {
         return m_cacheSettings;
     }
+
+    void setSettings(const QVariantMap& config) {
+        m_config.insert("settings", config);
+        m_cacheSettings = config;
+        emit getSettingsChanged();
+        writeConfig(false);
+    }
+
     QVariantMap getUIConfig() {
         return m_cacheUIConfig;
     }

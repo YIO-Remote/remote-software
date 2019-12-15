@@ -1,9 +1,32 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
+import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
 
 Item {
@@ -529,7 +552,7 @@ Item {
         width: 120
         height: 120
 
-        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == 3 ? true : false
+        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ? true : false
 
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -577,7 +600,7 @@ Item {
 
             onClicked: {
                 haptic.playEffect("click");
-                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == 3) {
+                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ) {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
                 } else {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();

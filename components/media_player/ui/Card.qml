@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -163,6 +163,9 @@ Rectangle {
         onCurrentIndexChanged: {
             if (cardSwipeView.currentIndex != features.indexOf("SEARCH"))
                 looseFocus();
+            if (currentItem.item) {
+                currentItem.item.swipeView.currentIndex = 0;
+            }
         }
 
         Item {
@@ -173,6 +176,7 @@ Rectangle {
             id: cardRepeater
 
             Loader {
+                id: loader
                 asynchronous: true
                 sourceComponent: {
                     if (card.features.indexOf("SEARCH")-1 == index ) {
@@ -185,6 +189,8 @@ Rectangle {
                         return cardSpeakerControl;
                     }
                 }
+
+                property bool _currentItem: SwipeView.isCurrentItem
             }
         }
 
@@ -200,10 +206,7 @@ Rectangle {
 
         Component {
             id: cardList
-            Rectangle {
-                anchors.fill: parent
-                color: "blue"
-            }
+            CardPlaylists {}
         }
 
         Component {
@@ -226,11 +229,11 @@ Rectangle {
         spacing: {
             var i = 0;
 
-            if (obj.supported_features.indexOf("SEARCH") > -1)
+            if (obj.isSupported("SEARCH"))
                 i++;
-            if (obj.supported_features.indexOf("LIST") > -1)
+            if (obj.isSupported("LIST"))
                 i++;
-            if (obj.supported_features.indexOf("SPEAKER_CONTROL") > -1)
+            if (obj.isSupported("SPEAKER_CONTROL"))
                 i++;
 
             if (i === 0)
@@ -262,14 +265,15 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = 0;
+//                    cardSwipeView.currentIndex = 0;
+                    cardSwipeView.setCurrentIndex(0);
                 }
             }
         }
 
         // search
         Text {
-            visible: obj.supported_features.indexOf("SEARCH") > -1 ? true : false
+            visible: obj.isSupported("SEARCH") ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
             text: "\uE90C"
@@ -287,14 +291,15 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
+//                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
+                    cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
                 }
             }
         }
 
         // playlists
         Text {
-            visible: obj.supported_features.indexOf("LIST") > -1 ? true : false
+            visible: obj.isSupported("LIST") ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
             text: "\uE907"
@@ -312,14 +317,15 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = features.indexOf("LIST");
+//                    cardSwipeView.currentIndex = features.indexOf("LIST");
+                    cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
                 }
             }
         }
 
         // speakers
         Text {
-            visible: obj.supported_features.indexOf("SPEAKER_CONTROL") > -1 ? true : false
+            visible: obj.isSupported("SPEAKER_CONTROL") ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
             text: "\uE90D"
@@ -337,10 +343,23 @@ Rectangle {
 
                 onClicked: {
                     haptic.playEffect("click");
-                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
+//                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
+                    cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
                 }
             }
         }
     }
 
+    property alias contextMenuLoader: contextMenuLoader
+
+    Loader {
+        id: contextMenuLoader
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+
+        onStatusChanged: {
+            if (contextMenuLoader.status == Loader.Ready)
+                contextMenuLoader.item.state = "open"
+        }
+    }
 }

@@ -32,7 +32,7 @@ QString MediaPlayer::Type = "media_player";
 
 bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
 {
-    bool    chg = false;
+    bool chg = false;
     switch (attrIndex) {
         case MediaPlayerDef::STATE:
             if (value.type() == QVariant::String)
@@ -110,6 +110,13 @@ bool MediaPlayer::updateAttrByIndex (int attrIndex, const QVariant& value)
             }
             break;
         }
+        break;
+    case MediaPlayerDef::BROWSERESULT:
+        m_browseResult = value;
+        chg = true;
+        emit browseResultChanged();
+        break;
+    }
     return chg;
 }
 
@@ -121,6 +128,11 @@ void MediaPlayer::turnOn()
 void MediaPlayer::turnOff()
 {
     command(MediaPlayerDef::C_TURNOFF, "");
+}
+
+void MediaPlayer::setrecentSearches(QVariant list)
+{
+    m_recentSearches = list;
 }
 
 void MediaPlayer::setrecentSearches(QVariant list)

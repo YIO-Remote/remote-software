@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -14,7 +14,7 @@ Rectangle {
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj // obj.integrationObj //integration[obj.integration].obj
+        target: obj
 
         onConnectedChanged: {
             if (obj.connected) {
@@ -28,6 +28,7 @@ Rectangle {
             }
         }
     }
+    
     Behavior on opacity {
         PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
     }
@@ -75,7 +76,7 @@ Rectangle {
         },
         State {
             name: "open"
-            PropertyChanges {target: buttonContainer; width: 440; height: 720}
+            PropertyChanges {target: buttonContainer; width: 480; height: 720}
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
         }

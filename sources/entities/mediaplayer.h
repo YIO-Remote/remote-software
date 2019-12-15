@@ -63,6 +63,7 @@ public:
     QObject*                    searchModel()              { return m_searchModel; }
     QObject*                    browseModel()              { return m_browseModel; }
     QVariant                    recentSearches()           { return m_recentSearches; }
+
     void                        setrecentSearches (QVariant list);
 
     // commands
@@ -105,7 +106,7 @@ signals:
     void mediaProgressChanged();
     void sourceChanged();
     void searchModelChanged();
-    void browseModelChanged();
+    void browseModelChanged(QObject* model);
     void recentSearchesChanged();
 
 public:
