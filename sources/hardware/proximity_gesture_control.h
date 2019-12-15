@@ -37,10 +37,10 @@ class ProximityGestureControl : public QObject
     Q_OBJECT
 
 public:
-    Q_PROPERTY(int ambientLight READ getambientLight)
-    Q_PROPERTY(int proximity NOTIFY proximityEvent)
-    Q_PROPERTY(QString gesture READ getgesture NOTIFY gestureEvent)
-    Q_PROPERTY(int proximitySetting READ getproximitySetting WRITE setproximitySetting)
+    Q_PROPERTY(int          ambientLight        READ getambientLight)
+    Q_PROPERTY(int          proximity           READ proximity                  NOTIFY proximityEvent)
+    Q_PROPERTY(QString      gesture             READ getgesture                 NOTIFY gestureEvent)
+    Q_PROPERTY(int          proximitySetting    READ getproximitySetting        WRITE setproximitySetting)
 
     int getambientLight() { return int(m_ambientLight); }
 
@@ -49,6 +49,8 @@ public:
     int getproximitySetting() { return m_proximitySetting; }
 
     void setproximitySetting(int proximity) { m_proximitySetting = proximity; }
+
+    int proximity() { return m_proximity; }
 
     Q_INVOKABLE void proximityDetection(bool state)
     {

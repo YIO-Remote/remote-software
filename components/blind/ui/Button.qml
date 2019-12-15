@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Entity.Blind 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
@@ -68,17 +70,17 @@ Rectangle {
             if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
                 switch (button) {
                 case "dpad up":
-                    if (obj.supported_features.indexOf("OPEN") > -1) {
+                    if (obj.isSupported(Blind.F_OPEN)) {
                         obj.open();
                     }
                     break;
                 case "dpad down":
-                    if (obj.supported_features.indexOf("CLOSE") > -1) {
+                    if (obj.isSupported(Blind.F_CLOSE)) {
                         obj.close();
                     }
                     break;
                 case "dpad middle":
-                    if (obj.supported_features.indexOf("STOP") > -1) {
+                    if (obj.isSupported(Blind.F_STOP)) {
                         obj.stop();
                     }
                     break;

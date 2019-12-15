@@ -37,8 +37,8 @@ class Notifications : public QObject, NotificationsInterface
     Q_INTERFACES(NotificationsInterface)
 
     // list of all notifications
-    Q_PROPERTY  (QVariantList            list            READ    list           NOTIFY listChanged      CONSTANT)
-    Q_PROPERTY  (bool                    isThereError    READ    isThereError   NOTIFY errorChanged     CONSTANT)
+    Q_PROPERTY  (QVariantList            list            READ    list           NOTIFY listChanged)
+    Q_PROPERTY  (bool                    isThereError    READ    isThereError   NOTIFY errorChanged)
 
 public:
     // get all notifications
@@ -60,7 +60,7 @@ public:
 //    Q_INVOKABLE bool            isThereError    ();
 
 
-    explicit Notifications(QQmlApplicationEngine *engine = NULL);
+    explicit Notifications(QQmlApplicationEngine *engine = nullptr);
     virtual ~Notifications();
 
     static Notifications*       getInstance     ()

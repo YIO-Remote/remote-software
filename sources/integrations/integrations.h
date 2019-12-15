@@ -34,10 +34,11 @@
 class Integrations : public QObject, IntegrationsInterface
 {
     Q_OBJECT
+    Q_INTERFACES(IntegrationsInterface)
 
 public:
     // list of all integrations
-    Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged          CONSTANT)
+    Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged)
 
     // load all integrations from config file
     Q_INVOKABLE void                    load                    ();

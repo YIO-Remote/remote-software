@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 import QtQuick 2.0
+import Entity.MediaPlayer 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -131,6 +132,7 @@ Item {
 
     Rectangle {
         id: progressBar
+        visible: obj.isSupported(MediaPlayer.F_MEDIA_POSITION)
         width: parent.width-80
         height: 4
         color: "#000000"

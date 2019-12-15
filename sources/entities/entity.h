@@ -55,16 +55,16 @@ public:
     Q_PROPERTY	(QStringList   	supported_features  READ supported_features CONSTANT)   // !!!!! use isSupported if possible !!!!!!!
 
     Q_PROPERTY  (int            state               READ state              WRITE       setState        NOTIFY stateChanged)
-    Q_PROPERTY	(QString   	stateText           READ stateText          WRITE       setStateText    NOTIFY stateTextChanged)
-    Q_PROPERTY	(bool   	isOn                READ isOn                                           NOTIFY onChanged)
-    Q_PROPERTY	(bool   	supportsOn          READ supportsOn         CONSTANT)
+    Q_PROPERTY	(QString        stateText           READ stateText          WRITE       setStateText    NOTIFY stateTextChanged)
+    Q_PROPERTY	(bool           isOn                READ isOn                                           NOTIFY onChanged)
+    Q_PROPERTY	(bool           supportsOn          READ supportsOn         CONSTANT)
     Q_PROPERTY  (QStringList    allStates           READ allStates          CONSTANT)
     Q_PROPERTY  (QStringList    allAttributes       READ allAttributes      CONSTANT)
     Q_PROPERTY  (QStringList    allFeatures         READ allFeatures        CONSTANT)
     Q_PROPERTY  (QStringList    allCommands         READ allCommands        CONSTANT)
 
     // send command to the integration
-    Q_INVOKABLE	void		command             (int command, const QVariant& param);   // Use Command enum C_XXXX
+    Q_INVOKABLE	void            command             (int command, const QVariant& param);   // Use Command enum C_XXXX
     Q_INVOKABLE void            turnOn              () {}
     Q_INVOKABLE void            turnOff             () {}
 
@@ -91,18 +91,18 @@ public:
     // Only for C++ integrations
     void*                       getSpecificInterface()  { return m_specificInterface; }     // light, blind, media player */
     QString                     type()                  { return m_type; }
-    QString			area()                  { return m_area; }
-    QString			friendly_name()         { return m_friendly_name; }
-    QString			entity_id()             { return objectName(); }
-    QString			integration()           { return m_integration; }
+    QString                     area()                  { return m_area; }
+    QString                     friendly_name()         { return m_friendly_name; }
+    QString                     entity_id()             { return objectName(); }
+    QString                     integration()           { return m_integration; }
     IntegrationInterface*       integrationObj()        { return m_integrationObj; }
     QStringList                 supported_features();
-    bool			favorite()              { return m_favorite; }
-    void			setFavorite             (bool value);
-    bool			connected()             { return m_connected; }
+    bool                        favorite()              { return m_favorite; }
+    void                        setFavorite             (bool value);
+    bool                        connected()             { return m_connected; }
     void                        setConnected            (bool value);
     int                         state()                 { return m_state; }
-    bool			setState                (int state);                // return true on change
+    bool                        setState                (int state);                // return true on change
     bool                        isOn                    ();
     bool                        supportsOn              ();
     QString                     stateText               ();

@@ -57,7 +57,6 @@ HEADERS += \
     sources/hardware/interrupt_handler.h \
     sources/hardware/drv2605.h \
     sources/hardware/bq27441.h \
-    sources/integrations/integration.h \
     sources/entities/entities.h \
     sources/entities/entity.h \
     sources/integrations/plugininterface.h \
