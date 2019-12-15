@@ -218,7 +218,7 @@ void MediaPlayer::setSearchModel(QObject *model)
 void MediaPlayer::setBrowseModel(QObject *model)
 {
     m_browseModel = model;
-    emit browseModelChanged();
+    emit browseModelChanged(model);
 }
 
 MediaPlayer::MediaPlayer(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
