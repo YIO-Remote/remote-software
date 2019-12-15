@@ -177,7 +177,7 @@ Item {
 
             if (itemsLoaded >= 3) {
                 if (mainNavigation.mainNavigationListView.count !== 0 && !mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
-                    mainNavigation.mainNavigationListView.currentIndex = currentIndex;
+                    mainNavigation.mainNavigationListView.currentIndex = currentIndex       ;
                     mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }
