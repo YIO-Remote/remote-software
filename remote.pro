@@ -47,6 +47,7 @@ HEADERS += \
     sources/hardware/webserver_lighttpd.h \
     sources/hardware/webserver_mock.h \
     sources/hardware/wifi_control.h \
+    sources/hardware/wifi_mock.h \
     sources/hardware/wifi_network.h \
     sources/hardware/wifi_security.h \
     sources/hardware/wifi_signal.h \
@@ -95,6 +96,7 @@ SOURCES += \
     sources/hardware/webserver_lighttpd.cpp \
     sources/hardware/webserver_mock.cpp \
     sources/hardware/wifi_control.cpp \
+    sources/hardware/wifi_mock.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
     sources/main.cpp \
@@ -159,12 +161,6 @@ linux {
             sources/hardware/apds9960.cpp
     }
 
-} else:macx {
-    HEADERS += sources/hardware/wifi_mock.h
-    SOURCES += sources/hardware/wifi_mock.cpp
-} else:win32 {
-    HEADERS += sources/hardware/wifi_mock.h
-    SOURCES += sources/hardware/wifi_mock.cpp
 }
 
 # === start TRANSLATION section =======================================

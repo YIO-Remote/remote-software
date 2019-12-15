@@ -52,9 +52,9 @@ const size_t WPA_BUF_SIZE = 2048;
 
 WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl *webServerControl, SystemService *systemService, QObject *parent)
     : WifiControl(parent)
+    , m_ctrl(nullptr)
     , p_webServerControl(webServerControl)
     , p_systemService(systemService)
-    , m_ctrl(nullptr)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }

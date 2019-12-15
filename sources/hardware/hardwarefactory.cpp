@@ -25,8 +25,11 @@
 
 #include "hardwarefactory.h"
 
+#if defined (Q_OS_LINUX)
 #include "hardwarefactory_rpi0.h"
+#else
 #include "hardwarefactory_mock.h"
+#endif
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwFactory");
 
