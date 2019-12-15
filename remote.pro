@@ -39,11 +39,13 @@ HEADERS += \
     sources/fileio.h \
     sources/hardware/hardwarefactory.h \
     sources/hardware/hardwarefactory_mock.h \
-    sources/hardware/hardwarefactory_rpi0.h \
     sources/hardware/systemd.h \
     sources/hardware/systemservice.h \
     sources/hardware/systemservice_mock.h \
     sources/hardware/systemservice_name.h \
+    sources/hardware/webserver_control.h \
+    sources/hardware/webserver_lighttpd.h \
+    sources/hardware/webserver_mock.h \
     sources/hardware/wifi_control.h \
     sources/hardware/wifi_network.h \
     sources/hardware/wifi_security.h \
@@ -86,10 +88,12 @@ SOURCES += \
     sources/entities/remote.cpp \
     sources/hardware/hardwarefactory.cpp \
     sources/hardware/hardwarefactory_mock.cpp \
-    sources/hardware/hardwarefactory_rpi0.cpp \
     sources/hardware/systemd.cpp \
     sources/hardware/systemservice.cpp \
     sources/hardware/systemservice_mock.cpp \
+    sources/hardware/webserver_control.cpp \
+    sources/hardware/webserver_lighttpd.cpp \
+    sources/hardware/webserver_mock.cpp \
     sources/hardware/wifi_control.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
@@ -140,6 +144,11 @@ linux {
         SOURCES += sources/hardware/wifi_shellscripts.cpp \
             sources/hardware/wifi_mock.cpp
     }
+
+    HEADERS += \
+        sources/hardware/hardwarefactory_rpi0.h
+    SOURCES += \
+        sources/hardware/hardwarefactory_rpi0.cpp
 
     equals(QT_ARCH, arm): {
         HEADERS += \

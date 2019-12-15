@@ -20,34 +20,30 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMD_H
-#define SYSTEMD_H
+#ifndef WEBSERVERCONTROL_H
+#define WEBSERVERCONTROL_H
 
 #include <QObject>
-#include <QMap>
-
-#include "systemservice.h"
 
 /**
- * @brief Linux systemd implementation of the SystemService interface.
+ * @brief The WebServerControl interface defines all web server specific functionality.
  */
-class Systemd : public SystemService
+class WebServerControl : public QObject
 {
     Q_OBJECT
 public:
-    Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
+    explicit WebServerControl(QObject *parent = nullptr);
 
-    // SystemService interface
-public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName) override;
+    Q_INVOKABLE virtual bool startService() = 0;
+    Q_INVOKABLE virtual bool stopService() = 0;
+    Q_INVOKABLE virtual bool restartService();
+    Q_INVOKABLE virtual bool reloadService();
 
-private:
-    bool launch(const QString &command);
+    Q_INVOKABLE virtual bool startWifiSetupPortal() = 0;
+    Q_INVOKABLE virtual bool startWebConfigurator() = 0;
 
-    QMap<SystemServiceName, QString> m_serviceNameMap;
+signals:
+
 };
 
-#endif // SYSTEMD_H
+#endif // WEBSERVERCONTROL_H

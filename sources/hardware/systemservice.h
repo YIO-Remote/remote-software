@@ -27,6 +27,10 @@
 
 #include "systemservice_name.h"
 
+/**
+ * @brief The SystemService interface allows to control system services.
+ * @details The concrete implementations handle the OS specific interactions.
+ */
 class SystemService : public QObject
 {
     Q_OBJECT
@@ -38,28 +42,28 @@ public:
      * @param serviceName the name of the service
      * @return true if the service was started successfully
      */
-    virtual bool startService(SystemServiceName serviceName) = 0;
+    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) = 0;
 
     /**
      * @brief stopService Stopps the given service
      * @param serviceName the name of the service
      * @return true if the service was stopped successfully
      */
-    virtual bool stopService(SystemServiceName serviceName) = 0;
+    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) = 0;
 
     /**
      * @brief restartService Restarts the given service
      * @param serviceName the name of the service
      * @return true if the service was restarted successfully
      */
-    virtual bool restartService(SystemServiceName serviceName);
+    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName);
 
     /**
      * @brief reloadService Reloads the configuration of the given service
      * @param serviceName the name of the service
      * @return true if the service was reloaded successfully
      */
-    virtual bool reloadService(SystemServiceName serviceName);
+    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName);
 
 signals:
 

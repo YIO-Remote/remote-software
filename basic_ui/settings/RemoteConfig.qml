@@ -32,10 +32,6 @@ Item {
     width: parent.width
     height: header.height + section.height + 20
 
-    Launcher {
-        id: remoteConfigLauncher
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DISPLAY
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,12 +80,11 @@ Item {
 
             checked: false
             mouseArea.onClicked: {
-                // TODO create a web server launcher class or at least a configurable command instead of launching hard coded shell scripts from QML
                 if (remoteConfigButton.checked) {
-                    remoteConfigLauncher.launch("systemctl start lighttpd.service");
+                    webserver.startService();
                     remoteConfigButton.checked = true;
                 } else {
-                    remoteConfigLauncher.launch("systemctl stop lighttpd.service");
+                    webserver.stopService();
                     remoteConfigButton.checked = false;
                 }
             }

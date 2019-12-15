@@ -125,6 +125,8 @@ int main(int argc, char *argv[])
     HardwareFactory *hwFactory = HardwareFactory::build((ConfigInterface *)&config);
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
+    WebServerControl* webServerControl = hwFactory->getWebServerControl();
+    engine.rootContext()->setContextProperty("webserver", webServerControl);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;

@@ -34,11 +34,15 @@
 #include <QLoggingCategory>
 #include <QVector>
 #include <QThread>
+#include <QFile>
+#include <QEventLoop>
+#include <QTimer>
 
 #include <cstdio>
 #include <cerrno>
 #include <exception>
 
+#include "systemservice_name.h"
 #include "wifi_wpasupplicant.h"
 #include "common/wpa_ctrl.h"
 
@@ -46,10 +50,11 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
 const size_t WPA_BUF_SIZE = 2048;
 
-WifiWpaSupplicant::WifiWpaSupplicant(QObject *parent)
+WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl *webServerControl, SystemService *systemService, QObject *parent)
     : WifiControl(parent)
+    , p_webServerControl(webServerControl)
+    , p_systemService(systemService)
     , m_ctrl(nullptr)
-    , m_scriptProcess(new QProcess(this))
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
@@ -101,9 +106,7 @@ bool WifiWpaSupplicant::init()
     if (!m_ctrl) {
         qCDebug(CLASS_LC) << "initializing driver...";
 
-        // TODO use a configuration object, pass as argument to init() and read m_wifiOnScript, m_wifiOffScript, wpaSupplicantSocketPath from configuration
-        m_wifiOnScript = "systemctl start wpa_supplicant@wlan0.service";
-        m_wifiOffScript = "systemctl stop wpa_supplicant@wlan0.service";
+        // TODO use a configuration object, pass as argument to init() and read wpaSupplicantSocketPath from configuration
         QString wpaSupplicantSocketPath = "/var/run/wpa_supplicant/wlan0";
         if (!connectWpaControlSocket(wpaSupplicantSocketPath)) {
             return false;
@@ -128,8 +131,7 @@ void WifiWpaSupplicant::on()
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
-    // TODO use a system-service class instead of launching shell script within the wifi control driver
-    launch(m_scriptProcess, m_wifiOnScript);
+    p_systemService->startService(SystemServiceName::WIFI);
     checkConnection();
     startScanTimer();
 }
@@ -142,8 +144,7 @@ void WifiWpaSupplicant::off()
 
     // TODO what about wpa_supplicant TERMINATE command? Or does that interfere with systemd service auto restart?
     // https://w1.fi/wpa_supplicant/devel/ctrl_iface_page.html
-    // TODO use a system-service class instead of launching shell script within the wifi control driver
-    launch(m_scriptProcess, m_wifiOffScript);
+    p_systemService->stopService(SystemServiceName::WIFI);
     setConnected(false);
 }
 
@@ -341,11 +342,85 @@ void WifiWpaSupplicant::startNetworkScan()
     controlRequest("SCAN");
 }
 
+QList<WifiNetwork>& WifiWpaSupplicant::scanForAvailableNetworks(int timeout)
+{
+    QEventLoop loop;
+    QTimer timeoutTimer;
+    connect(this, SIGNAL(networksFound()), &loop, SLOT(quit()));
+    connect(&timeoutTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
+    timeoutTimer.start(timeout);
+    loop.exec(); //blocks untill either theSignalToWaitFor or timeout was fired
+
+    return scanResult();
+}
+
 bool WifiWpaSupplicant::startAccessPoint()
 {
     qCDebug(CLASS_LC) << "TODO starting access point...";
 
-    // FIXME Implement access point configuration
+    if (!clearConfiguredNetworks()) {
+        return false;
+    }
+
+    QString cmd = "SET ap_scan 1";
+    if (!controlRequest(cmd)) {
+        return false;
+    }
+    controlRequest("SAVE_CONFIG");
+
+    // FIXME set wpa_supplicant access point configuration:
+    // # reset configuration file
+    // mkdir -p /etc/wpa_supplicant
+    // echo "ctrl_interface=/var/run/wpa_supplicant
+    // ap_scan=1
+    // update_config=1
+    // " > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+
+    // TODO logic from reset-wifi.sh still required to restart networking, dns & wpa_supplicant?
+    //    p_systemService->restartService(SystemServiceName::NETWORKING);
+    //    p_systemService->restartService(SystemServiceName::NAME_RESOLUTION);
+    //    p_systemService->restartService(SystemServiceName::WIFI);
+
+    // TODO scan for nearby wifis
+    //    iw dev wlan0 scan >> /dev/null
+    //     /usr/bin/yio-remote/wifi_network_list.sh > /networklist
+
+    QList<WifiNetwork> networks = scanForAvailableNetworks(5000);
+
+    // FIXME legacy function for PHP setup portal
+    QFile qFile("/networklist");
+    if (!qFile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        qCWarning(CLASS_LC) << "Error opening file:" << qFile.fileName();
+        return false;
+    }
+    QTextStream out(&qFile);
+    for (WifiNetwork network : networks) {
+        out << network.rssi() << ',' << network.name() << '\n';
+    }
+    qFile.close();
+
+    // TODO set static IP address
+    //    echo "[Match]
+    // Name=wlan0
+    //
+    // [Network]
+    // Address=10.0.0.1/24" > /etc/systemd/network/20-wireless.network
+    p_systemService->restartService(SystemServiceName::NETWORKING);
+
+    // TODO turn off wlan service
+    p_systemService->stopService(SystemServiceName::WIFI);
+    // killall -9 wpa_supplicant
+
+    // TODO DHCP and DNS service
+    p_systemService->stopService(SystemServiceName::NAME_RESOLUTION);
+    // dnsmasq -k --conf-file=/etc/dnsmasq.conf &
+
+    // TODO launch hostapd
+    // hostapd -B /etc/hostapd/hostapd.conf &
+
+    // AP up and running, start web portal
+    p_webServerControl->startWifiSetupPortal();
+
     return false;
 }
 

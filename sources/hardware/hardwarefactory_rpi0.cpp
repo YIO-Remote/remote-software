@@ -26,6 +26,7 @@
 #include "hardwarefactory_rpi0.h"
 #include "systemservice_name.h"
 #include "systemd.h"
+#include "webserver_lighttpd.h"
 
 #if defined (CONFIG_WPA_SUPPLICANT)
     #include "wifi_wpasupplicant.h"
@@ -42,15 +43,10 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(ConfigInterface *config, QObject *paren
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
-#if defined (CONFIG_WPA_SUPPLICANT)
-    p_wifiControl = new WifiWpaSupplicant(this);
-#else
-    p_wifiControl = new WifiShellScripts(this);
-#endif
 
     QMap<SystemServiceName, QString> serviceNameMap;
     serviceNameMap.insert(SystemServiceName::WIFI, "wpa_supplicant@wlan0.service");
-    serviceNameMap.insert(SystemServiceName::DNS, "systemd-resolved.service");
+    serviceNameMap.insert(SystemServiceName::NAME_RESOLUTION, "systemd-resolved.service");
     serviceNameMap.insert(SystemServiceName::WEBSERVER, "lighttpd.service");
     serviceNameMap.insert(SystemServiceName::NTP, "systemd-timesyncd.service");
     serviceNameMap.insert(SystemServiceName::DHCP, "dhcpcd.service");
@@ -61,6 +57,14 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(ConfigInterface *config, QObject *paren
     serviceNameMap.insert(SystemServiceName::NETWORKING, "systemd-networkd");
 
     p_systemService = new Systemd(serviceNameMap, this);
+
+    p_webServerControl = new WebServerLighttpd(p_systemService);
+
+#if defined (CONFIG_WPA_SUPPLICANT)
+    p_wifiControl = new WifiWpaSupplicant(p_webServerControl, p_systemService, this);
+#else
+    p_wifiControl = new WifiShellScripts(this);
+#endif
 }
 
 WifiControl *HardwareFactoryRPi0::getWifiControl()
@@ -71,4 +75,10 @@ WifiControl *HardwareFactoryRPi0::getWifiControl()
 SystemService *HardwareFactoryRPi0::getSystemService()
 {
     return p_systemService;
+}
+
+
+WebServerControl *HardwareFactoryRPi0::getWebServerControl()
+{
+    return p_webServerControl;
 }

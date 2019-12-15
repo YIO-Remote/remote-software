@@ -25,6 +25,9 @@
 
 #include "systemservice.h"
 
+/**
+ * @brief A mock implementation of the SystemService interface for unsupported platforms.
+ */
 class SystemServiceMock : public SystemService
 {
     Q_OBJECT
@@ -33,8 +36,8 @@ public:
 
     // SystemService interface
 public:
-    virtual bool startService(SystemServiceName serviceName) override;
-    virtual bool stopService(SystemServiceName serviceName) override;
+    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
+    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
 };
 
 #endif // SYSTEMSERVICEMOCK_H

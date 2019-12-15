@@ -23,37 +23,48 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include "systemservice_mock.h"
-#include "webserver_mock.h"
-#include "wifi_mock.h"
+#include "webserver_lighttpd.h"
 
-#include "hardwarefactory_mock.h"
+static Q_LOGGING_CATEGORY(CLASS_LC, "WebLighttpd");
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwMock");
-
-HardwareFactoryMock::HardwareFactoryMock(ConfigInterface *config, QObject *parent) : HardwareFactory(parent)
+WebServerLighttpd::WebServerLighttpd(SystemService *systemService, QObject *parent)
+    : WebServerControl(parent)
+    , p_systemService(systemService)
 {
-    Q_UNUSED(config)
-
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 
-WifiControl *HardwareFactoryMock::getWifiControl()
+bool WebServerLighttpd::startService()
 {
-    static WifiMock singleton;
-    return &singleton;
+    return p_systemService->startService(SystemServiceName::WEBSERVER);
 }
 
-SystemService *HardwareFactoryMock::getSystemService()
+bool WebServerLighttpd::stopService()
 {
-    static SystemServiceMock singleton;
-    return &singleton;
+    return p_systemService->stopService(SystemServiceName::WEBSERVER);
 }
 
-
-WebServerControl *HardwareFactoryMock::getWebServerControl()
+bool WebServerLighttpd::restartService()
 {
-    static WebServerMock singleton;
-    return &singleton;
+    return p_systemService->restartService(SystemServiceName::WEBSERVER);
+}
+
+bool WebServerLighttpd::reloadService()
+{
+    return p_systemService->reloadService(SystemServiceName::WEBSERVER);
+}
+
+bool WebServerLighttpd::startWifiSetupPortal()
+{
+    // TODO copy config
+    // cp /etc/lighttpd/lighttpd-wifisetup.conf /etc/lighttpd/lighttpd.conf
+    return restartService();
+}
+
+bool WebServerLighttpd::startWebConfigurator()
+{
+    // TODO copy config
+    // cp /etc/lighttpd/lighttpd-config.conf /etc/lighttpd/lighttpd.conf
+    return restartService();
 }

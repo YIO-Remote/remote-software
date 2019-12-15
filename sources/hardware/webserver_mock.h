@@ -20,34 +20,26 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMD_H
-#define SYSTEMD_H
+#ifndef WEBSERVERMOCK_H
+#define WEBSERVERMOCK_H
 
-#include <QObject>
-#include <QMap>
-
-#include "systemservice.h"
+#include "webserver_control.h"
 
 /**
- * @brief Linux systemd implementation of the SystemService interface.
+ * @brief A mock implementation of the WebServerControl interface for unsupported platforms.
  */
-class Systemd : public SystemService
+class WebServerMock : public WebServerControl
 {
     Q_OBJECT
 public:
-    Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
+    WebServerMock(QObject *parent = nullptr);
 
-    // SystemService interface
+    // WebServerControl interface
 public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName) override;
-
-private:
-    bool launch(const QString &command);
-
-    QMap<SystemServiceName, QString> m_serviceNameMap;
+    Q_INVOKABLE virtual bool startService() override;
+    Q_INVOKABLE virtual bool stopService() override;
+    Q_INVOKABLE virtual bool startWifiSetupPortal() override;
+    Q_INVOKABLE virtual bool startWebConfigurator() override;
 };
 
-#endif // SYSTEMD_H
+#endif // WEBSERVERMOCK_H

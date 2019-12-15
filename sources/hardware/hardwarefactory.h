@@ -27,8 +27,12 @@
 
 #include "../configinterface.h"
 #include "systemservice.h"
+#include "webserver_control.h"
 #include "wifi_control.h"
 
+/**
+ * @brief Abstract hardware factory. Supported platforms are implemented in concrete factories.
+ */
 class HardwareFactory : public QObject
 {
     Q_OBJECT
@@ -50,6 +54,8 @@ public:
     virtual WifiControl* getWifiControl() = 0;
 
     virtual SystemService* getSystemService() = 0;
+
+    virtual WebServerControl* getWebServerControl() = 0;
 
 signals:
 

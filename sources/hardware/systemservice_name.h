@@ -37,7 +37,7 @@ public:
         WIFI,
         WEBSERVER,
         DHCP,
-        DNS,
+        NAME_RESOLUTION,
         NETWORKING,
         NTP,
         ZEROCONF,

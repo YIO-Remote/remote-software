@@ -24,7 +24,11 @@
 #define HARDWAREFACTORYRPI0_H
 
 #include "hardwarefactory.h"
+#include "webserver_control.h"
 
+/**
+ * @brief Concrete hardware factory implementation for the Raspberry Pi Zero in the YIO Remote.
+ */
 class HardwareFactoryRPi0 : public HardwareFactory
 {
     Q_OBJECT
@@ -37,9 +41,12 @@ public:
 
     virtual SystemService *getSystemService() override;
 
+    virtual WebServerControl *getWebServerControl() override;
+
 private:
-    WifiControl   *p_wifiControl;
-    SystemService *p_systemService;
+    WifiControl      *p_wifiControl;
+    SystemService    *p_systemService;
+    WebServerControl *p_webServerControl;
 };
 
 #endif // HARDWAREFACTORYRPI0_H

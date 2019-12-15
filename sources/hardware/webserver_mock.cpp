@@ -20,34 +20,40 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMD_H
-#define SYSTEMD_H
+#include <QLoggingCategory>
+#include <QtDebug>
 
-#include <QObject>
-#include <QMap>
+#include "webserver_mock.h"
 
-#include "systemservice.h"
+static Q_LOGGING_CATEGORY(CLASS_LC, "WebMock");
 
-/**
- * @brief Linux systemd implementation of the SystemService interface.
- */
-class Systemd : public SystemService
+WebServerMock::WebServerMock(QObject *parent) : WebServerControl(parent)
+
 {
-    Q_OBJECT
-public:
-    Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+}
 
-    // SystemService interface
-public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName) override;
 
-private:
-    bool launch(const QString &command);
+bool WebServerMock::startService()
+{
+    qCDebug(CLASS_LC) << "startService";
+    return true;
+}
 
-    QMap<SystemServiceName, QString> m_serviceNameMap;
-};
+bool WebServerMock::stopService()
+{
+    qCDebug(CLASS_LC) << "stopService";
+    return true;
+}
 
-#endif // SYSTEMD_H
+bool WebServerMock::startWifiSetupPortal()
+{
+    qCDebug(CLASS_LC) << "startWifiSetupPortal";
+    return true;
+}
+
+bool WebServerMock::startWebConfigurator()
+{
+    qCDebug(CLASS_LC) << "startWebConfiugorator";
+    return true;
+}

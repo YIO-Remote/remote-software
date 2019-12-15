@@ -39,12 +39,13 @@
 #include <QString>
 #include <QStringRef>
 #include <QList>
-#include <QProcess>
 
 #include <memory>
 #include <mutex>
 #include <thread>
 
+#include "systemservice.h"
+#include "webserver_control.h"
 #include "wifi_control.h"
 #include "common/wpa_ctrl.h"
 
@@ -58,7 +59,7 @@ class WifiWpaSupplicant : public WifiControl
 {
     Q_OBJECT
 public:
-    explicit WifiWpaSupplicant(QObject *parent = nullptr);
+    explicit WifiWpaSupplicant(WebServerControl *webServerControl, SystemService *systemService, QObject *parent = nullptr);
 
     /**
      * Destructor must close wpa_cli
@@ -179,6 +180,8 @@ private:
 
     QList<WifiNetwork>& getConfiguredNetworks();
 
+    QList<WifiNetwork>& scanForAvailableNetworks(int timeout);
+
     /**
      * @brief controlRequest Issue a command to wpa_supplicant without returning the response message
      * @param cmd wpa_supplicant command
@@ -230,10 +233,8 @@ private:
      */
     std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
 
-    QString m_wifiOnScript;
-    QString m_wifiOffScript;
-    QProcess *m_scriptProcess;
-
+    WebServerControl *p_webServerControl;
+    SystemService *p_systemService;
 };
 
 #endif // WIFIWPASUPPLICANT_H

@@ -25,6 +25,9 @@
 
 #include "hardwarefactory.h"
 
+/**
+ * @brief A mock implementation of the abstract hardware factory for unsupported platforms.
+ */
 class HardwareFactoryMock : public HardwareFactory
 {
     Q_OBJECT
@@ -35,6 +38,7 @@ public:
 public:
     virtual WifiControl *getWifiControl() override;
     virtual SystemService *getSystemService() override;
+    virtual WebServerControl *getWebServerControl() override;
 };
 
 #endif // HARDWAREFACTORYMOCK_H

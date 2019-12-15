@@ -20,34 +20,29 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMD_H
-#define SYSTEMD_H
+#include "webserver_control.h"
 
-#include <QObject>
-#include <QMap>
+WebServerControl::WebServerControl(QObject *parent) : QObject(parent)
+{
 
-#include "systemservice.h"
+}
 
 /**
- * @brief Linux systemd implementation of the SystemService interface.
+ * @brief WebServerControl::restartService default implementation: stops and starts service
+ * @return
  */
-class Systemd : public SystemService
+bool WebServerControl::restartService()
 {
-    Q_OBJECT
-public:
-    Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
+    stopService();
+    return startService();
+}
 
-    // SystemService interface
-public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName) override;
-
-private:
-    bool launch(const QString &command);
-
-    QMap<SystemServiceName, QString> m_serviceNameMap;
-};
-
-#endif // SYSTEMD_H
+/**
+ * @brief WebServerControl::reloadService default implementation: stops and starts service
+ * @return
+ */
+bool WebServerControl::reloadService()
+{
+    stopService();
+    return startService();
+}

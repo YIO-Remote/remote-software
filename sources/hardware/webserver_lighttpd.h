@@ -20,34 +20,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMD_H
-#define SYSTEMD_H
+#ifndef WEBSERVERLIGHTTPD_H
+#define WEBSERVERLIGHTTPD_H
 
-#include <QObject>
-#include <QMap>
-
+#include "webserver_control.h"
 #include "systemservice.h"
 
 /**
- * @brief Linux systemd implementation of the SystemService interface.
+ * @brief A lighttpd implementation of the WebServerControl interface.
  */
-class Systemd : public SystemService
+class WebServerLighttpd : public WebServerControl
 {
     Q_OBJECT
 public:
-    Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
-
-    // SystemService interface
-public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName) override;
+    WebServerLighttpd(SystemService *systemService, QObject *parent = nullptr);
 
 private:
-    bool launch(const QString &command);
+    SystemService *p_systemService;
 
-    QMap<SystemServiceName, QString> m_serviceNameMap;
+    // WebServerControl interface
+public:
+    Q_INVOKABLE virtual bool startService() override;
+    Q_INVOKABLE virtual bool stopService() override;
+    Q_INVOKABLE virtual bool restartService() override;
+    Q_INVOKABLE virtual bool reloadService() override;
+    Q_INVOKABLE virtual bool startWifiSetupPortal() override;
+    Q_INVOKABLE virtual bool startWebConfigurator() override;
 };
 
-#endif // SYSTEMD_H
+#endif // WEBSERVERLIGHTTPD_H
