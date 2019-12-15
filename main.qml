@@ -286,8 +286,16 @@ ApplicationWindow {
         target: integrations
 
         onLoadComplete: {
-            console.debug("loadComplete");
+            console.debug("Integrations are loaded.");
             entities.load();
+        }
+    }
+
+    Connections {
+        target: entities
+
+        onEntitiesLoaded: {
+            console.debug("Entities are loaded.");
 
             // when everything is loaded, load the main UI
             if (fileio.exists("/wifisetup")) {
@@ -379,7 +387,7 @@ ApplicationWindow {
                          }
 
         function onLoadingCompleted() {
-            if (loader_main.item.itemsLoaded == loader_main.item.mainNavigation.menuConfig.count)
+            if (loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count)
                 loadingScreen.item.state = "loaded";
         }
     }

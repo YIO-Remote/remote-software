@@ -88,6 +88,7 @@ void Entities::load()
 
         }
     }
+    emit entitiesLoaded();
 }
 
 QList<EntityInterface *> Entities::getByType(const QString& type)

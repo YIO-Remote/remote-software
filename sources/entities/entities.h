@@ -103,6 +103,7 @@ public:
 
 signals:
     void mediaplayersPlayingChanged();
+    void entitiesLoaded();
 
 private:
     QMap<QString, Entity*>      m_entities;

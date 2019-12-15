@@ -26,7 +26,7 @@
 #include "config.h"
 
 Logger*     Logger::s_instance          = nullptr;
-QStringList Logger::s_msgTypeString     = { "DEBUG", "WARN ", "CRIT ", "FATAL", "INFO " };      // parallel to QMsgType
+QStringList Logger::s_msgTypeString     = { "DEBUG", "WARN", "CRIT", "FATAL", "INFO" };      // parallel to QMsgType
 QtMsgType   Logger::s_msgTypeSorted[]   = { QtDebugMsg, QtInfoMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg }; // sorted by severity
 
 Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSource, int queueSize, int purgeHours, QObject *parent) :
