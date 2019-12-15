@@ -32,6 +32,7 @@ class Integration : public QObject, IntegrationInterface
 {
     Q_OBJECT
     Q_INTERFACES (IntegrationInterface)
+
 public:
 
     Integration() {}
