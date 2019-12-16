@@ -68,7 +68,7 @@ void Blind::stop()
 
 void Blind::setPosition(int value)
 {
-     command(BlindDef::C_STOP, value);
+     command(BlindDef::C_POSITION, value);
 }
 
 Blind::Blind(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
