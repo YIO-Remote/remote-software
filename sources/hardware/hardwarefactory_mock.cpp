@@ -31,7 +31,7 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwMock");
 
-HardwareFactoryMock::HardwareFactoryMock(ConfigInterface *config, QObject *parent) : HardwareFactory(parent)
+HardwareFactoryMock::HardwareFactoryMock(const QVariantMap &config, QObject *parent) : HardwareFactory(parent)
 {
     Q_UNUSED(config)
 

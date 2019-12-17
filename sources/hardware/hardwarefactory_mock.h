@@ -32,7 +32,7 @@ class HardwareFactoryMock : public HardwareFactory
 {
     Q_OBJECT
 public:
-    HardwareFactoryMock(ConfigInterface *config, QObject* parent = nullptr);
+    explicit HardwareFactoryMock(const QVariantMap &config, QObject* parent = nullptr);
 
     // HardwareFactory interface
 public:

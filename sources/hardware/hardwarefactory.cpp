@@ -20,6 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include <assert.h>
+
 #include <QLoggingCategory>
 #include <QtDebug>
 
@@ -43,7 +45,7 @@ HardwareFactory::~HardwareFactory()
     s_instance = nullptr;
 }
 
-HardwareFactory* HardwareFactory::build(ConfigInterface *config)
+HardwareFactory* HardwareFactory::build(const QVariantMap &config)
 {
     if (s_instance != nullptr) {
         qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow! HardwareFactory already initialized, ignoring build() call.";
@@ -62,5 +64,7 @@ HardwareFactory* HardwareFactory::build(ConfigInterface *config)
 
 HardwareFactory* HardwareFactory::instance()
 {
+    assert(s_instance);
+
     return s_instance;
 }

@@ -185,22 +185,5 @@ void WifiControl::stopScanTimer()
     }
 }
 
-QString WifiControl::launch(QProcess *process, const QString &command)
-{
-    QStringList arguments;
-    return launch(process, command, arguments);
-}
-
-QString WifiControl::launch(QProcess *process, const QString &command, const QStringList &arguments)
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO << command;
-
-    // TODO should launcher be synchronized? i.e. guarded by a mutex? --> shell script launching needs rework anyways and should soon be deprecated for most tasks.
-    process->start(command, arguments);
-    process->waitForFinished(-1);  // FIXME use timeout. Infinite is never a good idea.
-    QByteArray bytes = process->readAllStandardOutput();
-    QString output = QString::fromLocal8Bit(bytes);
-    return output;
-}
 
 

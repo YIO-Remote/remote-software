@@ -50,9 +50,13 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
 const size_t WPA_BUF_SIZE = 2048;
 
-WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl *webServerControl, SystemService *systemService, QObject *parent)
+WifiWpaSupplicant::WifiWpaSupplicant(const QVariantMap &config,
+                                     WebServerControl *webServerControl,
+                                     SystemService *systemService,
+                                     QObject *parent)
     : WifiControl(parent)
     , m_ctrl(nullptr)
+    , m_config(config)
     , p_webServerControl(webServerControl)
     , p_systemService(systemService)
 {
@@ -395,7 +399,7 @@ bool WifiWpaSupplicant::startAccessPoint()
     }
     QTextStream out(&qFile);
     for (WifiNetwork network : networks) {
-        out << network.rssi() << ',' << network.name() << '\n';
+        out << network.rssi() << ',' << network.name() << endl;
     }
     qFile.close();
 

@@ -37,6 +37,9 @@ class Systemd : public SystemService
 public:
     Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
 
+    void setUseSudo(bool sudo);
+    bool isUseSudo();
+
     // SystemService interface
 public:
     Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
@@ -47,6 +50,7 @@ public:
 private:
     bool launch(const QString &command);
 
+    bool m_useSudo;
     QMap<SystemServiceName, QString> m_serviceNameMap;
 };
 

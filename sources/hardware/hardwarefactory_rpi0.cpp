@@ -20,6 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include <assert.h>
+
 #include <QLoggingCategory>
 #include <QtDebug>
 
@@ -36,49 +38,57 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
 
-HardwareFactoryRPi0::HardwareFactoryRPi0(ConfigInterface *config, QObject *parent) : HardwareFactory(parent)
+HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *parent) : HardwareFactory(parent)
 {
-    Q_UNUSED(config)
-
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
+    // TODO define configuration structure
+    QMap<QString, QVariant> systemdCfg = config.value("systemd").toMap();
+
     // KISS: sufficient for now, custom logic possible with config interface when needed.
-
     QMap<SystemServiceName, QString> serviceNameMap;
-    serviceNameMap.insert(SystemServiceName::WIFI, "wpa_supplicant@wlan0.service");
-    serviceNameMap.insert(SystemServiceName::NAME_RESOLUTION, "systemd-resolved.service");
-    serviceNameMap.insert(SystemServiceName::WEBSERVER, "lighttpd.service");
-    serviceNameMap.insert(SystemServiceName::NTP, "systemd-timesyncd.service");
-    serviceNameMap.insert(SystemServiceName::DHCP, "dhcpcd.service");
-    serviceNameMap.insert(SystemServiceName::SHUTDOWN, "shutdown.service");
-    serviceNameMap.insert(SystemServiceName::YIO_UPDATE, "update.service");
-    serviceNameMap.insert(SystemServiceName::NETWORKING, "lighttpd.service");
-    serviceNameMap.insert(SystemServiceName::ZEROCONF, "avahi-daemon");
-    serviceNameMap.insert(SystemServiceName::NETWORKING, "systemd-networkd");
+    serviceNameMap.insert(SystemServiceName::WIFI, systemdCfg.value("wifi", "wpa_supplicant@wlan0.service").toString());
+    serviceNameMap.insert(SystemServiceName::NAME_RESOLUTION, systemdCfg.value("name-resolution", "systemd-resolved.service").toString());
+    serviceNameMap.insert(SystemServiceName::WEBSERVER, systemdCfg.value("webserver", "lighttpd.service").toString());
+    serviceNameMap.insert(SystemServiceName::NTP, systemdCfg.value("ntp", "systemd-timesyncd.service").toString());
+    serviceNameMap.insert(SystemServiceName::DHCP, systemdCfg.value("dhcp", "dhcpcd.service").toString());
+    serviceNameMap.insert(SystemServiceName::SHUTDOWN, systemdCfg.value("shutdown", "shutdown.service").toString());
+    serviceNameMap.insert(SystemServiceName::YIO_UPDATE, systemdCfg.value("yio-update", "update.service").toString());
+    serviceNameMap.insert(SystemServiceName::ZEROCONF, systemdCfg.value("zeroconf", "avahi-daemon").toString());
+    serviceNameMap.insert(SystemServiceName::NETWORKING, systemdCfg.value("networking", "systemd-networkd").toString());
 
-    p_systemService = new Systemd(serviceNameMap, this);
+    Systemd *systemd = new Systemd(serviceNameMap, this);
+    // TODO define configuration key
+    systemd->setUseSudo(config.value("sudo", false).toBool());
+    p_systemService = systemd;
 
     p_webServerControl = new WebServerLighttpd(p_systemService);
 
 #if defined (CONFIG_WPA_SUPPLICANT)
-    p_wifiControl = new WifiWpaSupplicant(p_webServerControl, p_systemService, this);
+    p_wifiControl = new WifiWpaSupplicant(config, p_webServerControl, p_systemService, this);
 #else
-    p_wifiControl = new WifiShellScripts(this);
+    p_wifiControl = new WifiShellScripts(config, p_systemService, this);
 #endif
 }
 
 WifiControl *HardwareFactoryRPi0::getWifiControl()
 {
+    assert(p_wifiControl);
+
     return p_wifiControl;
 }
 
 SystemService *HardwareFactoryRPi0::getSystemService()
 {
+    assert(p_systemService);
+
     return p_systemService;
 }
 
 
 WebServerControl *HardwareFactoryRPi0::getWebServerControl()
 {
+    assert(p_webServerControl);
+
     return p_webServerControl;
 }

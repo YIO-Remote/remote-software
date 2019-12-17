@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 
     // DRIVERS
     // TODO use a hardware specific / advanced configuration object for low-level configuration
-    HardwareFactory *hwFactory = HardwareFactory::build((ConfigInterface *)&config);
+    HardwareFactory *hwFactory = HardwareFactory::build(config.getSettings());
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();

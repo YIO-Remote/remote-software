@@ -54,20 +54,35 @@
  */
 void wpa_msg_cb(char* buf, size_t len);
 
-
+/**
+ * @brief wpa_supplicant implementation of the WifiControl interface.
+ * @details Uses the control interface to control the operations of the wpa_supplicant
+ *          daemon and to get status information and event notifications.
+ */
 class WifiWpaSupplicant : public WifiControl
 {
     Q_OBJECT
 public:
-    explicit WifiWpaSupplicant(WebServerControl *webServerControl, SystemService *systemService, QObject *parent = nullptr);
+    explicit WifiWpaSupplicant(const QVariantMap &config,
+                               WebServerControl *webServerControl,
+                               SystemService *systemService,
+                               QObject *parent = nullptr);
 
     /**
      * Destructor must close wpa_cli
      */
     virtual ~WifiWpaSupplicant() override;
 
+    /**
+     * @brief init Connects to the wpa_supplicant control socket and checks connection.
+     * @return true if initialization succeeded
+     */
     virtual bool init() override;
 
+    /**
+     * @brief reset Detaches from the wpa_supplicant control socket, followed by init().
+     * @return
+     */
     Q_INVOKABLE virtual bool reset() override;
     Q_INVOKABLE virtual bool clearConfiguredNetworks() override;
     Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password, WifiSecurity security = WifiSecurity::DEFAULT) override;
@@ -178,8 +193,16 @@ private:
      */
     WifiSecurity getSecurityFromFlags(const QString& flags, int networkId = -1);
 
+    /**
+     * @brief getConfiguredNetworks Returns the configured networks with command LIST_NETWORKS
+     */
     QList<WifiNetwork>& getConfiguredNetworks();
 
+    /**
+     * @brief scanForAvailableNetworks Synchronous wifi network scan
+     * @param timeout maximum time in ms to wait for scan results
+     * @return List of found networks
+     */
     QList<WifiNetwork>& scanForAvailableNetworks(int timeout);
 
     /**
@@ -233,8 +256,9 @@ private:
      */
     std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
 
+    QVariantMap       m_config;
     WebServerControl *p_webServerControl;
-    SystemService *p_systemService;
+    SystemService    *p_systemService;
 };
 
 #endif // WIFIWPASUPPLICANT_H

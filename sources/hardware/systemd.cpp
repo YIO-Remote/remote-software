@@ -31,9 +31,20 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "systemd");
 // TODO direct d-bus interaction? https://doc.qt.io/qt-5/qtdbus-index.html
 Systemd::Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent)
     : SystemService(parent)
+    , m_useSudo(false)
     , m_serviceNameMap(serviceNameMap)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
+}
+
+void Systemd::setUseSudo(bool sudo)
+{
+    m_useSudo = sudo;
+}
+
+bool Systemd::isUseSudo()
+{
+    return m_useSudo;
 }
 
 bool Systemd::startService(SystemServiceName serviceName)
@@ -66,7 +77,11 @@ bool Systemd::launch(const QString &command)
 
     QProcess process;
 
-    process.start(command);
+    if (m_useSudo) {
+        process.start(QString("sudo %1").arg(command));
+    } else {
+        process.start(command);
+    }
     process.waitForFinished(30000);
     if (process.exitStatus() == QProcess::ExitStatus::NormalExit
             && process.exitCode() == 0) {

@@ -33,7 +33,7 @@ class HardwareFactoryRPi0 : public HardwareFactory
 {
     Q_OBJECT
 public:
-    HardwareFactoryRPi0(ConfigInterface *config, QObject* parent = nullptr);
+    explicit HardwareFactoryRPi0(const QVariantMap &config, QObject* parent = nullptr);
 
     // HardwareFactory interface
 public:

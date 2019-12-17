@@ -25,7 +25,6 @@
 
 #include <QObject>
 
-#include "../configinterface.h"
 #include "systemservice.h"
 #include "webserver_control.h"
 #include "wifi_control.h"
@@ -40,10 +39,10 @@ public:
     /**
      * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details This operation must be called once before using the singleton instance() accessor.
-     * @param config The configuration interface to retrieve build configuration options.
+     * @param config The configuration map to retrieve build configuration options.
      * @return The concrete instance or nullptr if construction failed. In this case the application should be terminated.
      */
-    static HardwareFactory* build(ConfigInterface *config);
+    static HardwareFactory* build(const QVariantMap &config);
 
     /**
      * @brief instance Returns a concrete HardwareFactory implementation

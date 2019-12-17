@@ -27,6 +27,9 @@
 
 #include "wifi_control.h"
 
+/**
+ * @brief Mock implementation for the WifiControl interface for unsupported platforms.
+ */
 class WifiMock : public WifiControl
 {
     Q_OBJECT

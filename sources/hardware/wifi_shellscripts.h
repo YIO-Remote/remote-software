@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QProcess>
 
+#include "systemservice.h"
 #include "wifi_control.h"
 
 /**
@@ -36,7 +37,10 @@ class WifiShellScripts : public WifiControl
 {
     Q_OBJECT
 public:
-    explicit WifiShellScripts(QObject *parent = nullptr);
+     // TODO use ConfigInterface or define a dedicated configuration object?
+    explicit WifiShellScripts(const QVariantMap &config,
+                              SystemService *systemService,
+                              QObject *parent = nullptr);
 
     virtual bool init() override;
 
@@ -72,8 +76,13 @@ private:
      */
     QList<WifiNetwork> parseScanresult(const QString& buffer);
 
+    QString launch(QProcess *process, const QString &command);
+    QString launch(QProcess *process, const QString &command, const QStringList &arguments);
+
     QProcess *m_scriptProcess;
 
+    QVariantMap    m_config;
+    SystemService *p_systemService;
 };
 
 #endif // WIFISHELLSCRIPTS_H

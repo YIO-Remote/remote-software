@@ -35,7 +35,7 @@
 #include "wifi_network.h"
 
 /**
- * @brief Abstract WiFi control interface
+ * @brief Abstract WiFi control interface for client interactions with Wifi networks.
  */
 class WifiControl : public QObject
 {
@@ -71,7 +71,7 @@ public:
     virtual bool init() = 0;
 
     /**
-     * @brief reset Resets and re-initializes the driver. An active WiFi connection will be disconnected and reassociated.
+     * @brief reset Resets and re-initializes the driver. An active WiFi connection might be disconnected and reassociated.
      * @return true if reassociation succeeded
      */
     Q_INVOKABLE virtual bool reset() = 0;
@@ -121,8 +121,13 @@ public:
     virtual QString ipAddress() const;
     virtual ScanStatus scanStatus() const;
     QList<WifiNetwork>& scanResult();
-    int maxScanResults() const;
+
+    /**
+     * @brief setMaxScanResults Limits the number of Wifi network scan results
+     * @param number Maximum number of results
+     */
     void setMaxScanResults(int number);
+    int maxScanResults() const;
 
 signals:
     // TODO do we need individual signals or simply use wifiStatusChanged?
@@ -131,7 +136,7 @@ signals:
     void ipAddressChanged(QString ipAddress);
 
     /**
-     * @brief Notifies that that the signal strength of the connected network changed
+     * @brief Notifies that the signal strength of the connected network changed
      * @param rssi received signal strength indicator
      */
     void signalStrengthChanged(int rssi);
@@ -172,6 +177,7 @@ public slots:
     void stopWifiStatusScanning();
 
 protected:
+    // abstract base class
     WifiControl(QObject* parent = nullptr);
 
     /**
@@ -179,6 +185,10 @@ protected:
      */
     bool validateAuthentication(WifiSecurity security, const QString &preSharedKey);
 
+    /**
+     * @brief setConnected Set Wifi connection status
+     * @param connected true = connection to network established
+     */
     virtual void setConnected(bool connected);
 
     /**
@@ -188,9 +198,6 @@ protected:
 
     void startScanTimer();
     void stopScanTimer();
-
-    QString launch(QProcess *process, const QString &command);
-    QString launch(QProcess *process, const QString &command, const QStringList &arguments);
 
     /**
      * @brief Current wifi connection status
@@ -212,16 +219,16 @@ protected:
 
 private:
     bool m_connected;
+
     /**
      * @brief Returns a QML compatible representation of the WifiNetwork list
      * @return a QVariantList copy of the WifiNetwork list
      */
     QVariantList networkScanResult() const;
+
     int m_maxScanResults;
-
-    int  m_scanInterval;
-    int  m_timerId;
-
+    int m_scanInterval;
+    int m_timerId;
 };
 
 #endif // WIFICONTROL_H

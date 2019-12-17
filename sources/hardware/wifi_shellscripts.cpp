@@ -31,9 +31,13 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");
 
 
-WifiShellScripts::WifiShellScripts(QObject *parent) :
-    WifiControl(parent),
-    m_scriptProcess(new QProcess(this))
+WifiShellScripts::WifiShellScripts(const QVariantMap &config,
+                                   SystemService *systemService,
+                                   QObject *parent)
+    : WifiControl(parent)
+    , m_scriptProcess(new QProcess(this))
+    , m_config(config)
+    , p_systemService(systemService)
 {
 
 }
@@ -50,8 +54,7 @@ void WifiShellScripts::on()
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
-    // TODO make configurable
-    launch(m_scriptProcess, "systemctl start wpa_supplicant@wlan0.service");
+    p_systemService->startService(SystemServiceName::WIFI);
     // TODO emit signal
     startScanTimer();
     setConnected(true);
@@ -62,8 +65,7 @@ void WifiShellScripts::off()
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
     stopScanTimer();
-    // TODO make configurable
-    launch(m_scriptProcess, "systemctl stop wpa_supplicant@wlan0.service");
+    p_systemService->stopService(SystemServiceName::WIFI);
     setConnected(false);
 }
 
@@ -185,4 +187,22 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
             emit signalStrengthChanged(value);
         }
     }
+}
+
+QString WifiShellScripts::launch(QProcess *process, const QString &command)
+{
+    QStringList arguments;
+    return launch(process, command, arguments);
+}
+
+QString WifiShellScripts::launch(QProcess *process, const QString &command, const QStringList &arguments)
+{
+    qCDebug(CLASS_LC) << Q_FUNC_INFO << command;
+
+    // TODO should launcher be synchronized? i.e. guarded by a mutex? --> shell script launching needs rework anyways and should soon be deprecated for most tasks.
+    process->start(command, arguments);
+    process->waitForFinished(-1);  // FIXME use timeout. Infinite is never a good idea.
+    QByteArray bytes = process->readAllStandardOutput();
+    QString output = QString::fromLocal8Bit(bytes);
+    return output;
 }
