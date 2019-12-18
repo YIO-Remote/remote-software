@@ -50,13 +50,15 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
 const size_t WPA_BUF_SIZE = 2048;
 
-WifiWpaSupplicant::WifiWpaSupplicant(const QVariantMap &config,
-                                     WebServerControl *webServerControl,
+WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl *webServerControl,
                                      SystemService *systemService,
                                      QObject *parent)
     : WifiControl(parent)
     , m_ctrl(nullptr)
-    , m_config(config)
+    , m_networkJoinRetryCount(5)
+    , m_networkJoinRetryDelayMs(3000)
+    , m_removeNetworksBeforeJoin(false)
+    , m_wpaSupplicantSocketPath("/var/run/wpa_supplicant/wlan0")
     , p_webServerControl(webServerControl)
     , p_systemService(systemService)
 {
@@ -110,9 +112,7 @@ bool WifiWpaSupplicant::init()
     if (!m_ctrl) {
         qCDebug(CLASS_LC) << "initializing driver...";
 
-        // TODO use a configuration object, pass as argument to init() and read wpaSupplicantSocketPath from configuration
-        QString wpaSupplicantSocketPath = "/var/run/wpa_supplicant/wlan0";
-        if (!connectWpaControlSocket(wpaSupplicantSocketPath)) {
+        if (!connectWpaControlSocket()) {
             return false;
         }
         m_ctrlNotifier = std::make_unique<QSocketNotifier>(
@@ -236,9 +236,7 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiS
 
     char buf[WPA_BUF_SIZE];
     QString cmd;
-    // TODO make configurable
-    bool removeNetworksBeforeJoin = false;
-    if (removeNetworksBeforeJoin) {
+    if (m_removeNetworksBeforeJoin) {
         if (!controlRequest("REMOVE_NETWORK all", buf, WPA_BUF_SIZE)) {
             return false;
         }
@@ -295,19 +293,18 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiS
 
     // wait for successful connection and save configuration once connected.
     // TODO asynchronous check using a timer. Return immediately and notify caller with signal.
-    int retries = 5; // TODO make configurable
-    for (int i = 0; i < retries; i++) {
-        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i+1) << "/" << retries << ")";
+    for (int i = 0; i < m_networkJoinRetryCount; i++) {
+        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i+1) << "/" << m_networkJoinRetryCount << ")";
 
         if (checkConnection()) {
             bool resetIfFailed = false;
             return saveConfiguration(resetIfFailed);
         }
 
-        QThread::currentThread()->sleep(3);
+        QThread::currentThread()->msleep(m_networkJoinRetryDelayMs);
     }
 
-    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << retries << "retries";
+    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << m_networkJoinRetryCount << "retries";
     return false;
 }
 
@@ -452,9 +449,9 @@ bool WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& networ
 }
 
 /****************************************************************************/
-bool WifiWpaSupplicant::connectWpaControlSocket(const QString &wpaSupplicantSocketPath) {
+bool WifiWpaSupplicant::connectWpaControlSocket() {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
-    m_ctrl = wpa_ctrl_open(wpaSupplicantSocketPath.toStdString().c_str());
+    m_ctrl = wpa_ctrl_open(m_wpaSupplicantSocketPath.toStdString().c_str());
     if (!m_ctrl) {
         qCCritical(CLASS_LC) << "wpa_ctrl_open() failed. Errno:" << errno;
         return false;
@@ -865,4 +862,44 @@ void WifiWpaSupplicant::timerEvent(QTimerEvent *event)
             }
         }
     }
+}
+
+int WifiWpaSupplicant::getNetworkJoinRetryDelayMs() const
+{
+    return m_networkJoinRetryDelayMs;
+}
+
+void WifiWpaSupplicant::setNetworkJoinRetryDelayMs(int msDelay)
+{
+    m_networkJoinRetryDelayMs = msDelay;
+}
+
+int WifiWpaSupplicant::getNetworkJoinRetryCount() const
+{
+    return m_networkJoinRetryCount;
+}
+
+void WifiWpaSupplicant::setNetworkJoinRetryCount(int count)
+{
+    m_networkJoinRetryCount = count;
+}
+
+bool WifiWpaSupplicant::getRemoveNetworksBeforeJoin() const
+{
+    return m_removeNetworksBeforeJoin;
+}
+
+void WifiWpaSupplicant::setRemoveNetworksBeforeJoin(bool removeNetworksBeforeJoin)
+{
+    m_removeNetworksBeforeJoin = removeNetworksBeforeJoin;
+}
+
+QString WifiWpaSupplicant::getWpaSupplicantSocketPath() const
+{
+    return m_wpaSupplicantSocketPath;
+}
+
+void WifiWpaSupplicant::setWpaSupplicantSocketPath(const QString &wpaSupplicantSocketPath)
+{
+    m_wpaSupplicantSocketPath = wpaSupplicantSocketPath;
 }

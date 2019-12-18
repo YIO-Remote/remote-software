@@ -64,10 +64,18 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
 
     p_webServerControl = new WebServerLighttpd(p_systemService);
 
+    QMap<QString, QVariant> wifiCfg = config.value("wifi").toMap();
 #if defined (CONFIG_WPA_SUPPLICANT)
-    p_wifiControl = new WifiWpaSupplicant(config, p_webServerControl, p_systemService, this);
+    WifiWpaSupplicant *wps = new WifiWpaSupplicant(p_webServerControl, p_systemService, this);
+    wps->setWpaSupplicantSocketPath(wifiCfg.value("wpaSupplicantSocketPath", "/var/run/wpa_supplicant/wlan0").toString());
+    wps->setRemoveNetworksBeforeJoin(wifiCfg.value("removeNetworksBeforeJoin", false).toBool());
+    wps->setNetworkJoinRetryCount(wifiCfg.value("networkJoinRetryCount", 5).toInt());
+    wps->setNetworkJoinRetryDelayMs(wifiCfg.value("networkJoinRetryDelayMs", 3000).toInt());
+    p_wifiControl = wps;
 #else
-    p_wifiControl = new WifiShellScripts(config, p_systemService, this);
+    WifiShellScripts *wss = new WifiShellScripts(p_systemService, this);
+    wss->setScriptTimeout(wifiCfg.value("scriptTimeoutMs", 30000).toInt());
+    p_wifiControl = wss;
 #endif
 }
 

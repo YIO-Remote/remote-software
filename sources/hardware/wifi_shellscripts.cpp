@@ -31,15 +31,12 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");
 
 
-WifiShellScripts::WifiShellScripts(const QVariantMap &config,
-                                   SystemService *systemService,
+WifiShellScripts::WifiShellScripts(SystemService *systemService,
                                    QObject *parent)
     : WifiControl(parent)
-    , m_scriptProcess(new QProcess(this))
-    , m_config(config)
+    , m_scriptTimeout(30000)
     , p_systemService(systemService)
 {
-
 }
 
 bool WifiShellScripts::init()
@@ -79,7 +76,7 @@ bool WifiShellScripts::reset()
 bool WifiShellScripts::clearConfiguredNetworks()
 {
     // TODO this also starts the AP! Only reset wpa_supplicant
-    launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
+    launch("/usr/bin/yio-remote/reset-wifi.sh");
     return true;
 }
 
@@ -92,7 +89,7 @@ bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSe
     QStringList args;
     args.append(ssid);
     args.append(password);
-    launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_network_create.sh", args);
+    launch("/usr/bin/yio-remote/wifi_network_create.sh", args);
     return true;
 }
 
@@ -105,7 +102,7 @@ bool WifiShellScripts::isConnected()
 void WifiShellScripts::startNetworkScan()
 {
     setScanStatus(Scanning);
-    QString scanResult = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_network_list.sh");
+    QString scanResult = launch("/usr/bin/yio-remote/wifi_network_list.sh");
     m_scanResults = parseScanresult(scanResult);
 
     setScanStatus(ScanOk);
@@ -116,7 +113,7 @@ bool WifiShellScripts::startAccessPoint()
 {
     qCDebug(CLASS_LC) << "Resetting WiFi and starting access point...";
 
-    launch(m_scriptProcess, "/usr/bin/yio-remote/reset-wifi.sh");
+    launch("/usr/bin/yio-remote/reset-wifi.sh");
     return true;
 }
 
@@ -161,19 +158,19 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
     if (m_wifiStatusScanning) {
-        QString ssid = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_ssid.sh");
+        QString ssid = launch("/usr/bin/yio-remote/wifi_ssid.sh");
         if (ssid != m_wifiStatus.name) {
             m_wifiStatus.name = ssid;
             emit networkNameChanged("dummy");
         }
 
-        QString ipAddress = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_ip.sh");
+        QString ipAddress = launch("/usr/bin/yio-remote/wifi_ip.sh");
         if (ipAddress != m_wifiStatus.ipAddress) {
             m_wifiStatus.ipAddress = ipAddress;
             emit ipAddressChanged(ipAddress);
         }
 
-        QString macAddress = launch(m_scriptProcess, "cat /sys/class/net/wlan0/address");
+        QString macAddress = launch("cat /sys/class/net/wlan0/address");
         if (macAddress != m_wifiStatus.macAddress) {
             m_wifiStatus.macAddress = macAddress;
             emit macAddressChanged(macAddress);
@@ -181,7 +178,7 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
     }
 
     if (m_signalStrengthScanning) {
-        int value = launch(m_scriptProcess, "/usr/bin/yio-remote/wifi_rssi.sh").toInt();
+        int value = launch("/usr/bin/yio-remote/wifi_rssi.sh").toInt();
         if (value != m_wifiStatus.signalStrength) {
             m_wifiStatus.signalStrength = value;
             emit signalStrengthChanged(value);
@@ -189,20 +186,33 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
     }
 }
 
-QString WifiShellScripts::launch(QProcess *process, const QString &command)
+QString WifiShellScripts::launch(const QString &command)
 {
     QStringList arguments;
-    return launch(process, command, arguments);
+    return launch(command, arguments);
 }
 
-QString WifiShellScripts::launch(QProcess *process, const QString &command, const QStringList &arguments)
+QString WifiShellScripts::launch(const QString &command, const QStringList &arguments)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO << command;
 
-    // TODO should launcher be synchronized? i.e. guarded by a mutex? --> shell script launching needs rework anyways and should soon be deprecated for most tasks.
-    process->start(command, arguments);
-    process->waitForFinished(-1);  // FIXME use timeout. Infinite is never a good idea.
-    QByteArray bytes = process->readAllStandardOutput();
+    QProcess process;
+    process.start(command, arguments);
+    if (!process.waitForFinished(m_scriptTimeout)) {
+        qCWarning(CLASS_LC) << "Command did not finish within" << m_scriptTimeout << "ms:" << command;
+        return "";
+    }
+    QByteArray bytes = process.readAllStandardOutput();
     QString output = QString::fromLocal8Bit(bytes);
     return output;
+}
+
+int WifiShellScripts::scriptTimeout() const
+{
+    return m_scriptTimeout;
+}
+
+void WifiShellScripts::setScriptTimeout(int scriptTimeoutMs)
+{
+    m_scriptTimeout = scriptTimeoutMs;
 }

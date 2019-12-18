@@ -63,8 +63,7 @@ class WifiWpaSupplicant : public WifiControl
 {
     Q_OBJECT
 public:
-    explicit WifiWpaSupplicant(const QVariantMap &config,
-                               WebServerControl *webServerControl,
+    explicit WifiWpaSupplicant(WebServerControl *webServerControl,
                                SystemService *systemService,
                                QObject *parent = nullptr);
 
@@ -103,6 +102,18 @@ public:
       * @return false if authentication request couldn't be sent
       */
     bool wpsPushButtonConfigurationAuth(const WifiNetwork& network);
+
+    QString getWpaSupplicantSocketPath() const;
+    void setWpaSupplicantSocketPath(const QString &wpaSupplicantSocketPath);
+
+    bool getRemoveNetworksBeforeJoin() const;
+    void setRemoveNetworksBeforeJoin(bool removeNetworksBeforeJoin);
+
+    int getNetworkJoinRetryCount() const;
+    void setNetworkJoinRetryCount(int count);
+
+    int getNetworkJoinRetryDelayMs() const;
+    void setNetworkJoinRetryDelayMs(int msDelay);
 
 signals:
 
@@ -143,10 +154,9 @@ private:
 
     /**
      * Connect to wpa control interface socket
-     * @param wpaSupplicantSocketPath Path to management socket e.g. /var/lib/wpa_supplicant/wlan0
      * @return false if operation failed
      */
-    bool connectWpaControlSocket(const QString &wpaSupplicantSocketPath);
+    bool connectWpaControlSocket();
 
     /**
      * @brief parseStatus Parse a STATUS response message
@@ -256,9 +266,14 @@ private:
      */
     std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
 
-    QVariantMap       m_config;
     WebServerControl *p_webServerControl;
     SystemService    *p_systemService;
+
+    // configuration parameters
+    QString m_wpaSupplicantSocketPath;
+    bool    m_removeNetworksBeforeJoin;
+    int     m_networkJoinRetryCount;
+    int     m_networkJoinRetryDelayMs;
 };
 
 #endif // WIFIWPASUPPLICANT_H

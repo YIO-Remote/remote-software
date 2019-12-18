@@ -37,9 +37,7 @@ class WifiShellScripts : public WifiControl
 {
     Q_OBJECT
 public:
-     // TODO use ConfigInterface or define a dedicated configuration object?
-    explicit WifiShellScripts(const QVariantMap &config,
-                              SystemService *systemService,
+    explicit WifiShellScripts(SystemService *systemService,
                               QObject *parent = nullptr);
 
     virtual bool init() override;
@@ -53,6 +51,9 @@ public:
 
     virtual QString countryCode() override;
     virtual void setCountryCode(QString &countryCode) override;
+
+    int scriptTimeout() const;
+    void setScriptTimeout(int scriptTimeoutMs);
 
 public slots:
 
@@ -76,13 +77,13 @@ private:
      */
     QList<WifiNetwork> parseScanresult(const QString& buffer);
 
-    QString launch(QProcess *process, const QString &command);
-    QString launch(QProcess *process, const QString &command, const QStringList &arguments);
+    QString launch(const QString &command);
+    QString launch(const QString &command, const QStringList &arguments);
 
-    QProcess *m_scriptProcess;
-
-    QVariantMap    m_config;
     SystemService *p_systemService;
+
+    // configuration parameters
+    int m_scriptTimeout;
 };
 
 #endif // WIFISHELLSCRIPTS_H
