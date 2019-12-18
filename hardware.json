@@ -1,0 +1,24 @@
+{
+    "systemd": {
+        "sudo" : false,
+        "timeoutMs" : 30000,
+        "services": {
+            "wifi": "wpa_supplicant@wlan0.service",
+            "dns": "systemd-resolved.service",
+            "webserver": "lighttpd.service",
+            "ntp": "systemd-timesyncd.service",
+            "dhcp": "dhcpcd.service",
+            "shutdown": "shutdown.service",
+            "yio-update": "update.service",
+            "zeroconf": "avahi-daemon",
+            "networking": "systemd-networkd"
+        }
+    },
+    "wifi": {
+        "wpaSupplicantSocketPath": "/var/run/wpa_supplicant/wlan0",
+        "removeNetworksBeforeJoin": false,
+        "joinRetryCount": 5,
+        "joinRetryDelayMs": 3000,
+        "scriptTimeoutMs": 3000
+    }
+}

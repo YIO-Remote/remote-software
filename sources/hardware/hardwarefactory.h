@@ -36,9 +36,18 @@ class HardwareFactory : public QObject
 {
     Q_OBJECT
 public:
+
     /**
      * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
-     * @details This operation must be called once before using the singleton instance() accessor.
+     * @details One of the build operations must be called once before using the singleton instance() accessor.
+     * @param configFileName the JSON configuration file name to load the hardware configuration from.
+     * @return The concrete instance or nullptr if construction failed. In this case the application should be terminated.
+     */
+    static HardwareFactory* build(const QString &configFileName);
+
+    /**
+     * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
+     * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param config The configuration map to retrieve build configuration options.
      * @return The concrete instance or nullptr if construction failed. In this case the application should be terminated.
      */

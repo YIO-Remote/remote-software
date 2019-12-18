@@ -25,6 +25,7 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
+#include "../jsonfile.h"
 #include "hardwarefactory.h"
 
 #if defined (Q_OS_LINUX)
@@ -43,6 +44,13 @@ HardwareFactory::HardwareFactory(QObject *parent) : QObject(parent)
 HardwareFactory::~HardwareFactory()
 {
     s_instance = nullptr;
+}
+
+HardwareFactory *HardwareFactory::build(const QString &configFileName)
+{
+    JsonFile hwCfg(configFileName);
+
+    return build(hwCfg.read().toMap());
 }
 
 HardwareFactory* HardwareFactory::build(const QVariantMap &config)

@@ -42,6 +42,7 @@
 #include <cerrno>
 #include <exception>
 
+#include "hw_config.h"
 #include "systemservice_name.h"
 #include "wifi_wpasupplicant.h"
 #include "common/wpa_ctrl.h"
@@ -55,10 +56,10 @@ WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl *webServerControl,
                                      QObject *parent)
     : WifiControl(parent)
     , m_ctrl(nullptr)
-    , m_networkJoinRetryCount(5)
-    , m_networkJoinRetryDelayMs(3000)
-    , m_removeNetworksBeforeJoin(false)
-    , m_wpaSupplicantSocketPath("/var/run/wpa_supplicant/wlan0")
+    , m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY)
+    , m_networkJoinRetryDelayMs(HW_DEF_WIFI_JOIN_DELAY)
+    , m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN)
+    , m_wpaSupplicantSocketPath(HW_DEF_WIFI_WPA_SOCKET)
     , p_webServerControl(webServerControl)
     , p_systemService(systemService)
 {

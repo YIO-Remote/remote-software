@@ -39,6 +39,7 @@ HEADERS += \
     sources/fileio.h \
     sources/hardware/hardwarefactory.h \
     sources/hardware/hardwarefactory_mock.h \
+    sources/hardware/hw_config.h \
     sources/hardware/systemd.h \
     sources/hardware/systemservice.h \
     sources/hardware/systemservice_mock.h \
@@ -294,7 +295,7 @@ targetPlugins.path = $$target.path/plugins
 win32 {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -314,7 +315,7 @@ win32 {
 } else:linux {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -339,7 +340,7 @@ win32 {
     }
 
 } else:macx {
-    APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
+    APP_QML_FILES.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 

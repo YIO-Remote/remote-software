@@ -25,6 +25,7 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
+#include "hw_config.h"
 #include "hardwarefactory_rpi0.h"
 #include "systemservice_name.h"
 #include "systemd.h"
@@ -42,39 +43,40 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
-    // TODO define configuration structure
-    QMap<QString, QVariant> systemdCfg = config.value("systemd").toMap();
+    QMap<QString, QVariant> systemdCfg = config.value(HW_CFG_SYSTEMD).toMap();
+    QMap<QString, QVariant> serviceCfg = config.value(HW_CFG_SYSTEMD_SERVICES).toMap();
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
     QMap<SystemServiceName, QString> serviceNameMap;
-    serviceNameMap.insert(SystemServiceName::WIFI, systemdCfg.value("wifi", "wpa_supplicant@wlan0.service").toString());
-    serviceNameMap.insert(SystemServiceName::NAME_RESOLUTION, systemdCfg.value("name-resolution", "systemd-resolved.service").toString());
-    serviceNameMap.insert(SystemServiceName::WEBSERVER, systemdCfg.value("webserver", "lighttpd.service").toString());
-    serviceNameMap.insert(SystemServiceName::NTP, systemdCfg.value("ntp", "systemd-timesyncd.service").toString());
-    serviceNameMap.insert(SystemServiceName::DHCP, systemdCfg.value("dhcp", "dhcpcd.service").toString());
-    serviceNameMap.insert(SystemServiceName::SHUTDOWN, systemdCfg.value("shutdown", "shutdown.service").toString());
-    serviceNameMap.insert(SystemServiceName::YIO_UPDATE, systemdCfg.value("yio-update", "update.service").toString());
-    serviceNameMap.insert(SystemServiceName::ZEROCONF, systemdCfg.value("zeroconf", "avahi-daemon").toString());
-    serviceNameMap.insert(SystemServiceName::NETWORKING, systemdCfg.value("networking", "systemd-networkd").toString());
+    serviceNameMap.insert(SystemServiceName::WIFI, serviceCfg.value(HW_CFG_SERVICE_WIFI, HW_DEF_SERVICE_WIFI).toString());
+    serviceNameMap.insert(SystemServiceName::NAME_RESOLUTION, serviceCfg.value(HW_CFG_SERVICE_DNS, HW_DEF_SERVICE_DNS).toString());
+    serviceNameMap.insert(SystemServiceName::WEBSERVER, serviceCfg.value(HW_CFG_SERVICE_WEBSERVER, HW_DEF_SERVICE_WEBSERVER).toString());
+    serviceNameMap.insert(SystemServiceName::NTP, serviceCfg.value(HW_CFG_SERVICE_NTP, HW_DEF_SERVICE_NTP).toString());
+    serviceNameMap.insert(SystemServiceName::DHCP, serviceCfg.value(HW_CFG_SERVICE_DHCP, HW_DEF_SERVICE_DHCP).toString());
+    serviceNameMap.insert(SystemServiceName::SHUTDOWN, serviceCfg.value(HW_CFG_SERVICE_SHUTDOWN, HW_DEF_SERVICE_SHUTDOWN).toString());
+    serviceNameMap.insert(SystemServiceName::YIO_UPDATE, serviceCfg.value(HW_CFG_SERVICE_YIO_UPDATE, HW_DEF_SERVICE_YIO_UPDATE).toString());
+    serviceNameMap.insert(SystemServiceName::ZEROCONF, serviceCfg.value(HW_CFG_SERVICE_ZEROCONF, HW_DEF_SERVICE_ZEROCONF).toString());
+    serviceNameMap.insert(SystemServiceName::NETWORKING, serviceCfg.value(HW_CFG_SERVICE_NETWORKING, HW_DEF_SERVICE_NETWORKING).toString());
 
     Systemd *systemd = new Systemd(serviceNameMap, this);
-    // TODO define configuration key
-    systemd->setUseSudo(config.value("sudo", false).toBool());
+    systemd->setUseSudo(systemdCfg.value(HW_CFG_SYSTEMD_SUDO, HW_DEF_SYSTEMD_SUDO).toBool());
+    systemd->setSystemctlTimeout(systemdCfg.value(HW_CFG_SYSTEMD_TIMEOUT, HW_DEF_SYSTEMD_TIMEOUT).toInt());
+
     p_systemService = systemd;
 
     p_webServerControl = new WebServerLighttpd(p_systemService);
 
-    QMap<QString, QVariant> wifiCfg = config.value("wifi").toMap();
+    QMap<QString, QVariant> wifiCfg = config.value(HW_CFG_WIFI).toMap();
 #if defined (CONFIG_WPA_SUPPLICANT)
     WifiWpaSupplicant *wps = new WifiWpaSupplicant(p_webServerControl, p_systemService, this);
-    wps->setWpaSupplicantSocketPath(wifiCfg.value("wpaSupplicantSocketPath", "/var/run/wpa_supplicant/wlan0").toString());
-    wps->setRemoveNetworksBeforeJoin(wifiCfg.value("removeNetworksBeforeJoin", false).toBool());
-    wps->setNetworkJoinRetryCount(wifiCfg.value("networkJoinRetryCount", 5).toInt());
-    wps->setNetworkJoinRetryDelayMs(wifiCfg.value("networkJoinRetryDelayMs", 3000).toInt());
+    wps->setWpaSupplicantSocketPath(wifiCfg.value(HW_CFG_WIFI_WPA_SOCKET, HW_DEF_WIFI_WPA_SOCKET).toString());
+    wps->setRemoveNetworksBeforeJoin(wifiCfg.value(HW_CFG_WIFI_RM_BEFORE_JOIN, HW_DEF_WIFI_RM_BEFORE_JOIN).toBool());
+    wps->setNetworkJoinRetryCount(wifiCfg.value(HW_CFG_WIFI_JOIN_RETRY, HW_DEF_WIFI_JOIN_RETRY).toInt());
+    wps->setNetworkJoinRetryDelayMs(wifiCfg.value(HW_CFG_WIFI_JOIN_DELAY, HW_DEF_WIFI_JOIN_DELAY).toInt());
     p_wifiControl = wps;
 #else
     WifiShellScripts *wss = new WifiShellScripts(p_systemService, this);
-    wss->setScriptTimeout(wifiCfg.value("scriptTimeoutMs", 30000).toInt());
+    wss->setScriptTimeout(wifiCfg.value(HW_CFG_WIFI_SCRIPT_TIMEOUT, HW_DEF_WIFI_SCRIPT_TIMEOUT).toInt());
     p_wifiControl = wss;
 #endif
 }

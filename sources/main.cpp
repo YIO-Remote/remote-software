@@ -121,8 +121,11 @@ int main(int argc, char *argv[])
     qRegisterMetaType<SignalStrength>("SignalStrength");
 
     // DRIVERS
-    // TODO use a hardware specific / advanced configuration object for low-level configuration
-    HardwareFactory *hwFactory = HardwareFactory::build(config.getSettings());
+    QString hwConfigPath = appPath;
+    if (QFile::exists("/mnt/boot/hardware.json")) {
+        hwConfigPath = "/mnt/boot";
+    }
+    HardwareFactory *hwFactory = HardwareFactory::build(hwConfigPath + "/hardware.json");
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();

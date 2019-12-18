@@ -24,6 +24,7 @@
 #include <QtDebug>
 #include <QProcess>
 
+#include "hw_config.h"
 #include "systemd.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "systemd");
@@ -31,7 +32,8 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "systemd");
 // TODO direct d-bus interaction? https://doc.qt.io/qt-5/qtdbus-index.html
 Systemd::Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent)
     : SystemService(parent)
-    , m_useSudo(false)
+    , m_useSudo(HW_DEF_SYSTEMD_SUDO)
+    , m_systemctlTimeout(HW_DEF_SYSTEMD_TIMEOUT)
     , m_serviceNameMap(serviceNameMap)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
@@ -82,7 +84,7 @@ bool Systemd::launch(const QString &command)
     } else {
         process.start(command);
     }
-    process.waitForFinished(30000);
+    process.waitForFinished(m_systemctlTimeout);
     if (process.exitStatus() == QProcess::ExitStatus::NormalExit
             && process.exitCode() == 0) {
         return true;
@@ -92,4 +94,14 @@ bool Systemd::launch(const QString &command)
                         << QString::fromLocal8Bit(process.readAllStandardOutput())
                         << QString::fromLocal8Bit(process.readAllStandardError());
     return false;
+}
+
+int Systemd::systemctlTimeout() const
+{
+    return m_systemctlTimeout;
+}
+
+void Systemd::setSystemctlTimeout(int systemctlTimeout)
+{
+    m_systemctlTimeout = systemctlTimeout;
 }

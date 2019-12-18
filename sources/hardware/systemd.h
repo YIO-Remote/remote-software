@@ -47,10 +47,14 @@ public:
     Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName) override;
     Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName) override;
 
+    int systemctlTimeout() const;
+    void setSystemctlTimeout(int systemctlTimeout);
+
 private:
     bool launch(const QString &command);
 
     bool m_useSudo;
+    int  m_systemctlTimeout;
     QMap<SystemServiceName, QString> m_serviceNameMap;
 };
 
