@@ -30,6 +30,7 @@
 #include <QVariant>
 #include <QMap>
 #include <QtDebug>
+#include <QLoggingCategory>
 
 #include "../integrations/integrationinterface.h"
 #include "entity.h"
@@ -115,6 +116,8 @@ private:
     QMap<QString, QTimer*>      m_mediaplayersTimers;
 
     static Entities*            s_instance;
+
+    QLoggingCategory            m_log;
 };
 
 #endif // ENTITIES_H
