@@ -9,7 +9,7 @@ There are many ways to contribute to the YIO Project. Here is a list of developm
 - [Reviewing pull requests](CONTRIBUTING.md#reviewing-pull-requests)
 - Maintaining repositories and packages
 
-The project is not just about GitHub. There are many other ways to contribute to the project: designing new interface elements and icons, testing the latest software, spreading the word of YIO Remote and helping to modarate the forum.
+The project is not just about GitHub. There are many other ways to contribute to the project: designing new interface elements and icons, testing the latest software, spreading the word of YIO Remote and helping to moderate the forum.
 
 If you have any ideas that could help the project, please let us know by opening an issue or posting in the [community](https://community.yio-remote.com/)!
 
