@@ -142,15 +142,17 @@ linux {
             wpa_supplicant/src/utils/os_unix.c
 
     } else {
-        HEADERS += sources/hardware/wifi_shellscripts.h \
+        HEADERS +=
             sources/hardware/wifi_mock.h
-        SOURCES += sources/hardware/wifi_shellscripts.cpp \
+        SOURCES +=
             sources/hardware/wifi_mock.cpp
     }
 
     HEADERS += \
+        sources/hardware/wifi_shellscripts.h \
         sources/hardware/hardwarefactory_rpi0.h
     SOURCES += \
+        sources/hardware/wifi_shellscripts.cpp \
         sources/hardware/hardwarefactory_rpi0.cpp
 
     equals(QT_ARCH, arm): {

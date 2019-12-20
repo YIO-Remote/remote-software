@@ -24,6 +24,8 @@
 #define HW_CONFIG_H
 
 
+#define HW_CFG_SYSTEMSERVICE      "systemservice"
+
 #define HW_CFG_SYSTEMD            "systemd"
 #define HW_CFG_SYSTEMD_SERVICES   "services"
 
@@ -56,18 +58,50 @@
 
 #define HW_CFG_WIFI_SCAN_RESULTS   "maxScanResults"
 #define HW_DEF_WIFI_SCAN_RESULTS   50
-#define HW_CFG_WIFI_POLL_INTERVAL  "pollIntervalMs"
-#define HW_DEF_WIFI_POLL_INTERVAL  10000
-#define HW_CFG_WIFI_WPA_SOCKET     "wpaSupplicantSocketPath"
-#define HW_DEF_WIFI_WPA_SOCKET     "/var/run/wpa_supplicant/wlan0"
-#define HW_CFG_WIFI_RM_BEFORE_JOIN "removeNetworksBeforeJoin"
-#define HW_DEF_WIFI_RM_BEFORE_JOIN false
 #define HW_CFG_WIFI_JOIN_RETRY     "joinRetryCount"
 #define HW_DEF_WIFI_JOIN_RETRY     5
 #define HW_CFG_WIFI_JOIN_DELAY     "joinRetryDelayMs"
 #define HW_DEF_WIFI_JOIN_DELAY     3000
-#define HW_CFG_WIFI_SCRIPT_TIMEOUT "scriptTimeoutMs"
-#define HW_DEF_WIFI_SCRIPT_TIMEOUT 30000
+#define HW_CFG_WIFI_POLL_INTERVAL  "pollIntervalMs"
+#define HW_DEF_WIFI_POLL_INTERVAL  10000
+#define HW_CFG_WIFI_USE_SH         "useShellScript"
+#define HW_DEF_WIFI_USE_SH         false
+
+#define HW_CFG_WIFI_INTERFACE      "interface"
+
+#define HW_CFG_WIFI_IF_WPA_SUPP    "wpa_supplicant"
+
+#define HW_CFG_WIFI_WPA_SOCKET     "socketPath"
+#define HW_DEF_WIFI_WPA_SOCKET     "/var/run/wpa_supplicant/wlan0"
+#define HW_CFG_WIFI_RM_BEFORE_JOIN "removeNetworksBeforeJoin"
+#define HW_DEF_WIFI_RM_BEFORE_JOIN false
+
+#define HW_CFG_WIFI_IF_SHELLSCRIPT "shellScript"
+
+#define HW_CFG_WIFI_SH_SUDO        "sudo"
+#define HW_DEF_WIFI_SH_SUDO        false
+#define HW_CFG_WIFI_SH_TIMEOUT     "timeout"
+#define HW_DEF_WIFI_SH_TIMEOUT     30000
+#define HW_CFG_WIFI_SH_CLEAR_NET   "clearNetworks"
+#define HW_DEF_WIFI_SH_CLEAR_NET   ""
+#define HW_CFG_WIFI_SH_CONNECT     "connect"
+#define HW_DEF_WIFI_SH_CONNECT     "/usr/bin/yio-remote/wifi_network_create.sh"
+#define HW_CFG_WIFI_SH_LIST        "listNetworks"
+#define HW_DEF_WIFI_SH_LIST        "/usr/bin/yio-remote/wifi_network_list.sh"
+#define HW_CFG_WIFI_SH_START_AP    "startAP"
+#define HW_DEF_WIFI_SH_START_AP    "/usr/bin/yio-remote/reset-wifi.sh"
+#define HW_CFG_WIFI_SH_GET_SSID    "getSSID"
+#define HW_DEF_WIFI_SH_GET_SSID    "/usr/bin/yio-remote/wifi_ssid.sh"
+#define HW_CFG_WIFI_SH_GET_IP      "getIP"
+#define HW_DEF_WIFI_SH_GET_IP      "/usr/bin/yio-remote/wifi_ip.sh"
+#define HW_CFG_WIFI_SH_GET_MAC     "getMAC"
+#define HW_DEF_WIFI_SH_GET_MAC     "cat /sys/class/net/wlan0/address"
+#define HW_CFG_WIFI_SH_GET_RSSI    "getRSSI"
+#define HW_DEF_WIFI_SH_GET_RSSI    "/usr/bin/yio-remote/wifi_rssi.sh"
+
+
+#define HW_CFG_ACCESS_POINT        "accessPoint"
+
 
 #define HW_CFG_WEBSERVER           "webserver"
 #define HW_CFG_LIGHTTPD            "lighttpd"

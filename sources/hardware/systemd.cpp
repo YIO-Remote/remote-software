@@ -91,8 +91,8 @@ bool Systemd::launch(const QString &command)
     }
 
     qCWarning(CLASS_LC) << "Failed to execute" << command << ":"
-                        << QString::fromLocal8Bit(process.readAllStandardOutput())
-                        << QString::fromLocal8Bit(process.readAllStandardError());
+                        << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
+                        << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
     return false;
 }
 

@@ -60,8 +60,6 @@ WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl *webServerControl,
     , p_systemService(systemService)
     , m_wpaSupplicantSocketPath(HW_DEF_WIFI_WPA_SOCKET)
     , m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN)
-    , m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY)
-    , m_networkJoinRetryDelayMs(HW_DEF_WIFI_JOIN_DELAY)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
@@ -294,18 +292,18 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiS
 
     // wait for successful connection and save configuration once connected.
     // TODO asynchronous check using a timer. Return immediately and notify caller with signal.
-    for (int i = 0; i < m_networkJoinRetryCount; i++) {
-        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i+1) << "/" << m_networkJoinRetryCount << ")";
+    for (int i = 0; i < getNetworkJoinRetryCount(); i++) {
+        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i+1) << "/" << getNetworkJoinRetryCount() << ")";
 
         if (checkConnection()) {
             bool resetIfFailed = false;
             return saveConfiguration(resetIfFailed);
         }
 
-        QThread::currentThread()->msleep(m_networkJoinRetryDelayMs);
+        QThread::currentThread()->msleep(getNetworkJoinRetryDelayMs());
     }
 
-    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << m_networkJoinRetryCount << "retries";
+    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << getNetworkJoinRetryCount() << "retries";
     return false;
 }
 
@@ -863,26 +861,6 @@ void WifiWpaSupplicant::timerEvent(QTimerEvent *event)
             }
         }
     }
-}
-
-int WifiWpaSupplicant::getNetworkJoinRetryDelayMs() const
-{
-    return m_networkJoinRetryDelayMs;
-}
-
-void WifiWpaSupplicant::setNetworkJoinRetryDelayMs(int msDelay)
-{
-    m_networkJoinRetryDelayMs = msDelay;
-}
-
-int WifiWpaSupplicant::getNetworkJoinRetryCount() const
-{
-    return m_networkJoinRetryCount;
-}
-
-void WifiWpaSupplicant::setNetworkJoinRetryCount(int count)
-{
-    m_networkJoinRetryCount = count;
 }
 
 bool WifiWpaSupplicant::getRemoveNetworksBeforeJoin() const

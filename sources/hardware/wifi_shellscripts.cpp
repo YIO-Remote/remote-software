@@ -36,7 +36,16 @@ WifiShellScripts::WifiShellScripts(SystemService *systemService,
                                    QObject *parent)
     : WifiControl(parent)
     , p_systemService(systemService)
-    , m_scriptTimeout(HW_DEF_WIFI_SCRIPT_TIMEOUT)
+    , m_scriptTimeout(HW_DEF_WIFI_SH_TIMEOUT)
+    , m_useSudo(HW_DEF_WIFI_SH_SUDO)
+    , m_scriptClearNetworks(HW_DEF_WIFI_SH_CLEAR_NET)
+    , m_scriptConnectWifi(HW_DEF_WIFI_SH_CONNECT)
+    , m_scriptListNetworks(HW_DEF_WIFI_SH_LIST)
+    , m_scriptStartAP(HW_DEF_WIFI_SH_START_AP)
+    , m_scriptGetSsid(HW_DEF_WIFI_SH_GET_SSID)
+    , m_scriptGetIp(HW_DEF_WIFI_SH_GET_IP)
+    , m_scriptGetMac(HW_DEF_WIFI_SH_GET_MAC)
+    , m_scriptGetRssi(HW_DEF_WIFI_SH_GET_RSSI)
 {
 }
 
@@ -76,8 +85,7 @@ bool WifiShellScripts::reset()
 
 bool WifiShellScripts::clearConfiguredNetworks()
 {
-    // TODO this also starts the AP! Only reset wpa_supplicant
-    launch("/usr/bin/yio-remote/reset-wifi.sh");
+    launch(m_scriptClearNetworks);
     return true;
 }
 
@@ -90,7 +98,7 @@ bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSe
     QStringList args;
     args.append(ssid);
     args.append(password);
-    launch("/usr/bin/yio-remote/wifi_network_create.sh", args);
+    launch(m_scriptConnectWifi, args);
     return true;
 }
 
@@ -103,7 +111,7 @@ bool WifiShellScripts::isConnected()
 void WifiShellScripts::startNetworkScan()
 {
     setScanStatus(Scanning);
-    QString scanResult = launch("/usr/bin/yio-remote/wifi_network_list.sh");
+    QString scanResult = launch(m_scriptListNetworks);
     m_scanResults = parseScanresult(scanResult);
 
     setScanStatus(ScanOk);
@@ -114,7 +122,7 @@ bool WifiShellScripts::startAccessPoint()
 {
     qCDebug(CLASS_LC) << "Resetting WiFi and starting access point...";
 
-    launch("/usr/bin/yio-remote/reset-wifi.sh");
+    launch(m_scriptStartAP);
     return true;
 }
 
@@ -159,19 +167,19 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
     if (m_wifiStatusScanning) {
-        QString ssid = launch("/usr/bin/yio-remote/wifi_ssid.sh");
+        QString ssid = launch(m_scriptGetSsid);
         if (ssid != m_wifiStatus.name) {
             m_wifiStatus.name = ssid;
             emit networkNameChanged("dummy");
         }
 
-        QString ipAddress = launch("/usr/bin/yio-remote/wifi_ip.sh");
+        QString ipAddress = launch(m_scriptGetIp);
         if (ipAddress != m_wifiStatus.ipAddress) {
             m_wifiStatus.ipAddress = ipAddress;
             emit ipAddressChanged(ipAddress);
         }
 
-        QString macAddress = launch("cat /sys/class/net/wlan0/address");
+        QString macAddress = launch(m_scriptGetMac);
         if (macAddress != m_wifiStatus.macAddress) {
             m_wifiStatus.macAddress = macAddress;
             emit macAddressChanged(macAddress);
@@ -179,7 +187,7 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
     }
 
     if (m_signalStrengthScanning) {
-        int value = launch("/usr/bin/yio-remote/wifi_rssi.sh").toInt();
+        int value = launch(m_scriptGetRssi).toInt();
         if (value != m_wifiStatus.signalStrength) {
             m_wifiStatus.signalStrength = value;
             emit signalStrengthChanged(value);
@@ -197,10 +205,16 @@ QString WifiShellScripts::launch(const QString &command, const QStringList &argu
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO << command;
 
+    if (command.isNull() || command.isEmpty()) {
+        return "";
+    }
+
     QProcess process;
     process.start(command, arguments);
     if (!process.waitForFinished(m_scriptTimeout)) {
-        qCWarning(CLASS_LC) << "Command did not finish within" << m_scriptTimeout << "ms:" << command;
+        qCWarning(CLASS_LC) << "Failed to execute" << command << ":"
+                            << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
+                            << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
         return "";
     }
     QByteArray bytes = process.readAllStandardOutput();
@@ -208,9 +222,49 @@ QString WifiShellScripts::launch(const QString &command, const QStringList &argu
     return output;
 }
 
-int WifiShellScripts::scriptTimeout() const
+void WifiShellScripts::setUseSudo(bool useSudo)
 {
-    return m_scriptTimeout;
+    m_useSudo = useSudo;
+}
+
+void WifiShellScripts::setScriptGetRssi(const QString &script)
+{
+    m_scriptGetRssi = script;
+}
+
+void WifiShellScripts::setScriptGetMacAddress(const QString &script)
+{
+    m_scriptGetMac = script;
+}
+
+void WifiShellScripts::setScriptGetIp(const QString &script)
+{
+    m_scriptGetIp = script;
+}
+
+void WifiShellScripts::setScriptGetSsid(const QString &script)
+{
+    m_scriptGetSsid = script;
+}
+
+void WifiShellScripts::setScriptStartAP(const QString &script)
+{
+    m_scriptStartAP = script;
+}
+
+void WifiShellScripts::setScriptListNetworks(const QString &script)
+{
+    m_scriptListNetworks = script;
+}
+
+void WifiShellScripts::setScriptConnectWifi(const QString &script)
+{
+    m_scriptConnectWifi = script;
+}
+
+void WifiShellScripts::setScriptClearNetworks(const QString &script)
+{
+    m_scriptClearNetworks = script;
 }
 
 void WifiShellScripts::setScriptTimeout(int scriptTimeoutMs)

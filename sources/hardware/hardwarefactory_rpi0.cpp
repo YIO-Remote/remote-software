@@ -30,11 +30,10 @@
 #include "systemservice_name.h"
 #include "systemd.h"
 #include "webserver_lighttpd.h"
+#include "wifi_shellscripts.h"
 
 #if defined (CONFIG_WPA_SUPPLICANT)
     #include "wifi_wpasupplicant.h"
-#else
-    #include "wifi_shellscripts.h"
 #endif
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
@@ -43,10 +42,10 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
-    QMap<QString, QVariant> systemdCfg = config.value(HW_CFG_SYSTEMD).toMap();
-    QMap<QString, QVariant> serviceCfg = config.value(HW_CFG_SYSTEMD_SERVICES).toMap();
+    // -- System services - RPi uses systemd
+    QMap<QString, QVariant> systemdCfg = config.value(HW_CFG_SYSTEMSERVICE).toMap().value(HW_CFG_SYSTEMD).toMap();
+    QMap<QString, QVariant> serviceCfg = systemdCfg.value(HW_CFG_SYSTEMD_SERVICES).toMap();
 
-    // KISS: sufficient for now, custom logic possible with config interface when needed.
     QMap<SystemServiceName, QString> serviceNameMap;
     serviceNameMap.insert(SystemServiceName::WIFI, serviceCfg.value(HW_CFG_SERVICE_WIFI, HW_DEF_SERVICE_WIFI).toString());
     serviceNameMap.insert(SystemServiceName::NAME_RESOLUTION, serviceCfg.value(HW_CFG_SERVICE_DNS, HW_DEF_SERVICE_DNS).toString());
@@ -64,6 +63,7 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
 
     p_systemService = systemd;
 
+    // -- Web Server control - RPi uses httpd
     QMap<QString, QVariant> webCfg = config.value(HW_CFG_WEBSERVER).toMap().value(HW_CFG_LIGHTTPD).toMap();
     WebServerLighttpd *lighttpd = new WebServerLighttpd(p_systemService, this);
     lighttpd->setConfigFile(webCfg.value(HW_CFG_LIGHTTPD_CFG_FILE, HW_DEF_LIGHTTPD_CFG_FILE).toString());
@@ -71,21 +71,48 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
     lighttpd->setWebConfiguratorConfig(webCfg.value(HW_CFG_LIGHTTPD_WEB_CFG, HW_DEF_LIGHTTPD_WEB_CFG).toString());
     p_webServerControl = lighttpd;
 
+    // -- WiFi control - RPi uses wpa_supplicant control interface and as fallback the old shell scripts
     QMap<QString, QVariant> wifiCfg = config.value(HW_CFG_WIFI).toMap();
+    // determine which interface driver to use
+    bool useShellScript = wifiCfg.value(HW_CFG_WIFI_USE_SH, HW_DEF_WIFI_USE_SH).toBool();
+    bool wpaSupplicantAvailable = false;
+
 #if defined (CONFIG_WPA_SUPPLICANT)
-    WifiWpaSupplicant *wps = new WifiWpaSupplicant(p_webServerControl, p_systemService, this);
-    wps->setWpaSupplicantSocketPath(wifiCfg.value(HW_CFG_WIFI_WPA_SOCKET, HW_DEF_WIFI_WPA_SOCKET).toString());
-    wps->setRemoveNetworksBeforeJoin(wifiCfg.value(HW_CFG_WIFI_RM_BEFORE_JOIN, HW_DEF_WIFI_RM_BEFORE_JOIN).toBool());
-    wps->setNetworkJoinRetryCount(wifiCfg.value(HW_CFG_WIFI_JOIN_RETRY, HW_DEF_WIFI_JOIN_RETRY).toInt());
-    wps->setNetworkJoinRetryDelayMs(wifiCfg.value(HW_CFG_WIFI_JOIN_DELAY, HW_DEF_WIFI_JOIN_DELAY).toInt());
-    p_wifiControl = wps;
-#else
-    WifiShellScripts *wss = new WifiShellScripts(p_systemService, this);
-    wss->setScriptTimeout(wifiCfg.value(HW_CFG_WIFI_SCRIPT_TIMEOUT, HW_DEF_WIFI_SCRIPT_TIMEOUT).toInt());
-    p_wifiControl = wss;
+    wpaSupplicantAvailable = true;
+    if (!useShellScript) {
+        qCDebug(CLASS_LC()) << "Using wpa_supplicant as WiFi control interface";
+        WifiWpaSupplicant *wps = new WifiWpaSupplicant(p_webServerControl, p_systemService, this);
+
+        QMap<QString, QVariant> wpaCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_WPA_SUPP).toMap();
+        wps->setWpaSupplicantSocketPath(wpaCfg.value(HW_CFG_WIFI_WPA_SOCKET, HW_DEF_WIFI_WPA_SOCKET).toString());
+        wps->setRemoveNetworksBeforeJoin(wpaCfg.value(HW_CFG_WIFI_RM_BEFORE_JOIN, HW_DEF_WIFI_RM_BEFORE_JOIN).toBool());
+
+        p_wifiControl = wps;
+    }
 #endif
+    if (useShellScript || !wpaSupplicantAvailable) {
+        qCDebug(CLASS_LC()) << "Using shell scripts to control WiFi";
+        WifiShellScripts *wss = new WifiShellScripts(p_systemService, this);
+
+        QMap<QString, QVariant> shCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_SHELLSCRIPT).toMap();
+        wss->setUseSudo(shCfg.value(HW_CFG_WIFI_SH_SUDO, HW_DEF_WIFI_SH_SUDO).toBool());
+        wss->setScriptTimeout(shCfg.value(HW_CFG_WIFI_SH_TIMEOUT, HW_DEF_WIFI_SH_TIMEOUT).toInt());
+        wss->setScriptGetIp(shCfg.value(HW_CFG_WIFI_SH_GET_IP, HW_DEF_WIFI_SH_GET_IP).toString());
+        wss->setScriptGetRssi(shCfg.value(HW_CFG_WIFI_SH_GET_RSSI, HW_DEF_WIFI_SH_GET_RSSI).toString());
+        wss->setScriptGetSsid(shCfg.value(HW_CFG_WIFI_SH_GET_SSID, HW_DEF_WIFI_SH_GET_SSID).toString());
+        wss->setScriptGetMacAddress(shCfg.value(HW_CFG_WIFI_SH_GET_MAC, HW_DEF_WIFI_SH_GET_MAC).toString());
+        wss->setScriptConnectWifi(shCfg.value(HW_CFG_WIFI_SH_CONNECT, HW_DEF_WIFI_SH_CONNECT).toString());
+        wss->setScriptListNetworks(shCfg.value(HW_CFG_WIFI_SH_LIST, HW_DEF_WIFI_SH_LIST).toString());
+        wss->setScriptClearNetworks(shCfg.value(HW_CFG_WIFI_SH_CLEAR_NET, HW_DEF_WIFI_SH_CLEAR_NET).toString());
+        wss->setScriptStartAP(shCfg.value(HW_CFG_WIFI_SH_START_AP, HW_DEF_WIFI_SH_START_AP).toString());
+
+        p_wifiControl = wss;
+    }
+
     p_wifiControl->setMaxScanResults(wifiCfg.value(HW_CFG_WIFI_SCAN_RESULTS, HW_DEF_WIFI_SCAN_RESULTS).toInt());
     p_wifiControl->setPollInterval(wifiCfg.value(HW_CFG_WIFI_POLL_INTERVAL, HW_DEF_WIFI_POLL_INTERVAL).toInt());
+    p_wifiControl->setNetworkJoinRetryCount(wifiCfg.value(HW_CFG_WIFI_JOIN_RETRY, HW_DEF_WIFI_JOIN_RETRY).toInt());
+    p_wifiControl->setNetworkJoinRetryDelayMs(wifiCfg.value(HW_CFG_WIFI_JOIN_DELAY, HW_DEF_WIFI_JOIN_DELAY).toInt());
 }
 
 WifiControl *HardwareFactoryRPi0::getWifiControl()

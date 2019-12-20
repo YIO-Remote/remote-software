@@ -52,8 +52,25 @@ public:
     virtual QString countryCode() override;
     virtual void setCountryCode(QString &countryCode) override;
 
-    int scriptTimeout() const;
     void setScriptTimeout(int scriptTimeoutMs);
+
+    void setScriptClearNetworks(const QString &script);
+
+    void setScriptConnectWifi(const QString &script);
+
+    void setScriptListNetworks(const QString &script);
+
+    void setScriptStartAP(const QString &script);
+
+    void setScriptGetSsid(const QString &script);
+
+    void setScriptGetIp(const QString &script);
+
+    void setScriptGetMacAddress(const QString &script);
+
+    void setScriptGetRssi(const QString &script);
+
+    void setUseSudo(bool useSudo);
 
 public slots:
 
@@ -83,7 +100,17 @@ private:
     SystemService *p_systemService;
 
     // configuration parameters
-    int m_scriptTimeout;
+    int     m_scriptTimeout;
+    bool    m_useSudo;
+    QString m_scriptClearNetworks;
+    QString m_scriptConnectWifi;
+    QString m_scriptListNetworks;
+    QString m_scriptStartAP;
+    QString m_scriptGetSsid;
+    QString m_scriptGetIp;
+    QString m_scriptGetMac;
+    QString m_scriptGetRssi;
+
 };
 
 #endif // WIFISHELLSCRIPTS_H

@@ -109,12 +109,6 @@ public:
     bool getRemoveNetworksBeforeJoin() const;
     void setRemoveNetworksBeforeJoin(bool removeNetworksBeforeJoin);
 
-    int getNetworkJoinRetryCount() const;
-    void setNetworkJoinRetryCount(int count);
-
-    int getNetworkJoinRetryDelayMs() const;
-    void setNetworkJoinRetryDelayMs(int msDelay);
-
 signals:
 
     /**
@@ -272,8 +266,6 @@ private:
     // configuration parameters
     QString m_wpaSupplicantSocketPath;
     bool    m_removeNetworksBeforeJoin;
-    int     m_networkJoinRetryCount;
-    int     m_networkJoinRetryDelayMs;
 };
 
 #endif // WIFIWPASUPPLICANT_H

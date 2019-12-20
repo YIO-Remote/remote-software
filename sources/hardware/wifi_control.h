@@ -136,6 +136,12 @@ public:
     void setPollInterval(int pollIntervalMs);
     int pollInterval() const;
 
+    int getNetworkJoinRetryCount() const;
+    void setNetworkJoinRetryCount(int count);
+
+    int getNetworkJoinRetryDelayMs() const;
+    void setNetworkJoinRetryDelayMs(int msDelay);
+
 signals:
     // TODO do we need individual signals or simply use wifiStatusChanged?
     void networkNameChanged(QString ssid);
@@ -236,6 +242,9 @@ private:
     int m_maxScanResults;
     int m_pollInterval;
     int m_timerId;
+    int m_networkJoinRetryCount;
+    int m_networkJoinRetryDelayMs;
+
 };
 
 #endif // WIFICONTROL_H
