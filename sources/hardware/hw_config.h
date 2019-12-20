@@ -24,8 +24,8 @@
 #define HW_CONFIG_H
 
 
-#define HW_CFG_SYSTEMD "systemd"
-#define HW_CFG_SYSTEMD_SERVICES "services"
+#define HW_CFG_SYSTEMD            "systemd"
+#define HW_CFG_SYSTEMD_SERVICES   "services"
 
 #define HW_CFG_SYSTEMD_SUDO       "sudo"
 #define HW_DEF_SYSTEMD_SUDO       false
@@ -52,8 +52,12 @@
 #define HW_CFG_SERVICE_NETWORKING "networking"
 #define HW_DEF_SERVICE_NETWORKING "systemd-networkd"
 
-#define HW_CFG_WIFI "wifi"
+#define HW_CFG_WIFI                "wifi"
 
+#define HW_CFG_WIFI_SCAN_RESULTS   "maxScanResults"
+#define HW_DEF_WIFI_SCAN_RESULTS   50
+#define HW_CFG_WIFI_POLL_INTERVAL  "pollIntervalMs"
+#define HW_DEF_WIFI_POLL_INTERVAL  10000
 #define HW_CFG_WIFI_WPA_SOCKET     "wpaSupplicantSocketPath"
 #define HW_DEF_WIFI_WPA_SOCKET     "/var/run/wpa_supplicant/wlan0"
 #define HW_CFG_WIFI_RM_BEFORE_JOIN "removeNetworksBeforeJoin"
@@ -65,5 +69,14 @@
 #define HW_CFG_WIFI_SCRIPT_TIMEOUT "scriptTimeoutMs"
 #define HW_DEF_WIFI_SCRIPT_TIMEOUT 30000
 
+#define HW_CFG_WEBSERVER           "webserver"
+#define HW_CFG_LIGHTTPD            "lighttpd"
+
+#define HW_CFG_LIGHTTPD_CFG_FILE   "configFile"
+#define HW_DEF_LIGHTTPD_CFG_FILE   "/etc/lighttpd/lighttpd.conf"
+#define HW_CFG_LIGHTTPD_WIFI_CFG   "wifiSetupConfig"
+#define HW_DEF_LIGHTTPD_WIFI_CFG   "/etc/lighttpd/lighttpd-wifisetup.conf"
+#define HW_CFG_LIGHTTPD_WEB_CFG    "webConfiguratorConfig"
+#define HW_DEF_LIGHTTPD_WEB_CFG    "/etc/lighttpd/lighttpd-config.conf"
 
 #endif // HW_CONFIG_H

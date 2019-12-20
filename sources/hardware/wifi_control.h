@@ -129,6 +129,13 @@ public:
     void setMaxScanResults(int number);
     int maxScanResults() const;
 
+    /**
+     * @brief setPollInterval Set polling interval for wifi status requests
+     * @param pollIntervalMs interval in milliseconds
+     */
+    void setPollInterval(int pollIntervalMs);
+    int pollInterval() const;
+
 signals:
     // TODO do we need individual signals or simply use wifiStatusChanged?
     void networkNameChanged(QString ssid);
@@ -227,7 +234,7 @@ private:
     QVariantList networkScanResult() const;
 
     int m_maxScanResults;
-    int m_scanInterval;
+    int m_pollInterval;
     int m_timerId;
 };
 

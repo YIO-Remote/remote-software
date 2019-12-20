@@ -22,6 +22,7 @@
 
 #include <QLoggingCategory>
 #include <QtDebug>
+#include <QFile>
 
 #include "webserver_lighttpd.h"
 
@@ -30,6 +31,9 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WebLighttpd");
 WebServerLighttpd::WebServerLighttpd(SystemService *systemService, QObject *parent)
     : WebServerControl(parent)
     , p_systemService(systemService)
+    , m_configFile()
+    , m_wifiSetupConfig()
+    , m_webConfiguratorConfig()
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
@@ -57,14 +61,58 @@ bool WebServerLighttpd::reloadService()
 
 bool WebServerLighttpd::startWifiSetupPortal()
 {
-    // TODO copy config
-    // cp /etc/lighttpd/lighttpd-wifisetup.conf /etc/lighttpd/lighttpd.conf
+    if (!QFile::exists(m_wifiSetupConfig)) {
+        qCCritical(CLASS_LC) << "Lighttpd wifi-setup configuration file does not exist:" << m_wifiSetupConfig;
+        return false;
+    }
+    QFile::remove(m_configFile);
+    if (!QFile::copy(m_wifiSetupConfig, m_configFile)) {
+        qCCritical(CLASS_LC) << "Error replacing lighttpd configuration file " << m_configFile << "with:" << m_wifiSetupConfig;
+        return false;
+    }
     return restartService();
 }
 
 bool WebServerLighttpd::startWebConfigurator()
 {
-    // TODO copy config
-    // cp /etc/lighttpd/lighttpd-config.conf /etc/lighttpd/lighttpd.conf
+    if (!QFile::exists(m_webConfiguratorConfig)) {
+        qCCritical(CLASS_LC) << "Lighttpd web-configurator configuration file does not exist:" << m_webConfiguratorConfig;
+        return false;
+    }
+    QFile::remove(m_configFile);
+    if (!QFile::copy(m_webConfiguratorConfig, m_configFile)) {
+        qCCritical(CLASS_LC) << "Error replacing lighttpd configuration file " << m_configFile << "with:" << m_webConfiguratorConfig;
+        return false;
+    }
     return restartService();
+}
+
+QString WebServerLighttpd::configFile() const
+{
+    return m_configFile;
+}
+
+void WebServerLighttpd::setConfigFile(const QString &configFile)
+{
+    m_configFile = configFile;
+}
+
+QString WebServerLighttpd::wifiSetupConfig() const
+{
+    return m_wifiSetupConfig;
+}
+
+void WebServerLighttpd::setWifiSetupConfig(const QString &wifiSetupConfig)
+{
+    m_wifiSetupConfig = wifiSetupConfig;
+}
+
+QString WebServerLighttpd::webConfiguratorConfig() const
+{
+    return m_webConfiguratorConfig;
+}
+
+void WebServerLighttpd::setWebConfiguratorConfig(const QString &webConfiguratorConfig)
+{
+    m_webConfiguratorConfig = webConfiguratorConfig;
 }

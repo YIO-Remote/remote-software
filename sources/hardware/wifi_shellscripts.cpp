@@ -25,6 +25,7 @@
 #include <QtDebug>
 #include <QVector>
 
+#include "hw_config.h"
 #include "../fileio.h"
 #include "wifi_shellscripts.h"
 
@@ -34,8 +35,8 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");
 WifiShellScripts::WifiShellScripts(SystemService *systemService,
                                    QObject *parent)
     : WifiControl(parent)
-    , m_scriptTimeout(30000)
     , p_systemService(systemService)
+    , m_scriptTimeout(HW_DEF_WIFI_SCRIPT_TIMEOUT)
 {
 }
 

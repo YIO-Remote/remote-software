@@ -22,6 +22,7 @@
 
 #include <QLoggingCategory>
 
+#include "hw_config.h"
 #include "wifi_control.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiCtrl");
@@ -29,8 +30,8 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiCtrl");
 WifiControl::WifiControl(QObject* parent)
     : QObject(parent)
     , m_scanStatus(Idle)
-    , m_maxScanResults(50)
-    , m_scanInterval(10000)         // TODO make scan interval configurable
+    , m_maxScanResults(HW_DEF_WIFI_SCAN_RESULTS)
+    , m_pollInterval(HW_DEF_WIFI_POLL_INTERVAL)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
@@ -131,6 +132,16 @@ QVariantList WifiControl::networkScanResult() const
     return list;
 }
 
+int WifiControl::pollInterval() const
+{
+    return m_pollInterval;
+}
+
+void WifiControl::setPollInterval(int pollIntervalMs)
+{
+    m_pollInterval = pollIntervalMs;
+}
+
 int WifiControl::maxScanResults() const
 {
     return m_maxScanResults;
@@ -173,7 +184,7 @@ void WifiControl::stopWifiStatusScanning()
 void WifiControl::startScanTimer()
 {
     if (m_timerId == 0) {
-        m_timerId = startTimer(m_scanInterval);
+        m_timerId = startTimer(m_pollInterval);
     }
 }
 

@@ -46,6 +46,20 @@ public:
     Q_INVOKABLE virtual bool reloadService() override;
     Q_INVOKABLE virtual bool startWifiSetupPortal() override;
     Q_INVOKABLE virtual bool startWebConfigurator() override;
+
+    QString configFile() const;
+    void setConfigFile(const QString &configFile);
+
+    QString wifiSetupConfig() const;
+    void setWifiSetupConfig(const QString &wifiSetupConfig);
+
+    QString webConfiguratorConfig() const;
+    void setWebConfiguratorConfig(const QString &webConfiguratorConfig);
+
+private:
+    QString m_configFile;
+    QString m_wifiSetupConfig;
+    QString m_webConfiguratorConfig;
 };
 
 #endif // WEBSERVERLIGHTTPD_H

@@ -15,10 +15,19 @@
         }
     },
     "wifi": {
+        "maxScanResults": 20,
+        "pollIntervalMs": 20000,
         "wpaSupplicantSocketPath": "/var/run/wpa_supplicant/wlan0",
         "removeNetworksBeforeJoin": false,
         "joinRetryCount": 5,
         "joinRetryDelayMs": 3000,
         "scriptTimeoutMs": 3000
+    },
+    "webserver" : {
+        "lighttpd" : {
+            "configFile": "/etc/lighttpd/lighttpd.conf",
+            "wifiSetupConfig": "/etc/lighttpd/lighttpd-wifisetup.conf",
+            "webConfiguratorConfig": "/etc/lighttpd/lighttpd-config.conf"
+        }
     }
 }

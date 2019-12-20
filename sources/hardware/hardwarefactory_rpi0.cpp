@@ -64,7 +64,12 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
 
     p_systemService = systemd;
 
-    p_webServerControl = new WebServerLighttpd(p_systemService);
+    QMap<QString, QVariant> webCfg = config.value(HW_CFG_WEBSERVER).toMap().value(HW_CFG_LIGHTTPD).toMap();
+    WebServerLighttpd *lighttpd = new WebServerLighttpd(p_systemService, this);
+    lighttpd->setConfigFile(webCfg.value(HW_CFG_LIGHTTPD_CFG_FILE, HW_DEF_LIGHTTPD_CFG_FILE).toString());
+    lighttpd->setWifiSetupConfig(webCfg.value(HW_CFG_LIGHTTPD_WIFI_CFG, HW_DEF_LIGHTTPD_WIFI_CFG).toString());
+    lighttpd->setWebConfiguratorConfig(webCfg.value(HW_CFG_LIGHTTPD_WEB_CFG, HW_DEF_LIGHTTPD_WEB_CFG).toString());
+    p_webServerControl = lighttpd;
 
     QMap<QString, QVariant> wifiCfg = config.value(HW_CFG_WIFI).toMap();
 #if defined (CONFIG_WPA_SUPPLICANT)
@@ -79,6 +84,8 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
     wss->setScriptTimeout(wifiCfg.value(HW_CFG_WIFI_SCRIPT_TIMEOUT, HW_DEF_WIFI_SCRIPT_TIMEOUT).toInt());
     p_wifiControl = wss;
 #endif
+    p_wifiControl->setMaxScanResults(wifiCfg.value(HW_CFG_WIFI_SCAN_RESULTS, HW_DEF_WIFI_SCAN_RESULTS).toInt());
+    p_wifiControl->setPollInterval(wifiCfg.value(HW_CFG_WIFI_POLL_INTERVAL, HW_DEF_WIFI_POLL_INTERVAL).toInt());
 }
 
 WifiControl *HardwareFactoryRPi0::getWifiControl()
