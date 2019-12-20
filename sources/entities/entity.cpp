@@ -30,7 +30,7 @@ EntityInterface::~EntityInterface()
 {
 }
 
-Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrationObj, QObject *parent) :
+Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent) :
     QObject(parent),
     m_integrationObj(integrationObj),
     m_type(type),
@@ -38,55 +38,29 @@ Entity::Entity(const QString& type, const QVariantMap& config, QObject *integrat
     m_friendly_name(config.value("friendly_name").toString()),
     m_integration(config.value("integration").toString()),
     m_favorite(false),
-    m_supported_features(config.value("supported_features").toStringList()),
+    m_connected(false),
     m_state(0),
     m_enumState(nullptr),
     m_enumAttr(nullptr),
+    m_enumFeatures(nullptr),
+    m_enumCommands(nullptr),
     m_specificInterface(nullptr)
 {
-    setObjectName(config.value("entity_id").toString());
+    memset (m_supported_features, 0, sizeof (m_supported_features));
 
-    QVariantMap c = Config::getInstance()->config();
-    QString p = Config::getInstance()->profile();
+    QString entityId = config.value("entity_id").toString();
+    setObjectName(entityId);
 
-    QVariantList f = c.value("ui_config").toMap().value("profiles").toMap().value(p).toMap().value("favorites").toJsonArray().toVariantList();
-
-    m_favorite = false;
-
-    for (int i = 0; i < f.length(); i++)
-    {
-        if (f[i].toString() == config.value("entity_id").toString()) {
-            m_favorite = true;
-        }
-    }
+    QStringList f = Config::getInstance()->getProfileFavorites();
+    m_favorite = f.contains(entityId);
 }
 
 Entity::~Entity()
 {
 }
-void Entity::command(const QString &command, const QVariant& param)
+void Entity::command(int command, const QVariant& param)
 {
-    QVariant returnedValue;
-    QMetaObject::invokeMethod(m_integrationObj, "sendCommand", Qt::AutoConnection,
-                              Q_ARG(QString, m_type),
-                              Q_ARG(QString, QString(entity_id())),
-                              Q_ARG(QString, command),
-                              Q_ARG(QVariant, param));
-}
-
-QVariantMap Entity::getDataToSave()
-{
-    QVariantMap map;
-
-    map["type"] = m_type;
-    map["entity_id"] = entity_id();
-    map["favorite"] = m_favorite;
-    map["friendly_name"] = m_friendly_name;
-    map["integration"] = m_integration;
-    map["area"] = m_area;
-    map["supported_features"] = m_supported_features;
-
-    return map;
+    m_integrationObj->sendCommand(m_type, entity_id(), command, param);
 }
 
 bool Entity::update(const QVariantMap &attributes)
@@ -113,12 +87,73 @@ int Entity::getAttrIndex (const QString& attrName)
     Q_ASSERT(m_enumAttr != nullptr);
     return m_enumAttr->keyToValue(attrName.toUpper().toUtf8());
 }
+QString  Entity::getFeatureName (int featureIndex)
+{
+    Q_ASSERT(m_enumFeatures != nullptr);
+    return QString(m_enumFeatures->valueToKey(featureIndex)).mid(2);
+}
+int Entity::getFeatureIndex (const QString& featureName)
+{
+    Q_ASSERT(m_enumFeatures != nullptr);
+    QString name = featureName;
+    return m_enumFeatures->keyToValue(name.prepend("F_").toUpper().toUtf8());
+}
+
+QString Entity::getCommandName (int commandIndex)
+{
+    Q_ASSERT(m_enumCommands != nullptr);
+    return QString(m_enumCommands->valueToKey(commandIndex)).mid(2);
+}
+int Entity::getCommandIndex     (const QString& commandName)
+{
+    Q_ASSERT(m_enumCommands != nullptr);
+    QString name = commandName;
+    return m_enumCommands->keyToValue(name.prepend("C_").toUpper().toUtf8());
+}
+
 QStringList Entity::allAttributes ()
 {
     Q_ASSERT(m_enumAttr != nullptr);
     QStringList list;
     for (int i = 0; i < m_enumAttr->keyCount(); i++)
         list.append(m_enumAttr->key(i));
+    return list;
+}
+QStringList Entity::allCommands ()
+{
+    Q_ASSERT(m_enumAttr != nullptr);
+    QStringList list;
+    for (int i = 0; i < m_enumCommands->keyCount(); i++) {
+        QString name(m_enumCommands->key(i));
+        list.append(name.mid(2));
+    }
+    return list;
+}
+bool Entity::isSupported (int feature)
+{
+    int byte = feature / 8;
+    int bit  = feature % 8;
+    Q_ASSERT(byte < int(sizeof (m_supported_features)));
+    return !!(m_supported_features[byte] & (1 << bit));
+}
+
+QStringList Entity::supported_features() {
+    QStringList list;
+    for (int i = 0; i < MAX_FEATURES; i++) {
+        if (isSupported(i))
+            list.append (getFeatureName(i));
+    }
+    return list;
+}
+
+QStringList Entity::allFeatures ()
+{
+    Q_ASSERT(m_enumAttr != nullptr);
+    QStringList list;
+    for (int i = 0; i < m_enumFeatures->keyCount(); i++) {
+        QString name(m_enumFeatures->key(i));
+        list.append(name.mid(2));
+    }
     return list;
 }
 QStringList Entity::allStates ()
@@ -150,10 +185,6 @@ bool Entity::setStateText(const QString& stateText)
     Q_ASSERT(m_enumState != nullptr);
     return setState (m_enumState->keyToValue(stateText.toUpper().toUtf8()));
 }
-bool Entity::isSupported (const QString& feature)
-{
-    return m_supported_features.contains(feature);
-}
 
 bool Entity::updateAttrByIndex(int idx, const QVariant& value)
 {
@@ -168,11 +199,12 @@ bool Entity::isOn() {
 bool Entity::supportsOn() {
     return true;                            // Otherwise : Override in specific entity
 }
-void Entity::turnOn() {
-    command("ON", "");                      // Otherwise : Override in specific entity
-}
-void Entity::turnOff() {
-    command("OFF", "");                     // Otherwise : Override in specific entity
+void Entity::setConnected(bool value)
+{
+    if (m_connected != value) {
+        m_connected = value;
+        emit connectedChanged();
+    }
 }
 
 void Entity::setFavorite(bool value)
@@ -183,4 +215,20 @@ void Entity::setFavorite(bool value)
         m_favorite = value;
         emit favoriteChanged();
     });
+}
+
+void Entity::initializeSupportedFeatures(const QVariantMap &config)
+{
+    QStringList features = config.value("supported_features").toStringList();
+    for (int i = 0; i < features.length(); i++) {
+       int feature = getFeatureIndex(features[i]);
+       if (feature < 0) {
+           qWarning () << "not defined feature" << features[i];
+           continue;
+       }
+       int byte = feature / 8;
+       int bit  = feature % 8;
+       Q_ASSERT(byte < int(sizeof (m_supported_features)));
+       m_supported_features[byte] |= (1 << bit);
+    }
 }

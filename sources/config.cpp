@@ -85,6 +85,16 @@ void Config::writeConfig()
     m_jsf->write(m_config);
 }
 
+void Config::writeConfig(const bool sync)
+{
+    if (sync) {
+        syncCache();
+        m_jsf->write(m_config);
+    } else {
+        m_jsf->write(m_config);
+    }
+}
+
 QObject *Config::getQMLObject(QList<QObject*> nodes,const QString &name)
 {
     for (int i=0; i < nodes.size(); i++)
@@ -109,16 +119,16 @@ QObject *Config::getQMLObject(const QString &name)
 void Config::syncCache ()
 {
     m_cacheSettings     = m_config["settings"].toMap();
-    emit getSettingsChanged();
+    emit settingsChanged();
     m_cacheUIConfig     = m_config["ui_config"].toMap();
-    emit getUIConfigChanged();
+    emit uiConfigChanged();
     m_cacheProfile      = m_cacheUIConfig["selected_profile"].toString();
     m_cacheUIProfiles   = m_cacheUIConfig["profiles"].toMap();
-    emit getProfilesChanged();
+    emit profilesChanged();
     m_cacheUIProfile    = m_cacheUIProfiles[m_cacheProfile].toMap();
     emit profileChanged();
     m_cacheUIPages      = m_cacheUIConfig["pages"].toMap();
-    emit getPagesChanged();
+    emit pagesChanged();
     m_cacheUIGroups     = m_cacheUIConfig["groups"].toMap();
-    emit getGroupsChanged();
+    emit groupsChanged();
 }

@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 import QtQuick 2.0
+import Entity.MediaPlayer 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -57,7 +58,7 @@ Item {
             opacity: 0.5
             text: obj.source
             elide: Text.ElideRight
-            wrapMode: Text.WordWrap
+            wrapMode: Text.NoWrap
             width: title.width
             anchors.left: title.left
             anchors.top: title.bottom
@@ -131,12 +132,23 @@ Item {
 
     Rectangle {
         id: progressBar
+        visible: obj.isSupported(MediaPlayer.F_MEDIA_POSITION)
         width: parent.width-80
         height: 4
         color: "#000000"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: artist.bottom
-        anchors.topMargin: 30
+        anchors.topMargin: 20
+
+        Rectangle {
+            width: parent.width*(obj.mediaProgress/obj.mediaDuration)
+            height: parent.height
+            color: colorLine
+
+            Behavior on width {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
+        }
     }
 
     Item {

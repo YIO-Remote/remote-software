@@ -24,29 +24,32 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Entity.Blind 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: blindButton
 
-    property var obj
+    property var    obj
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj.integrationObj //integrations.getByType(obj.integration) //integration[obj.integration].obj
+        target: obj // obj.integrationObj //integration[obj.integration].obj
 
-        onConnected: {
-            blindButton.opacity = 1
-            blindButton.enabled = true
-        }
-
-        onDisconnected: {
-            blindButton.opacity = 0.3
-            blindButton.enabled = false
-            blindButton.state = "closed"
+        onConnectedChanged: {
+            if (obj.connected) {
+                blindButton.opacity = 1
+                blindButton.enabled = true
+            }
+            else {
+                blindButton.opacity = 0.3
+                blindButton.enabled = false
+                blindButton.state = "closed"
+            }
         }
     }
 
@@ -67,17 +70,17 @@ Rectangle {
             if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
                 switch (button) {
                 case "dpad up":
-                    if (obj.supported_features.indexOf("OPEN") > -1) {
+                    if (obj.isSupported(Blind.F_OPEN)) {
                         obj.open();
                     }
                     break;
                 case "dpad down":
-                    if (obj.supported_features.indexOf("CLOSE") > -1) {
+                    if (obj.isSupported(Blind.F_CLOSE)) {
                         obj.close();
                     }
                     break;
                 case "dpad middle":
-                    if (obj.supported_features.indexOf("STOP") > -1) {
+                    if (obj.isSupported(Blind.F_STOP)) {
                         obj.stop();
                     }
                     break;

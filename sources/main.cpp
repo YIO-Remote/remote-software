@@ -40,7 +40,7 @@
 #include "hardware/bq27441.h"
 #include "hardware/proximity_gesture_control.h"
 #include "hardware/wifi_control.h"
-#include "integrations/integration.h"
+
 #include "integrations/integrations.h"
 #include "entities/entities.h"
 

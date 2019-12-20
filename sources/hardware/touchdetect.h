@@ -31,8 +31,8 @@ class TouchEventFilter : public QQuickItem
 {
     Q_OBJECT
 public:
-    Q_PROPERTY(QObject * source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected NOTIFY detectedChanged)
+    Q_PROPERTY(QObject*     source          READ getSource      WRITE setSource)
+    Q_PROPERTY(bool         detected        READ detected       NOTIFY detectedChanged)
 
 public:
     TouchEventFilter()
@@ -54,6 +54,8 @@ public:
 
     QObject * getSource() { return m_source; }
 
+    bool detected() { return true; }
+
 
 private:
     bool eventFilter(QObject *obj, QEvent *event)
@@ -69,7 +71,6 @@ private:
             break;
         }
         return QQuickItem::eventFilter(this, event);
-
     }
 
 signals:

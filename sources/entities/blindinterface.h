@@ -32,11 +32,17 @@ class BlindDef : public QObject
 {
     Q_OBJECT
 public:
-    enum Attributes {  STATE, POSITION };
+    enum Attributes { STATE, POSITION };
     Q_ENUM (Attributes)
 
-    enum States     { OPEN =0, CLOSED=1, MOVING=2 };        // maybe some integration can deliver MOVING, or we simulate by the commands
+    enum States     { CLOSED = 0, OPEN = 1, MOVING = 2      };        // maybe some integration can deliver MOVING, or we simulate by the commands
     Q_ENUM (States)
+
+    enum Features   { F_OPEN, F_CLOSE, F_STOP, F_POSITION   };
+    Q_ENUM (Features)
+
+    enum Commands   { C_OPEN, C_CLOSE, C_STOP, C_POSITION   };
+    Q_ENUM (Commands)
 
     explicit BlindDef(QObject *parent = nullptr) : QObject(parent)
     {}

@@ -24,6 +24,7 @@
 #define MEDIAPLAYERINTERFACE_H
 
 #include <QObject>
+#include "../remote-software/components/media_player/sources/searchmodel_mediaplayer.h"
 
 /// This class is a work arround to make the feature enum available in the interface and in the specifc entity class.
 /// Qt cannot create metadata describing an enum contained in the interface
@@ -32,11 +33,20 @@ class MediaPlayerDef : public QObject
 {
     Q_OBJECT
 public:
-    enum Attributes  {  STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, BROWSERESULT };
+    enum Attributes     { STATE, SOURCE, VOLUME, MUTED, MEDIATYPE, MEDIATITLE, MEDIAARTIST, MEDIAIMAGE, MEDIADURATION, MEDIAPROGRESS };
     Q_ENUM (Attributes)
 
-    enum States   { OFF=0, ON=1, IDLE=2, PLAYING=3 };
+    enum States         { OFF=0, ON=1, IDLE=2, PLAYING=3 };
     Q_ENUM (States)
+
+    enum Features       { F_APP_NAME, F_MEDIA_ALBUM, F_MEDIA_ARTIST, F_MEDIA_DURATION,  F_MEDIA_POSITION, F_MEDIA_IMAGE, F_MEDIA_PROGRESS, F_MEDIA_TITLE,
+                          F_MEDIA_TYPE, F_MUTE, F_MUTE_SET, F_NEXT, F_PAUSE, F_PLAY, F_PREVIOUS, F_SEARCH, F_SEEK, F_SHUFFLE, F_SOURCE, F_STOP, F_TURN_OFF,
+                          F_TURN_ON, F_VOLUME, F_VOLUME_DOWN, F_VOLUME_SET, F_VOLUME_UP, F_LIST, F_SPEAKER_CONTROL };
+    Q_ENUM (Features)
+
+    enum Commands       { C_TURNOFF, C_TURNON, C_PLAY, C_PAUSE, C_STOP, C_PREVIOUS, C_NEXT, C_VOLUME_SET, C_VOLUME_UP, C_VOLUME_DOWN,
+                          C_MUTE, C_BROWSE, C_SEARCH, C_SEARCH_ITEM, C_PLAY_ITEM, C_GETALBUM, C_GETPLAYLIST };
+    Q_ENUM (Commands)
 
     explicit MediaPlayerDef (QObject *parent = nullptr) : QObject(parent)
     {}
@@ -50,6 +60,8 @@ public:
     virtual ~MediaPlayerInterface  ();
 
     virtual int                         volume() = 0;
+    virtual int                         mediaDuration() = 0;
+    virtual int                         mediaProgress() = 0;
     virtual bool                        muted() = 0;
     virtual QString                     mediaType() = 0;
     virtual QString                     mediaImage() = 0;
@@ -57,8 +69,8 @@ public:
     virtual QString                     mediaArtist() = 0;
     virtual QString                     source() = 0;
 
-    // extension for "generic" media browsing
-    virtual QVariant                    browseResult() = 0;
+    virtual void                        setSearchModel(QObject* model) = 0;
+    virtual void                        setBrowseModel(QObject* model) = 0;
 };
 
 QT_BEGIN_NAMESPACE
