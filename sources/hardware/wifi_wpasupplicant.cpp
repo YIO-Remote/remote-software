@@ -300,7 +300,7 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiS
             return saveConfiguration(resetIfFailed);
         }
 
-        QThread::currentThread()->msleep(getNetworkJoinRetryDelayMs());
+        QThread::currentThread()->msleep(getNetworkJoinRetryDelay());
     }
 
     qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << getNetworkJoinRetryCount() << "retries";

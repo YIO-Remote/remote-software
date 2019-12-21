@@ -32,7 +32,7 @@
 #define HW_CFG_SYSTEMD_SUDO       "sudo"
 #define HW_DEF_SYSTEMD_SUDO       false
 
-#define HW_CFG_SYSTEMD_TIMEOUT    "timeoutMs"
+#define HW_CFG_SYSTEMD_TIMEOUT    "timeout"
 #define HW_DEF_SYSTEMD_TIMEOUT    30000
 
 #define HW_CFG_SERVICE_WIFI       "wifi"
@@ -60,9 +60,9 @@
 #define HW_DEF_WIFI_SCAN_RESULTS   50
 #define HW_CFG_WIFI_JOIN_RETRY     "joinRetryCount"
 #define HW_DEF_WIFI_JOIN_RETRY     5
-#define HW_CFG_WIFI_JOIN_DELAY     "joinRetryDelayMs"
+#define HW_CFG_WIFI_JOIN_DELAY     "joinRetryDelay"
 #define HW_DEF_WIFI_JOIN_DELAY     3000
-#define HW_CFG_WIFI_POLL_INTERVAL  "pollIntervalMs"
+#define HW_CFG_WIFI_POLL_INTERVAL  "pollInterval"
 #define HW_DEF_WIFI_POLL_INTERVAL  10000
 #define HW_CFG_WIFI_USE_SH         "useShellScript"
 #define HW_DEF_WIFI_USE_SH         false

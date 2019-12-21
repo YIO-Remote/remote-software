@@ -2,7 +2,7 @@
     "systemservice": {
         "systemd": {
             "sudo" : false,
-            "timeoutMs" : 30000,
+            "timeout" : 30000,
             "services": {
                 "wifi": "wpa_supplicant@wlan0.service",
                 "dns": "systemd-resolved.service",
@@ -19,8 +19,8 @@
     "wifi": {
         "maxScanResults": 20,
         "joinRetryCount": 5,
-        "joinRetryDelayMs": 3000,
-        "pollIntervalMs": 20000,
+        "joinRetryDelay": 3000,
+        "pollInterval": 20000,
         "useShellScript": false,
         "interface": {
             "wpa_supplicant" : {

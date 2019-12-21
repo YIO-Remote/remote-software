@@ -139,8 +139,8 @@ public:
     int getNetworkJoinRetryCount() const;
     void setNetworkJoinRetryCount(int count);
 
-    int getNetworkJoinRetryDelayMs() const;
-    void setNetworkJoinRetryDelayMs(int msDelay);
+    int getNetworkJoinRetryDelay() const;
+    void setNetworkJoinRetryDelay(int msDelay);
 
 signals:
     // TODO do we need individual signals or simply use wifiStatusChanged?
@@ -243,7 +243,7 @@ private:
     int m_pollInterval;
     int m_timerId;
     int m_networkJoinRetryCount;
-    int m_networkJoinRetryDelayMs;
+    int m_networkJoinRetryDelay;
 
 };
 

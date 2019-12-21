@@ -33,7 +33,7 @@ WifiControl::WifiControl(QObject* parent)
     , m_maxScanResults(HW_DEF_WIFI_SCAN_RESULTS)
     , m_pollInterval(HW_DEF_WIFI_POLL_INTERVAL)
     , m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY)
-    , m_networkJoinRetryDelayMs(HW_DEF_WIFI_JOIN_DELAY)
+    , m_networkJoinRetryDelay(HW_DEF_WIFI_JOIN_DELAY)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
@@ -154,14 +154,14 @@ void WifiControl::setMaxScanResults(int number)
     m_maxScanResults = number;
 }
 
-int WifiControl::getNetworkJoinRetryDelayMs() const
+int WifiControl::getNetworkJoinRetryDelay() const
 {
-    return m_networkJoinRetryDelayMs;
+    return m_networkJoinRetryDelay;
 }
 
-void WifiControl::setNetworkJoinRetryDelayMs(int msDelay)
+void WifiControl::setNetworkJoinRetryDelay(int msDelay)
 {
-    m_networkJoinRetryDelayMs = msDelay;
+    m_networkJoinRetryDelay = msDelay;
 }
 
 int WifiControl::getNetworkJoinRetryCount() const
