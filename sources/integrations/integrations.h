@@ -29,14 +29,16 @@
 #include <QtDebug>
 
 #include "integrationsinterface.h"
+#include "plugininterface.h"
 
 class Integrations : public QObject, IntegrationsInterface
 {
     Q_OBJECT
+    Q_INTERFACES(IntegrationsInterface)
 
 public:
     // list of all integrations
-    Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged          CONSTANT)
+    Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged)
 
     // load all integrations from config file
     Q_INVOKABLE void                    load                    ();
@@ -64,7 +66,7 @@ public:
     // get the type of integration by id
     Q_INVOKABLE QString                 getType                 (const QString& id);
 
-    explicit Integrations(QQmlApplicationEngine *engine = NULL, const QString& appPath = "");
+    explicit Integrations(QQmlApplicationEngine *engine = nullptr, const QString& appPath = "");
     virtual ~Integrations();
 
     static Integrations*       getInstance     ()

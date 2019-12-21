@@ -45,7 +45,8 @@ Rectangle {
         if (!isCurrentItem) {
             searchResults.visible = false;
             itemFlickable.contentY = 0;
-            obj.searchModel.clear();
+            if (obj.searchModel)
+                obj.searchModel.clear();
         }
     }
 
@@ -321,7 +322,7 @@ Rectangle {
                             selected: {
                                 var selectedItem = true;
                                 for (var i=0; i<tagRepeater.count; i++) {
-                                    if (!tagRepeater.itemAt(i).selected) {
+                                    if (tagRepeater.itemAt(i) && !tagRepeater.itemAt(i).selected) {
                                         selectedItem = false;
                                     }
                                 }

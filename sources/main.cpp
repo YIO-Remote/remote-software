@@ -39,7 +39,7 @@
 #include "hardware/bq27441.h"
 #include "hardware/proximity_gesture_control.h"
 
-#include "integrations/integration.h"
+//#include "integrations/integrationinterface.h"
 #include "integrations/integrations.h"
 #include "entities/entities.h"
 

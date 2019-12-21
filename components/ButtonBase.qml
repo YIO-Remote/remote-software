@@ -8,27 +8,28 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: buttonContainer
 
-    property var obj
+    property var  obj
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj.integrationObj //integration[obj.integration].obj
+        target: obj
 
-        onConnected: {
-            buttonContainer.opacity = 1
-            buttonContainer.enabled = true
-        }
-
-        onDisconnected: {
-            buttonContainer.opacity = 0.3
-            buttonContainer.enabled = false
-            buttonContainer.state = "closed"
-            cardLoader.active = false;
+        onConnectedChanged: {
+            if (obj.connected) {
+                buttonContainer.opacity = 1
+                buttonContainer.enabled = true
+            }
+            else {
+                buttonContainer.opacity = 0.3
+                buttonContainer.enabled = false
+                buttonContainer.state = "closed"
+                cardLoader.active = false;
+            }
         }
     }
-
+    
     Behavior on opacity {
         PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
     }

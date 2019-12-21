@@ -28,7 +28,7 @@
 class IntegrationsInterface
 {
 public:
-    virtual ~IntegrationsInterface() {}
+    virtual ~IntegrationsInterface();
 
     virtual void                    add                     (const QVariantMap& config, QObject *obj, const QString& type) = 0;
 };

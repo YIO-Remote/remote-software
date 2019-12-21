@@ -53,10 +53,10 @@ KeyboardStyle {
 
     keyboardDesignWidth: 2560
     keyboardDesignHeight: 2560
-    keyboardRelativeLeftMargin: 114 / keyboardDesignWidth
-    keyboardRelativeRightMargin: 114 / keyboardDesignWidth
+    keyboardRelativeLeftMargin: 13 / keyboardDesignWidth
+    keyboardRelativeRightMargin: 13 / keyboardDesignWidth
     keyboardRelativeTopMargin: 13 / keyboardDesignHeight
-    keyboardRelativeBottomMargin: 86 / keyboardDesignHeight
+    keyboardRelativeBottomMargin: 13 / keyboardDesignHeight
 
     keyboardBackground: Rectangle {
         color: colorBackground

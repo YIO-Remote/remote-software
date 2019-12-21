@@ -36,6 +36,8 @@
         <file>basic_ui/NotificationDrawer.qml</file>
         <file>components/blind/ui/Button.qml</file>
         <file>components/blind/ui/Card.qml</file>
+        <file>components/weather/ui/Button.qml</file>
+        <file>components/weather/ui/Card.qml</file>
         <file>basic_ui/MiniMediaPlayer.qml</file>
         <file>basic_ui/Volume.qml</file>
         <file>components/media_player/ui/Button.qml</file>
@@ -181,7 +183,7 @@
         <file>sources/hardware/proximity_gesture_control.h</file>
         <file>sources/hardware/touchdetect.h</file>
         <file>sources/integrations/integration.h</file>
-        <file>sources/integrations/integrationinterface.h</file>
+        <file>sources/integrations/plugininterface.h</file>
         <file>sources/integrations/integrations.cpp</file>
         <file>sources/integrations/integrations.h</file>
         <file>sources/bluetootharea.cpp</file>

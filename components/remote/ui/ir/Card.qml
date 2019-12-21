@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Entity.Remote 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -42,22 +44,22 @@ Rectangle {
         onButtonPress: {
             switch (button) {
             case "volume up":
-                if (obj.supported_features.indexOf("VOLUME_UP") > -1) {
+                if (obj.isSupported(Remote.F_VOLUME_UP)) {
                     obj.volumeUp();
                 }
                 break;
             case "volume down":
-                if (obj.supported_features.indexOf("VOLUME_DOWN") > -1) {
+                if (obj.isSupported(Remote.F_VOLUME_DOWN)) {
                     obj.volumeDown();
                 }
                 break;
             case "channel up":
-                if (obj.supported_features.indexOf("CHANNEL_UP") > -1) {
+                if (obj.isSupported(Remote.F_CHANNEL_UP)) {
                     obj.channelUp();
                 }
                 break;
             case "channel down":
-                if (obj.supported_features.indexOf("CHANNEL_DOWN") > -1) {
+                if (obj.isSupported(Remote.F_CHANNEL_DOWN)) {
                     obj.channelDown();
                 }
                 break;

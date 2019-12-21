@@ -55,7 +55,8 @@ Item {
             switch (button) {
             case "dpad right":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
-                    loader_main.item.mainNavigationSwipeview.currentIndex += 1;
+//                    loader_main.item.mainNavigationSwipeview.currentIndex += 1;
+                    loader_main.item.mainNavigationSwipeview.incrementCurrentIndex();
                     //                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
                     haptic.playEffect("buzz");
@@ -63,7 +64,8 @@ Item {
                 break;
             case "dpad left":
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
-                    loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
+//                    loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
+                    loader_main.item.mainNavigationSwipeview.decrementCurrentIndex();
                     //                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
                     haptic.playEffect("buzz");
@@ -156,7 +158,7 @@ Item {
 
                 onStatusChanged: {
                     if (status == Loader.Ready) {
-                        itemsLoaded += 1
+                        itemsLoaded += 1;
                     }
                 }
             }
@@ -166,7 +168,7 @@ Item {
             // change navigation index after startup
             if (mainNavigationSwipeview.count == mainNavigation.menuConfig.count && !startUp) {
                 startUp = true
-                mainNavigationSwipeview.currentIndex = 0
+                mainNavigationSwipeview.setCurrentIndex(0);
             }
 
             if (startUp) {
@@ -175,7 +177,7 @@ Item {
 
             if (itemsLoaded >= 3) {
                 if (mainNavigation.mainNavigationListView.count !== 0 && !mainNavigation.mainNavigationListView.currentItem && !mainNavigation.mainNavigationListView.currentItem.held) {
-                    mainNavigation.mainNavigationListView.currentIndex = currentIndex
+                    mainNavigation.mainNavigationListView.currentIndex = currentIndex       ;
                     mainNavigation.mainNavigationListView.positionViewAtIndex(currentIndex, ListView.Center)
                 }
             }

@@ -24,29 +24,31 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Entity.Light 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: lightButton
 
-    property var obj
-
+    property var    obj
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: obj.integrationObj //integration[obj.integration].obj
+        target: obj // obj.integrationObj //integration[obj.integration].obj
 
-        onConnected: {
-            lightButton.opacity = 1
-            lightButton.enabled = true
-        }
-
-        onDisconnected: {
-            lightButton.opacity = 0.3
-            lightButton.enabled = false
-            lightButton.state = "closed"
+        onConnectedChanged: {
+            if (obj.connected) {
+                lightButton.opacity = 1
+                lightButton.enabled = true
+            }
+            else {
+                lightButton.opacity = 0.3
+                lightButton.enabled = false
+                lightButton.state = "closed"
+            }
         }
     }
 
@@ -397,9 +399,9 @@ Rectangle {
     function getSource() {
         if (lightButton.state != "open") {
             return "";
-        } else if (obj.supported_features.indexOf("COLOR") > -1) {
+        } else if (obj.isSupported(Light.F_COLOR)) {
             return "qrc:/components/light/ui/CardColor.qml";
-        } else if (obj.supported_features.indexOf("BRIGHTNESS") > -1) {
+        } else if (obj.isSupported(Light.F_BRIGHTNESS)) {
             return "qrc:/components/light/ui/CardDimmable.qml";
         } else {
             return "qrc:/components/light/ui/CardSwitch.qml";
@@ -412,7 +414,7 @@ Rectangle {
         height: lightButton.height
         asynchronous: true
         active: lightButton.state == "open"
-        source: getSource() //lightButton.state != "open" ? "" : (obj.supported_features.indexOf("obj.brightness") > -1 ? "qrc:/components/light/CardDimmable.qml" : "qrc:/components/light/CardSwitch.qml")
+        source: getSource()
         opacity: cardLoader.status == Loader.Ready ? 1 : 0
 
         Behavior on opacity {

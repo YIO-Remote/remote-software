@@ -28,12 +28,14 @@
 #include <QtWebSockets/QWebSocket>
 #include <QtWebSockets/QWebSocketServer>
 #include <QCryptographicHash>
+#include <QLoggingCategory>
 
 #include "yioapiinterface.h"
 //#include "qzeroconf.h"
 #include "../qtzeroconf/qzeroconf.h"
 #include "config.h"
 #include "integrations/integrations.h"
+#include "logger.h"
 
 class YioAPI : public YioAPIInterface
 {
@@ -95,6 +97,7 @@ public slots:
     void onClientDisconnected();
 
 private:
+    QLoggingCategory             m_log;
     QWebSocketServer*            m_server;
     QMap<QWebSocket *, bool>     m_clients; // websocket client, true if authentication was successful
 

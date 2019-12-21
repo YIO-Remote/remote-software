@@ -1,13 +1,15 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
+import Entity.MediaPlayer 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: card
     width: parent.width
     height: parent.height
-    color: mediaplayerUtils.pixelColor == "#000000" ? colorDark : mediaplayerUtils.pixelColor
+    color: mediaplayerUtils.pixelColor === "#000000" ? colorDark : mediaplayerUtils.pixelColor
 
     Behavior on color {
         ColorAnimation { duration: 300 }
@@ -19,7 +21,7 @@ Rectangle {
 
     Connections {
         target: buttonHandler
-        enabled: mediaplayerButton.state == "open" ? true : false
+        enabled: mediaplayerButton.state === "open" ? true : false
 
         onButtonPress: {
             switch (button) {
@@ -52,7 +54,7 @@ Rectangle {
 
         onTriggered: {
             if (volumeUp) {
-                if (volume.state != "visible") {
+                if (volume.state !== "visible") {
                     volume.volumePosition = obj.volume;
                     volume.state = "visible";
                 }
@@ -61,7 +63,7 @@ Rectangle {
                 obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             } else {
-                if (volume.state != "visible") {
+                if (volume.state !== "visible") {
                     volume.volumePosition = obj.volume;
                     volume.state = "visible";
                 }
@@ -140,11 +142,11 @@ Rectangle {
 
     Component.onCompleted: {
         features.push("HOME");
-        if (obj.supported_features.indexOf("SEARCH") > -1)
+        if (obj.isSupported(MediaPlayer.F_SEARCH))
             features.push("SEARCH");
-        if (obj.supported_features.indexOf("LIST") > -1)
+        if (obj.isSupported(MediaPlayer.F_LIST))
             features.push("LIST");
-        if (obj.supported_features.indexOf("SPEAKER_CONTROL") > -1)
+        if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
             features.push("SPEAKER_CONTROL");
 
         cardRepeater.model = features;
@@ -177,6 +179,7 @@ Rectangle {
 
             Loader {
                 id: loader
+                active: SwipeView.isCurrentItem || SwipeView.isPreviousItem || SwipeView.isNextItem
                 asynchronous: true
                 sourceComponent: {
                     if (card.features.indexOf("SEARCH")-1 == index ) {
@@ -229,11 +232,11 @@ Rectangle {
         spacing: {
             var i = 0;
 
-            if (obj.isSupported("SEARCH"))
+            if (obj.isSupported(MediaPlayer.F_SEARCH))
                 i++;
-            if (obj.isSupported("LIST"))
+            if (obj.isSupported(MediaPlayer.F_LIST))
                 i++;
-            if (obj.isSupported("SPEAKER_CONTROL"))
+            if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
                 i++;
 
             if (i === 0)
@@ -273,7 +276,7 @@ Rectangle {
 
         // search
         Text {
-            visible: obj.isSupported("SEARCH") ? true : false
+            visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
             text: "\uE90C"
@@ -299,7 +302,7 @@ Rectangle {
 
         // playlists
         Text {
-            visible: obj.isSupported("LIST") ? true : false
+            visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
             text: "\uE907"
@@ -325,7 +328,7 @@ Rectangle {
 
         // speakers
         Text {
-            visible: obj.isSupported("SPEAKER_CONTROL") ? true : false
+            visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
             color: colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
             text: "\uE90D"

@@ -35,31 +35,105 @@ KeyboardLayout {
     keyWeight: 160
     KeyboardRow {
         Key {
-            key: Qt.Key_A
-            text: "a"
+            key: Qt.Key_0
+            text: "0"
         }
         Key {
-            key: Qt.Key_B
-            text: "b"
+            key: Qt.Key_1
+            text: "1"
         }
         Key {
-            key: Qt.Key_C
-            text: "c"
+            key: Qt.Key_2
+            text: "2"
         }
         Key {
-            key: Qt.Key_D
-            text: "d"
+            key: Qt.Key_3
+            text: "3"
+        }
+        Key {
+            key: Qt.Key_4
+            text: "4"
+        }
+        Key {
+            key: Qt.Key_5
+            text: "5"
+        }
+        Key {
+            key: Qt.Key_6
+            text: "6"
+        }
+        Key {
+            key: Qt.Key_7
+            text: "7"
+        }
+        Key {
+            key: Qt.Key_8
+            text: "8"
+        }
+        Key {
+            key: Qt.Key_9
+            text: "9"
+        }
+    }
+    KeyboardRow {
+        Key {
+            key: Qt.Key_Q
+            text: "q"
+        }
+        Key {
+            key: Qt.Key_W
+            text: "w"
         }
         Key {
             key: Qt.Key_E
             text: "e"
         }
         Key {
-            key: Qt.Key_F
-            text: "f"
+            key: Qt.Key_R
+            text: "t"
+        }
+        Key {
+            key: Qt.Key_T
+            text: "t"
+        }
+        Key {
+            key: Qt.Key_Y
+            text: "y"
+        }
+        Key {
+            key: Qt.Key_U
+            text: "u"
+        }
+        Key {
+            key: Qt.Key_I
+            text: "i"
+        }
+        Key {
+            key: Qt.Key_O
+            text: "o"
+        }
+        Key {
+            key: Qt.Key_P
+            text: "p"
         }
     }
     KeyboardRow {
+        Key {
+            key: Qt.Key_A
+            text: "a"
+        }
+        Key {
+            key: Qt.Key_S
+            text: "s"
+        }
+        Key {
+            key: Qt.Key_D
+            text: "d"
+        }
+        Key {
+            key: Qt.Key_F
+            text: "f"
+        }
         Key {
             key: Qt.Key_G
             text: "g"
@@ -67,10 +141,6 @@ KeyboardLayout {
         Key {
             key: Qt.Key_H
             text: "h"
-        }
-        Key {
-            key: Qt.Key_I
-            text: "i"
         }
         Key {
             key: Qt.Key_J
@@ -86,74 +156,50 @@ KeyboardLayout {
         }
     }
     KeyboardRow {
-        Key {
-            key: Qt.Key_M
-            text: "m"
+        HideKeyboardKey {
+            weight: 200
         }
         Key {
-            key: Qt.Key_N
-            text: "n"
-        }
-        Key {
-            key: Qt.Key_O
-            text: "o"
-        }
-        Key {
-            key: Qt.Key_P
-            text: "p"
-        }
-        Key {
-            key: Qt.Key_Q
-            text: "q"
-        }
-        Key {
-            key: Qt.Key_R
-            text: "r"
-        }
-        Key {
-            key: Qt.Key_S
-            text: "s"
-        }
-    }
-    KeyboardRow {
-        Key {
-            key: Qt.Key_T
-            text: "t"
-        }
-        Key {
-            key: Qt.Key_U
-            text: "u"
-        }
-        Key {
-            key: Qt.Key_V
-            text: "v"
-        }
-        Key {
-            key: Qt.Key_W
-            text: "w"
+            key: Qt.Key_Z
+            text: "z"
         }
         Key {
             key: Qt.Key_X
             text: "x"
         }
         Key {
-            key: Qt.Key_Y
-            text: "y"
+            key: Qt.Key_C
+            text: "c"
         }
         Key {
-            key: Qt.Key_Z
-            text: "z"
+            key: Qt.Key_V
+            text: "v"
         }
-    }
-    KeyboardRow {
-        ShiftKey {}
-        SymbolModeKey {
-            weight: 200
+        Key {
+            key: Qt.Key_B
+            text: "b"
+        }
+        Key {
+            key: Qt.Key_N
+            text: "n"
+        }
+        Key {
+            key: Qt.Key_M
+            text: "m"
         }
         BackspaceKey {
         }
-        HideKeyboardKey {
-            weight: 200
+    }
+    KeyboardRow {
+        SymbolModeKey {}
+        Key {
+            text: " "
+            displayText: "\u2423"
+            repeat: true
+            showPreview: false
+            key: Qt.Key_Space
+            weight: 300
         }
+        EnterKey {}
     }
 }

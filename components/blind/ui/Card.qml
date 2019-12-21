@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Entity.Blind 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -158,19 +160,11 @@ Rectangle {
         font {family: "Open Sans Regular"; pixelSize: 24 }
     }
 
-    function getFeature(feature) {
-        if (obj.supported_features.indexOf(feature) > -1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     BasicUI.CustomButton {
         anchors { left: parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonText: "   "
-        visible: getFeature("CLOSE");
+        visible: obj.isSupported(Blind.F_CLOSE)
 
         mouseArea.onClicked: {
             haptic.playEffect("click");
@@ -188,7 +182,7 @@ Rectangle {
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonText: "   "
-        visible: getFeature("STOP");
+        visible: obj.isSupported(Blind.F_STOP)
         mouseArea.onClicked: {
             haptic.playEffect("click");
             obj.stop()
@@ -205,7 +199,7 @@ Rectangle {
         anchors { right: parent.right; rightMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: colorText
         buttonText: "   "
-        visible: getFeature("OPEN");
+        visible: obj.isSupported(Blind.F_OPEN)
 
         mouseArea.onClicked: {
             haptic.playEffect("click");

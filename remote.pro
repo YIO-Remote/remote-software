@@ -35,10 +35,18 @@ HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
     sources/configinterface.h \
+    sources/entities/blindinterface.h \
+    sources/entities/entityinterface.h \
+    sources/entities/lightinterface.h \
+    sources/entities/mediaplayerinterface.h \
     sources/entities/remote.h \
+    sources/entities/weather.h \
+    sources/entities/weatherinterface.h \
     sources/fileio.h \
+    sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
+    sources/integrations/integrationinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/hardware/display_control.h \
@@ -49,15 +57,15 @@ HEADERS += \
     sources/hardware/interrupt_handler.h \
     sources/hardware/drv2605.h \
     sources/hardware/bq27441.h \
-    sources/integrations/integration.h \
     sources/entities/entities.h \
     sources/entities/entity.h \
-    sources/integrations/integrationinterface.h \
+    sources/integrations/plugininterface.h \
     sources/entities/entitiesinterface.h \
     sources/entities/entityinterface.h \
-    sources/entities/lightinterface.h \
     sources/entities/blindinterface.h \
+    sources/entities/lightinterface.h \
     sources/entities/mediaplayerinterface.h \
+    sources/entities/remoteinterface.h \
     sources/entities/light.h \
     sources/entities/blind.h \
     sources/notifications.h \
@@ -74,6 +82,7 @@ SOURCES += \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/remote.cpp \
+    sources/entities/weather.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
     sources/main.cpp \
@@ -111,6 +120,7 @@ lupdate_only{
 SOURCES = main.qml \
           MainContainer.qml \
           StandbyControl.qml \
+          ButtonHandler.qml \
           wifiSetup.qml \
           basic_ui/*.qml \
           basic_ui/pages/*.qml \
@@ -118,6 +128,7 @@ SOURCES = main.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \
           components/media_player/ui/*.qml \
+          components/weather/ui/*.qml \
           components/remote/ui/*.qml \
           components/media_player/ui/*.qml \
           sources/proximity_gesture_control.h
@@ -306,5 +317,3 @@ win32 {
 } else {
     error(unknown platform! Platform must be configured in remote.pro)
 }
-
-DISTFILES +=
