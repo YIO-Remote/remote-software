@@ -191,10 +191,15 @@ KeyboardLayout {
         }
     }
     KeyboardRow {
-        ShiftKey {}
-        SpaceKey {}
-        SymbolModeKey {
-            weight: 200
+        SymbolModeKey {}
+        Key {
+            text: " "
+            displayText: "\u2423"
+            repeat: true
+            showPreview: false
+            key: Qt.Key_Space
+            weight: 300
         }
+        EnterKey {}
     }
 }
