@@ -4,37 +4,37 @@
   <context>
     <name>Battery</name>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="54"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="76"/>
       <source>Battery</source>
       <translation>Batteri</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="75"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="97"/>
       <source>Battery health</source>
       <translation>Batteritilstand</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="111"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="133"/>
       <source>Screen on</source>
       <translation>Tændt skærm</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="139"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="161"/>
       <source>Screen off</source>
       <translation>Slukket skærm</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="176"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="198"/>
       <source>Battery level</source>
       <translation type="unfinished">Battery level</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="236"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="258"/>
       <source>Average power</source>
       <translation type="unfinished">Average power</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="312"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="334"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
       <translation type="unfinished">No data available yet</translation>
@@ -43,17 +43,17 @@
   <context>
     <name>Bluetooth</name>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="18"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
       <source>Bluetooth</source>
       <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
       <source>Area detection</source>
       <translation type="unfinished">Area detection</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
     </message>
@@ -61,37 +61,109 @@
   <context>
     <name>Button</name>
     <message>
-      <location filename="../components/blind/ui/Button.qml" line="372"/>
-      <location filename="../components/light/ui/Button.qml" line="370"/>
-      <location filename="../components/media_player/ui/Button.qml" line="343"/>
+      <location filename="../components/blind/ui/Button.qml" line="386"/>
+      <location filename="../components/light/ui/Button.qml" line="380"/>
+      <location filename="../components/weather/ui/Button.qml" line="340"/>
       <source>Remove from favorites</source>
       <translation>Fjern fra favoritter</translation>
     </message>
     <message>
-      <location filename="../components/blind/ui/Button.qml" line="372"/>
-      <location filename="../components/light/ui/Button.qml" line="370"/>
-      <location filename="../components/media_player/ui/Button.qml" line="343"/>
+      <location filename="../components/blind/ui/Button.qml" line="386"/>
+      <location filename="../components/light/ui/Button.qml" line="380"/>
+      <location filename="../components/weather/ui/Button.qml" line="340"/>
       <source>Add to favorites</source>
       <translation>Tilføj til favoritter</translation>
     </message>
   </context>
   <context>
+    <name>ButtonBase</name>
+    <message>
+      <location filename="../components/ButtonBase.qml" line="331"/>
+      <source>Remove from favorites</source>
+      <translation type="unfinished">Remove from favorites</translation>
+    </message>
+    <message>
+      <location filename="../components/ButtonBase.qml" line="331"/>
+      <source>Add to favorites</source>
+      <translation type="unfinished">Add to favorites</translation>
+    </message>
+  </context>
+  <context>
+    <name>CardPlaylists</name>
+    <message>
+      <location filename="../components/media_player/ui/CardPlaylists.qml" line="94"/>
+      <source>My playlists</source>
+      <translation type="unfinished">My playlists</translation>
+    </message>
+  </context>
+  <context>
+    <name>CardSearch</name>
+    <message>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="99"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="151"/>
+      <source>Search</source>
+      <translation type="unfinished">Search</translation>
+    </message>
+    <message>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="216"/>
+      <source>Recent searches</source>
+      <translation type="unfinished">Recent searches</translation>
+    </message>
+    <message>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="227"/>
+      <source>Clear</source>
+      <translation type="unfinished">Clear</translation>
+    </message>
+    <message>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="418"/>
+      <source>Albums</source>
+      <translation type="unfinished">Albums</translation>
+    </message>
+    <message>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="358"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="420"/>
+      <source>Tracks</source>
+      <translation type="unfinished">Tracks</translation>
+    </message>
+    <message>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="360"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="422"/>
+      <source>Artists</source>
+      <translation type="unfinished">Artists</translation>
+    </message>
+    <message>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="362"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="424"/>
+      <source>Playlists</source>
+      <translation type="unfinished">Playlists</translation>
+    </message>
+  </context>
+  <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="90"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="155"/>
       <source>% Charged</source>
       <translation>% Oladet</translation>
     </message>
   </context>
   <context>
+    <name>ContextMenu</name>
+    <message>
+      <location filename="../basic_ui/ContextMenu.qml" line="129"/>
+      <source>Cancel</source>
+      <translation type="unfinished">Cancel</translation>
+    </message>
+  </context>
+  <context>
     <name>Devices</name>
     <message>
-      <location filename="../basic_ui/settings/Devices.qml" line="17"/>
+      <location filename="../basic_ui/settings/Devices.qml" line="39"/>
       <source>Devices</source>
       <translation>Enheder</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Devices.qml" line="38"/>
+      <location filename="../basic_ui/settings/Devices.qml" line="60"/>
       <source>Add new</source>
       <translation>Tilføj ny</translation>
     </message>
@@ -99,27 +171,27 @@
   <context>
     <name>Display</name>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="18"/>
+      <location filename="../basic_ui/settings/Display.qml" line="40"/>
       <source>Display</source>
       <translation>Skærm</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="39"/>
+      <location filename="../basic_ui/settings/Display.qml" line="61"/>
       <source>Auto brightness</source>
       <translation>Automatisk lysstyrke</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="144"/>
+      <location filename="../basic_ui/settings/Display.qml" line="166"/>
       <source>Dark mode</source>
       <translation>Mørk tilstand</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="183"/>
+      <location filename="../basic_ui/settings/Display.qml" line="205"/>
       <source>Cleaning mode</source>
       <translation>Rengøringstilstand</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="198"/>
+      <location filename="../basic_ui/settings/Display.qml" line="220"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
       <translation>Tryk på skærmen i 10 sekunder for at deaktivere rengøringstilstand.</translation>
     </message>
@@ -127,53 +199,67 @@
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="61"/>
+      <location filename="../sources/entities/entities.h" line="112"/>
       <source>Lights</source>
       <translation>Lys</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="61"/>
+      <location filename="../sources/entities/entities.h" line="112"/>
       <source>Blinds</source>
       <translation>Rullegardiner</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="61"/>
+      <location filename="../sources/entities/entities.h" line="112"/>
       <source>Media</source>
       <translation type="unfinished">Media</translation>
     </message>
+    <message>
+      <location filename="../sources/entities/entities.h" line="112"/>
+      <source>Remote</source>
+      <translation type="unfinished">Remote</translation>
+    </message>
   </context>
   <context>
-    <name>Hubs</name>
+    <name>Favorites</name>
     <message>
-      <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
+      <location filename="../basic_ui/pages/Favorites.qml" line="30"/>
+      <source>Favorites</source>
+      <extracomment>Name of the settings page</extracomment>
+      <translation type="unfinished">Favorites</translation>
+    </message>
+  </context>
+  <context>
+    <name>Integrations</name>
+    <message>
+      <location filename="../basic_ui/settings/Integrations.qml" line="45"/>
       <source> - Disconnected</source>
       <translation type="unfinished"> - Disconnected</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
+      <location filename="../basic_ui/settings/Integrations.qml" line="146"/>
       <source>Connect</source>
       <translation type="unfinished">Connect</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
+      <location filename="../basic_ui/settings/Integrations.qml" line="182"/>
       <source>Disconnect</source>
       <translation type="unfinished">Disconnect</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
-      <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <location filename="../basic_ui/settings/Integrations.qml" line="212"/>
+      <source>Integrations</source>
+      <translation type="unfinished">Integrations</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
+      <location filename="../basic_ui/settings/Integrations.qml" line="253"/>
       <source>Add new</source>
-      <translation>Tilføj ny</translation>
+      <translation type="unfinished">Add new</translation>
     </message>
   </context>
   <context>
     <name>Languages</name>
     <message>
-      <location filename="../basic_ui/settings/Languages.qml" line="25"/>
+      <location filename="../basic_ui/settings/Languages.qml" line="47"/>
       <source>Languages</source>
       <translation>Sprog</translation>
     </message>
@@ -181,46 +267,51 @@
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="31"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Favoritter</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="31"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Settings</source>
       <translation>Indstillinger</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="32"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Lights</source>
       <translation>Lys</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="32"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Blinds</source>
       <translation>Gardiner</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <source>Media</source>
+      <translation type="unfinished">Media</translation>
     </message>
   </context>
   <context>
     <name>Network</name>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="60"/>
+      <location filename="../basic_ui/settings/Network.qml" line="56"/>
       <source>Network</source>
       <translation>Netværk</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="250"/>
+      <location filename="../basic_ui/settings/Network.qml" line="239"/>
       <source>Wi-Fi signal strength</source>
       <translation>Wi-Fi signalstyrke</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="287"/>
+      <location filename="../basic_ui/settings/Network.qml" line="276"/>
       <source>IP address</source>
       <translation>IP-adresse</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="323"/>
+      <location filename="../basic_ui/settings/Network.qml" line="312"/>
       <source>MAC address</source>
       <translation>MAC-adresse</translation>
     </message>
@@ -228,7 +319,7 @@
   <context>
     <name>Notification</name>
     <message>
-      <location filename="../basic_ui/Notification.qml" line="244"/>
+      <location filename="../basic_ui/Notification.qml" line="266"/>
       <source>Dismiss</source>
       <translation>Undlad</translation>
     </message>
@@ -236,7 +327,7 @@
   <context>
     <name>NotificationDrawer</name>
     <message>
-      <location filename="../basic_ui/NotificationDrawer.qml" line="16"/>
+      <location filename="../basic_ui/NotificationDrawer.qml" line="38"/>
       <source>Notifications</source>
       <translation>Notifikationer</translation>
     </message>
@@ -244,12 +335,12 @@
   <context>
     <name>PopupLowBattery</name>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="98"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="120"/>
       <source>Low battery</source>
       <translation>Lavt batteriniveau</translation>
     </message>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="113"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="135"/>
       <source>Please charge the remote soon</source>
       <translation>Oplad fjernbetjeningen snart</translation>
     </message>
@@ -257,51 +348,64 @@
   <context>
     <name>PowerSaving</name>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="17"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
       <source>Power saving</source>
       <translation>Energisparring</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="61"/>
       <source>Never turn off Wi-Fi</source>
       <translation>Sluk aldrig Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="61"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
       <translation>Slå Wi-Fi fra efter %1 minutters inaktivitet</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="119"/>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="234"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="150"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="274"/>
       <source>Never</source>
       <translation>Aldrig</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="132"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="163"/>
       <source>60 minutes</source>
       <translation>60 minutter</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="185"/>
       <source>Never turn off the remote</source>
       <translation>Sluk aldrig fjernbetjeningen</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="154"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="185"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
       <translation>Sluk fjernbetjeningen efter %1 timer inaktivitet</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="247"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="287"/>
       <source>8 hours</source>
       <translation>8 timer</translation>
     </message>
   </context>
   <context>
+    <name>Profiles</name>
+    <message>
+      <location filename="../basic_ui/Profiles.qml" line="94"/>
+      <source>Profiles</source>
+      <translation type="unfinished">Profiles</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/Profiles.qml" line="184"/>
+      <source>To edit your profiles, use the web configurator tool in settings.</source>
+      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+    </message>
+  </context>
+  <context>
     <name>ProximityGestureControl</name>
     <message>
-      <location filename="../sources/hardware/proximity_gesture_control.h" line="118"/>
+      <location filename="../sources/hardware/proximity_gesture_control.h" line="145"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
       <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
     </message>
@@ -309,13 +413,13 @@
   <context>
     <name>RemoteConfig</name>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="24"/>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="45"/>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="42"/>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="63"/>
       <source>Remote configuration</source>
       <translation type="unfinished">Remote configuration</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="80"/>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="98"/>
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
@@ -327,59 +431,61 @@
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/Settings.qml" line="34"/>
+      <location filename="../basic_ui/Settings.qml" line="56"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="32"/>
       <source>Settings</source>
+      <extracomment>Name of the settings page</extracomment>
       <translation>Indstillinger</translation>
     </message>
   </context>
   <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="19"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="41"/>
       <source>Software update</source>
       <translation>Softwareopdatering</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="40"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="62"/>
       <source>Auto update</source>
       <translation>Automatisk opdatering</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="94"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation type="unfinished">Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="119"/>
       <source>New software is available.
 YIO remote </source>
       <translation type="unfinished">New software is available.
 YIO remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="119"/>
       <source>Your software is up to date.</source>
       <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="136"/>
       <source>Installed version: YIO Remote </source>
       <translation type="unfinished">Installed version: YIO Remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="136"/>
       <source>YIO Remote </source>
       <translation type="unfinished">YIO Remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="151"/>
       <source>Update</source>
       <translation type="unfinished">Update</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="180"/>
       <source>Check for update</source>
       <translation type="unfinished">Check for update</translation>
     </message>
@@ -387,82 +493,56 @@ YIO remote </translation>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="37"/>
+      <location filename="../basic_ui/settings/System.qml" line="60"/>
       <source>System</source>
       <translation type="unfinished">System</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="58"/>
+      <location filename="../basic_ui/settings/System.qml" line="81"/>
       <source>Uptime</source>
       <translation>Oppetid</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="95"/>
+      <location filename="../basic_ui/settings/System.qml" line="118"/>
       <source>CPU temperature</source>
       <translation>CPU temperatur</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="131"/>
+      <location filename="../basic_ui/settings/System.qml" line="154"/>
       <source>Reboot</source>
       <translation>Genstart</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="146"/>
+      <location filename="../basic_ui/settings/System.qml" line="171"/>
       <source>Shutdown</source>
       <translation>Sluk</translation>
     </message>
   </context>
   <context>
-    <name>dashboard</name>
-    <message>
-      <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
-      <source>Favorites</source>
-      <extracomment>Name of the settings page</extracomment>
-      <translation>Favoritter</translation>
-    </message>
-  </context>
-  <context>
-    <name>homeassistant</name>
-    <message>
-      <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
-      <source>Failed to connect to Home Assistant.</source>
-      <translation type="unfinished">Failed to connect to Home Assistant.</translation>
-    </message>
-  </context>
-  <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="208"/>
+      <location filename="../main.qml" line="241"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
       <translation type="unfinished">New software version is available!</translation>
     </message>
   </context>
   <context>
-    <name>settings</name>
-    <message>
-      <location filename="../basic_ui/pages/settings.qml" line="10"/>
-      <source>Settings</source>
-      <extracomment>Name of the settings page</extracomment>
-      <translation>Indstillinger</translation>
-    </message>
-  </context>
-  <context>
     <name>wifiSetup</name>
     <message>
-      <location filename="../wifiSetup.qml" line="28"/>
+      <location filename="../wifiSetup.qml" line="53"/>
       <source>Wi-Fi setup</source>
       <translation type="unfinished">Wi-Fi setup</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="45"/>
+      <location filename="../wifiSetup.qml" line="71"/>
       <source>Connect to the Wi-Fi network
 </source>
       <translation type="unfinished">Connect to the Wi-Fi network
 </translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="62"/>
+      <location filename="../wifiSetup.qml" line="89"/>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
@@ -471,64 +551,65 @@ and navigate to
 yio.remote</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="77"/>
+      <location filename="../wifiSetup.qml" line="104"/>
       <source>Shutdown</source>
       <translation>Sluk</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="102"/>
+      <location filename="../wifiSetup.qml" line="131"/>
       <source>Connected</source>
       <translation type="unfinished">Connected</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="119"/>
+      <location filename="../wifiSetup.qml" line="148"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
       <translation type="unfinished">YIO Remote has successfully
 connected to your Wi-Fi network.</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="133"/>
-      <location filename="../wifiSetup.qml" line="271"/>
+      <location filename="../wifiSetup.qml" line="162"/>
+      <location filename="../wifiSetup.qml" line="302"/>
       <source>Next</source>
       <translation>Næste</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="152"/>
+      <location filename="../wifiSetup.qml" line="181"/>
       <source>Not connected</source>
       <translation type="unfinished">Not connected</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="169"/>
+      <location filename="../wifiSetup.qml" line="198"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
       <translation type="unfinished">YIO Remote could not
 connect to your Wi-Fi network.</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="186"/>
+      <location filename="../wifiSetup.qml" line="215"/>
       <source>Please try again</source>
       <translation>Prøv venligst igen</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="200"/>
+      <location filename="../wifiSetup.qml" line="229"/>
       <source>Try again</source>
       <translation>Prøv igen</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="254"/>
+      <location filename="../wifiSetup.qml" line="284"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
       <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
     </message>
     <message>
-      <location filename="../wifiSetup.qml" line="290"/>
-      <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="325"/>
+      <location filename="../wifiSetup.qml" line="314"/>
+      <location filename="../wifiSetup.qml" line="369"/>
       <source>Reboot</source>
       <translation>Genstart</translation>
+    </message>
+    <message>
+      <location filename="../wifiSetup.qml" line="334"/>
+      <source>Wi-Fi setup completed</source>
+      <translation type="unfinished">Wi-Fi setup completed</translation>
     </message>
   </context>
 </TS>
