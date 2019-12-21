@@ -80,12 +80,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Verwijder uit favorieten</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Toevoegen aan favorieten</translation>
     </message>
   </context>
   <context>
@@ -93,7 +93,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="94"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Mijn afspeellijsten</translation>
     </message>
   </context>
   <context>
@@ -102,41 +102,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="99"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="151"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Zoeken</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="216"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Recente zoekopdrachten</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="227"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Wissen</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="418"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Albums</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="358"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="420"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Nummers</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="360"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="422"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Artiesten</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="362"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="424"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Afspeellijsten</translation>
     </message>
   </context>
   <context>
