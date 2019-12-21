@@ -1,0 +1,54 @@
+{
+    "systemservice": {
+        "systemd": {
+            "sudo" : false,
+            "timeout" : 30000,
+            "services": {
+                "wifi": "wpa_supplicant@wlan0.service",
+                "dns": "systemd-resolved.service",
+                "webserver": "lighttpd.service",
+                "ntp": "systemd-timesyncd.service",
+                "dhcp": "dhcpcd.service",
+                "shutdown": "shutdown.service",
+                "yio-update": "update.service",
+                "zeroconf": "avahi-daemon",
+                "networking": "systemd-networkd"
+            }
+        }
+    },
+    "wifi": {
+        "maxScanResults": 20,
+        "joinRetryCount": 5,
+        "joinRetryDelay": 3000,
+        "pollInterval": 20000,
+        "useShellScript": false,
+        "interface": {
+            "wpa_supplicant" : {
+                "socketPath": "/var/run/wpa_supplicant/wlan0",
+                "removeNetworksBeforeJoin": false
+            },
+            "shellScript": {
+                "sudo": false,
+                "timeout": 30000,
+                "clearNetworks": "",
+                "connect": "/usr/bin/yio-remote/wifi_network_create.sh",
+                "listNetworks": "/usr/bin/yio-remote/wifi_network_list.sh",
+                "startAP": "/usr/bin/yio-remote/reset-wifi.sh",
+                "getSSID": "/usr/bin/yio-remote/wifi_ssid.sh",
+                "getIP": "/usr/bin/yio-remote/wifi_ip.sh",
+                "getMAC": "cat /sys/class/net/wlan0/address",
+                "getRSSI": "/usr/bin/yio-remote/wifi_rssi.sh"
+            }
+        },
+        "accessPoint": {
+            "TODO": true
+        }
+    },
+    "webserver" : {
+        "lighttpd" : {
+            "configFile": "/etc/lighttpd/lighttpd.conf",
+            "wifiSetupConfig": "/etc/lighttpd/lighttpd-wifisetup.conf",
+            "webConfiguratorConfig": "/etc/lighttpd/lighttpd-config.conf"
+        }
+    }
+}

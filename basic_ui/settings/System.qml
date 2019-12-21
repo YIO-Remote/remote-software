@@ -43,6 +43,7 @@ Item {
         triggeredOnStart: true
 
         onTriggered: {
+            // TODO create a device class instead of launching hard coded shell scripts from QML
             uptimeValue.text = settingsLauncher.launch("/usr/bin/yio-remote/uptime.sh").trim();
             temperatureValue.text = Math.round(parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp"))/1000) + "ºC";
         }
@@ -157,8 +158,10 @@ Item {
             anchors.leftMargin: (parent.width - (buttonReboot.width + buttonShutdown.width + 40))/2
 
             mouseArea.onClicked: {
+                // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
                 settingsLauncher.launch("fbv -d 1 /bye.png")
                 console.debug("now reboot")
+                // TODO create a device class for system reboot instead of launching hard coded shell scripts from QML
                 settingsLauncher.launch("reboot");
             }
         }

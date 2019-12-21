@@ -22,7 +22,9 @@
  #############################################################################/
 
 QT += qml quick websockets quickcontrols2 bluetooth
-CONFIG += c++11 disable-desktop qtquickcompiler
+CONFIG += c++14 disable-desktop
+# disable qtquickcompiler for QML debugging!
+CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -57,6 +59,22 @@ HEADERS += \
     sources/hardware/interrupt_handler.h \
     sources/hardware/drv2605.h \
     sources/hardware/bq27441.h \
+    sources/hardware/hardwarefactory.h \
+    sources/hardware/hardwarefactory_mock.h \
+    sources/hardware/hw_config.h \
+    sources/hardware/systemd.h \
+    sources/hardware/systemservice.h \
+    sources/hardware/systemservice_mock.h \
+    sources/hardware/systemservice_name.h \
+    sources/hardware/webserver_control.h \
+    sources/hardware/webserver_lighttpd.h \
+    sources/hardware/webserver_mock.h \
+    sources/hardware/wifi_control.h \
+    sources/hardware/wifi_mock.h \
+    sources/hardware/wifi_network.h \
+    sources/hardware/wifi_security.h \
+    sources/hardware/wifi_signal.h \
+    sources/hardware/wifi_status.h \
     sources/entities/entities.h \
     sources/entities/entity.h \
     sources/integrations/plugininterface.h \
@@ -91,6 +109,16 @@ SOURCES += \
     sources/hardware/display_control.cpp \
     sources/hardware/drv2605.cpp \
     sources/hardware/bq27441.cpp \
+    sources/hardware/hardwarefactory.cpp \
+    sources/hardware/hardwarefactory_mock.cpp \
+    sources/hardware/systemd.cpp \
+    sources/hardware/systemservice.cpp \
+    sources/hardware/systemservice_mock.cpp \
+    sources/hardware/webserver_control.cpp \
+    sources/hardware/webserver_lighttpd.cpp \
+    sources/hardware/webserver_mock.cpp \
+    sources/hardware/wifi_control.cpp \
+    sources/hardware/wifi_mock.cpp \
     sources/entities/entities.cpp \
     sources/entities/entity.cpp \
     sources/entities/light.cpp \
@@ -101,19 +129,55 @@ SOURCES += \
     sources/utils.cpp \
     sources/yioapi.cpp
 
-equals(QT_ARCH, arm): {
-    HEADERS += \
-        sources/hardware/apds9960.h \
-        sources/hardware/mcp23017.h
-
-    SOURCES += \
-        sources/hardware/apds9960.cpp
-}
-
 RESOURCES += qml.qrc \
     images.qrc \
     keyboard.qrc \
     translations.qrc
+
+# === platform specific devices =======================================
+linux {
+    USE_WPA_SUPPLICANT = y
+
+    # TODO simplify defines
+    equals(USE_WPA_SUPPLICANT, y): {
+        DEFINES += CONFIG_WPA_SUPPLICANT \
+            CONFIG_CTRL_IFACE=1 \
+            CONFIG_CTRL_IFACE_UNIX=1
+
+        INCLUDEPATH += wpa_supplicant/src wpa_supplicant/src/utils
+
+        HEADERS += \
+            sources/hardware/wifi_wpasupplicant.h
+
+        SOURCES += \
+            sources/hardware/wifi_wpasupplicant.cpp \
+            wpa_supplicant/src/common/wpa_ctrl.c \
+            wpa_supplicant/src/utils/os_unix.c
+
+    } else {
+        HEADERS +=
+            sources/hardware/wifi_mock.h
+        SOURCES +=
+            sources/hardware/wifi_mock.cpp
+    }
+
+    HEADERS += \
+        sources/hardware/wifi_shellscripts.h \
+        sources/hardware/hardwarefactory_rpi0.h
+    SOURCES += \
+        sources/hardware/wifi_shellscripts.cpp \
+        sources/hardware/hardwarefactory_rpi0.cpp
+
+    equals(QT_ARCH, arm): {
+        HEADERS += \
+            sources/hardware/apds9960.h \
+            sources/hardware/mcp23017.h
+
+        SOURCES += \
+            sources/hardware/apds9960.cpp
+    }
+
+}
 
 # === start TRANSLATION section =======================================
 lupdate_only{
@@ -248,7 +312,7 @@ targetPlugins.path = $$target.path/plugins
 win32 {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -268,7 +332,7 @@ win32 {
 } else:linux {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -293,7 +357,7 @@ win32 {
     }
 
 } else:macx {
-    APP_QML_FILES.files = $$PWD/config.json $$PWD/translations.json
+    APP_QML_FILES.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
@@ -317,3 +381,4 @@ win32 {
 } else {
     error(unknown platform! Platform must be configured in remote.pro)
 }
+

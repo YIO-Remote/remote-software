@@ -67,6 +67,7 @@ Item {
                 id: step1
                 color: colorText
                 opacity: 0.5
+                // TODO read apssid from WifiControl instance once implemented
                 text: qsTr("Connect to the Wi-Fi network\n") + fileio.read("/apssid").trim() + translateHandler.emptyString
                 horizontalAlignment: Text.AlignHCenter
                 anchors {
@@ -84,6 +85,7 @@ Item {
                 id: step2
                 color: colorText
                 opacity: 0.5
+                // TODO read hostname from WifiControl or configuration once implemented
                 text: qsTr("Open a web browser\nand navigate to\nyio.remote") + translateHandler.emptyString
                 horizontalAlignment: Text.AlignHCenter
                 anchors {
@@ -105,8 +107,10 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 mouseArea.onClicked: {
+                    // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("fbv -d 1 /bye.png")
                     buttonHandler.interruptHandler.shutdown();
+                    // TODO create a system device class for shutdown instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("halt");
                 }
             }
@@ -229,7 +233,8 @@ Item {
 
                     mouseArea.onClicked: {
                         swipeView.currentIndex = 0;
-                        mainLauncher.launch("/usr/bin/yio-remote/reset-wifi.sh")
+                        wifi.clearConfiguredNetworks()
+                        wifi.startAccessPoint()
                         firstSetupCheck.start();
                     }
                 }
@@ -313,6 +318,7 @@ Item {
                 anchors.leftMargin: 20
 
                 mouseArea.onClicked: {
+                    // TODO create a system device class for reboot instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("reboot");
                 }
             }
@@ -366,7 +372,9 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 mouseArea.onClicked: {
+                    // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("fbv -d 1 /bye.png")
+                    // TODO create a system device class for reboot instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("reboot");
                 }
             }
@@ -380,7 +388,12 @@ Item {
         interval: 2000
 
         onTriggered: {
+            // /firstsetup marker file is created by first-time-setup/wifi_network_setup.sh which is called from wifi.php after the user entered network information
             if (fileio.exists("/firstsetup")) {
+                console.debug("WifiSetup: initiating firstsetup");
+                // FIXME refactor captive portal and either use existing web-socket communication or create a REST API.
+                //       Until this is done we have to re-initialize WifiControl to make sure the wpa_ctrl interface is re-attached after the external restart.
+                wifi.reset()
                 checkWifi.start();
                 this.stop();
             }
@@ -394,14 +407,15 @@ Item {
         interval: 10000
 
         onTriggered: {
-            var wifiSuccess = mainLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();
-            var ssid = fileio.read("/ssid").trim();
-            if (wifiSuccess == ssid) {
+            if (wifi.isConnected()) {
+                console.debug("WifiSetup: connected to network " + wifi.getCurrentSSID());
+                // FIXME Bluetooth credential handling
                 msg = fileio.read("/wificred");
                 msg += "\"remote_id\":\"" + api.hostname + "\"}";
                 failurePage.visible = false;
                 successPage.visible = true;
             } else {
+                console.debug("WifiSetup: could not connect to network!");
                 failurePage.visible = true;
                 successPage.visible = false;
             }
@@ -415,6 +429,7 @@ Item {
     Connections {
         target: bluetoothArea
         onDockFound: {
+            console.debug("WifiSetup: Dock found! Sending credentials...");
             // show dock page
             bluetoothArea.sendInfoToDock(msg);
         }

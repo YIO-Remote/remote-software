@@ -32,10 +32,6 @@ Item {
     width: parent.width
     height: header.height + section.height + 20
 
-    Launcher {
-        id: remoteConfigLauncher
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DISPLAY
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,10 +81,10 @@ Item {
             checked: false
             mouseArea.onClicked: {
                 if (remoteConfigButton.checked) {
-                    remoteConfigLauncher.launch("systemctl start lighttpd.service");
+                    webserver.startService();
                     remoteConfigButton.checked = true;
                 } else {
-                    remoteConfigLauncher.launch("systemctl stop lighttpd.service");
+                    webserver.stopService();
                     remoteConfigButton.checked = false;
                 }
             }

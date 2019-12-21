@@ -31,7 +31,7 @@ BluetoothArea::BluetoothArea(QObject *parent) : QObject(parent)
 BluetoothArea::~BluetoothArea() {
     if (m_thread.isRunning()) {
         m_thread.exit();
-        m_thread.wait();
+        m_thread.wait(5000);
     }
 }
 
@@ -139,6 +139,8 @@ BluetoothThread::BluetoothThread(QMap<QString, QString> areas, int interval)
         qDebug() << "Bluetooth init OK";
 
     } else {
+        qCritical() << "Bluetooth device was not found.";
+        // TODO translate Bluetooth notification
         Notifications::getInstance()->add(true,"Bluetooth device was not found.");
     }
 }

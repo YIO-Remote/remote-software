@@ -75,6 +75,7 @@ public:
     {
         wiringPiSetup();
 
+        // TODO make i2c device configurable
         bus = wiringPiI2CSetupInterface("/dev/i2c-3", MCP23017_ADDRESS);
 
         // set up all inputs on both ports

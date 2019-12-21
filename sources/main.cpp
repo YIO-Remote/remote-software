@@ -32,14 +32,15 @@
 #include "jsonfile.h"
 #include "translation.h"
 
+#include "hardware/hardwarefactory.h"
 #include "hardware/display_control.h"
 #include "hardware/touchdetect.h"
 #include "hardware/interrupt_handler.h"
 #include "hardware/drv2605.h"
 #include "hardware/bq27441.h"
 #include "hardware/proximity_gesture_control.h"
+#include "hardware/wifi_control.h"
 
-//#include "integrations/integrationinterface.h"
 #include "integrations/integrations.h"
 #include "entities/entities.h"
 
@@ -111,6 +112,25 @@ int main(int argc, char *argv[])
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
+    qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum", "Not creatable as it is an enum type");
+    qRegisterMetaType<SystemServiceName>("SystemServiceName");
+    qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork", "Not creatable as it is an information object only");
+    qmlRegisterUncreatableType<WifiSecurityEnum>("WifiControl", 1, 0, "WifiSecurityEnum", "Not creatable as it is an enum type");
+    qRegisterMetaType<WifiSecurity>("WifiSecurity");
+    qmlRegisterUncreatableType<SignalStrengthEnum>("WifiControl", 1, 0, "SignalStrengthEnum", "Not creatable as it is an enum type");
+    qRegisterMetaType<SignalStrength>("SignalStrength");
+
+    // DRIVERS
+    QString hwConfigPath = appPath;
+    if (QFile::exists("/mnt/boot/hardware.json")) {
+        hwConfigPath = "/mnt/boot";
+    }
+    HardwareFactory *hwFactory = HardwareFactory::build(hwConfigPath + "/hardware.json");
+    WifiControl* wifiControl = hwFactory->getWifiControl();
+    engine.rootContext()->setContextProperty("wifi", wifiControl);
+    WebServerControl* webServerControl = hwFactory->getWebServerControl();
+    engine.rootContext()->setContextProperty("webserver", webServerControl);
+
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
     engine.rootContext()->setContextProperty("bluetoothArea", &bluetoothArea);
@@ -131,6 +151,11 @@ int main(int argc, char *argv[])
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
+    // TODO put initialization into factory
+    if (!wifiControl->init()) {
+        notifications.add(true, QObject::tr("WiFi device was not found."));
+    }
+
     // FILE IO
     FileIO fileIO;
     engine.rootContext()->setContextProperty("fileio", &fileIO);
@@ -145,8 +170,20 @@ int main(int argc, char *argv[])
     engine.addImportPath("qrc:/");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
+    if (engine.rootObjects().isEmpty()) {
         return -1;
+    }
+
+    // FIXME move initialization code to a device driver factory
+    QObject* standbyControl = config.getQMLObject("standbyControl");
+    if (standbyControl == nullptr) {
+        qCritical() << "Error looking up QML object:" << "standbyControl";
+    } else {
+        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
+        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
+        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
+        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
+    }
 
     return app.exec();
 }

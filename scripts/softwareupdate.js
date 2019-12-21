@@ -1,4 +1,5 @@
 function checkForUpdate() {
+    // TODO create a update service device class instead of launching hard coded shell scripts from QML
     var response = mainLauncher.launch("curl -L https://api.github.com/repos/martonborzak/yio-remote/releases/latest");
     var obj = JSON.parse(response);
     if (obj.tag_name >= _current_version + 0.1) {
