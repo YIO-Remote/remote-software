@@ -51,7 +51,7 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
     QString entityId = config.value("entity_id").toString();
     setObjectName(entityId);
 
-    QStringList f = Config::getInstance()->getProfileFavorites();
+    QStringList f = Config::getInstance()->profileFavorites();
     m_favorite = f.contains(entityId);
 }
 

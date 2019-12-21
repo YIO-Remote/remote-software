@@ -38,19 +38,19 @@ class Config : public QObject, ConfigInterface
     Q_INTERFACES(ConfigInterface)
 
 public:
-    Q_PROPERTY (QVariantMap      config         READ config               WRITE setConfig       NOTIFY configChanged)
-    Q_PROPERTY (QString          profile        READ profile              WRITE setProfile      NOTIFY profileChanged)
-    Q_PROPERTY (QVariantMap      settings       READ getSettings          WRITE setSettings     NOTIFY settingsChanged)
-    Q_PROPERTY (QVariantMap      integrations   READ getIntegrations                            CONSTANT)
-    Q_PROPERTY (QVariantMap      entities       READ getAllEntities                             CONSTANT)
-    Q_PROPERTY (QVariantMap      profiles       READ getProfiles                                NOTIFY profilesChanged)
-    Q_PROPERTY (QVariantMap      ui_config      READ getUIConfig                                NOTIFY uiConfigChanged)
-    Q_PROPERTY (QVariantMap      pages          READ getPages                                   NOTIFY pagesChanged)
-    Q_PROPERTY (QVariantMap      groups         READ getGroups                                  NOTIFY groupsChanged)
+    Q_PROPERTY (QVariantMap      config             READ config               WRITE setConfig       NOTIFY configChanged)
+    Q_PROPERTY (QString          profile            READ profile              WRITE setProfile      NOTIFY profileChanged)
+    Q_PROPERTY (QStringList      profileFavorites   READ profileFavorites                           NOTIFY profileFavoritesChanged)
+    Q_PROPERTY (QVariantMap      settings           READ getSettings          WRITE setSettings     NOTIFY settingsChanged)
+    Q_PROPERTY (QVariantMap      integrations       READ getIntegrations                            CONSTANT)
+    Q_PROPERTY (QVariantMap      entities           READ getAllEntities                             CONSTANT)
+    Q_PROPERTY (QVariantMap      profiles           READ getProfiles                                NOTIFY profilesChanged)
+    Q_PROPERTY (QVariantMap      ui_config          READ getUIConfig          WRITE setUIConfig     NOTIFY uiConfigChanged)
+    Q_PROPERTY (QVariantMap      pages              READ getPages                                   NOTIFY pagesChanged)
+    Q_PROPERTY (QVariantMap      groups             READ getGroups                                  NOTIFY groupsChanged)
 
     Q_INVOKABLE void readConfig(QString path);
     Q_INVOKABLE void writeConfig();
-    Q_INVOKABLE void writeConfig(const bool sync);
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
@@ -68,20 +68,15 @@ public:
     }
 
     // Assuming that the following config items are accessed quite often they are cached
-    QVariantMap getSettings() {
-        return m_cacheSettings;
-    }
+    QVariantMap getSettings() { return m_cacheSettings; }
 
-    void setSettings(const QVariantMap& config) {
-        m_config.insert("settings", config);
-        m_cacheSettings = config;
-        emit settingsChanged();
-        writeConfig(false);
-    }
+    void setSettings(const QVariantMap& config);
 
     QVariantMap getUIConfig() {
         return m_cacheUIConfig;
     }
+    void setUIConfig(const QVariantMap& config);
+
     QVariantMap getProfiles() {
         return m_cacheUIProfiles;
     }
@@ -105,7 +100,7 @@ public:
     Q_INVOKABLE QVariantMap getProfile() {
         return m_cacheUIProfile;
     }
-    Q_INVOKABLE QStringList getProfileFavorites() {
+    Q_INVOKABLE QStringList profileFavorites() {
         return m_cacheUIProfile.value("favorites").toStringList();
     }
     Q_INVOKABLE QStringList getProfilePages() {
@@ -116,40 +111,18 @@ public:
     Q_INVOKABLE void setFavorite (const QString& entityId, bool value);
 
 
-    QVariantMap config()
-    {
-        return m_config;
-    }
-    void setConfig(const QVariantMap& config)
-    {
-        m_config = config;
-        syncCache();
-        emit configChanged();
-    }
-    QVariant getContextProperty (const QString& name)
-    {
-        return m_engine->rootContext()->contextProperty(name);
-    }
+    QVariantMap config() { return m_config; }
+    void setConfig(const QVariantMap& config);
+
+    QVariant getContextProperty (const QString& name);
 
     // get a QML object, you need to have objectName property of the QML object set to be able to use this
     QObject *getQMLObject(QList<QObject*> nodes,const QString &name);
     QObject *getQMLObject(const QString &name);
 
     // profile
-    QString profile()
-    {
-        return m_cacheProfile;
-    }
-
-    void setProfile(QString id)
-    {
-        QVariantMap p = getUIConfig();
-        p.insert("selected_profile", id);
-        m_config.insert("ui_config", p);
-
-        writeConfig();
-        emit profileChanged();
-    }
+    QString profile() { return m_cacheProfile; }
+    void setProfile(QString id);
 
 public:
     explicit Config(QQmlApplicationEngine *engine = nullptr, QString path = "");
@@ -161,6 +134,7 @@ public:
 signals:
     void configChanged();
     void profileChanged();
+    void profileFavoritesChanged();
     void settingsChanged();
     void profilesChanged();
     void uiConfigChanged();
@@ -168,7 +142,8 @@ signals:
     void groupsChanged();
 
 private:
-    void syncCache ();
+    void syncConfigToCache      ();
+    void syncCacheToConfig      ();
 
     static Config*              s_instance;
     QQmlApplicationEngine*      m_engine;

@@ -255,7 +255,7 @@ ApplicationWindow {
         }
 
         // change dark mode to the configured value
-        darkMode = Qt.binding(function () { return config.ui_config.darkmode});
+        darkMode = Qt.binding(function () { return config.ui_config.darkmode });
         standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
@@ -268,7 +268,7 @@ ApplicationWindow {
 
 
         // set the language
-        translateHandler.selectLanguage(config.language);
+        translateHandler.selectLanguage(config.settings.language);
 
         // load bluetooth
         bluetoothArea.init(config.config);
