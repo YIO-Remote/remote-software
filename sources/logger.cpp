@@ -26,7 +26,7 @@
 #include "config.h"
 
 Logger*     Logger::s_instance          = nullptr;
-QStringList Logger::s_msgTypeString     = { "DEBUG", "WARN", "CRIT", "FATAL", "INFO" };      // parallel to QMsgType
+QStringList Logger::s_msgTypeString     = { "DEBUG", "WARN ", "CRIT ", "FATAL", "INFO " };      // parallel to QMsgType
 QtMsgType   Logger::s_msgTypeSorted[]   = { QtDebugMsg, QtInfoMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg }; // sorted by severity
 
 Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSource, int queueSize, int purgeHours, QObject *parent) :
@@ -36,7 +36,7 @@ Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSou
     m_queueEnabled(false),
     m_showSource(showSource),
     m_maxQueueSize(queueSize),
-    m_directory(path + "/log"),
+    m_directory(path),
     m_file(nullptr)
 {
     s_instance = this;
@@ -159,7 +159,7 @@ void Logger::processMessage  (QtMsgType type,  const char* category, const char*
         QString sourcePosition;
         if (m_showSource && source != nullptr)
             sourcePosition = QString("%1:%2").arg(source).arg(line);
-        QDateTime dt = QDateTime::currentDateTime();
+        QDateTime dt = QDateTime::currentDateTimeUtc();
         SMessage message(type, dt.toTime_t(), cat, msg, sourcePosition);
         if (m_debugEnabled)
             writeDebug(message);
@@ -189,10 +189,15 @@ void Logger::writeFile   (SMessage& message, const QDateTime& dt)
         m_file->setFileName(path);
         m_file->open(QIODevice::Append | QIODevice::Text);
     }
-    QString msg = QString("%1 %2 %3 %4 %5\n\r").arg(dt.toString("dd.MM.yyyy hh:mm:ss")).arg(s_msgTypeString[message.type]).arg(message.category).arg(message.message).arg(message.sourcePosition);
+    QString msg = QString("%1 %2 %3 %4 %5")
+            .arg(dt.toString("dd.MM.yyyy hh:mm:ss"))
+            .arg(s_msgTypeString[message.type])
+            .arg(message.category)
+            .arg(message.message)
+            .arg(message.sourcePosition);
     QTextStream out (m_file);
     out.setCodec("UTF-8");
-    out << msg;
+    out << msg << endl;
 }
 
 void Logger::writeQueue  (SMessage& message)
