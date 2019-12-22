@@ -58,9 +58,11 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
 Entity::~Entity()
 {
 }
+
 void Entity::command(int command, const QVariant& param)
 {
-    m_integrationObj->sendCommand(m_type, entity_id(), command, param);
+    if (m_integrationObj)
+        m_integrationObj->sendCommand(m_type, entity_id(), command, param);
 }
 
 bool Entity::update(const QVariantMap &attributes)

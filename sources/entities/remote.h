@@ -28,6 +28,7 @@
 #include <QVariant>
 #include "entity.h"
 #include "remoteinterface.h"
+#include "../logger.h"
 
 class Remote : public Entity, RemoteInterface
 {
@@ -103,6 +104,8 @@ private:
     static QMetaEnum    s_metaEnumState;
 
     QVariantList        m_commands;
+
+    QLoggingCategory    m_log;
 
 };
 

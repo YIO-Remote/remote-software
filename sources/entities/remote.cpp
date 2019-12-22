@@ -63,7 +63,6 @@ void Remote::pause()
 
 void Remote::playToggle()
 {
-    qDebug() << "POWERTOGGLE";
     command(RemoteDef::C_PLAYTOGGLE, "");
 }
 
@@ -176,6 +175,7 @@ void Remote::powerOff()
 
 void Remote::powerToggle()
 {
+    qCDebug(m_log) << "POWERTOGGLE";
     command(RemoteDef::C_POWER_TOGGLE, "");
 }
 
@@ -222,13 +222,15 @@ void Remote::muteToggle()
 }
 
 Remote::Remote(QObject *parent) :
-    Entity (Type, QVariantMap(), nullptr, parent)
+    Entity (Type, QVariantMap(), nullptr, parent),
+    m_log("REMOTE ENTITY")
 {
 
 }
 
 Remote::Remote(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
-    Entity (Type, config, integrationObj, parent)
+    Entity (Type, config, integrationObj, parent),
+    m_log("REMOTE ENTITY")
 {
     staticInitialize();
 
