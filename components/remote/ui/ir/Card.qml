@@ -45,21 +45,25 @@ Rectangle {
             switch (button) {
             case "volume up":
                 if (obj.isSupported(Remote.F_VOLUME_UP)) {
+                    console.debug("REMOTE VOLUME UP");
                     obj.volumeUp();
                 }
                 break;
             case "volume down":
                 if (obj.isSupported(Remote.F_VOLUME_DOWN)) {
+                    console.debug("REMOTE VOLUME DOWN");
                     obj.volumeDown();
                 }
                 break;
             case "channel up":
                 if (obj.isSupported(Remote.F_CHANNEL_UP)) {
+                    console.debug("REMOTE CHANNEL UP");
                     obj.channelUp();
                 }
                 break;
             case "channel down":
                 if (obj.isSupported(Remote.F_CHANNEL_DOWN)) {
+                    console.debug("REMOTE CHANNEL DOWN");
                     obj.channelDown();
                 }
                 break;

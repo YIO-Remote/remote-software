@@ -182,11 +182,13 @@ void Remote::powerToggle()
 // tuner commands
 void Remote::channelUp()
 {
+    qCDebug(m_log) << "CHANNEL_UP";
     command(RemoteDef::C_CHANNEL_UP, "");
 }
 
 void Remote::channelDown()
 {
+    qCDebug(m_log) << "CHANNEL_DOWN";
     command(RemoteDef::C_CHANNEL_DOWN, "");
 }
 
@@ -208,11 +210,13 @@ void Remote::guide()
 // volume commands
 void Remote::volumeUp()
 {
+    qCDebug(m_log) << "VOLUME_UP";
     command(RemoteDef::C_VOLUME_UP, "");
 }
 
 void Remote::volumeDown()
 {
+    qCDebug(m_log) << "VOLUME_DOWN";
     command(RemoteDef::C_VOLUME_DOWN, "");
 }
 
