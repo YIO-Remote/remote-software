@@ -19,7 +19,7 @@ If you found a bug in the YIO Remote app, please file a report in [our issue tra
 Please choose the appropriate issue template and fill in all the fields to help us understand the issue.
 
 ## Feature requests
-xxx
+Feature requests are welcome. But take a moment to find out whether your idea fits with the scope and aims of the project. It's up to you to make a strong case to convince the project's developers of the merits of this feature. Please provide as much detail and context as possible. We encourage you to discuss you ideas also on [our forum](https://community.yio-remote.com/c/feature-requests).
 
 ## Documentation
 If you'd like to contribute to the YIO documentation, head over to [the documentation repository wiki](https://github.com/YIO-Remote/documentation/wiki) and create issues or pull requests there.
