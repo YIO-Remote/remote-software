@@ -80,12 +80,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Verwijder uit favorieten</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Toevoegen aan favorieten</translation>
     </message>
   </context>
   <context>
@@ -93,7 +93,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="94"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Mijn afspeellijsten</translation>
     </message>
   </context>
   <context>
@@ -102,41 +102,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="99"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="151"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Zoeken</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="216"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Recente zoekopdrachten</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="227"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Wissen</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="418"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Albums</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="358"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="420"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Nummers</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="360"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="422"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Artiesten</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="362"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="424"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Afspeellijsten</translation>
     </message>
   </context>
   <context>
@@ -152,7 +152,7 @@
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="129"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Annuleren</translation>
     </message>
   </context>
   <context>
@@ -216,7 +216,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="112"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Afstandsbediening</translation>
     </message>
   </context>
   <context>
@@ -225,7 +225,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="30"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favorieten</translation>
     </message>
   </context>
   <context>
@@ -233,27 +233,27 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="45"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Verbinding verbroken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="146"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Verbinden</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="182"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Verbinding verbreken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="212"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integraties</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="253"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Nieuwe toevoegen</translation>
     </message>
   </context>
   <context>
@@ -290,7 +290,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
   </context>
   <context>
@@ -394,12 +394,12 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profielen</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="184"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Gebruik de web configuratie tool onder settings om uw profielen te bewerken.</translation>
     </message>
   </context>
   <context>
