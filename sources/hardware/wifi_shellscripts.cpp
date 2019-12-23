@@ -105,7 +105,7 @@ bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSe
 bool WifiShellScripts::isConnected()
 {
     FileIO fileIO;
-    return ssid() == fileIO.read("/ssid").trimmed();
+    return wifiStatus().name() == fileIO.read("/ssid").trimmed();
 }
 
 void WifiShellScripts::startNetworkScan()
@@ -166,31 +166,26 @@ QList<WifiNetwork> WifiShellScripts::parseScanresult(const QString& buffer) {
 void WifiShellScripts::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
+
+    if (!(m_wifiStatusScanning || m_signalStrengthScanning)) {
+        return;
+    }
+
+    int rssi = launch(m_scriptGetRssi).toInt();
+
     if (m_wifiStatusScanning) {
         QString ssid = launch(m_scriptGetSsid);
-        if (ssid != m_wifiStatus.name) {
-            m_wifiStatus.name = ssid;
-            emit networkNameChanged("dummy");
-        }
-
         QString ipAddress = launch(m_scriptGetIp);
-        if (ipAddress != m_wifiStatus.ipAddress) {
-            m_wifiStatus.ipAddress = ipAddress;
-            emit ipAddressChanged(ipAddress);
-        }
-
         QString macAddress = launch(m_scriptGetMac);
-        if (macAddress != m_wifiStatus.macAddress) {
-            m_wifiStatus.macAddress = macAddress;
-            emit macAddressChanged(macAddress);
-        }
+
+        m_wifiStatus = WifiStatus(ssid, "", ipAddress, macAddress, rssi);
+        emit wifiStatusChanged(m_wifiStatus);
     }
 
     if (m_signalStrengthScanning) {
-        int value = launch(m_scriptGetRssi).toInt();
-        if (value != m_wifiStatus.signalStrength) {
-            m_wifiStatus.signalStrength = value;
-            emit signalStrengthChanged(value);
+        if (rssi != m_wifiStatus.rssi()) {
+            m_wifiStatus.setRssi(rssi);
+            emit signalStrengthChanged(rssi);
         }
     }
 }

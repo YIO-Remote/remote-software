@@ -243,7 +243,7 @@ private:
      */
     bool saveConfiguration(bool resetCfgIfFailed = true);
 
-    virtual void timerEvent(QTimerEvent *event) override;
+    void timerEvent(QTimerEvent *event) override;
 
     /**
      * Handle for lower layer wpa_ctrl

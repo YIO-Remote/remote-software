@@ -86,31 +86,6 @@ bool WifiMock::isConnected()
     return rand() % 2 == 0;
 }
 
-QString WifiMock::macAddress() const
-{
-    qCDebug(CLASS_LC) << "macAddress";
-    return "de:ad:be:ef:00:00";
-}
-
-QString WifiMock::ssid() const
-{
-    qCDebug(CLASS_LC) << "ssid";
-    return "WiFi Mock";
-}
-
-int WifiMock::signalStrength() const
-{
-    qCDebug(CLASS_LC) << "signalStrength";
-
-    return -70 + qrand() % 9;
-}
-
-QString WifiMock::ipAddress() const
-{
-    qCDebug(CLASS_LC) << "ipAddress";
-    return "127.0.0.1";
-}
-
 void WifiMock::startNetworkScan()
 {
     qCDebug(CLASS_LC) << "startNetworkScan";
@@ -139,13 +114,16 @@ void WifiMock::setCountryCode(QString &countryCode) {
     m_countryCode = countryCode;
 }
 
+WifiStatus WifiMock::wifiStatus() const
+{
+    return WifiStatus { "WiFi Mock", "", "127.0.0.1",  "de:ad:be:ef:00:00", -70 + qrand() % 9 };
+}
+
 void WifiMock::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
     if (m_wifiStatusScanning) {
-        emit ipAddressChanged("foo");
-        emit macAddressChanged("bar");
-        emit networkNameChanged("dummy");
+        emit wifiStatusChanged(wifiStatus());
     }
 
     if (m_signalStrengthScanning) {

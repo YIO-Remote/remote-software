@@ -29,9 +29,14 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "WifiCtrl");
 
 WifiControl::WifiControl(QObject* parent)
     : QObject(parent)
+    , m_wifiStatus(WifiStatus())
     , m_scanStatus(Idle)
+    , m_scanResults(QList<WifiNetwork>())
+    , m_signalStrengthScanning(false)
+    , m_wifiStatusScanning(false)
     , m_maxScanResults(HW_DEF_WIFI_SCAN_RESULTS)
     , m_pollInterval(HW_DEF_WIFI_POLL_INTERVAL)
+    , m_timerId(0)
     , m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY)
     , m_networkJoinRetryDelay(HW_DEF_WIFI_JOIN_DELAY)
 {
@@ -87,24 +92,9 @@ void WifiControl::setConnected(bool connected)
     // TODO emit signal on connection status change?
 }
 
-QString WifiControl::macAddress() const
+WifiStatus WifiControl::wifiStatus() const
 {
-    return m_wifiStatus.macAddress;
-}
-
-QString WifiControl::ssid() const
-{
-    return m_wifiStatus.name;
-}
-
-int WifiControl::signalStrength() const
-{
-    return m_wifiStatus.signalStrength;
-}
-
-QString WifiControl::ipAddress() const
-{
-    return m_wifiStatus.ipAddress;
+    return m_wifiStatus;
 }
 
 WifiControl::ScanStatus WifiControl::scanStatus() const
@@ -205,6 +195,7 @@ void WifiControl::stopWifiStatusScanning()
 void WifiControl::startScanTimer()
 {
     if (m_timerId == 0) {
+        qCDebug(CLASS_LC) << "Starting scan timer with interval:" << m_pollInterval;
         m_timerId = startTimer(m_pollInterval);
     }
 }
@@ -212,6 +203,7 @@ void WifiControl::startScanTimer()
 void WifiControl::stopScanTimer()
 {
     if (m_timerId > 0) {
+        qCDebug(CLASS_LC) << "Stopping scan timer";
         killTimer(m_timerId);
         m_timerId = 0;
     }

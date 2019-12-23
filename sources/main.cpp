@@ -119,6 +119,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<WifiSecurity>("WifiSecurity");
     qmlRegisterUncreatableType<SignalStrengthEnum>("WifiControl", 1, 0, "SignalStrengthEnum", "Not creatable as it is an enum type");
     qRegisterMetaType<SignalStrength>("SignalStrength");
+    qmlRegisterUncreatableType<WifiStatus>("WifiControl", 1, 0, "WifiStatus", "Not creatable as it is an information object only");
+    qRegisterMetaType<WifiStatus>("WifiStatus");
 
     // DRIVERS
     QString hwConfigPath = appPath;

@@ -23,6 +23,8 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 
+import WifiControl 1.0
+
 Item {
     width: parent.width
     height: header.height + section.height + 20
@@ -45,6 +47,10 @@ Item {
         wifiNetworkSelected = wifiNetworks[buttonId].name;
         wifiSwipeview.currentIndex += 1;
         popup.height = 200;
+    }
+
+    Component.onCompleted: {
+        wifi.networksFound.connect(addNetworks);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +87,7 @@ Item {
             Text {
                 id: wifiSSIDText
                 color: colorText
-                text: wifi.ssid
+                text: wifi.wifiStatus.name
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
@@ -105,10 +111,8 @@ Item {
                         flowWifiList.children[k-1].destroy();
                     }
 
+                    // emits networksFound! See above's Component.onCompleted
                     wifi.startNetworkScan()
-                    // FIXME add handler: act on signal when scanning is finished
-                    // add wifi networks to the list
-                    addNetworks();
 
                     // open popup that displays the list
                     popup.open();
@@ -118,6 +122,7 @@ Item {
         }
 
 
+        // FIXME create an escape functionality. User is stuck in the popup :(
         Popup {
             id: popup
             x: 0
@@ -250,7 +255,7 @@ Item {
         Text {
             id: wifiSignalValue
             color: colorText
-            text: wifi.signalStrength
+            text: wifi.wifiStatus.rssi
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -286,7 +291,7 @@ Item {
 
         Text {
             color: colorText
-            text: wifi.ipAddress
+            text: wifi.wifiStatus.ipAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -322,7 +327,7 @@ Item {
 
         Text {
             color: colorText
-            text: wifi.macAddress
+            text: wifi.wifiStatus.macAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20

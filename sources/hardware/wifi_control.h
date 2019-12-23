@@ -41,11 +41,7 @@ class WifiControl : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString countryCode            READ countryCode       WRITE setCountryCode)
-    // TODO do we need individual properties or would WifiStatus class be better?
-    Q_PROPERTY(QString ssid                   READ ssid              NOTIFY networkNameChanged)
-    Q_PROPERTY(QString macAddress             READ macAddress        NOTIFY macAddressChanged)
-    Q_PROPERTY(QString ipAddress              READ ipAddress         NOTIFY ipAddressChanged)
-    Q_PROPERTY(int signalStrength             READ signalStrength    NOTIFY signalStrengthChanged)
+    Q_PROPERTY(WifiStatus wifiStatus          READ wifiStatus        NOTIFY wifiStatusChanged)
     Q_PROPERTY(ScanStatus scanStatus          READ scanStatus        NOTIFY scanStatusChanged)
     Q_PROPERTY(QVariantList networkScanResult READ networkScanResult NOTIFY networksFound)
 
@@ -115,10 +111,7 @@ public:
      */
     virtual void setCountryCode(QString &countryCode) = 0;
 
-    virtual QString macAddress() const;
-    virtual QString ssid() const;
-    virtual int signalStrength() const;
-    virtual QString ipAddress() const;
+    virtual WifiStatus wifiStatus() const;
     virtual ScanStatus scanStatus() const;
     QList<WifiNetwork>& scanResult();
 
@@ -143,10 +136,11 @@ public:
     void setNetworkJoinRetryDelay(int msDelay);
 
 signals:
-    // TODO do we need individual signals or simply use wifiStatusChanged?
-    void networkNameChanged(QString ssid);
-    void macAddressChanged(QString macAddress);
-    void ipAddressChanged(QString ipAddress);
+    /**
+     * @brief wifiStatusChanged Notifies that the client status was updated
+     * @param wifiStatus Client WiFi status information
+     */
+    void wifiStatusChanged(WifiStatus wifiStatus);
 
     /**
      * @brief Notifies that the signal strength of the connected network changed

@@ -48,10 +48,7 @@ public:
 
     virtual QString countryCode() override;
     virtual void setCountryCode(QString &countryCode) override;
-    virtual QString macAddress() const override;
-    virtual QString ssid() const override;
-    virtual int signalStrength() const override;
-    virtual QString ipAddress() const override;
+    virtual WifiStatus wifiStatus() const override;
 
 public slots:
     virtual void on() override;

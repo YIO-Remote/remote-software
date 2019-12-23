@@ -99,9 +99,9 @@ QDebug operator<<(QDebug debug, const WifiStatus& wifiStatus)
 {
     QDebugStateSaver saver(debug);
     debug.nospace() << "("
-                    << "ssid: " << wifiStatus.name << ", "
-                    << "ip: " << wifiStatus.ipAddress  << ", "
-                    << "mac: " << wifiStatus.macAddress
+                    << "ssid: " << wifiStatus.name() << ", "
+                    << "ip: " << wifiStatus.ipAddress()  << ", "
+                    << "mac: " << wifiStatus.macAddress()
                     << ")";
     return debug;
 }
@@ -109,7 +109,7 @@ QDebug operator<<(QDebug debug, const WifiStatus& wifiStatus)
 bool WifiWpaSupplicant::init()
 {
     if (!m_ctrl) {
-        qCDebug(CLASS_LC) << "initializing driver...";
+        qCDebug(CLASS_LC) << "Initializing driver...";
 
         if (!connectWpaControlSocket()) {
             return false;
@@ -132,8 +132,6 @@ bool WifiWpaSupplicant::init()
 
 void WifiWpaSupplicant::on()
 {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-
     p_systemService->startService(SystemServiceName::WIFI);
     checkConnection();
     startScanTimer();
@@ -141,8 +139,6 @@ void WifiWpaSupplicant::on()
 
 void WifiWpaSupplicant::off()
 {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-
     stopScanTimer();
 
     // TODO what about wpa_supplicant TERMINATE command? Or does that interfere with systemd service auto restart?
@@ -338,7 +334,6 @@ bool WifiWpaSupplicant::writeWepKey(const QString& networkId, const QString& val
 
 void WifiWpaSupplicant::startNetworkScan()
 {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     controlRequest("SCAN");
 }
 
@@ -346,10 +341,11 @@ QList<WifiNetwork>& WifiWpaSupplicant::scanForAvailableNetworks(int timeout)
 {
     QEventLoop loop;
     QTimer timeoutTimer;
-    connect(this, SIGNAL(networksFound()), &loop, SLOT(quit()));
+    connect(this, SIGNAL(networksFound(const QList<WifiNetwork>&)), &loop, SLOT(quit()));
     connect(&timeoutTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
     timeoutTimer.start(timeout);
-    loop.exec(); //blocks untill either theSignalToWaitFor or timeout was fired
+    controlRequest("SCAN");
+    loop.exec(); //blocks until either networksFound or timeout was fired
 
     return scanResult();
 }
@@ -449,7 +445,6 @@ bool WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& networ
 
 /****************************************************************************/
 bool WifiWpaSupplicant::connectWpaControlSocket() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     m_ctrl = wpa_ctrl_open(m_wpaSupplicantSocketPath.toStdString().c_str());
     if (!m_ctrl) {
         qCCritical(CLASS_LC) << "wpa_ctrl_open() failed. Errno:" << errno;
@@ -504,7 +499,6 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
 void WifiWpaSupplicant::controlEvent(int fd) {
     Q_UNUSED(fd)
 
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     char buf[256] = {};
     while (wpa_ctrl_pending(m_ctrl) > 0) {
         auto buf_len = sizeof(buf) - 1;
@@ -517,15 +511,12 @@ void WifiWpaSupplicant::controlEvent(int fd) {
 /****************************************************************************/
 
 void WifiWpaSupplicant::parseEvent(char* msg) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-
-    // skip priority
+    // skip leading priority field
     char* pos = msg;
-    int priority = 2;
 
     if (*pos == '<') {
         pos++;
-        priority = atoi(pos);
+        // int priority = atoi(pos);
         pos = strchr(pos, '>');
         if (pos) {
             pos++;
@@ -533,41 +524,25 @@ void WifiWpaSupplicant::parseEvent(char* msg) {
             pos = msg;
         }
     }
-    Q_UNUSED(priority)
 
     QString event = QString::fromLocal8Bit(pos);
+    qCDebug(CLASS_LC) << "Event:" << event;
 
     if (event.startsWith(WPA_CTRL_REQ)) {
-        qCDebug(CLASS_LC) << " interactive authentication request";
         processCtrlReq(event);
     } else if (event.startsWith(WPA_EVENT_SCAN_RESULTS)) {
-        qCDebug(CLASS_LC) << " scan_results available!";
         setScanStatus(ScanOk);
         readScanResults();
     } else if (event.startsWith(WPA_EVENT_SCAN_STARTED)) {
-        qCDebug(CLASS_LC) << "scan started!";
         setScanStatus(Scanning);
     } else if (event.startsWith(WPA_EVENT_SCAN_FAILED)) {
-        qCDebug(CLASS_LC) << "scan failed!";
         setScanStatus(ScanFailed);
     } else if (event.startsWith(WPA_EVENT_CONNECTED)) {
-        qCDebug(CLASS_LC) << " connected!";
         setConnected(true);
-    } else if (event.startsWith(WPS_EVENT_AP_AVAILABLE_PBC)) {
-        qCDebug(CLASS_LC) << " WPS PBC available!";
-    } else if (event.startsWith(WPA_EVENT_NETWORK_NOT_FOUND)) {
-        qCDebug(CLASS_LC) << " network not found!";
-        // signal?
     } else if (event.startsWith(WPA_EVENT_DISCONNECTED)) {
-        qCDebug(CLASS_LC) << " disconnected!";
         setConnected(false);
     } else if (event.startsWith(WPA_EVENT_TERMINATING)) {
-        qCDebug(CLASS_LC) << " terminated!";
         setConnected(false);
-    } else if (event.startsWith(WPS_EVENT_ACTIVE)) {
-        qCDebug(CLASS_LC) << " Push button Configuration active!";
-    } else {
-        qCDebug(CLASS_LC) << " event:" << event;
     }
 }
 
@@ -626,8 +601,6 @@ void WifiWpaSupplicant::authenticationResponse(const QString& type, int networkI
 
 /****************************************************************************/
 void WifiWpaSupplicant::readScanResults() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-
     // Note: the simple all-in-one "SCAN_RESULTS" command might fail if there are too many networks! (response buffer too small)
     // Therefore we are using individual "BSS <networkid>" calls.
     m_scanResults.clear();
@@ -751,7 +724,8 @@ QList<WifiNetwork> &WifiWpaSupplicant::getConfiguredNetworks()
 WifiStatus WifiWpaSupplicant::parseStatus(const char* buffer) {
     QString results(buffer);
     auto lines = results.splitRef("\n");
-    WifiStatus wifiStatus { "", "", "", "" };
+    QString  name, bssid, ip, mac;
+    bool connected = false;
 
     for (int i = 0; i < lines.length(); i++) {
         int pos = lines[i].indexOf("=");
@@ -759,20 +733,20 @@ WifiStatus WifiWpaSupplicant::parseStatus(const char* buffer) {
             auto key = lines[i].left(pos);
             auto value = lines[i].mid(pos + 1);
             if ("bssid" == key) {
-                wifiStatus.bssid = value.toString();
+                bssid = value.toString();
             } else if ("ssid" == key) {
-                wifiStatus.name = value.toString();
+                name = value.toString();
             } else if ("ip_address" == key) {
-                wifiStatus.ipAddress = value.toString();
+                ip = value.toString();
             } else if ("address" == key) {
-                wifiStatus.macAddress = value.toString();
+                mac = value.toString();
             } else if ("wpa_state" == key) {
-                wifiStatus.connected = value == "COMPLETED";
+                connected = value == "COMPLETED";
             }
         }
     }
 
-    return wifiStatus;
+    return WifiStatus { name, bssid, ip, mac, -100, connected };
 }
 
 // code based on WpaGui::updateSignalMeter()
@@ -801,7 +775,7 @@ bool WifiWpaSupplicant::checkConnection()
     }
 
     WifiStatus wifiStatus = parseStatus(buf);
-    setConnected(wifiStatus.connected);
+    setConnected(wifiStatus.isConnected());
     return true;
 }
 
@@ -832,31 +806,23 @@ void WifiWpaSupplicant::timerEvent(QTimerEvent *event)
     if (m_wifiStatusScanning) {
         if (controlRequest("STATUS", buf, WPA_BUF_SIZE)) {
             WifiStatus wifiStatus = parseStatus(buf);
+            qCDebug(CLASS_LC) << "wifiStatus:" << wifiStatus;
 
-            if (wifiStatus.name != m_wifiStatus.name) {
-                emit networkNameChanged(wifiStatus.name);
-            }
+            emit wifiStatusChanged(wifiStatus);
 
-            if (wifiStatus.ipAddress != m_wifiStatus.ipAddress) {
-                emit ipAddressChanged(wifiStatus.ipAddress);
-            }
-
-            if (wifiStatus.macAddress != m_wifiStatus.macAddress) {
-                emit macAddressChanged(wifiStatus.macAddress);
-            }
             // HACK clean up WifiStatus
-            int oldSignalStrength = m_wifiStatus.signalStrength;
+            int oldSignalStrength = m_wifiStatus.rssi();
             m_wifiStatus = wifiStatus;
-            m_wifiStatus.signalStrength = oldSignalStrength;
-            setConnected(m_wifiStatus.connected);
+            m_wifiStatus.setRssi(oldSignalStrength);
+            setConnected(m_wifiStatus.isConnected());
         }
     }
 
     if (m_signalStrengthScanning) {
         if (controlRequest("SIGNAL_POLL", buf, WPA_BUF_SIZE)) {
             int value = parseSignalStrength(buf);
-            if (value != m_wifiStatus.signalStrength) {
-                m_wifiStatus.signalStrength = value;
+            if (value != m_wifiStatus.rssi()) {
+                m_wifiStatus.setRssi(value);
                 emit signalStrengthChanged(value);
             }
         }
