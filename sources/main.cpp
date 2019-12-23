@@ -89,13 +89,13 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("config", &config);
 
     // LOGGER
-    QMap<QString, QVariant> logCfg = config.getSettings().value("logging").toMap();
-    Logger logger(logCfg.value("path", appPath + "/log").toString(),
-                  logCfg.value("level", "WARN").toString(),
-                  logCfg.value("console", true).toBool(),
-                  logCfg.value("showSource", true).toBool(),
-                  logCfg.value("queueSize", 100).toInt(),
-                  logCfg.value("purgeHours", 72).toInt());
+    QVariantMap logCfg = config.getSettings().value("logging").toMap();
+    Logger logger(logCfg.value("path").toString(),
+                  logCfg.value("level").toString(),
+                  logCfg.value("console").toBool(),
+                  logCfg.value("showSource").toBool(),
+                  logCfg.value("queueSize").toInt(),
+                  logCfg.value("purgeHours").toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
 
