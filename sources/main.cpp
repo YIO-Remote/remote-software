@@ -90,12 +90,20 @@ int main(int argc, char *argv[])
 
     // LOGGER
     QVariantMap logCfg = config.getSettings().value("logging").toMap();
-    Logger logger(logCfg.value("path", appPath + "/log").toString(),
-                       logCfg.value("level", "WARN").toString(),
-                       logCfg.value("console", true).toBool(),
-                       logCfg.value("showSource", true).toBool(),
-                       logCfg.value("queueSize", 100).toInt(),
-                       logCfg.value("purgeHours", 72).toInt());
+    // "path" cfg logic:
+    //   - key not set or "." => <application_path>/log
+    //   - "" (empty)         => no log file
+    //   - <otherwise>        => absolute directory path (e.g. "/var/log")
+    QString path = logCfg.value("path", ".").toString();
+    if (path == ".") {
+        path = appPath + "/log";
+    }
+    Logger logger(path,
+                  logCfg.value("level", "WARN").toString(),
+                  logCfg.value("console", true).toBool(),
+                  logCfg.value("showSource", true).toBool(),
+                  logCfg.value("queueSize", 100).toInt(),
+                  logCfg.value("purgeHours", 72).toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
 
