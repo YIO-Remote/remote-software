@@ -346,8 +346,8 @@ void YioAPI::processMessage(QString message)
                 // enable logger target, default is queue
                 if (logTarget == "file")
                     logger->setFileEnabled(true);
-                else if (logTarget == "debug")
-                    logger->setDebugEnabled(true);
+                else if (logTarget == "console")
+                    logger->setConsoleEnabled(true);
                 else
                     logger->setQueueEnabled(true);
             }
@@ -355,8 +355,8 @@ void YioAPI::processMessage(QString message)
                 // edisable logger queue target, default is queue
                 if (logTarget == "file")
                     logger->setFileEnabled(false);
-                else if (logTarget == "debug")
-                    logger->setDebugEnabled(false);
+                else if (logTarget == "console")
+                    logger->setConsoleEnabled(false);
                 else
                     logger->setQueueEnabled(false);
             }

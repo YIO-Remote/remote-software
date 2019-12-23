@@ -89,7 +89,21 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("config", &config);
 
     // LOGGER
-    Logger logger(appPath + "/log", QtDebugMsg, true, true);
+    QVariantMap logCfg = config.getSettings().value("logging").toMap();
+    // "path" cfg logic:
+    //   - key not set or "." => <application_path>/log
+    //   - "" (empty)         => no log file
+    //   - <otherwise>        => absolute directory path (e.g. "/var/log")
+    QString path = logCfg.value("path", ".").toString();
+    if (path == ".") {
+        path = appPath + "/log";
+    }
+    Logger logger(path,
+                  logCfg.value("level", "WARN").toString(),
+                  logCfg.value("console", true).toBool(),
+                  logCfg.value("showSource", true).toBool(),
+                  logCfg.value("queueSize", 100).toInt(),
+                  logCfg.value("purgeHours", 72).toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
 

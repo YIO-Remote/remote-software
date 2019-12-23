@@ -44,7 +44,7 @@ public:
     Q_PROPERTY  (int        logLevel            READ logLevel       WRITE setLogLevel)      // default log level
     Q_PROPERTY  (bool       fileEnabled         READ fileEnabled    WRITE setFileEnabled)
     Q_PROPERTY  (bool       queueEnabled        READ queueEnabled   WRITE setQueueEnabled)
-    Q_PROPERTY  (bool       debugEnabled        READ debugEnabled   WRITE setDebugEnabled)
+    Q_PROPERTY  (bool       consoleEnabled      READ consoleEnabled WRITE setConsoleEnabled)
     Q_PROPERTY  (bool       showSourcePos       READ showSourcePos  WRITE setShowSourcePos)
 
     // write log functions intended for QML
@@ -70,12 +70,12 @@ public:
     Q_INVOKABLE void        purgeFiles          (int purgeHours);
 
     // path :       directory for log file, if empty no log file
-    // logLevel :   default log level, will be overwritten by config setting.log
+    // logLevel :   default log level
     // debug :      output to QtCreator DEBUG
     // showSource : show qDebug ... source and line
     // queueSize :  maximum Queue size
     // purgeHours : purge at start
-    explicit Logger (const QString& path, QtMsgType logLevel = QtDebugMsg, bool debug = true, bool showSource = false, int queueSize = 100, int purgeHours = 12, QObject *parent = nullptr);
+    explicit Logger (const QString& path, QString logLevel = "DEBUG", bool console = true, bool showSource = false, int queueSize = 100, int purgeHours = 12, QObject *parent = nullptr);
     ~Logger();
 
     QtMsgType           logLevel            ()                          { return m_logLevel; }
@@ -84,8 +84,8 @@ public:
     void                setFileEnabled      (bool value)                { m_fileEnabled = value; }
     bool                queueEnabled        ()                          { return m_queueEnabled; }
     void                setQueueEnabled     (bool value)                { m_queueEnabled = value; }
-    bool                debugEnabled        ()                          { return m_debugEnabled; }
-    void                setDebugEnabled     (bool value)                { m_debugEnabled = value; }
+    bool                consoleEnabled        ()                          { return m_consoleEnabled; }
+    void                setConsoleEnabled   (bool value)                { m_consoleEnabled = value; }
     bool                showSourcePos       ()                          { return m_showSource; }
     void                setShowSourcePos    (bool value)                { m_showSource = value; }
     static Logger*      getInstance         ()                          { return s_instance; }
@@ -123,7 +123,7 @@ private:
     void            processMessage          (QtMsgType type,  const char* category, const char* source, int line, const QString& msg, bool writeanyHow = false);
     void            writeFile               (SMessage& message, const QDateTime& dt);
     void            writeQueue              (SMessage& message);
-    void            writeDebug              (SMessage& message);
+    void            writeConsole            (SMessage& message);
 
     static void     messageOutput           (QtMsgType type, const QMessageLogContext& context, const QString& msg);
     static quint16  logLevelToMask          (QtMsgType logLevel);
@@ -135,9 +135,9 @@ private:
     QHash<QString, SCategory*>  m_categories;       // categories
     QtMsgType                   m_logLevel;         // overall log level
     quint16                     m_logLevelMask;     // overall log level mask, required because QtMsgType has strange sorting
-    bool                        m_debugEnabled;     // output to debugger console
-    bool                        m_fileEnabled;      // output to debugger console
-    bool                        m_queueEnabled;     // output to debugger console
+    bool                        m_consoleEnabled;   // output to console
+    bool                        m_fileEnabled;      // output to log file
+    bool                        m_queueEnabled;     // output to queue for JSON API
     bool                        m_showSource;       // Show source file and line
     int                         m_lastHour;         // Every hour we create a new file
     int                         m_maxQueueSize;     // Maximum Queue size

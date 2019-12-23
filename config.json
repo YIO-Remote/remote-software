@@ -291,7 +291,15 @@
         "softwareupdate": false,
         "wifitime": 240,
         "bluetootharea": false,
-        "paired_dock": "YIO-Dock-30AEA4D73C34"
+        "paired_dock": "YIO-Dock-30AEA4D73C34",
+        "logging": {
+            "path": ".",
+            "level": "INFO",
+            "console": true,
+            "showSource": true,
+            "queueSize": 100,
+            "purgeHours": 72
+        }
     },
     "ui_config": 
     {
