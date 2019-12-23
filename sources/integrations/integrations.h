@@ -29,6 +29,7 @@
 #include <QtDebug>
 
 #include "integrationsinterface.h"
+#include "integrationinterface.h"
 #include "plugininterface.h"
 
 class Integrations : public QObject, IntegrationsInterface
@@ -37,6 +38,13 @@ class Integrations : public QObject, IntegrationsInterface
     Q_INTERFACES(IntegrationsInterface)
 
 public:
+    enum States {
+        CONNECTED = IntegrationInterface::CONNECTED,
+        CONNECTING = IntegrationInterface::CONNECTING,
+        DISCONNECTED = IntegrationInterface::DISCONNECTED
+    };
+    Q_ENUM(States)
+
     // list of all integrations
     Q_PROPERTY  (QList<QObject *>       list                    READ    list         NOTIFY     listChanged)
 

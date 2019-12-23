@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("config", &config);
 
     // LOGGER
-    Logger logger(appPath, QtDebugMsg, true, true);
+    Logger logger(appPath + "/log", QtDebugMsg, true, true);
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
 
@@ -141,6 +141,7 @@ int main(int argc, char *argv[])
 
     // INTEGRATIONS
     Integrations integrations(&engine, appPath);
+    qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations", "Not creatable, only used for enum."); // Make integration state available in QML
     engine.rootContext()->setContextProperty("integrations", &integrations);
 
     // ENTITIES
