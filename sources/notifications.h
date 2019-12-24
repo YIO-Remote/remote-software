@@ -29,11 +29,25 @@
 #include <QMap>
 
 #include "notificationsinterface.h"
+#include "logger.h"
+
+class Notification
+{
+public:
+    explicit Notification(int id, bool type, QString text, QString actionLabel, void (*action)(), QVariant timestamp, QVariant* param);
+
+    int             m_id;
+    bool            m_type;
+    QString         m_text;
+    QString         m_actionLabel;
+    void            (*m_action)();
+    QVariant        m_timestamp;
+    QVariant*       m_param;
+};
 
 class Notifications : public QObject, NotificationsInterface
 {
     Q_OBJECT
-//    Q_PLUGIN_METADATA(IID "YIO.NotificationsInterface")
     Q_INTERFACES(NotificationsInterface)
 
     // list of all notifications
@@ -41,6 +55,8 @@ class Notifications : public QObject, NotificationsInterface
     Q_PROPERTY  (bool                    isThereError    READ    isThereError   NOTIFY errorChanged)
 
 public:
+    explicit Notifications(QQmlApplicationEngine *engine = nullptr);
+
     // get all notifications
     QVariantList                list            ();
 
@@ -48,20 +64,16 @@ public:
     bool                        isThereError    ();
 
     // add notification
-    Q_INVOKABLE void            add             (const bool &type, const QString &text, const QString &actionlabel, const QVariant &action);
-    Q_INVOKABLE void            add             (const bool &type, const QString &text);
-    Q_INVOKABLE void            add             (const QString &text);
+    Q_INVOKABLE void            add             (const bool &type, const QString &text, const QString &actionlabel, void (*f)(), QVariant* param) override;
+    Q_INVOKABLE void            add             (const bool &type, const QString &text) override;
+    Q_INVOKABLE void            add             (const QString &text) override;
 
     // remove notification
-    Q_INVOKABLE void            remove          (const int id);
-    Q_INVOKABLE void            remove          (const QString &text);
+    Q_INVOKABLE void            remove          (const int id) override;
+    Q_INVOKABLE void            remove          (const QString &text) override;
 
-    // check if there's an error notification
-//    Q_INVOKABLE bool            isThereError    ();
-
-
-    explicit Notifications(QQmlApplicationEngine *engine = nullptr);
-    virtual ~Notifications();
+    // execute function
+    Q_INVOKABLE void            execute         (const int id);
 
     static Notifications*       getInstance     ()
     { return s_instance; }
@@ -71,14 +83,14 @@ signals:
     void errorChanged();
 
 private:
-    QVariantList                m_notifications;
     int                         m_id = 0;
+    QMap<int, Notification*>     m_notifications;
 
     static Notifications*       s_instance;
     QQmlApplicationEngine*      m_engine;
+    QLoggingCategory            m_log;
 
     void                        show            (const int id);
-
 };
 
 #endif // NOTIFICATIONS_H
