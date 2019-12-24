@@ -79,8 +79,8 @@ int main(int argc, char *argv[])
 
     // Determine configuration path
     QString configPath = appPath;
-    if (QFile::exists("/mnt/boot/config.json")) {
-        configPath = "/mnt/boot";
+    if (QFile::exists("/boot/config.json")) {
+        configPath = "/boot";
     }
     engine.rootContext()->setContextProperty("configPath", configPath);
 
@@ -138,8 +138,8 @@ int main(int argc, char *argv[])
 
     // DRIVERS
     QString hwConfigPath = appPath;
-    if (QFile::exists("/mnt/boot/hardware.json")) {
-        hwConfigPath = "/mnt/boot";
+    if (QFile::exists("/boot/hardware.json")) {
+        hwConfigPath = "/boot";
     }
     HardwareFactory *hwFactory = HardwareFactory::build(hwConfigPath + "/hardware.json");
     WifiControl* wifiControl = hwFactory->getWifiControl();
