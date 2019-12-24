@@ -34,15 +34,15 @@
 class Notification
 {
 public:
-    explicit Notification(int id, bool type, QString text, QString actionLabel, void (*action)(), QVariant timestamp, QVariant* param);
+    explicit Notification(int id, bool type, QString text, QString actionLabel, QVariant timestamp, void (*action)(QObject*), QObject* param);
 
     int             m_id;
     bool            m_type;
     QString         m_text;
     QString         m_actionLabel;
-    void            (*m_action)();
+    void            (*m_action)(QObject*);
     QVariant        m_timestamp;
-    QVariant*       m_param;
+    QObject*        m_param;
 };
 
 class Notifications : public QObject, NotificationsInterface
@@ -64,7 +64,7 @@ public:
     bool                        isThereError    ();
 
     // add notification
-    Q_INVOKABLE void            add             (const bool &type, const QString &text, const QString &actionlabel, void (*f)(), QVariant* param) override;
+    Q_INVOKABLE void            add             (const bool &type, const QString &text, const QString &actionlabel, void (*f)(QObject*), QObject* param) override;
     Q_INVOKABLE void            add             (const bool &type, const QString &text) override;
     Q_INVOKABLE void            add             (const QString &text) override;
 

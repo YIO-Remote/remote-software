@@ -79,12 +79,10 @@ QVariantList Notifications::list()
     return list;
 }
 
-void Notifications::add(const bool &type, const QString &text, const QString &actionlabel, void (*f)(), QVariant* param)
+void Notifications::add(const bool &type, const QString &text, const QString &actionlabel, void (*f)(QObject*), QObject* param)
 {
-    Notification *n = new Notification(m_id, type, text, actionlabel, f, QDateTime::currentDateTime(), param);
+    Notification *n = new Notification(m_id, type, text, actionlabel, QDateTime::currentDateTime(), f, param);
     m_notifications.insert(m_id, n);
-    qCDebug(m_log) <<  "ADD" << n->m_text;
-
     emit listChanged();
     emit errorChanged();
 
@@ -127,13 +125,9 @@ void Notifications::remove(const QString &text)
 void Notifications::execute(const int id)
 {
     qCDebug(m_log) << "Executing function" << m_notifications.value(id)->m_text << m_notifications.value(id)->m_actionLabel;
-//    void (*f)(QVariant*) = m_notifications.value(id)->m_action;
-    void (*f)() = m_notifications.value(id)->m_action;
-//    qCDebug(m_log) << "Getting param";
-//    QVariant param = m_notifications.value(id)->m_param;
-//    qCDebug(m_log) << "Displaying param";
-//    qCDebug(m_log) << param;
-    f();
+    void (*f)(QObject*) = m_notifications.value(id)->m_action;
+    QObject* param = m_notifications.value(id)->m_param;
+    f(param);
 }
 
 bool Notifications::isThereError()
@@ -151,7 +145,7 @@ bool Notifications::isThereError()
     return r;
 }
 
-Notification::Notification(int id, bool type, QString text, QString actionLabel, void (*action)(), QVariant timestamp, QVariant* param) :
+Notification::Notification(int id, bool type, QString text, QString actionLabel, QVariant timestamp, void (*action)(QObject*), QObject* param) :
     m_id(id),
     m_type(type),
     m_text(text),

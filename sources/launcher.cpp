@@ -59,12 +59,7 @@ QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
 
     if (!plugin) {
         qDebug() << "FAILED TO LOAD PLUGIN: " <<  pluginLoader.errorString();
-
-//        Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
-        Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName), "Test", [](){
-            QLoggingCategory m("TEST");
-            qCDebug(m) << "WTF IS THIS WORKING";
-        }, nullptr);
+        Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
     }
 
     return plugin;
