@@ -9,10 +9,10 @@ jobs:
     - name: Copycat
       uses: andstor/copycat-action@v1.1.0
       env:
-        DST_BRANCH: master
+        DST_BRANCH: dev
         DST_OWNER: YIO-Remote
-        DST_REPO_NAME: translations
-        DST_PATH: /remote-software
-        SRC_BRANCH: dev
-        SRC_PATH: /translations/en_US.ts
+        DST_REPO_NAME: remote-software
+        DST_PATH: /translations/en_US.ts
+        SRC_BRANCH: master
+        SRC_PATH: /remote-software
         GH_PAT: ${{ secrets.GH_PAT }}
