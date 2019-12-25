@@ -12,7 +12,7 @@ jobs:
         DST_BRANCH: dev
         DST_OWNER: YIO-Remote
         DST_REPO_NAME: translations
-        DST_PATH: /remote-software/
+        DST_PATH: /translations/
         SRC_BRANCH: dev
         SRC_PATH: /translations/en_US.ts
         GH_PAT: ${{ secrets.GH_PAT }}
