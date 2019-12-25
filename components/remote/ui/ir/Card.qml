@@ -142,6 +142,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
+                    haptic.playEffect("click");
                     obj.powerToggle();
                 }
             }
