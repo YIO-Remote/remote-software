@@ -9,7 +9,7 @@ jobs:
     - name: Copycat
       uses: andstor/copycat-action@v1.1.0
       env:
-        DST_BRANCH: dev
+        DST_BRANCH: master
         DST_OWNER: YIO-Remote
         DST_REPO_NAME: translations
         DST_PATH: /translations/
