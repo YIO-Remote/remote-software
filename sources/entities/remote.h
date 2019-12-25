@@ -38,6 +38,7 @@ public:
     Q_PROPERTY  (QVariantList   commands       READ    commands       NOTIFY commandsChanged)
 
     QVariantList                commands() override { return m_commands; }
+    QVariantMap                 settings() override { return m_settings; }
 
     // transport and media controls
     Q_INVOKABLE void            play();
@@ -104,6 +105,7 @@ private:
     static QMetaEnum    s_metaEnumState;
 
     QVariantList        m_commands;
+    QVariantMap         m_settings;
 
     QLoggingCategory    m_log;
 
