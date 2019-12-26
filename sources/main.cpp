@@ -26,6 +26,7 @@
 #include <QQmlContext>
 #include <QFile>
 #include <QFileInfo>
+#include <QLoggingCategory>
 #include <QtDebug>
 
 #include "launcher.h"
@@ -52,6 +53,8 @@
 #include "config.h"
 #include "logger.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
 int main(int argc, char *argv[])
 {
@@ -85,7 +88,15 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("configPath", configPath);
 
     // LOAD CONFIG
-    Config config(&engine, configPath);
+    QString schemaPath = appPath + "/config-schema.json";
+    if (!QFile::exists(schemaPath)) {
+        qCWarning(CLASS_LC) << "Configuration schema not found, configuration file will not be validated! Missing file:" << schemaPath;
+    }
+    Config config(&engine, configPath, schemaPath);
+    if (!config.isValid()) {
+        qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config.getError();
+        // TODO show error screen with shutdon / reboot / web-configurator option
+    }
     engine.rootContext()->setContextProperty("config", &config);
 
     // LOGGER

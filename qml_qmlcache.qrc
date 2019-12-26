@@ -139,7 +139,7 @@
         <file alias="sources/hardware/proximity_gesture_control.h">sources/hardware/proximity_gesture_control.h</file>
         <file alias="sources/hardware/touchdetect.h">sources/hardware/touchdetect.h</file>
         <file alias="sources/integrations/integration.h">sources/integrations/integration.h</file>
-        <file alias="sources/integrations/integrationinterface.h">sources/integrations/integrationinterface.h</file>
+        <file alias="sources/integrations/plugininterface.h">sources/integrations/plugininterface.h</file>
         <file alias="sources/integrations/integrations.cpp">sources/integrations/integrations.cpp</file>
         <file alias="sources/integrations/integrations.h">sources/integrations/integrations.h</file>
         <file alias="sources/bluetootharea.cpp">sources/bluetootharea.cpp</file>

@@ -26,10 +26,11 @@ ConfigInterface::~ConfigInterface()
 {}
 Config* Config::s_instance = nullptr;
 
-Config::Config(QQmlApplicationEngine *engine, QString path) :
-    m_engine(engine)
+Config::Config(QQmlApplicationEngine *engine, QString path, QString schemaPath)
+    : m_engine(engine)
 {
     m_jsf = new JsonFile();
+    m_jsf->setSchemaPath(schemaPath);
     s_instance = this;
 
     //load the config file
@@ -58,6 +59,7 @@ void Config::setFavorite (const QString& entityId, bool value)
 
 void Config::setConfig(const QVariantMap &config)
 {
+    // TODO validate configuration!
     m_config = config;
     syncConfigToCache();
     emit configChanged();
@@ -69,19 +71,22 @@ QVariant Config::getContextProperty(const QString &name)
 }
 
 
-void Config::readConfig(QString path)
+bool Config::readConfig(QString path)
 {
     // load the config.json file from the filesystem
     m_jsf->setName(path + "/config.json");
     m_config = m_jsf->read().toMap();
+    m_valid = m_jsf->isValid();
     syncConfigToCache();
     emit configChanged();
+
+    return m_valid;
 }
 
-void Config::writeConfig()
+bool Config::writeConfig()
 {
     syncCacheToConfig();
-    m_jsf->write(m_config);
+    return m_jsf->write(m_config);
 }
 
 void Config::setSettings(const QVariantMap &config) {

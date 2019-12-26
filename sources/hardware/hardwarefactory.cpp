@@ -48,7 +48,7 @@ HardwareFactory::~HardwareFactory()
 
 HardwareFactory *HardwareFactory::build(const QString &configFileName)
 {
-    JsonFile hwCfg(configFileName);
+    JsonFile hwCfg(configFileName, "");
 
     return build(hwCfg.read().toMap());
 }

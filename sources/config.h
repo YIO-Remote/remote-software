@@ -38,6 +38,8 @@ class Config : public QObject, ConfigInterface
     Q_INTERFACES(ConfigInterface)
 
 public:
+    Q_PROPERTY (bool             valid              READ isValid                                    CONSTANT)
+    Q_PROPERTY (QString          error              READ getError                                   CONSTANT)
     Q_PROPERTY (QVariantMap      config             READ config               WRITE setConfig       NOTIFY configChanged)
     Q_PROPERTY (QString          profile            READ profile              WRITE setProfile      NOTIFY profileChanged)
     Q_PROPERTY (QStringList      profileFavorites   READ profileFavorites                           NOTIFY profileFavoritesChanged)
@@ -49,8 +51,8 @@ public:
     Q_PROPERTY (QVariantMap      pages              READ getPages                                   NOTIFY pagesChanged)
     Q_PROPERTY (QVariantMap      groups             READ getGroups                                  NOTIFY groupsChanged)
 
-    Q_INVOKABLE void readConfig(QString path);
-    Q_INVOKABLE void writeConfig();
+    Q_INVOKABLE bool readConfig(QString path);
+    Q_INVOKABLE bool writeConfig();
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
@@ -111,6 +113,10 @@ public:
     Q_INVOKABLE void setFavorite (const QString& entityId, bool value);
 
 
+    bool isValid() const { return m_valid; }
+    QString getError() const { return m_jsf->error(); }
+
+
     QVariantMap config() { return m_config; }
     void setConfig(const QVariantMap& config);
 
@@ -125,7 +131,7 @@ public:
     void setProfile(QString id);
 
 public:
-    explicit Config(QQmlApplicationEngine *engine = nullptr, QString path = "");
+    explicit Config(QQmlApplicationEngine *engine = nullptr, QString path = "", QString schemaPath = "");
     virtual ~Config();
 
     static Config*       getInstance     ()
@@ -145,6 +151,7 @@ private:
     void syncConfigToCache      ();
     void syncCacheToConfig      ();
 
+    bool                        m_valid;
     static Config*              s_instance;
     QQmlApplicationEngine*      m_engine;
 
