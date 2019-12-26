@@ -113,8 +113,8 @@ public:
     Q_INVOKABLE void setFavorite (const QString& entityId, bool value);
 
 
-    bool isValid() const { return m_valid; }
-    QString getError() const { return m_jsf->error(); }
+    bool isValid() const { return m_error.isEmpty(); }
+    QString getError() const { return m_error; }
 
 
     QVariantMap config() { return m_config; }
@@ -151,13 +151,13 @@ private:
     void syncConfigToCache      ();
     void syncCacheToConfig      ();
 
-    bool                        m_valid;
     static Config*              s_instance;
     QQmlApplicationEngine*      m_engine;
 
     QVariantMap                 m_config;
 
     JsonFile*                   m_jsf;
+    QString                     m_error;
 
     // Caches to improve performance
     QString                     m_cacheProfile;

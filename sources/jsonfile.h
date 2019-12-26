@@ -75,7 +75,15 @@ public:
     Q_INVOKABLE QVariant read();
 
     /**
-     * @brief validate Validates the JSON document against the given JSON schema
+     * @brief validate Validates the JSON document against the associated schema of the JsonFile instance.
+     * @param doc The JSON document to validate
+     * @param errorText Returns the validation error text
+     * @return true if the document is valid according to the schema
+     */
+    bool validate(const QJsonDocument &doc, QString &errorText);
+
+    /**
+     * @brief validate Validates the JSON document against the given JSON schema.
      * @param doc The JSON document to validate
      * @param schema The JSON schema document
      * @param errorText Returns the validation error text
@@ -95,7 +103,6 @@ public slots:
 
 private:
     bool loadDocument(const QString &path, QJsonDocument &doc);
-    bool validate(const QJsonDocument &doc, const QString &schemaPath);
 
     QFile   m_file;
     QString m_schemaPath;

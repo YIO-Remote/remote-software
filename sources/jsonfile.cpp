@@ -99,6 +99,12 @@ bool JsonFile::write(const QVariantMap &data)
         m_error = tr("empty data");
         return false;
     }
+
+    if (!validate(doc, m_error)) {
+        qCWarning(CLASS_LC) << "JSON document failed schema validation before writing:" << m_file.fileName();
+        return false;
+    }
+
     QByteArray json = doc.toJson();
     if (!m_file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
         m_error = tr("cannot open file '%1' for writing: %2")
@@ -119,12 +125,9 @@ QVariant JsonFile::read()
         return QVariant();
     }
 
-    if (!m_schemaPath.isEmpty()) {
-        qCDebug(CLASS_LC) << "Validating json document with json schema file:" << m_schemaPath;
-        if (!validate(doc, m_schemaPath)) {
-            qCWarning(CLASS_LC) << "JSON document failed schema validation:" << m_file.fileName();
-            return QVariant();
-        }
+    if (!validate(doc, m_error)) {
+        qCWarning(CLASS_LC) << "Read JSON document failed schema validation:" << m_file.fileName();
+        return QVariant();
     }
 
     return doc.toVariant();
@@ -160,14 +163,20 @@ bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc)
     return true;
 }
 
-bool JsonFile::validate(const QJsonDocument &doc, const QString &schemaPath)
+bool JsonFile::validate(const QJsonDocument &doc, QString &errorText)
 {
-    QJsonDocument schemaDoc;
-    if (!loadDocument(schemaPath, schemaDoc)) {
+    if (m_schemaPath.isEmpty()) {
+        qCDebug(CLASS_LC) << "Skipping json document schema validation: no schema file set";
+        return true;
+    }
+
+    // TODO in case there are too many read or write calls we should probably cache the schema document
+     QJsonDocument schemaDoc;
+    if (!loadDocument(m_schemaPath, schemaDoc)) {
         return false;
     }
 
-    return JsonFile::validate(doc, schemaDoc, m_error);
+    return JsonFile::validate(doc, schemaDoc, errorText);
 }
 
 bool JsonFile::validate(const QJsonDocument &doc, const QJsonDocument &schemaDoc, QString &errorText)

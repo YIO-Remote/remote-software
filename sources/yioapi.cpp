@@ -95,10 +95,14 @@ QVariantMap YioAPI::getConfig()
     return Config::getInstance()->config();
 }
 
-void YioAPI::setConfig(QVariantMap config)
+bool YioAPI::setConfig(QVariantMap config)
 {
-    Config::getInstance()->setConfig(config);
-    Config::getInstance()->writeConfig();
+    Config *cfg = Config::getInstance();
+    cfg->setConfig(config);
+    if (!cfg->isValid()) {
+        return false;
+    }
+    return cfg->writeConfig();
 }
 
 bool YioAPI::addEntityToConfig(QVariantMap entity)
@@ -140,11 +144,14 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
         }
     }
 
-    // writeh the config back
-    Config::getInstance()->setConfig(c);
-    Config::getInstance()->writeConfig();
+    // write the config back
+    Config *cfg = Config::getInstance();
+    cfg->setConfig(c);
+    if (!cfg->isValid()) {
+        return false;
+    }
 
-    return true;
+    return cfg->writeConfig();
 }
 
 void YioAPI::discoverNetworkServices()
@@ -326,7 +333,11 @@ void YioAPI::processMessage(QString message)
             qCDebug(m_log) << "REQUEST FOR SETCONFIG";
 
             QVariantMap config = map.value("config").toMap();
-            setConfig(config);
+            if (setConfig(config)) {
+                // FIXME reply SUCCESS
+            } else {
+                // FIXME reply FAIL
+            }
         } else if (type == "button" && m_clients[client]) {
             // Handle buttons
             QString buttonName = map["name"].toString();

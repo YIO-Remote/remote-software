@@ -53,7 +53,7 @@ public:
 
     // CONFIG MANIPULATION METHODS
     Q_INVOKABLE QVariantMap     getConfig                   () override;
-    Q_INVOKABLE void            setConfig                   (QVariantMap config);
+    Q_INVOKABLE bool            setConfig                   (QVariantMap config);
     Q_INVOKABLE bool            addEntityToConfig           (QVariantMap entity) override;
 
 

@@ -20,6 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include <QJsonDocument>
+
 #include "config.h"
 
 ConfigInterface::~ConfigInterface()
@@ -28,6 +30,7 @@ Config* Config::s_instance = nullptr;
 
 Config::Config(QQmlApplicationEngine *engine, QString path, QString schemaPath)
     : m_engine(engine)
+    , m_error("")
 {
     m_jsf = new JsonFile();
     m_jsf->setSchemaPath(schemaPath);
@@ -59,7 +62,11 @@ void Config::setFavorite (const QString& entityId, bool value)
 
 void Config::setConfig(const QVariantMap &config)
 {
-    // TODO validate configuration!
+    m_error.clear();
+    if (!m_jsf->validate(QJsonDocument::fromVariant(config), m_error)) {
+        return;
+    }
+
     m_config = config;
     syncConfigToCache();
     emit configChanged();
@@ -76,17 +83,19 @@ bool Config::readConfig(const QString &path)
     // load the config.json file from the filesystem
     m_jsf->setName(path + "/config.json");
     m_config = m_jsf->read().toMap();
-    m_valid = m_jsf->isValid();
+    m_error = m_jsf->error();
     syncConfigToCache();
     emit configChanged();
 
-    return m_valid;
+    return m_jsf->isValid();
 }
 
 bool Config::writeConfig()
 {
     syncCacheToConfig();
-    return m_jsf->write(m_config);
+    bool result = m_jsf->write(m_config);
+    m_error = m_jsf->error();
+    return result;
 }
 
 void Config::setSettings(const QVariantMap &config) {
