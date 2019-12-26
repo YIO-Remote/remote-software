@@ -127,7 +127,10 @@ QVariant JsonFile::read()
 
     if (!validate(doc, m_error)) {
         qCWarning(CLASS_LC) << "Read JSON document failed schema validation:" << m_file.fileName();
-        return QVariant();
+        // FIXME decide on how to handle errors:
+        // a) only schema validated docs are used: -> app needs fatal error handling during startup, otherwise: spinning circle of death
+        // b) best effort: return read configuration and hope for the best :-/ -> client can still call isValid() to check validation status
+        //return QVariant();
     }
 
     return doc.toVariant();
