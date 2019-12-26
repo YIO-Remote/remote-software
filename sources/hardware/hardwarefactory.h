@@ -41,9 +41,10 @@ public:
      * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param configFileName the JSON configuration file name to load the hardware configuration from.
+     * @param schemaFileName the JSON schema file to validate the configuration file.
      * @return The concrete instance or nullptr if construction failed. In this case the application should be terminated.
      */
-    static HardwareFactory* build(const QString &configFileName);
+    static HardwareFactory* build(const QString &configFileName, const QString &schemaFileName);
 
     /**
      * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.

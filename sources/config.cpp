@@ -71,7 +71,7 @@ QVariant Config::getContextProperty(const QString &name)
 }
 
 
-bool Config::readConfig(QString path)
+bool Config::readConfig(const QString &path)
 {
     // load the config.json file from the filesystem
     m_jsf->setName(path + "/config.json");

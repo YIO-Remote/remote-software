@@ -51,7 +51,7 @@ public:
     Q_PROPERTY (QVariantMap      pages              READ getPages                                   NOTIFY pagesChanged)
     Q_PROPERTY (QVariantMap      groups             READ getGroups                                  NOTIFY groupsChanged)
 
-    Q_INVOKABLE bool readConfig(QString path);
+    Q_INVOKABLE bool readConfig(const QString &path);
     Q_INVOKABLE bool writeConfig();
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure

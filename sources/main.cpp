@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
     if (QFile::exists("/boot/hardware.json")) {
         hwConfigPath = "/boot";
     }
-    HardwareFactory *hwFactory = HardwareFactory::build(hwConfigPath + "/hardware.json");
+    HardwareFactory *hwFactory = HardwareFactory::build(hwConfigPath + "/hardware.json", hwConfigPath + "/hardware-schema.json");
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();

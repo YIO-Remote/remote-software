@@ -46,11 +46,17 @@ HardwareFactory::~HardwareFactory()
     s_instance = nullptr;
 }
 
-HardwareFactory *HardwareFactory::build(const QString &configFileName)
+HardwareFactory *HardwareFactory::build(const QString &configFileName, const QString &schemaFileName)
 {
-    JsonFile hwCfg(configFileName, "");
+    JsonFile hwCfg(configFileName, schemaFileName);
 
-    return build(hwCfg.read().toMap());
+    QVariantMap config = hwCfg.read().toMap();
+    if (!hwCfg.isValid()) {
+        // FIXME decide how to proceed: a) use an empty configuration for build to use default values, b) return null and let caller handle this as a fatal error.
+        qCCritical(CLASS_LC).noquote() << "Invalid hardware configuration! Ignoring configuration file and using default values. Errors:" << endl << hwCfg.error();
+        config.clear();
+    }
+    return build(config);
 }
 
 HardwareFactory* HardwareFactory::build(const QVariantMap &config)
