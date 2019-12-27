@@ -36,8 +36,10 @@ class Remote : public Entity, RemoteInterface
     Q_INTERFACES(RemoteInterface)
 public:
     Q_PROPERTY  (QVariantList   commands       READ    commands       NOTIFY commandsChanged)
+    Q_PROPERTY  (QVariantList   channels       READ    channels       NOTIFY channelsChanged)
 
     QVariantList                commands() override { return m_commands; }
+    QVariantList                channels() override { return m_channels; }
     QVariantMap                 settings() override { return m_settings; }
 
     // transport and media controls
@@ -77,6 +79,7 @@ public:
     Q_INVOKABLE void            channelSearch();
     Q_INVOKABLE void            toFavorite();
     Q_INVOKABLE void            guide();
+    Q_INVOKABLE void            channel(int ch);
 
     // volume commands
     Q_INVOKABLE void            volumeUp();
@@ -94,6 +97,7 @@ public:
 
 signals:
     void commandsChanged();
+    void channelsChanged();
 
 public:
     static QString      Type;
@@ -105,6 +109,7 @@ private:
     static QMetaEnum    s_metaEnumState;
 
     QVariantList        m_commands;
+    QVariantList        m_channels;
     QVariantMap         m_settings;
 
     QLoggingCategory    m_log;

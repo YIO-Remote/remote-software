@@ -92,6 +92,16 @@ Rectangle {
                     obj.muteToggle();
                 }
                 break;
+            case "bottom left":
+                if (obj.isSupported(Remote.F_BACK)) {
+                    obj.back();
+                }
+                break;
+            case "bottom right":
+                if (obj.isSupported(Remote.F_MENU)) {
+                    obj.menu();
+                }
+                break;
             }
 
         }
@@ -102,6 +112,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Item {
+        id: topItem
         width: parent.width
         height: 125
         anchors.top: parent.top
@@ -138,99 +149,66 @@ Rectangle {
 
     }
 
-    Item {
-        id: contentGroup0
-        width: parent.width-40
-        height: parent.height
-        anchors.top: parent.top
-        anchors.topMargin: 120
-        anchors.horizontalCenter: parent.horizontalCenter
-        opacity: group1.state == "open" || group2.state == "open" ? 0.1 : 1
-        enabled: group1.state == "open" || group2.state == "open" ? 0.1 : 1
+    SwipeView {
+        id: pagesSwipeView
+        width: parent.width
+        height: parent.height - topItem.height - tooltips.height - 50
+        anchors.top: topItem.bottom
+        anchors.topMargin: 0
+        currentIndex: 0
 
+        //buttons
         Item {
-            width: 80
-            height: 60
-
-            Rectangle {
-                width: 80
-                height: 60
-                radius: width/2
-                color: colorRed
-            }
-
-            Text {
-                color: colorText
-                text: "O"
-                verticalAlignment: Text.AlignVCenter
-                anchors.centerIn: parent
-                font.family: "Open Semibold"
-                font.weight: Font.Normal
-                font.pixelSize: 27
-            }
-
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    haptic.playEffect("click");
-                    obj.powerToggle();
-                }
-            }
-        }
-    }
-
-    Group {
-        id: group1
-        height: 580
-        offset: 80
-
-        onStateChanged: {
-            if (state == "closed") {
-                group2.state = "closed";
-            }
         }
 
+        // channels
         Item {
-            id: contentGroup1
-            width: parent.width
-            height: parent.height
-            opacity: parent.state == "open" ? 1 : 0.3
-            enabled: parent.state == "open" ? true : false
-
-            Grid {
-                anchors.top: parent.top
-                anchors.topMargin: 60
+            GridView {
+                id: channelGridView
+                width: parent.width-50
+                height: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
-                columns: 3
-                columnSpacing: 50
-                rowSpacing: 30
+                cellWidth: width/3; cellHeight: cellWidth
+                clip: true
 
-                Repeater {
-                    model: 10
+                model: obj.channels
+                delegate: Item {
+                    width: channelGridView.cellWidth
+                    height: width
 
-                    Item {
+                    Rectangle {
+                        id: imageContainer
                         width: 80
-                        height: 60
+                        height: width
+                        anchors.centerIn: parent
+                        radius: cornerRadius
+                        color: colorDark
 
-                        Rectangle {
-                            width: 80
-                            height: 60
-                            radius: width/2
-                            color: colorBackgroundTransparent
-                            border.color: colorText
-                            border.width: 2
-                            opacity: 0.2
+                        layer.enabled: true
+                        layer.effect: OpacityMask {
+                            maskSource: Item {
+                                width: imageContainer.width
+                                height: imageContainer.height
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: cornerRadius
+                                }
+                            }
                         }
 
-                        Text {
-                            color: colorText
-                            text: index == 9 ? 0 : index + 1
-                            verticalAlignment: Text.AlignVCenter
-                            anchors.centerIn: parent
-                            font.family: "Open Semibold"
-                            font.weight: Font.Normal
-                            font.pixelSize: 27
+                        Image {
+                            anchors.fill: parent
+                            fillMode: Image.PreserveAspectCrop
+                            asynchronous: true
+                            source: "file:/" + obj.channels[index].image
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                haptic.playEffect("press");
+                                obj.channel(obj.channels[index].number);
+                            }
                         }
                     }
                 }
@@ -238,69 +216,29 @@ Rectangle {
         }
     }
 
-    Group {
-        id: group2
-        //        offset: 160
-        height: 500
+    PageIndicator {
+        id: indicator
 
-        onStateChanged: {
-            if (state == "open") {
-                group1.state = "move";
-            } else {
-                group1.state = "open";
-            }
-        }
+        count: pagesSwipeView.count
+        currentIndex: pagesSwipeView.currentIndex
 
-        Item {
-            id: contentGroup2
-            width: parent.width
-            height: parent.height
-            opacity: parent.state == "open" ? 1 : 0.3
-            enabled: parent.state == "open" ? true : false
+        anchors.bottom: tooltips.top
+        anchors.bottomMargin: 20
+        anchors.horizontalCenter: parent.horizontalCenter
 
-            Grid {
-                anchors.top: parent.top
-                anchors.topMargin: 60
-                anchors.horizontalCenter: parent.horizontalCenter
-                columns: 4
-                spacing: 60
-
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#EA003C"
-                }
-
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#91BF4C"
-                }
-
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#D7B435"
-                }
-
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#284CC5"
-                }
-            }
+        delegate: Rectangle {
+            width: 8
+            height: 8
+            radius: height/2
+            color: colorText
+            opacity: index == pagesSwipeView.currentIndex ? 1 : 0.3
         }
     }
 
-    Rectangle {
+    Item {
+        id: tooltips
         width: parent.width
         height: 80
-        color: colorHighlight2
-        radius: cornerRadius
         anchors.bottom: parent.bottom
     }
 }

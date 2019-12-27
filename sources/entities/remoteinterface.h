@@ -104,6 +104,7 @@ class RemoteInterface
 public:
     virtual ~RemoteInterface  ();
     virtual QVariantList      commands() = 0;
+    virtual QVariantList      channels() = 0;
     virtual QVariantMap       settings() = 0;
 };
 

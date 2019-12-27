@@ -109,7 +109,8 @@ Flickable {
 
             Component.onCompleted: {
                 var e = entities.get(config.profileFavorites[index]);
-                this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
+                if (e)
+                    this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
             }
         }
     }

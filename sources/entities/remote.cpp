@@ -22,6 +22,7 @@
 
 #include <QtDebug>
 #include <QJsonArray>
+#include <QTimer>
 #include "remote.h"
 #include "../yioapi.h"
 
@@ -207,6 +208,60 @@ void Remote::guide()
     command(RemoteDef::C_GUIDE, "");
 }
 
+void Remote::channel(int ch)
+{
+    int delay = settings().value("delay").toInt();
+
+    QString chStr(ch);
+
+    for (int i=0; i<chStr.length(); i++) {
+        QTimer timer;
+        timer.setSingleShot(true);
+
+        int digit = chStr[i].digitValue();
+
+        QObject* context = new QObject(this);
+        connect(&timer, &QTimer::timeout, context, [&](){
+            switch (digit) {
+            case 0:
+                command(RemoteDef::C_DIGIT_0, "");
+                break;
+            case 1:
+                command(RemoteDef::C_DIGIT_1, "");
+                break;
+            case 2:
+                command(RemoteDef::C_DIGIT_2, "");
+                break;
+            case 3:
+                command(RemoteDef::C_DIGIT_3, "");
+                break;
+            case 4:
+                command(RemoteDef::C_DIGIT_4, "");
+                break;
+            case 5:
+                command(RemoteDef::C_DIGIT_5, "");
+                break;
+            case 6:
+                command(RemoteDef::C_DIGIT_6, "");
+                break;
+            case 7:
+                command(RemoteDef::C_DIGIT_7, "");
+                break;
+            case 8:
+                command(RemoteDef::C_DIGIT_8, "");
+                break;
+            case 9:
+                command(RemoteDef::C_DIGIT_9, "");
+                break;
+            }
+            timer.deleteLater();
+            context->deleteLater();
+        });
+
+        timer.start(delay);
+    }
+}
+
 // volume commands
 void Remote::volumeUp()
 {
@@ -247,5 +302,7 @@ Remote::Remote(const QVariantMap& config, IntegrationInterface* integrationObj, 
     initializeSupportedFeatures(config);
     m_commands = config.value("commands").toJsonArray().toVariantList();
     m_settings = config.value("settings").toMap();
+    m_channels = config.value("channels").toList();
     emit commandsChanged();
+    emit channelsChanged();
 }

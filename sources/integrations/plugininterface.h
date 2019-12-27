@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QVariantMap>
+#include <QTranslator>
 
 // This interface is implemented by the integration .so files, it is used by the entities to operate the integration
 class PluginInterface : public QObject
