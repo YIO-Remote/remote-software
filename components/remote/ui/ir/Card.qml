@@ -206,7 +206,7 @@ Rectangle {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                haptic.playEffect("press");
+                                haptic.playEffect("click");
                                 obj.channel(obj.channels[index].number);
                             }
                         }

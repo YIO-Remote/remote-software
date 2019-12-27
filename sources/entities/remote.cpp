@@ -210,18 +210,19 @@ void Remote::guide()
 
 void Remote::channel(int ch)
 {
+    qCDebug(m_log) << "Switching channel to" << ch;
     int delay = settings().value("delay").toInt();
 
-    QString chStr(ch);
+    QString chStr = QString::number(ch);
 
     for (int i=0; i<chStr.length(); i++) {
-        QTimer timer;
-        timer.setSingleShot(true);
+        QTimer* timer = new QTimer(this);
+        timer->setSingleShot(true);
 
         int digit = chStr[i].digitValue();
 
         QObject* context = new QObject(this);
-        connect(&timer, &QTimer::timeout, context, [&](){
+        connect(timer, &QTimer::timeout, context, [=](){
             switch (digit) {
             case 0:
                 command(RemoteDef::C_DIGIT_0, "");
@@ -254,11 +255,11 @@ void Remote::channel(int ch)
                 command(RemoteDef::C_DIGIT_9, "");
                 break;
             }
-            timer.deleteLater();
+            timer->deleteLater();
             context->deleteLater();
         });
 
-        timer.start(delay);
+        timer->start(delay);
     }
 }
 
