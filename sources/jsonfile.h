@@ -68,7 +68,7 @@ class JsonFile : public QObject
 
     Q_INVOKABLE bool rename(const QString &newName);
 
-    Q_INVOKABLE inline bool copy(const QString &newName) { return m_file.copy(newName); }
+    Q_INVOKABLE inline bool copy(const QString &newName) { return m_file.copy(newName); } //NOLINT false positive: doesn't like copy name
     Q_INVOKABLE inline bool remove() { return m_file.remove(); }
 
     Q_INVOKABLE bool write(const QVariantMap &data);
@@ -80,7 +80,7 @@ class JsonFile : public QObject
      * @param errorText Returns the validation error text
      * @return true if the document is valid according to the schema
      */
-    bool validate(const QJsonDocument &doc, QString &errorText);
+    bool validate(const QJsonDocument &doc, QString &errorText); //NOLINT we do not want a pointer for errorText
 
     /**
      * @brief validate Validates the JSON document against the given JSON schema.
@@ -89,12 +89,12 @@ class JsonFile : public QObject
      * @param errorText Returns the validation error text
      * @return true if the document is valid according to the schema
      */
-    static bool validate(const QJsonDocument &doc, const QJsonDocument &schema, QString &errorText);
+    static bool validate(const QJsonDocument &doc, const QJsonDocument &schema, QString &errorText); //NOLINT we do not want a pointer for errorText
 
  signals:
     void nameChanged(const QString &name);
 
- public slots:
+ public slots: //NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     /**
      * @brief setName Sets the full file name
      * @param name The file name including path
@@ -102,7 +102,7 @@ class JsonFile : public QObject
     void setName(const QString &name);
 
  private:
-    bool loadDocument(const QString &path, QJsonDocument &doc);
+    bool loadDocument(const QString &path, QJsonDocument &doc); //NOLINT we do not want a pointer for doc
 
     QFile   m_file;
     QString m_schemaPath;

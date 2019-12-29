@@ -87,7 +87,7 @@ class YioAPI : public YioAPIInterface
     void buttonPressed(QString button);
     void buttonReleased(QString button);
 
- public slots:
+ public slots: //NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onNewConnection();
     void processMessage(QString message);
     void onClientDisconnected();
@@ -104,7 +104,7 @@ class YioAPI : public YioAPIInterface
 
     QString                      m_token = "0";  // "c82b5fd6bea6fc3faf9a30bb864a9ee2"
     // QCryptographicHash::hash(m_token.toLocal8Bit(), QCryptographicHash::Sha512);
-    QByteArray                   m_hash = "{U\xC0<$\xF7\n\xA7PA\xC3=\xBEk\xF5\xC1\xCA\x8B\t\x91\xA0\x9Et\xBA""E\xE9\xA0)\xE4\x07^E\x04\x17Xg\xE4)\x04\xB7\xD4\x9D,\x19%\xD7\xA1\xDC\x84U\x83\xA2\xAA\x1D\xD7:\xBE\xF6""1\xFA\x90\xED\x16\xBB";
+    QByteArray                   m_hash = "{U\xC0<$\xF7\n\xA7PA\xC3=\xBEk\xF5\xC1\xCA\x8B\t\x91\xA0\x9Et\xBA""E\xE9\xA0)\xE4\x07^E\x04\x17Xg\xE4)\x04\xB7\xD4\x9D,\x19%\xD7\xA1\xDC\x84U\x83\xA2\xAA\x1D\xD7:\xBE\xF6""1\xFA\x90\xED\x16\xBB"; //NOLINT
     QString                      m_hostname;
 
     QZeroConf                    m_qzero_conf;
