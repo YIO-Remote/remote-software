@@ -36,7 +36,7 @@ Config::Config(QQmlApplicationEngine *engine, QString path, QString schemaPath)
     m_jsf->setSchemaPath(schemaPath);
     s_instance = this;
 
-    //load the config file
+    // load the config file
     readConfig(path);
 }
 
@@ -45,7 +45,7 @@ Config::~Config()
     s_instance = nullptr;
 }
 
-void Config::setFavorite (const QString& entityId, bool value)
+void Config::setFavorite(const QString& entityId, bool value)
 {
     QStringList fav = profileFavorites();
 
@@ -111,7 +111,7 @@ void Config::setUIConfig(const QVariantMap &config)
     writeConfig();
 }
 
-QObject *Config::getQMLObject(QList<QObject*> nodes,const QString &name)
+QObject *Config::getQMLObject(QList<QObject*> nodes, const QString &name)
 {
     for (int i=0; i < nodes.size(); i++)
     {

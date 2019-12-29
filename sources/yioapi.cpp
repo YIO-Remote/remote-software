@@ -20,17 +20,18 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QtDebug>
-
 #include "yioapi.h"
-#include "fileio.h"
-#include "entities/entities.h"
-#include "logger.h"
+
+#include <QtDebug>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QNetworkInterface>
 #include <QTimer>
+
+#include "fileio.h"
+#include "entities/entities.h"
+#include "logger.h"
 
 YioAPI* YioAPI::s_instance = nullptr;
 
@@ -81,8 +82,7 @@ void YioAPI::stop()
 void YioAPI::sendMessage(QString message)
 {
     QMap<QWebSocket *, bool>::iterator i;
-    for (i = m_clients.begin(); i != m_clients.end(); i++)
-    {
+    for (i = m_clients.begin(); i != m_clients.end(); i++) {
         if (i.value()) {
             QWebSocket *socket = i.key();
             socket->sendTextMessage(message);
@@ -108,8 +108,12 @@ bool YioAPI::setConfig(QVariantMap config)
 bool YioAPI::addEntityToConfig(QVariantMap entity)
 {
     // check the input if it's OK
-    if (!entity.contains("area") && !entity.contains("entity_id") && !entity.contains("friendly_name") && !entity.contains("integration") && !entity.contains("supported_features") && !entity.contains("type"))
-    {
+    if (!entity.contains("area")
+            && !entity.contains("entity_id")
+            && !entity.contains("friendly_name")
+            && !entity.contains("integration")
+            && !entity.contains("supported_features")
+            && !entity.contains("type")) {
         return false;
     }
 
@@ -120,11 +124,9 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     // check what is the type of the new entity
     QString entityType = entity.value("type").toString();
 
-
     //find the entities key and insert the new entity
-    for (int i=0; i<e.length(); i++) {
+    for (int i = 0; i < e.length(); i++) {
         if (e[i].toMap().value("type").toString() == entityType) {
-
             // get the data key array
             QVariantMap r = e[i].toMap();
             QVariantList rl = r.value("data").toJsonArray().toVariantList();
@@ -160,7 +162,7 @@ void YioAPI::discoverNetworkServices()
 
     m_discoverableServices = Integrations::getInstance()->getMDNSList();
 
-    for (int i=0; i<m_discoverableServices.length(); i++) {
+    for (int i = 0; i < m_discoverableServices.length(); i++) {
         m_qzero_conf_browser = new QZeroConf;
         connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
             QVariantMap txt;
@@ -168,8 +170,7 @@ void YioAPI::discoverNetworkServices()
             QMap<QByteArray, QByteArray> txtInfo = item->txt();
 
             QMap<QByteArray, QByteArray>::iterator qi;
-            for (qi = txtInfo.begin(); qi != txtInfo.end(); ++qi)
-            {
+            for (qi = txtInfo.begin(); qi != txtInfo.end(); ++qi) {
                 txt.insert(qi.key(), qi.value());
             }
 
@@ -200,14 +201,13 @@ void YioAPI::discoverNetworkServices(QString mdns)
         QMap<QByteArray, QByteArray> txtInfo = item->txt();
 
         QMap<QByteArray, QByteArray>::iterator i;
-        for (i = txtInfo.begin(); i != txtInfo.end(); ++i)
-        {
+        for (i = txtInfo.begin(); i != txtInfo.end(); ++i) {
             txt.insert(i.key(), i.value());
         }
 
         QVariantMap map;
-        map.insert(QString("name"),item->name());
-        map.insert(QString("ip"),item->ip().toString());
+        map.insert(QString("name"), item->name());
+        map.insert(QString("ip"), item->ip().toString());
         map.insert(QString("port"), item->port());
         map.insert(QString("mdns"), mdns);
         map.insert(QString("txt"), txt);
@@ -343,10 +343,11 @@ void YioAPI::processMessage(QString message)
             QString buttonName = map["name"].toString();
             QString buttonAction = map["action"].toString();
             qDebug() << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
-            if (buttonAction == "pressed")
+            if (buttonAction == "pressed") {
                 emit buttonPressed(buttonName);
-            else
+            } else {
                 emit buttonReleased(buttonName);
+            }
         } else if (type == "log" && m_clients[client]) {
             // Handle log
             Logger* logger = Logger::getInstance();
@@ -355,35 +356,32 @@ void YioAPI::processMessage(QString message)
             qCDebug(m_log) << "LOGGER : " << logAction;
             if (logAction == "start") {
                 // enable logger target, default is queue
-                if (logTarget == "file")
+                if (logTarget == "file") {
                     logger->setFileEnabled(true);
-                else if (logTarget == "console")
+                } else if (logTarget == "console") {
                     logger->setConsoleEnabled(true);
-                else
+                } else {
                     logger->setQueueEnabled(true);
-            }
-            else if (logAction == "stop") {
+                }
+            } else if (logAction == "stop") {
                 // edisable logger queue target, default is queue
-                if (logTarget == "file")
+                if (logTarget == "file") {
                     logger->setFileEnabled(false);
-                else if (logTarget == "console")
+                } else if (logTarget == "console") {
                     logger->setConsoleEnabled(false);
-                else
+                } else {
                     logger->setQueueEnabled(false);
-            }
-            else if (logAction == "showsource") {
+                }
+            } else if (logAction == "showsource") {
                 logger->setShowSourcePos(true);
-            }
-            else if (logAction == "hidesource") {
+            } else if (logAction == "hidesource") {
                 logger->setShowSourcePos(false);
-            }
-            else if (logAction == "purge") {
+            } else if (logAction == "purge") {
                 int hours = 24;
                 if (map.contains("hours"))
                     hours = map["hours"].toInt();
                 logger->purgeFiles(hours);
-            }
-            else if (logAction == "setloglevel") {
+            } else if (logAction == "setloglevel") {
                 // set log level
                 int level = QtMsgType::QtDebugMsg;
                 QString category;
@@ -395,8 +393,7 @@ void YioAPI::processMessage(QString message)
                 }
                 else
                     logger->setLogLevel(level);
-            }
-            else if (logAction == "getmessages") {
+            } else if (logAction == "getmessages") {
                 // get log messages
                 int count = 50;
                 int level = QtMsgType::QtDebugMsg;
@@ -413,8 +410,7 @@ void YioAPI::processMessage(QString message)
                 jsonObj.insert("messages", messages);
                 QJsonDocument json = QJsonDocument(jsonObj);
                 client->sendTextMessage(json.toJson());
-            }
-            else if (logAction == "getinfo") {
+            } else if (logAction == "getinfo") {
                 // get log info
                 QJsonObject info = logger->getInformation();
                 QJsonObject jsonObj;

@@ -42,7 +42,7 @@ class JsonFile : public QObject
     Q_PROPERTY(bool        valid          READ isValid                                CONSTANT)
     Q_PROPERTY(QString     error          READ error                                  CONSTANT)
 
-public:
+  public:
     explicit JsonFile(QObject *parent = nullptr);
     JsonFile(const QString &path, const QString &schemaPath, QObject *parent = nullptr);
 
@@ -58,7 +58,7 @@ public:
      * @brief schemaName Returns the full JSON schema file name including path
      */
     inline QString schemaPath() const { return m_schemaPath; }
-    inline void setSchemaPath(QString &name) { m_schemaPath = name; }
+    inline void setSchemaPath(const QString &name) { m_schemaPath = name; }
     inline bool exists() const { return m_file.exists(); }
     inline bool writeable() const { return m_file.permissions().testFlag(QFileDevice::WriteUser); }
     inline bool readable() const { return m_file.permissions().testFlag(QFileDevice::ReadUser); }
@@ -91,17 +91,17 @@ public:
      */
     static bool validate(const QJsonDocument &doc, const QJsonDocument &schema, QString &errorText);
 
-signals:
+  signals:
     void nameChanged(const QString &name);
 
-public slots:
+  public slots:
     /**
      * @brief setName Sets the full file name
      * @param name The file name including path
      */
     void setName(const QString &name);
 
-private:
+  private:
     bool loadDocument(const QString &path, QJsonDocument &doc);
 
     QFile   m_file;

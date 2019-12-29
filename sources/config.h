@@ -37,19 +37,19 @@ class Config : public QObject, ConfigInterface
     Q_OBJECT
     Q_INTERFACES(ConfigInterface)
 
-public:
-    Q_PROPERTY (bool             valid              READ isValid                                    CONSTANT)
-    Q_PROPERTY (QString          error              READ getError                                   CONSTANT)
-    Q_PROPERTY (QVariantMap      config             READ config               WRITE setConfig       NOTIFY configChanged)
-    Q_PROPERTY (QString          profile            READ profile              WRITE setProfile      NOTIFY profileChanged)
-    Q_PROPERTY (QStringList      profileFavorites   READ profileFavorites                           NOTIFY profileFavoritesChanged)
-    Q_PROPERTY (QVariantMap      settings           READ getSettings          WRITE setSettings     NOTIFY settingsChanged)
-    Q_PROPERTY (QVariantMap      integrations       READ getIntegrations                            CONSTANT)
-    Q_PROPERTY (QVariantMap      entities           READ getAllEntities                             CONSTANT)
-    Q_PROPERTY (QVariantMap      profiles           READ getProfiles                                NOTIFY profilesChanged)
-    Q_PROPERTY (QVariantMap      ui_config          READ getUIConfig          WRITE setUIConfig     NOTIFY uiConfigChanged)
-    Q_PROPERTY (QVariantMap      pages              READ getPages                                   NOTIFY pagesChanged)
-    Q_PROPERTY (QVariantMap      groups             READ getGroups                                  NOTIFY groupsChanged)
+ public:
+    Q_PROPERTY(bool         valid             READ isValid                             CONSTANT)
+    Q_PROPERTY(QString      error             READ getError                            CONSTANT)
+    Q_PROPERTY(QVariantMap  config            READ config            WRITE setConfig   NOTIFY configChanged)
+    Q_PROPERTY(QString      profile           READ profile           WRITE setProfile  NOTIFY profileChanged)
+    Q_PROPERTY(QStringList  profileFavorites  READ profileFavorites                    NOTIFY profileFavoritesChanged)
+    Q_PROPERTY(QVariantMap  settings          READ getSettings       WRITE setSettings NOTIFY settingsChanged)
+    Q_PROPERTY(QVariantMap  integrations      READ getIntegrations                     CONSTANT)
+    Q_PROPERTY(QVariantMap  entities          READ getAllEntities                      CONSTANT)
+    Q_PROPERTY(QVariantMap  profiles          READ getProfiles                         NOTIFY profilesChanged)
+    Q_PROPERTY(QVariantMap  ui_config         READ getUIConfig       WRITE setUIConfig NOTIFY uiConfigChanged)
+    Q_PROPERTY(QVariantMap  pages             READ getPages                            NOTIFY pagesChanged)
+    Q_PROPERTY(QVariantMap  groups            READ getGroups                           NOTIFY groupsChanged)
 
     Q_INVOKABLE bool readConfig(const QString &path);
     Q_INVOKABLE bool writeConfig();
@@ -110,7 +110,7 @@ public:
     }
 
     // Removed from entities
-    Q_INVOKABLE void setFavorite (const QString& entityId, bool value);
+    Q_INVOKABLE void setFavorite(const QString& entityId, bool value);
 
 
     bool isValid() const { return m_error.isEmpty(); }
@@ -120,24 +120,23 @@ public:
     QVariantMap config() { return m_config; }
     void setConfig(const QVariantMap& config);
 
-    QVariant getContextProperty (const QString& name);
+    QVariant getContextProperty(const QString& name);
 
     // get a QML object, you need to have objectName property of the QML object set to be able to use this
-    QObject *getQMLObject(QList<QObject*> nodes,const QString &name);
+    QObject *getQMLObject(QList<QObject*> nodes, const QString &name);
     QObject *getQMLObject(const QString &name);
 
     // profile
     QString profile() { return m_cacheProfile; }
     void setProfile(QString id);
 
-public:
+ public:
     explicit Config(QQmlApplicationEngine *engine = nullptr, QString path = "", QString schemaPath = "");
     virtual ~Config();
 
-    static Config*       getInstance     ()
-    { return s_instance; }
+    static Config* getInstance() { return s_instance; }
 
-signals:
+ signals:
     void configChanged();
     void profileChanged();
     void profileFavoritesChanged();
@@ -147,9 +146,9 @@ signals:
     void pagesChanged();
     void groupsChanged();
 
-private:
-    void syncConfigToCache      ();
-    void syncCacheToConfig      ();
+ private:
+    void syncConfigToCache();
+    void syncCacheToConfig();
 
     static Config*              s_instance;
     QQmlApplicationEngine*      m_engine;
@@ -169,4 +168,4 @@ private:
     QVariantMap                 m_cacheUIGroups;
 };
 
-#endif // CONFIG_H
+#endif  // CONFIG_H

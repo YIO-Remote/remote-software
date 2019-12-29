@@ -35,8 +35,8 @@
 class HardwareFactory : public QObject
 {
     Q_OBJECT
-public:
 
+  public:
     /**
      * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details One of the build operations must be called once before using the singleton instance() accessor.
@@ -66,14 +66,14 @@ public:
 
     virtual WebServerControl* getWebServerControl() = 0;
 
-signals:
+  signals:
 
-protected:
-    HardwareFactory(QObject *parent = nullptr);
+  protected:
+    explicit HardwareFactory(QObject *parent = nullptr);
     virtual ~HardwareFactory();
 
-private:
+  private:
     static HardwareFactory* s_instance;
 };
 
-#endif // HARDWAREFACTORY_H
+#endif  // HARDWAREFACTORY_H

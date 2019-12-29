@@ -21,14 +21,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <valijson/schema.hpp>
-#include <valijson/schema_parser.hpp>
-#include <valijson/validator.hpp>
-#include <valijson/validation_results.hpp>
-#include <valijson/adapters/qtjson_adapter.hpp>
-#include <valijson/utils/qtjson_utils.hpp>
-
-#include <iostream>
+#include "jsonfile.h"
 
 #include <QLoggingCategory>
 #include <QtDebug>
@@ -37,8 +30,15 @@
 #include <QDir>
 #include <QJsonDocument>
 
-#include "jsonfile.h"
+#include <iostream>
+#include <string>
 
+#include <valijson/schema.hpp>
+#include <valijson/schema_parser.hpp>
+#include <valijson/validator.hpp>
+#include <valijson/validation_results.hpp>
+#include <valijson/adapters/qtjson_adapter.hpp>
+#include <valijson/utils/qtjson_utils.hpp>
 
 using std::endl;
 
@@ -128,9 +128,11 @@ QVariant JsonFile::read()
     if (!validate(doc, m_error)) {
         qCWarning(CLASS_LC) << "Read JSON document failed schema validation:" << m_file.fileName();
         // FIXME decide on how to handle errors:
-        // a) only schema validated docs are used: -> app needs fatal error handling during startup, otherwise: spinning circle of death
-        // b) best effort: return read configuration and hope for the best :-/ -> client can still call isValid() to check validation status
-        //return QVariant();
+        // a) only schema validated docs are used:
+        //    -> app needs fatal error handling during startup, otherwise: spinning circle of death
+        // b) best effort: return read configuration and hope for the best :-/
+        //    -> client can still call isValid() to check validation status
+        // return QVariant();
     }
 
     return doc.toVariant();
@@ -173,7 +175,7 @@ bool JsonFile::validate(const QJsonDocument &doc, QString &errorText)
         return true;
     }
 
-    // TODO in case there are too many read or write calls we should probably cache the schema document
+    // TODO(zehnm) in case there are too many read or write calls we should probably cache the schema document
      QJsonDocument schemaDoc;
     if (!loadDocument(m_schemaPath, schemaDoc)) {
         return false;
