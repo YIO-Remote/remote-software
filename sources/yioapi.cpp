@@ -124,7 +124,7 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     // check what is the type of the new entity
     QString entityType = entity.value("type").toString();
 
-    //find the entities key and insert the new entity
+    // find the entities key and insert the new entity
     for (int i = 0; i < e.length(); i++) {
         if (e[i].toMap().value("type").toString() == entityType) {
             // get the data key array
@@ -175,8 +175,8 @@ void YioAPI::discoverNetworkServices()
             }
 
             QVariantMap map;
-            map.insert(QString("name"),item->name());
-            map.insert(QString("ip"),item->ip().toString());
+            map.insert(QString("name"), item->name());
+            map.insert(QString("ip"), item->ip().toString());
             map.insert(QString("port"), item->port());
             map.insert(QString("mdns"), m_discoverableServices[i]);
             map.insert(QString("txt"), txt);
@@ -280,7 +280,8 @@ void YioAPI::processMessage(QString message)
             if (map.contains("token")) {
                 qCDebug(m_log) << "Has token";
 
-//                QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(), QCryptographicHash::Sha512);
+                // QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(),
+                //                                            QCryptographicHash::Sha512);
 
                 if (map.value("token").toString() == m_token) {
                     qDebug() << "Token OK";
@@ -378,21 +379,23 @@ void YioAPI::processMessage(QString message)
                 logger->setShowSourcePos(false);
             } else if (logAction == "purge") {
                 int hours = 24;
-                if (map.contains("hours"))
+                if (map.contains("hours")) {
                     hours = map["hours"].toInt();
+                }
                 logger->purgeFiles(hours);
             } else if (logAction == "setloglevel") {
                 // set log level
                 int level = QtMsgType::QtDebugMsg;
                 QString category;
-                if (map.contains("level"))
+                if (map.contains("level")) {
                     level = logger->toMsgType(map["level"].toString());
+                }
                 if (map.contains("category")) {
                     category = map["category"].toString();
                     logger->setCategoryLogLevel(category, level);
-                }
-                else
+                } else {
                     logger->setLogLevel(level);
+                }
             } else if (logAction == "getmessages") {
                 // get log messages
                 int count = 50;

@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     Config config(&engine, configPath, schemaPath);
     if (!config.isValid()) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config.getError();
-        // TODO show error screen with shutdon / reboot / web-configurator option
+        // TODO(marton) show error screen with shutdon / reboot / web-configurator option
     }
     engine.rootContext()->setContextProperty("config", &config);
 

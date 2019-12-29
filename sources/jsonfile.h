@@ -42,7 +42,7 @@ class JsonFile : public QObject
     Q_PROPERTY(bool        valid          READ isValid                                CONSTANT)
     Q_PROPERTY(QString     error          READ error                                  CONSTANT)
 
-  public:
+ public:
     explicit JsonFile(QObject *parent = nullptr);
     JsonFile(const QString &path, const QString &schemaPath, QObject *parent = nullptr);
 
@@ -91,17 +91,17 @@ class JsonFile : public QObject
      */
     static bool validate(const QJsonDocument &doc, const QJsonDocument &schema, QString &errorText);
 
-  signals:
+ signals:
     void nameChanged(const QString &name);
 
-  public slots:
+ public slots:
     /**
      * @brief setName Sets the full file name
      * @param name The file name including path
      */
     void setName(const QString &name);
 
-  private:
+ private:
     bool loadDocument(const QString &path, QJsonDocument &doc);
 
     QFile   m_file;
@@ -109,4 +109,4 @@ class JsonFile : public QObject
     QString m_error;
 };
 
-#endif // JSONFILE_H
+#endif  // JSONFILE_H

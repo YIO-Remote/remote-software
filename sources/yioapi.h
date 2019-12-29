@@ -31,7 +31,6 @@
 #include <QLoggingCategory>
 
 #include "yioapiinterface.h"
-//#include "qzeroconf.h"
 #include "../qtzeroconf/qzeroconf.h"
 #include "config.h"
 #include "integrations/integrations.h"
@@ -42,13 +41,18 @@ class YioAPI : public YioAPIInterface
     Q_OBJECT
     Q_INTERFACES(YioAPIInterface)
 
-  public:
-    Q_PROPERTY(bool running       READ running            NOTIFY runningChanged)      // returns the state of the API
-    Q_PROPERTY(QString hostname   READ hostname           NOTIFY hostnameChanged)     // returns the hostname of the remote
+ public:
+    // returns the state of the API
+    Q_PROPERTY(bool running       READ running        NOTIFY runningChanged)
+    // returns the hostname of the remote
+    Q_PROPERTY(QString hostname   READ hostname       NOTIFY hostnameChanged)
 
-    Q_INVOKABLE void start() override;                                                           // start the API
-    Q_INVOKABLE void stop() override;                                                            // stop the API
-    Q_INVOKABLE void sendMessage(QString message) override;                                      // send a message to all clients
+    Q_INVOKABLE void start() override;
+    Q_INVOKABLE void stop() override;
+    /**
+     * @brief sendMessage Sends a message to all clients
+     */
+    Q_INVOKABLE void sendMessage(QString message) override;
 
 
     // CONFIG MANIPULATION METHODS
@@ -58,7 +62,7 @@ class YioAPI : public YioAPIInterface
 
 
     // NETWORK SERVICES DISCOVERY
-    Q_PROPERTY(QVariantList   discoveredServices          READ discoveredServices     NOTIFY discoveredServicesChanged)
+    Q_PROPERTY(QVariantList discoveredServices        READ discoveredServices   NOTIFY discoveredServicesChanged)
     Q_INVOKABLE void discoverNetworkServices() override;
     Q_INVOKABLE void discoverNetworkServices(QString mdns) override;
 
@@ -74,7 +78,7 @@ class YioAPI : public YioAPIInterface
 
     static YioAPI*  getInstance() { return s_instance; }
 
-  signals:
+ signals:
     void closed();
     void messageReceived(QVariantMap message);
     void runningChanged();
@@ -84,12 +88,12 @@ class YioAPI : public YioAPIInterface
     void buttonReleased(QString button);
     // void serviceDiscovered(QMap<QString, QVariantMap> services);
 
-  public slots:
+ public slots:
     void onNewConnection();
     void processMessage(QString message);
     void onClientDisconnected();
 
-  private:
+ private:
     QLoggingCategory             m_log;
     QWebSocketServer*            m_server;
     QMap<QWebSocket *, bool>     m_clients;  // websocket client, true if authentication was successful
@@ -99,8 +103,8 @@ class YioAPI : public YioAPIInterface
     static YioAPI*               s_instance;
     QQmlApplicationEngine*       m_engine;
 
-    QString                      m_token = "0";  //"c82b5fd6bea6fc3faf9a30bb864a9ee2"
-    //QCryptographicHash::hash(m_token.toLocal8Bit(), QCryptographicHash::Sha512);
+    QString                      m_token = "0";  // "c82b5fd6bea6fc3faf9a30bb864a9ee2"
+    // QCryptographicHash::hash(m_token.toLocal8Bit(), QCryptographicHash::Sha512);
     QByteArray                   m_hash = "{U\xC0<$\xF7\n\xA7PA\xC3=\xBEk\xF5\xC1\xCA\x8B\t\x91\xA0\x9Et\xBA""E\xE9\xA0)\xE4\x07^E\x04\x17Xg\xE4)\x04\xB7\xD4\x9D,\x19%\xD7\xA1\xDC\x84U\x83\xA2\xAA\x1D\xD7:\xBE\xF6""1\xFA\x90\xED\x16\xBB";
     QString                      m_hostname;
 

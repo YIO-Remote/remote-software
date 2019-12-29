@@ -52,8 +52,13 @@ HardwareFactory *HardwareFactory::build(const QString &configFileName, const QSt
 
     QVariantMap config = hwCfg.read().toMap();
     if (!hwCfg.isValid()) {
-        // FIXME decide how to proceed: a) use an empty configuration for build to use default values, b) return null and let caller handle this as a fatal error.
-        qCCritical(CLASS_LC).noquote() << "Invalid hardware configuration! Ignoring configuration file and using default values. Errors:" << endl << hwCfg.error();
+        // FIXME decide how to proceed:
+        // a) use an empty configuration for build to use default values
+        // b) return null and let caller handle this as a fatal error.
+        qCCritical(CLASS_LC).noquote() << "Invalid hardware configuration!"
+                                       << "Ignoring configuration file and using default values. Errors:"
+                                       << endl
+                                       << hwCfg.error();
         config.clear();
     }
     return build(config);
@@ -62,14 +67,15 @@ HardwareFactory *HardwareFactory::build(const QString &configFileName, const QSt
 HardwareFactory* HardwareFactory::build(const QVariantMap &config)
 {
     if (s_instance != nullptr) {
-        qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow! HardwareFactory already initialized, ignoring build() call.";
+        qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow!"
+                             << "HardwareFactory already initialized, ignoring build() call.";
         return s_instance;
     }
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
 #if defined (Q_OS_LINUX)
     s_instance = new HardwareFactoryRPi0(config);
-#else // anyone wants to write Android, macOS or Windows factories?
+#else  // anyone wants to write Android, macOS or Windows factories?
     s_instance = new HardwareFactoryMock(config);
 #endif
 
