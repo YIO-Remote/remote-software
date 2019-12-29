@@ -263,6 +263,11 @@ void Remote::channel(int ch)
     }
 }
 
+void Remote::source()
+{
+    command(RemoteDef::C_SOURCE, "");
+}
+
 // volume commands
 void Remote::volumeUp()
 {

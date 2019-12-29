@@ -226,7 +226,7 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
     if (m_mediaplayersPlaying.contains(entity_id)) {
 
         // use a timer to remove the entity with a delay
-        QTimer* timer = new QTimer(this);
+        QTimer* timer = new QTimer();
         timer->setSingleShot(true);
         connect(timer, &QTimer::timeout, this, [=](){
             if (m_mediaplayersPlaying.contains(entity_id))

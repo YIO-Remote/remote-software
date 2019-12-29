@@ -158,62 +158,27 @@ Rectangle {
         currentIndex: 0
 
         //buttons
-        Item {
+        Loader {
+            asynchronous: true
+            sourceComponent: buttonView
         }
 
         // channels
-        Item {
-            GridView {
-                id: channelGridView
-                width: parent.width-50
-                height: parent.height
-                anchors.horizontalCenter: parent.horizontalCenter
-                cellWidth: width/3; cellHeight: cellWidth
-                clip: true
-
-                model: obj.channels
-                delegate: Item {
-                    width: channelGridView.cellWidth
-                    height: width
-
-                    Rectangle {
-                        id: imageContainer
-                        width: 80
-                        height: width
-                        anchors.centerIn: parent
-                        radius: cornerRadius
-                        color: colorDark
-
-                        layer.enabled: true
-                        layer.effect: OpacityMask {
-                            maskSource: Item {
-                                width: imageContainer.width
-                                height: imageContainer.height
-                                Rectangle {
-                                    anchors.fill: parent
-                                    radius: cornerRadius
-                                }
-                            }
-                        }
-
-                        Image {
-                            anchors.fill: parent
-                            fillMode: Image.PreserveAspectCrop
-                            asynchronous: true
-                            source: "file:/" + obj.channels[index].image
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                haptic.playEffect("click");
-                                obj.channel(obj.channels[index].number);
-                            }
-                        }
-                    }
-                }
-            }
+        Loader {
+            active: SwipeView.isCurrentItem
+            asynchronous: true
+            sourceComponent: channelView
         }
+    }
+
+    Component {
+        id: buttonView
+        CardButtons {}
+    }
+
+    Component {
+        id: channelView
+        CardChannels {}
     }
 
     PageIndicator {
@@ -223,7 +188,6 @@ Rectangle {
         currentIndex: pagesSwipeView.currentIndex
 
         anchors.bottom: tooltips.top
-        anchors.bottomMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
 
         delegate: Rectangle {
@@ -240,5 +204,109 @@ Rectangle {
         width: parent.width
         height: 80
         anchors.bottom: parent.bottom
+
+        Item {
+            id: leftToolTip
+            width: childrenRect.width
+            height: 60
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.verticalCenter: parent.verticalCenter
+
+            Text {
+                color: colorText
+                text: "\uE91B"
+                width: 60
+                height: 60
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 60 }
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                color: colorText
+                opacity: 0.5
+                text: qsTr("Mute") + translateHandler.emptyString
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 50
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 24
+                lineHeight: 1
+            }
+        }
+
+        Item {
+            id: middleToolTip
+            width: childrenRect.width
+            height: 60
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+
+            Text {
+                color: colorText
+                text: "\uE91D"
+                width: 60
+                height: 60
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 60 }
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                color: colorText
+                opacity: 0.5
+                text: qsTr("Back") + translateHandler.emptyString
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 50
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 24
+                lineHeight: 1
+            }
+        }
+
+        Item {
+            id: rightToolTip
+            width: childrenRect.width
+            height: 60
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            anchors.verticalCenter: parent.verticalCenter
+
+            Text {
+                color: colorText
+                text: "\uE91C"
+                width: 60
+                height: 60
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 60 }
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                color: colorText
+                opacity: 0.5
+                text: qsTr("Menu") + translateHandler.emptyString
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 50
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 24
+                lineHeight: 1
+            }
+        }
     }
 }

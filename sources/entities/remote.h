@@ -81,6 +81,8 @@ public:
     Q_INVOKABLE void            guide();
     Q_INVOKABLE void            channel(int ch);
 
+    Q_INVOKABLE void            source();
+
     // volume commands
     Q_INVOKABLE void            volumeUp();
     Q_INVOKABLE void            volumeDown();
