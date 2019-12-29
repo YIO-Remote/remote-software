@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,28 +20,27 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORYMOCK_H
-#define HARDWAREFACTORYMOCK_H
+#ifndef INTERRUPTHANDLER_H
+#define INTERRUPTHANDLER_H
 
-#include "hardwarefactory.h"
+#include <QObject>
 
-/**
- * @brief A mock implementation of the abstract hardware factory for unsupported platforms.
- */
-class HardwareFactoryMock : public HardwareFactory
+class InterruptHandler : public QObject
 {
     Q_OBJECT
-public:
-    explicit HardwareFactoryMock(const QVariantMap &config, QObject* parent = nullptr);
 
-    // HardwareFactory interface
+    Q_PROPERTY(QString button READ getButton NOTIFY buttonPressed)
+
 public:
-    virtual WifiControl *getWifiControl() override;
-    virtual SystemService *getSystemService() override;
-    virtual WebServerControl *getWebServerControl() override;
-    virtual DisplayControl *getDisplayControl() override;
-    virtual BatteryFuelGauge *getBatteryFuelGauge() override;
-    virtual InterruptHandler *getInterruptHandler() override;
+    explicit InterruptHandler(QObject *parent = nullptr) : QObject(parent) {}
+
+    Q_INVOKABLE virtual void shutdown() = 0;
+
+    virtual QString getButton() = 0;
+
+signals:
+    void buttonPressed();
+
 };
 
-#endif // HARDWAREFACTORYMOCK_H
+#endif // INTERRUPTHANDLER_H

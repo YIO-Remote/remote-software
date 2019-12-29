@@ -23,6 +23,8 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 
+import DisplayControl 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
@@ -241,7 +243,7 @@ Item {
                 cleaningmodeButton.checked = true
                 touchEventCatcher.enabled = true
                 standbyControl.setBrightness(0);
-                standbyControl.displayControl.setmode("standbyon");
+                DisplayControl.setmode("standbyon");
                 cleaningmodeButtonTimer.start();
             }
 

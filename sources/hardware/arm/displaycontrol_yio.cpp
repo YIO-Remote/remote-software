@@ -20,31 +20,37 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include "display_control.h"
 
+#include <QLoggingCategory>
 #include <QtDebug>
+#include <QFuture>
+#include <QtConcurrent/QtConcurrentRun>
 
-#define CLK 107
+#include <wiringPi.h>
+#include <mcp23017.h>
+
+#include "displaycontrol_yio.h"
+#include "mcp23017_handler.h"
+
+
+#define CLK  107
 #define MOSI 106
-#define CS 105
-#define RST 104
+#define CS   105
+#define RST  104
 
-DisplayControl::DisplayControl()
+DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent)
 {
     setup();
 }
 
-void DisplayControl::setup(void)
+void DisplayControlYio::setup()
 {
-#ifdef __arm__
     wiringPiSetup () ;
     mcp23017Setup (100, 0x21);
-#endif
 }
 
-void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1)
+void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1)
 {
-#ifdef __arm__
     int32_t i;
     int32_t control_bit;
 
@@ -132,38 +138,32 @@ void DisplayControl::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data
     digitalWrite(CLK, LOW);
     digitalWrite(MOSI, LOW);
     nanosleep(&ts3, NULL);
-#endif
 }
 
-bool DisplayControl::setmode(const QString &mode)
+bool DisplayControlYio::setmode(const QString &mode)
 {
     if (mode == "standbyon") {
-#ifdef __arm__
         QFuture<void> future = QtConcurrent::run([&](){
             delay(400); // wait until dimming of the display is done
             spi_screenreg_set(0x10, 0xffff, 0xffff);
             delay(120);
             spi_screenreg_set(0x28, 0xffff, 0xffff);
         });
-#endif
         return true;
     }
     if (mode == "standbyoff") {
-#ifdef __arm__
         QFuture<void> future = QtConcurrent::run([&](){
             spi_screenreg_set(0x29, 0xffff, 0xffff);
             spi_screenreg_set(0x11, 0xffff, 0xffff);
         });
-#endif
         return true;
     }
     return false;
 }
 
-void DisplayControl::setBrightness(int from, int to)
+void DisplayControlYio::setBrightness(int from, int to)
 {
     QFuture<void> future = QtConcurrent::run([&](int from, int to) {
-#ifdef __arm__
         if (from == 0 && digitalRead(26) == 0) {
             pinMode(26, PWM_OUTPUT);
             pwmSetMode(PWM_MODE_MS);
@@ -191,24 +191,19 @@ void DisplayControl::setBrightness(int from, int to)
                 delay(10);
             }
         }
-#endif
     }, from, to);
 }
 
-void DisplayControl::batteryChargingOn()
+void DisplayControlYio::batteryChargingOn()
 {
-#ifdef __arm__
     pinMode(108, OUTPUT);
     digitalWrite(108, LOW);
     qDebug() << "Turning battery charging on";
-#endif
 }
 
-void DisplayControl::batteryChargingOff()
+void DisplayControlYio::batteryChargingOff()
 {
-#ifdef __arm__
     pinMode(108, OUTPUT);
     digitalWrite(108, HIGH);
     qDebug() << "Turning battery charging off";
-#endif
 }

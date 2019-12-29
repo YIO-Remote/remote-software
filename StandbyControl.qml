@@ -100,13 +100,9 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY CONTROL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property alias displayControl: displayControl
-    DisplayControl {
-        id: displayControl
-    }
 
     function setBrightness(brightness) {
-        displayControl.setBrightness(display_brightness_old, brightness);
+        DisplayControl.setBrightness(display_brightness_old, brightness);
         display_brightness_old = brightness;
         display_brightness = brightness;
     }
@@ -137,7 +133,7 @@ Item {
 
             case "standby":
                 // turn off standby
-                if (displayControl.setmode("standbyoff")) {
+                if (DisplayControl.setmode("standbyoff")) {
                     standbyoffDelay.start();
                 }
 
@@ -149,7 +145,7 @@ Item {
                 wifi.on()
 
                 // turn off standby
-                if (displayControl.setmode("standbyoff")) {
+                if (DisplayControl.setmode("standbyoff")) {
                     standbyoffDelay.start();
                 }
 
@@ -267,7 +263,7 @@ Item {
                 setBrightness(0);
 
                 // put the display to standby mode
-                displayControl.setmode("standbyon");
+                DisplayControl.setmode("standbyon");
 
                 // stop bluetooth scanning
                 if (config.settings.bluetootharea) bluetoothArea.stopScan();

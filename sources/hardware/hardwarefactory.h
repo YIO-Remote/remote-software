@@ -24,10 +24,14 @@
 #define HARDWAREFACTORY_H
 
 #include <QObject>
+#include <QQmlApplicationEngine>
 
 #include "systemservice.h"
 #include "webserver_control.h"
 #include "wifi_control.h"
+#include "displaycontrol.h"
+#include "batteryfuelgauge.h"
+#include "interrupthandler.h"
 
 /**
  * @brief Abstract hardware factory. Supported platforms are implemented in concrete factories.
@@ -64,6 +68,16 @@ public:
     virtual SystemService* getSystemService() = 0;
 
     virtual WebServerControl* getWebServerControl() = 0;
+
+    virtual DisplayControl* getDisplayControl() = 0;
+
+    virtual BatteryFuelGauge* getBatteryFuelGauge() = 0;
+
+    virtual InterruptHandler* getInterruptHandler() = 0;
+
+    static QObject *batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
+    static QObject *displayControlProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
+    static QObject *interruptHandlerProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
 
 signals:
 

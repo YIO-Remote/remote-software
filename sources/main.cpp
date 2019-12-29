@@ -33,11 +33,9 @@
 #include "translation.h"
 
 #include "hardware/hardwarefactory.h"
-#include "hardware/display_control.h"
+#include "hardware/displaycontrol.h"
 #include "hardware/touchdetect.h"
-#include "hardware/interrupt_handler.h"
 #include "hardware/drv2605.h"
-#include "hardware/bq27441.h"
 #include "hardware/proximity_gesture_control.h"
 #include "hardware/wifi_control.h"
 
@@ -111,11 +109,9 @@ int main(int argc, char *argv[])
     // LOADING CUSTOM COMPONENTS
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
-    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
+
     qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
-    qmlRegisterType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler");
     qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
-    qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
     qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum", "Not creatable as it is an enum type");
@@ -138,6 +134,12 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();
     engine.rootContext()->setContextProperty("webserver", webServerControl);
+    DisplayControl* displayControl = hwFactory->getDisplayControl();
+    engine.rootContext()->setContextProperty("displayControl", displayControl);
+
+    qmlRegisterSingletonType<BatteryFuelGauge>("Battery", 1, 0, "Battery", &HardwareFactory::batteryFuelGaugeProvider);
+    qmlRegisterSingletonType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl", &HardwareFactory::displayControlProvider);
+    qmlRegisterSingletonType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler", &HardwareFactory::interruptHandlerProvider);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;

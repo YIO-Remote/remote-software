@@ -28,45 +28,36 @@
 #include <QSocketNotifier>
 #include <QtDebug>
 
-#ifdef __arm__
-#include "mcp23017.h"
-#endif
+#include "../interrupthandler.h"
 
-class InterruptHandler : public QObject
+#include "mcp23017_handler.h"
+
+class Mcp23017InterruptHandler : public InterruptHandler
 {
     Q_OBJECT
 
-#ifdef __arm__
-    QSocketNotifier *notifier;
-    QFile *file;
-#endif
-
-public:
-    Q_PROPERTY(QString button READ getButton NOTIFY buttonPressed)
-
-    Q_INVOKABLE void shutdown()
-    {
-#ifdef __arm__
-        mcp.shutdown();
-#endif
-    }
-
 public:
 
-    InterruptHandler()
+    Mcp23017InterruptHandler(QObject *parent = nullptr) : InterruptHandler(parent)
     {
         setupGPIO();
     }
 
-    ~InterruptHandler(){}
+    //~Mcp23017InterruptHandler() override {}
 
-    QString getButton() {
+    Q_INVOKABLE virtual void shutdown() override
+    {
+        mcp.shutdown();
+    }
+
+    virtual QString getButton() override {
         return m_button;
     }
 
+private:
+
     void setupGPIO()
     {
-#ifdef __arm__
         QFile exportFile("/sys/class/gpio/export");
         if (!exportFile.open(QIODevice::WriteOnly)) {
             qDebug() << "Error opening: /sys/class/gpio/export";
@@ -98,13 +89,11 @@ public:
         // connect to a signal
         notifier = new QSocketNotifier(file->handle(), QSocketNotifier::Exception);
         notifier->setEnabled(true);
-        connect(notifier, &QSocketNotifier::activated, this, &InterruptHandler::interruptHandler);
-#endif
+        connect(notifier, &QSocketNotifier::activated, this, &Mcp23017InterruptHandler::interruptHandler);
     }
 
     void interruptHandler()
     {
-#ifdef __arm__
         QFile file("/sys/class/gpio/gpio18/value");
         if (!file.open(QIODevice::ReadOnly)) {
             qDebug() << "Error opening: /sys/class/gpio/gpio18/value";
@@ -124,17 +113,13 @@ public:
         }
 
         delay(10);
-#endif
     }
 
 private:
-    QString m_button;
-#ifdef __arm__
-    MCP23017 mcp = MCP23017();
-#endif
-
-signals:
-    void buttonPressed();
+    QString         m_button;
+    MCP23017        mcp = MCP23017();
+    QSocketNotifier *notifier;
+    QFile           *file;
 
 };
 

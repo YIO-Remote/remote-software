@@ -23,7 +23,7 @@
 
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++14 disable-desktop
-# disable qtquickcompiler for QML debugging!
+#disable qtquickcompiler for QML debugging!
 CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -45,23 +45,26 @@ HEADERS += \
     sources/entities/weather.h \
     sources/entities/weatherinterface.h \
     sources/fileio.h \
+    sources/hardware/batteryfuelgauge.h \
+    sources/hardware/batteryfuelgauge_mock.h \
+    sources/hardware/displaycontrol.h \
+    sources/hardware/displaycontrol_mock.h \
+    sources/hardware/interrupthandler_mock.h \
     sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
     sources/integrations/integrationinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
-    sources/hardware/display_control.h \
     sources/logger.h \
     sources/translation.h \
     sources/hardware/touchdetect.h \
     sources/hardware/proximity_gesture_control.h \
-    sources/hardware/interrupt_handler.h \
     sources/hardware/drv2605.h \
-    sources/hardware/bq27441.h \
     sources/hardware/hardwarefactory.h \
     sources/hardware/hardwarefactory_mock.h \
     sources/hardware/hw_config.h \
+    sources/hardware/interrupthandler.h \
     sources/hardware/systemd.h \
     sources/hardware/systemservice.h \
     sources/hardware/systemservice_mock.h \
@@ -106,9 +109,7 @@ SOURCES += \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
-    sources/hardware/display_control.cpp \
     sources/hardware/drv2605.cpp \
-    sources/hardware/bq27441.cpp \
     sources/hardware/hardwarefactory.cpp \
     sources/hardware/hardwarefactory_mock.cpp \
     sources/hardware/systemd.cpp \
@@ -162,19 +163,26 @@ linux {
     }
 
     HEADERS += \
-        sources/hardware/wifi_shellscripts.h \
-        sources/hardware/hardwarefactory_rpi0.h
+        sources/hardware/hardwarefactory_rpi0.h \
+        sources/hardware/wifi_shellscripts.h
     SOURCES += \
-        sources/hardware/wifi_shellscripts.cpp \
-        sources/hardware/hardwarefactory_rpi0.cpp
+        sources/hardware/hardwarefactory_rpi0.cpp \
+        sources/hardware/wifi_shellscripts.cpp
 
     equals(QT_ARCH, arm): {
         HEADERS += \
-            sources/hardware/apds9960.h \
-            sources/hardware/mcp23017.h
+            sources/hardware/hardwarefactory_yio.h \
+            sources/hardware/arm/apds9960.h \
+            sources/hardware/arm/bq27441.h \
+            sources/hardware/arm/displaycontrol_yio.h \
+            sources/hardware/arm/mcp23017_interrupt.h \
+            sources/hardware/arm/mcp23017_handler.h
 
         SOURCES += \
-            sources/hardware/apds9960.cpp
+            sources/hardware/hardwarefactory_yio.cpp \
+            sources/hardware/arm/apds9960.cpp \
+            sources/hardware/arm/bq27441.cpp \
+            sources/hardware/arm/displaycontrol_yio.cpp
     }
 
 }

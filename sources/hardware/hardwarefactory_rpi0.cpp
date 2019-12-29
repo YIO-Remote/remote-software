@@ -31,6 +31,9 @@
 #include "systemd.h"
 #include "webserver_lighttpd.h"
 #include "wifi_shellscripts.h"
+#include "displaycontrol_mock.h"
+#include "batteryfuelgauge_mock.h"
+#include "interrupthandler_mock.h"
 
 #if defined (CONFIG_WPA_SUPPLICANT)
     #include "wifi_wpasupplicant.h"
@@ -38,11 +41,66 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
 
-HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *parent) : HardwareFactory(parent)
+HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *parent)
+    : HardwareFactory(parent)
+    , p_wifiControl(nullptr)
+    , p_systemService(nullptr)
+    , p_webServerControl(nullptr)
+    , p_displayControl(nullptr)
+    , p_batteryFuelGauge(nullptr)
+    , p_interruptHandler(nullptr)
 {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
-    // -- System services - RPi uses systemd
+    p_systemService = buildSystemService(config);
+    p_webServerControl = buildWebServerControl(config);
+    p_wifiControl = buildWifiControl(config);
+    p_displayControl = buildDisplayControl(config);
+    p_batteryFuelGauge = buildBatteryFuelGauge(config);
+    p_interruptHandler = buildInterruptHandler(config);
+}
+
+WifiControl *HardwareFactoryRPi0::getWifiControl()
+{
+    assert(p_wifiControl);
+    return p_wifiControl;
+}
+
+SystemService *HardwareFactoryRPi0::getSystemService()
+{
+    assert(p_systemService);
+    return p_systemService;
+}
+
+
+WebServerControl *HardwareFactoryRPi0::getWebServerControl()
+{
+    assert(p_webServerControl);
+    return p_webServerControl;
+}
+
+
+DisplayControl *HardwareFactoryRPi0::getDisplayControl()
+{
+    assert(p_displayControl);
+    return p_displayControl;
+}
+
+BatteryFuelGauge *HardwareFactoryRPi0::getBatteryFuelGauge()
+{
+    assert(p_batteryFuelGauge);
+    return p_batteryFuelGauge;
+}
+
+InterruptHandler *HardwareFactoryRPi0::getInterruptHandler()
+{
+    assert(p_interruptHandler);
+    return p_interruptHandler;
+}
+
+// -- System services - RPi uses systemd
+SystemService *HardwareFactoryRPi0::buildSystemService(const QVariantMap &config)
+{
     QMap<QString, QVariant> systemdCfg = config.value(HW_CFG_SYSTEMSERVICE).toMap().value(HW_CFG_SYSTEMD).toMap();
     QMap<QString, QVariant> serviceCfg = systemdCfg.value(HW_CFG_SYSTEMD_SERVICES).toMap();
 
@@ -57,21 +115,30 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
     serviceNameMap.insert(SystemServiceName::ZEROCONF, serviceCfg.value(HW_CFG_SERVICE_ZEROCONF, HW_DEF_SERVICE_ZEROCONF).toString());
     serviceNameMap.insert(SystemServiceName::NETWORKING, serviceCfg.value(HW_CFG_SERVICE_NETWORKING, HW_DEF_SERVICE_NETWORKING).toString());
 
+
     Systemd *systemd = new Systemd(serviceNameMap, this);
     systemd->setUseSudo(systemdCfg.value(HW_CFG_SYSTEMD_SUDO, HW_DEF_SYSTEMD_SUDO).toBool());
     systemd->setSystemctlTimeout(systemdCfg.value(HW_CFG_SYSTEMD_TIMEOUT, HW_DEF_SYSTEMD_TIMEOUT).toInt());
 
-    p_systemService = systemd;
+    return systemd;
+}
 
-    // -- Web Server control - RPi uses httpd
+// -- Web Server control - RPi uses httpd
+WebServerControl *HardwareFactoryRPi0::buildWebServerControl(const QVariantMap &config)
+{
     QMap<QString, QVariant> webCfg = config.value(HW_CFG_WEBSERVER).toMap().value(HW_CFG_LIGHTTPD).toMap();
-    WebServerLighttpd *lighttpd = new WebServerLighttpd(p_systemService, this);
+    WebServerLighttpd *lighttpd = new WebServerLighttpd(getSystemService(), this);
     lighttpd->setConfigFile(webCfg.value(HW_CFG_LIGHTTPD_CFG_FILE, HW_DEF_LIGHTTPD_CFG_FILE).toString());
     lighttpd->setWifiSetupConfig(webCfg.value(HW_CFG_LIGHTTPD_WIFI_CFG, HW_DEF_LIGHTTPD_WIFI_CFG).toString());
     lighttpd->setWebConfiguratorConfig(webCfg.value(HW_CFG_LIGHTTPD_WEB_CFG, HW_DEF_LIGHTTPD_WEB_CFG).toString());
-    p_webServerControl = lighttpd;
+    return lighttpd;
+}
 
-    // -- WiFi control - RPi uses wpa_supplicant control interface and as fallback the old shell scripts
+
+// -- WiFi control - RPi uses wpa_supplicant control interface and as fallback the old shell scripts
+WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &config)
+{
+    WifiControl *wifiControl = nullptr;
     QMap<QString, QVariant> wifiCfg = config.value(HW_CFG_WIFI).toMap();
     // determine which interface driver to use
     bool useShellScript = wifiCfg.value(HW_CFG_WIFI_USE_SH, HW_DEF_WIFI_USE_SH).toBool();
@@ -81,18 +148,18 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
     wpaSupplicantAvailable = true;
     if (!useShellScript) {
         qCDebug(CLASS_LC()) << "Using wpa_supplicant as WiFi control interface";
-        WifiWpaSupplicant *wps = new WifiWpaSupplicant(p_webServerControl, p_systemService, this);
+        WifiWpaSupplicant *wps = new WifiWpaSupplicant(getWebServerControl(), getSystemService(), this);
 
         QMap<QString, QVariant> wpaCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_WPA_SUPP).toMap();
         wps->setWpaSupplicantSocketPath(wpaCfg.value(HW_CFG_WIFI_WPA_SOCKET, HW_DEF_WIFI_WPA_SOCKET).toString());
         wps->setRemoveNetworksBeforeJoin(wpaCfg.value(HW_CFG_WIFI_RM_BEFORE_JOIN, HW_DEF_WIFI_RM_BEFORE_JOIN).toBool());
 
-        p_wifiControl = wps;
+        wifiControl = wps;
     }
 #endif
     if (useShellScript || !wpaSupplicantAvailable) {
         qCDebug(CLASS_LC()) << "Using shell scripts to control WiFi";
-        WifiShellScripts *wss = new WifiShellScripts(p_systemService, this);
+        WifiShellScripts *wss = new WifiShellScripts(getSystemService(), this);
 
         QMap<QString, QVariant> shCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_SHELLSCRIPT).toMap();
         wss->setUseSudo(shCfg.value(HW_CFG_WIFI_SH_SUDO, HW_DEF_WIFI_SH_SUDO).toBool());
@@ -106,33 +173,39 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
         wss->setScriptClearNetworks(shCfg.value(HW_CFG_WIFI_SH_CLEAR_NET, HW_DEF_WIFI_SH_CLEAR_NET).toString());
         wss->setScriptStartAP(shCfg.value(HW_CFG_WIFI_SH_START_AP, HW_DEF_WIFI_SH_START_AP).toString());
 
-        p_wifiControl = wss;
+        wifiControl = wss;
     }
 
-    p_wifiControl->setMaxScanResults(wifiCfg.value(HW_CFG_WIFI_SCAN_RESULTS, HW_DEF_WIFI_SCAN_RESULTS).toInt());
-    p_wifiControl->setPollInterval(wifiCfg.value(HW_CFG_WIFI_POLL_INTERVAL, HW_DEF_WIFI_POLL_INTERVAL).toInt());
-    p_wifiControl->setNetworkJoinRetryCount(wifiCfg.value(HW_CFG_WIFI_JOIN_RETRY, HW_DEF_WIFI_JOIN_RETRY).toInt());
-    p_wifiControl->setNetworkJoinRetryDelay(wifiCfg.value(HW_CFG_WIFI_JOIN_DELAY, HW_DEF_WIFI_JOIN_DELAY).toInt());
+    assert(wifiControl);
+
+    wifiControl->setMaxScanResults(wifiCfg.value(HW_CFG_WIFI_SCAN_RESULTS, HW_DEF_WIFI_SCAN_RESULTS).toInt());
+    wifiControl->setPollInterval(wifiCfg.value(HW_CFG_WIFI_POLL_INTERVAL, HW_DEF_WIFI_POLL_INTERVAL).toInt());
+    wifiControl->setNetworkJoinRetryCount(wifiCfg.value(HW_CFG_WIFI_JOIN_RETRY, HW_DEF_WIFI_JOIN_RETRY).toInt());
+    wifiControl->setNetworkJoinRetryDelay(wifiCfg.value(HW_CFG_WIFI_JOIN_DELAY, HW_DEF_WIFI_JOIN_DELAY).toInt());
+
+    return wifiControl;
 }
 
-WifiControl *HardwareFactoryRPi0::getWifiControl()
+DisplayControl *HardwareFactoryRPi0::buildDisplayControl(const QVariantMap &config)
 {
-    assert(p_wifiControl);
+    Q_UNUSED(config)
 
-    return p_wifiControl;
+    // TODO create a minimal RPi HDMI display controller? We could certainly switch it on and off. What about the RPi 7" screen brightness controll?
+    return new DisplayControlMock(this);
 }
 
-SystemService *HardwareFactoryRPi0::getSystemService()
+BatteryFuelGauge *HardwareFactoryRPi0::buildBatteryFuelGauge(const QVariantMap &config)
 {
-    assert(p_systemService);
-
-    return p_systemService;
+    Q_UNUSED(config)
+    return new BatteryFuelGaugeMock(this);
 }
 
-
-WebServerControl *HardwareFactoryRPi0::getWebServerControl()
+InterruptHandler *HardwareFactoryRPi0::buildInterruptHandler(const QVariantMap &config)
 {
-    assert(p_webServerControl);
-
-    return p_webServerControl;
+    Q_UNUSED(config)
+    return new InterruptHandlerMock(this);
 }
+
+
+
+

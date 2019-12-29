@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,28 +20,39 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORYMOCK_H
-#define HARDWAREFACTORYMOCK_H
+#ifndef DISPLAYCONTROLYIO_H
+#define DISPLAYCONTROLYIO_H
 
-#include "hardwarefactory.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <time.h>
 
-/**
- * @brief A mock implementation of the abstract hardware factory for unsupported platforms.
- */
-class HardwareFactoryMock : public HardwareFactory
+#include "../displaycontrol.h"
+
+class DisplayControlYio : public DisplayControl
 {
     Q_OBJECT
-public:
-    explicit HardwareFactoryMock(const QVariantMap &config, QObject* parent = nullptr);
 
-    // HardwareFactory interface
+    // define timing
+    struct timespec ts = {0, 40L};
+    struct timespec ts2 = {0, 100L};
+    struct timespec ts3 = {0, 300L};
+
 public:
-    virtual WifiControl *getWifiControl() override;
-    virtual SystemService *getSystemService() override;
-    virtual WebServerControl *getWebServerControl() override;
-    virtual DisplayControl *getDisplayControl() override;
-    virtual BatteryFuelGauge *getBatteryFuelGauge() override;
-    virtual InterruptHandler *getInterruptHandler() override;
+    Q_INVOKABLE virtual bool setmode(const QString &mode) override;
+
+    Q_INVOKABLE virtual void setBrightness(int from, int to) override;
+
+    Q_INVOKABLE virtual void batteryChargingOn() override;
+    Q_INVOKABLE virtual void batteryChargingOff() override;
+
+    DisplayControlYio(QObject *parent = nullptr);
+
+    virtual void setup() override;
+
+private:
+    void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
+
 };
 
-#endif // HARDWAREFACTORYMOCK_H
+#endif // DISPLAYCONTROLYIO_H

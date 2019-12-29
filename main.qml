@@ -29,6 +29,7 @@ import Launcher 1.0
 import JsonFile 1.0
 import Haptic 1.0
 import Battery 1.0
+import DisplayControl 1.0
 
 import Entity.Remote 1.0            
 
@@ -67,59 +68,50 @@ ApplicationWindow {
 
     signal batteryDataUpdated()
 
-    Battery {
-        id: battery
-        capacity: 2500
+    function checkBattery() {
+        // read battery data
+        battery_voltage = Battery.getVoltage() / 1000
+        battery_level = Battery.getStateOfCharge() / 100
+        battery_health = Battery.getStateOfHealth()
+        battery_design_capacity = Battery.getDesignCapacity()
+        battery_remaining_capacity = Battery.getRemainingCapacity()
+        battery_averagepower = Battery.getAveragePower()
+        battery_averagecurrent = Battery.getAverageCurrent()
 
-        Component.onCompleted: {
-            battery.begin();
-        }
+        if (battery_level != -1) {
 
-        function checkBattery() {
-            // read battery data
-            battery_voltage = battery.getVoltage() / 1000
-            battery_level = battery.getStateOfCharge() / 100
-            battery_health = battery.getStateOfHealth()
-            battery_design_capacity = battery.getDesignCapacity()
-            battery_remaining_capacity = battery.getRemainingCapacity()
-            battery_averagepower = battery.getAveragePower()
-            battery_averagecurrent = battery.getAverageCurrent()
-
-            if (battery_level != -1) {
-
-                // if the designcapacity is off correct it
-                if (battery_design_capacity != battery.capacity) {
-                    console.debug("Design capacity doesn't match. Recalibrating battery.");
-                    battery.changeCapacity(battery.capacity);
-                }
-
-                // if voltage is too low and we are sourcing power, turn off the remote after timeout
-                if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
-                    shutdownDelayTimer.start();
-                }
-
-                // hide and show the charging screen
-                if (battery_averagepower >= 0 && chargingScreen.item) {
-                    console.debug("Charging screen visible");
-                    chargingScreen.item.state = "visible";
-                    // cancel shutdown when started charging
-                    if (shutdownDelayTimer.running) {
-                        shutdownDelayTimer.stop();
-                    }
-                } else if (chargingScreen.item) {
-                    chargingScreen.item.state = "hidden";
-                }
-
-                // charging is done
-                if (battery_averagepower == 0 && battery_level == 1) {
-                    // signal with the dock that the remote is fully charged
-                    var obj = integrations.get(config.settings.paired_dock);
-                    obj.sendCommand("dock", "", Remote.C_REMOTE_CHARGED, "");
-                }
-
-                console.debug("Average power:" + battery_averagepower + "mW");
-                console.debug("Average current:" + battery_averagecurrent + "mA");
+            // if the designcapacity is off correct it
+            if (battery_design_capacity != Battery.capacity) {
+                console.debug("Design capacity doesn't match. Recalibrating battery.");
+                Battery.changeCapacity(Battery.capacity);
             }
+
+            // if voltage is too low and we are sourcing power, turn off the remote after timeout
+            if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
+                shutdownDelayTimer.start();
+            }
+
+            // hide and show the charging screen
+            if (battery_averagepower >= 0 && chargingScreen.item) {
+                console.debug("Charging screen visible");
+                chargingScreen.item.state = "visible";
+                // cancel shutdown when started charging
+                if (shutdownDelayTimer.running) {
+                    shutdownDelayTimer.stop();
+                }
+            } else if (chargingScreen.item) {
+                chargingScreen.item.state = "hidden";
+            }
+
+            // charging is done
+            if (battery_averagepower == 0 && battery_level == 1) {
+                // signal with the dock that the remote is fully charged
+                var obj = integrations.get(config.settings.paired_dock);
+                obj.sendCommand("dock", "", Remote.C_REMOTE_CHARGED, "");
+            }
+
+            console.debug("Average power:" + battery_averagepower + "mW");
+            console.debug("Average current:" + battery_averagecurrent + "mA");
         }
     }
 
@@ -151,7 +143,7 @@ ApplicationWindow {
             var tmp = {};
             tmp.timestamp = new Date();
             tmp.level = battery_level;
-            tmp.power = battery.getAveragePower();
+            tmp.power = Battery.getAveragePower();
             tmp.voltage = battery_voltage;
 
             tmpA.push(tmp);
@@ -279,7 +271,10 @@ ApplicationWindow {
         // Start websocket API
         api.start();
 
-        battery.checkBattery();
+        // FIXME initialize capacity in device builder
+        Battery.capacity = 2500;
+        Battery.begin();
+        checkBattery();
     }
 
     // load the entities when the integrations are loaded
@@ -594,7 +589,7 @@ ApplicationWindow {
         onPressAndHold: {
             console.debug("Disabling touch even catcher");
             touchEventCatcher.enabled = false;
-            standbyControl.displayControl.setmode("standbyoff");
+            DisplayControl.setmode("standbyoff");
             if (standbyControl.display_autobrightness) {
                 standbyControl.setBrightness(standbyControl.display_brightness_ambient);
             } else {

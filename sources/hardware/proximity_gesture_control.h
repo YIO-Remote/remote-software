@@ -27,7 +27,7 @@
 #include <QtDebug>
 
 #ifdef __arm__
-#include "apds9960.h"
+#include "arm/apds9960.h"
 #endif
 
 #include "../notifications.h"

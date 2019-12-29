@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,43 +20,39 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef DISPLAY_CONTROL_H
-#define DISPLAY_CONTROL_H
 
-#include <QObject>
-#include <QFuture>
-#include <QtConcurrent/QtConcurrentRun>
+#include <QLoggingCategory>
+#include <QtDebug>
 
-#include <stdio.h>
-#include <stdint.h>
-#ifdef __arm__
-    #include <wiringPi.h>
-    #include <mcp23017.h>
-#endif
-#include <time.h>
+#include "hardwarefactory_yio.h"
+#include "arm/displaycontrol_yio.h"
+#include "arm/bq27441.h"
+#include "arm/mcp23017_interrupt.h"
 
-class DisplayControl : public QObject
+static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
+
+HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject* parent) : HardwareFactoryRPi0(config, parent)
 {
-    Q_OBJECT
-
-    // define timing
-    struct timespec ts = {0, 40L};
-    struct timespec ts2 = {0, 100L};
-    struct timespec ts3 = {0, 300L};
+    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+}
 
 
-public:
-    Q_INVOKABLE bool setmode(const QString &mode);
+DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config)
+{
+    Q_UNUSED(config)
+    return new DisplayControlYio(this);
+}
 
-    Q_INVOKABLE void setBrightness(int from, int to);
 
-    Q_INVOKABLE void batteryChargingOn();
-    Q_INVOKABLE void batteryChargingOff();
+BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &config)
+{
+    Q_UNUSED(config)
+    return new BQ27441(this);
+}
 
-    DisplayControl();
 
-    void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
-    void setup(void);
-};
-
-#endif // DISPLAY_CONTROL_H
+InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &config)
+{
+    Q_UNUSED(config)
+    return new Mcp23017InterruptHandler(this);
+}

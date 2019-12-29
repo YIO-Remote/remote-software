@@ -26,8 +26,10 @@
 #include "systemservice_mock.h"
 #include "webserver_mock.h"
 #include "wifi_mock.h"
-
+#include "displaycontrol_mock.h"
 #include "hardwarefactory_mock.h"
+#include "batteryfuelgauge_mock.h"
+#include "interrupthandler_mock.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwMock");
 
@@ -55,5 +57,26 @@ SystemService *HardwareFactoryMock::getSystemService()
 WebServerControl *HardwareFactoryMock::getWebServerControl()
 {
     static WebServerMock singleton;
+    return &singleton;
+}
+
+
+DisplayControl *HardwareFactoryMock::getDisplayControl()
+{
+    static DisplayControlMock singleton;
+    return &singleton;
+}
+
+
+BatteryFuelGauge *HardwareFactoryMock::getBatteryFuelGauge()
+{
+    static BatteryFuelGaugeMock singleton;
+    return &singleton;
+}
+
+
+InterruptHandler *HardwareFactoryMock::getInterruptHandler()
+{
+    static InterruptHandlerMock singleton;
     return &singleton;
 }

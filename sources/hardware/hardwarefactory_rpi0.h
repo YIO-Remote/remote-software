@@ -25,6 +25,7 @@
 
 #include "hardwarefactory.h"
 #include "webserver_control.h"
+#include "displaycontrol.h"
 
 /**
  * @brief Concrete hardware factory implementation for the Raspberry Pi Zero in the YIO Remote.
@@ -32,6 +33,7 @@
 class HardwareFactoryRPi0 : public HardwareFactory
 {
     Q_OBJECT
+
 public:
     explicit HardwareFactoryRPi0(const QVariantMap &config, QObject* parent = nullptr);
 
@@ -43,10 +45,27 @@ public:
 
     virtual WebServerControl *getWebServerControl() override;
 
+    virtual DisplayControl *getDisplayControl() override;
+
+    virtual BatteryFuelGauge *getBatteryFuelGauge() override;
+
+    virtual InterruptHandler *getInterruptHandler() override;
+
+protected:
+    virtual WifiControl *buildWifiControl(const QVariantMap &config);
+    virtual SystemService *buildSystemService(const QVariantMap &config);
+    virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
+    virtual DisplayControl *buildDisplayControl(const QVariantMap &config);
+    virtual BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config);
+    virtual InterruptHandler* buildInterruptHandler(const QVariantMap &config);
+
 private:
     WifiControl      *p_wifiControl;
     SystemService    *p_systemService;
     WebServerControl *p_webServerControl;
+    DisplayControl   *p_displayControl;
+    BatteryFuelGauge *p_batteryFuelGauge;
+    InterruptHandler *p_interruptHandler;
 };
 
 #endif // HARDWAREFACTORYRPI0_H

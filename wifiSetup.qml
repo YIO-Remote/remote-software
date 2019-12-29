@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import InterruptHandler 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -109,7 +110,7 @@ Item {
                 mouseArea.onClicked: {
                     // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("fbv -d 1 /bye.png")
-                    buttonHandler.interruptHandler.shutdown();
+                    InterruptHandler.shutdown();
                     // TODO create a system device class for shutdown instead of launching hard coded shell scripts from QML
                     mainLauncher.launch("halt");
                 }
