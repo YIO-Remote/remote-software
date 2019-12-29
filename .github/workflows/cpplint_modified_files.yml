@@ -18,10 +18,13 @@ on:
   push:
     branches:
       - feature/**
+    paths:
+      - sources/**.cpp
+      - sources/**.h
   pull_request:
     paths:
       - sources/**.cpp
-      - sources/**.h      
+      - sources/**.h
 jobs:
   cpplint_modified_files:
     runs-on: ubuntu-latest
