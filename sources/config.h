@@ -20,8 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
 #include <QtDebug>
 
@@ -168,4 +168,4 @@ class Config : public QObject, ConfigInterface
     QVariantMap                 m_cacheUIGroups;
 };
 
-#endif  // CONFIG_H
+#endif  // CONFIG_H_

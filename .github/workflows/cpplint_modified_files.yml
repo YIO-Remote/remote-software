@@ -18,9 +18,6 @@ on:
   push:
     branches:
       - feature/**
-    paths:
-      - sources/**.cpp
-      - sources/**.h
   pull_request:
     paths:
       - sources/**.cpp
@@ -57,7 +54,7 @@ jobs:
             sys.exit(0)
 
           print("cpplint:")
-          result = subprocess.run(["cpplint", "--filter=-build/include_subdir,-whitespace/braces", "--linelength=120"] + cpp_files, text=True)
+          result = subprocess.run(["cpplint", "--filter=-build/include_subdir,-whitespace/braces", "--linelength=120", "--root=sources"] + cpp_files, text=True)
           if result.returncode:
             sys.exit(result.returncode)
 

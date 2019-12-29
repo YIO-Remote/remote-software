@@ -20,8 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef YIOAPI_H
-#define YIOAPI_H
+#ifndef YIOAPI_H_
+#define YIOAPI_H_
 
 #include <QObject>
 #include <QQmlApplicationEngine>
@@ -86,7 +86,6 @@ class YioAPI : public YioAPIInterface
     void discoveredServicesChanged();
     void buttonPressed(QString button);
     void buttonReleased(QString button);
-    // void serviceDiscovered(QMap<QString, QVariantMap> services);
 
  public slots:
     void onNewConnection();
@@ -116,4 +115,4 @@ class YioAPI : public YioAPIInterface
     QMap<QString, QVariantMap>   m_discoveredServices;
 };
 
-#endif  // YIOAPI_H
+#endif  // YIOAPI_H_

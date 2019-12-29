@@ -20,8 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORY_H
-#define HARDWAREFACTORY_H
+#ifndef HARDWARE_HARDWAREFACTORY_H_
+#define HARDWARE_HARDWAREFACTORY_H_
 
 #include <QObject>
 
@@ -74,4 +74,4 @@ class HardwareFactory : public QObject
     static HardwareFactory* s_instance;
 };
 
-#endif  // HARDWAREFACTORY_H
+#endif  // HARDWARE_HARDWAREFACTORY_H_

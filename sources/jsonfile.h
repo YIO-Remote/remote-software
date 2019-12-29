@@ -21,8 +21,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef JSONFILE_H
-#define JSONFILE_H
+#ifndef JSONFILE_H_
+#define JSONFILE_H_
 
 #include <QObject>
 #include <QFile>
@@ -109,4 +109,4 @@ class JsonFile : public QObject
     QString m_error;
 };
 
-#endif  // JSONFILE_H
+#endif  // JSONFILE_H_
