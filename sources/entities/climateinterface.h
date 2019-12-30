@@ -27,13 +27,13 @@
 class ClimateDef : public QObject {
     Q_OBJECT
  public:
-    enum Attributes { STATE, TEMPERATURE, TARGET_TEMPERATURE };
+    enum Attributes { STATE, TEMPERATURE, TARGET_TEMPERATURE, TEMPERATURE_UNIT, TEMPERATURE_MAX, TEMPERATURE_MIN };
     Q_ENUM(Attributes)
 
     enum States { OFF = 0, ON = 1, HEAT = 2, COOL = 3 };
     Q_ENUM(States)
 
-    enum Features { F_TEMPERATURE, F_TARGET_TEMPERATURE };
+    enum Features { F_TEMPERATURE, F_TARGET_TEMPERATURE, F_TEMPERATURE_MAX, F_TEMPERATURE_MIN };
     Q_ENUM(Features)
 
     enum Commands { C_OFF, C_ON, C_HEAT, C_COOL, C_TARGET_TEMPERATURE };
@@ -48,8 +48,11 @@ class ClimateInterface {
  public:
     virtual ~ClimateInterface();
 
-    virtual int temperature() = 0;
-    virtual int targetTemperature() = 0;
+    virtual double  temperature() = 0;
+    virtual double  targetTemperature() = 0;
+    virtual QString temperatureUnit() = 0;
+    virtual double  temperatureMax() = 0;
+    virtual double  temperatureMin() = 0;
 };
 
 QT_BEGIN_NAMESPACE

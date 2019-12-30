@@ -178,6 +178,8 @@ ApplicationWindow {
 
     property string colorGreen: "#19D37B"
     property string colorRed: "#EA003C"
+    property string colorOrange: "#FF7241"
+    property string colorBlue: "#19435E"
 
     property string colorBackground: darkMode ? "#000000" : "#ffffff"
     property string colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
@@ -383,13 +385,14 @@ ApplicationWindow {
             Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
 
-        onStatusChanged: if (loader_main.status == Loader.Ready && loadingScreen.item) {
+        onStatusChanged: if (loader_main.status == Loader.Ready /*&& loadingScreen.item*/) {
                              //                             loadingScreen.item.state = "loaded";
                              loader_main.item.onItemsLoadedChanged.connect(onLoadingCompleted);
                          }
 
         function onLoadingCompleted() {
             if (loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count)
+                console.debug("Setting loading screen to loaded");
                 loadingScreen.item.state = "loaded";
         }
     }

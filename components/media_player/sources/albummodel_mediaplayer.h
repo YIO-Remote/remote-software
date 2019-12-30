@@ -69,7 +69,9 @@ class BrowseModel : public QObject {
     BrowseModel(QObject* parent = nullptr, const QString& id = "", const QString& title = "",
                 const QString& subtitle = "", const QString& type = "", const QString& imageUrl = "",
                 const QStringList& commands = {})
-        : m_id(id), m_title(title), m_subtitle(subtitle), m_type(type), m_imageUrl(imageUrl), m_commands(commands) {}
+        : m_id(id), m_title(title), m_subtitle(subtitle), m_type(type), m_imageUrl(imageUrl), m_commands(commands) {
+        Q_UNUSED(parent)
+    }
     ~BrowseModel() {}
 
     QString     id() { return m_id; }

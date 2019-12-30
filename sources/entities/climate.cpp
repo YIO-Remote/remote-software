@@ -45,17 +45,38 @@ bool Climate::updateAttrByIndex(int attrIndex, const QVariant &value) {
                 chg = setState(value.toInt());
             break;
         case ClimateDef::TEMPERATURE:
-            if (m_temperature != value.toInt()) {
-                m_temperature = value.toInt();
+            if (m_temperature != value.toDouble()) {
+                m_temperature = value.toDouble();
                 chg = true;
                 emit temperatureChanged();
             }
             break;
         case ClimateDef::TARGET_TEMPERATURE:
-            if (m_targetTemperature != value.toInt()) {
-                m_targetTemperature = value.toInt();
+            if (m_targetTemperature != value.toDouble()) {
+                m_targetTemperature = value.toDouble();
                 chg = true;
                 emit targetTemperatureChanged();
+            }
+            break;
+        case ClimateDef::TEMPERATURE_UNIT:
+            if (m_temperatureUnit != value.toString()) {
+                m_temperatureUnit = value.toString();
+                chg = true;
+                emit temperatureUnitChanged();
+            }
+            break;
+        case ClimateDef::TEMPERATURE_MAX:
+            if (m_temperatureMax != value.toDouble()) {
+                m_temperatureMax = value.toDouble();
+                chg = true;
+                emit temperatureMaxChanged();
+            }
+            break;
+        case ClimateDef::TEMPERATURE_MIN:
+            if (m_temperatureMin != value.toDouble()) {
+                m_temperatureMin = value.toDouble();
+                chg = true;
+                emit temperatureMinChanged();
             }
             break;
     }

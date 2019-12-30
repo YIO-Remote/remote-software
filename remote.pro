@@ -198,6 +198,7 @@ SOURCES = main.qml \
           components/weather/ui/*.qml \
           components/remote/ui/*.qml \
           components/media_player/ui/*.qml \
+          components/climate/ui/*.qml \
           sources/proximity_gesture_control.h
 }
 
