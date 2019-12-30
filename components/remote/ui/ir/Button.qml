@@ -17,8 +17,10 @@ Rectangle {
     Text {
         id: title
         color: colorText
+        width: parent.width-20
+        elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.horizontalCenter
+        horizontalAlignment: Text.AlignHCenter
         anchors.centerIn: parent
         font.family: "Open Sans"
         font.weight: Font.Normal

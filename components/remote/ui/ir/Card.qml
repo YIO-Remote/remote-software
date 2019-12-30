@@ -165,7 +165,7 @@ Rectangle {
 
         // channels
         Loader {
-            active: SwipeView.isCurrentItem
+//            active: SwipeView.isCurrentItem
             asynchronous: true
             sourceComponent: channelView
         }
