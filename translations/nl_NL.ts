@@ -31,7 +31,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="236"/>
       <source>Average power</source>
-      <translation>Gemiddelde stroom</translation>
+      <translation>Gemiddeld stroomverbruik</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="312"/>
@@ -50,7 +50,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="39"/>
       <source>Area detection</source>
-      <translation>Herkenning van omgeving</translation>
+      <translation>Gebied detectie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="78"/>
@@ -147,17 +147,17 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation> Verbinding verbroken</translation>
+      <translation type="unfinished"> - Disconnected</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
       <source>Connect</source>
-      <translation>Verbinden</translation>
+      <translation type="unfinished">Connect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
       <source>Disconnect</source>
-      <translation>Verbinding verbreken</translation>
+      <translation type="unfinished">Disconnect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
@@ -167,7 +167,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
       <source>Add new</source>
-      <translation>Nieuwe toevoegen</translation>
+      <translation type="unfinished">Add new</translation>
     </message>
   </context>
   <context>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="19"/>
       <source>Software update</source>
-      <translation>Software update</translation>
+      <translation>Software bijwerken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="40"/>
@@ -348,7 +348,7 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="72"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation>Automatisch zoeken naar updates en bijwerken wanneer er een nieuwe software versie beschikbaar is.
+      <translation>Automatisch zoeken naar updates en bijwerken wanneer een nieuwe software versie beschikbaar is.
 Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
     </message>
     <message>
@@ -356,7 +356,7 @@ Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
       <source>New software is available.
 YIO remote </source>
       <translation>Nieuwe softwareversie is beschikbaar.
-YIO Afstandsbediening </translation>
+YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="97"/>
@@ -371,12 +371,12 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>YIO Remote </source>
-      <translation>YIO Afstandsbediening </translation>
+      <translation>YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="129"/>
       <source>Update</source>
-      <translation>Update</translation>
+      <translation>Bijwerken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="157"/>
@@ -418,7 +418,7 @@ YIO Afstandsbediening </translation>
       <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Favorieten</translation>
+      <translation type="unfinished">Favorites</translation>
     </message>
   </context>
   <context>
@@ -426,7 +426,7 @@ YIO Afstandsbediening </translation>
     <message>
       <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
       <source>Failed to connect to Home Assistant.</source>
-      <translation>Verbinding maken met Home Assistant is mislukt.</translation>
+      <translation type="unfinished">Failed to connect to Home Assistant.</translation>
     </message>
   </context>
   <context>
@@ -444,7 +444,7 @@ YIO Afstandsbediening </translation>
       <location filename="../basic_ui/pages/settings.qml" line="10"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Instellingen</translation>
+      <translation type="unfinished">Settings</translation>
     </message>
   </context>
   <context>

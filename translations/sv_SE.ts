@@ -139,7 +139,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Media</source>
-      <translation>Media</translation>
+      <translation type="unfinished">Media</translation>
     </message>
   </context>
   <context>
@@ -147,27 +147,27 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation> - Frånkopplad</translation>
+      <translation type="unfinished"> - Disconnected</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
       <source>Connect</source>
-      <translation>Anslut</translation>
+      <translation type="unfinished">Connect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
       <source>Disconnect</source>
-      <translation>Koppla från</translation>
+      <translation type="unfinished">Disconnect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
       <source>Hubs</source>
-      <translation>Hubbar</translation>
+      <translation type="unfinished">Hubs</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
       <source>Add new</source>
-      <translation>Lägg till ny</translation>
+      <translation type="unfinished">Add new</translation>
     </message>
   </context>
   <context>
@@ -217,7 +217,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="287"/>
       <source>IP address</source>
-      <translation>IP address</translation>
+      <translation type="unfinished">IP address</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="323"/>
@@ -389,7 +389,7 @@ YIO fjärrkontroll </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation>System</translation>
+      <translation type="unfinished">System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
@@ -418,7 +418,7 @@ YIO fjärrkontroll </translation>
       <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Favoriter</translation>
+      <translation type="unfinished">Favorites</translation>
     </message>
   </context>
   <context>
@@ -426,7 +426,7 @@ YIO fjärrkontroll </translation>
     <message>
       <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
       <source>Failed to connect to Home Assistant.</source>
-      <translation>Misslyckades att ansluta till Home Assistant.</translation>
+      <translation type="unfinished">Failed to connect to Home Assistant.</translation>
     </message>
   </context>
   <context>
@@ -444,7 +444,7 @@ YIO fjärrkontroll </translation>
       <location filename="../basic_ui/pages/settings.qml" line="10"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Inställningar</translation>
+      <translation type="unfinished">Settings</translation>
     </message>
   </context>
   <context>

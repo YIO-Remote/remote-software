@@ -167,7 +167,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
       <source>Add new</source>
-      <translation>Añadir nuevo</translation>
+      <translation type="unfinished">Add new</translation>
     </message>
   </context>
   <context>

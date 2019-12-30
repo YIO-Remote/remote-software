@@ -167,7 +167,7 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
       <source>Add new</source>
-      <translation>Tilføj ny</translation>
+      <translation type="unfinished">Add new</translation>
     </message>
   </context>
   <context>
@@ -418,7 +418,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Favoritter</translation>
+      <translation type="unfinished">Favorites</translation>
     </message>
   </context>
   <context>
@@ -444,7 +444,7 @@ YIO remote </translation>
       <location filename="../basic_ui/pages/settings.qml" line="10"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Indstillinger</translation>
+      <translation type="unfinished">Settings</translation>
     </message>
   </context>
   <context>
