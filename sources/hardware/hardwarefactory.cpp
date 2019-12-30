@@ -28,7 +28,7 @@
 #include "../jsonfile.h"
 #include "hardwarefactory.h"
 
-#if defined (Q_OS_LINUX)
+#if defined(Q_OS_LINUX)
 #include "hardwarefactory_rpi0.h"
 #else
 #include "hardwarefactory_mock.h"
@@ -36,42 +36,46 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwFactory");
 
-HardwareFactory* HardwareFactory::s_instance = nullptr;
+HardwareFactory *HardwareFactory::s_instance = nullptr;
 
-HardwareFactory::HardwareFactory(QObject *parent) : QObject(parent)
-{}
+HardwareFactory::HardwareFactory(QObject *parent) : QObject(parent) {}
 
-HardwareFactory::~HardwareFactory()
-{
-    s_instance = nullptr;
+HardwareFactory::~HardwareFactory() { s_instance = nullptr; }
+
+HardwareFactory *HardwareFactory::build(const QString &configFileName, const QString &schemaFileName) {
+    JsonFile hwCfg(configFileName, schemaFileName);
+
+    QVariantMap config = hwCfg.read().toMap();
+    if (!hwCfg.isValid()) {
+        // FIXME decide how to proceed:
+        // a) use an empty configuration for build to use default values
+        // b) return null and let caller handle this as a fatal error.
+        qCCritical(CLASS_LC).noquote() << "Invalid hardware configuration!"
+                                       << "Ignoring configuration file and using default values. Errors:" << endl
+                                       << hwCfg.error();
+        config.clear();
+    }
+    return build(config);
 }
 
-HardwareFactory *HardwareFactory::build(const QString &configFileName)
-{
-    JsonFile hwCfg(configFileName);
-
-    return build(hwCfg.read().toMap());
-}
-
-HardwareFactory* HardwareFactory::build(const QVariantMap &config)
-{
+HardwareFactory *HardwareFactory::build(const QVariantMap &config) {
     if (s_instance != nullptr) {
-        qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow! HardwareFactory already initialized, ignoring build() call.";
+        qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow!"
+                             << "HardwareFactory already initialized, ignoring build() call.";
         return s_instance;
     }
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
-#if defined (Q_OS_LINUX)
+#if defined(Q_OS_LINUX)
     s_instance = new HardwareFactoryRPi0(config);
-#else // anyone wants to write Android, macOS or Windows factories?
+#else  // anyone wants to write Android, macOS or Windows factories?
     s_instance = new HardwareFactoryMock(config);
 #endif
 
     return s_instance;
 }
 
-HardwareFactory* HardwareFactory::instance()
-{
+HardwareFactory *HardwareFactory::instance() {
     assert(s_instance);
 
     return s_instance;

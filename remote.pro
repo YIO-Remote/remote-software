@@ -280,6 +280,9 @@ equals(QT_ARCH, arm): {
     LIBS += -lwiringPi
 }
 
+# include valijson
+include(3rdparty/valijson.pri)
+
 # Configure destination path. DESTDIR is set in qmake-destination-path.pri
 OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/obj
 MOC_DIR = $$PWD/build/$$DESTINATION_PATH/moc
@@ -312,7 +315,7 @@ targetPlugins.path = $$target.path/plugins
 win32 {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -332,7 +335,7 @@ win32 {
 } else:linux {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -357,7 +360,7 @@ win32 {
     }
 
 } else:macx {
-    APP_QML_FILES.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
+    APP_QML_FILES.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
@@ -379,6 +382,6 @@ win32 {
     # TODO macOS application icon
     #ICON=icons/macos.icns
 } else {
-    error(unknown platform! Platform must be configured in remote.pro)
+    error(unknown platform! Platform must be configured in remote.pro project file)
 }
 

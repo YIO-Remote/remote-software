@@ -1,0 +1,1030 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://yio-remote.com/config.json",
+  "type": "object",
+  "title": "YIO Remote configuration schema",
+  "required": [
+    "entities",
+    "integrations",
+    "settings",
+    "ui_config"
+  ],
+  "properties": {
+    "entities": {
+      "$id": "#/properties/entities",
+      "type": "object",
+      "title": "The Entities Schema",
+      "properties": {
+        "light": {
+          "$id": "#/properties/entities/properties/light",
+          "type": "array",
+          "title": "The Light Schema",
+          "items": {
+            "$id": "#/properties/entities/properties/light/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "properties": {
+              "area": {
+                "$id": "#/properties/entities/properties/light/items/properties/area",
+                "type": "string",
+                "title": "The Area Schema",
+                "examples": [
+                  "Előszoba"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "entity_id": {
+                "$id": "#/properties/entities/properties/light/items/properties/entity_id",
+                "type": "string",
+                "title": "The Entity_id Schema",
+                "examples": [
+                  "light.entrance_light_level"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "friendly_name": {
+                "$id": "#/properties/entities/properties/light/items/properties/friendly_name",
+                "type": "string",
+                "title": "The Friendly_name Schema",
+                "examples": [
+                  "Előszoba lámpa"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "integration": {
+                "$id": "#/properties/entities/properties/light/items/properties/integration",
+                "type": "string",
+                "title": "The Integration Schema",
+                "examples": [
+                  "homeassistant"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "supported_features": {
+                "$id": "#/properties/entities/properties/light/items/properties/supported_features",
+                "type": "array",
+                "title": "The Supported_features Schema",
+                "items": {
+                  "$id": "#/properties/entities/properties/light/items/properties/supported_features/items",
+                  "type": "string",
+                  "title": "The Items Schema",
+                  "examples": [
+                    "BRIGHTNESS"
+                  ],
+                  "pattern": "^(.*)$"
+                }
+              }
+            },
+            "required": [
+              "entity_id",
+              "friendly_name",
+              "integration",
+              "supported_features"
+            ]
+          }
+        },
+        "media_player": {
+          "$id": "#/properties/entities/properties/media_player",
+          "type": "array",
+          "title": "The Media_player Schema",
+          "items": {
+            "$id": "#/properties/entities/properties/media_player/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "properties": {
+              "area": {
+                "$id": "#/properties/entities/properties/media_player/items/properties/area",
+                "type": "string",
+                "title": "The Area Schema",
+                "examples": [
+                  "Nappali"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "entity_id": {
+                "$id": "#/properties/entities/properties/media_player/items/properties/entity_id",
+                "type": "string",
+                "title": "The Entity_id Schema",
+                "examples": [
+                  "media_player.nappali_speaker"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "friendly_name": {
+                "$id": "#/properties/entities/properties/media_player/items/properties/friendly_name",
+                "type": "string",
+                "title": "The Friendly_name Schema",
+                "examples": [
+                  "Nappali hangszóró"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "integration": {
+                "$id": "#/properties/entities/properties/media_player/items/properties/integration",
+                "type": "string",
+                "title": "Integration plugins",
+                "examples": [
+                  "homeassistant",
+                  "spotify"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "supported_features": {
+                "$id": "#/properties/entities/properties/media_player/items/properties/supported_features",
+                "type": "array",
+                "title": "Supported features",
+                "items": {
+                  "$id": "#/properties/entities/properties/media_player/items/properties/supported_features/items",
+                  "type": "string",
+                  "title": "Feature",
+                  "enum": [
+                    "SOURCE",
+                    "APP_NAME",
+                    "VOLUME",
+                    "VOLUME_UP",
+                    "VOLUME_DOWN",
+                    "VOLUME_SET",
+                    "MUTE",
+                    "MUTE_SET",
+                    "MEDIA_TYPE",
+                    "MEDIA_TITLE",
+                    "MEDIA_ARTIST",
+                    "MEDIA_ALBUM",
+                    "MEDIA_DURATION",
+                    "MEDIA_POSITION",
+                    "MEDIA_IMAGE",
+                    "PLAY",
+                    "PAUSE",
+                    "STOP",
+                    "PREVIOUS",
+                    "NEXT",
+                    "SEEK",
+                    "SHUFFLE",
+                    "TURN_ON",
+                    "TURN_OFF",
+                    "SEARCH",
+                    "LIST",
+                    "CONTROL"
+                  ]
+                }
+              },
+              "type": {
+                "$id": "#/properties/entities/properties/media_player/items/properties/type",
+                "type": "string",
+                "title": "The Type Schema",
+                "examples": [
+                  "speaker"
+                ],
+                "pattern": "^(.*)$"
+              }
+            },
+            "required": [
+              "entity_id",
+              "friendly_name",
+              "integration",
+              "supported_features"
+            ]
+          }
+        },
+        "remote": {
+          "$id": "#/properties/entities/properties/remote",
+          "type": "array",
+          "title": "The Remote Schema",
+          "items": {
+            "$id": "#/properties/entities/properties/remote/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "properties": {
+              "area": {
+                "$id": "#/properties/entities/properties/remote/items/properties/area",
+                "type": "string",
+                "title": "The Area Schema",
+                "examples": [
+                  "Living room"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "settings": {
+                "$id": "#/properties/entities/properties/remote/items/properties/settings",
+                "type": "object",
+                "title": "The Settings Schema",
+                "properties": {
+                  "delay": {
+                    "$id": "#/properties/entities/properties/remote/items/properties/settings/properties/delay",
+                    "type": "integer",
+                    "minimum": 0,
+                    "title": "Delay in ms",
+                    "default": 300
+                  },
+                  "channel_switching": {
+                    "$id": "#/properties/entities/properties/remote/items/properties/settings/properties/channel_switching",
+                    "type": "array",
+                    "title": "The Channel_switching Schema",
+                    "items": {
+                      "$id": "#/properties/entities/properties/remote/items/properties/settings/properties/channel_switching/items",
+                      "type": "string",
+                      "title": "The Items Schema",
+                      "enum": [
+                        "DIGIT_SEPARATOR",
+                        "CHANNEL_NUMBER",
+                        "CHANNEL_END"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "channel_switching"
+                ]
+              },
+              "channels": {
+                "$id": "#/properties/entities/properties/remote/items/properties/channels",
+                "type": "array",
+                "title": "The Channels Schema",
+                "items": {
+                  "$id": "#/properties/entities/properties/remote/items/properties/channels/items",
+                  "type": "object",
+                  "title": "The Items Schema",
+                  "required": [
+                    "name",
+                    "number",
+                    "image"
+                  ],
+                  "properties": {
+                    "name": {
+                      "$id": "#/properties/entities/properties/remote/items/properties/channels/items/properties/name",
+                      "type": "string",
+                      "title": "Channel name",
+                      "examples": [
+                        "MTV"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "number": {
+                      "$id": "#/properties/entities/properties/remote/items/properties/channels/items/properties/number",
+                      "type": "integer",
+                      "minimum": 0,
+                      "title": "Channel number",
+                      "default": 0
+                    },
+                    "image": {
+                      "$id": "#/properties/entities/properties/remote/items/properties/channels/items/properties/image",
+                      "type": "string",
+                      "title": "The Image Schema",
+                      "default": "",
+                      "examples": [
+                        "/usr/bin/yio-remote/images/mtv.jpg"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                }
+              },
+              "commands": {
+                "$id": "#/properties/entities/properties/remote/items/properties/commands",
+                "type": "array",
+                "title": "The Commands Schema",
+                "items": {
+                  "$id": "#/properties/entities/properties/remote/items/properties/commands/items",
+                  "type": "object",
+                  "title": "The Items Schema",
+                  "required": [
+                    "button_map",
+                    "code",
+                    "format"
+                  ],
+                  "properties": {
+                    "button_map": {
+                      "$id": "#/properties/entities/properties/remote/items/properties/commands/items/properties/button_map",
+                      "type": "string",
+                      "enum": [
+                        "POWER_TOGGLE",
+                        "CHANNEL_UP",
+                        "CHANNEL_DOWN",
+                        "CURSOR_UP",
+                        "CURSOR_DOWN",
+                        "CURSOR_LEFT",
+                        "CURSOR_RIGHT",
+                        "CURSOR_OK",
+                        "MUTE_TOGGLE",
+                        "SOURCE",
+                        "APP_NAME",
+                        "VOLUME",
+                        "VOLUME_UP",
+                        "VOLUME_DOWN",
+                        "VOLUME_SET",
+                        "MUTE",
+                        "MUTE_SET",
+                        "MEDIA_TYPE",
+                        "MEDIA_TITLE",
+                        "MEDIA_ARTIST",
+                        "MEDIA_ALBUM",
+                        "MEDIA_DURATION",
+                        "MEDIA_POSITION",
+                        "MEDIA_IMAGE",
+                        "PLAY",
+                        "PAUSE",
+                        "STOP",
+                        "PREVIOUS",
+                        "NEXT",
+                        "SEEK",
+                        "SHUFFLE",
+                        "TURN_ON",
+                        "TURN_OFF",
+                        "SEARCH",
+                        "LIST",
+                        "CONTROL"
+                      ],
+                      "title": "The Button_map Schema"
+                    },
+                    "code": {
+                      "$id": "#/properties/entities/properties/remote/items/properties/commands/items/properties/code",
+                      "type": "string",
+                      "title": "The Code Schema",
+                      "examples": [
+                        "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,06FB"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "format": {
+                      "$id": "#/properties/entities/properties/remote/items/properties/commands/items/properties/format",
+                      "type": "string",
+                      "title": "IR code format",
+                      "enum": [
+                        "pronto", "hex"
+                      ]
+                    }
+                  }
+                }
+              },
+              "entity_id": {
+                "$id": "#/properties/entities/properties/remote/items/properties/entity_id",
+                "type": "string",
+                "title": "The Entity_id Schema",
+                "default": "",
+                "examples": [
+                  "remote.living_room"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "friendly_name": {
+                "$id": "#/properties/entities/properties/remote/items/properties/friendly_name",
+                "type": "string",
+                "title": "The Friendly_name Schema",
+                "examples": [
+                  "Nappali TV"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "integration": {
+                "$id": "#/properties/entities/properties/remote/items/properties/integration",
+                "type": "string",
+                "title": "The Integration Schema",
+                "examples": [
+                  "YIO-Dock-3C71BFE33DEC"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "supported_features": {
+                "$id": "#/properties/entities/properties/remote/items/properties/supported_features",
+                "type": "array",
+                "title": "Supported features",
+                "items": {
+                  "$id": "#/properties/entities/properties/remote/items/properties/supported_features/items",
+                  "type": "string",
+                  "title": "Feature",
+                  "enum": [
+                    "POWER_TOGGLE",
+                    "CHANNEL_UP",
+                    "CHANNEL_DOWN",
+                    "VOLUME_UP",
+                    "VOLUME_DOWN",
+                    "CURSOR_UP",
+                    "CURSOR_DOWN",
+                    "CURSOR_LEFT",
+                    "CURSOR_RIGHT",
+                    "CURSOR_OK",
+                    "MUTE_TOGGLE"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "settings",
+              "entity_id",
+              "friendly_name",
+              "integration",
+              "supported_features"
+            ]
+          }
+        }
+      }
+    },
+    "integrations": {
+      "$id": "#/properties/integrations",
+      "type": "object",
+      "title": "The Integrations Schema",
+      "properties": {
+        "homeassistant": {
+          "$id": "#/properties/integrations/properties/homeassistant",
+          "type": "object",
+          "title": "The Homeassistant Schema",
+          "required": [
+            "data",
+            "mdns"
+          ],
+          "properties": {
+            "data": {
+              "$id": "#/properties/integrations/properties/homeassistant/properties/data",
+              "type": "array",
+              "title": "The Data Schema",
+              "items": {
+                "$id": "#/properties/integrations/properties/homeassistant/properties/data/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                  "data",
+                  "friendly_name",
+                  "id"
+                ],
+                "properties": {
+                  "data": {
+                    "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/data",
+                    "type": "object",
+                    "title": "The Data Schema",
+                    "required": [
+                      "ip"
+                    ],
+                    "properties": {
+                      "ip": {
+                        "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/data/properties/ip",
+                        "type": "string",
+                        "title": "IP address",
+                        "examples": [
+                          "192.168.100.1:8123"
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "token": {
+                        "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/data/properties/token",
+                        "type": "string",
+                        "title": "Access token",
+                        "examples": [
+                          "my super secret T0ken"
+                        ],
+                        "pattern": "^(.*)$"
+                      }
+                    }
+                  },
+                  "friendly_name": {
+                    "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/friendly_name",
+                    "type": "string",
+                    "title": "The Friendly_name Schema",
+                    "examples": [
+                      "Home Assistant"
+                    ],
+                    "pattern": "^(.*)$"
+                  },
+                  "id": {
+                    "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/id",
+                    "type": "string",
+                    "title": "The Id Schema",
+                    "examples": [
+                      "homeassistant"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            },
+            "log": {
+              "$id": "#/properties/integrations/properties/homeassistant/properties/log",
+              "type": "string",
+              "title": "The Log Schema",
+              "examples": [
+                "debug"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "mdns": {
+              "$id": "#/properties/integrations/properties/homeassistant/properties/mdns",
+              "type": "string",
+              "title": "The Mdns Schema",
+              "examples": [
+                "_hap._tcp"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "spotify": {
+          "$id": "#/properties/integrations/properties/spotify",
+          "type": "object",
+          "title": "The Spotify Schema",
+          "required": [
+            "data",
+            "mdns"
+          ],
+          "properties": {
+            "data": {
+              "$id": "#/properties/integrations/properties/spotify/properties/data",
+              "type": "array",
+              "title": "The Data Schema",
+              "items": {
+                "$id": "#/properties/integrations/properties/spotify/properties/data/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                  "data",
+                  "friendly_name",
+                  "id"
+                ],
+                "properties": {
+                  "data": {
+                    "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data",
+                    "type": "object",
+                    "title": "The Data Schema",
+                    "required": [
+                      "access_token",
+                      "client_id",
+                      "client_secret",
+                      "entity_id",
+                      "refresh_token"
+                    ],
+                    "properties": {
+                      "access_token": {
+                        "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/access_token",
+                        "type": "string",
+                        "title": "The Access_token Schema",
+                        "examples": [
+                          ""
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "client_id": {
+                        "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/client_id",
+                        "type": "string",
+                        "title": "The Client_id Schema",
+                        "examples": [
+                          ""
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "client_secret": {
+                        "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/client_secret",
+                        "type": "string",
+                        "title": "The Client_secret Schema",
+                        "examples": [
+                          ""
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "entity_id": {
+                        "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/entity_id",
+                        "type": "string",
+                        "title": "The Entity_id Schema",
+                        "examples": [
+                          "spotify.spotify"
+                        ],
+                        "pattern": "^(.*)$"
+                      },
+                      "refresh_token": {
+                        "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/refresh_token",
+                        "type": "string",
+                        "title": "The Refresh_token Schema",
+                        "examples": [
+                          ""
+                        ],
+                        "pattern": "^(.*)$"
+                      }
+                    }
+                  },
+                  "friendly_name": {
+                    "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/friendly_name",
+                    "type": "string",
+                    "title": "The Friendly_name Schema",
+                    "examples": [
+                      "Spotify"
+                    ],
+                    "pattern": "^(.*)$"
+                  },
+                  "id": {
+                    "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/id",
+                    "type": "string",
+                    "title": "The Id Schema",
+                    "examples": [
+                      "spotify"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            },
+            "log": {
+              "$id": "#/properties/integrations/properties/spotify/properties/log",
+              "type": "string",
+              "title": "The Log Schema",
+              "examples": [
+                "debug"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "mdns": {
+              "$id": "#/properties/integrations/properties/spotify/properties/mdns",
+              "type": "string",
+              "title": "The Mdns Schema",
+              "examples": [
+                "_spotify-connect._tcp"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        }
+      }
+    },
+    "settings": {
+      "$id": "#/properties/settings",
+      "type": "object",
+      "title": "The Settings Schema",
+      "required": [
+        "autobrightness",
+        "bluetootharea",
+        "language",
+        "logging",
+        "proximity",
+        "shutdowntime",
+        "softwareupdate",
+        "wifitime"
+      ],
+      "properties": {
+        "autobrightness": {
+          "$id": "#/properties/settings/properties/autobrightness",
+          "type": "boolean",
+          "title": "Auto brightness",
+          "default": true
+        },
+        "bluetootharea": {
+          "$id": "#/properties/settings/properties/bluetootharea",
+          "type": "boolean",
+          "title": "Enable Bluetooth area beacons",
+          "default": false
+        },
+        "language": {
+          "$id": "#/properties/settings/properties/language",
+          "type": "string",
+          "title": "Language",
+          "examples": [
+            "hu_HU",
+            "en_US",
+            "de_DE"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "logging": {
+          "$id": "#/properties/settings/properties/logging",
+          "type": "object",
+          "title": "The Logging Schema",
+          "required": [
+            "path",
+            "level",
+            "console",
+            "showSource",
+            "queueSize",
+            "purgeHours"
+          ],
+          "properties": {
+            "path": {
+              "$id": "#/properties/settings/properties/logging/properties/path",
+              "type": "string",
+              "title": "Log file path",
+              "description": "Empty = no log file, . = application sub directory",
+              "examples": [
+                "",
+                ".",
+                "/var/log"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "level": {
+              "$id": "#/properties/settings/properties/logging/properties/level",
+              "type": "string",
+              "enum": ["DEBUG","INFO","WARN","CRIT","FATAL"],
+              "title": "Log level",
+              "default": "INFO"
+            },
+            "console": {
+              "$id": "#/properties/settings/properties/logging/properties/console",
+              "type": "boolean",
+              "title": "Log to console",
+              "default": true
+            },
+            "showSource": {
+              "$id": "#/properties/settings/properties/logging/properties/showSource",
+              "type": "boolean",
+              "title": "Show source in log message",
+              "default": true
+            },
+            "queueSize": {
+              "$id": "#/properties/settings/properties/logging/properties/queueSize",
+              "type": "integer",
+              "minimum": 0,
+              "title": "Log message queue size for websocket API",
+              "default": 100
+            },
+            "purgeHours": {
+              "$id": "#/properties/settings/properties/logging/properties/purgeHours",
+              "type": "integer",
+              "minimum": 0,
+              "title": "Purge log files in hours",
+              "default": 12
+            }
+          }
+        },
+        "paired_dock": {
+          "$id": "#/properties/settings/properties/paired_dock",
+          "type": "string",
+          "title": "Paired dock name",
+          "examples": [
+            "YIO-Dock-3C71BFE33DEC"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "proximity": {
+          "$id": "#/properties/settings/properties/proximity",
+          "type": "integer",
+          "minimum": 0,
+          "title": "Proximity sensitivity",
+          "default": 40
+        },
+        "shutdowntime": {
+          "$id": "#/properties/settings/properties/shutdowntime",
+          "type": "integer",
+          "title": "Shutdown time in minutes",
+          "default": 21600
+        },
+        "softwareupdate": {
+          "$id": "#/properties/settings/properties/softwareupdate",
+          "type": "boolean",
+          "title": "Enable software updates",
+          "default": false
+        },
+        "wifitime": {
+          "$id": "#/properties/settings/properties/wifitime",
+          "type": "integer",
+          "title": "WiFi switch off time in minutes",
+          "default": 3600
+        }
+      }
+    },
+    "ui_config": {
+      "$id": "#/properties/ui_config",
+      "type": "object",
+      "title": "The Ui_config Schema",
+      "required": [
+        "darkmode",
+        "groups",
+        "pages",
+        "profiles",
+        "selected_profile"
+      ],
+      "properties": {
+        "darkmode": {
+          "$id": "#/properties/ui_config/properties/darkmode",
+          "type": "boolean",
+          "title": "Darkmode",
+          "default": true
+        },
+        "groups": {
+          "$id": "#/properties/ui_config/properties/groups",
+          "type": "object",
+          "title": "The Groups Schema",
+          "properties": {
+            "12216382-3d36-4b21-8b3f-5a43193a4701": {
+              "$id": "#/properties/ui_config/properties/groups/properties/12216382-3d36-4b21-8b3f-5a43193a4701",
+              "type": "object",
+              "title": "The 12216382-3d36-4b21-8b3f-5a43193a4701 Schema",
+              "required": [
+                "entities",
+                "name",
+                "switch"
+              ],
+              "properties": {
+                "entities": {
+                  "$id": "#/properties/ui_config/properties/groups/properties/12216382-3d36-4b21-8b3f-5a43193a4701/properties/entities",
+                  "type": "array",
+                  "title": "The Entities Schema",
+                  "items": {
+                    "$id": "#/properties/ui_config/properties/groups/properties/12216382-3d36-4b21-8b3f-5a43193a4701/properties/entities/items",
+                    "type": "string",
+                    "title": "The Items Schema",
+                    "examples": [
+                      "light.entrance_light_level"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                },
+                "name": {
+                  "$id": "#/properties/ui_config/properties/groups/properties/12216382-3d36-4b21-8b3f-5a43193a4701/properties/name",
+                  "type": "string",
+                  "title": "The Name Schema",
+                  "examples": [
+                    "Lámpák"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "switch": {
+                  "$id": "#/properties/ui_config/properties/groups/properties/12216382-3d36-4b21-8b3f-5a43193a4701/properties/switch",
+                  "type": "boolean",
+                  "title": "The Switch Schema",
+                  "default": false
+                }
+              }
+            },
+            "15f7f394-4a15-45fc-b590-59f5aa7d89fa": {
+              "$id": "#/properties/ui_config/properties/groups/properties/15f7f394-4a15-45fc-b590-59f5aa7d89fa",
+              "type": "object",
+              "title": "The 15f7f394-4a15-45fc-b590-59f5aa7d89fa Schema",
+              "required": [
+                "entities",
+                "name",
+                "switch"
+              ],
+              "properties": {
+                "entities": {
+                  "$id": "#/properties/ui_config/properties/groups/properties/15f7f394-4a15-45fc-b590-59f5aa7d89fa/properties/entities",
+                  "type": "array",
+                  "title": "The Entities Schema",
+                  "items": {
+                    "$id": "#/properties/ui_config/properties/groups/properties/15f7f394-4a15-45fc-b590-59f5aa7d89fa/properties/entities/items",
+                    "type": "string",
+                    "title": "The Items Schema",
+                    "examples": [
+                      "media_player.living_room_2_1",
+                      "media_player.nappali_speaker"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                },
+                "name": {
+                  "$id": "#/properties/ui_config/properties/groups/properties/15f7f394-4a15-45fc-b590-59f5aa7d89fa/properties/name",
+                  "type": "string",
+                  "title": "The Name Schema",
+                  "examples": [
+                    "Hangszórók"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "switch": {
+                  "$id": "#/properties/ui_config/properties/groups/properties/15f7f394-4a15-45fc-b590-59f5aa7d89fa/properties/switch",
+                  "type": "boolean",
+                  "title": "The Switch Schema",
+                  "default": false
+                }
+              }
+            }
+          }
+        },
+        "pages": {
+          "$id": "#/properties/ui_config/properties/pages",
+          "type": "object",
+          "title": "The Pages Schema",
+          "required": [
+            "0"
+          ],
+          "properties": {
+            "0": {
+              "$id": "#/properties/ui_config/properties/pages/properties/0",
+              "type": "object",
+              "title": "The 0 Schema",
+              "properties": {
+                "bluetooth": {
+                  "$id": "#/properties/ui_config/properties/pages/properties/0/properties/bluetooth",
+                  "type": "string",
+                  "title": "Bluetooth beacon MAC address",
+                  "examples": [
+                    "00:01:12:34:56:78"
+                  ],
+                  "pattern": "^(([0-9a-fA-F]){2}:){5}([0-9a-fA-F]){2}$"
+                },
+                "groups": {
+                  "$id": "#/properties/ui_config/properties/pages/properties/0/properties/groups",
+                  "type": "array",
+                  "title": "The Groups Schema",
+                  "items": {
+                    "$id": "#/properties/ui_config/properties/pages/properties/0/properties/groups/items",
+                    "type": "string",
+                    "title": "The Items Schema",
+                    "default": "",
+                    "examples": [
+                      "50b0adf5-50b0-42ed-89f2-2806e59df8d1",
+                      "15f7f394-4a15-45fc-b590-59f5aa7d89fa",
+                      "10"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                },
+                "image": {
+                  "$id": "#/properties/ui_config/properties/pages/properties/0/properties/image",
+                  "type": "string",
+                  "title": "The Image Schema",
+                  "examples": [
+                    "/usr/bin/yio-remote/images/livingroom.jpg"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "name": {
+                  "$id": "#/properties/ui_config/properties/pages/properties/0/properties/name",
+                  "type": "string",
+                  "title": "The Name Schema",
+                  "examples": [
+                    "Nappali"
+                  ],
+                  "pattern": "^(.*)$"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        },
+        "profiles": {
+          "$id": "#/properties/ui_config/properties/profiles",
+          "type": "object",
+          "title": "The Profiles Schema",
+          "required": [
+            "0"
+          ],
+          "properties": {
+            "0": {
+              "$id": "#/properties/ui_config/properties/profiles/properties/0",
+              "type": "object",
+              "title": "The 0 Schema",
+              "required": [
+                "favorites",
+                "name",
+                "pages"
+              ],
+              "properties": {
+                "favorites": {
+                  "$id": "#/properties/ui_config/properties/profiles/properties/0/properties/favorites",
+                  "type": "array",
+                  "title": "The Favorites Schema",
+                  "items": {
+                    "$id": "#/properties/ui_config/properties/profiles/properties/0/properties/favorites/items",
+                    "type": "string",
+                    "title": "The Items Schema",
+                    "examples": [
+                      "light.livingroom_light_level",
+                      "light.kitchen_light_level",
+                      "light.kitchentable_light_level",
+                      "media_player.living_room_2_1",
+                      "media_player.nappali_speaker"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                },
+                "name": {
+                  "$id": "#/properties/ui_config/properties/profiles/properties/0/properties/name",
+                  "type": "string",
+                  "title": "The Name Schema",
+                  "examples": [
+                    "Apa"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "pages": {
+                  "$id": "#/properties/ui_config/properties/profiles/properties/0/properties/pages",
+                  "type": "array",
+                  "title": "The Pages Schema",
+                  "items": {
+                    "$id": "#/properties/ui_config/properties/profiles/properties/0/properties/pages/items",
+                    "type": "string",
+                    "title": "The Items Schema",
+                    "examples": [
+                      "favorites",
+                      "0",
+                      "5",
+                      "1",
+                      "settings"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "selected_profile": {
+          "$id": "#/properties/ui_config/properties/selected_profile",
+          "type": "string",
+          "title": "Active profile",
+          "examples": [
+            "0"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}
