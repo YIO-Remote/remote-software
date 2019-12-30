@@ -20,41 +20,43 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QFontDatabase>
-#include <QQmlContext>
 #include <QFile>
 #include <QFileInfo>
+#include <QFontDatabase>
+#include <QGuiApplication>
+#include <QLoggingCategory>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QtDebug>
 
-#include "launcher.h"
 #include "jsonfile.h"
+#include "launcher.h"
 #include "translation.h"
 
-#include "hardware/hardwarefactory.h"
-#include "hardware/display_control.h"
-#include "hardware/touchdetect.h"
-#include "hardware/interrupt_handler.h"
-#include "hardware/drv2605.h"
 #include "hardware/bq27441.h"
+#include "hardware/display_control.h"
+#include "hardware/drv2605.h"
+#include "hardware/hardwarefactory.h"
+#include "hardware/interrupt_handler.h"
 #include "hardware/proximity_gesture_control.h"
+#include "hardware/touchdetect.h"
 #include "hardware/wifi_control.h"
 
-#include "integrations/integrations.h"
 #include "entities/entities.h"
+#include "integrations/integrations.h"
 
-#include "notifications.h"
 #include "bluetootharea.h"
+#include "notifications.h"
 
-#include "fileio.h"
-#include "yioapi.h"
-#include "config.h"
-#include "logger.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
+#include "config.h"
+#include "fileio.h"
+#include "logger.h"
+#include "yioapi.h"
 
-int main(int argc, char *argv[])
-{
+static Q_LOGGING_CATEGORY(CLASS_LC, "main");
+
+int main(int argc, char* argv[]) {
     qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
 
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication app(argc, argv);
+    QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
@@ -85,7 +87,16 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("configPath", configPath);
 
     // LOAD CONFIG
-    Config config(&engine, configPath);
+    QString schemaPath = appPath + "/config-schema.json";
+    if (!QFile::exists(schemaPath)) {
+        qCWarning(CLASS_LC) << "Configuration schema not found, configuration file will not be validated! Missing file:"
+                            << schemaPath;
+    }
+    Config config(&engine, configPath, schemaPath);
+    if (!config.isValid()) {
+        qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config.getError();
+        // TODO(marton) show error screen with shutdon / reboot / web-configurator option
+    }
     engine.rootContext()->setContextProperty("config", &config);
 
     // LOGGER
@@ -98,11 +109,8 @@ int main(int argc, char *argv[])
     if (path == ".") {
         path = appPath + "/log";
     }
-    Logger logger(path,
-                  logCfg.value("level", "WARN").toString(),
-                  logCfg.value("console", true).toBool(),
-                  logCfg.value("showSource", true).toBool(),
-                  logCfg.value("queueSize", 100).toInt(),
+    Logger logger(path, logCfg.value("level", "WARN").toString(), logCfg.value("console", true).toBool(),
+                  logCfg.value("showSource", true).toBool(), logCfg.value("queueSize", 100).toInt(),
                   logCfg.value("purgeHours", 72).toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
@@ -126,14 +134,19 @@ int main(int argc, char *argv[])
     qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
-    qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum", "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum",
+                                                      "Not creatable as it is an enum type");
     qRegisterMetaType<SystemServiceName>("SystemServiceName");
-    qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork", "Not creatable as it is an information object only");
-    qmlRegisterUncreatableType<WifiSecurityEnum>("WifiControl", 1, 0, "WifiSecurityEnum", "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork",
+                                            "Not creatable as it is an information object only");
+    qmlRegisterUncreatableType<WifiSecurityEnum>("WifiControl", 1, 0, "WifiSecurityEnum",
+                                                 "Not creatable as it is an enum type");
     qRegisterMetaType<WifiSecurity>("WifiSecurity");
-    qmlRegisterUncreatableType<SignalStrengthEnum>("WifiControl", 1, 0, "SignalStrengthEnum", "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<SignalStrengthEnum>("WifiControl", 1, 0, "SignalStrengthEnum",
+                                                   "Not creatable as it is an enum type");
     qRegisterMetaType<SignalStrength>("SignalStrength");
-    qmlRegisterUncreatableType<WifiStatus>("WifiControl", 1, 0, "WifiStatus", "Not creatable as it is an information object only");
+    qmlRegisterUncreatableType<WifiStatus>("WifiControl", 1, 0, "WifiStatus",
+                                           "Not creatable as it is an information object only");
     qRegisterMetaType<WifiStatus>("WifiStatus");
 
     // DRIVERS
@@ -141,7 +154,8 @@ int main(int argc, char *argv[])
     if (QFile::exists("/boot/hardware.json")) {
         hwConfigPath = "/boot";
     }
-    HardwareFactory *hwFactory = HardwareFactory::build(hwConfigPath + "/hardware.json");
+    HardwareFactory* hwFactory =
+        HardwareFactory::build(hwConfigPath + "/hardware.json", hwConfigPath + "/hardware-schema.json");
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();
@@ -157,7 +171,9 @@ int main(int argc, char *argv[])
 
     // INTEGRATIONS
     Integrations integrations(&engine, appPath);
-    qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations", "Not creatable, only used for enum."); // Make integration state available in QML
+    // Make integration state available in QML
+    qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations",
+                                             "Not creatable, only used for enum.");
     engine.rootContext()->setContextProperty("integrations", &integrations);
 
     // ENTITIES
@@ -168,7 +184,7 @@ int main(int argc, char *argv[])
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
-    // TODO put initialization into factory
+    // TODO(zehnm) put initialization into factory
     if (!wifiControl->init()) {
         notifications.add(true, QObject::tr("WiFi device was not found."));
     }
@@ -194,7 +210,8 @@ int main(int argc, char *argv[])
     // FIXME move initialization code to a device driver factory
     QObject* standbyControl = config.getQMLObject("standbyControl");
     if (standbyControl == nullptr) {
-        qCritical() << "Error looking up QML object:" << "standbyControl";
+        qCritical() << "Error looking up QML object:"
+                    << "standbyControl";
     } else {
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));

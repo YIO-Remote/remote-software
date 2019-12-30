@@ -20,8 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORY_H
-#define HARDWAREFACTORY_H
+#ifndef HARDWARE_HARDWAREFACTORY_H_
+#define HARDWARE_HARDWAREFACTORY_H_
 
 #include <QObject>
 
@@ -32,26 +32,28 @@
 /**
  * @brief Abstract hardware factory. Supported platforms are implemented in concrete factories.
  */
-class HardwareFactory : public QObject
-{
+class HardwareFactory : public QObject {
     Q_OBJECT
-public:
 
+ public:
     /**
      * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param configFileName the JSON configuration file name to load the hardware configuration from.
-     * @return The concrete instance or nullptr if construction failed. In this case the application should be terminated.
+     * @param schemaFileName the JSON schema file to validate the configuration file.
+     * @return The concrete instance or nullptr if construction failed. In this case the application should be
+     * terminated.
      */
-    static HardwareFactory* build(const QString &configFileName);
+    static HardwareFactory* build(const QString& configFileName, const QString& schemaFileName);
 
     /**
      * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param config The configuration map to retrieve build configuration options.
-     * @return The concrete instance or nullptr if construction failed. In this case the application should be terminated.
+     * @return The concrete instance or nullptr if construction failed. In this case the application should be
+     * terminated.
      */
-    static HardwareFactory* build(const QVariantMap &config);
+    static HardwareFactory* build(const QVariantMap& config);
 
     /**
      * @brief instance Returns a concrete HardwareFactory implementation
@@ -65,14 +67,12 @@ public:
 
     virtual WebServerControl* getWebServerControl() = 0;
 
-signals:
-
-protected:
-    HardwareFactory(QObject *parent = nullptr);
+ protected:
+    explicit HardwareFactory(QObject* parent = nullptr);
     virtual ~HardwareFactory();
 
-private:
+ private:
     static HardwareFactory* s_instance;
 };
 
-#endif // HARDWAREFACTORY_H
+#endif  // HARDWARE_HARDWAREFACTORY_H_

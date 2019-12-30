@@ -35,6 +35,8 @@ class Config : public QObject, ConfigInterface {
     Q_INTERFACES(ConfigInterface)
 
  public:
+    Q_PROPERTY(bool valid READ isValid CONSTANT)
+    Q_PROPERTY(QString error READ getError CONSTANT)
     Q_PROPERTY(QVariantMap config READ config WRITE setConfig NOTIFY configChanged)
     Q_PROPERTY(QString profile READ profile WRITE setProfile NOTIFY profileChanged)
     Q_PROPERTY(QStringList profileFavorites READ profileFavorites NOTIFY profileFavoritesChanged)
@@ -79,6 +81,9 @@ class Config : public QObject, ConfigInterface {
     // Removed from entities
     Q_INVOKABLE void setFavorite(const QString& entityId, bool value);
 
+    bool    isValid() const { return m_error.isEmpty(); }
+    QString getError() const { return m_error; }
+
     QVariantMap config() { return m_config; }
     void        setConfig(const QVariantMap& config);
 
@@ -118,6 +123,7 @@ class Config : public QObject, ConfigInterface {
     QVariantMap m_config;
 
     JsonFile* m_jsf;
+    QString   m_error;
 
     // Caches to improve performance
     QString     m_cacheProfile;

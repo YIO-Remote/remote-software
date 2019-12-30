@@ -1,0 +1,11 @@
+# YIO project style configuration
+# 
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+BasedOnStyle: Google
+
+IndentWidth: 4
+ColumnLimit: 120
+
+AccessModifierOffset: -3
+AlignConsecutiveDeclarations: true

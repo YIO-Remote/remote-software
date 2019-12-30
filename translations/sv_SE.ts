@@ -139,7 +139,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="61"/>
       <source>Media</source>
-      <translation>Media</translation>
+      <translation type="unfinished">Media</translation>
     </message>
   </context>
   <context>
@@ -217,7 +217,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="287"/>
       <source>IP address</source>
-      <translation>IP address</translation>
+      <translation type="unfinished">IP address</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="323"/>
@@ -389,7 +389,7 @@ YIO fjärrkontroll </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="37"/>
       <source>System</source>
-      <translation>System</translation>
+      <translation type="unfinished">System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="58"/>
