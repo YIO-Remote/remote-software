@@ -1,0 +1,16 @@
+# GitHub Action that performs a JSON schema validation on the configuration files
+
+name: Config Schema Validation
+on: [push, pull_request]
+jobs:
+  validate_json:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - run: npm install -g ajv-cli
+    - run: ajv validate -s config-schema.json  -d config.json
+    - run: ajv validate -s hardware-schema.json  -d hardware.json
+    
