@@ -1,4 +1,4 @@
-name: Copy tranlsation master file
+name: Copy translation master file
 on: push
 jobs:
   copycat:
@@ -12,9 +12,9 @@ jobs:
         DST_BRANCH: master
         DST_OWNER: YIO-Remote
         DST_REPO_NAME: translations
-        DST_PATH: translations/en_US.ts
+        DST_PATH: translations/remote-software/en_US.ts
         GH_PAT: ${{ secrets.GH_PAT }}
         SRC_BRANCH: dev
-        SRC_PATH: remote-software/en_US.ts
+        SRC_PATH: remote-software/translations/en_US.ts
         USERNAME: Workflow
         EMAIL: hello@yio-remote.com
