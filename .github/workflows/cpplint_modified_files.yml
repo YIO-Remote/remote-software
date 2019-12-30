@@ -51,7 +51,7 @@ jobs:
           print("{} files were modified.".format(len(modified_files)))
 
           cpp_exts = tuple(".c .c++ .cc .cpp .cu .cuh .cxx .h .h++ .hh .hpp .hxx".split())
-          cpp_files = [file for file in modified_files if file.lower().endswith(cpp_exts) and not(re.match("(wpa_supplicant|3rdparty)", file))]
+          cpp_files = [file for file in modified_files if file.lower().endswith(cpp_exts) and os.path.exists(file) and not(re.match("(wpa_supplicant|3rdparty)", file))]
           print(f"{len(cpp_files)} C++ files were modified.")
           if not cpp_files:
             sys.exit(0)
