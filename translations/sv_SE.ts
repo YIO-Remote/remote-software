@@ -147,27 +147,27 @@
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="23"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Frånkopplad</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="124"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Anslut</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="160"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Koppla från</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="190"/>
       <source>Hubs</source>
-      <translation type="unfinished">Hubs</translation>
+      <translation>Hubbar</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Hubs.qml" line="228"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Lägg till ny</translation>
     </message>
   </context>
   <context>
@@ -418,7 +418,7 @@ YIO fjärrkontroll </translation>
       <location filename="../basic_ui/pages/dashboard.qml" line="8"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoriter</translation>
     </message>
   </context>
   <context>
@@ -426,7 +426,7 @@ YIO fjärrkontroll </translation>
     <message>
       <location filename="../integrations/homeassistant/homeassistant.qml" line="209"/>
       <source>Failed to connect to Home Assistant.</source>
-      <translation type="unfinished">Failed to connect to Home Assistant.</translation>
+      <translation>Misslyckades att ansluta till Home Assistant.</translation>
     </message>
   </context>
   <context>
@@ -444,7 +444,7 @@ YIO fjärrkontroll </translation>
       <location filename="../basic_ui/pages/settings.qml" line="10"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Settings</translation>
+      <translation>Inställningar</translation>
     </message>
   </context>
   <context>
