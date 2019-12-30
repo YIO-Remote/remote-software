@@ -84,3 +84,4 @@ translations/*.qm
 *.autosave
 # Makefile should always be generated with qmake
 Makefile
+*.ts
