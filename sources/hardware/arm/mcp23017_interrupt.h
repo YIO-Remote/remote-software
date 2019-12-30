@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_ARM_MCP23017_INTERRUPT_H_
-#define HARDWARE_ARM_MCP23017_INTERRUPT_H_
+#pragma once
 
 #include <QFile>
 #include <QObject>
@@ -107,5 +106,3 @@ class Mcp23017InterruptHandler : public InterruptHandler {
     QSocketNotifier *notifier;
     QFile *          file;
 };
-
-#endif  // HARDWARE_ARM_MCP23017_INTERRUPT_H_

@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_HARDWAREFACTORY_YIO_H_
-#define HARDWARE_HARDWAREFACTORY_YIO_H_
+#pragma once
 
 #include "hardwarefactory_rpi0.h"
 
@@ -38,6 +37,6 @@ class HardwareFactoryYio : public HardwareFactoryRPi0 {
     BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config) override;
 
     InterruptHandler *buildInterruptHandler(const QVariantMap &config) override;
-};
 
-#endif  // HARDWARE_HARDWAREFACTORY_YIO_H_
+    HapticMotor *buildHapticMotor(const QVariantMap &config) override;
+};

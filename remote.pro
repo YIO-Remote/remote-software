@@ -49,6 +49,8 @@ HEADERS += \
     sources/hardware/batteryfuelgauge_mock.h \
     sources/hardware/displaycontrol.h \
     sources/hardware/displaycontrol_mock.h \
+    sources/hardware/hapticmotor.h \
+    sources/hardware/hapticmotor_mock.h \
     sources/hardware/interrupthandler_mock.h \
     sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
@@ -60,7 +62,6 @@ HEADERS += \
     sources/translation.h \
     sources/hardware/touchdetect.h \
     sources/hardware/proximity_gesture_control.h \
-    sources/hardware/drv2605.h \
     sources/hardware/hardwarefactory.h \
     sources/hardware/hardwarefactory_mock.h \
     sources/hardware/hw_config.h \
@@ -109,7 +110,6 @@ SOURCES += \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
-    sources/hardware/drv2605.cpp \
     sources/hardware/hardwarefactory.cpp \
     sources/hardware/hardwarefactory_mock.cpp \
     sources/hardware/systemd.cpp \
@@ -175,6 +175,7 @@ linux {
             sources/hardware/arm/apds9960.h \
             sources/hardware/arm/bq27441.h \
             sources/hardware/arm/displaycontrol_yio.h \
+            sources/hardware/arm/drv2605.h \
             sources/hardware/arm/mcp23017_interrupt.h \
             sources/hardware/arm/mcp23017_handler.h
 
@@ -182,7 +183,8 @@ linux {
             sources/hardware/hardwarefactory_yio.cpp \
             sources/hardware/arm/apds9960.cpp \
             sources/hardware/arm/bq27441.cpp \
-            sources/hardware/arm/displaycontrol_yio.cpp
+            sources/hardware/arm/displaycontrol_yio.cpp \
+            sources/hardware/arm/drv2605.cpp
     }
 
 }

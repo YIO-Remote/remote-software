@@ -26,6 +26,8 @@ import QtGraphicalEffects 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
+import Haptic 1.0
+
 import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
 
@@ -111,14 +113,14 @@ Item {
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
                     mediaPlayers.currentIndex += 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect("buzz");
                 }
                 break;
             case "dpad left":
                 if (mediaPlayers.currentIndex > 0) {
                     mediaPlayers.currentIndex -= 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect("buzz");
                 }
                 break;
             case "top right":
@@ -507,7 +509,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 miniMediaPlayer.state = "closed"
             }
         }
@@ -541,7 +543,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].previous();
             }
         }
@@ -599,7 +601,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ) {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
                 } else {
@@ -637,7 +639,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].next();
             }
         }

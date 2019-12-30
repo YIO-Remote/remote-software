@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_ARM_BQ27441_H_
-#define HARDWARE_ARM_BQ27441_H_
+#pragma once
 
 #include <QObject>
 #include <QtDebug>
@@ -125,5 +124,3 @@ class BQ27441 : public BatteryFuelGauge {
     int  bus;
     bool m_init = false;
 };
-
-#endif  // HARDWARE_ARM_BQ27441_H_

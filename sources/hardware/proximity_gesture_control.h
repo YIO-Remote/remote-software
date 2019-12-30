@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_PROXIMITY_GESTURE_CONTROL_H_
-#define HARDWARE_PROXIMITY_GESTURE_CONTROL_H_
+#pragma once
 
 #include <QObject>
 #include <QtDebug>
@@ -182,5 +181,3 @@ class ProximityGestureControl : public QObject {
     bool     m_gestureDetection = false;
     int      m_proximitySetting = 70;  // default value
 };
-
-#endif  // HARDWARE_PROXIMITY_GESTURE_CONTROL_H_

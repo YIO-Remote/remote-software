@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -22,21 +22,16 @@
 
 #pragma once
 
-#include <QObject>
+#include "hapticmotor.h"
 
-class DisplayControl : public QObject {
+class HapticMotorMock : public HapticMotor {
     Q_OBJECT
-
  public:
-    Q_INVOKABLE virtual bool setmode(const QString& mode) = 0;
+    explicit HapticMotorMock(QObject *parent = nullptr) : HapticMotor(parent) {}
 
-    Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
+    // HapticMotor interface
+ public:
+    Q_INVOKABLE void playEffect(const QString &effect) override { Q_UNUSED(effect) }
 
-    Q_INVOKABLE virtual void batteryChargingOn() = 0;
-    Q_INVOKABLE virtual void batteryChargingOff() = 0;
-
-    virtual void setup() = 0;
-
- protected:
-    explicit DisplayControl(QObject* parent = nullptr) : QObject(parent) {}
+    bool init() override { return true; }
 };

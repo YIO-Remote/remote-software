@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_BATTERYFUELGAUGE_MOCK_H_
-#define HARDWARE_BATTERYFUELGAUGE_MOCK_H_
+#pragma once
 
 #include "batteryfuelgauge.h"
 
@@ -47,5 +46,3 @@ class BatteryFuelGaugeMock : public BatteryFuelGauge {
     int     getDesignCapacity() override { return 2500; }
     void    changeCapacity(int newCapacity) override { Q_UNUSED(newCapacity) }
 };
-
-#endif  // HARDWARE_BATTERYFUELGAUGE_MOCK_H_

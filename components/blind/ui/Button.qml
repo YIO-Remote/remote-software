@@ -24,6 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Haptic 1.0
 import Entity.Blind 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -182,13 +183,13 @@ Rectangle {
         enabled: blindButton.state == "open" ? false : true
 
         onPressAndHold: {
-            haptic.playEffect("press");
+            Haptic.playEffect("press");
 
             addToFavButton.state = "open"
         }
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect("click");
 
             originParent = blindButton.parent
 
@@ -319,7 +320,7 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 addToFavButton.state = "closed"
             }
         }

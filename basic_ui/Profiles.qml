@@ -23,6 +23,8 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 
+import Haptic 1.0
+
 Rectangle {
     id: profiles
     width: 480
@@ -169,7 +171,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect("click");
                     config.profile = id;
                     profileModel.move(index, 0, 1);
                 }
@@ -212,7 +214,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 profiles.state = "closed"
             }
         }

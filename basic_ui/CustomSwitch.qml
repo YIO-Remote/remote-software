@@ -23,6 +23,8 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 
+import Haptic 1.0
+
 Item {
     width: 66
     height: 36
@@ -65,7 +67,7 @@ Item {
         height: button.height + 60
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect("click");
             button.toggle();
         }
     }

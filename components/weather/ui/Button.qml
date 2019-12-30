@@ -2,6 +2,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Haptic 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
@@ -139,13 +141,13 @@ Rectangle {
         enabled: weatherButton.state == "open" ? false : true
 
         onPressAndHold: {
-            haptic.playEffect("press");
+            Haptic.playEffect("press");
 
             addToFavButton.state = "open"
         }
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect("click");
 
             originParent = weatherButton.parent
 
@@ -273,7 +275,7 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 addToFavButton.state = "closed"
             }
         }

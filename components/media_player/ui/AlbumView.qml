@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
+import Haptic 1.0
 import MediaPlayerUtils 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -80,7 +81,7 @@ Item {
                 anchors.centerIn: parent
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect("click");
                     obj.playMedia(albumModel.id, albumModel.type);
                 }
             }
@@ -190,7 +191,7 @@ Item {
                     anchors.fill: parent
 
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect("click");
                         obj.playMedia(item_key, item_type);
                     }
                 }
@@ -201,7 +202,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     mouseArea.onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect("click");
                         contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": main.width, "id": item_key, "type": item_type, "list": item_commands })
                     }
                 }

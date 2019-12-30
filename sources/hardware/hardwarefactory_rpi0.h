@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_HARDWAREFACTORY_RPI0_H_
-#define HARDWARE_HARDWAREFACTORY_RPI0_H_
+#pragma once
 
 #include "displaycontrol.h"
 #include "hardwarefactory.h"
@@ -50,6 +49,8 @@ class HardwareFactoryRPi0 : public HardwareFactory {
 
     InterruptHandler *getInterruptHandler() override;
 
+    HapticMotor *getHapticMotor() override;
+
  protected:
     virtual WifiControl *     buildWifiControl(const QVariantMap &config);
     virtual SystemService *   buildSystemService(const QVariantMap &config);
@@ -57,6 +58,7 @@ class HardwareFactoryRPi0 : public HardwareFactory {
     virtual DisplayControl *  buildDisplayControl(const QVariantMap &config);
     virtual BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config);
     virtual InterruptHandler *buildInterruptHandler(const QVariantMap &config);
+    virtual HapticMotor *     buildHapticMotor(const QVariantMap &config);
 
  private:
     WifiControl *     p_wifiControl;
@@ -66,5 +68,3 @@ class HardwareFactoryRPi0 : public HardwareFactory {
     BatteryFuelGauge *p_batteryFuelGauge;
     InterruptHandler *p_interruptHandler;
 };
-
-#endif  // HARDWARE_HARDWAREFACTORY_RPI0_H_

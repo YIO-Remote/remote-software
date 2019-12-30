@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_DISPLAYCONTROL_MOCK_H_
-#define HARDWARE_DISPLAYCONTROL_MOCK_H_
+#pragma once
 
 #include "displaycontrol.h"
 
@@ -44,5 +43,3 @@ class DisplayControlMock : public DisplayControl {
     void batteryChargingOff() override {}
     void setup() override {}
 };
-
-#endif  // HARDWARE_DISPLAYCONTROL_MOCK_H_

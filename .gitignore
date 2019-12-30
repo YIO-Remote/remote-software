@@ -66,6 +66,7 @@ $RECYCLE.BIN/
 ### Project specific ###
 software/build-*
 build
+qml_qmlcache.qrc
 
 # plugins
 plugins/*.so

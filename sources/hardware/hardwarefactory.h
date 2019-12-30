@@ -20,14 +20,14 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_HARDWAREFACTORY_H_
-#define HARDWARE_HARDWAREFACTORY_H_
+#pragma once
 
 #include <QObject>
 #include <QQmlApplicationEngine>
 
 #include "batteryfuelgauge.h"
 #include "displaycontrol.h"
+#include "hapticmotor.h"
 #include "interrupthandler.h"
 #include "systemservice.h"
 #include "webserver_control.h"
@@ -77,9 +77,13 @@ class HardwareFactory : public QObject {
 
     virtual InterruptHandler* getInterruptHandler() = 0;
 
+    virtual HapticMotor* getHapticMotor() = 0;
+
+    // QML callback providers for qmlRegisterSingletonType
     static QObject* batteryFuelGaugeProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* displayControlProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* interruptHandlerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* hapticMotorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 
  protected:
     explicit HardwareFactory(QObject* parent = nullptr);
@@ -88,5 +92,3 @@ class HardwareFactory : public QObject {
  private:
     static HardwareFactory* s_instance;
 };
-
-#endif  // HARDWARE_HARDWAREFACTORY_H_

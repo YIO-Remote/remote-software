@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_HARDWAREFACTORY_MOCK_H_
-#define HARDWARE_HARDWAREFACTORY_MOCK_H_
+#pragma once
 
 #include "hardwarefactory.h"
 
@@ -41,6 +40,5 @@ class HardwareFactoryMock : public HardwareFactory {
     DisplayControl *  getDisplayControl() override;
     BatteryFuelGauge *getBatteryFuelGauge() override;
     InterruptHandler *getInterruptHandler() override;
+    HapticMotor *     getHapticMotor() override;
 };
-
-#endif  // HARDWARE_HARDWAREFACTORY_MOCK_H_

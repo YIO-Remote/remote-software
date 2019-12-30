@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_INTERRUPTHANDLER_H_
-#define HARDWARE_INTERRUPTHANDLER_H_
+#pragma once
 
 #include <QObject>
 
@@ -40,5 +39,3 @@ class InterruptHandler : public QObject {
  signals:
     void buttonPressed();
 };
-
-#endif  // HARDWARE_INTERRUPTHANDLER_H_

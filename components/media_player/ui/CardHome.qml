@@ -21,6 +21,8 @@
  *****************************************************************************/
 
 import QtQuick 2.0
+
+import Haptic 1.0
 import Entity.MediaPlayer 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -179,7 +181,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 obj.previous();
             }
         }
@@ -235,7 +237,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 if (obj.state === 3) {
                     obj.pause();
                 } else {
@@ -273,7 +275,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 obj.next();
             }
         }

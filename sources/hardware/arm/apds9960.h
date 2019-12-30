@@ -27,8 +27,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_ARM_APDS9960_H_
-#define HARDWARE_ARM_APDS9960_H_
+#pragma once
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -515,5 +514,3 @@ class APDS9960 {
     };
     gstatus _gstatus;
 };
-
-#endif  // HARDWARE_ARM_APDS9960_H_

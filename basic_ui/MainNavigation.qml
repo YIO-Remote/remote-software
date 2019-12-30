@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtGraphicalEffects 1.0
 import QtQml.Models 2.3
 
+import Haptic 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 
 Item {
@@ -139,13 +141,13 @@ Item {
 
             onPressAndHold: {
                 held = true;
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
             }
             onReleased: {
                 if (held) {
                     savemenuConfig()
                 }
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
 
                 held = false
                 mainNavigationListView.currentIndex = index

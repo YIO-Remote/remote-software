@@ -86,25 +86,37 @@ HardwareFactory *HardwareFactory::instance() {
 }
 
 QObject *HardwareFactory::batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
-    Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
     assert(s_instance);
 
-    return s_instance->getBatteryFuelGauge();
+    QObject *device = s_instance->getBatteryFuelGauge();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
 }
 
 QObject *HardwareFactory::displayControlProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
-    Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
     assert(s_instance);
 
-    return s_instance->getDisplayControl();
+    QObject *device = s_instance->getDisplayControl();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
 }
 
 QObject *HardwareFactory::interruptHandlerProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
-    Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
     assert(s_instance);
 
-    return s_instance->getInterruptHandler();
+    QObject *device = s_instance->getInterruptHandler();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::hapticMotorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getHapticMotor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
 }

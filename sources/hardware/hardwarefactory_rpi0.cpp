@@ -27,6 +27,7 @@
 
 #include "batteryfuelgauge_mock.h"
 #include "displaycontrol_mock.h"
+#include "hapticmotor_mock.h"
 #include "hardwarefactory_rpi0.h"
 #include "hw_config.h"
 #include "interrupthandler_mock.h"
@@ -88,6 +89,8 @@ InterruptHandler *HardwareFactoryRPi0::getInterruptHandler() {
     assert(p_interruptHandler);
     return p_interruptHandler;
 }
+
+HapticMotor *HardwareFactoryRPi0::getHapticMotor() {}
 
 // -- System services - RPi uses systemd
 SystemService *HardwareFactoryRPi0::buildSystemService(const QVariantMap &config) {
@@ -198,4 +201,9 @@ BatteryFuelGauge *HardwareFactoryRPi0::buildBatteryFuelGauge(const QVariantMap &
 InterruptHandler *HardwareFactoryRPi0::buildInterruptHandler(const QVariantMap &config) {
     Q_UNUSED(config)
     return new InterruptHandlerMock(this);
+}
+
+HapticMotor *HardwareFactoryRPi0::buildHapticMotor(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new HapticMotorMock(this);
 }

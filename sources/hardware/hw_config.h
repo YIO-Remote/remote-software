@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_HW_CONFIG_H_
-#define HARDWARE_HW_CONFIG_H_
+#pragma once
 
 
 #define HW_CFG_SYSTEMSERVICE      "systemservice"
@@ -112,5 +111,3 @@
 #define HW_DEF_LIGHTTPD_WIFI_CFG   "/etc/lighttpd/lighttpd-wifisetup.conf"
 #define HW_CFG_LIGHTTPD_WEB_CFG    "webConfiguratorConfig"
 #define HW_DEF_LIGHTTPD_WEB_CFG    "/etc/lighttpd/lighttpd-config.conf"
-
-#endif  // HARDWARE_HW_CONFIG_H_

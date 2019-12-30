@@ -25,6 +25,7 @@
 
 #include "batteryfuelgauge_mock.h"
 #include "displaycontrol_mock.h"
+#include "hapticmotor_mock.h"
 #include "hardwarefactory_mock.h"
 #include "interrupthandler_mock.h"
 #include "systemservice_mock.h"
@@ -66,5 +67,10 @@ BatteryFuelGauge *HardwareFactoryMock::getBatteryFuelGauge() {
 
 InterruptHandler *HardwareFactoryMock::getInterruptHandler() {
     static InterruptHandlerMock singleton;
+    return &singleton;
+}
+
+HapticMotor *HardwareFactoryMock::getHapticMotor() {
+    static HapticMotorMock singleton;
     return &singleton;
 }

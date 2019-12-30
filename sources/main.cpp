@@ -34,7 +34,7 @@
 #include "translation.h"
 
 #include "hardware/displaycontrol.h"
-#include "hardware/drv2605.h"
+#include "hardware/hapticmotor.h"
 #include "hardware/hardwarefactory.h"
 #include "hardware/proximity_gesture_control.h"
 #include "hardware/touchdetect.h"
@@ -127,7 +127,6 @@ int main(int argc, char* argv[]) {
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
 
     qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
-    qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
     qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
     qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum",
@@ -164,6 +163,7 @@ int main(int argc, char* argv[]) {
                                              &HardwareFactory::displayControlProvider);
     qmlRegisterSingletonType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler",
                                                &HardwareFactory::interruptHandlerProvider);
+    qmlRegisterSingletonType<InterruptHandler>("Haptic", 1, 0, "Haptic", &HardwareFactory::hapticMotorProvider);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;

@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Haptic 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -79,7 +81,7 @@ Rectangle {
                 property int percent
 
                 onPositionChanged: {
-                    haptic.playEffect("bump");
+                    Haptic.playEffect("bump");
                     dragger.percent = Math.round((parent.height - 10 - mouse.y)/(parent.height-10)*100);
                     if (dragger.percent < 0) dragger.percent = 0;
                     if (dragger.percent > 100) dragger.percent = 100;
@@ -201,7 +203,7 @@ Rectangle {
                 buttonText: obj.state ? "Turn off" : "Turn on"
 
                 mouseArea.onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect("click");
                     obj.toggle();
                 }
             }
@@ -213,7 +215,7 @@ Rectangle {
                 buttonText: "Color"
 
                 mouseArea.onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect("click");
                     flipable.flipped = !flipable.flipped
                 }
             }
@@ -239,7 +241,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect("click");
                         lightButton.state = "closed"
                     }
                 }
@@ -424,7 +426,7 @@ Rectangle {
                 buttonText: "OK"
 
                 mouseArea.onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect("click");
                     flipable.flipped = !flipable.flipped
                 }
 
@@ -451,7 +453,7 @@ Rectangle {
 //                    anchors.centerIn: parent
 
 //                    onClicked: {
-//                        haptic.playEffect("click");
+//                        Haptic.playEffect("click");
 //                        lightButton.state = "closed"
 //                        loader_main.state = "visible"
 //                    }
@@ -483,7 +485,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect("click");
                         lightButton.state = "closed"
                         loader_main.state = "visible"
                     }

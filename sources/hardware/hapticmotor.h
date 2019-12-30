@@ -24,19 +24,15 @@
 
 #include <QObject>
 
-class DisplayControl : public QObject {
+class HapticMotor : public QObject {
     Q_OBJECT
 
  public:
-    Q_INVOKABLE virtual bool setmode(const QString& mode) = 0;
+    // TODO(zehnm) change string parameter to enum
+    Q_INVOKABLE virtual void playEffect(const QString& effect) = 0;
 
-    Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
-
-    Q_INVOKABLE virtual void batteryChargingOn() = 0;
-    Q_INVOKABLE virtual void batteryChargingOff() = 0;
-
-    virtual void setup() = 0;
+    virtual bool init() = 0;
 
  protected:
-    explicit DisplayControl(QObject* parent = nullptr) : QObject(parent) {}
+    explicit HapticMotor(QObject* parent = nullptr) : QObject(parent) {}
 };

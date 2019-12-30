@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_ARM_MCP23017_HANDLER_H_
-#define HARDWARE_ARM_MCP23017_HANDLER_H_
+#pragma once
 
 #include <QString>
 
@@ -193,5 +192,3 @@ class MCP23017 {
         }
     }
 };
-
-#endif  // HARDWARE_ARM_MCP23017_HANDLER_H_

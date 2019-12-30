@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_BATTERYFUELGAUGE_H_
-#define HARDWARE_BATTERYFUELGAUGE_H_
+#pragma once
 
 #include <QObject>
 
@@ -54,5 +53,3 @@ class BatteryFuelGauge : public QObject {
  protected:
     int m_capacity;
 };
-
-#endif  // HARDWARE_BATTERYFUELGAUGE_H_

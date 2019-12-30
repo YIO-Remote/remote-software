@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_ARM_DISPLAYCONTROL_YIO_H_
-#define HARDWARE_ARM_DISPLAYCONTROL_YIO_H_
+#pragma once
 
 #include <stdint.h>
 #include <stdio.h>
@@ -52,5 +51,3 @@ class DisplayControlYio : public DisplayControl {
  private:
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
 };
-
-#endif  // HARDWARE_ARM_DISPLAYCONTROL_YIO_H_

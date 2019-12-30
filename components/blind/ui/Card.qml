@@ -24,6 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Haptic 1.0
 import Entity.Blind 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -84,7 +85,7 @@ Rectangle {
             drag.maximumY: dragger_target.height
 
             onPositionChanged: {
-                haptic.playEffect("bump");
+                Haptic.playEffect("bump");
                 percent = Math.round(mouse.y/parent.height*100)
                 if (percent < 0) percent = 0
                 if (percent > 100) percent = 100
@@ -167,7 +168,7 @@ Rectangle {
         visible: obj.isSupported(Blind.F_CLOSE)
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect("click");
             obj.close()
         }
 
@@ -184,7 +185,7 @@ Rectangle {
         buttonText: "   "
         visible: obj.isSupported(Blind.F_STOP)
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect("click");
             obj.stop()
         }
 
@@ -202,7 +203,7 @@ Rectangle {
         visible: obj.isSupported(Blind.F_OPEN)
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect("click");
             obj.open()
         }
 
@@ -233,7 +234,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect("click");
                 blindButton.state = "closed"
             }
         }

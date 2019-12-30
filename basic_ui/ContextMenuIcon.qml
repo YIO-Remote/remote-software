@@ -1,4 +1,5 @@
 import QtQuick 2.11
+import Haptic 1.0
 
 Rectangle {
     id: circleButton
@@ -46,7 +47,7 @@ Rectangle {
         anchors.centerIn: parent
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect("click");
         }
     }
 }

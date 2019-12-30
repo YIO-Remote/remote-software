@@ -25,6 +25,7 @@
 
 #include "arm/bq27441.h"
 #include "arm/displaycontrol_yio.h"
+#include "arm/drv2605.h"
 #include "arm/mcp23017_interrupt.h"
 #include "hardwarefactory_yio.h"
 
@@ -48,4 +49,9 @@ BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &c
 InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &config) {
     Q_UNUSED(config)
     return new Mcp23017InterruptHandler(this);
+}
+
+HapticMotor *HardwareFactoryYio::buildHapticMotor(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new Drv2605(this);
 }
