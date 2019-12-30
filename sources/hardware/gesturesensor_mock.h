@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Foo Bar <foo@bar.com>
+ * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,3 +20,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#pragma once
+
+#include "gesturesensor.h"
+
+class GestureSensorMock : public GestureSensor {
+    Q_OBJECT
+
+ public:
+    explicit GestureSensorMock(QObject *parent = nullptr) : GestureSensor(parent) {}
+
+    // GestureSensor interface
+ public:
+    void gestureDetection(bool state) override { Q_UNUSED(state) }
+
+    QString gesture() override { return ""; }
+};

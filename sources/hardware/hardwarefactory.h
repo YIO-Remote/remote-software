@@ -27,8 +27,11 @@
 
 #include "batteryfuelgauge.h"
 #include "displaycontrol.h"
+#include "gesturesensor.h"
 #include "hapticmotor.h"
 #include "interrupthandler.h"
+#include "lightsensor.h"
+#include "proximitysensor.h"
 #include "systemservice.h"
 #include "webserver_control.h"
 #include "wifi_control.h"
@@ -79,11 +82,20 @@ class HardwareFactory : public QObject {
 
     virtual HapticMotor* getHapticMotor() = 0;
 
+    virtual GestureSensor* getGestureSensor() = 0;
+
+    virtual LightSensor* getLightSensor() = 0;
+
+    virtual ProximitySensor* getProximitySensor() = 0;
+
     // QML callback providers for qmlRegisterSingletonType
     static QObject* batteryFuelGaugeProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* displayControlProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* interruptHandlerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* hapticMotorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* gestureSensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* lightSensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* proximitySensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 
  protected:
     explicit HardwareFactory(QObject* parent = nullptr);

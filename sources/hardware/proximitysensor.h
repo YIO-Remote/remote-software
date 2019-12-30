@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Foo Bar <foo@bar.com>
+ * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -19,4 +19,29 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
+#pragma once
 
+#include <QObject>
+
+class ProximitySensor : public QObject {
+    Q_OBJECT
+
+ public:
+    Q_PROPERTY(int proximity READ proximity NOTIFY proximityEvent)
+    Q_PROPERTY(int proximitySetting READ proximitySetting WRITE setProximitySetting)
+
+    Q_INVOKABLE virtual void proximityDetection(bool state) = 0;
+    Q_INVOKABLE virtual void readInterrupt() = 0;
+
+    virtual int proximitySetting() = 0;
+
+    virtual void setProximitySetting(int proximity) = 0;
+
+    virtual int proximity() = 0;
+
+ signals:
+    void proximityEvent();
+
+ protected:
+    explicit ProximitySensor(QObject *parent = nullptr) : QObject(parent) {}
+};

@@ -25,9 +25,12 @@
 
 #include "batteryfuelgauge_mock.h"
 #include "displaycontrol_mock.h"
+#include "gesturesensor_mock.h"
 #include "hapticmotor_mock.h"
 #include "hardwarefactory_mock.h"
 #include "interrupthandler_mock.h"
+#include "lightsensor_mock.h"
+#include "proximitysensor_mock.h"
 #include "systemservice_mock.h"
 #include "webserver_mock.h"
 #include "wifi_mock.h"
@@ -72,5 +75,20 @@ InterruptHandler *HardwareFactoryMock::getInterruptHandler() {
 
 HapticMotor *HardwareFactoryMock::getHapticMotor() {
     static HapticMotorMock singleton;
+    return &singleton;
+}
+
+GestureSensor *HardwareFactoryMock::getGestureSensor() {
+    static GestureSensorMock singleton;
+    return &singleton;
+}
+
+LightSensor *HardwareFactoryMock::getLightSensor() {
+    static LightSensorMock singleton;
+    return &singleton;
+}
+
+ProximitySensor *HardwareFactoryMock::getProximitySensor() {
+    static ProximitySensorMock singleton;
     return &singleton;
 }

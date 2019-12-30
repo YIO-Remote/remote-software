@@ -29,7 +29,7 @@
 
 #include "apds9960.h"
 
-APDS9960::APDS9960() {}
+APDS9960::APDS9960() { _initialized = false; }
 
 APDS9960::~APDS9960() {}
 
@@ -103,6 +103,7 @@ bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain) {
     _gpulse.GPULSE = 9;  // 10 pulses
     wiringPiI2CWriteReg8(_fd, APDS9960_GPULSE, _gpulse.get());
 
+    _initialized = true;
     return true;
 }
 

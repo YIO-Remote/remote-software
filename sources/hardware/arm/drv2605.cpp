@@ -33,7 +33,7 @@
  *****************************************************************************/
 
 #include "drv2605.h"
-#include "../notifications.h"
+#include "../../notifications.h"
 
 // FIXME use strategy pattern for architecture specific device driver instead of multiple
 Drv2605::Drv2605(QObject* parent) : HapticMotor(parent) {

@@ -24,6 +24,7 @@ import QtQuick 2.11
 
 import DisplayControl 1.0
 import TouchEventFilter 1.0
+import LightSensor 1.0
 import Proximity 1.0
 import Launcher 1.0
 
@@ -70,10 +71,10 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // PROXIMITY SENSOR APDS9960
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property alias proximity: proximity
 
-    Proximity {
-        id: proximity
+    Connections {
+        target: Proximity
+        enabled: true
 
         onProximityEvent: {
             standbyControl.proximityDetected = true;
@@ -87,7 +88,7 @@ Item {
         interval: 400
 
         onTriggered: {
-            standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,30,15,100);
+            standbyControl.display_brightness_ambient = JSHelper.mapValues(LightSensor.readAmbientLight(),0,30,15,100);
             // set the display brightness
             if (standbyControl.display_autobrightness) {
                 setBrightness(display_brightness_ambient);
@@ -189,7 +190,7 @@ Item {
         if (touchDetected) {
             wakeUp();
             touchDetected = false;
-            proximity.proximityDetection(false);
+            Proximity.proximityDetection(false);
         }
     }
 
@@ -206,7 +207,7 @@ Item {
         if (buttonPressDetected) {
             wakeUp();
             buttonPressDetected = false;
-            proximity.proximityDetection(false);
+            Proximity.proximityDetection(false);
         }
     }
 
@@ -257,7 +258,7 @@ Item {
             // mode = standby
             if (time - standbyBaseTime > standbyTime * 1000 && mode == "dim") {
                 // turn on proximity detection
-                proximity.proximityDetection(true);
+                Proximity.proximityDetection(true);
 
                 // turn off the backlight
                 setBrightness(0);

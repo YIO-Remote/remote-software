@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Foo Bar <foo@bar.com>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,3 +20,23 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include "apds9960gesture.h"
+
+#include <cassert>
+
+Apds9960GestureSensor::Apds9960GestureSensor(APDS9960* apds, QObject* parent) : GestureSensor(parent), p_apds(apds) {
+    assert(apds);
+}
+
+void Apds9960GestureSensor::gestureDetection(bool state) {
+    m_gestureDetection = state;
+
+    if (state) {
+        // turn on
+
+    } else {
+        // turn off
+    }
+}
+
+QString Apds9960GestureSensor::gesture() { return m_gesture; }

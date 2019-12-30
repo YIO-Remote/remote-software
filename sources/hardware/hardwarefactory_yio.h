@@ -22,6 +22,7 @@
 
 #pragma once
 
+#include "arm/apds9960.h"
 #include "hardwarefactory_rpi0.h"
 
 class HardwareFactoryYio : public HardwareFactoryRPi0 {
@@ -39,4 +40,13 @@ class HardwareFactoryYio : public HardwareFactoryRPi0 {
     InterruptHandler *buildInterruptHandler(const QVariantMap &config) override;
 
     HapticMotor *buildHapticMotor(const QVariantMap &config) override;
+
+    GestureSensor *buildGestureSensor(const QVariantMap &config) override;
+
+    LightSensor *buildLightSensorr(const QVariantMap &config) override;
+
+    ProximitySensor *buildProximitySensor(const QVariantMap &config) override;
+
+ private:
+    APDS9960 m_apds;
 };

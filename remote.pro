@@ -49,9 +49,15 @@ HEADERS += \
     sources/hardware/batteryfuelgauge_mock.h \
     sources/hardware/displaycontrol.h \
     sources/hardware/displaycontrol_mock.h \
+    sources/hardware/gesturesensor.h \
+    sources/hardware/gesturesensor_mock.h \
     sources/hardware/hapticmotor.h \
     sources/hardware/hapticmotor_mock.h \
     sources/hardware/interrupthandler_mock.h \
+    sources/hardware/lightsensor.h \
+    sources/hardware/lightsensor_mock.h \
+    sources/hardware/proximitysensor.h \
+    sources/hardware/proximitysensor_mock.h \
     sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
@@ -61,7 +67,6 @@ HEADERS += \
     sources/logger.h \
     sources/translation.h \
     sources/hardware/touchdetect.h \
-    sources/hardware/proximity_gesture_control.h \
     sources/hardware/hardwarefactory.h \
     sources/hardware/hardwarefactory_mock.h \
     sources/hardware/hw_config.h \
@@ -173,6 +178,9 @@ linux {
         HEADERS += \
             sources/hardware/hardwarefactory_yio.h \
             sources/hardware/arm/apds9960.h \
+            sources/hardware/arm/apds9960gesture.h \
+            sources/hardware/arm/apds9960light.h \
+            sources/hardware/arm/apds9960proximity.h \
             sources/hardware/arm/bq27441.h \
             sources/hardware/arm/displaycontrol_yio.h \
             sources/hardware/arm/drv2605.h \
@@ -182,6 +190,7 @@ linux {
         SOURCES += \
             sources/hardware/hardwarefactory_yio.cpp \
             sources/hardware/arm/apds9960.cpp \
+            sources/hardware/arm/apds9960gesture.cpp \
             sources/hardware/arm/bq27441.cpp \
             sources/hardware/arm/displaycontrol_yio.cpp \
             sources/hardware/arm/drv2605.cpp

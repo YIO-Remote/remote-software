@@ -41,4 +41,7 @@ class HardwareFactoryMock : public HardwareFactory {
     BatteryFuelGauge *getBatteryFuelGauge() override;
     InterruptHandler *getInterruptHandler() override;
     HapticMotor *     getHapticMotor() override;
+    GestureSensor *   getGestureSensor() override;
+    LightSensor *     getLightSensor() override;
+    ProximitySensor * getProximitySensor() override;
 };

@@ -174,6 +174,7 @@ class APDS9960 {
     ~APDS9960();
 
     bool            begin(uint16_t iTimeMS = 10, apds9960AGain_t = APDS9960_AGAIN_4X);
+    bool            isInitialized() { return _initialized; }
     void            setADCIntegrationTime(uint16_t iTimeMS);
     float           getADCIntegrationTime();
     void            setADCGain(apds9960AGain_t gain);
@@ -220,6 +221,7 @@ class APDS9960 {
  private:
     uint8_t _i2caddr;
     int     _fd;
+    bool    _initialized;
 
     uint32_t read32(uint8_t reg);
     uint16_t read16(uint8_t reg);

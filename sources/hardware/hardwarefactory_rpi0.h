@@ -37,19 +37,46 @@ class HardwareFactoryRPi0 : public HardwareFactory {
 
     // HardwareFactory interface
  public:
-    WifiControl *getWifiControl() override;
-
-    SystemService *getSystemService() override;
-
-    WebServerControl *getWebServerControl() override;
-
-    DisplayControl *getDisplayControl() override;
-
-    BatteryFuelGauge *getBatteryFuelGauge() override;
-
-    InterruptHandler *getInterruptHandler() override;
-
-    HapticMotor *getHapticMotor() override;
+    WifiControl *getWifiControl() override {
+        assert(p_wifiControl);
+        return p_wifiControl;
+    }
+    SystemService *getSystemService() override {
+        assert(p_systemService);
+        return p_systemService;
+    }
+    WebServerControl *getWebServerControl() override {
+        assert(p_webServerControl);
+        return p_webServerControl;
+    }
+    DisplayControl *getDisplayControl() override {
+        assert(p_displayControl);
+        return p_displayControl;
+    }
+    BatteryFuelGauge *getBatteryFuelGauge() override {
+        assert(p_batteryFuelGauge);
+        return p_batteryFuelGauge;
+    }
+    InterruptHandler *getInterruptHandler() override {
+        assert(p_interruptHandler);
+        return p_interruptHandler;
+    }
+    HapticMotor *getHapticMotor() override {
+        assert(p_hapticMotor);
+        return p_hapticMotor;
+    }
+    GestureSensor *getGestureSensor() override {
+        assert(p_gestureSensor);
+        return p_gestureSensor;
+    }
+    LightSensor *getLightSensor() override {
+        assert(p_lightSensor);
+        return p_lightSensor;
+    }
+    ProximitySensor *getProximitySensor() override {
+        assert(p_proximitySensor);
+        return p_proximitySensor;
+    }
 
  protected:
     virtual WifiControl *     buildWifiControl(const QVariantMap &config);
@@ -59,6 +86,9 @@ class HardwareFactoryRPi0 : public HardwareFactory {
     virtual BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config);
     virtual InterruptHandler *buildInterruptHandler(const QVariantMap &config);
     virtual HapticMotor *     buildHapticMotor(const QVariantMap &config);
+    virtual GestureSensor *   buildGestureSensor(const QVariantMap &config);
+    virtual LightSensor *     buildLightSensorr(const QVariantMap &config);
+    virtual ProximitySensor * buildProximitySensor(const QVariantMap &config);
 
  private:
     WifiControl *     p_wifiControl;
@@ -67,4 +97,8 @@ class HardwareFactoryRPi0 : public HardwareFactory {
     DisplayControl *  p_displayControl;
     BatteryFuelGauge *p_batteryFuelGauge;
     InterruptHandler *p_interruptHandler;
+    HapticMotor *     p_hapticMotor;
+    GestureSensor *   p_gestureSensor;
+    LightSensor *     p_lightSensor;
+    ProximitySensor * p_proximitySensor;
 };

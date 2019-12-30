@@ -29,6 +29,7 @@ import Launcher 1.0
 import JsonFile 1.0
 import Battery 1.0
 import DisplayControl 1.0
+import Proximity 1.0
 
 import Entity.Remote 1.0            
 
@@ -248,7 +249,9 @@ ApplicationWindow {
         // change dark mode to the configured value
         darkMode = Qt.binding(function () { return config.ui_config.darkmode });
         standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
-        standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
+        // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
+        //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
+        Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
         // load the integrations
         //        if (integrations.load()) {

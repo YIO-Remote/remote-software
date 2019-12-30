@@ -20,17 +20,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <assert.h>
-
 #include <QLoggingCategory>
 #include <QtDebug>
 
+#include <cassert>
+
 #include "batteryfuelgauge_mock.h"
 #include "displaycontrol_mock.h"
+#include "gesturesensor_mock.h"
 #include "hapticmotor_mock.h"
 #include "hardwarefactory_rpi0.h"
 #include "hw_config.h"
 #include "interrupthandler_mock.h"
+#include "lightsensor_mock.h"
+#include "proximitysensor_mock.h"
 #include "systemd.h"
 #include "systemservice_name.h"
 #include "webserver_lighttpd.h"
@@ -49,7 +52,11 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
       p_webServerControl(nullptr),
       p_displayControl(nullptr),
       p_batteryFuelGauge(nullptr),
-      p_interruptHandler(nullptr) {
+      p_interruptHandler(nullptr),
+      p_hapticMotor(nullptr),
+      p_gestureSensor(nullptr),
+      p_lightSensor(nullptr),
+      p_proximitySensor(nullptr) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
     p_systemService = buildSystemService(config);
@@ -58,39 +65,11 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
     p_displayControl = buildDisplayControl(config);
     p_batteryFuelGauge = buildBatteryFuelGauge(config);
     p_interruptHandler = buildInterruptHandler(config);
+    p_hapticMotor = buildHapticMotor(config);
+    p_gestureSensor = buildGestureSensor(config);
+    p_lightSensor = buildLightSensorr(config);
+    p_proximitySensor = buildProximitySensor(config);
 }
-
-WifiControl *HardwareFactoryRPi0::getWifiControl() {
-    assert(p_wifiControl);
-    return p_wifiControl;
-}
-
-SystemService *HardwareFactoryRPi0::getSystemService() {
-    assert(p_systemService);
-    return p_systemService;
-}
-
-WebServerControl *HardwareFactoryRPi0::getWebServerControl() {
-    assert(p_webServerControl);
-    return p_webServerControl;
-}
-
-DisplayControl *HardwareFactoryRPi0::getDisplayControl() {
-    assert(p_displayControl);
-    return p_displayControl;
-}
-
-BatteryFuelGauge *HardwareFactoryRPi0::getBatteryFuelGauge() {
-    assert(p_batteryFuelGauge);
-    return p_batteryFuelGauge;
-}
-
-InterruptHandler *HardwareFactoryRPi0::getInterruptHandler() {
-    assert(p_interruptHandler);
-    return p_interruptHandler;
-}
-
-HapticMotor *HardwareFactoryRPi0::getHapticMotor() {}
 
 // -- System services - RPi uses systemd
 SystemService *HardwareFactoryRPi0::buildSystemService(const QVariantMap &config) {
@@ -206,4 +185,19 @@ InterruptHandler *HardwareFactoryRPi0::buildInterruptHandler(const QVariantMap &
 HapticMotor *HardwareFactoryRPi0::buildHapticMotor(const QVariantMap &config) {
     Q_UNUSED(config)
     return new HapticMotorMock(this);
+}
+
+GestureSensor *HardwareFactoryRPi0::buildGestureSensor(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new GestureSensorMock(this);
+}
+
+LightSensor *HardwareFactoryRPi0::buildLightSensorr(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new LightSensorMock(this);
+}
+
+ProximitySensor *HardwareFactoryRPi0::buildProximitySensor(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new ProximitySensorMock(this);
 }

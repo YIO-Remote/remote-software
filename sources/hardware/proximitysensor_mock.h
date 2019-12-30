@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Foo Bar <foo@bar.com>
+ * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,3 +20,25 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#pragma once
+
+#include "proximitysensor.h"
+
+class ProximitySensorMock : public ProximitySensor {
+    Q_OBJECT
+
+ public:
+    explicit ProximitySensorMock(QObject *parent = nullptr) : ProximitySensor(parent) {}
+
+    // ProximitySensor interface
+ public:
+    Q_INVOKABLE void proximityDetection(bool state) override { Q_UNUSED(state) }
+    Q_INVOKABLE void readInterrupt() override {}
+
+    int  proximitySetting() override { return m_proximitySetting; }
+    void setProximitySetting(int proximity) override { m_proximitySetting = proximity; }
+    int  proximity() override { return 0; }
+
+ private:
+    int m_proximitySetting = 70;
+};

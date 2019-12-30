@@ -23,17 +23,55 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
+#include "../notifications.h"
+#include "arm/apds9960gesture.h"
+#include "arm/apds9960light.h"
+#include "arm/apds9960proximity.h"
 #include "arm/bq27441.h"
 #include "arm/displaycontrol_yio.h"
 #include "arm/drv2605.h"
 #include "arm/mcp23017_interrupt.h"
 #include "hardwarefactory_yio.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
+static Q_LOGGING_CATEGORY(CLASS_LC, "HwYio");
 
 HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *parent)
     : HardwareFactoryRPi0(config, parent) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
+
+    // FIXME(mze) create initialization method / hook
+    // intialize the sensor
+    if (!m_apds.begin()) {
+        qCritical() << "Cannot initialise the APDS9960 sensor";
+        //: Error message that shows up as notification when light value cannot be read
+        Notifications::getInstance()->add(true,
+                                          tr("Cannot initialize the proximity sensor. Please restart the remote."));
+        return;
+    }
+
+    delay(100);
+
+    // turn on the light sensor
+    m_apds.enableColor(true);
+
+    // turn on proximity sensor
+    m_apds.enableProximity(true);
+
+    // set the proximity threshold
+    m_apds.setProximityInterruptThreshold(0, uint8_t(getProximitySensor()->proximitySetting()), 1);
+
+    // set the proximity gain
+    m_apds.setProxGain(APDS9960_PGAIN_2X);
+
+    // m_apds.setLED(APDS9960_LEDDRIVE_100MA, APDS9960_LEDBOOST_200PCNT);
+    m_apds.setLED(APDS9960_LEDDRIVE_25MA, APDS9960_LEDBOOST_100PCNT);
+
+    // read ambient light
+    while (!m_apds.colorDataReady()) {
+        delay(5);
+    }
+
+    getLightSensor()->readAmbientLight();
 }
 
 DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config) {
@@ -54,4 +92,19 @@ InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &c
 HapticMotor *HardwareFactoryYio::buildHapticMotor(const QVariantMap &config) {
     Q_UNUSED(config)
     return new Drv2605(this);
+}
+
+GestureSensor *HardwareFactoryYio::buildGestureSensor(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new Apds9960GestureSensor(&m_apds, this);
+}
+
+LightSensor *HardwareFactoryYio::buildLightSensorr(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new Apds9960LightSensor(&m_apds, this);
+}
+
+ProximitySensor *HardwareFactoryYio::buildProximitySensor(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new Apds9960ProximitySensor(&m_apds, this);
 }

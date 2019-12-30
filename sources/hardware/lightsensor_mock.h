@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Foo Bar <foo@bar.com>
+ * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,3 +20,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#pragma once
+
+#include "lightsensor.h"
+
+class LightSensorMock : public LightSensor {
+    Q_OBJECT
+
+ public:
+    explicit LightSensorMock(QObject *parent = nullptr) : LightSensor(parent) {}
+
+    // LightSensor interface
+ public:
+    int ambientLight() override { return 100; }
+
+    Q_INVOKABLE int readAmbientLight() override { return  100; }
+};

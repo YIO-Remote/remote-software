@@ -20,3 +20,43 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#pragma once
+
+#include <cassert>
+
+#include <QObject>
+#include <QtDebug>
+
+#include "../lightsensor.h"
+#include "apds9960.h"
+
+class Apds9960LightSensor : public LightSensor {
+    Q_OBJECT
+
+ public:
+    int ambientLight() override { return static_cast<int>(m_ambientLight); }
+
+    Q_INVOKABLE int readAmbientLight() override {
+        if (p_apds->isInitialized()) {
+            while (!p_apds->colorDataReady()) {
+                delay(5);
+            }
+
+            m_ambientLight = p_apds->getAmbientLight();
+            qDebug() << "Lux:" << m_ambientLight;
+        }
+
+        return static_cast<int>(m_ambientLight);
+    }
+
+    explicit Apds9960LightSensor(APDS9960* apds, QObject* parent = nullptr) : LightSensor(parent), p_apds(apds) {
+        assert(apds);
+    }
+
+    ~Apds9960LightSensor() override {}
+
+ private:
+    APDS9960* p_apds;
+
+    uint16_t m_ambientLight = 100;
+};

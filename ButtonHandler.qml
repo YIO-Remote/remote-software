@@ -23,6 +23,7 @@
 import QtQuick 2.11
 
 import InterruptHandler 1.0
+import Proximity 1.0
 
 Item {
 
@@ -52,7 +53,7 @@ Item {
 
         onButtonPressed: {
             if (InterruptHandler.button == "apds9960") {
-                standbyControl.proximity.readInterrupt();
+                Proximity.readInterrupt();
             } else if (InterruptHandler.button == "battery") {
                 Battery.checkBattery();
             } else {

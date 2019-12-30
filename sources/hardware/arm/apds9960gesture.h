@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Foo Bar <foo@bar.com>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,3 +20,24 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#pragma once
+
+#include "../gesturesensor.h"
+#include "apds9960.h"
+
+class Apds9960GestureSensor : public GestureSensor {
+    Q_OBJECT
+
+ public:
+    explicit Apds9960GestureSensor(APDS9960* apds, QObject *parent = nullptr);
+
+    // GestureSensor interface
+ public:
+    void    gestureDetection(bool state) override;
+    QString gesture() override;
+
+ private:
+    APDS9960* p_apds;
+    QString  m_gesture;
+    bool     m_gestureDetection = false;
+};

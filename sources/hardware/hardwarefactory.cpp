@@ -120,3 +120,30 @@ QObject *HardwareFactory::hapticMotorProvider(QQmlEngine *engine, QJSEngine *scr
     engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
     return device;
 }
+
+QObject *HardwareFactory::gestureSensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getGestureSensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::lightSensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getLightSensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::proximitySensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getProximitySensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
