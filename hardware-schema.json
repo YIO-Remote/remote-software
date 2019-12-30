@@ -1,0 +1,448 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://yio-remote.com/hardware.json",
+  "type": "object",
+  "title": "The YIO hardware configuration schema",
+  "required": [
+    "systemservice",
+    "wifi",
+    "webserver"
+  ],
+  "properties": {
+    "systemservice": {
+      "$id": "#/properties/systemservice",
+      "type": "object",
+      "title": "System service control",
+      "required": [
+        "systemd"
+      ],
+      "properties": {
+        "systemd": {
+          "$id": "#/properties/systemservice/properties/systemd",
+          "type": "object",
+          "title": "Systemd system service",
+          "required": [
+            "sudo",
+            "timeout",
+            "services"
+          ],
+          "properties": {
+            "sudo": {
+              "$id": "#/properties/systemservice/properties/systemd/properties/sudo",
+              "type": "boolean",
+              "title": "Use sudo for systemd interactions",
+              "default": false,
+              "examples": [
+                false
+              ]
+            },
+            "timeout": {
+              "$id": "#/properties/systemservice/properties/systemd/properties/timeout",
+              "type": "integer",
+              "minimum": -1,
+              "title": "Interaction timeout",
+              "description": "Timeout in milliseconds to wait for systemd interfactions, e.g. starting a service. If timeout is -1, the timeout is disabled",
+              "default": 30000,
+              "examples": [
+                20000
+              ]
+            },
+            "services": {
+              "$id": "#/properties/systemservice/properties/systemd/properties/services",
+              "type": "object",
+              "title": "Available services",
+              "required": [
+                "wifi",
+                "dns",
+                "webserver",
+                "ntp",
+                "dhcp",
+                "shutdown",
+                "yio-update",
+                "zeroconf",
+                "networking"
+              ],
+              "properties": {
+                "wifi": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/wifi",
+                  "type": "string",
+                  "title": "Wifi service",
+                  "default": "",
+                  "examples": [
+                    "wpa_supplicant@wlan0.service"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "dns": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/dns",
+                  "type": "string",
+                  "title": "Name resolution service",
+                  "default": "",
+                  "examples": [
+                    "systemd-resolved.service"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "webserver": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/webserver",
+                  "type": "string",
+                  "title": "Webserver service",
+                  "default": "",
+                  "examples": [
+                    "lighttpd.service"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "ntp": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/ntp",
+                  "type": "string",
+                  "title": "NTP service",
+                  "default": "",
+                  "examples": [
+                    "systemd-timesyncd.service"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "dhcp": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/dhcp",
+                  "type": "string",
+                  "title": "DHCP service",
+                  "default": "",
+                  "examples": [
+                    "dhcpcd.service"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "shutdown": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/shutdown",
+                  "type": "string",
+                  "title": "Shutdown service",
+                  "default": "",
+                  "examples": [
+                    "shutdown.service"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "yio-update": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/yio-update",
+                  "type": "string",
+                  "title": "Yio update service",
+                  "default": "",
+                  "examples": [
+                    "update.service"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "zeroconf": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/zeroconf",
+                  "type": "string",
+                  "title": "Zeroconf service",
+                  "default": "",
+                  "examples": [
+                    "avahi-daemon"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "networking": {
+                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/networking",
+                  "type": "string",
+                  "title": "Networking service",
+                  "default": "",
+                  "examples": [
+                    "systemd-networkd"
+                  ],
+                  "pattern": "^(.*)$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wifi": {
+      "$id": "#/properties/wifi",
+      "type": "object",
+      "title": "WiFi control",
+      "required": [
+        "maxScanResults",
+        "joinRetryCount",
+        "joinRetryDelay",
+        "pollInterval",
+        "useShellScript",
+        "interface",
+        "accessPoint"
+      ],
+      "properties": {
+        "maxScanResults": {
+          "$id": "#/properties/wifi/properties/maxScanResults",
+          "type": "integer",
+          "minimum": 0,
+          "title": "Maximum number of scan results",
+          "default": 50,
+          "examples": [
+            20
+          ]
+        },
+        "joinRetryCount": {
+          "$id": "#/properties/wifi/properties/joinRetryCount",
+          "type": "integer",
+          "minimum": 0,
+          "title": "Number of AP connection attempts",
+          "default": 5,
+          "examples": [
+            5
+          ]
+        },
+        "joinRetryDelay": {
+          "$id": "#/properties/wifi/properties/joinRetryDelay",
+          "type": "integer",
+          "minimum": 500,
+          "title": "Delay in milliseconds between connection attempts",
+          "default": 3000,
+          "examples": [
+            3000
+          ]
+        },
+        "pollInterval": {
+          "$id": "#/properties/wifi/properties/pollInterval",
+          "type": "integer",
+          "minimum": 1000,
+          "title": "Status polling interval in milliseconds",
+          "default": 30000,
+          "examples": [
+            20000
+          ]
+        },
+        "useShellScript": {
+          "$id": "#/properties/wifi/properties/useShellScript",
+          "type": "boolean",
+          "title": "Shell scripts instead wpa_control interface",
+          "default": false,
+          "examples": [
+            false
+          ]
+        },
+        "interface": {
+          "$id": "#/properties/wifi/properties/interface",
+          "type": "object",
+          "title": "WiFi control interface configuration",
+          "required": [
+            "wpa_supplicant",
+            "shellScript"
+          ],
+          "properties": {
+            "wpa_supplicant": {
+              "$id": "#/properties/wifi/properties/interface/properties/wpa_supplicant",
+              "type": "object",
+              "title": "wpa_supplicant control interface",
+              "required": [
+                "socketPath",
+                "removeNetworksBeforeJoin"
+              ],
+              "properties": {
+                "socketPath": {
+                  "$id": "#/properties/wifi/properties/interface/properties/wpa_supplicant/properties/socketPath",
+                  "type": "string",
+                  "title": "Socket for wpa_supplicant",
+                  "default": "",
+                  "examples": [
+                    "/var/run/wpa_supplicant/wlan0"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "removeNetworksBeforeJoin": {
+                  "$id": "#/properties/wifi/properties/interface/properties/wpa_supplicant/properties/removeNetworksBeforeJoin",
+                  "type": "boolean",
+                  "title": "Remove configured networks before joining a new network",
+                  "default": false,
+                  "examples": [
+                    false
+                  ]
+                }
+              }
+            },
+            "shellScript": {
+              "$id": "#/properties/wifi/properties/interface/properties/shellScript",
+              "type": "object",
+              "title": "WiFi control through shell scripts",
+              "required": [
+                "sudo",
+                "timeout",
+                "clearNetworks",
+                "connect",
+                "listNetworks",
+                "startAP",
+                "getSSID",
+                "getIP",
+                "getMAC",
+                "getRSSI"
+              ],
+              "properties": {
+                "sudo": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/sudo",
+                  "type": "boolean",
+                  "title": "Use sudo to execute shell scripts",
+                  "default": false,
+                  "examples": [
+                    false
+                  ]
+                },
+                "timeout": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/timeout",
+                  "type": "integer",
+                  "minimum": -1,
+                  "title": "Script timeout",
+                  "description": "Timeout in milliseconds to wait for script termination. If timeout is -1, the timeout is disabled.",
+                  "default": 0,
+                  "examples": [
+                    30000
+                  ]
+                },
+                "clearNetworks": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/clearNetworks",
+                  "type": "string",
+                  "title": "Clear networks script",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "connect": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/connect",
+                  "type": "string",
+                  "title": "Connect network script",
+                  "default": "",
+                  "examples": [
+                    "/usr/bin/yio-remote/wifi_network_create.sh"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "listNetworks": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/listNetworks",
+                  "type": "string",
+                  "title": "List networks script",
+                  "default": "",
+                  "examples": [
+                    "/usr/bin/yio-remote/wifi_network_list.sh"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "startAP": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/startAP",
+                  "type": "string",
+                  "title": "Start access point script",
+                  "default": "",
+                  "examples": [
+                    "/usr/bin/yio-remote/reset-wifi.sh"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "getSSID": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getSSID",
+                  "type": "string",
+                  "title": "Get ssid script",
+                  "default": "",
+                  "examples": [
+                    "/usr/bin/yio-remote/wifi_ssid.sh"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "getIP": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getIP",
+                  "type": "string",
+                  "title": "Get ip address script",
+                  "default": "",
+                  "examples": [
+                    "/usr/bin/yio-remote/wifi_ip.sh"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "getMAC": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getMAC",
+                  "type": "string",
+                  "title": "Get mac address script",
+                  "default": "",
+                  "examples": [
+                    "cat /sys/class/net/wlan0/address"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "getRSSI": {
+                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getRSSI",
+                  "type": "string",
+                  "title": "Get rssi script",
+                  "default": "",
+                  "examples": [
+                    "/usr/bin/yio-remote/wifi_rssi.sh"
+                  ],
+                  "pattern": "^(.*)$"
+                }
+              }
+            }
+          }
+        },
+        "accessPoint": {
+          "$id": "#/properties/wifi/properties/accessPoint",
+          "type": "object",
+          "title": "WiFi accesspoint configuration",
+          "required": [
+          ]
+        }
+      }
+    },
+    "webserver": {
+      "$id": "#/properties/webserver",
+      "type": "object",
+      "title": "Web server control",
+      "required": [
+        "lighttpd"
+      ],
+      "properties": {
+        "lighttpd": {
+          "$id": "#/properties/webserver/properties/lighttpd",
+          "type": "object",
+          "title": "Lighttpd web-server",
+          "required": [
+            "configFile",
+            "wifiSetupConfig",
+            "webConfiguratorConfig"
+          ],
+          "properties": {
+            "configFile": {
+              "$id": "#/properties/webserver/properties/lighttpd/properties/configFile",
+              "type": "string",
+              "title": "lighttpd configuration file",
+              "default": "",
+              "examples": [
+                "/etc/lighttpd/lighttpd.conf"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "wifiSetupConfig": {
+              "$id": "#/properties/webserver/properties/lighttpd/properties/wifiSetupConfig",
+              "type": "string",
+              "title": "Configuration file to enable web-configurator",
+              "default": "",
+              "examples": [
+                "/etc/lighttpd/lighttpd-wifisetup.conf"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "webConfiguratorConfig": {
+              "$id": "#/properties/webserver/properties/lighttpd/properties/webConfiguratorConfig",
+              "type": "string",
+              "title": "Configuration file to enable wifi setup through web server portal",
+              "default": "",
+              "examples": [
+                "/etc/lighttpd/lighttpd-config.conf"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

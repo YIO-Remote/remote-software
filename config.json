@@ -245,7 +245,7 @@
         },
         "pages": {
             "0": {
-                "bluetooth": "xx:xx:xx:xx:xx",
+                "bluetooth": "aa:bb:cc:dd:ee:ff",
                 "groups": [
                     "50b0adf5-50b0-42ed-89f2-2806e59df8d1",
                     "15f7f394-4a15-45fc-b590-59f5aa7d89fa",

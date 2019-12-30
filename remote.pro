@@ -38,6 +38,8 @@ HEADERS += \
     sources/config.h \
     sources/configinterface.h \
     sources/entities/blindinterface.h \
+    sources/entities/climate.h \
+    sources/entities/climateinterface.h \
     sources/entities/entityinterface.h \
     sources/entities/lightinterface.h \
     sources/entities/mediaplayerinterface.h \
@@ -99,6 +101,7 @@ SOURCES += \
     components/media_player/sources/searchmodel_mediaplayer.cpp \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
+    sources/entities/climate.cpp \
     sources/entities/remote.cpp \
     sources/entities/weather.cpp \
     sources/integrations/integrations.cpp \
@@ -195,6 +198,7 @@ SOURCES = main.qml \
           components/weather/ui/*.qml \
           components/remote/ui/*.qml \
           components/media_player/ui/*.qml \
+          components/climate/ui/*.qml \
           sources/proximity_gesture_control.h
 }
 
@@ -280,6 +284,9 @@ equals(QT_ARCH, arm): {
     LIBS += -lwiringPi
 }
 
+# include valijson
+include(3rdparty/valijson.pri)
+
 # Configure destination path. DESTDIR is set in qmake-destination-path.pri
 OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/obj
 MOC_DIR = $$PWD/build/$$DESTINATION_PATH/moc
@@ -312,7 +319,7 @@ targetPlugins.path = $$target.path/plugins
 win32 {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -332,7 +339,7 @@ win32 {
 } else:linux {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -357,7 +364,7 @@ win32 {
     }
 
 } else:macx {
-    APP_QML_FILES.files = $$PWD/config.json $$PWD/hardware.json $$PWD/translations.json
+    APP_QML_FILES.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
@@ -379,6 +386,6 @@ win32 {
     # TODO macOS application icon
     #ICON=icons/macos.icns
 } else {
-    error(unknown platform! Platform must be configured in remote.pro)
+    error(unknown platform! Platform must be configured in remote.pro project file)
 }
 

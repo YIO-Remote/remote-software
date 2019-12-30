@@ -19,9 +19,7 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
-#ifndef REMOTE_H
-#define REMOTE_H
+#pragma once
 
 #include <QObject>
 #include <QString>
@@ -115,5 +113,3 @@ class Remote : public Entity, RemoteInterface {
 
     QLoggingCategory m_log;
 };
-
-#endif  // REMOTE_H

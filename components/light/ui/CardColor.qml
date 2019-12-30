@@ -198,7 +198,7 @@ Rectangle {
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
                 color: colorText
                 buttonTextColor: colorBackground
-                buttonText: obj.state ? "Turn off" : "Turn on"
+                buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
                 mouseArea.onClicked: {
                     haptic.playEffect("click");
@@ -210,7 +210,7 @@ Rectangle {
                 anchors { left:toggleButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
                 color: colorText
                 buttonTextColor: colorBackground
-                buttonText: "Color"
+                buttonText: qsTr("Color") + translateHandler.emptyString
 
                 mouseArea.onClicked: {
                     haptic.playEffect("click");
