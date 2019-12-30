@@ -35,13 +35,13 @@ class Climate : public Entity, ClimateInterface {
  public:
     static QString Type;
 
-    Q_PROPERTY(double temperature READ temperature NOTIFY temperatureChanged)
-    Q_PROPERTY(double targetTemperature READ targetTemperature NOTIFY targetTemperatureChanged)
+    Q_PROPERTY(int temperature READ temperature NOTIFY temperatureChanged)
+    Q_PROPERTY(int targetTemperature READ targetTemperature NOTIFY targetTemperatureChanged)
 
     // climte commands
-    Q_INVOKABLE void setTargetTemperature(double temp);
-    Q_INVOKABLE void heat(double temp);
-    Q_INVOKABLE void cool(double temp);
+    Q_INVOKABLE void setTargetTemperature(int temp);
+    Q_INVOKABLE void heat();
+    Q_INVOKABLE void cool();
 
     // overrides from Entity class
     bool updateAttrByIndex(int attrIndex, const QVariant& value) override;
@@ -51,8 +51,8 @@ class Climate : public Entity, ClimateInterface {
     bool isOn() override;
 
     // overrides from ClimateInterface
-    double temperature() override { return m_temperature; }
-    double targetTemperature() override { return m_targetTemperature; }
+    int temperature() override { return m_temperature; }
+    int targetTemperature() override { return m_targetTemperature; }
 
     explicit Climate(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent = nullptr);
 
@@ -61,6 +61,6 @@ class Climate : public Entity, ClimateInterface {
     void targetTemperatureChanged();
 
  private:
-    double m_temperature;
-    double m_targetTemperature;
+    int m_temperature;
+    int m_targetTemperature;
 };

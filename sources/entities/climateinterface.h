@@ -48,8 +48,8 @@ class ClimateInterface {
  public:
     virtual ~ClimateInterface();
 
-    virtual double temperature() = 0;
-    virtual double targetTemperature() = 0;
+    virtual int temperature() = 0;
+    virtual int targetTemperature() = 0;
 };
 
 QT_BEGIN_NAMESPACE

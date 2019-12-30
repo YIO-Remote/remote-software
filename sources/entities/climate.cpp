@@ -29,11 +29,11 @@ QString Climate::Type = "climate";
 
 ClimateInterface::~ClimateInterface() {}
 
-void Climate::setTargetTemperature(double temp) { command(ClimateDef::C_TARGET_TEMPERATURE, temp); }
+void Climate::setTargetTemperature(int temp) { command(ClimateDef::C_TARGET_TEMPERATURE, temp); }
 
-void Climate::heat(double temp) { command(ClimateDef::C_HEAT, temp); }
+void Climate::heat() { command(ClimateDef::C_HEAT, ""); }
 
-void Climate::cool(double temp) { command(ClimateDef::C_COOL, temp); }
+void Climate::cool() { command(ClimateDef::C_COOL, ""); }
 
 bool Climate::updateAttrByIndex(int attrIndex, const QVariant &value) {
     bool chg = false;
@@ -45,15 +45,15 @@ bool Climate::updateAttrByIndex(int attrIndex, const QVariant &value) {
                 chg = setState(value.toInt());
             break;
         case ClimateDef::TEMPERATURE:
-            if (m_temperature != value.toDouble()) {
-                m_temperature = value.toDouble();
+            if (m_temperature != value.toInt()) {
+                m_temperature = value.toInt();
                 chg = true;
                 emit temperatureChanged();
             }
             break;
         case ClimateDef::TARGET_TEMPERATURE:
-            if (m_targetTemperature != value.toDouble()) {
-                m_targetTemperature = value.toDouble();
+            if (m_targetTemperature != value.toInt()) {
+                m_targetTemperature = value.toInt();
                 chg = true;
                 emit targetTemperatureChanged();
             }
@@ -66,7 +66,7 @@ void Climate::turnOn() { command(ClimateDef::C_ON, ""); }
 
 void Climate::turnOff() { command(ClimateDef::C_OFF, ""); }
 
-bool Climate::isOn() { return m_state == ClimateDef::ON; }
+bool Climate::isOn() { return m_state == ClimateDef::ON || m_state == ClimateDef::HEAT || m_state == ClimateDef::COOL; }
 
 Climate::Climate(const QVariantMap &config, IntegrationInterface *integrationObj, QObject *parent)
     : Entity(Type, config, integrationObj, parent), m_temperature(0), m_targetTemperature(0) {
