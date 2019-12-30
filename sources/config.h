@@ -48,8 +48,8 @@ class Config : public QObject, ConfigInterface {
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
 
-    Q_INVOKABLE void readConfig(QString path);
-    Q_INVOKABLE void writeConfig();
+    Q_INVOKABLE bool readConfig(const QString& path);
+    Q_INVOKABLE bool writeConfig();
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
@@ -98,7 +98,7 @@ class Config : public QObject, ConfigInterface {
     void    setProfile(QString id);
 
  public:
-    explicit Config(QQmlApplicationEngine* engine = nullptr, QString path = "");
+    explicit Config(QQmlApplicationEngine* engine = nullptr, QString path = "", QString schemaPath = "");
     virtual ~Config();
 
     static Config* getInstance() { return s_instance; }
