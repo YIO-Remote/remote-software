@@ -24,23 +24,22 @@
 #ifndef JSONFILE_H_
 #define JSONFILE_H_
 
-#include <QObject>
 #include <QFile>
+#include <QObject>
 #include <QVariant>
 
-class JsonFile : public QObject
-{
+class JsonFile : public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(QString     name           READ name           WRITE setName           NOTIFY nameChanged)
-    Q_PROPERTY(QString     fileName       READ fileName                               NOTIFY nameChanged)
-    Q_PROPERTY(QString     schemaPath     READ schemaPath     WRITE setSchemaPath)
-    Q_PROPERTY(bool        exists         READ exists)
-    Q_PROPERTY(bool        writeable      READ writeable)
-    Q_PROPERTY(bool        readable       READ readable)
-    Q_PROPERTY(qint64      size           READ size)
-    Q_PROPERTY(bool        valid          READ isValid                                CONSTANT)
-    Q_PROPERTY(QString     error          READ error                                  CONSTANT)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString fileName READ fileName NOTIFY nameChanged)
+    Q_PROPERTY(QString schemaPath READ schemaPath WRITE setSchemaPath)
+    Q_PROPERTY(bool exists READ exists)
+    Q_PROPERTY(bool writeable READ writeable)
+    Q_PROPERTY(bool readable READ readable)
+    Q_PROPERTY(qint64 size READ size)
+    Q_PROPERTY(bool valid READ isValid CONSTANT)
+    Q_PROPERTY(QString error READ error CONSTANT)
 
  public:
     explicit JsonFile(QObject *parent = nullptr);
@@ -58,17 +57,19 @@ class JsonFile : public QObject
      * @brief schemaName Returns the full JSON schema file name including path
      */
     inline QString schemaPath() const { return m_schemaPath; }
-    inline void setSchemaPath(const QString &name) { m_schemaPath = name; }
-    inline bool exists() const { return m_file.exists(); }
-    inline bool writeable() const { return m_file.permissions().testFlag(QFileDevice::WriteUser); }
-    inline bool readable() const { return m_file.permissions().testFlag(QFileDevice::ReadUser); }
-    inline qint64 size() const { return m_file.size(); }
-    bool isValid() const { return m_error.isEmpty(); }
+    inline void    setSchemaPath(const QString &name) { m_schemaPath = name; }
+    inline bool    exists() const { return m_file.exists(); }
+    inline bool    writeable() const { return m_file.permissions().testFlag(QFileDevice::WriteUser); }
+    inline bool    readable() const { return m_file.permissions().testFlag(QFileDevice::ReadUser); }
+    inline qint64  size() const { return m_file.size(); }
+    bool           isValid() const { return m_error.isEmpty(); }
     inline QString error() const { return m_error; }
 
     Q_INVOKABLE bool rename(const QString &newName);
 
-    Q_INVOKABLE inline bool copy(const QString &newName) { return m_file.copy(newName); } //NOLINT false positive: doesn't like copy name
+    Q_INVOKABLE inline bool copy(const QString &newName) {  // NOLINT false positive: doesn't like copy name
+        return m_file.copy(newName);
+    }
     Q_INVOKABLE inline bool remove() { return m_file.remove(); }
 
     Q_INVOKABLE bool write(const QVariantMap &data);
@@ -80,7 +81,7 @@ class JsonFile : public QObject
      * @param errorText Returns the validation error text
      * @return true if the document is valid according to the schema
      */
-    bool validate(const QJsonDocument &doc, QString &errorText); //NOLINT we do not want a pointer for errorText
+    bool validate(const QJsonDocument &doc, QString &errorText);  // NOLINT we do not want a pointer for errorText
 
     /**
      * @brief validate Validates the JSON document against the given JSON schema.
@@ -89,12 +90,13 @@ class JsonFile : public QObject
      * @param errorText Returns the validation error text
      * @return true if the document is valid according to the schema
      */
-    static bool validate(const QJsonDocument &doc, const QJsonDocument &schema, QString &errorText); //NOLINT we do not want a pointer for errorText
+    static bool validate(const QJsonDocument &doc, const QJsonDocument &schema,
+                         QString &errorText);  // NOLINT we do not want a pointer for errorText
 
  signals:
     void nameChanged(const QString &name);
 
- public slots: //NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     /**
      * @brief setName Sets the full file name
      * @param name The file name including path
@@ -102,7 +104,7 @@ class JsonFile : public QObject
     void setName(const QString &name);
 
  private:
-    bool loadDocument(const QString &path, QJsonDocument &doc); //NOLINT we do not want a pointer for doc
+    bool loadDocument(const QString &path, QJsonDocument &doc);  // NOLINT we do not want a pointer for doc
 
     QFile   m_file;
     QString m_schemaPath;

@@ -23,47 +23,39 @@
 
 #include "jsonfile.h"
 
-#include <QLoggingCategory>
-#include <QtDebug>
-#include <QUrl>
-#include <QFileInfo>
 #include <QDir>
+#include <QFileInfo>
 #include <QJsonDocument>
+#include <QLoggingCategory>
+#include <QUrl>
+#include <QtDebug>
 
 #include <iostream>
 #include <string>
 
+#include <valijson/adapters/qtjson_adapter.hpp>
 #include <valijson/schema.hpp>
 #include <valijson/schema_parser.hpp>
-#include <valijson/validator.hpp>
-#include <valijson/validation_results.hpp>
-#include <valijson/adapters/qtjson_adapter.hpp>
 #include <valijson/utils/qtjson_utils.hpp>
+#include <valijson/validation_results.hpp>
+#include <valijson/validator.hpp>
 
 using std::endl;
 
 using valijson::Schema;
 using valijson::SchemaParser;
-using valijson::Validator;
 using valijson::ValidationResults;
+using valijson::Validator;
 using valijson::adapters::QtJsonAdapter;
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "json");
 
-JsonFile::JsonFile(QObject *parent) :
-    QObject(parent)
-{
-}
+JsonFile::JsonFile(QObject *parent) : QObject(parent) {}
 
 JsonFile::JsonFile(const QString &path, const QString &schemaPath, QObject *parent)
-    : QObject(parent)
-    , m_file(path)
-    , m_schemaPath(schemaPath)
-{
-}
+    : QObject(parent), m_file(path), m_schemaPath(schemaPath) {}
 
-void JsonFile::setName(const QString &name)
-{
+void JsonFile::setName(const QString &name) {
     QString localName = name;
     if (m_file.fileName() != localName) {
         m_file.setFileName(localName);
@@ -71,13 +63,9 @@ void JsonFile::setName(const QString &name)
     }
 }
 
-QString JsonFile::fileName() const
-{
-    return QFileInfo(m_file).fileName();
-}
+QString JsonFile::fileName() const { return QFileInfo(m_file).fileName(); }
 
-bool JsonFile::rename(const QString &newName)
-{
+bool JsonFile::rename(const QString &newName) {
     bool success = m_file.rename(newName);
     if (success) {
         emit nameChanged(newName);
@@ -85,8 +73,7 @@ bool JsonFile::rename(const QString &newName)
     return success;
 }
 
-bool JsonFile::write(const QVariantMap &data)
-{
+bool JsonFile::write(const QVariantMap &data) {
     m_error.clear();
     if (m_file.fileName().isEmpty()) {
         qCWarning(CLASS_LC) << "Not writing json file: no filename set!";
@@ -107,8 +94,7 @@ bool JsonFile::write(const QVariantMap &data)
 
     QByteArray json = doc.toJson();
     if (!m_file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
-        m_error = tr("cannot open file '%1' for writing: %2")
-                .arg(m_file.fileName()).arg((m_file.errorString()));
+        m_error = tr("cannot open file '%1' for writing: %2").arg(m_file.fileName()).arg((m_file.errorString()));
         qCWarning(CLASS_LC) << m_error;
         return false;
     }
@@ -117,8 +103,7 @@ bool JsonFile::write(const QVariantMap &data)
     return success;
 }
 
-QVariant JsonFile::read()
-{
+QVariant JsonFile::read() {
     m_error.clear();
     QJsonDocument doc;
     if (!loadDocument(m_file.fileName(), doc)) {
@@ -138,8 +123,7 @@ QVariant JsonFile::read()
     return doc.toVariant();
 }
 
-bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc)
-{
+bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc) {
     if (path.isEmpty()) {
         qCWarning(CLASS_LC) << "Cannot load json file: no filename set!";
         m_error = tr("empty name");
@@ -149,8 +133,7 @@ bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc)
     QFile file(path);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        m_error = tr("cannot open file '%1' for reading: %2")
-                .arg(file.fileName()).arg((file.errorString()));
+        m_error = tr("cannot open file '%1' for reading: %2").arg(file.fileName()).arg((file.errorString()));
         qCWarning(CLASS_LC) << m_error;
         return false;
     }
@@ -159,8 +142,7 @@ bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc)
     QJsonParseError error;
     doc = QJsonDocument::fromJson(json, &error);
     if (error.error != QJsonParseError::NoError) {
-        m_error = tr("invalid JSON file '%1' at offset %2")
-                .arg(error.errorString()).arg(error.offset);
+        m_error = tr("invalid JSON file '%1' at offset %2").arg(error.errorString()).arg(error.offset);
         qCCritical(CLASS_LC) << m_error;
         return false;
     }
@@ -168,15 +150,14 @@ bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc)
     return true;
 }
 
-bool JsonFile::validate(const QJsonDocument &doc, QString &errorText)
-{
+bool JsonFile::validate(const QJsonDocument &doc, QString &errorText) {
     if (m_schemaPath.isEmpty()) {
         qCDebug(CLASS_LC) << "Skipping json document schema validation: no schema file set";
         return true;
     }
 
     // TODO(zehnm) in case there are too many read or write calls we should probably cache the schema document
-     QJsonDocument schemaDoc;
+    QJsonDocument schemaDoc;
     if (!loadDocument(m_schemaPath, schemaDoc)) {
         return false;
     }
@@ -184,25 +165,23 @@ bool JsonFile::validate(const QJsonDocument &doc, QString &errorText)
     return JsonFile::validate(doc, schemaDoc, errorText);
 }
 
-bool JsonFile::validate(const QJsonDocument &doc, const QJsonDocument &schemaDoc, QString &errorText)
-{
+bool JsonFile::validate(const QJsonDocument &doc, const QJsonDocument &schemaDoc, QString &errorText) {
     // Parse JSON schema content using valijson
-    Schema schema;
-    SchemaParser parser;
+    Schema        schema;
+    SchemaParser  parser;
     QtJsonAdapter schemaAdapter(schemaDoc.object());
     parser.populateSchema(schemaAdapter, schema);
 
     // Perform validation
-    Validator validator;
+    Validator         validator;
     ValidationResults results;
-    QtJsonAdapter targetDocumentAdapter(doc.isObject() ? QJsonValue(doc.object())
-                                                       : doc.isArray() ? QJsonValue(doc.array())
-                                                                       : QJsonValue());
+    QtJsonAdapter     targetDocumentAdapter(doc.isObject() ? QJsonValue(doc.object())
+                                                       : doc.isArray() ? QJsonValue(doc.array()) : QJsonValue());
     if (!validator.validate(schema, targetDocumentAdapter, &results)) {
         std::ostringstream err;
         err << "Validation failed." << endl;
         ValidationResults::Error error;
-        unsigned int errorNum = 1;
+        unsigned int             errorNum = 1;
         while (results.popError(error)) {
             err << "Error #" << errorNum << std::endl;
             err << "  ";

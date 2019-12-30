@@ -24,14 +24,11 @@
 
 #include "config.h"
 
-ConfigInterface::~ConfigInterface()
-{}
-Config* Config::s_instance = nullptr;
+Config *Config::s_instance = nullptr;
 
-Config::Config(QQmlApplicationEngine *engine, QString path, QString schemaPath)
-    : m_engine(engine)
-    , m_error("")
-{
+ConfigInterface::~ConfigInterface() {}
+
+Config::Config(QQmlApplicationEngine *engine, QString path, QString schemaPath) : m_engine(engine), m_error("") {
     m_jsf = new JsonFile();
     m_jsf->setSchemaPath(schemaPath);
     s_instance = this;
@@ -40,28 +37,25 @@ Config::Config(QQmlApplicationEngine *engine, QString path, QString schemaPath)
     readConfig(path);
 }
 
-Config::~Config()
-{
-    s_instance = nullptr;
-}
+Config::~Config() { s_instance = nullptr; }
 
-void Config::setFavorite(const QString& entityId, bool value)
-{
+void Config::setFavorite(const QString &entityId, bool value) {
     QStringList fav = profileFavorites();
 
-    if (value && !fav.contains(entityId))
+    if (value && !fav.contains(entityId)) {
         fav.append(entityId);
+    }
 
-    if (!value && fav.contains(entityId))
+    if (!value && fav.contains(entityId)) {
         fav.removeOne(entityId);
+    }
 
     m_cacheUIProfile.insert("favorites", fav);
     writeConfig();
     emit profileFavoritesChanged();
 }
 
-void Config::setConfig(const QVariantMap &config)
-{
+void Config::setConfig(const QVariantMap &config) {
     m_error.clear();
     if (!m_jsf->validate(QJsonDocument::fromVariant(config), m_error)) {
         return;
@@ -72,14 +66,9 @@ void Config::setConfig(const QVariantMap &config)
     emit configChanged();
 }
 
-QVariant Config::getContextProperty(const QString &name)
-{
-    return m_engine->rootContext()->contextProperty(name);
-}
+QVariant Config::getContextProperty(const QString &name) { return m_engine->rootContext()->contextProperty(name); }
 
-
-bool Config::readConfig(const QString &path)
-{
+bool Config::readConfig(const QString &path) {
     // load the config.json file from the filesystem
     m_jsf->setName(path + "/config.json");
     m_config = m_jsf->read().toMap();
@@ -90,8 +79,7 @@ bool Config::readConfig(const QString &path)
     return m_jsf->isValid();
 }
 
-bool Config::writeConfig()
-{
+bool Config::writeConfig() {
     syncCacheToConfig();
     bool result = m_jsf->write(m_config);
     m_error = m_jsf->error();
@@ -104,35 +92,29 @@ void Config::setSettings(const QVariantMap &config) {
     writeConfig();
 }
 
-void Config::setUIConfig(const QVariantMap &config)
-{
+void Config::setUIConfig(const QVariantMap &config) {
     m_cacheUIConfig = config;
     emit uiConfigChanged();
     writeConfig();
 }
 
-QObject *Config::getQMLObject(QList<QObject*> nodes, const QString &name)
-{
-    for (int i=0; i < nodes.size(); i++)
-    {
+QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {
+    for (int i = 0; i < nodes.size(); i++) {
         if (nodes.at(i) && nodes.at(i)->objectName() == name) {
-            return dynamic_cast<QObject*>(nodes.at(i));
+            return dynamic_cast<QObject *>(nodes.at(i));
         } else if (nodes.at(i) && nodes.at(i)->children().size() > 0) {
-            QObject* item = getQMLObject(nodes.at(i)->children(), name);
-            if (item)
+            QObject *item = getQMLObject(nodes.at(i)->children(), name);
+            if (item) {
                 return item;
+            }
         }
     }
-    return  nullptr;
+    return nullptr;
 }
 
-QObject *Config::getQMLObject(const QString &name)
-{
-    return getQMLObject(m_engine->rootObjects(), name);
-}
+QObject *Config::getQMLObject(const QString &name) { return getQMLObject(m_engine->rootObjects(), name); }
 
-void Config::setProfile(QString id)
-{
+void Config::setProfile(QString id) {
     QVariantMap p = getUIConfig();
     p.insert("selected_profile", id);
     m_config.insert("ui_config", p);
@@ -141,22 +123,19 @@ void Config::setProfile(QString id)
     emit profileChanged();
 }
 
+void Config::syncConfigToCache() {
+    m_cacheSettings = m_config["settings"].toMap();
+    m_cacheUIConfig = m_config["ui_config"].toMap();
 
-void Config::syncConfigToCache()
-{
-    m_cacheSettings     = m_config["settings"].toMap();
-    m_cacheUIConfig     = m_config["ui_config"].toMap();
+    m_cacheProfile = m_cacheUIConfig["selected_profile"].toString();
+    m_cacheUIProfiles = m_cacheUIConfig["profiles"].toMap();
+    m_cacheUIPages = m_cacheUIConfig["pages"].toMap();
+    m_cacheUIGroups = m_cacheUIConfig["groups"].toMap();
 
-    m_cacheProfile      = m_cacheUIConfig["selected_profile"].toString();
-    m_cacheUIProfiles   = m_cacheUIConfig["profiles"].toMap();
-    m_cacheUIPages      = m_cacheUIConfig["pages"].toMap();
-    m_cacheUIGroups     = m_cacheUIConfig["groups"].toMap();
-
-    m_cacheUIProfile    = m_cacheUIProfiles[m_cacheProfile].toMap();
+    m_cacheUIProfile = m_cacheUIProfiles[m_cacheProfile].toMap();
 }
 
-void Config::syncCacheToConfig()
-{
+void Config::syncCacheToConfig() {
     m_cacheUIProfiles.insert(m_cacheProfile, m_cacheUIProfile);
 
     m_cacheUIConfig.insert("selected_profile", m_cacheProfile);

@@ -20,44 +20,43 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QFontDatabase>
-#include <QQmlContext>
 #include <QFile>
 #include <QFileInfo>
+#include <QFontDatabase>
+#include <QGuiApplication>
 #include <QLoggingCategory>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QtDebug>
 
-#include "launcher.h"
 #include "jsonfile.h"
+#include "launcher.h"
 #include "translation.h"
 
-#include "hardware/hardwarefactory.h"
-#include "hardware/display_control.h"
-#include "hardware/touchdetect.h"
-#include "hardware/interrupt_handler.h"
-#include "hardware/drv2605.h"
 #include "hardware/bq27441.h"
+#include "hardware/display_control.h"
+#include "hardware/drv2605.h"
+#include "hardware/hardwarefactory.h"
+#include "hardware/interrupt_handler.h"
 #include "hardware/proximity_gesture_control.h"
+#include "hardware/touchdetect.h"
 #include "hardware/wifi_control.h"
 
-#include "integrations/integrations.h"
 #include "entities/entities.h"
+#include "integrations/integrations.h"
 
-#include "notifications.h"
 #include "bluetootharea.h"
+#include "notifications.h"
 
-#include "fileio.h"
-#include "yioapi.h"
-#include "config.h"
-#include "logger.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
+#include "config.h"
+#include "fileio.h"
+#include "logger.h"
+#include "yioapi.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
@@ -65,7 +64,7 @@ int main(int argc, char *argv[])
 
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication app(argc, argv);
+    QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
@@ -110,11 +109,8 @@ int main(int argc, char *argv[])
     if (path == ".") {
         path = appPath + "/log";
     }
-    Logger logger(path,
-                  logCfg.value("level", "WARN").toString(),
-                  logCfg.value("console", true).toBool(),
-                  logCfg.value("showSource", true).toBool(),
-                  logCfg.value("queueSize", 100).toInt(),
+    Logger logger(path, logCfg.value("level", "WARN").toString(), logCfg.value("console", true).toBool(),
+                  logCfg.value("showSource", true).toBool(), logCfg.value("queueSize", 100).toInt(),
                   logCfg.value("purgeHours", 72).toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write("Logging started");
@@ -158,8 +154,8 @@ int main(int argc, char *argv[])
     if (QFile::exists("/boot/hardware.json")) {
         hwConfigPath = "/boot";
     }
-    HardwareFactory *hwFactory = HardwareFactory::build(hwConfigPath + "/hardware.json",
-                                                        hwConfigPath + "/hardware-schema.json");
+    HardwareFactory* hwFactory =
+        HardwareFactory::build(hwConfigPath + "/hardware.json", hwConfigPath + "/hardware-schema.json");
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();
@@ -214,7 +210,8 @@ int main(int argc, char *argv[])
     // FIXME move initialization code to a device driver factory
     QObject* standbyControl = config.getQMLObject("standbyControl");
     if (standbyControl == nullptr) {
-        qCritical() << "Error looking up QML object:" << "standbyControl";
+        qCritical() << "Error looking up QML object:"
+                    << "standbyControl";
     } else {
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));

@@ -22,34 +22,27 @@
 
 #include "yioapi.h"
 
-#include <QtDebug>
-#include <QJsonDocument>
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkInterface>
 #include <QTimer>
+#include <QtDebug>
 
-#include "fileio.h"
 #include "entities/entities.h"
+#include "fileio.h"
 #include "logger.h"
 
-YioAPI* YioAPI::s_instance = nullptr;
+YioAPI *YioAPI::s_instance = nullptr;
 
-YioAPI::YioAPI(QQmlApplicationEngine *engine) :
-    m_log("yioapi"),
-    m_engine(engine)
-{
+YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_log("yioapi"), m_engine(engine) {
     s_instance = this;
     Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
 }
 
-YioAPI::~YioAPI()
-{
-    s_instance = nullptr;
-}
+YioAPI::~YioAPI() { s_instance = nullptr; }
 
-void YioAPI::start()
-{
+void YioAPI::start() {
     m_server = new QWebSocketServer(QStringLiteral("YIO API"), QWebSocketServer::NonSecureMode, this);
 
     // start websocket server on port 946(YIO)
@@ -70,8 +63,7 @@ void YioAPI::start()
     qCDebug(m_log) << "YIO api started";
 }
 
-void YioAPI::stop()
-{
+void YioAPI::stop() {
     m_server->close();
     m_clients.clear();
     m_running = false;
@@ -79,8 +71,7 @@ void YioAPI::stop()
     emit runningChanged();
 }
 
-void YioAPI::sendMessage(QString message)
-{
+void YioAPI::sendMessage(QString message) {
     QMap<QWebSocket *, bool>::iterator i;
     for (i = m_clients.begin(); i != m_clients.end(); i++) {
         if (i.value()) {
@@ -90,13 +81,9 @@ void YioAPI::sendMessage(QString message)
     }
 }
 
-QVariantMap YioAPI::getConfig()
-{
-    return Config::getInstance()->config();
-}
+QVariantMap YioAPI::getConfig() { return Config::getInstance()->config(); }
 
-bool YioAPI::setConfig(QVariantMap config)
-{
+bool YioAPI::setConfig(QVariantMap config) {
     Config *cfg = Config::getInstance();
     cfg->setConfig(config);
     if (!cfg->isValid()) {
@@ -105,20 +92,15 @@ bool YioAPI::setConfig(QVariantMap config)
     return cfg->writeConfig();
 }
 
-bool YioAPI::addEntityToConfig(QVariantMap entity)
-{
+bool YioAPI::addEntityToConfig(QVariantMap entity) {
     // check the input if it's OK
-    if (!entity.contains("area")
-            && !entity.contains("entity_id")
-            && !entity.contains("friendly_name")
-            && !entity.contains("integration")
-            && !entity.contains("supported_features")
-            && !entity.contains("type")) {
+    if (!entity.contains("area") && !entity.contains("entity_id") && !entity.contains("friendly_name") &&
+        !entity.contains("integration") && !entity.contains("supported_features") && !entity.contains("type")) {
         return false;
     }
 
     // get the config
-    QVariantMap c = getConfig();
+    QVariantMap  c = getConfig();
     QVariantList e = c.value("entities").toJsonArray().toVariantList();
 
     // check what is the type of the new entity
@@ -128,7 +110,7 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     for (int i = 0; i < e.length(); i++) {
         if (e[i].toMap().value("type").toString() == entityType) {
             // get the data key array
-            QVariantMap r = e[i].toMap();
+            QVariantMap  r = e[i].toMap();
             QVariantList rl = r.value("data").toJsonArray().toVariantList();
 
             // add the entity
@@ -156,8 +138,7 @@ bool YioAPI::addEntityToConfig(QVariantMap entity)
     return cfg->writeConfig();
 }
 
-void YioAPI::discoverNetworkServices()
-{
+void YioAPI::discoverNetworkServices() {
     m_discoveredServices.clear();
 
     m_discoverableServices = Integrations::getInstance()->getMDNSList();
@@ -189,8 +170,7 @@ void YioAPI::discoverNetworkServices()
     }
 }
 
-void YioAPI::discoverNetworkServices(QString mdns)
-{
+void YioAPI::discoverNetworkServices(QString mdns) {
     m_discoveredServices.clear();
 
     m_qzero_conf_browser = new QZeroConf;
@@ -220,13 +200,11 @@ void YioAPI::discoverNetworkServices(QString mdns)
     m_qzero_conf_browser->startBrowser(mdns);
 }
 
-QVariantList YioAPI::discoveredServices()
-{
+QVariantList YioAPI::discoveredServices() {
     QVariantList list;
 
     QMap<QString, QVariantMap>::iterator i;
-    for (i = m_discoveredServices.begin(); i != m_discoveredServices.end(); i++)
-    {
+    for (i = m_discoveredServices.begin(); i != m_discoveredServices.end(); i++) {
         QVariantMap map = i.value();
         list.append(map);
     }
@@ -234,8 +212,7 @@ QVariantList YioAPI::discoveredServices()
     return list;
 }
 
-void YioAPI::onNewConnection()
-{
+void YioAPI::onNewConnection() {
     QWebSocket *socket = m_server->nextPendingConnection();
 
     connect(socket, &QWebSocket::textMessageReceived, this, &YioAPI::processMessage);
@@ -245,24 +222,23 @@ void YioAPI::onNewConnection()
     QVariantMap map;
     map.insert("type", "auth_required");
     QJsonDocument doc = QJsonDocument::fromVariant(map);
-    QString message = doc.toJson(QJsonDocument::JsonFormat::Compact);
+    QString       message = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
     socket->sendTextMessage(message);
 
     m_clients.insert(socket, false);
 }
 
-void YioAPI::processMessage(QString message)
-{
+void YioAPI::processMessage(QString message) {
     QVariantMap r_map;
 
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
-//        qDebug() << message;
+        //        qDebug() << message;
 
         // convert message to json
         QJsonParseError parseerror;
-        QJsonDocument doc = QJsonDocument::fromJson(message.toUtf8(), &parseerror);
+        QJsonDocument   doc = QJsonDocument::fromJson(message.toUtf8(), &parseerror);
         if (parseerror.error != QJsonParseError::NoError) {
             qDebug() << "JSON error : " << parseerror.errorString();
             return;
@@ -287,7 +263,7 @@ void YioAPI::processMessage(QString message)
                     qDebug() << "Token OK";
                     r_map.insert("type", "auth_ok");
                     QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
-                    QString r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
+                    QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
 
@@ -300,7 +276,7 @@ void YioAPI::processMessage(QString message)
                     r_map.insert("type", "auth_error");
                     r_map.insert("message", "Invalid token");
                     QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
-                    QString r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
+                    QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
                 }
@@ -309,7 +285,7 @@ void YioAPI::processMessage(QString message)
                 r_map.insert("type", "auth_error");
                 r_map.insert("message", "Token needed");
                 QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
-                QString r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
+                QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                 client->sendTextMessage(r_message);
             }
@@ -319,7 +295,7 @@ void YioAPI::processMessage(QString message)
         // EMIT MESSAGES OF AUTHENTICATED CLIENTS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (type == "getconfig" && m_clients[client]){
+        if (type == "getconfig" && m_clients[client]) {
             qCDebug(m_log) << "REQUEST FOR GETCONFIG";
 
             QVariantMap response;
@@ -351,7 +327,7 @@ void YioAPI::processMessage(QString message)
             }
         } else if (type == "log" && m_clients[client]) {
             // Handle log
-            Logger* logger = Logger::getInstance();
+            Logger *logger = Logger::getInstance();
             QString logAction = map["action"].toString();
             QString logTarget = map["target"].toString();
             qCDebug(m_log) << "LOGGER : " << logAction;
@@ -385,7 +361,7 @@ void YioAPI::processMessage(QString message)
                 logger->purgeFiles(hours);
             } else if (logAction == "setloglevel") {
                 // set log level
-                int level = QtMsgType::QtDebugMsg;
+                int     level = QtMsgType::QtDebugMsg;
                 QString category;
                 if (map.contains("level")) {
                     level = logger->toMsgType(map["level"].toString());
@@ -398,16 +374,13 @@ void YioAPI::processMessage(QString message)
                 }
             } else if (logAction == "getmessages") {
                 // get log messages
-                int count = 50;
-                int level = QtMsgType::QtDebugMsg;
+                int         count = 50;
+                int         level = QtMsgType::QtDebugMsg;
                 QStringList categories;
-                if (map.contains("count"))
-                    count = map["count"].toInt();
-                if (map.contains("level"))
-                    level = logger->toMsgType(map["level"].toString());
-                if (map.contains("categories"))
-                    categories = map["categories"].toStringList();
-                QJsonArray messages = logger->getQueuedMessages(count, level, categories);
+                if (map.contains("count")) count = map["count"].toInt();
+                if (map.contains("level")) level = logger->toMsgType(map["level"].toString());
+                if (map.contains("categories")) categories = map["categories"].toStringList();
+                QJsonArray  messages = logger->getQueuedMessages(count, level, categories);
                 QJsonObject jsonObj;
                 jsonObj.insert("type", "log");
                 jsonObj.insert("messages", messages);
@@ -428,8 +401,7 @@ void YioAPI::processMessage(QString message)
     }
 }
 
-void YioAPI::onClientDisconnected()
-{
+void YioAPI::onClientDisconnected() {
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
         m_clients.remove(client);
