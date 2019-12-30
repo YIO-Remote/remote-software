@@ -113,4 +113,4 @@
 #define HW_CFG_LIGHTTPD_WEB_CFG    "webConfiguratorConfig"
 #define HW_DEF_LIGHTTPD_WEB_CFG    "/etc/lighttpd/lighttpd-config.conf"
 
-#endif // HARDWARE_HW_CONFIG_H_
+#endif  // HARDWARE_HW_CONFIG_H_
