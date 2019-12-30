@@ -20,32 +20,26 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TRANSLATION_H
-#define TRANSLATION_H
+#pragma once
 
-#include <QTranslator>
 #include <QGuiApplication>
 #include <QObject>
 #include <QQmlEngine>
+#include <QTranslator>
 
-class TranslationHandler : public QObject
-{
+class TranslationHandler : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString emptyString READ getEmptyString NOTIFY languageChanged)
 
-public:
-    explicit TranslationHandler(QQmlEngine *engine)
-    {
+ public:
+    explicit TranslationHandler(QQmlEngine *engine) {
         m_translator = new QTranslator(this);
         m_engine = engine;
     }
 
-    QString getEmptyString() {
-        return "";
-    }
+    QString getEmptyString() { return ""; }
 
-    Q_INVOKABLE void selectLanguage(QString language)
-    {
+    Q_INVOKABLE void selectLanguage(QString language) {
         qGuiApp->removeTranslator(m_translator);
         m_translator->load(":/translations/" + language);
         qGuiApp->installTranslator(m_translator);
@@ -53,13 +47,10 @@ public:
         emit languageChanged();
     }
 
-signals:
+ signals:
     void languageChanged();
 
-private:
+ private:
     QTranslator *m_translator;
-    QQmlEngine *m_engine;
-
+    QQmlEngine * m_engine;
 };
-
-#endif // TRANSLATION_H

@@ -21,8 +21,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef JSONFILE_H_
-#define JSONFILE_H_
+#pragma once
 
 #include <QFile>
 #include <QObject>
@@ -64,7 +63,6 @@ class JsonFile : public QObject {
     inline qint64  size() const { return m_file.size(); }
     bool           isValid() const { return m_error.isEmpty(); }
     inline QString error() const { return m_error; }
-
     Q_INVOKABLE bool rename(const QString &newName);
 
     Q_INVOKABLE inline bool copy(const QString &newName) {  // NOLINT false positive: doesn't like copy name
@@ -72,7 +70,7 @@ class JsonFile : public QObject {
     }
     Q_INVOKABLE inline bool remove() { return m_file.remove(); }
 
-    Q_INVOKABLE bool write(const QVariantMap &data);
+    Q_INVOKABLE bool     write(const QVariantMap &data);
     Q_INVOKABLE QVariant read();
 
     /**
@@ -110,5 +108,3 @@ class JsonFile : public QObject {
     QString m_schemaPath;
     QString m_error;
 };
-
-#endif  // JSONFILE_H_

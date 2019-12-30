@@ -19,16 +19,14 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
-#ifndef CONFIG_H_
-#define CONFIG_H_
-
-#include <QtDebug>
+#pragma once
 
 #include <QJsonArray>
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QtDebug>
+
 #include "configinterface.h"
 #include "jsonfile.h"
 
@@ -50,15 +48,14 @@ class Config : public QObject, ConfigInterface {
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
 
-    Q_INVOKABLE bool readConfig(const QString& path);
-    Q_INVOKABLE bool writeConfig();
+    Q_INVOKABLE void readConfig(QString path);
+    Q_INVOKABLE void writeConfig();
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
-    QVariantMap getIntegrations() { return m_config["integrations"].toMap(); }
-    QVariantMap getAllEntities() { return m_config["entities"].toMap(); }
-
-    Q_INVOKABLE QVariantMap getIntegration(const QString& type) { return getIntegrations().value(type).toMap(); }
+    QVariantMap              getIntegrations() { return m_config["integrations"].toMap(); }
+    Q_INVOKABLE QVariantMap  getIntegration(const QString& type) { return getIntegrations().value(type).toMap(); }
+    QVariantMap              getAllEntities() { return m_config["entities"].toMap(); }
     Q_INVOKABLE QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
 
     // Assuming that the following config items are accessed quite often they are cached
@@ -68,12 +65,12 @@ class Config : public QObject, ConfigInterface {
 
     QVariantMap getUIConfig() { return m_cacheUIConfig; }
     void        setUIConfig(const QVariantMap& config);
-    QVariantMap getProfiles() { return m_cacheUIProfiles; }
-    QVariantMap getPages() { return m_cacheUIPages; }
-    QVariantMap getGroups() { return m_cacheUIGroups; }
 
+    QVariantMap             getProfiles() { return m_cacheUIProfiles; }
     Q_INVOKABLE QVariantMap getProfile(const QString& profile) { return m_cacheUIProfiles.value(profile).toMap(); }
+    QVariantMap             getPages() { return m_cacheUIPages; }
     Q_INVOKABLE QVariantMap getPage(const QString& pageId) { return m_cacheUIPages.value(pageId).toMap(); }
+    QVariantMap             getGroups() { return m_cacheUIGroups; }
     Q_INVOKABLE QVariantMap getGroup(const QString& groupId) { return m_cacheUIGroups.value(groupId).toMap(); }
 
     // The selected, cached profile
@@ -101,7 +98,7 @@ class Config : public QObject, ConfigInterface {
     void    setProfile(QString id);
 
  public:
-    explicit Config(QQmlApplicationEngine* engine = nullptr, QString path = "", QString schemaPath = "");
+    explicit Config(QQmlApplicationEngine* engine = nullptr, QString path = "");
     virtual ~Config();
 
     static Config* getInstance() { return s_instance; }
@@ -137,5 +134,3 @@ class Config : public QObject, ConfigInterface {
     QVariantMap m_cacheUIPages;
     QVariantMap m_cacheUIGroups;
 };
-
-#endif  // CONFIG_H_
