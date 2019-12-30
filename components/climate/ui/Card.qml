@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.0
 
 import Entity.Climate 1.0
 
@@ -9,6 +10,25 @@ Item {
     id: climateCard
 
     property double targetTemperature: obj.targetTemperature
+
+    Component.onCompleted: {
+        var tempBase = temperatureDial.from;
+        for (var i=temperatureDial.from; i<(temperatureDial.to*2)-3; i++) {
+            var item = {};
+            item["temp"] = tempBase;
+            dialListModel.append(item);
+            tempBase = tempBase + 0.5;
+        }
+        dialListView.currentIndex = findNumber(targetTemperature);
+    }
+
+    function findNumber(temp) {
+        for (var i=0; i<dialListModel.count; i++) {
+            if (dialListModel.get(i).temp == temp) {
+                return i;
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
@@ -23,7 +43,8 @@ Item {
             PropertyChanges {target: titleText; opacity: 0}
             PropertyChanges {target: areaText; opacity: 0}
             PropertyChanges {target: turnOnButton; opacity: 0}
-            PropertyChanges {target: temperatureTextDial; opacity: 1}
+            PropertyChanges {target: modeButton; opacity: 0}
+            PropertyChanges {target: dialListView; opacity: 1}
         },
         State {
             name: "notmoving"
@@ -31,7 +52,8 @@ Item {
             PropertyChanges {target: titleText; opacity: 1}
             PropertyChanges {target: areaText; opacity: 1}
             PropertyChanges {target: turnOnButton; opacity: 1}
-            PropertyChanges {target: temperatureTextDial; opacity: 0}
+            PropertyChanges {target: modeButton; opacity: 1}
+            PropertyChanges {target: dialListView; opacity: 0}
         }
     ]
 
@@ -42,7 +64,8 @@ Item {
             PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: areaText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: turnOnButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-            PropertyAnimation { target: temperatureTextDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: modeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: dialListView; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
 
         },
         Transition {
@@ -51,7 +74,8 @@ Item {
             PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: areaText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: turnOnButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-            PropertyAnimation { target: temperatureTextDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: modeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            PropertyAnimation { target: dialListView; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
         }
     ]
 
@@ -76,21 +100,94 @@ Item {
         value: targetTemperature
 
         background: Rectangle {
+            id: dialBg
             x: temperatureDial.width / 2 - width / 2
             y: temperatureDial.height / 2 - height / 2
             width: Math.max(64, Math.min(temperatureDial.width, temperatureDial.height))
             height: width
             color: {
-                if (obj.state === Climate.HEAT && obj.targetTemperate > obj.temperature) {
+                if ((obj.state === Climate.HEAT && targetTemperature > obj.temperature) || (targetTemperature > obj.temperature)) {
                     return colorOrange
-                } else if (obj.state === Climate.COOL && obj.targetTemperature < obj.temperature) {
+                } else if ((obj.state === Climate.COOL && targetTemperature < obj.temperature) || targetTemperature < obj.temperature) {
                     return colorBlue
                 } else {
                     return colorHighlight2
                 }
             }
-
             radius: width / 2
+
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Item {
+                    width: dialBg.width
+                    height: dialBg.height
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: dialBg.radius
+                    }
+                }
+            }
+
+            ListModel {
+                id: dialListModel
+            }
+
+            ListView {
+                id: dialListView
+                width: parent.width
+                height: parent.height
+                spacing: 10
+                interactive: false
+                highlightMoveDuration: 200
+                highlightRangeMode: ListView.StrictlyEnforceRange
+                preferredHighlightBegin: height / 2 - 80
+                preferredHighlightEnd: height / 2 + 80
+
+                model: dialListModel
+
+                delegate: Component {
+                    Item {
+                        height: 160
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        opacity: ListView.isCurrentItem ? 1 : 0.5
+                        scale: ListView.isCurrentItem ? 1 : 0.5
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
+                        }
+
+                        Text {
+                            id: temperatureTextDial
+                            color: colorText
+                            text: {
+                                var s = temp.toString().split(".")
+                                return s[0]
+                            }
+                            horizontalAlignment: Text.AlignLeft
+                            anchors.centerIn: parent
+                            font {family: "Open Sans Light"; pixelSize: 140 }
+                        }
+
+                        Text {
+                            color: colorText
+                            text: {
+                                var s = temp.toString().split(".")
+                                if (s[1]) {
+                                    return s[1]
+                                } else {
+                                    return ""
+                                }
+                            }
+                            anchors { top: temperatureTextDial.top; topMargin: 16; left: temperatureTextDial.right; leftMargin: 0 }
+                            font {family: "Open Sans Regular"; pixelSize: 80 }
+                        }
+                    }
+                }
+            }
         }
 
         handle: Rectangle {
@@ -117,6 +214,9 @@ Item {
 
         onValueChanged: {
             targetTemperature = value;
+            var i = findNumber(targetTemperature);
+            if (i)
+                dialListView.currentIndex = i;
         }
 
         onPressedChanged: {
@@ -127,30 +227,6 @@ Item {
                 climateCard.state = "notmoving"
                 obj.setTargetTemperature(targetTemperature);
             }
-        }
-
-        Text {
-            id: temperatureTextDial
-            color: colorText
-            text: targetTemperature.toFixed(0)
-            horizontalAlignment: Text.AlignLeft
-            anchors.centerIn: parent
-            font {family: "Open Sans Light"; pixelSize: 140 }
-        }
-
-        Text {
-            color: colorText
-            opacity: temperatureTextDial.opacity
-            text: {
-                var s = targetTemperature.toString().split(".")
-                if (s[1]) {
-                    return s[1]
-                } else {
-                    return ""
-                }
-            }
-            anchors { top: temperatureTextDial.top; topMargin: 16; left: temperatureTextDial.right; leftMargin: 0 }
-            font {family: "Open Sans Regular"; pixelSize: 80 }
         }
     }
 
@@ -170,7 +246,10 @@ Item {
     Text {
         id: temperatureText
         color: colorText
-        text: targetTemperature.toFixed(0)
+        text: {
+            var s = targetTemperature.toString().split(".")
+            return s[0]
+        }
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: 0; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 140 }
@@ -227,5 +306,39 @@ Item {
         }
     }
 
+    BasicUI.CustomButton {
+        id: modeButton
+        anchors { left:turnOnButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
+        color: colorText
+        buttonTextColor: colorBackground
+        buttonText: qsTr("Mode") + translateHandler.emptyString
+        visible: obj.isSupported(Climate.F_HVAC_MODES)
+
+        mouseArea.onClicked: {
+            haptic.playEffect("click");
+            var list = [];
+
+            if (obj.isSupported(Climate.OFF))
+                list.push("Off");
+            if (obj.isSupported(Climate.F_HEAT))
+                list.push("Heat");
+            if (obj.isSupported(Climate.F_COOL))
+                list.push("Cool");
+
+            contextMenuLoader.setSource("qrc:/components/climate/ui/ContextMenu.qml", { "width": climateCard.width, "climateObj": obj, "list": list })
+        }
+    }
+
+    Loader {
+        id: contextMenuLoader
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        visible: modeButton.visible
+
+        onStatusChanged: {
+            if (contextMenuLoader.status == Loader.Ready)
+                contextMenuLoader.item.state = "open"
+        }
+    }
 
 }

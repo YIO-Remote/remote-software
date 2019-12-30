@@ -111,13 +111,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="199"/>
+        <location filename="../components/climate/ui/Card.qml" line="301"/>
         <source>Turn off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="199"/>
+        <location filename="../components/climate/ui/Card.qml" line="301"/>
         <source>Turn on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../components/climate/ui/Card.qml" line="314"/>
+        <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -251,6 +256,7 @@
     <name>ContextMenu</name>
     <message>
         <location filename="../basic_ui/ContextMenu.qml" line="129"/>
+        <location filename="../components/climate/ui/ContextMenu.qml" line="114"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

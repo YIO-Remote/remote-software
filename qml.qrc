@@ -224,5 +224,6 @@
         <file>components/remote/ui/ir/Button.qml</file>
         <file>components/climate/ui/Button.qml</file>
         <file>components/climate/ui/Card.qml</file>
+        <file>components/climate/ui/ContextMenu.qml</file>
     </qresource>
 </RCC>

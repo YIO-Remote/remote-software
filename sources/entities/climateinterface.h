@@ -33,7 +33,16 @@ class ClimateDef : public QObject {
     enum States { OFF = 0, ON = 1, HEAT = 2, COOL = 3 };
     Q_ENUM(States)
 
-    enum Features { F_TEMPERATURE, F_TARGET_TEMPERATURE, F_TEMPERATURE_MAX, F_TEMPERATURE_MIN };
+    enum Features {
+        F_TEMPERATURE,
+        F_TARGET_TEMPERATURE,
+        F_TEMPERATURE_MAX,
+        F_TEMPERATURE_MIN,
+        F_HVAC_MODES,
+        F_OFF,
+        F_HEAT,
+        F_COOL
+    };
     Q_ENUM(Features)
 
     enum Commands { C_OFF, C_ON, C_HEAT, C_COOL, C_TARGET_TEMPERATURE };
