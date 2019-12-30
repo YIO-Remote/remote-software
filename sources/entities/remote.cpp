@@ -246,5 +246,6 @@ Remote::Remote(const QVariantMap& config, IntegrationInterface* integrationObj, 
     m_specificInterface = qobject_cast<RemoteInterface*>(this);
     initializeSupportedFeatures(config);
     m_commands = config.value("commands").toJsonArray().toVariantList();
+    m_settings = config.value("settings").toMap();
     emit commandsChanged();
 }

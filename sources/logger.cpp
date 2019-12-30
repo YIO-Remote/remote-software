@@ -42,15 +42,19 @@ Logger::Logger(const QString& path, QString logLevel, bool console, bool showSou
 
     Q_ASSERT(s_msgTypeString.length() == QtMsgType::QtInfoMsg + 1);
 
-    if (!QDir(m_directory).exists())
+    if (m_fileEnabled && !QDir(m_directory).exists()) {
         QDir().mkdir(m_directory);
+    }
 
     qInstallMessageHandler(&messageOutput);
     defineLogCategory("default", QtMsgType::QtInfoMsg, QLoggingCategory::defaultCategory());
     if (!logLevel.isEmpty()) {
         setLogLevel(static_cast<QtMsgType>(toMsgType(logLevel)));
     }
-    purgeFiles(purgeHours);
+
+    if (m_fileEnabled) {
+        purgeFiles(purgeHours);
+    }
 }
 Logger::~Logger()
 {

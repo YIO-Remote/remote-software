@@ -61,7 +61,7 @@ public:
         C_PLAY, C_PAUSE, C_PLAYTOGGLE, C_STOP, C_FORWARD, C_BACKWARD, C_NEXT, C_PREVIOUS, C_INFO, C_RECORDINGS, C_RECORD, C_LIVE,
 
         // digits
-        C_DIGIT_0, C_DIGIT_1,C_DIGIT_2, C_DIGIT_3, C_DIGIT_4, C_DIGIT_5, C_DIGIT_6, C_DIGIT_7, C_DIGIT_8, C_DIGIT_9, C_DIGIT_10, C_DIGIT_10plus,
+        C_DIGIT_0, C_DIGIT_1, C_DIGIT_2, C_DIGIT_3, C_DIGIT_4, C_DIGIT_5, C_DIGIT_6, C_DIGIT_7, C_DIGIT_8, C_DIGIT_9, C_DIGIT_10, C_DIGIT_10plus,
         C_DIGIT_11, C_DIGIT_12, C_DIGIT_SEPARATOR, C_DIGIT_ENTER,
 
         // navigation
@@ -104,6 +104,7 @@ class RemoteInterface
 public:
     virtual ~RemoteInterface  ();
     virtual QVariantList      commands() = 0;
+    virtual QVariantMap       settings() = 0;
 };
 
 QT_BEGIN_NAMESPACE

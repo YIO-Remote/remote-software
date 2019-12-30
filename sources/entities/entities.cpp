@@ -208,8 +208,8 @@ void Entities::addMediaplayersPlaying(const QString &entity_id)
         QTimer* timer = m_mediaplayersTimers.value(entity_id);
         if (timer) {
             timer->stop();
-            timer->deleteLater();
             m_mediaplayersTimers.remove(entity_id);
+            timer->deleteLater();
         }
     }
 
@@ -226,16 +226,19 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id)
     if (m_mediaplayersPlaying.contains(entity_id)) {
 
         // use a timer to remove the entity with a delay
-        QTimer* timer = new QTimer();
+        QTimer* timer = new QTimer(this);
         timer->setSingleShot(true);
         connect(timer, &QTimer::timeout, this, [=](){
-            m_mediaplayersPlaying.remove(entity_id);
-            timer->deleteLater();
-            m_mediaplayersTimers.remove(entity_id);
+            if (m_mediaplayersPlaying.contains(entity_id))
+                m_mediaplayersPlaying.remove(entity_id);
+
+            if (m_mediaplayersTimers.contains(entity_id))
+                m_mediaplayersTimers.remove(entity_id);
+
             emit mediaplayersPlayingChanged();
+            timer->deleteLater();
         });
-        //        timer->start(120000);
-        timer->start(10000);
+        timer->start(120000);
 
         m_mediaplayersTimers.insert(entity_id, timer);
     }

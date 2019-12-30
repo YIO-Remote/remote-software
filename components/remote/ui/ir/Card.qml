@@ -62,7 +62,38 @@ Rectangle {
                     obj.channelDown();
                 }
                 break;
+            case "dpad up":
+                if (obj.isSupported(Remote.F_CURSOR_UP)) {
+                    obj.cursorUp();
+                }
+                break;
+            case "dpad down":
+                if (obj.isSupported(Remote.F_CURSOR_DOWN)) {
+                    obj.cursorDown();
+                }
+                break;
+            case "dpad left":
+                if (obj.isSupported(Remote.F_CURSOR_LEFT)) {
+                    obj.cursorLeft();
+                }
+                break;
+            case "dpad right":
+                if (obj.isSupported(Remote.F_CURSOR_RIGHT)) {
+                    obj.cursorRight();
+                }
+                break;
+            case "dpad middle":
+                if (obj.isSupported(Remote.F_CURSOR_OK)) {
+                    obj.cursorOK();
+                }
+                break;
+            case "top left":
+                if (obj.isSupported(Remote.F_MUTE_TOGGLE)) {
+                    obj.muteToggle();
+                }
+                break;
             }
+
         }
     }
 
@@ -142,6 +173,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
+                    haptic.playEffect("click");
                     obj.powerToggle();
                 }
             }
