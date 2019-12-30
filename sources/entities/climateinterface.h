@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef CLIMATEINTERFACE_H
-#define CLIMATEINTERFACE_H
+#pragma once
 
 #include <QObject>
 
@@ -57,5 +56,3 @@ QT_BEGIN_NAMESPACE
 #define ClimateInterface_iid "YIO.ClimateInterface"
 Q_DECLARE_INTERFACE(ClimateInterface, ClimateInterface_iid)
 QT_END_NAMESPACE
-
-#endif  // CLIMATEINTERFACE_H

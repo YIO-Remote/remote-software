@@ -20,26 +20,21 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef FILEIO_H
-#define FILEIO_H
+#pragma once
 
-#include <QObject>
 #include <QFile>
+#include <QObject>
 #include <QTextStream>
 
-class FileIO : public QObject
-{
+class FileIO : public QObject {
     Q_OBJECT
 
-public slots:
-    bool write(const QString& source, const QString& data)
-    {
-        if (source.isEmpty())
-            return false;
+ public slots:
+    bool write(const QString& source, const QString& data) {
+        if (source.isEmpty()) return false;
 
         QFile file(source);
-        if (!file.open(QFile::WriteOnly | QFile::Truncate))
-            return false;
+        if (!file.open(QFile::WriteOnly | QFile::Truncate)) return false;
 
         QTextStream out(&file);
         out << data;
@@ -47,8 +42,7 @@ public slots:
         return true;
     }
 
-    QString read(const QString& source)
-    {
+    QString read(const QString& source) {
         QString returnText;
 
         QFile file(source);
@@ -64,8 +58,7 @@ public slots:
         return returnText;
     }
 
-    bool exists(const QString& source)
-    {
+    bool exists(const QString& source) {
         QFile file(source);
 
         if (file.exists()) {
@@ -75,8 +68,6 @@ public slots:
         }
     }
 
-public:
+ public:
     FileIO() {}
 };
-
-#endif // FILEIO_H

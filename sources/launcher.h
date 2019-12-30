@@ -19,25 +19,20 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
-#ifndef LAUNCHER_H
-#define LAUNCHER_H
+#pragma once
 
 #include <QObject>
 #include <QProcess>
 
 #include "./integrations/integrationinterface.h"
 
-class Launcher : public QObject
-{
+class Launcher : public QObject {
     Q_OBJECT
-public:
+ public:
     explicit Launcher(QObject *parent = nullptr);
     Q_INVOKABLE QString launch(const QString &program);
-    Q_INVOKABLE QObject* loadPlugin(const QString& path, const QString &pluginName);
+    Q_INVOKABLE QObject *loadPlugin(const QString &path, const QString &pluginName);
 
-private:
+ private:
     QProcess *m_process;
 };
-
-#endif // LAUNCHER_H

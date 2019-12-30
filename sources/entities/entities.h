@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef ENTITIES_H
-#define ENTITIES_H
+#pragma once
 
 #include <QList>
 #include <QLoggingCategory>
@@ -118,5 +117,3 @@ class Entities : public QObject, EntitiesInterface {
 
     QLoggingCategory m_log;
 };
-
-#endif  // ENTITIES_H

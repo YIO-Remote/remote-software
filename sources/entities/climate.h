@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef CLIMATE_H
-#define CLIMATE_H
+#pragma once
 
 #include <QObject>
 #include <QVariant>
@@ -65,5 +64,3 @@ class Climate : public Entity, ClimateInterface {
     double m_temperature;
     double m_targetTemperature;
 };
-
-#endif  // CLIMATE_H
