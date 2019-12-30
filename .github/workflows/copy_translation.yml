@@ -1,5 +1,8 @@
 name: Copy translation master file
-on: push
+on:
+  push:
+    branches:
+      - dev
 jobs:
   copycat:
     name: Copycat
