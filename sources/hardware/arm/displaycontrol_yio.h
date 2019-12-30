@@ -20,17 +20,16 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef DISPLAYCONTROLYIO_H
-#define DISPLAYCONTROLYIO_H
+#ifndef HARDWARE_ARM_DISPLAYCONTROL_YIO_H_
+#define HARDWARE_ARM_DISPLAYCONTROL_YIO_H_
 
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <time.h>
 
 #include "../displaycontrol.h"
 
-class DisplayControlYio : public DisplayControl
-{
+class DisplayControlYio : public DisplayControl {
     Q_OBJECT
 
     // define timing
@@ -38,21 +37,20 @@ class DisplayControlYio : public DisplayControl
     struct timespec ts2 = {0, 100L};
     struct timespec ts3 = {0, 300L};
 
-public:
-    Q_INVOKABLE virtual bool setmode(const QString &mode) override;
+ public:
+    Q_INVOKABLE bool setmode(const QString &mode) override;
 
-    Q_INVOKABLE virtual void setBrightness(int from, int to) override;
+    Q_INVOKABLE void setBrightness(int from, int to) override;
 
-    Q_INVOKABLE virtual void batteryChargingOn() override;
-    Q_INVOKABLE virtual void batteryChargingOff() override;
+    Q_INVOKABLE void batteryChargingOn() override;
+    Q_INVOKABLE void batteryChargingOff() override;
 
-    DisplayControlYio(QObject *parent = nullptr);
+    explicit DisplayControlYio(QObject *parent = nullptr);
 
-    virtual void setup() override;
+    void setup() override;
 
-private:
+ private:
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
-
 };
 
-#endif // DISPLAYCONTROLYIO_H
+#endif  // HARDWARE_ARM_DISPLAYCONTROL_YIO_H_

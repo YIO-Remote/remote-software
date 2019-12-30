@@ -28,9 +28,9 @@
 #include "../jsonfile.h"
 #include "hardwarefactory.h"
 
-#if defined (__arm__)
+#if defined(__arm__)
 #include "hardwarefactory_yio.h"
-#elif defined (Q_OS_LINUX)
+#elif defined(Q_OS_LINUX)
 #include "hardwarefactory_rpi0.h"
 #else
 #include "hardwarefactory_mock.h"
@@ -68,9 +68,9 @@ HardwareFactory *HardwareFactory::build(const QVariantMap &config) {
     }
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
-#if defined (__arm__)
+#if defined(__arm__)
     s_instance = new HardwareFactoryYio(config);
-#elif defined (Q_OS_LINUX)
+#elif defined(Q_OS_LINUX)
     s_instance = new HardwareFactoryRPi0(config);
 #else  // anyone wants to write Android, macOS or Windows factories?
     s_instance = new HardwareFactoryMock(config);
@@ -85,8 +85,7 @@ HardwareFactory *HardwareFactory::instance() {
     return s_instance;
 }
 
-QObject *HardwareFactory::batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
-{
+QObject *HardwareFactory::batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
     assert(s_instance);
@@ -94,8 +93,7 @@ QObject *HardwareFactory::batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine
     return s_instance->getBatteryFuelGauge();
 }
 
-QObject *HardwareFactory::displayControlProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
-{
+QObject *HardwareFactory::displayControlProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
     assert(s_instance);
@@ -103,12 +101,10 @@ QObject *HardwareFactory::displayControlProvider(QQmlEngine *engine, QJSEngine *
     return s_instance->getDisplayControl();
 }
 
-QObject *HardwareFactory::interruptHandlerProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
-{
+QObject *HardwareFactory::interruptHandlerProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
     assert(s_instance);
 
     return s_instance->getInterruptHandler();
 }
-

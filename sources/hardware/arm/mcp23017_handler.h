@@ -20,13 +20,13 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef MCP23017_H
-#define MCP23017_H
+#ifndef HARDWARE_ARM_MCP23017_HANDLER_H_
+#define HARDWARE_ARM_MCP23017_HANDLER_H_
 
 #include <QString>
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <time.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
@@ -46,7 +46,6 @@
 #define MCP23017_GPIOA 0x12
 #define MCP23017_OLATA 0x14
 
-
 #define MCP23017_IODIRB 0x01
 #define MCP23017_IPOLB 0x03
 #define MCP23017_GPINTENB 0x05
@@ -61,38 +60,33 @@
 
 #define MCP23017_INT_ERR 255
 
-class MCP23017
-{
+class MCP23017 {
+ public:
+    MCP23017() { setup(); }
 
-public:
-    MCP23017() {
-        setup();
-    }
+    ~MCP23017() {}
 
-    ~MCP23017(){}
-
-    void setup()
-    {
+    void setup() {
         wiringPiSetup();
 
-        // TODO make i2c device configurable
+        // TODO(zehnm) make i2c device configurable
         bus = wiringPiI2CSetupInterface("/dev/i2c-3", MCP23017_ADDRESS);
 
         // set up all inputs on both ports
-        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0xbf); //0xbf 0b10111111
+        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0xbf);  // 0xbf 0b10111111
         wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0xff);
 
         // set up interrupts
         int ioconfValue = wiringPiI2CReadReg8(bus, MCP23017_IOCONA);
-        bitWrite(ioconfValue,6,true);
-        bitWrite(ioconfValue,2,false);
-        bitWrite(ioconfValue,1,false);
+        bitWrite(ioconfValue, 6, true);
+        bitWrite(ioconfValue, 2, false);
+        bitWrite(ioconfValue, 1, false);
         wiringPiI2CWriteReg8(bus, MCP23017_IOCONA, ioconfValue);
 
         ioconfValue = wiringPiI2CReadReg8(bus, MCP23017_IOCONB);
-        bitWrite(ioconfValue,6,true); // mirror
-        bitWrite(ioconfValue,2,false); //
-        bitWrite(ioconfValue,1,false); // polarity
+        bitWrite(ioconfValue, 6, true);   // mirror
+        bitWrite(ioconfValue, 2, false);  //
+        bitWrite(ioconfValue, 1, false);  // polarity
         wiringPiI2CWriteReg8(bus, MCP23017_IOCONB, ioconfValue);
 
         // setup pin for interrupt
@@ -110,78 +104,74 @@ public:
         wiringPiI2CReadReg8(bus, MCP23017_INTCAPB);
     }
 
-    QString readInterrupt()
-    {
-
+    QString readInterrupt() {
         int intf;
 
         intf = wiringPiI2CReadReg8(bus, MCP23017_INTFA);
 
         switch (intf) {
-        case 0x01:
-            clearInterrupt();
-            return "apds9960";
-        case 0x02:
-            clearInterrupt();
-            return "dpad up";
-        case 0x04:
-            clearInterrupt();
-            return "top right";
-        case 0x08:
-            clearInterrupt();
-            return "channel up";
-        case 0x10:
-            clearInterrupt();
-            return "dpad right";
-        case 0x20:
-            clearInterrupt();
-            return "channel down";
-        case 0x80:
-            clearInterrupt();
-            return "battery";
+            case 0x01:
+                clearInterrupt();
+                return "apds9960";
+            case 0x02:
+                clearInterrupt();
+                return "dpad up";
+            case 0x04:
+                clearInterrupt();
+                return "top right";
+            case 0x08:
+                clearInterrupt();
+                return "channel up";
+            case 0x10:
+                clearInterrupt();
+                return "dpad right";
+            case 0x20:
+                clearInterrupt();
+                return "channel down";
+            case 0x80:
+                clearInterrupt();
+                return "battery";
         }
 
         intf = wiringPiI2CReadReg8(bus, MCP23017_INTFB);
 
         switch (intf) {
-        case 0x01:
-            clearInterrupt();
-            return "bottom right";
-        case 0x02:
-            clearInterrupt();
-            return "dpad middle";
-        case 0x04:
-            clearInterrupt();
-            return "dpad down";
-        case 0x08:
-            clearInterrupt();
-            return "bottom left";
-        case 0x10:
-            clearInterrupt();
-            return "volume down";
-        case 0x20:
-            clearInterrupt();
-            return "dpad left";
-        case 0x40:
-            clearInterrupt();
-            return "volume up";
-        case 0x80:
-            clearInterrupt();
-            return "top left";
+            case 0x01:
+                clearInterrupt();
+                return "bottom right";
+            case 0x02:
+                clearInterrupt();
+                return "dpad middle";
+            case 0x04:
+                clearInterrupt();
+                return "dpad down";
+            case 0x08:
+                clearInterrupt();
+                return "bottom left";
+            case 0x10:
+                clearInterrupt();
+                return "volume down";
+            case 0x20:
+                clearInterrupt();
+                return "dpad left";
+            case 0x40:
+                clearInterrupt();
+                return "volume up";
+            case 0x80:
+                clearInterrupt();
+                return "top left";
         }
 
         return "";
     }
 
-    void clearInterrupt()
-    {
+    void clearInterrupt() {
         // clear interrupt registers
         wiringPiI2CReadReg8(bus, MCP23017_INTCAPA);
         wiringPiI2CReadReg8(bus, MCP23017_INTCAPB);
     }
 
-    void shutdown()
-    {
+    void shutdown() {
         // set pins output
         wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0x00);
 
@@ -189,10 +179,10 @@ public:
         wiringPiI2CWriteReg8(bus, MCP23017_OLATB, 0x00);
     }
 
-private:
+ private:
     int bus;
 
-private:
+ private:
     void bitWrite(int x, int n, bool b) {
         if (n <= 7 && n >= 0) {
             if (b) {
@@ -204,4 +194,4 @@ private:
     }
 };
 
-#endif // MCP23017_H
+#endif  // HARDWARE_ARM_MCP23017_HANDLER_H_

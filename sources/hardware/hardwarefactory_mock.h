@@ -20,28 +20,27 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORYMOCK_H
-#define HARDWAREFACTORYMOCK_H
+#ifndef HARDWARE_HARDWAREFACTORY_MOCK_H_
+#define HARDWARE_HARDWAREFACTORY_MOCK_H_
 
 #include "hardwarefactory.h"
 
 /**
  * @brief A mock implementation of the abstract hardware factory for unsupported platforms.
  */
-class HardwareFactoryMock : public HardwareFactory
-{
+class HardwareFactoryMock : public HardwareFactory {
     Q_OBJECT
-public:
-    explicit HardwareFactoryMock(const QVariantMap &config, QObject* parent = nullptr);
+ public:
+    explicit HardwareFactoryMock(const QVariantMap &config, QObject *parent = nullptr);
 
     // HardwareFactory interface
-public:
-    virtual WifiControl *getWifiControl() override;
-    virtual SystemService *getSystemService() override;
-    virtual WebServerControl *getWebServerControl() override;
-    virtual DisplayControl *getDisplayControl() override;
-    virtual BatteryFuelGauge *getBatteryFuelGauge() override;
-    virtual InterruptHandler *getInterruptHandler() override;
+ public:
+    WifiControl *     getWifiControl() override;
+    SystemService *   getSystemService() override;
+    WebServerControl *getWebServerControl() override;
+    DisplayControl *  getDisplayControl() override;
+    BatteryFuelGauge *getBatteryFuelGauge() override;
+    InterruptHandler *getInterruptHandler() override;
 };
 
-#endif // HARDWAREFACTORYMOCK_H
+#endif  // HARDWARE_HARDWAREFACTORY_MOCK_H_

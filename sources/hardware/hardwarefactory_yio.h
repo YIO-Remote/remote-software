@@ -20,25 +20,24 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORYYIO_H
-#define HARDWAREFACTORYYIO_H
+#ifndef HARDWARE_HARDWAREFACTORY_YIO_H_
+#define HARDWARE_HARDWAREFACTORY_YIO_H_
 
 #include "hardwarefactory_rpi0.h"
 
-class HardwareFactoryYio : public HardwareFactoryRPi0
-{
+class HardwareFactoryYio : public HardwareFactoryRPi0 {
     Q_OBJECT
 
-public:
-    explicit HardwareFactoryYio(const QVariantMap &config, QObject* parent = nullptr);
+ public:
+    explicit HardwareFactoryYio(const QVariantMap &config, QObject *parent = nullptr);
 
     // HardwareFactoryRPi0 interface
-protected:
-    virtual DisplayControl *buildDisplayControl(const QVariantMap &config) override;
+ protected:
+    DisplayControl *buildDisplayControl(const QVariantMap &config) override;
 
-    virtual BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config) override;
+    BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config) override;
 
-    virtual InterruptHandler *buildInterruptHandler(const QVariantMap &config) override;
+    InterruptHandler *buildInterruptHandler(const QVariantMap &config) override;
 };
 
-#endif // HARDWAREFACTORYYIO_H
+#endif  // HARDWARE_HARDWAREFACTORY_YIO_H_

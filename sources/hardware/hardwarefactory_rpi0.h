@@ -20,52 +20,51 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORYRPI0_H
-#define HARDWAREFACTORYRPI0_H
+#ifndef HARDWARE_HARDWAREFACTORY_RPI0_H_
+#define HARDWARE_HARDWAREFACTORY_RPI0_H_
 
+#include "displaycontrol.h"
 #include "hardwarefactory.h"
 #include "webserver_control.h"
-#include "displaycontrol.h"
 
 /**
  * @brief Concrete hardware factory implementation for the Raspberry Pi Zero in the YIO Remote.
  */
-class HardwareFactoryRPi0 : public HardwareFactory
-{
+class HardwareFactoryRPi0 : public HardwareFactory {
     Q_OBJECT
 
-public:
-    explicit HardwareFactoryRPi0(const QVariantMap &config, QObject* parent = nullptr);
+ public:
+    explicit HardwareFactoryRPi0(const QVariantMap &config, QObject *parent = nullptr);
 
     // HardwareFactory interface
-public:
-    virtual WifiControl *getWifiControl() override;
+ public:
+    WifiControl *getWifiControl() override;
 
-    virtual SystemService *getSystemService() override;
+    SystemService *getSystemService() override;
 
-    virtual WebServerControl *getWebServerControl() override;
+    WebServerControl *getWebServerControl() override;
 
-    virtual DisplayControl *getDisplayControl() override;
+    DisplayControl *getDisplayControl() override;
 
-    virtual BatteryFuelGauge *getBatteryFuelGauge() override;
+    BatteryFuelGauge *getBatteryFuelGauge() override;
 
-    virtual InterruptHandler *getInterruptHandler() override;
+    InterruptHandler *getInterruptHandler() override;
 
-protected:
-    virtual WifiControl *buildWifiControl(const QVariantMap &config);
-    virtual SystemService *buildSystemService(const QVariantMap &config);
+ protected:
+    virtual WifiControl *     buildWifiControl(const QVariantMap &config);
+    virtual SystemService *   buildSystemService(const QVariantMap &config);
     virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
-    virtual DisplayControl *buildDisplayControl(const QVariantMap &config);
+    virtual DisplayControl *  buildDisplayControl(const QVariantMap &config);
     virtual BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config);
-    virtual InterruptHandler* buildInterruptHandler(const QVariantMap &config);
+    virtual InterruptHandler *buildInterruptHandler(const QVariantMap &config);
 
-private:
-    WifiControl      *p_wifiControl;
-    SystemService    *p_systemService;
+ private:
+    WifiControl *     p_wifiControl;
+    SystemService *   p_systemService;
     WebServerControl *p_webServerControl;
-    DisplayControl   *p_displayControl;
+    DisplayControl *  p_displayControl;
     BatteryFuelGauge *p_batteryFuelGauge;
     InterruptHandler *p_interruptHandler;
 };
 
-#endif // HARDWAREFACTORYRPI0_H
+#endif  // HARDWARE_HARDWAREFACTORY_RPI0_H_

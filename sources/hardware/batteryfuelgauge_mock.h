@@ -20,39 +20,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef BATTERYFUELGAUGEMOCK_H
-#define BATTERYFUELGAUGEMOCK_H
-
+#ifndef HARDWARE_BATTERYFUELGAUGE_MOCK_H_
+#define HARDWARE_BATTERYFUELGAUGE_MOCK_H_
 
 #include "batteryfuelgauge.h"
 
-class BatteryFuelGaugeMock : public BatteryFuelGauge
-{
+class BatteryFuelGaugeMock : public BatteryFuelGauge {
     Q_OBJECT
-public:
-    BatteryFuelGaugeMock(QObject* parent = nullptr) : BatteryFuelGauge(parent)
-    {
-        setCapacity(2500);
-    }
+ public:
+    explicit BatteryFuelGaugeMock(QObject* parent = nullptr) : BatteryFuelGauge(parent) { setCapacity(2500); }
 
-    ~BatteryFuelGaugeMock() {
-
-    }
+    ~BatteryFuelGaugeMock() override {}
 
     // BatteryFuelGauge interface
-public:
-    virtual void begin() override {}
-    virtual int getVoltage() override { return 5000; }
-    virtual int getFullChargeCapacity() override { return 2500; }
-    virtual int getAverageCurrent() override { return -1600; }
-    virtual int getAveragePower() override { return -2500; }
-    virtual int getStateOfCharge() override { return 100; }
-    virtual int16_t getInternalTemperatureC() override  { return 23; }
-    virtual int getStateOfHealth() override { return 100; }
-    virtual int getFullAvailableCapacity() override { return 2500; }
-    virtual int getRemainingCapacity() override { return 2000; }
-    virtual int getDesignCapacity() override  { return 2500; }
-    virtual void changeCapacity(int newCapacity) override { Q_UNUSED(newCapacity) }
+ public:
+    void    begin() override {}
+    int     getVoltage() override { return 5000; }
+    int     getFullChargeCapacity() override { return 2500; }
+    int     getAverageCurrent() override { return -1600; }
+    int     getAveragePower() override { return -2500; }
+    int     getStateOfCharge() override { return 100; }
+    int16_t getInternalTemperatureC() override { return 23; }
+    int     getStateOfHealth() override { return 100; }
+    int     getFullAvailableCapacity() override { return 2500; }
+    int     getRemainingCapacity() override { return 2000; }
+    int     getDesignCapacity() override { return 2500; }
+    void    changeCapacity(int newCapacity) override { Q_UNUSED(newCapacity) }
 };
 
-#endif // BATTERYFUELGAUGEMOCK_H
+#endif  // HARDWARE_BATTERYFUELGAUGE_MOCK_H_

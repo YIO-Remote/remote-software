@@ -20,27 +20,25 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef INTERRUPTHANDLER_H
-#define INTERRUPTHANDLER_H
+#ifndef HARDWARE_INTERRUPTHANDLER_H_
+#define HARDWARE_INTERRUPTHANDLER_H_
 
 #include <QObject>
 
-class InterruptHandler : public QObject
-{
+class InterruptHandler : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QString button READ getButton NOTIFY buttonPressed)
 
-public:
+ public:
     explicit InterruptHandler(QObject *parent = nullptr) : QObject(parent) {}
 
     Q_INVOKABLE virtual void shutdown() = 0;
 
     virtual QString getButton() = 0;
 
-signals:
+ signals:
     void buttonPressed();
-
 };
 
-#endif // INTERRUPTHANDLER_H
+#endif  // HARDWARE_INTERRUPTHANDLER_H_

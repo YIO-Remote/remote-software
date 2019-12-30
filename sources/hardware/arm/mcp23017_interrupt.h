@@ -20,11 +20,11 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef INTERRUPT_HANDLER_H
-#define INTERRUPT_HANDLER_H
+#ifndef HARDWARE_ARM_MCP23017_INTERRUPT_H_
+#define HARDWARE_ARM_MCP23017_INTERRUPT_H_
 
-#include <QObject>
 #include <QFile>
+#include <QObject>
 #include <QSocketNotifier>
 #include <QtDebug>
 
@@ -32,32 +32,20 @@
 
 #include "mcp23017_handler.h"
 
-class Mcp23017InterruptHandler : public InterruptHandler
-{
+class Mcp23017InterruptHandler : public InterruptHandler {
     Q_OBJECT
 
-public:
+ public:
+    explicit Mcp23017InterruptHandler(QObject *parent = nullptr) : InterruptHandler(parent) { setupGPIO(); }
 
-    Mcp23017InterruptHandler(QObject *parent = nullptr) : InterruptHandler(parent)
-    {
-        setupGPIO();
-    }
+    // ~Mcp23017InterruptHandler() override {}
 
-    //~Mcp23017InterruptHandler() override {}
+    Q_INVOKABLE void shutdown() override { mcp.shutdown(); }
 
-    Q_INVOKABLE virtual void shutdown() override
-    {
-        mcp.shutdown();
-    }
+    QString getButton() override { return m_button; }
 
-    virtual QString getButton() override {
-        return m_button;
-    }
-
-private:
-
-    void setupGPIO()
-    {
+ private:
+    void setupGPIO() {
         QFile exportFile("/sys/class/gpio/export");
         if (!exportFile.open(QIODevice::WriteOnly)) {
             qDebug() << "Error opening: /sys/class/gpio/export";
@@ -92,8 +80,7 @@ private:
         connect(notifier, &QSocketNotifier::activated, this, &Mcp23017InterruptHandler::interruptHandler);
     }
 
-    void interruptHandler()
-    {
+    void interruptHandler() {
         QFile file("/sys/class/gpio/gpio18/value");
         if (!file.open(QIODevice::ReadOnly)) {
             qDebug() << "Error opening: /sys/class/gpio/gpio18/value";
@@ -104,7 +91,6 @@ private:
 
         // if the GPIO is 0, then it's a button press
         if (gpioVal == 0) {
-
             // check the MCP23017 what caused the interrupt
             m_button = mcp.readInterrupt();
 
@@ -115,12 +101,11 @@ private:
         delay(10);
     }
 
-private:
-    QString         m_button;
-    MCP23017        mcp = MCP23017();
+ private:
+    QString          m_button;
+    MCP23017         mcp = MCP23017();
     QSocketNotifier *notifier;
-    QFile           *file;
-
+    QFile *          file;
 };
 
-#endif // INTERRUPT_HANDLER_H
+#endif  // HARDWARE_ARM_MCP23017_INTERRUPT_H_

@@ -20,37 +20,30 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-
-#include <QLoggingCategory>
-#include <QtDebug>
 #include <QFuture>
+#include <QLoggingCategory>
 #include <QtConcurrent/QtConcurrentRun>
+#include <QtDebug>
 
-#include <wiringPi.h>
 #include <mcp23017.h>
+#include <wiringPi.h>
 
 #include "displaycontrol_yio.h"
 #include "mcp23017_handler.h"
 
-
-#define CLK  107
+#define CLK 107
 #define MOSI 106
-#define CS   105
-#define RST  104
+#define CS 105
+#define RST 104
 
-DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent)
-{
-    setup();
+DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent) { setup(); }
+
+void DisplayControlYio::setup() {
+    wiringPiSetup();
+    mcp23017Setup(100, 0x21);
 }
 
-void DisplayControlYio::setup()
-{
-    wiringPiSetup () ;
-    mcp23017Setup (100, 0x21);
-}
-
-void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1)
-{
+void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1) {
     int32_t i;
     int32_t control_bit;
 
@@ -69,12 +62,12 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     control_bit = 0x0000;
     Addr = (control_bit | Addr);
 
-    for(i = 0; i<9; i++)
-    {
-        if(Addr &(1<<(8-i)))
+    for (i = 0; i < 9; i++) {
+        if (Addr & (1 << (8 - i))) {
             digitalWrite(MOSI, HIGH);
-        else
+        } else {
             digitalWrite(MOSI, LOW);
+        }
 
         // \u6a21\u62dfCLK
         digitalWrite(CLK, HIGH);
@@ -88,7 +81,7 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     digitalWrite(CLK, LOW);
     nanosleep(&ts3, NULL);
 
-    if(0xffff == Data0){
+    if (0xffff == Data0) {
         return;
     }
 
@@ -97,12 +90,13 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     control_bit = 0x0100;
     Data0 = (control_bit | Data0);
 
-    for(i = 0; i < 9; i++)  //data
-    {
-        if(Data0 &(1<<(8-i)))
+    // data
+    for (i = 0; i < 9; i++) {
+        if (Data0 & (1 << (8 - i))) {
             digitalWrite(MOSI, HIGH);
-        else
+        } else {
             digitalWrite(MOSI, LOW);
+        }
         digitalWrite(CLK, HIGH);
         nanosleep(&ts, NULL);
         digitalWrite(CLK, LOW);
@@ -114,20 +108,22 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     digitalWrite(MOSI, LOW);
     nanosleep(&ts2, NULL);
 
-    if(0xffff == Data1)
+    if (0xffff == Data1) {
         return;
+    }
 
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
     Data1 = (control_bit | Data1);
 
-    for(i = 0; i < 9; i++)  //data
-    {
-        if(Data1 &(1<<(8-i)))
+    // data
+    for (i = 0; i < 9; i++) {
+        if (Data1 & (1 << (8 - i))) {
             digitalWrite(MOSI, HIGH);
-        else
+        } else {
             digitalWrite(MOSI, LOW);
+        }
         digitalWrite(CLK, HIGH);
         nanosleep(&ts, NULL);
         digitalWrite(CLK, LOW);
@@ -140,11 +136,10 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     nanosleep(&ts3, NULL);
 }
 
-bool DisplayControlYio::setmode(const QString &mode)
-{
+bool DisplayControlYio::setmode(const QString &mode) {
     if (mode == "standbyon") {
-        QFuture<void> future = QtConcurrent::run([&](){
-            delay(400); // wait until dimming of the display is done
+        QFuture<void> future = QtConcurrent::run([&]() {
+            delay(400);  // wait until dimming of the display is done
             spi_screenreg_set(0x10, 0xffff, 0xffff);
             delay(120);
             spi_screenreg_set(0x28, 0xffff, 0xffff);
@@ -152,7 +147,7 @@ bool DisplayControlYio::setmode(const QString &mode)
         return true;
     }
     if (mode == "standbyoff") {
-        QFuture<void> future = QtConcurrent::run([&](){
+        QFuture<void> future = QtConcurrent::run([&]() {
             spi_screenreg_set(0x29, 0xffff, 0xffff);
             spi_screenreg_set(0x11, 0xffff, 0xffff);
         });
@@ -161,48 +156,45 @@ bool DisplayControlYio::setmode(const QString &mode)
     return false;
 }
 
-void DisplayControlYio::setBrightness(int from, int to)
-{
-    QFuture<void> future = QtConcurrent::run([&](int from, int to) {
-        if (from == 0 && digitalRead(26) == 0) {
-            pinMode(26, PWM_OUTPUT);
-            pwmSetMode(PWM_MODE_MS);
-            pwmSetClock(1000);
-            pwmSetRange(100);
-        }
+void DisplayControlYio::setBrightness(int from, int to) {
+    QFuture<void> future = QtConcurrent::run(
+        [&](int from, int to) {
+            if (from == 0 && digitalRead(26) == 0) {
+                pinMode(26, PWM_OUTPUT);
+                pwmSetMode(PWM_MODE_MS);
+                pwmSetClock(1000);
+                pwmSetRange(100);
+            }
 
-        if (from >= to) {
-            // dim down
-            for (int i=from; i>to-1; i--)
-            {
-                pwmWrite(26, i);
-                delay(10);
-                if (i == 0) {
-                    delay(100);
-                    pinMode(26, OUTPUT);
-                    digitalWrite(26, 0);
+            if (from >= to) {
+                // dim down
+                for (int i = from; i > to - 1; i--) {
+                    pwmWrite(26, i);
+                    delay(10);
+                    if (i == 0) {
+                        delay(100);
+                        pinMode(26, OUTPUT);
+                        digitalWrite(26, 0);
+                    }
+                }
+            } else {
+                // dim up
+                for (int i = from; i < to + 1; i++) {
+                    pwmWrite(26, i);
+                    delay(10);
                 }
             }
-        } else {
-            // dim up
-            for (int i=from; i<to+1; i++)
-            {
-                pwmWrite(26, i);
-                delay(10);
-            }
-        }
-    }, from, to);
+        },
+        from, to);
 }
 
-void DisplayControlYio::batteryChargingOn()
-{
+void DisplayControlYio::batteryChargingOn() {
     pinMode(108, OUTPUT);
     digitalWrite(108, LOW);
     qDebug() << "Turning battery charging on";
 }
 
-void DisplayControlYio::batteryChargingOff()
-{
+void DisplayControlYio::batteryChargingOff() {
     pinMode(108, OUTPUT);
     digitalWrite(108, HIGH);
     qDebug() << "Turning battery charging off";

@@ -20,21 +20,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef INTERRUPTHANDLERMOCK_H
-#define INTERRUPTHANDLERMOCK_H
+#ifndef HARDWARE_INTERRUPTHANDLER_MOCK_H_
+#define HARDWARE_INTERRUPTHANDLER_MOCK_H_
 
 #include "interrupthandler.h"
 
-class InterruptHandlerMock : public InterruptHandler
-{
+class InterruptHandlerMock : public InterruptHandler {
     Q_OBJECT
-public:
-    InterruptHandlerMock(QObject* parent = nullptr) : InterruptHandler(parent) {}
+ public:
+    explicit InterruptHandlerMock(QObject* parent = nullptr) : InterruptHandler(parent) {}
 
     // InterruptHandler interface
-public:
-    virtual void shutdown() override {}
-    virtual QString getButton() override { return ""; }
+ public:
+    void    shutdown() override {}
+    QString getButton() override { return ""; }
 };
 
-#endif // INTERRUPTHANDLERMOCK_H
+#endif  // HARDWARE_INTERRUPTHANDLER_MOCK_H_

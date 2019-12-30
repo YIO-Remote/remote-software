@@ -26,12 +26,12 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 
+#include "batteryfuelgauge.h"
+#include "displaycontrol.h"
+#include "interrupthandler.h"
 #include "systemservice.h"
 #include "webserver_control.h"
 #include "wifi_control.h"
-#include "displaycontrol.h"
-#include "batteryfuelgauge.h"
-#include "interrupthandler.h"
 
 /**
  * @brief Abstract hardware factory. Supported platforms are implemented in concrete factories.
@@ -77,12 +77,12 @@ class HardwareFactory : public QObject {
 
     virtual InterruptHandler* getInterruptHandler() = 0;
 
-    static QObject *batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
-    static QObject *displayControlProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
-    static QObject *interruptHandlerProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
+    static QObject* batteryFuelGaugeProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* displayControlProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* interruptHandlerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 
-protected:
-    explicit HardwareFactory(QObject *parent = nullptr);
+ protected:
+    explicit HardwareFactory(QObject* parent = nullptr);
     virtual ~HardwareFactory();
 
  private:

@@ -33,10 +33,9 @@
 #include "launcher.h"
 #include "translation.h"
 
-#include "hardware/hardwarefactory.h"
 #include "hardware/displaycontrol.h"
-#include "hardware/touchdetect.h"
 #include "hardware/drv2605.h"
+#include "hardware/hardwarefactory.h"
 #include "hardware/proximity_gesture_control.h"
 #include "hardware/touchdetect.h"
 #include "hardware/wifi_control.h"
@@ -161,8 +160,10 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("displayControl", displayControl);
 
     qmlRegisterSingletonType<BatteryFuelGauge>("Battery", 1, 0, "Battery", &HardwareFactory::batteryFuelGaugeProvider);
-    qmlRegisterSingletonType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl", &HardwareFactory::displayControlProvider);
-    qmlRegisterSingletonType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler", &HardwareFactory::interruptHandlerProvider);
+    qmlRegisterSingletonType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl",
+                                             &HardwareFactory::displayControlProvider);
+    qmlRegisterSingletonType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler",
+                                               &HardwareFactory::interruptHandlerProvider);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;

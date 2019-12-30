@@ -20,39 +20,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include "hardwarefactory_yio.h"
-#include "arm/displaycontrol_yio.h"
 #include "arm/bq27441.h"
+#include "arm/displaycontrol_yio.h"
 #include "arm/mcp23017_interrupt.h"
+#include "hardwarefactory_yio.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
 
-HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject* parent) : HardwareFactoryRPi0(config, parent)
-{
+HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *parent)
+    : HardwareFactoryRPi0(config, parent) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
-
-DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config)
-{
+DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config) {
     Q_UNUSED(config)
     return new DisplayControlYio(this);
 }
 
-
-BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &config)
-{
+BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &config) {
     Q_UNUSED(config)
     return new BQ27441(this);
 }
 
-
-InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &config)
-{
+InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &config) {
     Q_UNUSED(config)
     return new Mcp23017InterruptHandler(this);
 }

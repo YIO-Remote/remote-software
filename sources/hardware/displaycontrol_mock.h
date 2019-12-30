@@ -20,30 +20,29 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef DISPLAYCONTROLMOCK_H
-#define DISPLAYCONTROLMOCK_H
+#ifndef HARDWARE_DISPLAYCONTROL_MOCK_H_
+#define HARDWARE_DISPLAYCONTROL_MOCK_H_
 
 #include "displaycontrol.h"
 
-class DisplayControlMock : public DisplayControl
-{
+class DisplayControlMock : public DisplayControl {
     Q_OBJECT
-public:
+ public:
     explicit DisplayControlMock(QObject *parent = nullptr) : DisplayControl(parent) {}
 
     // DisplayControl interface
-public:
-    virtual bool setmode(const QString &mode) override {
+ public:
+    bool setmode(const QString &mode) override {
         Q_UNUSED(mode)
         return true;
     }
-    virtual void setBrightness(int from, int to) override {
+    void setBrightness(int from, int to) override {
         Q_UNUSED(from)
         Q_UNUSED(to)
     }
-    virtual void batteryChargingOn() override {}
-    virtual void batteryChargingOff() override {}
-    virtual void setup() override {}
+    void batteryChargingOn() override {}
+    void batteryChargingOff() override {}
+    void setup() override {}
 };
 
-#endif // DISPLAYCONTROLMOCK_H
+#endif  // HARDWARE_DISPLAYCONTROL_MOCK_H_

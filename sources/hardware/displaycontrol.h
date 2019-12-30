@@ -20,17 +20,16 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef DISPLAY_CONTROL_H
-#define DISPLAY_CONTROL_H
+#ifndef HARDWARE_DISPLAYCONTROL_H_
+#define HARDWARE_DISPLAYCONTROL_H_
 
 #include <QObject>
 
-class DisplayControl : public QObject
-{
+class DisplayControl : public QObject {
     Q_OBJECT
 
-public:
-    Q_INVOKABLE virtual bool setmode(const QString &mode) = 0;
+ public:
+    Q_INVOKABLE virtual bool setmode(const QString& mode) = 0;
 
     Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
 
@@ -39,8 +38,8 @@ public:
 
     virtual void setup() = 0;
 
-protected:
-    DisplayControl(QObject* parent = nullptr) : QObject(parent) {}
+ protected:
+    explicit DisplayControl(QObject* parent = nullptr) : QObject(parent) {}
 };
 
-#endif // DISPLAY_CONTROL_H
+#endif  // HARDWARE_DISPLAYCONTROL_H_
