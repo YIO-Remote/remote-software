@@ -359,27 +359,27 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="45"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Verbinding verbroken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="146"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Verbinden</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="182"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Verbinding verbreken</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="212"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integraties</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="253"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Nieuwe toevoegen</translation>
     </message>
   </context>
   <context>
@@ -416,7 +416,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
   </context>
   <context>
@@ -520,7 +520,7 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profielen</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="184"/>
