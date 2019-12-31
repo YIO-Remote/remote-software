@@ -23,24 +23,31 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include "systemservice_mock.h"
+#include "webserver_mock.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "SysSrvMock");
+static Q_LOGGING_CATEGORY(CLASS_LC, "WebMock");
 
-SystemServiceMock::SystemServiceMock(QObject *parent) : SystemService(parent)
-{
+WebServerMock::WebServerMock(QObject *parent)
+    : WebServerControl(parent) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
-
-bool SystemServiceMock::startService(SystemServiceName serviceName)
-{
-    qCDebug(CLASS_LC) << "start service:" << serviceName;
+bool WebServerMock::startService() {
+    qCDebug(CLASS_LC) << "startService";
     return true;
 }
 
-bool SystemServiceMock::stopService(SystemServiceName serviceName)
-{
-    qCDebug(CLASS_LC) << "stop service:" << serviceName;
+bool WebServerMock::stopService() {
+    qCDebug(CLASS_LC) << "stopService";
+    return true;
+}
+
+bool WebServerMock::startWifiSetupPortal() {
+    qCDebug(CLASS_LC) << "startWifiSetupPortal";
+    return true;
+}
+
+bool WebServerMock::startWebConfigurator() {
+    qCDebug(CLASS_LC) << "startWebConfiugorator";
     return true;
 }

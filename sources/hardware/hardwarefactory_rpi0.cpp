@@ -25,15 +25,15 @@
 
 #include <cassert>
 
-#include "batteryfuelgauge_mock.h"
-#include "displaycontrol_mock.h"
-#include "gesturesensor_mock.h"
-#include "hapticmotor_mock.h"
 #include "hardwarefactory_rpi0.h"
 #include "hw_config.h"
-#include "interrupthandler_mock.h"
-#include "lightsensor_mock.h"
-#include "proximitysensor_mock.h"
+#include "mock/batteryfuelgauge_mock.h"
+#include "mock/displaycontrol_mock.h"
+#include "mock/gesturesensor_mock.h"
+#include "mock/hapticmotor_mock.h"
+#include "mock/interrupthandler_mock.h"
+#include "mock/lightsensor_mock.h"
+#include "mock/proximitysensor_mock.h"
 #include "systemd.h"
 #include "systemservice_name.h"
 #include "webserver_lighttpd.h"

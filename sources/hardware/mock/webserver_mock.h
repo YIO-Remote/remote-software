@@ -20,26 +20,23 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WEBSERVERMOCK_H
-#define WEBSERVERMOCK_H
+#pragma once
 
-#include "webserver_control.h"
+#include "../webserver_control.h"
 
 /**
  * @brief A mock implementation of the WebServerControl interface for unsupported platforms.
  */
-class WebServerMock : public WebServerControl
-{
+class WebServerMock : public WebServerControl {
     Q_OBJECT
-public:
-    WebServerMock(QObject *parent = nullptr);
+
+ public:
+    explicit WebServerMock(QObject *parent = nullptr);
 
     // WebServerControl interface
-public:
-    Q_INVOKABLE virtual bool startService() override;
-    Q_INVOKABLE virtual bool stopService() override;
-    Q_INVOKABLE virtual bool startWifiSetupPortal() override;
-    Q_INVOKABLE virtual bool startWebConfigurator() override;
+ public:
+    Q_INVOKABLE bool startService() override;
+    Q_INVOKABLE bool stopService() override;
+    Q_INVOKABLE bool startWifiSetupPortal() override;
+    Q_INVOKABLE bool startWebConfigurator() override;
 };
-
-#endif // WEBSERVERMOCK_H

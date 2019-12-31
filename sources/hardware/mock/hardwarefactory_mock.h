@@ -20,40 +20,28 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#pragma once
 
-#include "webserver_mock.h"
+#include "../hardwarefactory.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "WebMock");
+/**
+ * @brief A mock implementation of the abstract hardware factory for unsupported platforms.
+ */
+class HardwareFactoryMock : public HardwareFactory {
+    Q_OBJECT
+ public:
+    explicit HardwareFactoryMock(const QVariantMap &config, QObject *parent = nullptr);
 
-WebServerMock::WebServerMock(QObject *parent) : WebServerControl(parent)
-
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-}
-
-
-bool WebServerMock::startService()
-{
-    qCDebug(CLASS_LC) << "startService";
-    return true;
-}
-
-bool WebServerMock::stopService()
-{
-    qCDebug(CLASS_LC) << "stopService";
-    return true;
-}
-
-bool WebServerMock::startWifiSetupPortal()
-{
-    qCDebug(CLASS_LC) << "startWifiSetupPortal";
-    return true;
-}
-
-bool WebServerMock::startWebConfigurator()
-{
-    qCDebug(CLASS_LC) << "startWebConfiugorator";
-    return true;
-}
+    // HardwareFactory interface
+ public:
+    WifiControl *     getWifiControl() override;
+    SystemService *   getSystemService() override;
+    WebServerControl *getWebServerControl() override;
+    DisplayControl *  getDisplayControl() override;
+    BatteryFuelGauge *getBatteryFuelGauge() override;
+    InterruptHandler *getInterruptHandler() override;
+    HapticMotor *     getHapticMotor() override;
+    GestureSensor *   getGestureSensor() override;
+    LightSensor *     getLightSensor() override;
+    ProximitySensor * getProximitySensor() override;
+};

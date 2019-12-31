@@ -22,26 +22,18 @@
 
 #pragma once
 
-#include "hardwarefactory.h"
+#include "../systemservice.h"
 
 /**
- * @brief A mock implementation of the abstract hardware factory for unsupported platforms.
+ * @brief A mock implementation of the SystemService interface for unsupported platforms.
  */
-class HardwareFactoryMock : public HardwareFactory {
+class SystemServiceMock : public SystemService {
     Q_OBJECT
  public:
-    explicit HardwareFactoryMock(const QVariantMap &config, QObject *parent = nullptr);
+    explicit SystemServiceMock(QObject *parent = nullptr);
 
-    // HardwareFactory interface
+    // SystemService interface
  public:
-    WifiControl *     getWifiControl() override;
-    SystemService *   getSystemService() override;
-    WebServerControl *getWebServerControl() override;
-    DisplayControl *  getDisplayControl() override;
-    BatteryFuelGauge *getBatteryFuelGauge() override;
-    InterruptHandler *getInterruptHandler() override;
-    HapticMotor *     getHapticMotor() override;
-    GestureSensor *   getGestureSensor() override;
-    LightSensor *     getLightSensor() override;
-    ProximitySensor * getProximitySensor() override;
+    Q_INVOKABLE bool startService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool stopService(SystemServiceName serviceName) override;
 };

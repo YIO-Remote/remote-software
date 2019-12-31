@@ -27,18 +27,11 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiMock");
 
-WifiMock::WifiMock(QObject *parent) : WifiControl(parent)
-  , m_countryCode("CH")
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-}
+WifiMock::WifiMock(QObject *parent) : WifiControl(parent), m_countryCode("CH") { qCDebug(CLASS_LC) << Q_FUNC_INFO; }
 
-WifiMock::~WifiMock()
-{
-}
+WifiMock::~WifiMock() {}
 
-bool WifiMock::init()
-{
+bool WifiMock::init() {
     qCDebug(CLASS_LC) << "init";
     startSignalStrengthScanning();
     startWifiStatusScanning();
@@ -46,31 +39,22 @@ bool WifiMock::init()
     return true;
 }
 
-void WifiMock::on()
-{
-    qCDebug(CLASS_LC) << "on";
-}
+void WifiMock::on() { qCDebug(CLASS_LC) << "on"; }
 
-void WifiMock::off()
-{
-    qCDebug(CLASS_LC) << "off";
-}
+void WifiMock::off() { qCDebug(CLASS_LC) << "off"; }
 
-bool WifiMock::reset()
-{
+bool WifiMock::reset() {
     qCDebug(CLASS_LC) << "reset";
     // just make sure all timers are running
     return init();
 }
 
-bool WifiMock::clearConfiguredNetworks()
-{
+bool WifiMock::clearConfiguredNetworks() {
     qCDebug(CLASS_LC) << "clearConfiguredNetworks";
     return true;
 }
 
-bool WifiMock::join(const QString &ssid, const QString &password, WifiSecurity security)
-{
+bool WifiMock::join(const QString &ssid, const QString &password, WifiSecurity security) {
     qCDebug(CLASS_LC) << "join " << ssid;
 
     if (!validateAuthentication(security, password)) {
@@ -80,47 +64,38 @@ bool WifiMock::join(const QString &ssid, const QString &password, WifiSecurity s
     return true;
 }
 
-bool WifiMock::isConnected()
-{
+bool WifiMock::isConnected() {
     qCDebug(CLASS_LC) << "isConnected";
     return rand() % 2 == 0;
 }
 
-void WifiMock::startNetworkScan()
-{
+void WifiMock::startNetworkScan() {
     qCDebug(CLASS_LC) << "startNetworkScan";
     setScanStatus(Scanning);
 
     m_scanResults.clear();
-    m_scanResults.append({ "0", "Mock Net", "34:31:c4:e1:d3:97", -77, WifiSecurity::WPA_PSK });
-    m_scanResults.append({ "1", "Guest Network", "33:31:44:55:66:77", -66, WifiSecurity::NONE_OPEN });
+    m_scanResults.append({"0", "Mock Net", "34:31:c4:e1:d3:97", -77, WifiSecurity::WPA_PSK});
+    m_scanResults.append({"1", "Guest Network", "33:31:44:55:66:77", -66, WifiSecurity::NONE_OPEN});
 
     setScanStatus(ScanOk);
 
     emit networksFound(m_scanResults);
 }
 
-bool WifiMock::startAccessPoint()
-{
+bool WifiMock::startAccessPoint() {
     qCDebug(CLASS_LC) << "startAccessPoint";
     return false;
 }
 
-QString WifiMock::countryCode() {
-    return m_countryCode;
+QString WifiMock::countryCode() { return m_countryCode; }
+
+void WifiMock::setCountryCode(QString &countryCode) { m_countryCode = countryCode; }
+
+WifiStatus WifiMock::wifiStatus() const {
+    return WifiStatus{"WiFi Mock", "", "127.0.0.1", "de:ad:be:ef:00:00", -70 + qrand() % 9};
 }
 
-void WifiMock::setCountryCode(QString &countryCode) {
-    m_countryCode = countryCode;
-}
-
-WifiStatus WifiMock::wifiStatus() const
-{
-    return WifiStatus { "WiFi Mock", "", "127.0.0.1",  "de:ad:be:ef:00:00", -70 + qrand() % 9 };
-}
-
-void WifiMock::timerEvent(QTimerEvent *event)
-{
+void WifiMock::timerEvent(QTimerEvent *event) {
     Q_UNUSED(event)
     if (m_wifiStatusScanning) {
         emit wifiStatusChanged(wifiStatus());

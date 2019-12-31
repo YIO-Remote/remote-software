@@ -48,18 +48,18 @@ HEADERS += \
     sources/entities/weatherinterface.h \
     sources/fileio.h \
     sources/hardware/batteryfuelgauge.h \
-    sources/hardware/batteryfuelgauge_mock.h \
+    sources/hardware/mock/batteryfuelgauge_mock.h \
     sources/hardware/displaycontrol.h \
-    sources/hardware/displaycontrol_mock.h \
+    sources/hardware/mock/displaycontrol_mock.h \
     sources/hardware/gesturesensor.h \
-    sources/hardware/gesturesensor_mock.h \
+    sources/hardware/mock/gesturesensor_mock.h \
     sources/hardware/hapticmotor.h \
-    sources/hardware/hapticmotor_mock.h \
-    sources/hardware/interrupthandler_mock.h \
+    sources/hardware/mock/hapticmotor_mock.h \
+    sources/hardware/mock/interrupthandler_mock.h \
     sources/hardware/lightsensor.h \
-    sources/hardware/lightsensor_mock.h \
+    sources/hardware/mock/lightsensor_mock.h \
     sources/hardware/proximitysensor.h \
-    sources/hardware/proximitysensor_mock.h \
+    sources/hardware/mock/proximitysensor_mock.h \
     sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
@@ -70,18 +70,18 @@ HEADERS += \
     sources/translation.h \
     sources/hardware/touchdetect.h \
     sources/hardware/hardwarefactory.h \
-    sources/hardware/hardwarefactory_mock.h \
+    sources/hardware/mock/hardwarefactory_mock.h \
     sources/hardware/hw_config.h \
     sources/hardware/interrupthandler.h \
     sources/hardware/systemd.h \
     sources/hardware/systemservice.h \
-    sources/hardware/systemservice_mock.h \
+    sources/hardware/mock/systemservice_mock.h \
     sources/hardware/systemservice_name.h \
     sources/hardware/webserver_control.h \
     sources/hardware/webserver_lighttpd.h \
-    sources/hardware/webserver_mock.h \
+    sources/hardware/mock/webserver_mock.h \
     sources/hardware/wifi_control.h \
-    sources/hardware/wifi_mock.h \
+    sources/hardware/mock/wifi_mock.h \
     sources/hardware/wifi_network.h \
     sources/hardware/wifi_security.h \
     sources/hardware/wifi_signal.h \
@@ -119,15 +119,15 @@ SOURCES += \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
     sources/hardware/hardwarefactory.cpp \
-    sources/hardware/hardwarefactory_mock.cpp \
+    sources/hardware/mock/hardwarefactory_mock.cpp \
     sources/hardware/systemd.cpp \
     sources/hardware/systemservice.cpp \
-    sources/hardware/systemservice_mock.cpp \
+    sources/hardware/mock/systemservice_mock.cpp \
     sources/hardware/webserver_control.cpp \
     sources/hardware/webserver_lighttpd.cpp \
-    sources/hardware/webserver_mock.cpp \
+    sources/hardware/mock/webserver_mock.cpp \
     sources/hardware/wifi_control.cpp \
-    sources/hardware/wifi_mock.cpp \
+    sources/hardware/mock/wifi_mock.cpp \
     sources/entities/entities.cpp \
     sources/entities/entity.cpp \
     sources/entities/light.cpp \
@@ -163,11 +163,6 @@ linux {
             wpa_supplicant/src/common/wpa_ctrl.c \
             wpa_supplicant/src/utils/os_unix.c
 
-    } else {
-        HEADERS +=
-            sources/hardware/wifi_mock.h
-        SOURCES +=
-            sources/hardware/wifi_mock.cpp
     }
 
     HEADERS += \

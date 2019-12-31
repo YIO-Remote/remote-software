@@ -20,24 +20,21 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICEMOCK_H
-#define SYSTEMSERVICEMOCK_H
+#include <QLoggingCategory>
+#include <QtDebug>
 
-#include "systemservice.h"
+#include "systemservice_mock.h"
 
-/**
- * @brief A mock implementation of the SystemService interface for unsupported platforms.
- */
-class SystemServiceMock : public SystemService
-{
-    Q_OBJECT
-public:
-    SystemServiceMock(QObject *parent = nullptr);
+static Q_LOGGING_CATEGORY(CLASS_LC, "SysSrvMock");
 
-    // SystemService interface
-public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
-};
+SystemServiceMock::SystemServiceMock(QObject *parent) : SystemService(parent) { qCDebug(CLASS_LC) << Q_FUNC_INFO; }
 
-#endif // SYSTEMSERVICEMOCK_H
+bool SystemServiceMock::startService(SystemServiceName serviceName) {
+    qCDebug(CLASS_LC) << "start service:" << serviceName;
+    return true;
+}
+
+bool SystemServiceMock::stopService(SystemServiceName serviceName) {
+    qCDebug(CLASS_LC) << "stop service:" << serviceName;
+    return true;
+}

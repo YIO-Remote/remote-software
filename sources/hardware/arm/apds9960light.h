@@ -22,10 +22,10 @@
 
 #pragma once
 
-#include <cassert>
-
 #include <QObject>
 #include <QtDebug>
+
+#include <cassert>
 
 #include "../lightsensor.h"
 #include "apds9960.h"
