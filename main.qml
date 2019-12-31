@@ -385,13 +385,12 @@ ApplicationWindow {
             Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
 
-        onStatusChanged: if (loader_main.status == Loader.Ready /*&& loadingScreen.item*/) {
-                             //                             loadingScreen.item.state = "loaded";
+        onStatusChanged: if (loader_main.status == Loader.Ready) {
                              loader_main.item.onItemsLoadedChanged.connect(onLoadingCompleted);
                          }
 
         function onLoadingCompleted() {
-            if (loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count)
+            if (loadingScreen.item && loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count)
                 console.debug("Setting loading screen to loaded");
                 loadingScreen.item.state = "loaded";
         }
