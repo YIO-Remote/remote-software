@@ -48,7 +48,7 @@ Item {
                 if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
                     var t = targetTemperature-0.5
                     targetTemperature = t;
-                    obj.cursorDown();
+                    obj.setTargetTemperature(targetTemperature);
                 }
                 break;
             }
