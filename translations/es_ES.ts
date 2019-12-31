@@ -146,22 +146,22 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="52"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Entrada</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="62"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Info</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="72"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menús</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="82"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Guía</translation>
     </message>
   </context>
   <context>
@@ -169,17 +169,17 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="201"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Apagar</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="201"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Apagar</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="213"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Color</translation>
     </message>
   </context>
   <context>
@@ -187,12 +187,12 @@
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="171"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Apagar</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="171"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Apagar</translation>
     </message>
   </context>
   <context>
@@ -200,7 +200,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="94"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Mis listas</translation>
     </message>
   </context>
   <context>
@@ -209,41 +209,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="99"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="151"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Buscar preguntas y respuestas</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="216"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Búsquedas recientes</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="227"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Limpio</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="418"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Álbum</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="358"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="420"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Pistas:</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="360"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="422"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Artista</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="362"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="424"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Listas</translation>
     </message>
   </context>
   <context>
@@ -251,12 +251,12 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="107"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Apagar</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="107"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Apagar</translation>
     </message>
   </context>
   <context>
@@ -273,7 +273,7 @@
       <location filename="../basic_ui/ContextMenu.qml" line="129"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="114"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Cancelar</translation>
     </message>
   </context>
   <context>
@@ -337,12 +337,12 @@
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Independiente</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Tiempo</translation>
     </message>
   </context>
   <context>
@@ -351,7 +351,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="30"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Añadida a favoritas</translation>
     </message>
   </context>
   <context>
@@ -359,12 +359,12 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="45"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Desconectado</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="146"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Activada</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="182"/>
