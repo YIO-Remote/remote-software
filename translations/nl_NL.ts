@@ -111,32 +111,32 @@
       <translation>Menu</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="301"/>
+      <location filename="../components/climate/ui/Card.qml" line="327"/>
       <source>Turn off</source>
       <translation>Uitschakelen</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="301"/>
+      <location filename="../components/climate/ui/Card.qml" line="327"/>
       <source>Turn on</source>
       <translation>Inschakelen</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="314"/>
+      <location filename="../components/climate/ui/Card.qml" line="340"/>
       <source>Mode</source>
       <translation>Modus</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="322"/>
+      <location filename="../components/climate/ui/Card.qml" line="350"/>
       <source>Off</source>
       <translation type="unfinished">Off</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="324"/>
+      <location filename="../components/climate/ui/Card.qml" line="356"/>
       <source>Heat</source>
       <translation type="unfinished">Heat</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="326"/>
+      <location filename="../components/climate/ui/Card.qml" line="362"/>
       <source>Cool</source>
       <translation type="unfinished">Cool</translation>
     </message>
@@ -271,7 +271,7 @@
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="129"/>
-      <location filename="../components/climate/ui/ContextMenu.qml" line="114"/>
+      <location filename="../components/climate/ui/ContextMenu.qml" line="115"/>
       <source>Cancel</source>
       <translation type="unfinished">Cancel</translation>
     </message>
