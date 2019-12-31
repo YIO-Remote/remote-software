@@ -128,17 +128,17 @@
     <message>
       <location filename="../components/climate/ui/Card.qml" line="322"/>
       <source>Off</source>
-      <translation type="unfinished">Off</translation>
+      <translation>Ki</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="324"/>
       <source>Heat</source>
-      <translation type="unfinished">Heat</translation>
+      <translation>Fűtés</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="326"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Hűtés</translation>
     </message>
   </context>
   <context>
