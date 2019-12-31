@@ -125,6 +125,21 @@
       <source>Mode</source>
       <translation>Modus</translation>
     </message>
+    <message>
+      <location filename="../components/climate/ui/Card.qml" line="322"/>
+      <source>Off</source>
+      <translation type="unfinished">Off</translation>
+    </message>
+    <message>
+      <location filename="../components/climate/ui/Card.qml" line="324"/>
+      <source>Heat</source>
+      <translation type="unfinished">Heat</translation>
+    </message>
+    <message>
+      <location filename="../components/climate/ui/Card.qml" line="326"/>
+      <source>Cool</source>
+      <translation type="unfinished">Cool</translation>
+    </message>
   </context>
   <context>
     <name>CardButtons</name>
