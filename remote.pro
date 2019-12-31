@@ -55,6 +55,7 @@ HEADERS += \
     sources/launcher.h \
     sources/hardware/display_control.h \
     sources/logger.h \
+    sources/standbycontrol.h \
     sources/translation.h \
     sources/hardware/touchdetect.h \
     sources/hardware/proximity_gesture_control.h \
@@ -129,6 +130,7 @@ SOURCES += \
     sources/notifications.cpp \
     sources/entities/mediaplayer.cpp \
     sources/bluetootharea.cpp \
+    sources/standbycontrol.cpp \
     sources/utils.cpp \
     sources/yioapi.cpp
 

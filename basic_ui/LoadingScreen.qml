@@ -24,6 +24,7 @@ import QtQuick 2.11
 
 Rectangle {
     id: loadingScreenComp
+    objectName: "loadingScreen"
     anchors.fill: parent
     color: "#00000000"
 
