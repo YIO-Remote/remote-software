@@ -319,11 +319,11 @@ Item {
             var list = [];
 
             if (obj.isSupported(Climate.OFF))
-                list.push("Off");
+                list.push(qsTr("Off")+translateHandler.emptyString);
             if (obj.isSupported(Climate.F_HEAT))
-                list.push("Heat");
+                list.push(qsTr("Heat")+translateHandler.emptyString);
             if (obj.isSupported(Climate.F_COOL))
-                list.push("Cool");
+                list.push(qsTr("Cool")+translateHandler.emptyString);
 
             contextMenuLoader.setSource("qrc:/components/climate/ui/ContextMenu.qml", { "width": climateCard.width, "climateObj": obj, "list": list })
         }
