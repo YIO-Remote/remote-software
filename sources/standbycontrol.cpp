@@ -22,7 +22,7 @@
 
 #include "standbycontrol.h"
 
-#include "integrations/integration.h"
+#include "integrations/integrationinterface.h"
 
 StandbyControl *StandbyControl::s_instance = nullptr;
 
@@ -104,7 +104,7 @@ void StandbyControl::onSecondsTimerTimeout() {
     if (m_elapsedTime == m_wifiOffTime && m_wifiOffTime != 0 && m_mode == STANDBY /*&& battery_averagepower <= 0*/) {
         // disconnect integrations
         for (int i = 0; i < m_integrations->list().length(); i++) {
-            Integration *integrationObj = qobject_cast<Integration *>(m_integrations->list().at(i));
+            IntegrationInterface *integrationObj = qobject_cast<IntegrationInterface *>(m_integrations->list().at(i));
             integrationObj->disconnect();
         }
 
