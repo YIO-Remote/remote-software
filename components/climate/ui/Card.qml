@@ -29,6 +29,32 @@ Item {
             }
         }
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: buttonHandler
+
+        onButtonPress: {
+            switch (button) {
+            case "dpad up":
+                if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
+                    var t = targetTemperature+0.5
+                    targetTemperature = t;
+                    obj.setTargetTemperature(targetTemperature);
+                }
+                break;
+            case "dpad down":
+                if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
+                    var t = targetTemperature-0.5
+                    targetTemperature = t;
+                    obj.setTargetTemperature(targetTemperature);
+                }
+                break;
+            }
+
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
