@@ -85,12 +85,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Verwijder uit favorieten</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Toevoegen aan favorieten</translation>
     </message>
   </context>
   <context>
@@ -98,32 +98,32 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="231"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Dempen</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="265"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Terug</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="300"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menu</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="301"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Uitschakelen</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="301"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Inschakelen</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="314"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Modus</translation>
     </message>
   </context>
   <context>
@@ -510,7 +510,7 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="184"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Gebruik de web configuratie tool onder settings om uw profielen te bewerken.</translation>
     </message>
   </context>
   <context>

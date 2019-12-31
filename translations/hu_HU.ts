@@ -77,7 +77,7 @@
     <message>
       <location filename="../components/climate/ui/Button.qml" line="43"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Hőmérséklet: </translation>
     </message>
   </context>
   <context>
@@ -85,12 +85,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Eltávolítás a kedvencekből</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Hozzáadás a kedvencekhez</translation>
     </message>
   </context>
   <context>
@@ -98,32 +98,32 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="231"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Némít</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="265"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Vissza</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="300"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menü</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="301"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Kikapcsolás</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="301"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Bekapcsolás</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="314"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Mód</translation>
     </message>
   </context>
   <context>
@@ -131,22 +131,22 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="52"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Bemenet</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="62"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Infó</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="72"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menü</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="82"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Program</translation>
     </message>
   </context>
   <context>
@@ -154,17 +154,17 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="201"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Kikapcsolás</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="201"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Bekapcsolás</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="213"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Szín</translation>
     </message>
   </context>
   <context>
@@ -172,12 +172,12 @@
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="171"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Kikapcsolás</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="171"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Bekapcsolás</translation>
     </message>
   </context>
   <context>
@@ -185,7 +185,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="94"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Lejátszási listáim</translation>
     </message>
   </context>
   <context>
@@ -194,41 +194,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="99"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="151"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Keresés</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="216"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Keresési előzmények</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="227"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Törlés</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="418"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Albumok</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="358"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="420"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Számok</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="360"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="422"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Előadók</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="362"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="424"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Lejátszási listák</translation>
     </message>
   </context>
   <context>
@@ -236,12 +236,12 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="107"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Kikapcsolás</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="107"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Bekapcsolás</translation>
     </message>
   </context>
   <context>
@@ -258,7 +258,7 @@
       <location filename="../basic_ui/ContextMenu.qml" line="129"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="114"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Mégse</translation>
     </message>
   </context>
   <context>
@@ -322,12 +322,12 @@
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Távirányító</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Klíma</translation>
     </message>
   </context>
   <context>
@@ -336,7 +336,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="30"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Kedvencek</translation>
     </message>
   </context>
   <context>
@@ -344,27 +344,27 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="45"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Szétkapcsolva</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="146"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Kapcsolódás</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="182"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Kapcsolat bontása</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="212"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrációk</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="253"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Új hozzáadása</translation>
     </message>
   </context>
   <context>
@@ -401,7 +401,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Média</translation>
     </message>
   </context>
   <context>
@@ -505,12 +505,12 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profilok</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="184"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>A profiljaid szerkesztéséhez használd a web konfigurációs eszközt a beállításokban.</translation>
     </message>
   </context>
   <context>
