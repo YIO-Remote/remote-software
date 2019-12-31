@@ -24,41 +24,47 @@
 
 #include <QObject>
 
-/// This class is a work arround to make the feature enum available in the interface and in the specifc entity class.
-/// Qt cannot create metadata describing an enum contained in the interface
-/// In the specific entity class it is only needed to generically convert the feature enum to a string and back
-class BlindDef : public QObject {
+class ClimateDef : public QObject {
     Q_OBJECT
  public:
-    enum Attributes { STATE, POSITION };
+    enum Attributes { STATE, TEMPERATURE, TARGET_TEMPERATURE, TEMPERATURE_UNIT, TEMPERATURE_MAX, TEMPERATURE_MIN };
     Q_ENUM(Attributes)
 
-    enum States {
-        CLOSED = 0,
-        OPEN = 1,
-        MOVING = 2
-    };  // maybe some integration can deliver MOVING, or we simulate by the commands
+    enum States { OFF = 0, ON = 1, HEAT = 2, COOL = 3 };
     Q_ENUM(States)
 
-    enum Features { F_OPEN, F_CLOSE, F_STOP, F_POSITION };
+    enum Features {
+        F_TEMPERATURE,
+        F_TARGET_TEMPERATURE,
+        F_TEMPERATURE_MAX,
+        F_TEMPERATURE_MIN,
+        F_HVAC_MODES,
+        F_OFF,
+        F_HEAT,
+        F_COOL
+    };
     Q_ENUM(Features)
 
-    enum Commands { C_OPEN, C_CLOSE, C_STOP, C_POSITION };
+    enum Commands { C_OFF, C_ON, C_HEAT, C_COOL, C_TARGET_TEMPERATURE };
     Q_ENUM(Commands)
 
-    explicit BlindDef(QObject *parent = nullptr) : QObject(parent) {}
+    explicit ClimateDef(QObject* parent = nullptr) : QObject(parent) {}
 };
 
 /// This interface allows integrations to access the specific attributes
 /// You get this interface from the generic entity using getSpecificInterface
-class BlindInterface {
+class ClimateInterface {
  public:
-    virtual ~BlindInterface();
+    virtual ~ClimateInterface();
 
-    virtual int position() = 0;
+    virtual double  temperature() = 0;
+    virtual double  targetTemperature() = 0;
+    virtual QString temperatureUnit() = 0;
+    virtual double  temperatureMax() = 0;
+    virtual double  temperatureMin() = 0;
 };
 
 QT_BEGIN_NAMESPACE
-#define BlindInterface_iid "YIO.BlindInterface"
-Q_DECLARE_INTERFACE(BlindInterface, BlindInterface_iid)
+#define ClimateInterface_iid "YIO.ClimateInterface"
+Q_DECLARE_INTERFACE(ClimateInterface, ClimateInterface_iid)
 QT_END_NAMESPACE

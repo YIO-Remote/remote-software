@@ -137,7 +137,8 @@ Item {
 
             Component.onCompleted: {
                 var e = entities.get(config.groups[groupID].entities[index]);
-                this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
+                if (e)
+                    this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
             }
         }
     }

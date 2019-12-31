@@ -207,7 +207,6 @@
         <file>basic_ui/ProgressCircle.qml</file>
         <file>components/ButtonBase.qml</file>
         <file>components/remote/ui/ir/Card.qml</file>
-        <file>components/remote/ui/ir/Group.qml</file>
         <file>basic_ui/CustomImageLoader.qml</file>
         <file>components/media_player/ui/Card.qml</file>
         <file>components/media_player/ui/CardHome.qml</file>
@@ -217,5 +216,11 @@
         <file>basic_ui/ContextMenu.qml</file>
         <file>basic_ui/Tag.qml</file>
         <file>components/media_player/ui/CardPlaylists.qml</file>
+        <file>components/remote/ui/ir/CardChannels.qml</file>
+        <file>components/remote/ui/ir/CardButtons.qml</file>
+        <file>components/remote/ui/ir/Button.qml</file>
+        <file>components/climate/ui/Button.qml</file>
+        <file>components/climate/ui/Card.qml</file>
+        <file>components/climate/ui/ContextMenu.qml</file>
     </qresource>
 </RCC>

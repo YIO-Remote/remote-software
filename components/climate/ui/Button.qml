@@ -20,54 +20,39 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#pragma once
+import QtQuick 2.11
+//import QtQuick.Controls 2.5
+//import QtGraphicalEffects 1.0
 
-#include <QFile>
-#include <QObject>
-#include <QTextStream>
+import "qrc:/scripts/helper.js" as JSHelper
+import "qrc:/components" as Comp
 
-class FileIO : public QObject {
-    Q_OBJECT
+Comp.ButtonBase {
+    id: climateButton
+    icon: "\uE913"
+    cardLoader.source: "qrc:/components/climate/ui/Card.qml"
 
- public slots:
-    bool write(const QString& source, const QString& data) {
-        if (source.isEmpty()) return false;
+    // override default settings
+    title.anchors.verticalCenterOffset: -15
 
-        QFile file(source);
-        if (!file.open(QFile::WriteOnly | QFile::Truncate)) return false;
-
-        QTextStream out(&file);
-        out << data;
-        file.close();
-        return true;
+    // additional UI elements
+    Text {
+        id: info
+        color: colorText
+        opacity: 0.5
+        text: qsTr("Temperature: ") + obj.temperature + obj.temperatureUnit + translateHandler.emptyString
+        elide: Text.ElideRight
+        wrapMode: Text.WordWrap
+        width: title.width
+        anchors.left: parent.left
+        anchors.leftMargin: title.x
+        anchors.top: parent.top
+        anchors.topMargin: title.y + title.height
+        font.family: "Open Sans"
+        font.weight: Font.Normal
+        font.pixelSize: 20
+        lineHeight: 1
+        z: climateButton.state == "open" ? (cardLoader.z - 1) : (cardLoader.z + 1)
     }
+}
 
-    QString read(const QString& source) {
-        QString returnText;
-
-        QFile file(source);
-        if (!file.exists()) {
-            return QString("");
-        }
-
-        if (file.open(QFile::ReadOnly)) {
-            QTextStream stream(&file);
-            returnText = stream.readAll();
-        }
-
-        return returnText;
-    }
-
-    bool exists(const QString& source) {
-        QFile file(source);
-
-        if (file.exists()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
- public:
-    FileIO() {}
-};

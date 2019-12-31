@@ -19,9 +19,7 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
-#ifndef YIOAPI_H_
-#define YIOAPI_H_
+#pragma once
 
 #include <QCryptographicHash>
 #include <QLoggingCategory>
@@ -113,5 +111,3 @@ class YioAPI : public YioAPIInterface {
     // name as string, <ip address as string, mdns name as string>  "192.169.100.1", 496
     QMap<QString, QVariantMap> m_discoveredServices;
 };
-
-#endif  // YIOAPI_H_

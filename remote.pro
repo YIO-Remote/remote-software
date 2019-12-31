@@ -38,6 +38,8 @@ HEADERS += \
     sources/config.h \
     sources/configinterface.h \
     sources/entities/blindinterface.h \
+    sources/entities/climate.h \
+    sources/entities/climateinterface.h \
     sources/entities/entityinterface.h \
     sources/entities/lightinterface.h \
     sources/entities/mediaplayerinterface.h \
@@ -108,6 +110,7 @@ SOURCES += \
     components/media_player/sources/searchmodel_mediaplayer.cpp \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
+    sources/entities/climate.cpp \
     sources/entities/remote.cpp \
     sources/entities/weather.cpp \
     sources/integrations/integrations.cpp \
@@ -214,6 +217,7 @@ SOURCES = main.qml \
           components/weather/ui/*.qml \
           components/remote/ui/*.qml \
           components/media_player/ui/*.qml \
+          components/climate/ui/*.qml \
           sources/proximity_gesture_control.h
 }
 
