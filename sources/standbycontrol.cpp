@@ -45,6 +45,9 @@ StandbyControl::StandbyControl(QObject *parent) : QObject(parent), m_log("STANDB
     Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
 
     // load configuration
+    loadSettings();
+    // connect to config change signals
+    connect(m_config, &Config::settingsChanged, this, &StandbyControl::loadSettings);
 
     // start timer that counts every seconds
     m_secondsTimer->setInterval(1000);
@@ -123,4 +126,10 @@ void StandbyControl::onSecondsTimerTimeout() {
         loadingScreen->setProperty("source", "qrc:/basic_ui/ClosingScreen.qml");
         loadingScreen->setProperty("active", true);
     }
+}
+
+void StandbyControl::loadSettings() {
+    QVariantMap settings = m_config->getSettings();
+    m_wifiOffTime = settings.value("wifitime").toInt();
+    m_shutDownTime = settings.value("shutdowntime").toInt();
 }

@@ -64,10 +64,10 @@ class StandbyControl : public QObject {
 
     int m_mode;
 
-    int m_displayDimTime = 20;  // seconds
-    int m_standByTime = 30;     // seconds
-    int m_wifiOffTime = 0;      // seconds, 0 means never
-    int m_shutDownTime = 0;     // seconds, 0 means never
+    int m_displayDimTime = 20;  // seconds, not changeable by user
+    int m_standByTime = 30;     // seconds, not changeable by user
+    int m_wifiOffTime = 0;      // seconds, 0 means never, loaded from config.settings
+    int m_shutDownTime = 0;     // seconds, 0 means never, loaded from config.settings
 
     int m_screenOnTime = 0;   // seconds
     int m_screenOffTime = 0;  // seconds
@@ -77,4 +77,5 @@ class StandbyControl : public QObject {
 
  private slots:
     void onSecondsTimerTimeout();
+    void loadSettings();
 };
