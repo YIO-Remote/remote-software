@@ -344,13 +344,24 @@ Item {
             haptic.playEffect("click");
             var list = [];
 
-            if (obj.isSupported(Climate.OFF))
-                list.push(qsTr("Off")+translateHandler.emptyString);
-            if (obj.isSupported(Climate.F_HEAT))
-                list.push(qsTr("Heat")+translateHandler.emptyString);
-            if (obj.isSupported(Climate.F_COOL))
-                list.push(qsTr("Cool")+translateHandler.emptyString);
-
+            if (obj.isSupported(Climate.OFF)) {
+                var item = {}
+                item["original"] = "Off";
+                item["translated"] = qsTr("Off")+translateHandler.emptyString;
+                list.push(item);
+            }
+            if (obj.isSupported(Climate.F_HEAT)) {
+                item = {}
+                item["original"] = "Heat";
+                item["translated"] = qsTr("Heat")+translateHandler.emptyString;
+                list.push(item);
+            }
+            if (obj.isSupported(Climate.F_COOL)) {
+                item = {}
+                item["original"] = "Cool";
+                item["translated"] = qsTr("Cool")+translateHandler.emptyString;
+                list.push(item);
+            }
             contextMenuLoader.setSource("qrc:/components/climate/ui/ContextMenu.qml", { "width": climateCard.width, "climateObj": obj, "list": list })
         }
     }
