@@ -77,7 +77,7 @@
     <message>
       <location filename="../components/climate/ui/Button.qml" line="43"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Temperatura: </translation>
     </message>
   </context>
   <context>
@@ -85,12 +85,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Eliminar de favoritos</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="331"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Añadir a Favoritos</translation>
     </message>
   </context>
   <context>
@@ -98,32 +98,32 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="231"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Desactivar audio</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="265"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Atrás</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="300"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menús</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="301"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>¿Apagar?</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="301"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Apagar</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="314"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Modo</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="322"/>
