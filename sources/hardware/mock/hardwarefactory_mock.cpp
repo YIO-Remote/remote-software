@@ -23,6 +23,7 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
+#include "batterycharger_mock.h"
 #include "batteryfuelgauge_mock.h"
 #include "displaycontrol_mock.h"
 #include "gesturesensor_mock.h"
@@ -60,6 +61,11 @@ WebServerControl *HardwareFactoryMock::getWebServerControl() {
 
 DisplayControl *HardwareFactoryMock::getDisplayControl() {
     static DisplayControlMock singleton;
+    return &singleton;
+}
+
+BatteryCharger *HardwareFactoryMock::getBatteryCharger() {
+    static BatteryChargerMock singleton;
     return &singleton;
 }
 

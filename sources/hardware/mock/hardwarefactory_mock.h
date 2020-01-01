@@ -38,6 +38,7 @@ class HardwareFactoryMock : public HardwareFactory {
     SystemService *   getSystemService() override;
     WebServerControl *getWebServerControl() override;
     DisplayControl *  getDisplayControl() override;
+    BatteryCharger *  getBatteryCharger() override;
     BatteryFuelGauge *getBatteryFuelGauge() override;
     InterruptHandler *getInterruptHandler() override;
     HapticMotor *     getHapticMotor() override;
