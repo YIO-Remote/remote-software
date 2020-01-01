@@ -44,6 +44,8 @@ HEADERS += \
     sources/entities/lightinterface.h \
     sources/entities/mediaplayerinterface.h \
     sources/entities/remote.h \
+    sources/entities/switch.h \
+    sources/entities/switchinterface.h \
     sources/entities/weather.h \
     sources/entities/weatherinterface.h \
     sources/fileio.h \
@@ -103,6 +105,7 @@ SOURCES += \
     sources/config.cpp \
     sources/entities/climate.cpp \
     sources/entities/remote.cpp \
+    sources/entities/switch.cpp \
     sources/entities/weather.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
