@@ -31,8 +31,8 @@ Rectangle {
     width: parent.width-20
     height: 104 // 244
     x: 10
-    radius: cornerRadius
-    color: type ? colorRed : colorLight
+    radius: Style.cornerRadius
+    color: type ? Style.colorRed : Style.colorLight
 
     Behavior on opacity {
         NumberAnimation {
@@ -197,10 +197,10 @@ Rectangle {
             opacity: notification.x == 100 ? 1 : 0
 
             ColorOverlay {
-                visible: !darkMode
+                visible: !Style.darkMode
                 anchors.fill: parent
                 source: parent
-                color: colorText
+                color: Style.colorText
                 antialiasing: true
             }
 
@@ -223,7 +223,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 10
 
-        color: colorText
+        color: Style.colorText
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
@@ -242,7 +242,7 @@ Rectangle {
         anchors.top: notificationText.bottom
         anchors.topMargin: 10
 
-        color: colorText
+        color: Style.colorText
         font.family: "Open Sans"
         font.weight: Font.Normal
         font.pixelSize: 20
@@ -307,10 +307,10 @@ Rectangle {
         anchors.topMargin: 20
 
         ColorOverlay {
-            visible: !darkMode
+            visible: !Style.darkMode
             anchors.fill: parent
             source: parent
-            color: colorText
+            color: Style.colorText
             antialiasing: true
         }
     }

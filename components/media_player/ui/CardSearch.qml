@@ -27,7 +27,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     width: parent.width
     height: parent.height
-    color: colorDark
+    color: Style.colorDark
 
     function onSearch() {
         obj.search(searchTextField.text);
@@ -116,7 +116,7 @@ Rectangle {
 
                 Text {
                     id: title
-                    color: colorText
+                    color: Style.colorText
                     text: qsTr("Search") + translateHandler.emptyString
                     anchors.left: parent.left
                     anchors.leftMargin: 30
@@ -134,12 +134,12 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.topMargin: 100
                     anchors.horizontalCenter: parent.horizontalCenter
-                    color: colorText
-                    radius: cornerRadius
+                    color: Style.colorText
+                    radius: Style.cornerRadius
 
                     Text {
                         id: searchIcon
-                        color: colorBackground
+                        color: Style.colorBackground
                         text: "\uE90C"
                         renderType: Text.NativeRendering
                         width: 70
@@ -170,13 +170,13 @@ Rectangle {
                         anchors.leftMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
                         placeholderText: qsTr("Search") + translateHandler.emptyString
-                        color: colorBackground
+                        color: Style.colorBackground
                         font.family: "Open Sans"
                         font.weight: Font.Normal
                         font.pixelSize: 27
 
                         background: Rectangle {
-                            color: colorBackgroundTransparent
+                            color: Style.colorBackgroundTransparent
                             border.width: 0
                         }
 
@@ -233,7 +233,7 @@ Rectangle {
 
                     Text {
                         id: recentSearchesTitle
-                        color: colorText
+                        color: Style.colorText
                         text: qsTr("Recent searches") + translateHandler.emptyString
                         anchors.left: parent.left
                         anchors.top: parent.top
@@ -243,7 +243,7 @@ Rectangle {
                     }
 
                     Text {
-                        color: colorText
+                        color: Style.colorText
                         opacity: 0.5
                         text: qsTr("Clear") + translateHandler.emptyString
                         anchors.right: parent.right
@@ -278,7 +278,7 @@ Rectangle {
                             height: 60
 
                             Text {
-                                color: colorText
+                                color: Style.colorText
                                 text: searchString
                                 font.family: "Open Sans"
                                 font.pixelSize: 25
@@ -319,7 +319,7 @@ Rectangle {
 
                     Text {
                         id: searchResultsTitle
-                        color: colorText
+                        color: Style.colorText
                         anchors.left: parent.left
                         anchors.top: parent.top
                         font.family: "Open Sans Bold"
@@ -444,7 +444,7 @@ Rectangle {
                                     else if (title === "playlists")
                                         return qsTr("Playlists") + translateHandler.emptyString
                                 }
-                                color: colorText
+                                color: Style.colorText
                                 anchors.left: parent.left
                                 anchors.top: parent.top
                                 font.family: "Open Sans"
@@ -512,7 +512,7 @@ Rectangle {
                             id: albumImage
                             width: 160
                             height: 160
-                            color: colorBackground
+                            color: Style.colorBackground
 
                             Image {
                                 source: item_image
@@ -528,7 +528,7 @@ Rectangle {
                             elide: Text.ElideRight
                             width: albumImage.width
                             wrapMode: Text.NoWrap
-                            color: colorText
+                            color: Style.colorText
                             anchors.left: parent.left
                             anchors.top: albumImage.bottom
                             anchors.topMargin: 20
@@ -543,7 +543,7 @@ Rectangle {
                             elide: Text.ElideRight
                             width: albumImage.width
                             wrapMode: Text.NoWrap
-                            color: colorText
+                            color: Style.colorText
                             opacity: 0.6
                             anchors.left: parent.left
                             anchors.top: albumTitleText.bottom
@@ -605,7 +605,7 @@ Rectangle {
                             elide: Text.ElideRight
                             width: itemFlickable.width-60-albumImage.width-20-60
                             wrapMode: Text.NoWrap
-                            color: colorText
+                            color: Style.colorText
                             anchors.left: albumImage.right
                             anchors.leftMargin: 20
                             anchors.top: albumImage.top
@@ -622,7 +622,7 @@ Rectangle {
                             visible: item_subtitle == "" ? false : true
                             width: albumTitleText.width
                             wrapMode: Text.NoWrap
-                            color: colorText
+                            color: Style.colorText
                             opacity: 0.6
                             anchors.left: albumTitleText.left
                             anchors.top: albumTitleText.bottom
@@ -665,7 +665,7 @@ Rectangle {
 
             Text {
                 id: backButton
-                color: colorText
+                color: Style.colorText
                 text: "\uE917"
                 renderType: Text.NativeRendering
                 width: 70

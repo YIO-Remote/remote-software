@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 import Launcher 1.0
 
@@ -48,11 +49,11 @@ Item {
         Rectangle {
             width: parent.width
             height: 240
-            color: colorBackground
+            color: Style.colorBackground
 
             Text {
                 id: titleText
-                color: colorText
+                color: Style.colorText
                 text: qsTr("Settings") + translateHandler.emptyString
                 anchors.centerIn: parent
                 font.family: "Open Sans"

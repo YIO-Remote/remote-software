@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -64,7 +65,7 @@ Item {
         height: 80
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: qsTr(config.groups[groupID].name) + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20

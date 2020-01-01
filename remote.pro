@@ -135,7 +135,6 @@ SOURCES += \
 RESOURCES += qml.qrc \
     images.qrc \
     keyboard.qrc \
-    style.qrc \
     translations.qrc
 
 # === platform specific devices =======================================

@@ -22,7 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-
+import Style 1.0
 import "qrc:/scripts/helper.js" as JSHelper
 
 Item {
@@ -43,7 +43,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Languages") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -56,8 +56,8 @@ Item {
         id: section
         width: parent.width
         height: 74
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
@@ -89,11 +89,11 @@ Item {
                 Rectangle {
                 width: parent.width
                 height: 74
-                color: colorBackgroundTransparent
+                color: Style.colorBackgroundTransparent
 
                 Text {
                     text: translations[index].name
-                    color: colorText
+                    color: Style.colorText
                     anchors.left: parent.left
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
@@ -122,7 +122,7 @@ Item {
                 }
             }
 
-            highlight: Rectangle { color: section.height == 300 ? colorHighlight1 : colorBackgroundTransparent ; radius: cornerRadius }
+            highlight: Rectangle { color: section.height == 300 ? Style.colorHighlight1 : Style.colorBackgroundTransparent ; radius: Style.cornerRadius }
         }
     }
 }

@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 Item {
     width: 66
@@ -42,8 +43,8 @@ Item {
             y: (button.height - height) / 2
             width: 26
             height: 26
-            radius: cornerRadius
-            color: button.checked ? colorText : colorLight
+            radius: Style.cornerRadius
+            color: button.checked ? Style.colorText : Style.colorLight
 
             Behavior on x {
                 enabled: !button.pressed
@@ -52,10 +53,10 @@ Item {
         }
 
         background: Rectangle {
-            radius: cornerRadius+2
-            color: button.checked ? colorHighlight1 : colorDark
+            radius: Style.cornerRadius+2
+            color: button.checked ? Style.colorHighlight1 : Style.colorDark
             border.width: 2
-            border.color: button.checked ? colorHighlight1 : colorLight
+            border.color: button.checked ? Style.colorHighlight1 : Style.colorLight
         }
     }
 

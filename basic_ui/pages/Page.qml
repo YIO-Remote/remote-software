@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 Flickable {
     id: itemFlickable
@@ -96,7 +97,7 @@ Flickable {
         Rectangle {
             id: comp
             anchors.fill: parent
-            color: colorBackground
+            color: Style.colorBackground
 
             Image {
                 id: bgImage
@@ -117,8 +118,8 @@ Flickable {
                         start: Qt.point(0, 0)
                         end: Qt.point(0, 80)
                         gradient: Gradient {
-                            GradientStop { position: 0.2; color: colorBackgroundTransparent }
-                            GradientStop { position: 1.0; color: colorBackground }
+                            GradientStop { position: 0.2; color: Style.colorBackgroundTransparent }
+                            GradientStop { position: 1.0; color: Style.colorBackground }
                         }
                     }
             }
@@ -149,7 +150,7 @@ Flickable {
         Rectangle {
             id: overlay
             anchors.fill: noise
-            color: colorBackground
+            color: Style.colorBackground
             opacity: 0.5
         }
     }
@@ -161,7 +162,7 @@ Flickable {
 
         Text {
             id: titleText
-            color: colorText
+            color: Style.colorText
             text: title
             anchors.centerIn: parent
             font.family: "Open Sans"

@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/scripts/softwareupdate.js" as JSUpdate
@@ -37,7 +38,7 @@ Item {
 
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Software update") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -50,15 +51,15 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 50 //softwareUpdateText.height + smallText.height + 60
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: softwareUpdateText
-            color: colorText
+            color: Style.colorText
             text: qsTr("Auto update") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -89,7 +90,7 @@ Item {
 
         Text {
             id: smallText
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: qsTr("Automatically look for updates and update when a new software version is available.\nUpdates are installed between 03.00 am and 05.00 am.") + translateHandler.emptyString
             wrapMode: Text.WordWrap
@@ -108,14 +109,14 @@ Item {
             id: line
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: smallText.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: uptodateText
-            color: colorText
+            color: Style.colorText
             text: updateAvailable ? qsTr("New software is available.\nYIO remote ") + _new_version + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
@@ -131,7 +132,7 @@ Item {
 
         Text {
             id: uptodateTextsmall
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: updateAvailable? qsTr("Installed version: YIO Remote ") + _current_version + translateHandler.emptyString : qsTr("YIO Remote ") + _current_version
             wrapMode: Text.WordWrap
@@ -170,7 +171,7 @@ Item {
             id: line2
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: updateAvailable ? updateButton.bottom : uptodateTextsmall.bottom
             anchors.topMargin: 30
         }

@@ -32,7 +32,7 @@ Rectangle {
     id: cardRemote
     width: parent.width
     height: parent.height
-    color: colorDark
+    color: Style.colorDark
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
@@ -119,7 +119,7 @@ Rectangle {
 
         Text {
             id: title
-            color: colorText
+            color: Style.colorText
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
@@ -135,7 +135,7 @@ Rectangle {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: icon.text
             width: 85
             height: 85
@@ -194,7 +194,7 @@ Rectangle {
             width: 8
             height: 8
             radius: height/2
-            color: colorText
+            color: Style.colorText
             opacity: index == pagesSwipeView.currentIndex ? 1 : 0.3
         }
     }
@@ -214,7 +214,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
-                color: colorText
+                color: Style.colorText
                 text: "\uE91B"
                 width: 60
                 height: 60
@@ -226,7 +226,7 @@ Rectangle {
             }
 
             Text {
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 text: qsTr("Mute") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
@@ -248,7 +248,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
-                color: colorText
+                color: Style.colorText
                 text: "\uE91D"
                 width: 60
                 height: 60
@@ -260,7 +260,7 @@ Rectangle {
             }
 
             Text {
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 text: qsTr("Back") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
@@ -283,7 +283,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
-                color: colorText
+                color: Style.colorText
                 text: "\uE91C"
                 width: 60
                 height: 60
@@ -295,7 +295,7 @@ Rectangle {
             }
 
             Text {
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 text: qsTr("Menu") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter

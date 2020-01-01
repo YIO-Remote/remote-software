@@ -41,7 +41,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 40
 
-        color: colorText
+        color: Style.colorText
         verticalAlignment: Text.AlignVCenter
         font.family: "Open Sans"
         font.weight: Font.Normal

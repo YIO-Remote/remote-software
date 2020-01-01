@@ -86,7 +86,7 @@ Item {
             id: opacityMask
             width: miniMediaPlayer.width
             height: miniMediaPlayer.height
-            radius: miniMediaPlayer.state == "closed" ? 0 : cornerRadius
+            radius: miniMediaPlayer.state == "closed" ? 0 : Style.cornerRadius
 
             Behavior on radius {
                 NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
@@ -186,7 +186,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: colorBackground
+        color: Style.colorBackground
     }
 
     SwipeView {
@@ -356,7 +356,7 @@ Item {
 
                     Text {
                         id: title
-                        color: colorText
+                        color: Style.colorText
                         text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -370,7 +370,7 @@ Item {
 
                     Text {
                         id: artist
-                        color: colorText
+                        color: Style.colorText
                         text: entities.mediaplayersPlaying[index].mediaTitle
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -400,7 +400,7 @@ Item {
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 Text {
                     id: sourceText
-                    color: colorText
+                    color: Style.colorText
                     text: entities.mediaplayersPlaying[index].source
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
@@ -418,7 +418,7 @@ Item {
 
                 Text {
                     id: titleOpen
-                    color: colorText
+                    color: Style.colorText
                     text: entities.mediaplayersPlaying[index].mediaTitle
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -435,7 +435,7 @@ Item {
 
                 Text {
                     id: artistOpen
-                    color: colorText
+                    color: Style.colorText
                     text: entities.mediaplayersPlaying[index].mediaArtist
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -466,7 +466,7 @@ Item {
                     }
 
                     Text {
-                        color: colorText
+                        color: Style.colorText
                         text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         font.family: "Open Sans"
@@ -487,7 +487,7 @@ Item {
 
     Text {
         id: closeButton
-        color: colorText
+        color: Style.colorText
         text: "\uE916"
         renderType: Text.NativeRendering
         width: 70
@@ -525,7 +525,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE909"
             renderType: Text.NativeRendering
             width: 85
@@ -561,7 +561,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE905"
             renderType: Text.NativeRendering
             width: 85
@@ -578,7 +578,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE906"
             renderType: Text.NativeRendering
             width: 85
@@ -621,7 +621,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE904"
             renderType: Text.NativeRendering
             width: 85
@@ -657,7 +657,7 @@ Item {
             width: 8
             height: 8
             radius: height/2
-            color: colorText
+            color: Style.colorText
             opacity: index == mediaPlayers.currentIndex ? 1 : 0.3
         }
     }

@@ -36,7 +36,7 @@ Item {
 
         Text {
             id: title
-            color: colorText
+            color: Style.colorText
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
@@ -54,7 +54,7 @@ Item {
 
         Text {
             id: info
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: obj.source
             elide: Text.ElideRight
@@ -70,7 +70,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: icon.text
             width: 85
             height: 85
@@ -96,7 +96,7 @@ Item {
 
     Text {
         id: songTitle
-        color: colorText
+        color: Style.colorText
         text: obj.mediaTitle
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -115,7 +115,7 @@ Item {
 
     Text {
         id: artist
-        color: colorText
+        color: Style.colorText
         text: obj.mediaArtist
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -143,7 +143,7 @@ Item {
         Rectangle {
             width: parent.width*(obj.mediaProgress/obj.mediaDuration)
             height: parent.height
-            color: colorLine
+            color: Style.colorLine
 
             Behavior on width {
                 NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
@@ -163,7 +163,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE909"
             renderType: Text.NativeRendering
             width: 85
@@ -197,7 +197,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE905"
             renderType: Text.NativeRendering
             width: 85
@@ -214,7 +214,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE906"
             renderType: Text.NativeRendering
             width: 85
@@ -257,7 +257,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE904"
             renderType: Text.NativeRendering
             width: 85

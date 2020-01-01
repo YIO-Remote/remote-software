@@ -22,13 +22,14 @@
 
 import QtQuick 2.11
 import QtGraphicalEffects 1.0
+import Style 1.0
 import "qrc:/scripts/helper.js" as JSHelper
 
 Rectangle {
     id: chargingScreen
     width: parent.width
     height: parent.height
-    color: colorBackground
+    color: Style.colorBackground
 
     state: "hidden"
 
@@ -103,7 +104,7 @@ Rectangle {
             color: "#00000000"
             radius: 16
             border.width: 6
-            border.color: colorLine
+            border.color: Style.colorLine
         }
 
         // battery frame
@@ -113,9 +114,9 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             width: 151
             height: 218
-            color: colorBackground
+            color: Style.colorBackground
             border.width: 6
-            border.color: colorLine
+            border.color: Style.colorLine
             radius: 32
 
             // battery fill
@@ -125,7 +126,7 @@ Rectangle {
                 anchors.bottomMargin: 23
                 width: 106
                 height: battery_level*172
-                color: colorGreen
+                color: Style.colorGreen
                 radius: 8
             }
 
@@ -140,10 +141,10 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 ColorOverlay {
-                    visible: !darkMode
+                    visible: !Style.darkMode
                     anchors.fill: parent
                     source: parent
-                    color: colorText
+                    color: Style.colorText
                 }
             }
         }
@@ -151,7 +152,7 @@ Rectangle {
 
     Text {
         id: chargeText
-        color: colorText
+        color: Style.colorText
         text: Math.round(battery_level * 100) + qsTr("% Charged") + translateHandler.emptyString
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 230
@@ -166,7 +167,7 @@ Rectangle {
 
     Text {
         id: timeText
-        color: colorText
+        color: Style.colorText
         text: loader_main.item ? loader_main.item.statusBar.timeText.text : ""
         verticalAlignment: Text.AlignVCenter
         anchors.horizontalCenter: parent.horizontalCenter

@@ -28,16 +28,16 @@ Rectangle {
     width: 110
     height: 60
     radius: height/2
-    border.color: colorLight
+    border.color: Style.colorLight
     border.width: 2
-    color: colorBackgroundTransparent
+    color: Style.colorBackgroundTransparent
 
     property alias title: title.text
     property alias mouseArea: mouseArea
 
     Text {
         id: title
-        color: colorText
+        color: Style.colorText
         width: parent.width-20
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter

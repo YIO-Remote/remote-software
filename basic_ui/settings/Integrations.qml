@@ -22,7 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-
+import Style 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Item {
@@ -44,7 +44,7 @@ Item {
                 width: parent.width - 100
                 text: obj.state == 0 ? title : title + qsTr(" - Disconnected") + translateHandler.emptyString
                 elide: Text.ElideRight
-                color: colorText
+                color: Style.colorText
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
@@ -54,7 +54,7 @@ Item {
             Rectangle {
                 width: parent.width
                 height: 2
-                color: colorBackground
+                color: Style.colorBackground
 
                 anchors.bottom: parent.bottom
             }
@@ -63,7 +63,7 @@ Item {
                 id: circleButton
                 width: 36
                 height: 36
-                color: colorLine
+                color: Style.colorLine
                 radius: width/2
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
@@ -72,7 +72,7 @@ Item {
                 Rectangle {
                     width: 4
                     height: 4
-                    color: colorBackground
+                    color: Style.colorBackground
                     radius: width/2
                     anchors.left: parent.left
                     anchors.leftMargin: 8
@@ -82,7 +82,7 @@ Item {
                 Rectangle {
                     width: 4
                     height: 4
-                    color: colorBackground
+                    color: Style.colorBackground
                     radius: width/2
                     anchors.centerIn: parent
                 }
@@ -90,7 +90,7 @@ Item {
                 Rectangle {
                     width: 4
                     height: 4
-                    color: colorBackground
+                    color: Style.colorBackground
                     radius: width/2
                     anchors.right: parent.right
                     anchors.rightMargin: 8
@@ -133,8 +133,8 @@ Item {
 
                 background: Rectangle {
                     anchors.fill: parent
-                    color: colorLine
-                    radius: cornerRadius
+                    color: Style.colorLine
+                    radius: Style.cornerRadius
                 }
 
                 Item {
@@ -144,7 +144,7 @@ Item {
 
                     Text {
                         text: qsTr("Connect") + translateHandler.emptyString
-                        color: colorBackground
+                        color: Style.colorBackground
                         opacity: obj.state == 0 ? 0.5 : 1
                         anchors.left: parent.left
                         anchors.leftMargin: 10
@@ -168,7 +168,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: 2
-                    color: colorBackground
+                    color: Style.colorBackground
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -180,7 +180,7 @@ Item {
 
                     Text {
                         text: qsTr("Disconnect") + translateHandler.emptyString
-                        color: colorBackground
+                        color: Style.colorBackground
                         anchors.left: parent.left
                         anchors.leftMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
@@ -208,7 +208,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Integrations") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -221,8 +221,8 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 40
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20

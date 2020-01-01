@@ -86,7 +86,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: "\uE906"
             renderType: Text.NativeRendering
             width: 70
@@ -110,7 +110,7 @@ Item {
 
         Text {
             id: title
-            color: colorText
+            color: Style.colorText
             text: albumModel.title
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -129,7 +129,7 @@ Item {
 
         Text {
             id: artist
-            color: colorText
+            color: Style.colorText
             text: albumModel.subtitle
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -169,7 +169,7 @@ Item {
                 Text {
                     id: trackNumber
                     text: index+1
-                    color: colorText
+                    color: Style.colorText
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     font.family: "Open Sans"
@@ -183,7 +183,7 @@ Item {
                     elide: Text.ElideRight
                     width: parent.width-100
                     wrapMode: Text.NoWrap
-                    color: colorText
+                    color: Style.colorText
                     anchors.left: parent.left
                     anchors.leftMargin: 45
                     anchors.top: parent.top
@@ -198,7 +198,7 @@ Item {
                     elide: Text.ElideRight
                     width: albumTitleText.width
                     wrapMode: Text.NoWrap
-                    color: colorText
+                    color: Style.colorText
                     opacity: 0.6
                     anchors.left: albumTitleText.left
                     anchors.top: albumTitleText.bottom

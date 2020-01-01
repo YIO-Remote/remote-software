@@ -33,12 +33,12 @@ Item {
         width: 110
         height: 60
         radius: height/2
-        color: colorRed
+        color: Style.colorRed
         anchors.top: parent.top
         anchors.left: parent.left
 
         Text {
-            color: colorLine
+            color: Style.colorLine
             text: "\uE908"
             renderType: Text.NativeRendering
             width: 70

@@ -32,7 +32,7 @@ Rectangle {
     id: blindAdjust
     width: parent.width
     height: parent.height
-    color: colorDark
+    color: Style.colorDark
 
     // blind graphics draggable element
 
@@ -62,7 +62,7 @@ Rectangle {
                 delegate: Rectangle {
                     width: blindAdjust.width
                     height: 10
-                    color: colorHighlight2
+                    color: Style.colorHighlight2
                 }
             }
         }
@@ -71,7 +71,7 @@ Rectangle {
             id: dragger_target
             width: parent.width
             height: parent.height
-            color: colorBackgroundTransparent
+            color: Style.colorBackgroundTransparent
             y: userMove ? Math.round(height*percent/100) : Math.round(obj.position/100)
         }
 
@@ -110,7 +110,7 @@ Rectangle {
 
     Text {
         id: icon
-        color: colorText
+        color: Style.colorText
         text: "\uE914"
         renderType: Text.NativeRendering
         width: 85
@@ -123,7 +123,7 @@ Rectangle {
 
     Text {
         id: percentage
-        color: colorText
+        color: Style.colorText
         text: userMove ? percent : obj.position
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
@@ -131,7 +131,7 @@ Rectangle {
     }
 
     Text {
-        color: colorText
+        color: Style.colorText
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
         font {family: "Open Sans Light"; pixelSize: 100 }
@@ -139,7 +139,7 @@ Rectangle {
 
     Text {
         id: title
-        color: colorText
+        color: Style.colorText
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
@@ -150,7 +150,7 @@ Rectangle {
 
     Text {
         id: areaText
-        color: colorText
+        color: Style.colorText
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
@@ -162,7 +162,7 @@ Rectangle {
 
     BasicUI.CustomButton {
         anchors { left: parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: colorText
+        color: Style.colorText
         buttonText: "   "
         visible: obj.isSupported(Blind.F_CLOSE)
 
@@ -180,7 +180,7 @@ Rectangle {
 
     BasicUI.CustomButton {
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 70 }
-        color: colorText
+        color: Style.colorText
         buttonText: "   "
         visible: obj.isSupported(Blind.F_STOP)
         mouseArea.onClicked: {
@@ -197,7 +197,7 @@ Rectangle {
 
     BasicUI.CustomButton {
         anchors { right: parent.right; rightMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: colorText
+        color: Style.colorText
         buttonText: "   "
         visible: obj.isSupported(Blind.F_OPEN)
 
@@ -214,7 +214,7 @@ Rectangle {
     }
 
     Text {
-        color: colorText
+        color: Style.colorText
         text: "\uE915"
         renderType: Text.NativeRendering
         width: 70

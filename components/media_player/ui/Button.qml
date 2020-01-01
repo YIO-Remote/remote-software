@@ -56,7 +56,7 @@ Comp.ButtonBase {
     // additional UI elements
     Text {
         id: info
-        color: colorText
+        color: Style.colorText
         opacity: 0.5
         text: obj.source
         elide: Text.ElideRight
@@ -100,7 +100,7 @@ Comp.ButtonBase {
                 height: image.height
                 Rectangle {
                     anchors.fill: parent
-                    radius: cornerRadius/2
+                    radius: Style.cornerRadius/2
                 }
             }
         }

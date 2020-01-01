@@ -30,7 +30,7 @@ Rectangle {
     id: card
     width: parent.width
     height: parent.height
-    color: mediaplayerUtils.pixelColor === "#000000" ? colorDark : mediaplayerUtils.pixelColor
+    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
 
     Behavior on color {
         ColorAnimation { duration: 300 }
@@ -272,7 +272,7 @@ Rectangle {
 
         // home
         Text {
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
             text: "\uE900"
             renderType: Text.NativeRendering
@@ -298,7 +298,7 @@ Rectangle {
         // search
         Text {
             visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
             text: "\uE90C"
             renderType: Text.NativeRendering
@@ -324,7 +324,7 @@ Rectangle {
         // playlists
         Text {
             visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
             text: "\uE907"
             renderType: Text.NativeRendering
@@ -350,7 +350,7 @@ Rectangle {
         // speakers
         Text {
             visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
             text: "\uE90D"
             renderType: Text.NativeRendering

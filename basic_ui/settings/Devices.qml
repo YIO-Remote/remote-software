@@ -35,7 +35,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Devices") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -48,8 +48,8 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 40
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
