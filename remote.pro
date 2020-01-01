@@ -37,12 +37,9 @@ HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
     sources/configinterface.h \
-    sources/entities/blindinterface.h \
     sources/entities/climate.h \
     sources/entities/climateinterface.h \
     sources/entities/entityinterface.h \
-    sources/entities/lightinterface.h \
-    sources/entities/mediaplayerinterface.h \
     sources/entities/remote.h \
     sources/entities/switch.h \
     sources/entities/switchinterface.h \
@@ -81,7 +78,6 @@ HEADERS += \
     sources/hardware/wifi_status.h \
     sources/entities/entities.h \
     sources/entities/entity.h \
-    sources/integrations/plugininterface.h \
     sources/entities/entitiesinterface.h \
     sources/entities/entityinterface.h \
     sources/entities/blindinterface.h \
@@ -391,6 +387,4 @@ win32 {
 } else {
     error(unknown platform! Platform must be configured in remote.pro project file)
 }
-
-DISTFILES +=
 
