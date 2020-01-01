@@ -70,9 +70,6 @@ build
 # plugins
 plugins/*.so
 
-#Translation files
-translations/*.ts
-translations/*.qm
 *.user
 *.user.*
 *.dylib
@@ -84,4 +81,3 @@ translations/*.qm
 *.autosave
 # Makefile should always be generated with qmake
 Makefile
-*.ts
