@@ -61,11 +61,12 @@ Rectangle {
                     id: icon
                     color: colorText
                     text: {
-                        if (list[index] === "Off")
+                        console.debug(list[index])
+                        if (list[index]["original"] === "Off")
                             return "\uE908"
-                        else if (list[index] === "Heat")
+                        else if (list[index]["original"] === "Heat")
                             return "\uE91F"
-                        else if (list[index] === "Cool")
+                        else if (list[index]["original"] === "Cool")
                             return "\uE91E"
                     }
                     renderType: Text.NativeRendering
@@ -80,7 +81,7 @@ Rectangle {
                 }
 
                 Text {
-                    text: qsTr(list[index]) + translateHandler.emptyString
+                    text: list[index]["translated"]
                     color: colorText
                     anchors.left: icon.right
                     anchors.leftMargin: 20
@@ -95,11 +96,11 @@ Rectangle {
                     onClicked: {
                         haptic.playEffect("click");
                         main.state = "closed";
-                        if (list[index] === "Off")
+                        if (list[index]["original"] === "Off")
                             climateObj.turnOff();
-                        if (list[index] === "Heat")
+                        if (list[index]["original"] === "Heat")
                             climateObj.heat();
-                        if (list[index] === "Cool")
+                        if (list[index]["original"] === "Cool")
                             climateObj.cool();
                     }
                 }

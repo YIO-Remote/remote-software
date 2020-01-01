@@ -31,22 +31,17 @@ Item {
                 radius: cornerRadius
                 color: colorMedium
 
-                Drag.active: mouseArea.drag.active
-                Drag.source: mouseArea
-                Drag.hotSpot.x: 40
-                Drag.hotSpot.y: 40
-
-                layer.enabled: true
-                layer.effect: OpacityMask {
-                    maskSource: Item {
-                        width: imageContainer.width
-                        height: imageContainer.height
-                        Rectangle {
-                            anchors.fill: parent
-                            radius: cornerRadius
-                        }
-                    }
-                }
+//                layer.enabled: true
+//                layer.effect: OpacityMask {
+//                    maskSource: Item {
+//                        width: imageContainer.width
+//                        height: imageContainer.height
+//                        Rectangle {
+//                            anchors.fill: parent
+//                            radius: cornerRadius
+//                        }
+//                    }
+//                }
 
                 Text {
                     color: colorText

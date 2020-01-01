@@ -111,32 +111,32 @@
       <translation>Menu</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="301"/>
+      <location filename="../components/climate/ui/Card.qml" line="327"/>
       <source>Turn off</source>
       <translation>Éteindre</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="301"/>
+      <location filename="../components/climate/ui/Card.qml" line="327"/>
       <source>Turn on</source>
       <translation>Allumer</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="314"/>
+      <location filename="../components/climate/ui/Card.qml" line="340"/>
       <source>Mode</source>
       <translation>Mode</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="322"/>
+      <location filename="../components/climate/ui/Card.qml" line="350"/>
       <source>Off</source>
       <translation>Éteint</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="324"/>
+      <location filename="../components/climate/ui/Card.qml" line="356"/>
       <source>Heat</source>
       <translation>Chauffage</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="326"/>
+      <location filename="../components/climate/ui/Card.qml" line="362"/>
       <source>Cool</source>
       <translation>Climatisation</translation>
     </message>
@@ -271,7 +271,7 @@
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="129"/>
-      <location filename="../components/climate/ui/ContextMenu.qml" line="114"/>
+      <location filename="../components/climate/ui/ContextMenu.qml" line="115"/>
       <source>Cancel</source>
       <translation>Annuler</translation>
     </message>
