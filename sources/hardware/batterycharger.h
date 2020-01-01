@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -22,17 +22,17 @@
 
 #pragma once
 
-#include "../gesturesensor.h"
+#include <QObject>
 
-class GestureSensorMock : public GestureSensor {
+class BatteryCharger : public QObject {
     Q_OBJECT
 
  public:
-    explicit GestureSensorMock(QObject *parent = nullptr) : GestureSensor(parent) {}
+    Q_INVOKABLE virtual void batteryChargingOn() = 0;
+    Q_INVOKABLE virtual void batteryChargingOff() = 0;
 
-    // GestureSensor interface
- public:
-    void gestureDetection(bool state) override { Q_UNUSED(state) }
+    virtual void setup() = 0;
 
-    QString gesture() override { return ""; }
+ protected:
+    explicit BatteryCharger(QObject* parent = nullptr) : QObject(parent) {}
 };

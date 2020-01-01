@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "proximitysensor.h"
+#include "../proximitysensor.h"
 
 class ProximitySensorMock : public ProximitySensor {
     Q_OBJECT

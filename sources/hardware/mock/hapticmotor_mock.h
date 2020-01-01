@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "hapticmotor.h"
+#include "../hapticmotor.h"
 
 class HapticMotorMock : public HapticMotor {
     Q_OBJECT

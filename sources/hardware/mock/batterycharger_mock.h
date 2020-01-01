@@ -22,17 +22,16 @@
 
 #pragma once
 
-#include "../gesturesensor.h"
+#include "../batterycharger.h"
 
-class GestureSensorMock : public GestureSensor {
+class BatteryChargerMock : public BatteryCharger {
     Q_OBJECT
-
  public:
-    explicit GestureSensorMock(QObject *parent = nullptr) : GestureSensor(parent) {}
+    explicit BatteryChargerMock(QObject *parent = nullptr) : BatteryCharger(parent) {}
 
-    // GestureSensor interface
+    // BatteryCharging interface
  public:
-    void gestureDetection(bool state) override { Q_UNUSED(state) }
-
-    QString gesture() override { return ""; }
+    void batteryChargingOn() override {}
+    void batteryChargingOff() override {}
+    void setup() override {}
 };

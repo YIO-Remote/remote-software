@@ -22,10 +22,11 @@
 
 #pragma once
 
-#include "displaycontrol.h"
+#include "../displaycontrol.h"
 
 class DisplayControlMock : public DisplayControl {
     Q_OBJECT
+
  public:
     explicit DisplayControlMock(QObject *parent = nullptr) : DisplayControl(parent) {}
 
@@ -35,11 +36,11 @@ class DisplayControlMock : public DisplayControl {
         Q_UNUSED(mode)
         return true;
     }
+
     void setBrightness(int from, int to) override {
         Q_UNUSED(from)
         Q_UNUSED(to)
     }
-    void batteryChargingOn() override {}
-    void batteryChargingOff() override {}
+
     void setup() override {}
 };

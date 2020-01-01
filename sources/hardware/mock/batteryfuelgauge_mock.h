@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "batteryfuelgauge.h"
+#include "../batteryfuelgauge.h"
 
 class BatteryFuelGaugeMock : public BatteryFuelGauge {
     Q_OBJECT

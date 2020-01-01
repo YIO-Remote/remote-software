@@ -153,6 +153,8 @@ int main(int argc, char* argv[]) {
     DisplayControl* displayControl = hwFactory->getDisplayControl();
     engine.rootContext()->setContextProperty("displayControl", displayControl);
 
+    qmlRegisterSingletonType<BatteryCharger>("BatteryCharger", 1, 0, "BatteryCharger",
+                                          &HardwareFactory::batteryChargerProvider);
     qmlRegisterSingletonType<BatteryFuelGauge>("Battery", 1, 0, "Battery", &HardwareFactory::batteryFuelGaugeProvider);
     qmlRegisterSingletonType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl",
                                              &HardwareFactory::displayControlProvider);

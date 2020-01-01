@@ -27,6 +27,7 @@
 
 #include "hardwarefactory_rpi0.h"
 #include "hw_config.h"
+#include "mock/batterycharger_mock.h"
 #include "mock/batteryfuelgauge_mock.h"
 #include "mock/displaycontrol_mock.h"
 #include "mock/gesturesensor_mock.h"
@@ -51,6 +52,7 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
       p_systemService(nullptr),
       p_webServerControl(nullptr),
       p_displayControl(nullptr),
+      p_batteryCharger(nullptr),
       p_batteryFuelGauge(nullptr),
       p_interruptHandler(nullptr),
       p_hapticMotor(nullptr),
@@ -63,6 +65,7 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
     p_webServerControl = buildWebServerControl(config);
     p_wifiControl = buildWifiControl(config);
     p_displayControl = buildDisplayControl(config);
+    p_batteryCharger = buildBatteryCharger(config);
     p_batteryFuelGauge = buildBatteryFuelGauge(config);
     p_interruptHandler = buildInterruptHandler(config);
     p_hapticMotor = buildHapticMotor(config);
@@ -170,6 +173,11 @@ DisplayControl *HardwareFactoryRPi0::buildDisplayControl(const QVariantMap &conf
     // TODO(zehnm) create a minimal RPi HDMI display controller? We could certainly switch it on and off.
     // What about the RPi 7" screen brightness controll?
     return new DisplayControlMock(this);
+}
+
+BatteryCharger *HardwareFactoryRPi0::buildBatteryCharger(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new BatteryChargerMock(this);
 }
 
 BatteryFuelGauge *HardwareFactoryRPi0::buildBatteryFuelGauge(const QVariantMap &config) {

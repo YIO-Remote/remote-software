@@ -20,10 +20,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <assert.h>
-
 #include <QLoggingCategory>
 #include <QtDebug>
+
+#include <cassert>
 
 #include "../jsonfile.h"
 #include "hardwarefactory.h"
@@ -83,6 +83,15 @@ HardwareFactory *HardwareFactory::instance() {
     assert(s_instance);
 
     return s_instance;
+}
+
+QObject *HardwareFactory::batteryChargerProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getBatteryCharger();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
 }
 
 QObject *HardwareFactory::batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {

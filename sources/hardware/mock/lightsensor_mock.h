@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "lightsensor.h"
+#include "../lightsensor.h"
 
 class LightSensorMock : public LightSensor {
     Q_OBJECT

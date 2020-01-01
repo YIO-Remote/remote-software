@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "interrupthandler.h"
+#include "../interrupthandler.h"
 
 class InterruptHandlerMock : public InterruptHandler {
     Q_OBJECT

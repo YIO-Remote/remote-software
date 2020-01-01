@@ -27,6 +27,7 @@
 #include "arm/apds9960gesture.h"
 #include "arm/apds9960light.h"
 #include "arm/apds9960proximity.h"
+#include "arm/batterycharger_yio.h"
 #include "arm/bq27441.h"
 #include "arm/displaycontrol_yio.h"
 #include "arm/drv2605.h"
@@ -77,6 +78,11 @@ HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *paren
 DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config) {
     Q_UNUSED(config)
     return new DisplayControlYio(this);
+}
+
+BatteryCharger *HardwareFactoryYio::buildBatteryCharger(const QVariantMap &config) {
+    Q_UNUSED(config)
+    return new BatteryChargerYio(this);
 }
 
 BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &config) {

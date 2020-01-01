@@ -38,11 +38,7 @@ class DisplayControlYio : public DisplayControl {
 
  public:
     Q_INVOKABLE bool setmode(const QString &mode) override;
-
     Q_INVOKABLE void setBrightness(int from, int to) override;
-
-    Q_INVOKABLE void batteryChargingOn() override;
-    Q_INVOKABLE void batteryChargingOff() override;
 
     explicit DisplayControlYio(QObject *parent = nullptr);
 

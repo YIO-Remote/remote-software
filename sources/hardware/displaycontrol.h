@@ -32,9 +32,6 @@ class DisplayControl : public QObject {
 
     Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
 
-    Q_INVOKABLE virtual void batteryChargingOn() = 0;
-    Q_INVOKABLE virtual void batteryChargingOff() = 0;
-
     virtual void setup() = 0;
 
  protected:

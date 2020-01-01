@@ -47,7 +47,9 @@ HEADERS += \
     sources/entities/weather.h \
     sources/entities/weatherinterface.h \
     sources/fileio.h \
+    sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
+    sources/hardware/mock/batterycharger_mock.h \
     sources/hardware/mock/batteryfuelgauge_mock.h \
     sources/hardware/displaycontrol.h \
     sources/hardware/mock/displaycontrol_mock.h \
@@ -179,6 +181,7 @@ linux {
             sources/hardware/arm/apds9960gesture.h \
             sources/hardware/arm/apds9960light.h \
             sources/hardware/arm/apds9960proximity.h \
+            sources/hardware/arm/batterycharger_yio.h \
             sources/hardware/arm/bq27441.h \
             sources/hardware/arm/displaycontrol_yio.h \
             sources/hardware/arm/drv2605.h \
@@ -189,6 +192,7 @@ linux {
             sources/hardware/hardwarefactory_yio.cpp \
             sources/hardware/arm/apds9960.cpp \
             sources/hardware/arm/apds9960gesture.cpp \
+            sources/hardware/arm/batterycharger_yio.cpp \
             sources/hardware/arm/bq27441.cpp \
             sources/hardware/arm/displaycontrol_yio.cpp \
             sources/hardware/arm/drv2605.cpp

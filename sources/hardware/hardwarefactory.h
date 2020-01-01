@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 
+#include "batterycharger.h"
 #include "batteryfuelgauge.h"
 #include "displaycontrol.h"
 #include "gesturesensor.h"
@@ -76,6 +77,8 @@ class HardwareFactory : public QObject {
 
     virtual DisplayControl* getDisplayControl() = 0;
 
+    virtual BatteryCharger* getBatteryCharger() = 0;
+
     virtual BatteryFuelGauge* getBatteryFuelGauge() = 0;
 
     virtual InterruptHandler* getInterruptHandler() = 0;
@@ -89,6 +92,7 @@ class HardwareFactory : public QObject {
     virtual ProximitySensor* getProximitySensor() = 0;
 
     // QML callback providers for qmlRegisterSingletonType
+    static QObject* batteryChargerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* batteryFuelGaugeProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* displayControlProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* interruptHandlerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);

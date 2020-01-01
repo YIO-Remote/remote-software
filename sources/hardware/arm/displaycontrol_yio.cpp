@@ -23,7 +23,6 @@
 #include <QFuture>
 #include <QLoggingCategory>
 #include <QtConcurrent/QtConcurrentRun>
-#include <QtDebug>
 
 #include <mcp23017.h>
 #include <wiringPi.h>
@@ -41,6 +40,58 @@ DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent) {
 void DisplayControlYio::setup() {
     wiringPiSetup();
     mcp23017Setup(100, 0x21);
+}
+
+bool DisplayControlYio::setmode(const QString &mode) {
+    if (mode == "standbyon") {
+        QFuture<void> future = QtConcurrent::run([&]() {
+            delay(400);  // wait until dimming of the display is done
+            spi_screenreg_set(0x10, 0xffff, 0xffff);
+            delay(120);
+            spi_screenreg_set(0x28, 0xffff, 0xffff);
+        });
+        return true;
+    }
+    if (mode == "standbyoff") {
+        QFuture<void> future = QtConcurrent::run([&]() {
+            spi_screenreg_set(0x29, 0xffff, 0xffff);
+            spi_screenreg_set(0x11, 0xffff, 0xffff);
+        });
+        return true;
+    }
+    return false;
+}
+
+void DisplayControlYio::setBrightness(int from, int to) {
+    QFuture<void> future = QtConcurrent::run(
+        [&](int from, int to) {
+            if (from == 0 && digitalRead(26) == 0) {
+                pinMode(26, PWM_OUTPUT);
+                pwmSetMode(PWM_MODE_MS);
+                pwmSetClock(1000);
+                pwmSetRange(100);
+            }
+
+            if (from >= to) {
+                // dim down
+                for (int i = from; i > to - 1; i--) {
+                    pwmWrite(26, i);
+                    delay(10);
+                    if (i == 0) {
+                        delay(100);
+                        pinMode(26, OUTPUT);
+                        digitalWrite(26, 0);
+                    }
+                }
+            } else {
+                // dim up
+                for (int i = from; i < to + 1; i++) {
+                    pwmWrite(26, i);
+                    delay(10);
+                }
+            }
+        },
+        from, to);
 }
 
 void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1) {
@@ -134,68 +185,4 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     digitalWrite(CLK, LOW);
     digitalWrite(MOSI, LOW);
     nanosleep(&ts3, NULL);
-}
-
-bool DisplayControlYio::setmode(const QString &mode) {
-    if (mode == "standbyon") {
-        QFuture<void> future = QtConcurrent::run([&]() {
-            delay(400);  // wait until dimming of the display is done
-            spi_screenreg_set(0x10, 0xffff, 0xffff);
-            delay(120);
-            spi_screenreg_set(0x28, 0xffff, 0xffff);
-        });
-        return true;
-    }
-    if (mode == "standbyoff") {
-        QFuture<void> future = QtConcurrent::run([&]() {
-            spi_screenreg_set(0x29, 0xffff, 0xffff);
-            spi_screenreg_set(0x11, 0xffff, 0xffff);
-        });
-        return true;
-    }
-    return false;
-}
-
-void DisplayControlYio::setBrightness(int from, int to) {
-    QFuture<void> future = QtConcurrent::run(
-        [&](int from, int to) {
-            if (from == 0 && digitalRead(26) == 0) {
-                pinMode(26, PWM_OUTPUT);
-                pwmSetMode(PWM_MODE_MS);
-                pwmSetClock(1000);
-                pwmSetRange(100);
-            }
-
-            if (from >= to) {
-                // dim down
-                for (int i = from; i > to - 1; i--) {
-                    pwmWrite(26, i);
-                    delay(10);
-                    if (i == 0) {
-                        delay(100);
-                        pinMode(26, OUTPUT);
-                        digitalWrite(26, 0);
-                    }
-                }
-            } else {
-                // dim up
-                for (int i = from; i < to + 1; i++) {
-                    pwmWrite(26, i);
-                    delay(10);
-                }
-            }
-        },
-        from, to);
-}
-
-void DisplayControlYio::batteryChargingOn() {
-    pinMode(108, OUTPUT);
-    digitalWrite(108, LOW);
-    qDebug() << "Turning battery charging on";
-}
-
-void DisplayControlYio::batteryChargingOff() {
-    pinMode(108, OUTPUT);
-    digitalWrite(108, HIGH);
-    qDebug() << "Turning battery charging off";
 }

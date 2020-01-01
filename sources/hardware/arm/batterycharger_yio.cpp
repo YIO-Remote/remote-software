@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,19 +20,34 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#pragma once
+#include <QLoggingCategory>
+#include <QtDebug>
 
-#include "../gesturesensor.h"
+#include <wiringPi.h>
 
-class GestureSensorMock : public GestureSensor {
-    Q_OBJECT
+#include "batterycharger_yio.h"
 
- public:
-    explicit GestureSensorMock(QObject *parent = nullptr) : GestureSensor(parent) {}
+#define CLK 107
+#define MOSI 106
+#define CS 105
+#define RST 104
 
-    // GestureSensor interface
- public:
-    void gestureDetection(bool state) override { Q_UNUSED(state) }
+static Q_LOGGING_CATEGORY(CLASS_LC, "BatCharger");
 
-    QString gesture() override { return ""; }
-};
+BatteryChargerYio::BatteryChargerYio(QObject *parent) : BatteryCharger(parent) { setup(); }
+
+void BatteryChargerYio::setup() {
+    wiringPiSetup();
+}
+
+void BatteryChargerYio::batteryChargingOn() {
+    pinMode(108, OUTPUT);
+    digitalWrite(108, LOW);
+    qCDebug(CLASS_LC) << "Turning battery charging on";
+}
+
+void BatteryChargerYio::batteryChargingOff() {
+    pinMode(108, OUTPUT);
+    digitalWrite(108, HIGH);
+    qCDebug(CLASS_LC) << "Turning battery charging off";
+}
