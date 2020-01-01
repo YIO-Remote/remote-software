@@ -183,7 +183,9 @@ linux {
 
 # === start TRANSLATION section =======================================
 lupdate_only{
-SOURCES = main.qml \
+SOURCES += $$OTHER_FILES
+
+OTHER_FILES = main.qml \
           MainContainer.qml \
           StandbyControl.qml \
           ButtonHandler.qml \
