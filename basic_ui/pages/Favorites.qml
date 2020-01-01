@@ -29,8 +29,6 @@ Flickable {
     //: Name of the settings page
     property string title: qsTr("Favorites") + translateHandler.emptyString
 
-    property var favoritesModel: config.getProfileFavorites() //config.ui_config.profiles[config.profile].favorites
-
     signal scrolledUp()
     signal scrolledDown()
     signal scrollupBegin()
@@ -95,10 +93,9 @@ Flickable {
         interactive: false
         spacing: 10
 
-        model: favoritesModel
+        model: config.profileFavorites
         delegate: entityDelegate
     }
-
 
     // LISTVIEW DELEGATE
     Component {
@@ -111,8 +108,9 @@ Flickable {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Component.onCompleted: {
-                var e = entities.get(favoritesModel[index]);
-                this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
+                var e = entities.get(config.profileFavorites[index]);
+                if (e)
+                    this.setSource("qrc:/components/"+ e.type +"/ui/Button.qml", { "obj": e });
             }
         }
     }

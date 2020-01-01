@@ -74,6 +74,7 @@ bool drv2605::init()
 {
 #ifdef __arm__
     wiringPiSetup();
+    // TODO make i2c device configurable
     bus = wiringPiI2CSetupInterface("/dev/i2c-3", DRV2605_ADDR);
 
 //    int id = readRegister8(DRV2605_REG_STATUS);

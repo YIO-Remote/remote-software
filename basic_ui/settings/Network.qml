@@ -23,54 +23,34 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 
-import Launcher 1.0
+import WifiControl 1.0
 
 Item {
     width: parent.width
     height: header.height + section.height + 20
 
-    Launcher {
-        id: settingsLauncher
-    }
-
-    Timer {
-        id: timer
-        running: false
-        repeat: true
-        interval: 10000
-        triggeredOnStart: true
-
-        onTriggered: {
-            wifiSignalValue.text = settingsLauncher.launch("/usr/bin/yio-remote/wifi_rssi.sh").trim();
-            var ssid = settingsLauncher.launch("/usr/bin/yio-remote/wifi_ssid.sh").trim();
-            if (ssid == "") {
-                wifiSSIDText.text = "Select WiFi network";
-            } else {
-                wifiSSIDText.text = ssid;
-            }
-        }
-    }
-
-    Component.onCompleted: timer.start()
-
-    property var wifiNetworks: []
-    property var wifiNetworksRSSI: []
+    property var wifiNetworks
     property var wifiNetworkSelected: ""
-    property var wifiNetworkSelectedRSSI
 
     function addNetworks() {
         var comp = Qt.createComponent("qrc:/basic_ui/settings/WifiNetworkListElement.qml");
 
-        for (var i=0; i<wifiNetworks.length; i++) {
-            var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i], rssi: wifiNetworksRSSI[i], buttonId: i});
+        wifiNetworks = wifi.networkScanResult
+        for (var i = 0; i < wifiNetworks.length; i++) {
+            console.log("Adding network: " + wifiNetworks[i])
+            var obj = comp.createObject(flowWifiList, {ssid: wifiNetworks[i].name, rssi: wifiNetworks[i].signalStrength, buttonId: i});
             obj.clicked.connect(buttonClicked)
         }
     }
 
     function buttonClicked(buttonId) {
-        wifiNetworkSelected = wifiNetworks[buttonId];
+        wifiNetworkSelected = wifiNetworks[buttonId].name;
         wifiSwipeview.currentIndex += 1;
         popup.height = 200;
+    }
+
+    Component.onCompleted: {
+        wifi.networksFound.connect(addNetworks);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,7 +87,7 @@ Item {
             Text {
                 id: wifiSSIDText
                 color: colorText
-                text: ""
+                text: wifi.wifiStatus.name
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
@@ -125,23 +105,14 @@ Item {
 
                     // Start wifi network scan
                     wifiNetworks = [];
-                    wifiNetworksRSSI = [];
 
                     // clear list
                     for (var k = flowWifiList.children.length; k>0; k--) {
                         flowWifiList.children[k-1].destroy();
                     }
 
-                    var tmp = mainLauncher.launch("/usr/bin/yio-remote/wifi_network_list.sh");
-                    tmp = tmp.split('\n');
-                    for (var i=0; i<tmp.length-1; i++) {
-                        var wifitmp = tmp[i].split(',')
-                        wifiNetworks[i] = wifitmp[1];
-                        wifiNetworksRSSI[i] = wifitmp[0]
-                    }
-
-                    // add wifi networks to the list
-                    addNetworks();
+                    // emits networksFound! See above's Component.onCompleted
+                    wifi.startNetworkScan()
 
                     // open popup that displays the list
                     popup.open();
@@ -151,6 +122,7 @@ Item {
         }
 
 
+        // FIXME create an escape functionality. User is stuck in the popup :(
         Popup {
             id: popup
             x: 0
@@ -283,7 +255,7 @@ Item {
         Text {
             id: wifiSignalValue
             color: colorText
-            text: "-59"
+            text: wifi.wifiStatus.rssi
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -319,7 +291,7 @@ Item {
 
         Text {
             color: colorText
-            text: settingsLauncher.launch("/usr/bin/yio-remote/wifi_ip.sh").trim()
+            text: wifi.wifiStatus.ipAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -355,7 +327,7 @@ Item {
 
         Text {
             color: colorText
-            text: settingsLauncher.launch("cat /sys/class/net/wlan0/address").trim()
+            text: wifi.wifiStatus.macAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20

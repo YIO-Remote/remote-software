@@ -39,7 +39,6 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
         target: buttonHandler
-        enabled: parent.state == "open" ? true : false
 
         onButtonPress: {
             switch (button) {
@@ -63,7 +62,48 @@ Rectangle {
                     obj.channelDown();
                 }
                 break;
+            case "dpad up":
+                if (obj.isSupported(Remote.F_CURSOR_UP)) {
+                    obj.cursorUp();
+                }
+                break;
+            case "dpad down":
+                if (obj.isSupported(Remote.F_CURSOR_DOWN)) {
+                    obj.cursorDown();
+                }
+                break;
+            case "dpad left":
+                if (obj.isSupported(Remote.F_CURSOR_LEFT)) {
+                    obj.cursorLeft();
+                }
+                break;
+            case "dpad right":
+                if (obj.isSupported(Remote.F_CURSOR_RIGHT)) {
+                    obj.cursorRight();
+                }
+                break;
+            case "dpad middle":
+                if (obj.isSupported(Remote.F_CURSOR_OK)) {
+                    obj.cursorOK();
+                }
+                break;
+            case "top left":
+                if (obj.isSupported(Remote.F_MUTE_TOGGLE)) {
+                    obj.muteToggle();
+                }
+                break;
+            case "bottom left":
+                if (obj.isSupported(Remote.F_BACK)) {
+                    obj.back();
+                }
+                break;
+            case "bottom right":
+                if (obj.isSupported(Remote.F_MENU)) {
+                    obj.menu();
+                }
+                break;
             }
+
         }
     }
 
@@ -72,6 +112,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Item {
+        id: topItem
         width: parent.width
         height: 125
         anchors.top: parent.top
@@ -108,168 +149,164 @@ Rectangle {
 
     }
 
-    Item {
-        id: contentGroup0
-        width: parent.width-40
-        height: parent.height
-        anchors.top: parent.top
-        anchors.topMargin: 120
+    SwipeView {
+        id: pagesSwipeView
+        width: parent.width
+        height: parent.height - topItem.height - tooltips.height - 50
+        anchors.top: topItem.bottom
+        anchors.topMargin: 0
+        currentIndex: 0
+
+        //buttons
+        Loader {
+            asynchronous: true
+            sourceComponent: buttonView
+        }
+
+        // channels
+        Loader {
+//            active: SwipeView.isCurrentItem
+            asynchronous: true
+            sourceComponent: channelView
+        }
+    }
+
+    Component {
+        id: buttonView
+        CardButtons {}
+    }
+
+    Component {
+        id: channelView
+        CardChannels {}
+    }
+
+    PageIndicator {
+        id: indicator
+
+        count: pagesSwipeView.count
+        currentIndex: pagesSwipeView.currentIndex
+
+        anchors.bottom: tooltips.top
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: group1.state == "open" || group2.state == "open" ? 0.1 : 1
-        enabled: group1.state == "open" || group2.state == "open" ? 0.1 : 1
+
+        delegate: Rectangle {
+            width: 8
+            height: 8
+            radius: height/2
+            color: colorText
+            opacity: index == pagesSwipeView.currentIndex ? 1 : 0.3
+        }
+    }
+
+    Item {
+        id: tooltips
+        width: parent.width
+        height: 80
+        anchors.bottom: parent.bottom
 
         Item {
-            width: 80
+            id: leftToolTip
+            width: childrenRect.width
             height: 60
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.verticalCenter: parent.verticalCenter
 
-            Rectangle {
-                width: 80
+            Text {
+                color: colorText
+                text: "\uE91B"
+                width: 60
                 height: 60
-                radius: width/2
-                color: colorRed
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 60 }
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             Text {
                 color: colorText
-                text: "O"
+                opacity: 0.5
+                text: qsTr("Mute") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
-                anchors.centerIn: parent
-                font.family: "Open Semibold"
+                anchors.left: parent.left
+                anchors.leftMargin: 50
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
                 font.weight: Font.Normal
-                font.pixelSize: 27
-            }
-
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    obj.powerToggle();
-                }
-            }
-        }
-    }
-
-    Group {
-        id: group1
-        height: 580
-        offset: 80
-
-        onStateChanged: {
-            if (state == "closed") {
-                group2.state = "closed";
+                font.pixelSize: 24
+                lineHeight: 1
             }
         }
 
         Item {
-            id: contentGroup1
-            width: parent.width
-            height: parent.height
-            opacity: parent.state == "open" ? 1 : 0.3
-            enabled: parent.state == "open" ? true : false
+            id: middleToolTip
+            width: childrenRect.width
+            height: 60
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
 
-            Grid {
-                anchors.top: parent.top
-                anchors.topMargin: 60
-                anchors.horizontalCenter: parent.horizontalCenter
-                columns: 3
-                columnSpacing: 50
-                rowSpacing: 30
-
-                Repeater {
-                    model: 10
-
-                    Item {
-                        width: 80
-                        height: 60
-
-                        Rectangle {
-                            width: 80
-                            height: 60
-                            radius: width/2
-                            color: colorBackgroundTransparent
-                            border.color: colorText
-                            border.width: 2
-                            opacity: 0.2
-                        }
-
-                        Text {
-                            color: colorText
-                            text: index == 9 ? 0 : index + 1
-                            verticalAlignment: Text.AlignVCenter
-                            anchors.centerIn: parent
-                            font.family: "Open Semibold"
-                            font.weight: Font.Normal
-                            font.pixelSize: 27
-                        }
-                    }
-                }
+            Text {
+                color: colorText
+                text: "\uE91D"
+                width: 60
+                height: 60
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 60 }
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
             }
-        }
-    }
 
-    Group {
-        id: group2
-        //        offset: 160
-        height: 500
-
-        onStateChanged: {
-            if (state == "open") {
-                group1.state = "move";
-            } else {
-                group1.state = "open";
+            Text {
+                color: colorText
+                opacity: 0.5
+                text: qsTr("Back") + translateHandler.emptyString
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 50
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 24
+                lineHeight: 1
             }
         }
 
         Item {
-            id: contentGroup2
-            width: parent.width
-            height: parent.height
-            opacity: parent.state == "open" ? 1 : 0.3
-            enabled: parent.state == "open" ? true : false
+            id: rightToolTip
+            width: childrenRect.width
+            height: 60
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            anchors.verticalCenter: parent.verticalCenter
 
-            Grid {
-                anchors.top: parent.top
-                anchors.topMargin: 60
-                anchors.horizontalCenter: parent.horizontalCenter
-                columns: 4
-                spacing: 60
+            Text {
+                color: colorText
+                text: "\uE91C"
+                width: 60
+                height: 60
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 60 }
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#EA003C"
-                }
-
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#91BF4C"
-                }
-
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#D7B435"
-                }
-
-                Rectangle {
-                    width: 40
-                    height: width
-                    radius: width/2
-                    color: "#284CC5"
-                }
+            Text {
+                color: colorText
+                opacity: 0.5
+                text: qsTr("Menu") + translateHandler.emptyString
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 50
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Open Sans"
+                font.weight: Font.Normal
+                font.pixelSize: 24
+                lineHeight: 1
             }
         }
-    }
-
-    Rectangle {
-        width: parent.width
-        height: 80
-        color: colorHighlight2
-        radius: cornerRadius
-        anchors.bottom: parent.bottom
     }
 }

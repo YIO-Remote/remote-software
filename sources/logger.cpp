@@ -23,40 +23,38 @@
 #include <iostream>
 #include <QDir>
 #include "logger.h"
-#include "config.h"
 
 Logger*     Logger::s_instance          = nullptr;
-QStringList Logger::s_msgTypeString     = { "DEBUG", "WARN", "CRIT", "FATAL", "INFO" };      // parallel to QMsgType
+QStringList Logger::s_msgTypeString     = { "DEBUG", "WARN ", "CRIT ", "FATAL", "INFO " };      // parallel to QMsgType
 QtMsgType   Logger::s_msgTypeSorted[]   = { QtDebugMsg, QtInfoMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg }; // sorted by severity
 
-Logger::Logger(const QString& path, QtMsgType logLevel, bool debug, bool showSource, int queueSize, int purgeHours, QObject *parent) :
+Logger::Logger(const QString& path, QString logLevel, bool console, bool showSource, int queueSize, int purgeHours, QObject *parent) :
     QObject(parent),
-    m_debugEnabled(debug),
+    m_consoleEnabled(console),
     m_fileEnabled(path.length() > 0),
     m_queueEnabled(false),
     m_showSource(showSource),
     m_maxQueueSize(queueSize),
-    m_directory(path + "/log"),
+    m_directory(path),
     m_file(nullptr)
 {
     s_instance = this;
 
     Q_ASSERT(s_msgTypeString.length() == QtMsgType::QtInfoMsg + 1);
 
-    if (!QDir(m_directory).exists())
+    if (m_fileEnabled && !QDir(m_directory).exists()) {
         QDir().mkdir(m_directory);
+    }
 
     qInstallMessageHandler(&messageOutput);
-    Config* config = Config::getInstance ();
-    if (config != nullptr) {
-        QVariantMap settings = config->getSettings();
-        QString log = settings["log"].toString();
-        if (!log.isEmpty())
-            logLevel = static_cast<QtMsgType>(toMsgType(log));
-    }
     defineLogCategory("default", QtMsgType::QtInfoMsg, QLoggingCategory::defaultCategory());
-    setLogLevel(logLevel);
-    purgeFiles(purgeHours);
+    if (!logLevel.isEmpty()) {
+        setLogLevel(static_cast<QtMsgType>(toMsgType(logLevel)));
+    }
+
+    if (m_fileEnabled) {
+        purgeFiles(purgeHours);
+    }
 }
 Logger::~Logger()
 {
@@ -159,10 +157,10 @@ void Logger::processMessage  (QtMsgType type,  const char* category, const char*
         QString sourcePosition;
         if (m_showSource && source != nullptr)
             sourcePosition = QString("%1:%2").arg(source).arg(line);
-        QDateTime dt = QDateTime::currentDateTime();
+        QDateTime dt = QDateTime::currentDateTimeUtc();
         SMessage message(type, dt.toTime_t(), cat, msg, sourcePosition);
-        if (m_debugEnabled)
-            writeDebug(message);
+        if (m_consoleEnabled)
+            writeConsole(message);
         if (m_fileEnabled)
             writeFile(message, dt);
         if (m_queueEnabled)
@@ -189,10 +187,15 @@ void Logger::writeFile   (SMessage& message, const QDateTime& dt)
         m_file->setFileName(path);
         m_file->open(QIODevice::Append | QIODevice::Text);
     }
-    QString msg = QString("%1 %2 %3 %4 %5\n\r").arg(dt.toString("dd.MM.yyyy hh:mm:ss")).arg(s_msgTypeString[message.type]).arg(message.category).arg(message.message).arg(message.sourcePosition);
+    QString msg = QString("%1 %2 %3 %4 %5")
+            .arg(dt.toString("dd.MM.yyyy hh:mm:ss"))
+            .arg(s_msgTypeString[message.type])
+            .arg(message.category)
+            .arg(message.message)
+            .arg(message.sourcePosition);
     QTextStream out (m_file);
     out.setCodec("UTF-8");
-    out << msg;
+    out << msg << endl;
 }
 
 void Logger::writeQueue  (SMessage& message)
@@ -203,10 +206,10 @@ void Logger::writeQueue  (SMessage& message)
     m_queue.enqueue(message);
 }
 
-void Logger::writeDebug  (SMessage& message)
+void Logger::writeConsole  (SMessage& message)
 {
     QString msg = QString("%1 %2 %3 %4\n").arg(s_msgTypeString[message.type]).arg(message.category).arg(message.message).arg(message.sourcePosition);
-    std::cout << msg.toStdString();     // goes to QtCreator console
+    std::cout << msg.toStdString();     // goes to console
     std::cout.flush();
 }
 
@@ -285,7 +288,7 @@ QJsonObject Logger::getInformation ()
     QJsonObject info;
     info.insert("fileEnabled",   m_fileEnabled);
     info.insert("queueEnabled",  m_queueEnabled);
-    info.insert("debugEnabled",  m_debugEnabled);
+    info.insert("consoleEnabled",  m_consoleEnabled);
     info.insert("fileCount",     getFileCount());
     info.insert("showSourcePos", m_showSource);
     QJsonArray array;

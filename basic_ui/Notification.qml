@@ -277,8 +277,9 @@ Rectangle {
 
             BasicUI.CustomButton {
                 buttonText: qsTr(actionlabel) + translateHandler.emptyString
-                visible: action != "" ? true : false
+                visible: actionlabel != "" ? true : false
                 mouseArea.onClicked:  {
+                    notifications.execute(idN);
                     notification.opacity = 0;
                     if (notificationsDrawer.position > 0) {
                         notifications.remove(idN);
@@ -286,9 +287,7 @@ Rectangle {
                         notification.destroy(400);
                         notifications.remove(idN);
                     }
-                    if (notification.actionlabel == "Reconnect") {
-//                        integrations.getByType(notification.action).connect();
-                    }
+                    //
                 }
             }
         }

@@ -178,6 +178,8 @@ ApplicationWindow {
 
     property string colorGreen: "#19D37B"
     property string colorRed: "#EA003C"
+    property string colorOrange: "#FF7241"
+    property string colorBlue: "#19435E"
 
     property string colorBackground: darkMode ? "#000000" : "#ffffff"
     property string colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
@@ -223,6 +225,7 @@ ApplicationWindow {
                 if (updateAvailable) {
                     var hour = new Date().getHours();
                     if (hour >= 3 && hour <= 5) {
+                        // TODO create a update service class instead of launching hard coded shell scripts from QML
                         fileio.write("/usr/bin/updateURL", updateURL);
                         mainLauncher.launch("systemctl restart update.service");
                         Qt.quit();
@@ -254,7 +257,7 @@ ApplicationWindow {
         }
 
         // change dark mode to the configured value
-        darkMode = Qt.binding(function () { return config.ui_config.darkmode});
+        darkMode = Qt.binding(function () { return config.ui_config.darkmode });
         standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
         standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
@@ -267,7 +270,7 @@ ApplicationWindow {
 
 
         // set the language
-        translateHandler.selectLanguage(config.language);
+        translateHandler.selectLanguage(config.settings.language);
 
         // load bluetooth
         bluetoothArea.init(config.config);
@@ -299,6 +302,7 @@ ApplicationWindow {
 
             // when everything is loaded, load the main UI
             if (fileio.exists("/wifisetup")) {
+                console.debug("Starting WiFi setup");
                 loader_main.setSource("qrc:/wifiSetup.qml");
             } else {
                 loader_main.setSource("qrc:/MainContainer.qml");
@@ -382,12 +386,12 @@ ApplicationWindow {
         ]
 
         onStatusChanged: if (loader_main.status == Loader.Ready && loadingScreen.item) {
-                             //                             loadingScreen.item.state = "loaded";
                              loader_main.item.onItemsLoadedChanged.connect(onLoadingCompleted);
                          }
 
         function onLoadingCompleted() {
             if (loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count)
+                console.debug("Setting loading screen to loaded");
                 loadingScreen.item.state = "loaded";
         }
     }

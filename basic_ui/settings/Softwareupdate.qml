@@ -158,6 +158,7 @@ Item {
             mouseArea.onClicked: {
                 if (updateAvailable) {
                     console.debug("Updating the app")
+                    // TODO create a update servcie class instead of launching hard coded shell scripts from QML
                     fileio.write("/usr/bin/updateURL", updateURL);
                     mainLauncher.launch("systemctl restart update.service");
                 }

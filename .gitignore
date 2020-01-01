@@ -70,7 +70,6 @@ build
 # plugins
 plugins/*.so
 
-#Translation files
 *.user
 *.user.*
 *.dylib

@@ -113,9 +113,9 @@ Item {
                             languageListView.currentIndex = index
                             section.height = 74
                             translateHandler.selectLanguage(translations[index].id)
-                            var tmp = config.config
+                            var tmp = config.settings
                             tmp.language = translations[index].id
-                            config.config = tmp
+                            config.settings = tmp;
                             config.writeConfig();
                         }
                     }

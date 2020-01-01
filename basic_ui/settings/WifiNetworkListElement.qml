@@ -35,7 +35,7 @@ Rectangle {
     property alias mouseArea: mouseArea
     property bool selected: false
     property int buttonId
-    property var rssi
+    property int rssi
 
     signal clicked(int buttonId);
 

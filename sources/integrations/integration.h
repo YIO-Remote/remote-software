@@ -26,6 +26,7 @@
 #include <QObject>
 #include "integrationinterface.h"
 #include "../entities/entitiesinterface.h"
+#include "../logger.h"
 
 // Integration base class
 class Integration : public QObject, IntegrationInterface

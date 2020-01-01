@@ -20,18 +20,16 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef YIOAPIINTERFACE_H
-#define YIOAPIINTERFACE_H
+#pragma once
 
-#include <QVariant>
 #include <QObject>
+#include <QVariant>
 
 /// This interface is implemented by the Entities object and used by integration DLLs to access the entities
-class YioAPIInterface : public QObject
-{
+class YioAPIInterface : public QObject {
     Q_OBJECT
 
-public:
+ public:
     virtual ~YioAPIInterface() {}
 
     virtual void start() = 0;
@@ -40,13 +38,13 @@ public:
 
     // CONFIG MANIPULATION METHODS
     virtual QVariantMap getConfig() = 0;
-    virtual bool addEntityToConfig(QVariantMap entity) = 0;
+    virtual bool        addEntityToConfig(QVariantMap entity) = 0;
 
     // NETWORK SERVICES DISCOVERY
     virtual void discoverNetworkServices() = 0;
     virtual void discoverNetworkServices(QString mdns) = 0;
 
-signals:
+ signals:
     void serviceDiscovered(QMap<QString, QVariantMap> services);
 };
 
@@ -54,5 +52,3 @@ QT_BEGIN_NAMESPACE
 #define YioAPIInterface_iid "YIO.YioAPIInterface"
 Q_DECLARE_INTERFACE(YioAPIInterface, YioAPIInterface_iid)
 QT_END_NAMESPACE
-
-#endif // YIOAPIINTERFACE_H

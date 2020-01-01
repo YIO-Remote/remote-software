@@ -51,16 +51,18 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
     QString entityId = config.value("entity_id").toString();
     setObjectName(entityId);
 
-    QStringList f = Config::getInstance()->getProfileFavorites();
+    QStringList f = Config::getInstance()->profileFavorites();
     m_favorite = f.contains(entityId);
 }
 
 Entity::~Entity()
 {
 }
+
 void Entity::command(int command, const QVariant& param)
 {
-    m_integrationObj->sendCommand(m_type, entity_id(), command, param);
+    if (m_integrationObj)
+        m_integrationObj->sendCommand(m_type, entity_id(), command, param);
 }
 
 bool Entity::update(const QVariantMap &attributes)
