@@ -71,8 +71,6 @@ build
 plugins/*.so
 
 #Translation files
-translations/*.ts
-translations/*.qm
 *.user
 *.user.*
 *.dylib
