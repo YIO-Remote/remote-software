@@ -281,7 +281,7 @@ Item {
     Text {
         id: icon
         color: Style.colorText
-        text: "\uE913"
+        text: Style.icons.climate
         renderType: Text.NativeRendering
         width: 85
         height: 85

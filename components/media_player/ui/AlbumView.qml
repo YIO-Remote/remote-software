@@ -88,7 +88,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE906"
+            text: Style.icons.play
             renderType: Text.NativeRendering
             width: 70
             height: 70

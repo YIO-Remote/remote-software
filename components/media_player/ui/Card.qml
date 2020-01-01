@@ -275,7 +275,7 @@ Rectangle {
         Text {
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
-            text: "\uE900"
+            text: Style.icons.home
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -301,7 +301,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
-            text: "\uE90C"
+            text: Style.icons.search
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -327,7 +327,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
-            text: "\uE907"
+            text: Style.icons.playlist
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -353,7 +353,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
-            text: "\uE90D"
+            text: Style.icons.speaker
             renderType: Text.NativeRendering
             width: 60
             height: 60

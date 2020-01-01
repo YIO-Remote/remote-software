@@ -50,6 +50,50 @@ QtObject {
     property color colorDark: darkMode ? "#1C1C1C" : "#ffffff"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ICONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    readonly property QtObject icons: QtObject {
+
+        readonly property string cool: "\uE91E"
+        readonly property string heat: "\uE91F"
+
+        readonly property string circle_full: "\uE91A"
+        readonly property string circle: "\uE91B"
+        readonly property string square_full: "\uE91C"
+        readonly property string square: "\uE91D"
+
+        readonly property string left_arrow: "\uE917"
+        readonly property string right_arrow: "\uE918"
+        readonly property string up_arrow: "\uE919"
+        readonly property string down_arrow: "\uE916"
+
+        readonly property string close: "\uE915"
+        readonly property string home: "\uE900"
+
+        readonly property string light: "\uE901"
+        readonly property string link: "\uE902"
+        readonly property string music: "\uE903"
+        readonly property string prev: "\uE909"
+        readonly property string next: "\uE904"
+        readonly property string pause: "\uE905"
+        readonly property string play: "\uE906"
+        readonly property string playlist: "\uE907"
+        readonly property string search: "\uE90C"
+        readonly property string speaker: "\uE90D"
+        readonly property string speakers: "\uE90E"
+        readonly property string radio: "\uE90A"
+
+        readonly property string power_on: "\uE908"
+        readonly property string remote: "\uE90B"
+        readonly property string stairs: "\uE90F"
+        readonly property string tv: "\uE910"
+        readonly property string weather: "\uE911"
+        readonly property string climate: "\uE913"
+        readonly property string blind: "\uE914"
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FONT STYLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

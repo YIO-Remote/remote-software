@@ -86,11 +86,11 @@ Rectangle {
                     color: Style.colorText
                     text: {
                         if (list[index] == "PLAY")
-                            return "\uE903"
+                            return Style.icons.music
                         else if (list[index] == "QUEUE")
-                            return "\uE907"
+                            return Style.icons.playlist
                         else if (list[index] == "SONGRADIO")
-                            return "\uE90A"
+                            return Style.icons.radio
                         else
                             return ""
                     }

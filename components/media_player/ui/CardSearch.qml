@@ -141,7 +141,7 @@ Rectangle {
                     Text {
                         id: searchIcon
                         color: Style.colorBackground
-                        text: "\uE90C"
+                        text: Style.icons.search
                         renderType: Text.NativeRendering
                         width: 70
                         height: 70
@@ -667,7 +667,7 @@ Rectangle {
             Text {
                 id: backButton
                 color: Style.colorText
-                text: "\uE917"
+                text: Style.icons.left_arrow
                 renderType: Text.NativeRendering
                 width: 70
                 height: 70

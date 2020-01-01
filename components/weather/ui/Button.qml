@@ -206,7 +206,7 @@ Rectangle {
         Text {
             id: icon
             color: Style.colorText
-            text: "\uE901"
+            text: Style.icons.light
             renderType: Text.NativeRendering
             width: 85
             height: 85

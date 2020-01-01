@@ -228,7 +228,7 @@ Rectangle {
         Text {
             id: icon
             color: Style.colorText
-            text: "\uE914"
+            text: Style.icons.blind
             renderType: Text.NativeRendering
             width: 85
             height: 85

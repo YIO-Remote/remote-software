@@ -40,7 +40,7 @@ Item {
 
         Text {
             color: Style.colorLine
-            text: "\uE908"
+            text: Style.icons.power_on
             renderType: Text.NativeRendering
             width: 70
             height: 70

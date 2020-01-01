@@ -216,7 +216,7 @@ Rectangle {
 
             Text {
                 color: Style.colorText
-                text: "\uE91B"
+                text: Style.icons.circle
                 width: 60
                 height: 60
                 verticalAlignment: Text.AlignVCenter
@@ -250,7 +250,7 @@ Rectangle {
 
             Text {
                 color: Style.colorText
-                text: "\uE91D"
+                text: Style.icons.square
                 width: 60
                 height: 60
                 verticalAlignment: Text.AlignVCenter
@@ -285,7 +285,7 @@ Rectangle {
 
             Text {
                 color: Style.colorText
-                text: "\uE91C"
+                text: Style.icons.square_full
                 width: 60
                 height: 60
                 verticalAlignment: Text.AlignVCenter

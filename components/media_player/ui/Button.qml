@@ -33,7 +33,7 @@ import MediaPlayerUtils 1.0
 
 Comp.ButtonBase {
     id: mediaplayerButton
-    icon: "\uE903"
+    icon: Style.icons.music
     cardLoader.source: "qrc:/components/media_player/ui/Card.qml"
 
     // override default settings

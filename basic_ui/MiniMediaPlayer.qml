@@ -489,7 +489,7 @@ Item {
     Text {
         id: closeButton
         color: Style.colorText
-        text: "\uE916"
+        text: Style.icons.down_arrow
         renderType: Text.NativeRendering
         width: 70
         height: 70
@@ -527,7 +527,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE909"
+            text: Style.icons.prev
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -563,7 +563,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE905"
+            text: Style.icons.pause
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -580,7 +580,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE906"
+            text: Style.icons.play
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -623,7 +623,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE904"
+            text: Style.icons.next
             renderType: Text.NativeRendering
             width: 85
             height: 85

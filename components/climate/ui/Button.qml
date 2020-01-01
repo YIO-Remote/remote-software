@@ -30,7 +30,7 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: climateButton
-    icon: "\uE913"
+    icon: Style.icons.climate
     cardLoader.source: "qrc:/components/climate/ui/Card.qml"
 
     // override default settings

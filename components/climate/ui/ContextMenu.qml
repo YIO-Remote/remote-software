@@ -85,11 +85,11 @@ Rectangle {
                     text: {
                         console.debug(list[index])
                         if (list[index]["original"] === "Off")
-                            return "\uE908"
+                            return Style.icons.power_on
                         else if (list[index]["original"] === "Heat")
-                            return "\uE91F"
+                            return Style.icons.heat
                         else if (list[index]["original"] === "Cool")
-                            return "\uE91E"
+                            return Style.icons.cool
                     }
                     renderType: Text.NativeRendering
                     width: 70

@@ -427,7 +427,7 @@ Rectangle {
         id: closeButton
         color: Style.colorText
         visible: buttonContainer.state == "open"
-        text: "\uE915"
+        text: Style.icons.close
         renderType: Text.NativeRendering
         width: 70
         height: 70

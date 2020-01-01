@@ -145,7 +145,7 @@ Rectangle {
             Text {
                 id: icon
                 color: Style.colorText
-                text: "\uE901"
+                text: Style.icons.light
                 renderType: Text.NativeRendering
                 width: 85
                 height: 85
@@ -222,7 +222,7 @@ Rectangle {
             Text {
                 id: closeButton
                 color: Style.colorText
-                text: "\uE915"
+                text: Style.icons.close
                 renderType: Text.NativeRendering
                 width: 70
                 height: 70
@@ -348,7 +348,7 @@ Rectangle {
             Text {
                 id: icon_b
                 color: Style.colorText
-                text: "\uE901"
+                text: Style.icons.light
                 renderType: Text.NativeRendering
                 width: 85
                 height: 85
@@ -466,7 +466,7 @@ Rectangle {
             Text {
                 id: closeButton_b
                 color: Style.colorText
-                text: "\uE915"
+                text: Style.icons.close
                 renderType: Text.NativeRendering
                 width: 70
                 height: 70

@@ -222,7 +222,7 @@ Rectangle {
             Text {
                 id: backButton
                 color: Style.colorText
-                text: "\uE917"
+                text: Style.icons.left_arrow
                 renderType: Text.NativeRendering
                 width: 70
                 height: 70
