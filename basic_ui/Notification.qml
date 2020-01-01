@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 

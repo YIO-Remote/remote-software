@@ -22,6 +22,7 @@
 
 import QtQuick 2.0
 import Entity.MediaPlayer 1.0
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 

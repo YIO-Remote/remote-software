@@ -76,17 +76,17 @@ Rectangle {
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    layer.enabled: true
-    layer.effect: OpacityMask {
-        maskSource: Item {
-            width: buttonContainer.width
-            height: buttonContainer.height
-            Rectangle {
-                anchors.fill: parent
-                radius: Style.cornerRadius
-            }
-        }
-    }
+//    layer.enabled: true
+//    layer.effect: OpacityMask {
+//        maskSource: Item {
+//            width: buttonContainer.width
+//            height: buttonContainer.height
+//            Rectangle {
+//                anchors.fill: parent
+//                radius: Style.cornerRadius
+//            }
+//        }
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
@@ -186,10 +186,11 @@ Rectangle {
             anchors.left: parent.left
             anchors.leftMargin: 126
             anchors.verticalCenter: parent.verticalCenter
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 27
-            lineHeight: 1
+//            font.family: "Open Sans"
+//            font.weight: Font.Normal
+//            font.pixelSize: 27
+//            lineHeight: 1
+            font: Style.buttonFont
         }
 
         Text {
