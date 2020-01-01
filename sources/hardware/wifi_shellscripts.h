@@ -21,8 +21,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFISHELLSCRIPTS_H
-#define WIFISHELLSCRIPTS_H
+#pragma once
 
 #include <QObject>
 #include <QProcess>
@@ -33,52 +32,52 @@
 /**
  * @brief Deprecated WifiControl implementation using the legacy shell scripts
  */
-class WifiShellScripts : public WifiControl
-{
+class WifiShellScripts : public WifiControl {
     Q_OBJECT
-public:
-    explicit WifiShellScripts(SystemService *systemService,
-                              QObject *parent = nullptr);
 
-    virtual bool init() override;
+ public:
+    explicit WifiShellScripts(SystemService *systemService, QObject *parent = nullptr);
 
-    Q_INVOKABLE virtual bool reset() override;
-    Q_INVOKABLE virtual bool clearConfiguredNetworks() override;
-    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password, WifiSecurity security = WifiSecurity::DEFAULT) override;
-    Q_INVOKABLE virtual bool isConnected() override;
-    Q_INVOKABLE virtual void startNetworkScan() override;
-    Q_INVOKABLE virtual bool startAccessPoint() override;
+    bool init() override;
 
-    virtual QString countryCode() override;
-    virtual void setCountryCode(QString &countryCode) override;
+    Q_INVOKABLE bool reset() override;
+    Q_INVOKABLE bool clearConfiguredNetworks() override;
+    Q_INVOKABLE bool join(const QString &ssid, const QString &password,
+                                  WifiSecurity security = WifiSecurity::DEFAULT) override;
+    Q_INVOKABLE bool isConnected() override;
+    Q_INVOKABLE void startNetworkScan() override;
+    Q_INVOKABLE  bool startAccessPoint() override;
 
-    void setScriptTimeout(int scriptTimeoutMs);
+    QString countryCode() override;
+    void    setCountryCode(const QString &countryCode) override;
 
-    void setScriptClearNetworks(const QString &script);
+    void setUseSudo(bool useSudo) { m_useSudo = useSudo; }
 
-    void setScriptConnectWifi(const QString &script);
+    void setScriptGetRssi(const QString &script) { m_scriptGetRssi = script; }
 
-    void setScriptListNetworks(const QString &script);
+    void setScriptGetMacAddress(const QString &script) { m_scriptGetMac = script; }
 
-    void setScriptStartAP(const QString &script);
+    void setScriptGetIp(const QString &script) { m_scriptGetIp = script; }
 
-    void setScriptGetSsid(const QString &script);
+    void setScriptGetSsid(const QString &script) { m_scriptGetSsid = script; }
 
-    void setScriptGetIp(const QString &script);
+    void setScriptStartAP(const QString &script) { m_scriptStartAP = script; }
 
-    void setScriptGetMacAddress(const QString &script);
+    void setScriptListNetworks(const QString &script) { m_scriptListNetworks = script; }
 
-    void setScriptGetRssi(const QString &script);
+    void setScriptConnectWifi(const QString &script) { m_scriptConnectWifi = script; }
 
-    void setUseSudo(bool useSudo);
+    void setScriptClearNetworks(const QString &script) { m_scriptClearNetworks = script; }
 
-public slots:
+    void setScriptTimeout(int scriptTimeoutMs) { m_scriptTimeout = scriptTimeoutMs; }
 
-    virtual void on() override;
-    virtual void off() override;
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
 
-private:
-    virtual void timerEvent(QTimerEvent *event) override;
+    void on() override;
+    void off() override;
+
+ private:
+    void timerEvent(QTimerEvent *event) override;
 
     /**
      * Tokenize a single line of scan results and interpret fields as WifiNetwork
@@ -86,13 +85,13 @@ private:
      * @param line reference to string in scan results
      * @return WifiNetwork data object
      */
-    WifiNetwork lineToNetwork(int index, const QStringRef& line);
+    WifiNetwork lineToNetwork(int index, const QStringRef &line);
 
     /**
      * Tokenize a buffer returned by the shell script into a list of WifiNetworks
      * @param buffer result
      */
-    QList<WifiNetwork> parseScanresult(const QString& buffer);
+    QList<WifiNetwork> parseScanresult(const QString &buffer);
 
     QString launch(const QString &command);
     QString launch(const QString &command, const QStringList &arguments);
@@ -110,7 +109,4 @@ private:
     QString m_scriptGetIp;
     QString m_scriptGetMac;
     QString m_scriptGetRssi;
-
 };
-
-#endif // WIFISHELLSCRIPTS_H

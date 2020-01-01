@@ -22,17 +22,13 @@
 
 #include "webserver_control.h"
 
-WebServerControl::WebServerControl(QObject *parent) : QObject(parent)
-{
-
-}
+WebServerControl::WebServerControl(QObject *parent) : QObject(parent) {}
 
 /**
  * @brief WebServerControl::restartService default implementation: stops and starts service
  * @return
  */
-bool WebServerControl::restartService()
-{
+bool WebServerControl::restartService() {
     stopService();
     return startService();
 }
@@ -41,8 +37,7 @@ bool WebServerControl::restartService()
  * @brief WebServerControl::reloadService default implementation: stops and starts service
  * @return
  */
-bool WebServerControl::reloadService()
-{
+bool WebServerControl::reloadService() {
     stopService();
     return startService();
 }

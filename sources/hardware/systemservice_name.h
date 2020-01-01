@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICENAME_ENUM_H
-#define SYSTEMSERVICENAME_ENUM_H
+#pragma once
 
 #include <QObject>
 
@@ -32,7 +31,7 @@
 class SystemServiceNameEnum {
     Q_GADGET
 
-public:
+ public:
     enum Value {
         WIFI,
         WEBSERVER,
@@ -44,12 +43,10 @@ public:
         SHUTDOWN,
         YIO_UPDATE
     };
-    Q_ENUM (Value)
+    Q_ENUM(Value)
 
-private:
-    explicit SystemServiceNameEnum() {}
+ private:
+    SystemServiceNameEnum() {}
 };
 
 typedef SystemServiceNameEnum::Value SystemServiceName;
-
-#endif // SYSTEMSERVICENAME_ENUM_H

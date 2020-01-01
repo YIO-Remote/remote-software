@@ -31,23 +31,22 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFIWPASUPPLICANT_H
-#define WIFIWPASUPPLICANT_H
+#pragma once
 
+#include <QList>
 #include <QObject>
 #include <QSocketNotifier>
 #include <QString>
 #include <QStringRef>
-#include <QList>
 
 #include <memory>
 #include <mutex>
 #include <thread>
 
+#include "common/wpa_ctrl.h"
 #include "systemservice.h"
 #include "webserver_control.h"
 #include "wifi_control.h"
-#include "common/wpa_ctrl.h"
 
 /**
  * Function to register as callback for the wpa_supplicant control interface
@@ -59,83 +58,84 @@ void wpa_msg_cb(char* buf, size_t len);
  * @details Uses the control interface to control the operations of the wpa_supplicant
  *          daemon and to get status information and event notifications.
  */
-class WifiWpaSupplicant : public WifiControl
-{
+class WifiWpaSupplicant : public WifiControl {
     Q_OBJECT
-public:
-    explicit WifiWpaSupplicant(WebServerControl *webServerControl,
-                               SystemService *systemService,
-                               QObject *parent = nullptr);
+
+ public:
+    explicit WifiWpaSupplicant(WebServerControl* webServerControl, SystemService* systemService,
+                               QObject* parent = nullptr);
 
     /**
      * Destructor must close wpa_cli
      */
-    virtual ~WifiWpaSupplicant() override;
+    ~WifiWpaSupplicant() override;
 
     /**
      * @brief init Connects to the wpa_supplicant control socket and checks connection.
      * @return true if initialization succeeded
      */
-    virtual bool init() override;
+    bool init() override;
 
     /**
      * @brief reset Detaches from the wpa_supplicant control socket, followed by init().
      * @return
      */
-    Q_INVOKABLE virtual bool reset() override;
-    Q_INVOKABLE virtual bool clearConfiguredNetworks() override;
-    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password, WifiSecurity security = WifiSecurity::DEFAULT) override;
-    Q_INVOKABLE virtual void startNetworkScan() override;
-    Q_INVOKABLE virtual bool startAccessPoint() override;
+    Q_INVOKABLE bool reset() override;
+    Q_INVOKABLE bool clearConfiguredNetworks() override;
+    Q_INVOKABLE bool join(const QString& ssid, const QString& password,
+                                  WifiSecurity security = WifiSecurity::DEFAULT) override;
+    Q_INVOKABLE void startNetworkScan() override;
+    Q_INVOKABLE bool startAccessPoint() override;
 
-    virtual QString countryCode() override;
-    virtual void setCountryCode(QString &countryCode) override;
+    QString countryCode() override;
+    void    setCountryCode(const QString& countryCode) override;
 
     /**
-      * TESTING ONLY! Proof of concept implementation for interactive authentication.
-      * Callback method for signal authenticationRequest().
-      */
+     * TESTING ONLY! Proof of concept implementation for interactive authentication.
+     * Callback method for signal authenticationRequest().
+     */
     Q_INVOKABLE void authenticationResponse(const QString& type, int networkId, const QString& response);
 
     /**
-      * Trigger Push Button Configuration (PBC) authentication with given network
-      * @return false if authentication request couldn't be sent
-      */
+     * Trigger Push Button Configuration (PBC) authentication with given network
+     * @return false if authentication request couldn't be sent
+     */
     bool wpsPushButtonConfigurationAuth(const WifiNetwork& network);
 
     QString getWpaSupplicantSocketPath() const;
-    void setWpaSupplicantSocketPath(const QString &wpaSupplicantSocketPath);
+    void    setWpaSupplicantSocketPath(const QString& wpaSupplicantSocketPath);
 
     bool getRemoveNetworksBeforeJoin() const;
     void setRemoveNetworksBeforeJoin(bool removeNetworksBeforeJoin);
 
-signals:
+ signals:
 
     /**
-     * @brief authenticationRequest TESTING ONLY! Proof of concept implementation for interactive authentication request.
+     * @brief authenticationRequest TESTING ONLY! Proof of concept implementation for interactive authentication
+     * request.
      * @param type Authorization type: "PASSWORD", "NEW_PASSWORD", "IDENTITY", "PASSPHRASE", "OTP"
      * @param networkId Network Id, must be used in authenticationResponse
      * @param text Human readable authorization information
      */
     void authenticationRequest(QString type, int networkId, QString text);
 
-public slots:
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
 
-    virtual void on() override;
-    virtual void off() override;
+    void on() override;
+    void off() override;
 
-protected slots:
+ protected slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
 
     /**
      * Data on control channel available
      */
     void controlEvent(int fd);
 
-private:
-
+ private:
     /**
      * @brief setNetworkParam Helper method to set a network parameter with SET_NETWORK
-     * @details If the parameter setting fails the wpa_supplicant configuration is re-read to restore the previous configuration state!
+     * @details If the parameter setting fails the wpa_supplicant configuration is re-read to restore the previous
+     * configuration state!
      * @param networkId Network identification
      * @param parm Parameter name
      * @param val Value to set for parameter
@@ -238,12 +238,13 @@ private:
 
     /**
      * @brief saveConfiguration Persist configuration with SAVE_CONFIG and check result
-     * @param resetCfgIfFailed true = if the configuration cannot be saved the wpa_supplicant configuration is re-read to restore the previous configuration state!
+     * @param resetCfgIfFailed true = if the configuration cannot be saved the wpa_supplicant configuration is re-read
+     * to restore the previous configuration state!
      * @return true if configuation was saved
      */
     bool saveConfiguration(bool resetCfgIfFailed = true);
 
-    void timerEvent(QTimerEvent *event) override;
+    void timerEvent(QTimerEvent* event) override;
 
     /**
      * Handle for lower layer wpa_ctrl
@@ -260,12 +261,10 @@ private:
      */
     std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
 
-    WebServerControl *p_webServerControl;
-    SystemService    *p_systemService;
+    WebServerControl* p_webServerControl;
+    SystemService*    p_systemService;
 
     // configuration parameters
     QString m_wpaSupplicantSocketPath;
     bool    m_removeNetworksBeforeJoin;
 };
-
-#endif // WIFIWPASUPPLICANT_H

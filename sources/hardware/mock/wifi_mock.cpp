@@ -89,7 +89,7 @@ bool WifiMock::startAccessPoint() {
 
 QString WifiMock::countryCode() { return m_countryCode; }
 
-void WifiMock::setCountryCode(QString &countryCode) { m_countryCode = countryCode; }
+void WifiMock::setCountryCode(const QString &countryCode) { m_countryCode = countryCode; }
 
 WifiStatus WifiMock::wifiStatus() const {
     return WifiStatus{"WiFi Mock", "", "127.0.0.1", "de:ad:be:ef:00:00", -70 + qrand() % 9};

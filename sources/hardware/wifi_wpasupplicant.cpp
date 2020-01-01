@@ -31,42 +31,38 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QVector>
-#include <QThread>
-#include <QFile>
 #include <QEventLoop>
+#include <QFile>
+#include <QLoggingCategory>
+#include <QThread>
 #include <QTimer>
+#include <QVector>
 
-#include <cstdio>
 #include <cerrno>
+#include <cstdio>
 #include <exception>
 
+#include "common/wpa_ctrl.h"
 #include "hw_config.h"
 #include "systemservice_name.h"
 #include "wifi_wpasupplicant.h"
-#include "common/wpa_ctrl.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
 const size_t WPA_BUF_SIZE = 2048;
 
-WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl *webServerControl,
-                                     SystemService *systemService,
-                                     QObject *parent)
-    : WifiControl(parent)
-    , m_ctrl(nullptr)
-    , p_webServerControl(webServerControl)
-    , p_systemService(systemService)
-    , m_wpaSupplicantSocketPath(HW_DEF_WIFI_WPA_SOCKET)
-    , m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN)
-{
+WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl* webServerControl, SystemService* systemService, QObject* parent)
+    : WifiControl(parent),
+      m_ctrl(nullptr),
+      p_webServerControl(webServerControl),
+      p_systemService(systemService),
+      m_wpaSupplicantSocketPath(HW_DEF_WIFI_WPA_SOCKET),
+      m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 /****************************************************************************/
-WifiWpaSupplicant::~WifiWpaSupplicant()
-{
+WifiWpaSupplicant::~WifiWpaSupplicant() {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
     if (m_ctrl) {
         if (m_ctrlNotifier) {
@@ -78,8 +74,7 @@ WifiWpaSupplicant::~WifiWpaSupplicant()
     }
 }
 
-QDebug operator<<(QDebug debug, const WifiNetwork& wn)
-{
+QDebug operator<<(QDebug debug, const WifiNetwork& wn) {
     QDebugStateSaver saver(debug);
     debug.nospace() << "("
                     << "id: " << wn.id() << ", "
@@ -90,65 +85,60 @@ QDebug operator<<(QDebug debug, const WifiNetwork& wn)
                     << "encrypted: " << wn.isEncrypted() << ", "
                     << "security: " << wn.security() << ", "
                     << "wpsAvailable: " << wn.isWpsAvailable() << ", "
-                    << "connected: " << wn.isConnected()
-                    << ")";
+                    << "connected: " << wn.isConnected() << ")";
     return debug;
 }
 
-QDebug operator<<(QDebug debug, const WifiStatus& wifiStatus)
-{
+QDebug operator<<(QDebug debug, const WifiStatus& wifiStatus) {
     QDebugStateSaver saver(debug);
     debug.nospace() << "("
                     << "ssid: " << wifiStatus.name() << ", "
-                    << "ip: " << wifiStatus.ipAddress()  << ", "
-                    << "mac: " << wifiStatus.macAddress()
-                    << ")";
+                    << "ip: " << wifiStatus.ipAddress() << ", "
+                    << "mac: " << wifiStatus.macAddress() << ")";
     return debug;
 }
 
-bool WifiWpaSupplicant::init()
-{
+bool WifiWpaSupplicant::init() {
     if (!m_ctrl) {
         qCDebug(CLASS_LC) << "Initializing driver...";
 
         if (!connectWpaControlSocket()) {
             return false;
         }
-        m_ctrlNotifier = std::make_unique<QSocketNotifier>(
-            wpa_ctrl_get_fd(m_ctrl), QSocketNotifier::Read);
+        m_ctrlNotifier = std::make_unique<QSocketNotifier>(wpa_ctrl_get_fd(m_ctrl), QSocketNotifier::Read);
 
         connect(m_ctrlNotifier.get(), SIGNAL(activated(int)), this, SLOT(controlEvent(int)));
 
         checkConnection();
-        // TODO signal & status scanning should be started by the external initialization or a signal when the user switched to the configuration screen
+        // TODO(zehnm) signal & status scanning should be started by the external initialization or a signal
+        //             when the user switched to the configuration screen
         startSignalStrengthScanning();
         startWifiStatusScanning();
 
-        qCDebug(CLASS_LC) << "wpa_supplicant control interface successfully initialized. WiFi connection:" << isConnected();
+        qCDebug(CLASS_LC) << "wpa_supplicant control interface successfully initialized. WiFi connection:"
+                          << isConnected();
     }
 
     return true;
 }
 
-void WifiWpaSupplicant::on()
-{
+void WifiWpaSupplicant::on() {
     p_systemService->startService(SystemServiceName::WIFI);
     checkConnection();
     startScanTimer();
 }
 
-void WifiWpaSupplicant::off()
-{
+void WifiWpaSupplicant::off() {
     stopScanTimer();
 
-    // TODO what about wpa_supplicant TERMINATE command? Or does that interfere with systemd service auto restart?
+    // TODO(zehnm) what about wpa_supplicant TERMINATE command?
+    //             Or does that interfere with systemd service auto restart?
     // https://w1.fi/wpa_supplicant/devel/ctrl_iface_page.html
     p_systemService->stopService(SystemServiceName::WIFI);
     setConnected(false);
 }
 
-bool WifiWpaSupplicant::reset()
-{
+bool WifiWpaSupplicant::reset() {
     if (m_ctrl) {
         if (m_ctrlNotifier) {
             m_ctrlNotifier->setEnabled(false);
@@ -162,8 +152,7 @@ bool WifiWpaSupplicant::reset()
     return init();
 }
 
-bool WifiWpaSupplicant::clearConfiguredNetworks()
-{
+bool WifiWpaSupplicant::clearConfiguredNetworks() {
     qCDebug(CLASS_LC) << "Disconnecting and removing all networks...";
 
     if (!controlRequest("DISCONNECT")) {
@@ -187,8 +176,7 @@ bool WifiWpaSupplicant::clearConfiguredNetworks()
     return true;
 }
 
-bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiSecurity security)
-{
+bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiSecurity security) {
     qCDebug(CLASS_LC) << "Joining network:" << ssid << security;
 
     // For more details about network creation & security option see:
@@ -202,34 +190,34 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiS
     QString authAlg;
 
     // KISS: as long as we don't need EAP this simple logic is "good enough".
-    // Even though it's a classical OCP violation: different security should be handled in their own specialized classes!
-    // Note: EAP is validated & rejected in above's validateAuthentication call
+    // Even though it's a classical OCP violation: different security should be handled in their own specialized
+    // classes! Note: EAP is validated & rejected in above's validateAuthentication call
     switch (security) {
-    case WifiSecurity::DEFAULT :
-        break;
-    case WifiSecurity::NONE_OPEN :
-        keyMgmnt = "NONE";
-        break;
-    // TODO either test NoneWep & NoneWepShared or remove them. Do we even need to distinguish them?
-    case WifiSecurity::NONE_WEP  :
-        keyMgmnt = "NONE";
-        break;
-    case WifiSecurity::NONE_WEP_SHARED :
-        keyMgmnt = "NONE";
-        authAlg = "SHARED";
-        break;
-    case WifiSecurity::WPA_PSK  :
-        keyMgmnt = "WPA-PSK";
-        break;
-    case WifiSecurity::WPA2_PSK :
-        keyMgmnt = "WPA-PSK";
-        break;
-    default :
-        qCWarning(CLASS_LC) << "Authentication mode not (yet) implemented:" << security;
-        return false;
+        case WifiSecurity::DEFAULT:
+            break;
+        case WifiSecurity::NONE_OPEN:
+            keyMgmnt = "NONE";
+            break;
+        // TODO(zehnm) either test NoneWep & NoneWepShared or remove them. Do we even need to distinguish them?
+        case WifiSecurity::NONE_WEP:
+            keyMgmnt = "NONE";
+            break;
+        case WifiSecurity::NONE_WEP_SHARED:
+            keyMgmnt = "NONE";
+            authAlg = "SHARED";
+            break;
+        case WifiSecurity::WPA_PSK:
+            keyMgmnt = "WPA-PSK";
+            break;
+        case WifiSecurity::WPA2_PSK:
+            keyMgmnt = "WPA-PSK";
+            break;
+        default:
+            qCWarning(CLASS_LC) << "Authentication mode not (yet) implemented:" << security;
+            return false;
     }
 
-    char buf[WPA_BUF_SIZE];
+    char    buf[WPA_BUF_SIZE];
     QString cmd;
     if (m_removeNetworksBeforeJoin) {
         if (!controlRequest("REMOVE_NETWORK all", buf, WPA_BUF_SIZE)) {
@@ -282,14 +270,15 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiS
 
     cmd = "ENABLE_NETWORK %1";
     if (!controlRequest(cmd.arg(networkId), buf, WPA_BUF_SIZE)) {
-        controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
+        controlRequest("RECONFIGURE");  // reload from cfg and hope for the best
         return false;
     }
 
     // wait for successful connection and save configuration once connected.
-    // TODO asynchronous check using a timer. Return immediately and notify caller with signal.
+    // TODO(zehnm) asynchronous check using a timer. Return immediately and notify caller with signal.
     for (int i = 0; i < getNetworkJoinRetryCount(); i++) {
-        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i+1) << "/" << getNetworkJoinRetryCount() << ")";
+        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i + 1) << "/"
+                          << getNetworkJoinRetryCount() << ")";
 
         if (checkConnection()) {
             bool resetIfFailed = false;
@@ -299,12 +288,13 @@ bool WifiWpaSupplicant::join(const QString &ssid, const QString &password, WifiS
         QThread::currentThread()->msleep(getNetworkJoinRetryDelay());
     }
 
-    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << getNetworkJoinRetryCount() << "retries";
+    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << getNetworkJoinRetryCount()
+                        << "retries";
     return false;
 }
 
-bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString& parm, const QString& val, bool quote/* = false*/)
-{
+bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString& parm, const QString& val,
+                                        bool quote /* = false*/) {
     QString cmd;
     if (quote)
         cmd = "SET_NETWORK %1 %2 \"%3\"";
@@ -312,15 +302,14 @@ bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString&
         cmd = "SET_NETWORK %1 %2 %3";
 
     if (!controlRequest(cmd.arg(networkId).arg(parm).arg(val))) {
-        controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
+        controlRequest("RECONFIGURE");  // reload from cfg and hope for the best
         return false;
     }
 
     return true;
 }
 
-bool WifiWpaSupplicant::writeWepKey(const QString& networkId, const QString& value, int keyId)
-{
+bool WifiWpaSupplicant::writeWepKey(const QString& networkId, const QString& value, int keyId) {
     // Assume hex key if only hex characters are present and length matches with 40, 104, or 128-bit key
     auto len = value.size();
     auto hex = value.contains(QRegExp("^[0-9A-F]+$"));
@@ -332,26 +321,21 @@ bool WifiWpaSupplicant::writeWepKey(const QString& networkId, const QString& val
     return setNetworkParam(networkId, var.arg(keyId), value, !hex);
 }
 
-void WifiWpaSupplicant::startNetworkScan()
-{
-    controlRequest("SCAN");
-}
+void WifiWpaSupplicant::startNetworkScan() { controlRequest("SCAN"); }
 
-QList<WifiNetwork>& WifiWpaSupplicant::scanForAvailableNetworks(int timeout)
-{
+QList<WifiNetwork>& WifiWpaSupplicant::scanForAvailableNetworks(int timeout) {
     QEventLoop loop;
-    QTimer timeoutTimer;
+    QTimer     timeoutTimer;
     connect(this, SIGNAL(networksFound(const QList<WifiNetwork>&)), &loop, SLOT(quit()));
     connect(&timeoutTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
     timeoutTimer.start(timeout);
     controlRequest("SCAN");
-    loop.exec(); //blocks until either networksFound or timeout was fired
+    loop.exec();  // blocks until either networksFound or timeout was fired
 
     return scanResult();
 }
 
-bool WifiWpaSupplicant::startAccessPoint()
-{
+bool WifiWpaSupplicant::startAccessPoint() {
     qCDebug(CLASS_LC) << "TODO starting access point...";
 
     if (!clearConfiguredNetworks()) {
@@ -372,15 +356,12 @@ bool WifiWpaSupplicant::startAccessPoint()
     // update_config=1
     // " > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 
-    // TODO logic from reset-wifi.sh still required to restart networking, dns & wpa_supplicant?
+    // TODO(zehnm) logic from reset-wifi.sh still required to restart networking, dns & wpa_supplicant?
     //    p_systemService->restartService(SystemServiceName::NETWORKING);
     //    p_systemService->restartService(SystemServiceName::NAME_RESOLUTION);
     //    p_systemService->restartService(SystemServiceName::WIFI);
 
-    // TODO scan for nearby wifis
-    //    iw dev wlan0 scan >> /dev/null
-    //     /usr/bin/yio-remote/wifi_network_list.sh > /networklist
-
+    // scan for nearby wifi APs
     QList<WifiNetwork> networks = scanForAvailableNetworks(5000);
 
     // FIXME legacy function for PHP setup portal
@@ -395,7 +376,7 @@ bool WifiWpaSupplicant::startAccessPoint()
     }
     qFile.close();
 
-    // TODO set static IP address
+    // TODO(zehnm) set static IP address
     //    echo "[Match]
     // Name=wlan0
     //
@@ -403,15 +384,15 @@ bool WifiWpaSupplicant::startAccessPoint()
     // Address=10.0.0.1/24" > /etc/systemd/network/20-wireless.network
     p_systemService->restartService(SystemServiceName::NETWORKING);
 
-    // TODO turn off wlan service
+    // turn off wlan service
     p_systemService->stopService(SystemServiceName::WIFI);
     // killall -9 wpa_supplicant
 
-    // TODO DHCP and DNS service
+    // DHCP and DNS service
     p_systemService->stopService(SystemServiceName::NAME_RESOLUTION);
     // dnsmasq -k --conf-file=/etc/dnsmasq.conf &
 
-    // TODO launch hostapd
+    // TODO(zehnm) launch hostapd
     // hostapd -B /etc/hostapd/hostapd.conf &
 
     // AP up and running, start web portal
@@ -429,7 +410,7 @@ QString WifiWpaSupplicant::countryCode() {
     return QString(buf);
 }
 
-void WifiWpaSupplicant::setCountryCode(QString &countryCode) {
+void WifiWpaSupplicant::setCountryCode(const QString& countryCode) {
     QString cmd = "SET country %1";
     if (controlRequest(cmd.arg(countryCode.toUpper()))) {
         controlRequest("SAVE_CONFIG");
@@ -475,8 +456,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
     // we might have multiple threads accessing this driver (e.g. QML user interface & pollers)
     std::lock_guard<std::mutex> lock(m_wpaMutex);
 
-    auto res = wpa_ctrl_request(
-        m_ctrl, cmd.toStdString().c_str(), cmd.size(), buf, &buflen, nullptr);
+    auto res = wpa_ctrl_request(m_ctrl, cmd.toStdString().c_str(), cmd.size(), buf, &buflen, nullptr);
 
     buf[buflen] = '\0';
     if (res < 0) {
@@ -550,7 +530,9 @@ void WifiWpaSupplicant::parseEvent(char* msg) {
 /*
 From: https://w1.fi/wpa_supplicant/devel/ctrl_iface_page.html#ctrl_iface_interactive
 
-If wpa_supplicant needs additional information during authentication (e.g., password), it will use a specific prefix, CTRL-REQ- (WPA_CTRL_REQ macro) in an unsolicited event message. An external program, e.g., a GUI, can provide such information by using CTRL-RSP- (WPA_CTRL_RSP macro) prefix in a command with matching field name.
+If wpa_supplicant needs additional information during authentication (e.g., password), it will use a specific prefix,
+CTRL-REQ- (WPA_CTRL_REQ macro) in an unsolicited event message. An external program, e.g., a GUI, can provide such
+information by using CTRL-RSP- (WPA_CTRL_RSP macro) prefix in a command with matching field name.
 
 The following fields can be requested in this way from the user:
 
@@ -573,27 +555,25 @@ And a matching reply from the GUI:
     CTRL-RSP-PASSWORD-1-secret
  */
 void WifiWpaSupplicant::processCtrlReq(const QString& req) {
-
     QString type = req.section('-', 0, 0);
     QString networkId = req.section('-', 1, 1).section(':', 0, 0);
     QString text = req.section(':', 1, 1);
 
     bool ok;
-    int id = networkId.toInt(&ok);
+    int  id = networkId.toInt(&ok);
     if (!ok) {
         qCWarning(CLASS_LC()) << "Bad request data:" << req;
         return;
     }
 
-    // TODO This is only a proof of concept implementation!
+    // TODO(zehnm) This is only a proof of concept implementation!
     // IF we really require this functionality in the future then improve the simple POC code with:
     // - validate type here. It must be one of:  "PASSWORD", "NEW_PASSWORD", "IDENTITY", "PASSPHRASE", "OTP"
     // - create an enum for the type. Don't pass string value to client
     emit authenticationRequest(type, id, text);
 }
 
-void WifiWpaSupplicant::authenticationResponse(const QString& type, int networkId, const QString& response)
-{
+void WifiWpaSupplicant::authenticationResponse(const QString& type, int networkId, const QString& response) {
     // Response to processCtrlReq above, cmd has to be: "CTRL-RSP-PASSWORD-1:myPassword", "CTRL-RSP-OTP-2:1234" etc
     QString cmd = QString("%1%2-%3:%4").arg(WPA_CTRL_RSP).arg(type).arg(networkId).arg(response);
     controlRequest(cmd);
@@ -601,19 +581,18 @@ void WifiWpaSupplicant::authenticationResponse(const QString& type, int networkI
 
 /****************************************************************************/
 void WifiWpaSupplicant::readScanResults() {
-    // Note: the simple all-in-one "SCAN_RESULTS" command might fail if there are too many networks! (response buffer too small)
-    // Therefore we are using individual "BSS <networkid>" calls.
+    // Note: the simple all-in-one "SCAN_RESULTS" command might fail if there are too many networks! (response buffer
+    // too small) Therefore we are using individual "BSS <networkid>" calls.
     m_scanResults.clear();
 
     for (int i = 0; i < maxScanResults(); i++) {
-        if (!addBSS(i))
-            break;
+        if (!addBSS(i)) break;
     }
     emit networksFound(m_scanResults);
 }
 
 bool WifiWpaSupplicant::addBSS(int networkId) {
-    char buf[WPA_BUF_SIZE];
+    char    buf[WPA_BUF_SIZE];
     QString cmd("BSS %1");
 
     if (!controlRequest(cmd.arg(networkId), buf, WPA_BUF_SIZE)) {
@@ -626,7 +605,7 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
     }
 
     QString id, ssid, bssid, flags, wps_name, pri_dev_type;
-    int level = -100;
+    int     level = -100;
 
     QStringList lines = bss.split(QRegExp("\\n"));
     for (QStringList::Iterator it = lines.begin(); it != lines.end(); it++) {
@@ -653,7 +632,7 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
     }
 
     WifiSecurity security = getSecurityFromFlags(flags, networkId);
-    WifiNetwork network { id, ssid, bssid, level, security, flags.contains("[WPS") };
+    WifiNetwork  network{id, ssid, bssid, level, security, flags.contains("[WPS")};
     qCDebug(CLASS_LC) << "Network found:" << network;
 
     m_scanResults.append(network);
@@ -661,8 +640,7 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
     return true;
 }
 
-WifiSecurity WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int networkId)
-{
+WifiSecurity WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int networkId) {
     // Partial implementation of security flags, e.g. no support for EAP
     // Sufficiant for now...
     WifiSecurity auth;
@@ -684,7 +662,7 @@ WifiSecurity WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int n
             auth = WifiSecurity::NONE_WEP;
         }
         if (networkId >= 0) {
-            char buf[WPA_BUF_SIZE];
+            char    buf[WPA_BUF_SIZE];
             QString cmd = "GET_NETWORK %1 auth_alg";
             if (controlRequest(cmd.arg(networkId), buf, WPA_BUF_SIZE)) {
                 if (strcmp(buf, "SHARED") == 0) {
@@ -697,23 +675,22 @@ WifiSecurity WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int n
     return auth;
 }
 
-QList<WifiNetwork> &WifiWpaSupplicant::getConfiguredNetworks()
-{
+QList<WifiNetwork>& WifiWpaSupplicant::getConfiguredNetworks() {
     static QList<WifiNetwork> networks;
-    char buf[WPA_BUF_SIZE];
+    char                      buf[WPA_BUF_SIZE];
 
     networks.clear();
     if (!controlRequest("LIST_NETWORKS", buf, WPA_BUF_SIZE)) {
         return networks;
     }
 
-    for(QString line : QString(buf).split('\n')) {
+    for (QString line : QString(buf).split('\n')) {
         QStringList data = line.split('\t');
         // assume network id is always a number, it's not completely clear in the docs...
-        if (!data.at(0).contains(QRegExp("^[0-9]+$")))
-            continue;
+        if (!data.at(0).contains(QRegExp("^[0-9]+$"))) continue;
 
-        WifiNetwork wn {data.at(0), data.at(1), data.at(2), 0, WifiSecurity::DEFAULT, false, data.at(3).contains("[CURRENT]") };
+        WifiNetwork wn{
+            data.at(0), data.at(1), data.at(2), 0, WifiSecurity::DEFAULT, false, data.at(3).contains("[CURRENT]")};
         networks.append(wn);
     }
 
@@ -723,9 +700,9 @@ QList<WifiNetwork> &WifiWpaSupplicant::getConfiguredNetworks()
 /****************************************************************************/
 WifiStatus WifiWpaSupplicant::parseStatus(const char* buffer) {
     QString results(buffer);
-    auto lines = results.splitRef("\n");
-    QString  name, bssid, ip, mac;
-    bool connected = false;
+    auto    lines = results.splitRef("\n");
+    QString name, bssid, ip, mac;
+    bool    connected = false;
 
     for (int i = 0; i < lines.length(); i++) {
         int pos = lines[i].indexOf("=");
@@ -746,29 +723,27 @@ WifiStatus WifiWpaSupplicant::parseStatus(const char* buffer) {
         }
     }
 
-    return WifiStatus { name, bssid, ip, mac, -100, connected };
+    return WifiStatus{name, bssid, ip, mac, -100, connected};
 }
 
 // code based on WpaGui::updateSignalMeter()
 int WifiWpaSupplicant::parseSignalStrength(const char* buffer) {
     const char* rssi;
-    int rssiValue = -100;
+    int         rssiValue = -100;
 
-    /* In order to eliminate signal strength fluctuations, try
-     * to obtain averaged RSSI value in the first place. */
-    if ((rssi = strstr(buffer, "AVG_RSSI=")) != nullptr)
+    // In order to eliminate signal strength fluctuations, try to obtain averaged RSSI value in the first place.
+    if ((rssi = strstr(buffer, "AVG_RSSI=")) != nullptr) {
         rssiValue = atoi(&rssi[sizeof("AVG_RSSI")]);
-    else if ((rssi = strstr(buffer, "RSSI=")) != nullptr)
+    } else if ((rssi = strstr(buffer, "RSSI=")) != nullptr) {
         rssiValue = atoi(&rssi[sizeof("RSSI")]);
-    else {
+    } else {
         qCDebug(CLASS_LC) << "Failed to get RSSI value";
     }
 
     return rssiValue;
 }
 
-bool WifiWpaSupplicant::checkConnection()
-{
+bool WifiWpaSupplicant::checkConnection() {
     char buf[WPA_BUF_SIZE];
     if (!controlRequest("STATUS", buf, WPA_BUF_SIZE)) {
         return false;
@@ -781,17 +756,18 @@ bool WifiWpaSupplicant::checkConnection()
 
 bool WifiWpaSupplicant::saveConfiguration(bool resetCfgIfFailed) {
     if (!controlRequest("SAVE_CONFIG")) {
-        qCWarning(CLASS_LC) << "Error saving current wpa_supplicant configuration! Please verify that /etc/wpa_supplicant/wpa_supplicant-wlan0.conf has 'update_config=1' set. Otherwise the configration cannot be persisted!";
+        qCWarning(CLASS_LC) << "Error saving current wpa_supplicant configuration! Please verify that "
+                               "/etc/wpa_supplicant/wpa_supplicant-wlan0.conf has 'update_config=1' set. Otherwise the "
+                               "configration cannot be persisted!";
         if (resetCfgIfFailed) {
-            controlRequest("RECONFIGURE"); // reload from cfg and hope for the best
+            controlRequest("RECONFIGURE");  // reload from cfg and hope for the best
         }
         return false;
     }
     return true;
 }
 
-void WifiWpaSupplicant::timerEvent(QTimerEvent *event)
-{
+void WifiWpaSupplicant::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
 
     if (!(m_wifiStatusScanning || m_signalStrengthScanning)) {
@@ -829,22 +805,14 @@ void WifiWpaSupplicant::timerEvent(QTimerEvent *event)
     }
 }
 
-bool WifiWpaSupplicant::getRemoveNetworksBeforeJoin() const
-{
-    return m_removeNetworksBeforeJoin;
-}
+bool WifiWpaSupplicant::getRemoveNetworksBeforeJoin() const { return m_removeNetworksBeforeJoin; }
 
-void WifiWpaSupplicant::setRemoveNetworksBeforeJoin(bool removeNetworksBeforeJoin)
-{
+void WifiWpaSupplicant::setRemoveNetworksBeforeJoin(bool removeNetworksBeforeJoin) {
     m_removeNetworksBeforeJoin = removeNetworksBeforeJoin;
 }
 
-QString WifiWpaSupplicant::getWpaSupplicantSocketPath() const
-{
-    return m_wpaSupplicantSocketPath;
-}
+QString WifiWpaSupplicant::getWpaSupplicantSocketPath() const { return m_wpaSupplicantSocketPath; }
 
-void WifiWpaSupplicant::setWpaSupplicantSocketPath(const QString &wpaSupplicantSocketPath)
-{
+void WifiWpaSupplicant::setWpaSupplicantSocketPath(const QString& wpaSupplicantSocketPath) {
     m_wpaSupplicantSocketPath = wpaSupplicantSocketPath;
 }

@@ -47,7 +47,7 @@ class WifiMock : public WifiControl {
     Q_INVOKABLE bool startAccessPoint() override;
 
     QString    countryCode() override;
-    void       setCountryCode(QString &countryCode) override;
+    void       setCountryCode(const QString &countryCode) override;
     WifiStatus wifiStatus() const override;
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99

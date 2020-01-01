@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFISECURITY_H
-#define WIFISECURITY_H
+#pragma once
 
 #include <QObject>
 
@@ -32,7 +31,7 @@
 class WifiSecurityEnum {
     Q_GADGET
 
-public:
+ public:
     enum Value {
         DEFAULT,
         NONE_OPEN,
@@ -44,12 +43,10 @@ public:
         WPA2_PSK,
         WPA2_EAP
     };
-    Q_ENUM (Value)
+    Q_ENUM(Value)
 
-private:
-    explicit WifiSecurityEnum() {}
+ private:
+    WifiSecurityEnum() {}
 };
 
 typedef WifiSecurityEnum::Value WifiSecurity;
-
-#endif // WIFISECURITY_H
