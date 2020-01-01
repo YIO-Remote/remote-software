@@ -31,7 +31,7 @@ Item {
     height: 40
     clip: true
 
-    property alias bg: bg
+//    property alias bg: bg
 
     Rectangle {
         id: bg
@@ -204,7 +204,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: batteryIcon.left
         anchors.rightMargin: 10
-        fillMode: Image.PreserveAspectFit
+//        fillMode: Image.PreserveAspectFit
         source: "qrc:/images/statusbar/statusbar-loader.png"
 
         RotationAnimator on rotation {

@@ -91,6 +91,7 @@ void Notifications::remove(const int id) {
     m_notifications.remove(id);
     emit listChanged();
     emit errorChanged();
+    if (m_notifications.size() == 0) emit listIsEmpty();
 }
 
 void Notifications::remove(const QString &text) {
@@ -102,6 +103,7 @@ void Notifications::remove(const QString &text) {
     }
     emit listChanged();
     emit errorChanged();
+    if (m_notifications.size() == 0) emit listIsEmpty();
 }
 
 void Notifications::execute(const int id) {
