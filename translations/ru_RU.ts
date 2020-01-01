@@ -43,17 +43,17 @@
   <context>
     <name>Bluetooth</name>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="41"/>
       <source>Bluetooth</source>
       <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
       <source>Area detection</source>
       <translation type="unfinished">Area detection</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
     </message>
@@ -62,15 +62,15 @@
     <name>Button</name>
     <message>
       <location filename="../components/blind/ui/Button.qml" line="386"/>
-      <location filename="../components/light/ui/Button.qml" line="380"/>
-      <location filename="../components/weather/ui/Button.qml" line="340"/>
+      <location filename="../components/light/ui/Button.qml" line="381"/>
+      <location filename="../components/weather/ui/Button.qml" line="361"/>
       <source>Remove from favorites</source>
       <translation>Удалить из избранного</translation>
     </message>
     <message>
       <location filename="../components/blind/ui/Button.qml" line="386"/>
-      <location filename="../components/light/ui/Button.qml" line="380"/>
-      <location filename="../components/weather/ui/Button.qml" line="340"/>
+      <location filename="../components/light/ui/Button.qml" line="381"/>
+      <location filename="../components/weather/ui/Button.qml" line="361"/>
       <source>Add to favorites</source>
       <translation>Добавить в избранное</translation>
     </message>
@@ -83,12 +83,12 @@
   <context>
     <name>ButtonBase</name>
     <message>
-      <location filename="../components/ButtonBase.qml" line="331"/>
+      <location filename="../components/ButtonBase.qml" line="358"/>
       <source>Remove from favorites</source>
       <translation type="unfinished">Remove from favorites</translation>
     </message>
     <message>
-      <location filename="../components/ButtonBase.qml" line="331"/>
+      <location filename="../components/ButtonBase.qml" line="358"/>
       <source>Add to favorites</source>
       <translation type="unfinished">Add to favorites</translation>
     </message>
@@ -111,32 +111,32 @@
       <translation type="unfinished">Menu</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="327"/>
+      <location filename="../components/climate/ui/Card.qml" line="348"/>
       <source>Turn off</source>
       <translation type="unfinished">Turn off</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="327"/>
+      <location filename="../components/climate/ui/Card.qml" line="348"/>
       <source>Turn on</source>
       <translation type="unfinished">Turn on</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="340"/>
+      <location filename="../components/climate/ui/Card.qml" line="361"/>
       <source>Mode</source>
       <translation type="unfinished">Mode</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="350"/>
+      <location filename="../components/climate/ui/Card.qml" line="371"/>
       <source>Off</source>
       <translation type="unfinished">Off</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="356"/>
+      <location filename="../components/climate/ui/Card.qml" line="377"/>
       <source>Heat</source>
       <translation type="unfinished">Heat</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="362"/>
+      <location filename="../components/climate/ui/Card.qml" line="383"/>
       <source>Cool</source>
       <translation type="unfinished">Cool</translation>
     </message>
@@ -144,22 +144,22 @@
   <context>
     <name>CardButtons</name>
     <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="52"/>
+      <location filename="../components/remote/ui/ir/CardButtons.qml" line="73"/>
       <source>Source</source>
       <translation type="unfinished">Source</translation>
     </message>
     <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="62"/>
+      <location filename="../components/remote/ui/ir/CardButtons.qml" line="83"/>
       <source>Info</source>
       <translation type="unfinished">Info</translation>
     </message>
     <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="72"/>
+      <location filename="../components/remote/ui/ir/CardButtons.qml" line="93"/>
       <source>Menu</source>
       <translation type="unfinished">Menu</translation>
     </message>
     <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="82"/>
+      <location filename="../components/remote/ui/ir/CardButtons.qml" line="103"/>
       <source>Guide</source>
       <translation type="unfinished">Guide</translation>
     </message>
@@ -198,7 +198,7 @@
   <context>
     <name>CardPlaylists</name>
     <message>
-      <location filename="../components/media_player/ui/CardPlaylists.qml" line="94"/>
+      <location filename="../components/media_player/ui/CardPlaylists.qml" line="115"/>
       <source>My playlists</source>
       <translation type="unfinished">My playlists</translation>
     </message>
@@ -206,42 +206,42 @@
   <context>
     <name>CardSearch</name>
     <message>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="99"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="151"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="120"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="172"/>
       <source>Search</source>
       <translation type="unfinished">Search</translation>
     </message>
     <message>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="216"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="237"/>
       <source>Recent searches</source>
       <translation type="unfinished">Recent searches</translation>
     </message>
     <message>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="227"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="248"/>
       <source>Clear</source>
       <translation type="unfinished">Clear</translation>
     </message>
     <message>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="418"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="377"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="439"/>
       <source>Albums</source>
       <translation type="unfinished">Albums</translation>
     </message>
     <message>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="358"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="420"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="379"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="441"/>
       <source>Tracks</source>
       <translation type="unfinished">Tracks</translation>
     </message>
     <message>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="360"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="422"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="381"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="443"/>
       <source>Artists</source>
       <translation type="unfinished">Artists</translation>
     </message>
     <message>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="362"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="424"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="383"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="445"/>
       <source>Playlists</source>
       <translation type="unfinished">Playlists</translation>
     </message>
@@ -262,7 +262,7 @@
   <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="155"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="156"/>
       <source>% Charged</source>
       <translation type="unfinished">% Charged</translation>
     </message>
@@ -270,8 +270,8 @@
   <context>
     <name>ContextMenu</name>
     <message>
-      <location filename="../basic_ui/ContextMenu.qml" line="129"/>
-      <location filename="../components/climate/ui/ContextMenu.qml" line="115"/>
+      <location filename="../basic_ui/ContextMenu.qml" line="151"/>
+      <location filename="../components/climate/ui/ContextMenu.qml" line="136"/>
       <source>Cancel</source>
       <translation type="unfinished">Cancel</translation>
     </message>
@@ -292,27 +292,27 @@
   <context>
     <name>Display</name>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="40"/>
+      <location filename="../basic_ui/settings/Display.qml" line="41"/>
       <source>Display</source>
       <translation>Дисплей</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="61"/>
+      <location filename="../basic_ui/settings/Display.qml" line="62"/>
       <source>Auto brightness</source>
       <translation>Авто-яркость</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="166"/>
+      <location filename="../basic_ui/settings/Display.qml" line="167"/>
       <source>Dark mode</source>
       <translation>Тёмный режим</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="204"/>
+      <location filename="../basic_ui/settings/Display.qml" line="205"/>
       <source>Cleaning mode</source>
       <translation>Режим очистки</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="219"/>
+      <location filename="../basic_ui/settings/Display.qml" line="220"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
       <translation>Жмите на дисплей в течение 10 секунд, чтобы отключить режим очистки.</translation>
     </message>
@@ -348,7 +348,7 @@
   <context>
     <name>Favorites</name>
     <message>
-      <location filename="../basic_ui/pages/Favorites.qml" line="30"/>
+      <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
       <translation type="unfinished">Favorites</translation>
@@ -393,28 +393,28 @@
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Избранное</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Settings</source>
       <translation>Настройки</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Lights</source>
       <translation>Свет</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Blinds</source>
       <translation>Жалюзи</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Media</source>
       <translation type="unfinished">Media</translation>
     </message>
@@ -422,22 +422,22 @@
   <context>
     <name>Network</name>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="62"/>
+      <location filename="../basic_ui/settings/Network.qml" line="63"/>
       <source>Network</source>
       <translation>Сеть</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="244"/>
+      <location filename="../basic_ui/settings/Network.qml" line="245"/>
       <source>Wi-Fi signal strength</source>
       <translation>Мощность сигнала Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="281"/>
+      <location filename="../basic_ui/settings/Network.qml" line="282"/>
       <source>IP address</source>
       <translation>IP-адрес</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Network.qml" line="317"/>
+      <location filename="../basic_ui/settings/Network.qml" line="318"/>
       <source>MAC address</source>
       <translation>MAC-адрес</translation>
     </message>
@@ -461,12 +461,12 @@
   <context>
     <name>PopupLowBattery</name>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="120"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="122"/>
       <source>Low battery</source>
       <translation>Аккумулятор разряжен</translation>
     </message>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="135"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="137"/>
       <source>Please charge the remote soon</source>
       <translation>Пожалуйста, зарядите пульт</translation>
     </message>
@@ -474,43 +474,43 @@
   <context>
     <name>PowerSaving</name>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="39"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="40"/>
       <source>Power saving</source>
       <translation>Энергосбережение</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="61"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>
       <source>Never turn off Wi-Fi</source>
       <translation>Никогда не выключать Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="61"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
       <translation>Выключить Wi-Fi после %1 минут бездействия</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="150"/>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="274"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="151"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="275"/>
       <source>Never</source>
       <translation>Никогда</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="163"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="164"/>
       <source>60 minutes</source>
       <translation>60 минут</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="185"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="186"/>
       <source>Never turn off the remote</source>
       <translation>Никогда не выключать пульт</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="185"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="186"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
       <translation>Выключить пульт после %1 часов бездействия</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/PowerSaving.qml" line="287"/>
+      <location filename="../basic_ui/settings/PowerSaving.qml" line="288"/>
       <source>8 hours</source>
       <translation>8 часов</translation>
     </message>
@@ -557,7 +557,7 @@
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/Settings.qml" line="56"/>
+      <location filename="../basic_ui/Settings.qml" line="57"/>
       <location filename="../basic_ui/pages/Settings.qml" line="32"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
@@ -567,51 +567,51 @@
   <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="41"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="42"/>
       <source>Software update</source>
       <translation>Обновление ПО</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="62"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="63"/>
       <source>Auto update</source>
       <translation>Автообновление</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="94"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="95"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation type="unfinished">Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="119"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>New software is available.
 YIO remote </source>
       <translation type="unfinished">New software is available.
 YIO remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="119"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>Your software is up to date.</source>
       <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="136"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>Installed version: YIO Remote </source>
       <translation type="unfinished">Installed version: YIO Remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="136"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>YIO Remote </source>
       <translation type="unfinished">YIO Remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="151"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="152"/>
       <source>Update</source>
       <translation type="unfinished">Update</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="180"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="181"/>
       <source>Check for update</source>
       <translation type="unfinished">Check for update</translation>
     </message>
@@ -647,7 +647,7 @@ YIO remote </translation>
   <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="243"/>
+      <location filename="../main.qml" line="220"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
       <translation type="unfinished">New software version is available!</translation>
