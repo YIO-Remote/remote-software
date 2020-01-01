@@ -135,6 +135,7 @@ SOURCES += \
 RESOURCES += qml.qrc \
     images.qrc \
     keyboard.qrc \
+    style.qrc \
     translations.qrc
 
 # === platform specific devices =======================================
@@ -388,4 +389,6 @@ win32 {
 } else {
     error(unknown platform! Platform must be configured in remote.pro project file)
 }
+
+DISTFILES +=
 
