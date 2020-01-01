@@ -566,6 +566,7 @@ ApplicationWindow {
     property alias loadingScreen: loadingScreen
     Loader {
         id: loadingScreen
+        objectName: "loadingScreen"
         width: parent.width
         height: parent.height
 
