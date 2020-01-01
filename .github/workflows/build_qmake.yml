@@ -3,7 +3,7 @@ name: QMake Build Matrix
 on:
   push:
     branches:
-      - master
+      - develop
 
 env:
   QT_VERSION: 5.12.6
