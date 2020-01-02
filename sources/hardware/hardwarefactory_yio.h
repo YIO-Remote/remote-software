@@ -33,6 +33,8 @@ class HardwareFactoryYio : public HardwareFactoryRPi0 {
 
     // HardwareFactoryRPi0 interface
  protected:
+    bool initialize(const QVariantMap& config) override;
+
     DisplayControl *buildDisplayControl(const QVariantMap &config) override;
 
     BatteryCharger *buildBatteryCharger(const QVariantMap &config) override;

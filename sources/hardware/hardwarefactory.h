@@ -105,6 +105,8 @@ class HardwareFactory : public QObject {
     explicit HardwareFactory(QObject* parent = nullptr);
     virtual ~HardwareFactory();
 
+    bool virtual initialize(const QVariantMap& config) = 0;
+
  private:
     static HardwareFactory* s_instance;
 };

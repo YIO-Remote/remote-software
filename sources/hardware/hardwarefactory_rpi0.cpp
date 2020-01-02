@@ -60,7 +60,9 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
       p_lightSensor(nullptr),
       p_proximitySensor(nullptr) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
+}
 
+bool HardwareFactoryRPi0::initialize(const QVariantMap &config) {
     p_systemService = buildSystemService(config);
     p_webServerControl = buildWebServerControl(config);
     p_wifiControl = buildWifiControl(config);
@@ -72,6 +74,8 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
     p_gestureSensor = buildGestureSensor(config);
     p_lightSensor = buildLightSensorr(config);
     p_proximitySensor = buildProximitySensor(config);
+
+    return true;
 }
 
 // -- System services - RPi uses systemd
@@ -169,7 +173,7 @@ WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &config) {
 
 DisplayControl *HardwareFactoryRPi0::buildDisplayControl(const QVariantMap &config) {
     Q_UNUSED(config)
-
+    qCDebug(CLASS_LC) << "Using DisplayControlMock";
     // TODO(zehnm) create a minimal RPi HDMI display controller? We could certainly switch it on and off.
     // What about the RPi 7" screen brightness controll?
     return new DisplayControlMock(this);
@@ -177,35 +181,42 @@ DisplayControl *HardwareFactoryRPi0::buildDisplayControl(const QVariantMap &conf
 
 BatteryCharger *HardwareFactoryRPi0::buildBatteryCharger(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "Using BatteryChargerMock";
     return new BatteryChargerMock(this);
 }
 
 BatteryFuelGauge *HardwareFactoryRPi0::buildBatteryFuelGauge(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "Using BatteryFuelGaugeMock";
     return new BatteryFuelGaugeMock(this);
 }
 
 InterruptHandler *HardwareFactoryRPi0::buildInterruptHandler(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "Using InterruptHandlerMock";
     return new InterruptHandlerMock(this);
 }
 
 HapticMotor *HardwareFactoryRPi0::buildHapticMotor(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "Using HapticMotorMock";
     return new HapticMotorMock(this);
 }
 
 GestureSensor *HardwareFactoryRPi0::buildGestureSensor(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "Using GestureSensorMock";
     return new GestureSensorMock(this);
 }
 
 LightSensor *HardwareFactoryRPi0::buildLightSensorr(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "Using LightSensorMock";
     return new LightSensorMock(this);
 }
 
 ProximitySensor *HardwareFactoryRPi0::buildProximitySensor(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "Using ProximitySensorMock";
     return new ProximitySensorMock(this);
 }

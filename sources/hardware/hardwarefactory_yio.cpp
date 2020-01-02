@@ -39,15 +39,21 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "HwYio");
 HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *parent)
     : HardwareFactoryRPi0(config, parent) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
+}
 
-    // FIXME(mze) create initialization method / hook
+bool HardwareFactoryYio::initialize(const QVariantMap &config) {
+    Q_UNUSED(config)
+
+    HardwareFactoryRPi0::initialize(config);
+
+    // FIXME(mze) create start method / hook
     // intialize the sensor
     if (!m_apds.begin()) {
-        qCritical() << "Cannot initialise the APDS9960 sensor";
+        qCCritical(CLASS_LC) << "Cannot initialise the APDS9960 sensor";
         //: Error message that shows up as notification when light value cannot be read
-        Notifications::getInstance()->add(true,
-                                          tr("Cannot initialize the proximity sensor. Please restart the remote."));
-        return;
+//        Notifications::getInstance()->add(true,
+//                                          tr("Cannot initialize the proximity sensor. Please restart the remote."));
+        return false;
     }
 
     delay(100);
@@ -73,44 +79,54 @@ HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *paren
     }
 
     getLightSensor()->readAmbientLight();
+
+    return true;
 }
 
 DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "DisplayControl device: DisplayControlYio";
     return new DisplayControlYio(this);
 }
 
 BatteryCharger *HardwareFactoryYio::buildBatteryCharger(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "BatteryCharger device: BatteryChargerYio";
     return new BatteryChargerYio(this);
 }
 
 BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "BatteryFuelGauge device: BQ27441";
     return new BQ27441(this);
 }
 
 InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "InterruptHandler device: Mcp23017InterruptHandler";
     return new Mcp23017InterruptHandler(this);
 }
 
 HapticMotor *HardwareFactoryYio::buildHapticMotor(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "HapticMotor device: Drv2605";
     return new Drv2605(this);
 }
 
 GestureSensor *HardwareFactoryYio::buildGestureSensor(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "GestureSensor device: Apds9960GestureSensor";
     return new Apds9960GestureSensor(&m_apds, this);
 }
 
 LightSensor *HardwareFactoryYio::buildLightSensorr(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "LightSensor device: Apds9960LightSensor";
     return new Apds9960LightSensor(&m_apds, this);
 }
 
 ProximitySensor *HardwareFactoryYio::buildProximitySensor(const QVariantMap &config) {
     Q_UNUSED(config)
+    qCDebug(CLASS_LC) << "ProximitySensor: Apds9960ProximitySensor";
     return new Apds9960ProximitySensor(&m_apds, this);
 }

@@ -93,6 +93,8 @@ class HardwareFactoryRPi0 : public HardwareFactory {
     }
 
  protected:
+    bool initialize(const QVariantMap& config) override;
+
     virtual WifiControl *     buildWifiControl(const QVariantMap &config);
     virtual SystemService *   buildSystemService(const QVariantMap &config);
     virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
