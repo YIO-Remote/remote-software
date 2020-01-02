@@ -296,10 +296,11 @@ bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiS
 bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString& parm, const QString& val,
                                         bool quote /* = false*/) {
     QString cmd;
-    if (quote)
+    if (quote) {
         cmd = "SET_NETWORK %1 %2 \"%3\"";
-    else
+    } else {
         cmd = "SET_NETWORK %1 %2 %3";
+    }
 
     if (!controlRequest(cmd.arg(networkId).arg(parm).arg(val))) {
         controlRequest("RECONFIGURE");  // reload from cfg and hope for the best

@@ -32,7 +32,10 @@
 #include "hardware/hardwarefactory.h"
 #include "hardware/touchdetect.h"
 
+#include "bluetootharea.h"
+#include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
+#include "fileio.h"
 #include "entities/entities.h"
 #include "integrations/integrations.h"
 #include "jsonfile.h"
