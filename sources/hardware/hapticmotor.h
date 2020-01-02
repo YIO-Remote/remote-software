@@ -28,8 +28,15 @@ class HapticMotor : public QObject {
     Q_OBJECT
 
  public:
-    // TODO(zehnm) change string parameter to enum
-    Q_INVOKABLE virtual void playEffect(const QString& effect) = 0;
+    enum Effect {
+        Click,
+        Bump,
+        Press,
+        Buzz
+    };
+    Q_ENUM(Effect)
+
+    Q_INVOKABLE virtual void playEffect(Effect effect) = 0;
 
     virtual bool init() = 0;
 

@@ -114,14 +114,14 @@ Item {
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
                     mediaPlayers.currentIndex += 1;
                 } else {
-                    Haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case "dpad left":
                 if (mediaPlayers.currentIndex > 0) {
                     mediaPlayers.currentIndex -= 1;
                 } else {
-                    Haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case "top right":
@@ -510,7 +510,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 miniMediaPlayer.state = "closed"
             }
         }
@@ -544,7 +544,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].previous();
             }
         }
@@ -602,7 +602,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ) {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
                 } else {
@@ -640,7 +640,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].next();
             }
         }

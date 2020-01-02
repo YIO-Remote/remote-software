@@ -160,11 +160,13 @@ int main(int argc, char* argv[]) {
                                              &HardwareFactory::displayControlProvider);
     qmlRegisterSingletonType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler",
                                                &HardwareFactory::interruptHandlerProvider);
-    qmlRegisterSingletonType<InterruptHandler>("Haptic", 1, 0, "Haptic", &HardwareFactory::hapticMotorProvider);
+    qmlRegisterSingletonType<HapticMotor>("Haptic", 1, 0, "Haptic", &HardwareFactory::hapticMotorProvider);
     qmlRegisterSingletonType<ProximitySensor>("Proximity", 1, 0, "Proximity",
                                               &HardwareFactory::proximitySensorProvider);
     qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor",
                                           &HardwareFactory::lightSensorProvider);
+
+    qCInfo(CLASS_LC) << "Registered QML types";
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
@@ -190,9 +192,11 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
     // TODO(zehnm) put initialization into factory
+    qCInfo(CLASS_LC) << "Initializing WiFi...";
     if (!wifiControl->init()) {
         notifications.add(true, QObject::tr("WiFi device was not found."));
     }
+    qCInfo(CLASS_LC) << "WiFi initialized!";
 
     // FILE IO
     FileIO fileIO;
@@ -209,20 +213,22 @@ int main(int argc, char* argv[]) {
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty()) {
+        qCCritical(CLASS_LC) << "No QML root entities available! Terminating.";
         return -1;
     }
 
     // FIXME move initialization code to a device driver factory
     QObject* standbyControl = config.getQMLObject("standbyControl");
     if (standbyControl == nullptr) {
-        qCritical() << "Error looking up QML object:"
-                    << "standbyControl";
+        qCCritical(CLASS_LC) << "Error looking up QML object:" << "standbyControl";
     } else {
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
         QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
         QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
     }
+
+    qCInfo(CLASS_LC) << "Starting UI...";
 
     return app.exec();
 }

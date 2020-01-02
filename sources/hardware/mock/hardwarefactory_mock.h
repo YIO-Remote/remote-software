@@ -45,4 +45,10 @@ class HardwareFactoryMock : public HardwareFactory {
     GestureSensor *   getGestureSensor() override;
     LightSensor *     getLightSensor() override;
     ProximitySensor * getProximitySensor() override;
+
+ protected:
+    bool initialize(const QVariantMap& config) override {
+        Q_UNUSED(config)
+        return true;
+    }
 };

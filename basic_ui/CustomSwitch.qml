@@ -68,7 +68,7 @@ Item {
         height: button.height + 60
 
         onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             button.toggle();
         }
     }

@@ -40,7 +40,7 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
@@ -110,7 +110,7 @@ Rectangle {
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
@@ -137,7 +137,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 lightButton.state = "closed"
             }
         }

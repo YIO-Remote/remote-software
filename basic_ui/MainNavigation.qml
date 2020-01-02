@@ -142,13 +142,13 @@ Item {
 
             onPressAndHold: {
                 held = true;
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
             }
             onReleased: {
                 if (held) {
                     savemenuConfig()
                 }
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
 
                 held = false
                 mainNavigationListView.currentIndex = index

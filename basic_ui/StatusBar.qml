@@ -290,7 +290,7 @@ Item {
         }
 
         onPressAndHold: {
-            Haptic.playEffect("press");
+            Haptic.playEffect(Haptic.Press);
             loader_second.setSource("qrc:/basic_ui/Profiles.qml");
         }
     }

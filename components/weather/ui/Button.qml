@@ -163,13 +163,13 @@ Rectangle {
         enabled: weatherButton.state == "open" ? false : true
 
         onPressAndHold: {
-            Haptic.playEffect("press");
+            Haptic.playEffect(Haptic.Press);
 
             addToFavButton.state = "open"
         }
 
         onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
 
             originParent = weatherButton.parent
 
@@ -297,7 +297,7 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 addToFavButton.state = "closed"
             }
         }

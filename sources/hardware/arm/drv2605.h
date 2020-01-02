@@ -92,7 +92,7 @@ class Drv2605 : public HapticMotor {
     Q_OBJECT
 
  public:
-    Q_INVOKABLE void playEffect(const QString& effect) override;
+    Q_INVOKABLE void playEffect(Effect effect) override;
 
  public:
     explicit Drv2605(QObject* parent = nullptr);

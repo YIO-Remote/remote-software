@@ -82,7 +82,7 @@ Rectangle {
                 property int percent
 
                 onPositionChanged: {
-                    Haptic.playEffect("bump");
+                    Haptic.playEffect(Haptic.Bump);
                     dragger.percent = Math.round((parent.height - 10 - mouse.y)/(parent.height-10)*100);
                     if (dragger.percent < 0) dragger.percent = 0;
                     if (dragger.percent > 100) dragger.percent = 100;
@@ -204,7 +204,7 @@ Rectangle {
                 buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
                 mouseArea.onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     obj.toggle();
                 }
             }
@@ -216,7 +216,7 @@ Rectangle {
                 buttonText: qsTr("Color") + translateHandler.emptyString
 
                 mouseArea.onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     flipable.flipped = !flipable.flipped
                 }
             }
@@ -242,7 +242,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     onClicked: {
-                        Haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         lightButton.state = "closed"
                     }
                 }
@@ -427,7 +427,7 @@ Rectangle {
                 buttonText: "OK"
 
                 mouseArea.onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     flipable.flipped = !flipable.flipped
                 }
 
@@ -454,7 +454,7 @@ Rectangle {
 //                    anchors.centerIn: parent
 
 //                    onClicked: {
-//                        Haptic.playEffect("click");
+//                        Haptic.playEffect(Haptic.Click);
 //                        lightButton.state = "closed"
 //                        loader_main.state = "visible"
 //                    }
@@ -486,7 +486,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     onClicked: {
-                        Haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         lightButton.state = "closed"
                         loader_main.state = "visible"
                     }

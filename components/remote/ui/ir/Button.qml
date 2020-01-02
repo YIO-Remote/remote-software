@@ -54,7 +54,7 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         onClicked: {
-            haptic.playEffect("click");
+            haptic.playEffect(Haptic.Click);
         }
     }
 } // Rectangle end

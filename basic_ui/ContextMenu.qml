@@ -129,7 +129,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        Haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         if (list[index] == "PLAY")
                             obj.playMedia(id, type);
                         else if (list[index] == "QUEUE")
@@ -164,7 +164,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     main.state = "closed";
                 }
             }

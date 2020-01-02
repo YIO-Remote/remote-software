@@ -290,7 +290,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = 0;
                     cardSwipeView.setCurrentIndex(0);
                 }
@@ -316,7 +316,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
                     cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
                 }
@@ -342,7 +342,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("LIST");
                     cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
                 }
@@ -368,7 +368,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
                     cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
                 }

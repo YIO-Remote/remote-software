@@ -149,13 +149,13 @@ Rectangle {
         enabled: buttonContainer.state == "open" ? false : true
 
         onPressAndHold: {
-            Haptic.playEffect("press");
+            Haptic.playEffect(Haptic.Press);
 
             addToFavButton.state = "open"
         }
 
         onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             originParent = buttonContainer.parent
 //            buttonContainer.state = "open"
             cardLoader.active = true;
@@ -294,7 +294,7 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 addToFavButton.state = "closed"
             }
         }
@@ -448,7 +448,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 buttonContainer.state = "closed"
                 cardLoader.active = false;
             }

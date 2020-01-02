@@ -182,7 +182,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 obj.previous();
             }
         }
@@ -238,7 +238,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 if (obj.state === 3) {
                     obj.pause();
                 } else {
@@ -276,7 +276,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 obj.next();
             }
         }

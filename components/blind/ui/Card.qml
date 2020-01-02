@@ -86,7 +86,7 @@ Rectangle {
             drag.maximumY: dragger_target.height
 
             onPositionChanged: {
-                Haptic.playEffect("bump");
+                Haptic.playEffect(Haptic.Bump);
                 percent = Math.round(mouse.y/parent.height*100)
                 if (percent < 0) percent = 0
                 if (percent > 100) percent = 100
@@ -169,7 +169,7 @@ Rectangle {
         visible: obj.isSupported(Blind.F_CLOSE)
 
         mouseArea.onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.close()
         }
 
@@ -186,7 +186,7 @@ Rectangle {
         buttonText: "   "
         visible: obj.isSupported(Blind.F_STOP)
         mouseArea.onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.stop()
         }
 
@@ -204,7 +204,7 @@ Rectangle {
         visible: obj.isSupported(Blind.F_OPEN)
 
         mouseArea.onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.open()
         }
 
@@ -235,7 +235,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 blindButton.state = "closed"
             }
         }

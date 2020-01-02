@@ -248,7 +248,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 weatherButton.state = "closed"
             }
         }

@@ -172,7 +172,7 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     config.profile = id;
                     profileModel.move(index, 0, 1);
                 }
@@ -215,7 +215,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                Haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 profiles.state = "closed"
             }
         }

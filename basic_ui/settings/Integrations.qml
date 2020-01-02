@@ -104,7 +104,7 @@ Item {
                     anchors.fill: parent
 
                     onClicked: {
-                        Haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         popup.open();
                     }
                 }
@@ -160,7 +160,7 @@ Item {
                         enabled: obj.state == 0 ? false : true
 
                         onClicked: {
-                            Haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             obj.connect();
                             popup.close();
                         }
@@ -195,7 +195,7 @@ Item {
                         enabled: obj.state == 2 ? false : true
 
                         onClicked: {
-                            Haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             obj.disconnect();
                             popup.close();
                         }

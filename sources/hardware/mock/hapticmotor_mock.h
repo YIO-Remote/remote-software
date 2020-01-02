@@ -31,7 +31,7 @@ class HapticMotorMock : public HapticMotor {
 
     // HapticMotor interface
  public:
-    Q_INVOKABLE void playEffect(const QString &effect) override { Q_UNUSED(effect) }
+    Q_INVOKABLE void playEffect(Effect effect) override { Q_UNUSED(effect) }
 
     bool init() override { return true; }
 };

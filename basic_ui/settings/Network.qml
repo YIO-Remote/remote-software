@@ -103,7 +103,7 @@ Item {
                 anchors.fill: parent
 
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 
                     // Start wifi network scan
                     wifiNetworks = [];

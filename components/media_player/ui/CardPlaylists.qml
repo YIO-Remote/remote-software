@@ -195,7 +195,7 @@ Rectangle {
                         anchors.fill: parent
 
                         onClicked: {
-                            Haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             load(item_key, item_type);
                         }
                     }
@@ -205,7 +205,7 @@ Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
 
                         mouseArea.onClicked: {
-                            Haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
                         }
                     }
@@ -243,7 +243,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     onClicked: {
-                        Haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         swipeView.currentIndex = 0;
                     }
                 }

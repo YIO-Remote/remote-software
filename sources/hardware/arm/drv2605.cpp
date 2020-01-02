@@ -45,20 +45,20 @@ Drv2605::Drv2605(QObject* parent) : HapticMotor(parent) {
     }
 }
 
-void Drv2605::playEffect(const QString& effect) {
-    if (effect == "click") {
+void Drv2605::playEffect(Effect effect) {
+    if (effect == Click) {
         setWaveform(0, 1);
         go();
     }
-    if (effect == "bump") {
+    if (effect == Bump) {
         setWaveform(0, 24);
         go();
     }
-    if (effect == "press") {
+    if (effect == Press) {
         setWaveform(0, 86);
         go();
     }
-    if (effect == "buzz") {
+    if (effect == Buzz) {
         setWaveform(0, 47);
         go();
     }

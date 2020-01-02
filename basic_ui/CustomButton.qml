@@ -72,7 +72,7 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            Haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
         }
     }
 }

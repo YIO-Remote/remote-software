@@ -104,7 +104,7 @@ Item {
                 anchors.centerIn: parent
 
                 onClicked: {
-                    Haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     obj.playMedia(albumModel.id, albumModel.type);
                 }
             }
@@ -214,7 +214,7 @@ Item {
                     anchors.fill: parent
 
                     onClicked: {
-                        Haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         obj.playMedia(item_key, item_type);
                     }
                 }
@@ -225,7 +225,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     mouseArea.onClicked: {
-                        Haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": main.width, "id": item_key, "type": item_type, "list": item_commands })
                     }
                 }

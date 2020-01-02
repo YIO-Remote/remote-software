@@ -60,7 +60,7 @@ Item {
                     loader_main.item.mainNavigationSwipeview.incrementCurrentIndex();
                     //                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
-                    Haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case "dpad left":
@@ -69,13 +69,13 @@ Item {
                     loader_main.item.mainNavigationSwipeview.decrementCurrentIndex();
                     //                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
-                    Haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case "dpad up":
                 var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
                 if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == 0) {
-                    Haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 if (newpos <= 0) {
                     newpos = 0;
@@ -85,7 +85,7 @@ Item {
             case "dpad down":
                 newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
-                     Haptic.playEffect("buzz");
+                     Haptic.playEffect(Haptic.Buzz);
                 }
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
                     newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
