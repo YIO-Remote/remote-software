@@ -105,9 +105,9 @@ class Entities : public QObject, EntitiesInterface {
  private:
     QMap<QString, Entity*> m_entities;
     /// ADD NEW ENTITY TYPE HERE
-    QStringList m_supported_entities = {"light", "blind", "media_player", "remote", "weather", "climate"};
-    QStringList m_supported_entities_translation = {tr("Lights"), tr("Blinds"), tr("Media"), tr("Remote"),
-                                                    tr("Climate")};
+    QStringList m_supported_entities = {"light", "blind", "media_player", "remote", "weather", "climate", "switch"};
+    QStringList m_supported_entities_translation = {tr("Lights"), tr("Blinds"),  tr("Media"),
+                                                    tr("Remote"), tr("Climate"), tr("Switch")};
     QStringList m_loaded_entities;
 
     QMap<QString, QObject*> m_mediaplayersPlaying;

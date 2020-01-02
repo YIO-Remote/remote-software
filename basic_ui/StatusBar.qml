@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import Haptic 1.0
 
@@ -37,7 +38,7 @@ Item {
     Rectangle {
         id: bg
         anchors.fill: parent
-        color: colorBackground
+        color: Style.colorBackground
         opacity: 0
 
         Behavior on opacity {
@@ -73,7 +74,7 @@ Item {
 
     Text {
         id: titleText
-        color: colorText
+        color: Style.colorText
         text: ""
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
@@ -145,7 +146,7 @@ Item {
 
     Text { // time in the middle
         id: timeText
-        color: colorText
+        color: Style.colorText
         text: "22:00"
         verticalAlignment: Text.AlignVCenter
         height: parent.height
@@ -167,7 +168,7 @@ Item {
         width: 12
         height: width
         radius: width/2
-        color: colorRed
+        color: Style.colorRed
         visible: notifications.list.length > 0 ? true : false
         anchors.right: timeText.left
         anchors.rightMargin: 10
@@ -241,17 +242,17 @@ Item {
             id: icon_battery
             width: battery_level*20
             height: 6
-            color: battery_level >= 0.200 ? colorLine : colorRed
+            color: battery_level >= 0.200 ? Style.colorLine : Style.colorRed
         }
         // battery frame
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             width: 30
             height: 18
-            color: colorBackgroundTransparent
+            color: Style.colorBackgroundTransparent
             radius: 4
             border.width: 2
-            border.color: colorLine
+            border.color: Style.colorLine
         }
         // battery notch
         Rectangle {
@@ -259,16 +260,16 @@ Item {
             anchors.right: parent.right
             width: 8
             height: 10
-            color: colorBackgroundTransparent
+            color: Style.colorBackgroundTransparent
             radius: 2
             border.width: 2
-            border.color: colorLine
+            border.color: Style.colorLine
         }
     }
 
     Text {
         id: batteryPercentText
-        color: colorText
+        color: Style.colorText
         text: Math.round(battery_level * 100) + "%"
         verticalAlignment: Text.AlignVCenter
         height: parent.height

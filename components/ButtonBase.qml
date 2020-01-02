@@ -1,6 +1,28 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import Haptic 1.0
 
@@ -43,8 +65,8 @@ Rectangle {
     width: 460
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
-    color: colorDark
-    radius: cornerRadius
+    color: Style.colorDark
+    radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
@@ -56,17 +78,17 @@ Rectangle {
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    layer.enabled: true
-    layer.effect: OpacityMask {
-        maskSource: Item {
-            width: buttonContainer.width
-            height: buttonContainer.height
-            Rectangle {
-                anchors.fill: parent
-                radius: cornerRadius
-            }
-        }
-    }
+//    layer.enabled: true
+//    layer.effect: OpacityMask {
+//        maskSource: Item {
+//            width: buttonContainer.width
+//            height: buttonContainer.height
+//            Rectangle {
+//                anchors.fill: parent
+//                radius: Style.cornerRadius
+//            }
+//        }
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
@@ -157,7 +179,7 @@ Rectangle {
 
         Text {
             id: title
-            color: colorText
+            color: Style.colorText
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
@@ -166,15 +188,16 @@ Rectangle {
             anchors.left: parent.left
             anchors.leftMargin: 126
             anchors.verticalCenter: parent.verticalCenter
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 27
-            lineHeight: 1
+//            font.family: "Open Sans"
+//            font.weight: Font.Normal
+//            font.pixelSize: 27
+//            lineHeight: 1
+            font: Style.buttonFont
         }
 
         Text {
             id: icon
-            color: colorText
+            color: Style.colorText
             text: ""
             width: 85
             height: 85
@@ -222,20 +245,20 @@ Rectangle {
         radius: 200
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        color: colorHighlight1
+        color: Style.colorHighlight1
 
         state: "closed"
 
         states: [
             State {
                 name: "closed"
-                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: colorHighlight1}
+                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: Style.colorHighlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 0}
                 PropertyChanges {target: addToFavButtonText; opacity: 0}
             },
             State {
                 name: "open"
-                PropertyChanges {target: addToFavButton; width:500; height: 500; color: colorHighlight1}
+                PropertyChanges {target: addToFavButton; width:500; height: 500; color: Style.colorHighlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 1}
                 PropertyChanges {target: addToFavButtonText; opacity: 1}
             }
@@ -281,7 +304,7 @@ Rectangle {
             width: 80
             height: width
             radius: width/2
-            color: colorDark
+            color: Style.colorDark
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 40
@@ -292,7 +315,7 @@ Rectangle {
                 when: mouseAreaFav.pressed === true
                 PropertyChanges {
                     target: addToFavButtonCircle
-                    color: colorHighlight1
+                    color: Style.colorHighlight1
                 }
             }
 
@@ -313,10 +336,10 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 ColorOverlay {
-                    visible: !darkMode
+                    visible: !Style.darkMode
                     anchors.fill: parent
                     source: parent
-                    color: colorText
+                    color: Style.colorText
                 }
             }
 
@@ -334,7 +357,7 @@ Rectangle {
 
         Text {
             id: addToFavButtonText
-            color: colorText
+            color: Style.colorText
             text: obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.verticalCenter: addToFavButtonCircle.verticalCenter
@@ -404,9 +427,9 @@ Rectangle {
 
     Text {
         id: closeButton
-        color: colorText
+        color: Style.colorText
         visible: buttonContainer.state == "open"
-        text: "\uE915"
+        text: Style.icons.close
         renderType: Text.NativeRendering
         width: 70
         height: 70

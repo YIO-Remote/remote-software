@@ -22,7 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-
+import Style 1.0
 import Launcher 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -56,7 +56,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("System") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -69,15 +69,15 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 40
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: uptimeText
-            color: colorText
+            color: Style.colorText
             text: qsTr("Uptime") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -91,7 +91,7 @@ Item {
 
         Text {
             id: uptimeValue
-            color: colorText
+            color: Style.colorText
             text: "0h"
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
@@ -107,14 +107,14 @@ Item {
             id: line7
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: uptimeText.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: temperatureText
-            color: colorText
+            color: Style.colorText
             text: qsTr("CPU temperature") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -128,7 +128,7 @@ Item {
 
         Text {
             id: temperatureValue
-            color: colorText
+            color: Style.colorText
             text: "36ºC"
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
@@ -144,7 +144,7 @@ Item {
             id: line8
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: temperatureText.bottom
             anchors.topMargin: 20
         }

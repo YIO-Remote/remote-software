@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 Flickable {
     id: itemFlickable
@@ -74,7 +75,7 @@ Flickable {
 
         Text {
             id: titleText
-            color: colorText
+            color: Style.colorText
             text: title
             anchors.centerIn: parent
             font.family: "Open Sans"

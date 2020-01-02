@@ -23,13 +23,14 @@
 import QtQuick 2.11
 //import QtQuick.Controls 2.5
 //import QtGraphicalEffects 1.0
+import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: climateButton
-    icon: "\uE913"
+    icon: Style.icons.climate
     cardLoader.source: "qrc:/components/climate/ui/Card.qml"
 
     // override default settings
@@ -38,7 +39,7 @@ Comp.ButtonBase {
     // additional UI elements
     Text {
         id: info
-        color: colorText
+        color: Style.colorText
         opacity: 0.5
         text: qsTr("Temperature: ") + obj.temperature + obj.temperatureUnit + translateHandler.emptyString
         elide: Text.ElideRight

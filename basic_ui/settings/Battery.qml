@@ -24,7 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
-
+import Style 1.0
 import Launcher 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -72,7 +72,7 @@ Item {
 
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Battery") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -85,15 +85,15 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 40
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: batteryhealthText
-            color: colorText
+            color: Style.colorText
             text: qsTr("Battery health") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -106,7 +106,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             text: battery_health + "%"
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
@@ -122,14 +122,14 @@ Item {
             id: line1
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: batteryhealthText.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: screenOnTimeText
-            color: colorHighlight1
+            color: Style.colorHighlight1
             text: qsTr("Screen on") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -144,7 +144,7 @@ Item {
 
         Text {
             id: screenOnTimeTextData
-            color: colorText
+            color: Style.colorText
             horizontalAlignment: Text.AlignRight
             anchors.left: screenOnTimeText.left
             anchors.top: screenOnTimeText.bottom
@@ -157,7 +157,7 @@ Item {
 
         Text {
             id: screenOffTimeText
-            color: colorHighlight1
+            color: Style.colorHighlight1
             text: qsTr("Screen off") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -172,7 +172,7 @@ Item {
 
         Text {
             id: screenOffTimeTextData
-            color: colorText
+            color: Style.colorText
             horizontalAlignment: Text.AlignRight
             anchors.left: screenOffTimeText.left
             anchors.top: screenOffTimeText.bottom
@@ -187,14 +187,14 @@ Item {
             id: line2
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: screenOnTimeTextData.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: batteryLevelText
-            color: colorHighlight1
+            color: Style.colorHighlight1
             text: qsTr("Battery level") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -219,10 +219,10 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             ColorOverlay {
-                visible: !darkMode
+                visible: !Style.darkMode
                 anchors.fill: parent
                 source: parent
-                color: colorText
+                color: Style.colorText
                 antialiasing: true
             }
         }
@@ -245,7 +245,7 @@ Item {
                     Rectangle {
                         width: 6
                         height: 96 * battery_data[index].level
-                        color: battery_data[index].power < 0 ? colorText : colorGreen
+                        color: battery_data[index].power < 0 ? Style.colorText : Style.colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }
@@ -254,7 +254,7 @@ Item {
 
         Text {
             id: averagePowerText
-            color: colorHighlight1
+            color: Style.colorHighlight1
             text: qsTr("Average power") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.left: parent.left
@@ -279,10 +279,10 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             ColorOverlay {
-                visible: !darkMode
+                visible: !Style.darkMode
                 anchors.fill: parent
                 source: parent
-                color: colorText
+                color: Style.colorText
                 antialiasing: true
             }
         }
@@ -305,7 +305,7 @@ Item {
                     Rectangle {
                         width: 6
                         height: (96 * (Math.abs(battery_data[index].power) / 5500)) + 1
-                        color: battery_data[index].power < 0 ? colorText : colorGreen
+                        color: battery_data[index].power < 0 ? Style.colorText : Style.colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }
@@ -332,7 +332,7 @@ Item {
                     delegate: Text {
                         //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
                         text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[hours.length-1-index]
-                        color: colorHighlight1
+                        color: Style.colorHighlight1
                         font.family: "Open Sans"
                         font.weight: Font.Normal
                         font.pixelSize: 16

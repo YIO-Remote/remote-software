@@ -1,6 +1,28 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import Haptic 1.0
 
@@ -10,7 +32,7 @@ Rectangle {
     id: weatherList
     width: parent.width
     height: parent.height
-    color: colorDark
+    color: Style.colorDark
 
     /////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS (with long press detection)
@@ -44,7 +66,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.topMargin: 10
         Text {
-            color: colorText
+            color: Style.colorText
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
@@ -70,15 +92,15 @@ Rectangle {
                 width: parent.width
                 height: parent.height
                 visible: true
-                color: colorMedium
-                radius: cornerRadius
+                color: Style.colorMedium
+                radius: Style.cornerRadius
 
                 Text {
                     id: date
                     width: 30
                     anchors { left: parent.left; top:parent.top; leftMargin: 10; verticalCenter: parent.verticalCenter }
                     verticalAlignment: Text.AlignVCenter
-                    color: colorText
+                    color: Style.colorText
                     text: model.date
                     font.family: "Open Sans"
                     font.weight: Font.Normal
@@ -96,7 +118,7 @@ Rectangle {
                 Text {
                     id: desc
                     anchors { left: image.right; top:parent.top; topMargin: 20 }
-                    color: colorText
+                    color: Style.colorText
                     text: model.description
                     font.family: "Open Sans"
                     font.weight: Font.Normal
@@ -105,7 +127,7 @@ Rectangle {
                 Text {
                     id: temp
                     anchors { right: parent.right; top:parent.top; topMargin: 20; rightMargin: 10 }
-                    color: colorText
+                    color: Style.colorText
                     text: model.temp
                     font.family: "Open Sans"
                     font.weight: Font.Normal
@@ -124,7 +146,7 @@ Rectangle {
                 Text {
                     id: rain
                     anchors { left: imgRain.right; leftMargin:10; bottom: parent.bottom; bottomMargin: 15 }
-                    color: colorText
+                    color: Style.colorText
                     text: model.rain
                     font.family: "Open Sans"
                     font.weight: Font.Normal
@@ -142,7 +164,7 @@ Rectangle {
                 Text {
                     id: snow
                     anchors { left: imgSnow.right; leftMargin:10; bottom:parent.bottom; bottomMargin: 15 }
-                    color: colorText
+                    color: Style.colorText
                     text: model.snow
                     visible: model.snow
                     font.family: "Open Sans"
@@ -161,7 +183,7 @@ Rectangle {
                 Text {
                     id: wind
                     anchors { left: imgWind.right; leftMargin:10; bottom :parent.bottom; bottomMargin: 15 }
-                    color: colorText
+                    color: Style.colorText
                     text: model.wind
                     font.family: "Open Sans"
                     font.weight: Font.Normal
@@ -170,7 +192,7 @@ Rectangle {
                 Text {
                     id: humidity
                     anchors { right: parent.right; rightMargin: 10; bottom : parent.bottom; bottomMargin: 15 }
-                    color: colorText
+                    color: Style.colorText
                     text: model.humidity
                     font.family: "Open Sans"
                     font.weight: Font.Normal
@@ -213,10 +235,10 @@ Rectangle {
         anchors.topMargin: 20
 
         ColorOverlay {
-            visible: !darkMode
+            visible: !Style.darkMode
             anchors.fill: parent
             source: parent
-            color: colorText
+            color: Style.colorText
             antialiasing: true
         }
 

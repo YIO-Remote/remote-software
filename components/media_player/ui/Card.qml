@@ -1,5 +1,27 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import Style 1.0
 
 import Haptic 1.0
 import Entity.MediaPlayer 1.0
@@ -10,7 +32,7 @@ Rectangle {
     id: card
     width: parent.width
     height: parent.height
-    color: mediaplayerUtils.pixelColor === "#000000" ? colorDark : mediaplayerUtils.pixelColor
+    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
 
     Behavior on color {
         ColorAnimation { duration: 300 }
@@ -252,9 +274,9 @@ Rectangle {
 
         // home
         Text {
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
-            text: "\uE900"
+            text: Style.icons.home
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -278,9 +300,9 @@ Rectangle {
         // search
         Text {
             visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
-            text: "\uE90C"
+            text: Style.icons.search
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -304,9 +326,9 @@ Rectangle {
         // playlists
         Text {
             visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
-            text: "\uE907"
+            text: Style.icons.playlist
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -330,9 +352,9 @@ Rectangle {
         // speakers
         Text {
             visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
-            text: "\uE90D"
+            text: Style.icons.speaker
             renderType: Text.NativeRendering
             width: 60
             height: 60

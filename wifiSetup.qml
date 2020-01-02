@@ -24,6 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import InterruptHandler 1.0
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -50,7 +51,7 @@ Item {
 
             Text {
                 id: titleText
-                color: colorText
+                color: Style.colorText
                 text: qsTr("Wi-Fi setup") + translateHandler.emptyString
                 horizontalAlignment: Text.AlignHCenter
                 anchors {
@@ -66,7 +67,7 @@ Item {
 
             Text {
                 id: step1
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 // TODO read apssid from WifiControl instance once implemented
                 text: qsTr("Connect to the Wi-Fi network\n") + fileio.read("/apssid").trim() + translateHandler.emptyString
@@ -84,7 +85,7 @@ Item {
 
             Text {
                 id: step2
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 // TODO read hostname from WifiControl or configuration once implemented
                 text: qsTr("Open a web browser\nand navigate to\nyio.remote") + translateHandler.emptyString
@@ -128,7 +129,7 @@ Item {
 
                 Text {
                     id: titleText2
-                    color: colorText
+                    color: Style.colorText
                     text: qsTr("Connected") + translateHandler.emptyString
                     horizontalAlignment: Text.AlignHCenter
                     anchors {
@@ -144,7 +145,7 @@ Item {
 
                 Text {
                     id: smallText
-                    color: colorText
+                    color: Style.colorText
                     opacity: 0.5
                     text: qsTr("YIO Remote has successfully\nconnected to your Wi-Fi network.") + translateHandler.emptyString
                     horizontalAlignment: Text.AlignHCenter
@@ -178,7 +179,7 @@ Item {
 
                 Text {
                     id: titleText3
-                    color: colorText
+                    color: Style.colorText
                     text: qsTr("Not connected") + translateHandler.emptyString
                     horizontalAlignment: Text.AlignHCenter
                     anchors {
@@ -194,7 +195,7 @@ Item {
 
                 Text {
                     id: smallTextf
-                    color: colorText
+                    color: Style.colorText
                     opacity: 0.5
                     text: qsTr("YIO Remote could not\nconnect to your Wi-Fi network.") + translateHandler.emptyString
                     horizontalAlignment: Text.AlignHCenter
@@ -211,7 +212,7 @@ Item {
 
                 Text {
                     id: smallTextf2
-                    color: colorText
+                    color: Style.colorText
                     opacity: 0.5
                     text: qsTr("Please try again") + translateHandler.emptyString
                     horizontalAlignment: Text.AlignHCenter
@@ -280,7 +281,7 @@ Item {
 
             Text {
                 id: smallTextDock
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 text: qsTr("Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
@@ -331,7 +332,7 @@ Item {
 
             Text {
                 id: dockSuccessTitle
-                color: colorText
+                color: Style.colorText
                 text: qsTr("Wi-Fi setup completed") + translateHandler.emptyString
                 width: 420
                 wrapMode: Text.WordWrap
@@ -349,7 +350,7 @@ Item {
 
             Text {
                 id: dockSuccessText
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 text: qsTr("YIO Dock has successfully connected to your Wi-Fi network.\n\nTo continue the configuration, open a web browser on your computer and navigate to\n" + fileio.read("/apssid").trim() + "local") + translateHandler.emptyString
                 width: 420

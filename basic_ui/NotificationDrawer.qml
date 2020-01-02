@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -41,7 +42,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 40
 
-        color: colorText
+        color: Style.colorText
         verticalAlignment: Text.AlignVCenter
         font.family: "Open Sans"
         font.weight: Font.Normal

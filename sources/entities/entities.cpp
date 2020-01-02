@@ -36,6 +36,7 @@
 #include "light.h"
 #include "mediaplayer.h"
 #include "remote.h"
+#include "switch.h"
 #include "weather.h"
 
 EntitiesInterface::~EntitiesInterface() {}
@@ -157,9 +158,16 @@ void Entities::add(const QString &type, const QVariantMap &config, IntegrationIn
     // Weather entity
     else if (type == "weather") {
         entity = new Weather(config, integrationObj, this);
-    } else if (type == "climate") {
+    }
+    // Climate entity
+    else if (type == "climate") {
         entity = new Climate(config, integrationObj, this);
     }
+    // Switch entity
+    else if (type == "switch") {
+        entity = new Switch(config, integrationObj, this);
+    }
+
     if (entity == nullptr)
         qCDebug(m_log) << "Illegal entity type : " << type;
     else

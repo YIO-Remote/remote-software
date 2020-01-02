@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 
@@ -35,7 +36,7 @@ Item {
 
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Power saving") + translateHandler.emptyString
         anchors.top: parent.top
         anchors.left: parent.left
@@ -49,15 +50,15 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 40
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: wifioffText
-            color: colorText
+            color: Style.colorText
             text: config.settings.wifitime == 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(config.settings.wifitime/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
@@ -94,13 +95,13 @@ Item {
                 width: wifioffSlider.availableWidth
                 height: implicitHeight
                 radius: 4
-                color: colorBackground
+                color: Style.colorBackground
 
                 Rectangle {
                     width: wifioffSlider.visualPosition * parent.width
                     height: 4
                     radius: 2
-                    color: colorBackgroundTransparent
+                    color: Style.colorBackgroundTransparent
 
                     Rectangle {
                         width: parent.height
@@ -108,8 +109,8 @@ Item {
                         anchors.centerIn: parent
                         rotation: -90
                         gradient: Gradient {
-                            GradientStop { position: 0.0; color: colorMedium }
-                            GradientStop { position: 1.0; color: colorHighlight1 }
+                            GradientStop { position: 0.0; color: Style.colorMedium }
+                            GradientStop { position: 1.0; color: Style.colorHighlight1 }
                         }
                     }
                 }
@@ -120,8 +121,8 @@ Item {
                 y: wifioffSlider.topPadding + wifioffSlider.availableHeight / 2 - height / 2
                 implicitWidth: 28
                 implicitHeight: 28
-                radius: cornerRadius
-                color: colorLine
+                radius: Style.cornerRadius
+                color: Style.colorLine
             }
 
             onValueChanged: {
@@ -145,7 +146,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: qsTr("Never") + translateHandler.emptyString
             anchors.left: parent.left
@@ -158,7 +159,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: qsTr("60 minutes") + translateHandler.emptyString
             anchors.right: parent.right
@@ -174,14 +175,14 @@ Item {
             id: line3
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: wifioffSlider.bottom
             anchors.topMargin: 40
         }
 
         Text {
             id: shutdownText
-            color: colorText
+            color: Style.colorText
             text: config.settings.shutdowntime == 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(config.settings.shutdowntime/60/60) + translateHandler.emptyString
             wrapMode: Text.WordWrap
             width: parent.width-40
@@ -218,13 +219,13 @@ Item {
                 width: shutdownSlider.availableWidth
                 height: implicitHeight
                 radius: 4
-                color: colorBackground
+                color: Style.colorBackground
 
                 Rectangle {
                     width: shutdownSlider.visualPosition * parent.width
                     height: 4
                     radius: 2
-                    color: colorBackgroundTransparent
+                    color: Style.colorBackgroundTransparent
 
                     Rectangle {
                         width: parent.height
@@ -232,8 +233,8 @@ Item {
                         anchors.centerIn: parent
                         rotation: -90
                         gradient: Gradient {
-                            GradientStop { position: 0.0; color: colorMedium }
-                            GradientStop { position: 1.0; color: colorHighlight1 }
+                            GradientStop { position: 0.0; color: Style.colorMedium }
+                            GradientStop { position: 1.0; color: Style.colorHighlight1 }
                         }
                     }
                 }
@@ -244,8 +245,8 @@ Item {
                 y: shutdownSlider.topPadding + shutdownSlider.availableHeight / 2 - height / 2
                 implicitWidth: 28
                 implicitHeight: 28
-                radius: cornerRadius
-                color: colorLine
+                radius: Style.cornerRadius
+                color: Style.colorLine
             }
 
             onValueChanged: {
@@ -269,7 +270,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: qsTr("Never") + translateHandler.emptyString
             anchors.left: parent.left
@@ -282,7 +283,7 @@ Item {
         }
 
         Text {
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: qsTr("8 hours") + translateHandler.emptyString
             anchors.right: parent.right

@@ -25,13 +25,15 @@ import QtQuick.Controls 2.5
 import QtQuick.VirtualKeyboard 2.2
 import QtQuick.VirtualKeyboard.Settings 2.2
 
+import Style 1.0
+
 import Launcher 1.0
 import JsonFile 1.0
 import Battery 1.0
 import DisplayControl 1.0
 import Proximity 1.0
 
-import Entity.Remote 1.0            
+import Entity.Remote 1.0
 
 import "qrc:/scripts/softwareupdate.js" as JSUpdate
 import "qrc:/basic_ui" as BasicUI
@@ -159,32 +161,7 @@ ApplicationWindow {
     visible: true
     width: 480
     height: 800
-    color: colorBackground
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // COLORS
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property int cornerRadius: 18 // radius of the buttons, defined here
-
-    property bool darkMode: true
-
-    property string colorGreen: "#19D37B"
-    property string colorRed: "#EA003C"
-    property string colorOrange: "#FF7241"
-    property string colorBlue: "#19435E"
-
-    property string colorBackground: darkMode ? "#000000" : "#ffffff"
-    property string colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
-
-    property string colorText: darkMode ? "#ffffff" : "#000000"
-    property string colorLine: darkMode ? "#ffffff" : "#000000"
-
-    property string colorHighlight1: "#918682"
-    property string colorHighlight2: "#313247"
-
-    property string colorLight: darkMode ? "#484848" : "#CBCBCB"
-    property string colorMedium: darkMode ? "#282828" : "#D4D4D4"
-    property string colorDark: darkMode ? "#1C1C1C" : "#ffffff"
+    color: Style.colorBackground
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
@@ -249,7 +226,7 @@ ApplicationWindow {
         }
 
         // change dark mode to the configured value
-        darkMode = Qt.binding(function () { return config.ui_config.darkmode });
+        Style.darkMode = Qt.binding(function () { return config.ui_config.darkMode });
         standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
         // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
@@ -371,12 +348,12 @@ ApplicationWindow {
             Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
 
-        onStatusChanged: if (loader_main.status == Loader.Ready) {
+        onStatusChanged: if (loader_main.status == Loader.Ready && loadingScreen.item) {
                              loader_main.item.onItemsLoadedChanged.connect(onLoadingCompleted);
                          }
 
         function onLoadingCompleted() {
-            if (loadingScreen.item && loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count)
+            if (loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count)
                 console.debug("Setting loading screen to loaded");
                 loadingScreen.item.state = "loaded";
         }
@@ -507,14 +484,14 @@ ApplicationWindow {
             x: parent.width - 1
             width: parent.width
             height: parent.height
-            color: colorBackgroundTransparent
+            color: Style.colorBackgroundTransparent
         }
 
         Rectangle {
             width: parent.width
             height: parent.height - 40
             y: 40
-            color: colorBackground
+            color: Style.colorBackground
             opacity: notificationsDrawer.position
         }
 

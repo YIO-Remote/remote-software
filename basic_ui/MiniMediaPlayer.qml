@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -88,7 +89,7 @@ Item {
             id: opacityMask
             width: miniMediaPlayer.width
             height: miniMediaPlayer.height
-            radius: miniMediaPlayer.state == "closed" ? 0 : cornerRadius
+            radius: miniMediaPlayer.state == "closed" ? 0 : Style.cornerRadius
 
             Behavior on radius {
                 NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
@@ -188,7 +189,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: colorBackground
+        color: Style.colorBackground
     }
 
     SwipeView {
@@ -358,7 +359,7 @@ Item {
 
                     Text {
                         id: title
-                        color: colorText
+                        color: Style.colorText
                         text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -372,7 +373,7 @@ Item {
 
                     Text {
                         id: artist
-                        color: colorText
+                        color: Style.colorText
                         text: entities.mediaplayersPlaying[index].mediaTitle
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -402,7 +403,7 @@ Item {
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 Text {
                     id: sourceText
-                    color: colorText
+                    color: Style.colorText
                     text: entities.mediaplayersPlaying[index].source
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
@@ -420,7 +421,7 @@ Item {
 
                 Text {
                     id: titleOpen
-                    color: colorText
+                    color: Style.colorText
                     text: entities.mediaplayersPlaying[index].mediaTitle
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -437,7 +438,7 @@ Item {
 
                 Text {
                     id: artistOpen
-                    color: colorText
+                    color: Style.colorText
                     text: entities.mediaplayersPlaying[index].mediaArtist
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -468,7 +469,7 @@ Item {
                     }
 
                     Text {
-                        color: colorText
+                        color: Style.colorText
                         text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
                         font.family: "Open Sans"
@@ -489,8 +490,8 @@ Item {
 
     Text {
         id: closeButton
-        color: colorText
-        text: "\uE916"
+        color: Style.colorText
+        text: Style.icons.down_arrow
         renderType: Text.NativeRendering
         width: 70
         height: 70
@@ -527,8 +528,8 @@ Item {
         }
 
         Text {
-            color: colorText
-            text: "\uE909"
+            color: Style.colorText
+            text: Style.icons.prev
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -563,8 +564,8 @@ Item {
         }
 
         Text {
-            color: colorText
-            text: "\uE905"
+            color: Style.colorText
+            text: Style.icons.pause
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -580,8 +581,8 @@ Item {
         }
 
         Text {
-            color: colorText
-            text: "\uE906"
+            color: Style.colorText
+            text: Style.icons.play
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -623,8 +624,8 @@ Item {
         }
 
         Text {
-            color: colorText
-            text: "\uE904"
+            color: Style.colorText
+            text: Style.icons.next
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -659,7 +660,7 @@ Item {
             width: 8
             height: 8
             radius: height/2
-            color: colorText
+            color: Style.colorText
             opacity: index == mediaPlayers.currentIndex ? 1 : 0.3
         }
     }

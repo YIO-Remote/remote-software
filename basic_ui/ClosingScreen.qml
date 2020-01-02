@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import Launcher 1.0
+import Style 1.0
 
 import InterruptHandler 1.0
 

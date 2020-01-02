@@ -222,5 +222,6 @@
         <file>components/climate/ui/Button.qml</file>
         <file>components/climate/ui/Card.qml</file>
         <file>components/climate/ui/ContextMenu.qml</file>
+        <file>Style.qml</file>
     </qresource>
 </RCC>

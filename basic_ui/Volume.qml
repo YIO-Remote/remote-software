@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Style 1.0
+
 Item {
     id: volume
     width:  parent.width
@@ -79,7 +81,7 @@ Item {
         id: bg
         width: 300
         height: 80
-        color: colorLight
+        color: Style.colorLight
         radius: height/2
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -97,7 +99,7 @@ Item {
             id: volumeBar
             height: parent.height
             width: bg.width * volumePosition/100
-            color: colorLine
+            color: Style.colorLine
             anchors.left: parent.left
         }
 

@@ -1,5 +1,28 @@
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
+
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import Style 1.0
 
 import Haptic 1.0
 import MediaPlayerUtils 1.0
@@ -65,8 +88,8 @@ Item {
         }
 
         Text {
-            color: colorText
-            text: "\uE906"
+            color: Style.colorText
+            text: Style.icons.play
             renderType: Text.NativeRendering
             width: 70
             height: 70
@@ -89,7 +112,7 @@ Item {
 
         Text {
             id: title
-            color: colorText
+            color: Style.colorText
             text: albumModel.title
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -108,7 +131,7 @@ Item {
 
         Text {
             id: artist
-            color: colorText
+            color: Style.colorText
             text: albumModel.subtitle
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -148,7 +171,7 @@ Item {
                 Text {
                     id: trackNumber
                     text: index+1
-                    color: colorText
+                    color: Style.colorText
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     font.family: "Open Sans"
@@ -162,7 +185,7 @@ Item {
                     elide: Text.ElideRight
                     width: parent.width-100
                     wrapMode: Text.NoWrap
-                    color: colorText
+                    color: Style.colorText
                     anchors.left: parent.left
                     anchors.leftMargin: 45
                     anchors.top: parent.top
@@ -177,7 +200,7 @@ Item {
                     elide: Text.ElideRight
                     width: albumTitleText.width
                     wrapMode: Text.NoWrap
-                    color: colorText
+                    color: Style.colorText
                     opacity: 0.6
                     anchors.left: albumTitleText.left
                     anchors.top: albumTitleText.bottom

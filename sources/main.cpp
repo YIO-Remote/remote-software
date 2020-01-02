@@ -29,23 +29,17 @@
 #include <QQmlContext>
 #include <QtDebug>
 
-#include "jsonfile.h"
-#include "launcher.h"
-#include "translation.h"
-
 #include "hardware/hardwarefactory.h"
 #include "hardware/touchdetect.h"
 
+#include "config.h"
 #include "entities/entities.h"
 #include "integrations/integrations.h"
-
-#include "bluetootharea.h"
-#include "notifications.h"
-
-#include "components/media_player/sources/utils_mediaplayer.h"
-#include "config.h"
-#include "fileio.h"
+#include "jsonfile.h"
+#include "launcher.h"
 #include "logger.h"
+#include "notifications.h"
+#include "translation.h"
 #include "yioapi.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "main");
@@ -114,6 +108,9 @@ int main(int argc, char* argv[]) {
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
+
+    // LOAD STYLES
+    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/Style.qml")), "Style", 1, 0, "Style");
 
     // LOAD ICONS
     QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
