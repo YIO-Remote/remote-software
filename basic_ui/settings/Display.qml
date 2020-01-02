@@ -244,7 +244,7 @@ Item {
                 cleaningmodeButton.checked = true
                 touchEventCatcher.enabled = true
                 standbyControl.setBrightness(0);
-                DisplayControl.setmode(DisplayControl.StandbyOn);
+                DisplayControl.setMode(DisplayControl.StandbyOn);
                 cleaningmodeButtonTimer.start();
             }
 

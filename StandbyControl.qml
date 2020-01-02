@@ -134,7 +134,7 @@ Item {
 
             case "standby":
                 // turn off standby
-                if (DisplayControl.setmode(DisplayControl.StandbyOff)) {
+                if (DisplayControl.setMode(DisplayControl.StandbyOff)) {
                     standbyoffDelay.start();
                 }
 
@@ -146,7 +146,7 @@ Item {
                 wifi.on()
 
                 // turn off standby
-                if (DisplayControl.setmode(DisplayControl.StandbyOff)) {
+                if (DisplayControl.setMode(DisplayControl.StandbyOff)) {
                     standbyoffDelay.start();
                 }
 
@@ -264,7 +264,7 @@ Item {
                 setBrightness(0);
 
                 // put the display to standby mode
-                DisplayControl.setmode(DisplayControl.StandbyOn);
+                DisplayControl.setMode(DisplayControl.StandbyOn);
 
                 // stop bluetooth scanning
                 if (config.settings.bluetootharea) bluetoothArea.stopScan();
