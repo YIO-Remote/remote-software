@@ -77,7 +77,7 @@
     <message>
       <location filename="../components/climate/ui/Button.qml" line="43"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Taste: </translation>
     </message>
   </context>
   <context>
@@ -113,22 +113,22 @@
     <message>
       <location filename="../components/climate/ui/Card.qml" line="348"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Ausschalten</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="348"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Einschalten</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="361"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Modus</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="371"/>
       <source>Off</source>
-      <translation type="unfinished">Off</translation>
+      <translation>Aus</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="377"/>
@@ -146,22 +146,22 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="73"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Quelle</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="83"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Information</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="93"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menü</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="103"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Anleitung</translation>
     </message>
   </context>
   <context>
@@ -169,7 +169,7 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="201"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Ausschalten</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="201"/>
