@@ -34,5 +34,5 @@ class GestureSensorMock : public GestureSensor {
  public:
     void gestureDetection(bool state) override { Q_UNUSED(state) }
 
-    QString gesture() override { return ""; }
+    Gesture gesture() override { return None; }
 };

@@ -190,7 +190,6 @@ linux {
         SOURCES += \
             sources/hardware/hardwarefactory_yio.cpp \
             sources/hardware/arm/apds9960.cpp \
-            sources/hardware/arm/apds9960gesture.cpp \
             sources/hardware/arm/batterycharger_yio.cpp \
             sources/hardware/arm/bq27441.cpp \
             sources/hardware/arm/displaycontrol_yio.cpp \

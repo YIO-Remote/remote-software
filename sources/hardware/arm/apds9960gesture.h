@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include <cassert>
+
 #include "../gesturesensor.h"
 #include "apds9960.h"
 
@@ -29,15 +31,26 @@ class Apds9960GestureSensor : public GestureSensor {
     Q_OBJECT
 
  public:
-    explicit Apds9960GestureSensor(APDS9960* apds, QObject *parent = nullptr);
+    explicit Apds9960GestureSensor(APDS9960* apds, QObject* parent = nullptr) : GestureSensor(parent), p_apds(apds) {
+        assert(apds);
+    }
 
     // GestureSensor interface
  public:
-    void    gestureDetection(bool state) override;
-    QString gesture() override;
+    void gestureDetection(bool state) override {
+        m_gestureDetection = state;
+
+        if (state) {
+            // turn on
+        } else {
+            // turn off
+        }
+    }
+
+    Gesture gesture() override { return m_gesture; }
 
  private:
     APDS9960* p_apds;
-    QString  m_gesture;
-    bool     m_gestureDetection = false;
+    Gesture   m_gesture;
+    bool      m_gestureDetection = false;
 };

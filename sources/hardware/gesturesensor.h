@@ -28,14 +28,28 @@ class GestureSensor : public QObject {
     Q_OBJECT
 
  public:
-    Q_PROPERTY(QString gesture READ gesture NOTIFY gestureEvent)
+    enum Gesture {
+        None
+        // To be defined
+    };
+    Q_ENUM(Gesture)
 
+    Q_PROPERTY(Gesture gesture READ gesture NOTIFY gestureEvent)
+
+    /**
+     * @brief gestureDetection Enable or disable gesture detection.
+     * @param state true = enable detection.
+     */
     Q_INVOKABLE virtual void gestureDetection(bool state) = 0;
 
-    virtual QString gesture() = 0;
+    /**
+     * @brief gesture Return gesture
+     * @return The last detected gesture
+     */
+    virtual Gesture gesture() = 0;
 
  signals:
-    void gestureEvent();
+    void gestureEvent(Gesture gesture);
 
  protected:
     explicit GestureSensor(QObject *parent = nullptr) : QObject(parent) {}
