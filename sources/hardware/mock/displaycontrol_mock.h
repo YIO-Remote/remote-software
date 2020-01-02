@@ -32,7 +32,7 @@ class DisplayControlMock : public DisplayControl {
 
     // DisplayControl interface
  public:
-    bool setmode(const QString &mode) override {
+    bool setMode(Mode mode) override {
         Q_UNUSED(mode)
         return true;
     }

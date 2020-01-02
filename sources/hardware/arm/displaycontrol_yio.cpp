@@ -42,8 +42,8 @@ void DisplayControlYio::setup() {
     mcp23017Setup(100, 0x21);
 }
 
-bool DisplayControlYio::setmode(const QString &mode) {
-    if (mode == "standbyon") {
+bool DisplayControlYio::setMode(Mode mode) {
+    if (mode == StandbyOn) {
         QFuture<void> future = QtConcurrent::run([&]() {
             delay(400);  // wait until dimming of the display is done
             spi_screenreg_set(0x10, 0xffff, 0xffff);
@@ -52,7 +52,7 @@ bool DisplayControlYio::setmode(const QString &mode) {
         });
         return true;
     }
-    if (mode == "standbyoff") {
+    if (mode == StandbyOff) {
         QFuture<void> future = QtConcurrent::run([&]() {
             spi_screenreg_set(0x29, 0xffff, 0xffff);
             spi_screenreg_set(0x11, 0xffff, 0xffff);

@@ -37,7 +37,7 @@ class DisplayControlYio : public DisplayControl {
     struct timespec ts3 = {0, 300L};
 
  public:
-    Q_INVOKABLE bool setmode(const QString &mode) override;
+    Q_INVOKABLE bool setMode(Mode mode) override;
     Q_INVOKABLE void setBrightness(int from, int to) override;
 
     explicit DisplayControlYio(QObject *parent = nullptr);

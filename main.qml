@@ -559,7 +559,7 @@ ApplicationWindow {
         onPressAndHold: {
             console.debug("Disabling touch even catcher");
             touchEventCatcher.enabled = false;
-            DisplayControl.setmode("standbyoff");
+            DisplayControl.setmode(DisplayControl.StandbyOff);
             if (standbyControl.display_autobrightness) {
                 standbyControl.setBrightness(standbyControl.display_brightness_ambient);
             } else {

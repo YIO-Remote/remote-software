@@ -28,7 +28,13 @@ class DisplayControl : public QObject {
     Q_OBJECT
 
  public:
-    Q_INVOKABLE virtual bool setmode(const QString& mode) = 0;
+    enum Mode {
+        StandbyOn,
+        StandbyOff
+    };
+    Q_ENUM(Mode)
+
+    Q_INVOKABLE virtual bool setMode(Mode mode) = 0;
 
     Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
 
