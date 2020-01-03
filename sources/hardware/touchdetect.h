@@ -20,51 +20,40 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#ifndef TOUCHDETECT_H
+#define TOUCHDETECT_H
+
 #pragma once
 
+#include <QQmlApplicationEngine>
 #include <QQuickItem>
+
+#include "../logger.h"
 
 class TouchEventFilter : public QQuickItem {
     Q_OBJECT
-
  public:
     Q_PROPERTY(QObject *source READ getSource WRITE setSource)
     Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
 
- public:
-    TouchEventFilter() { m_source = nullptr; }
+    explicit TouchEventFilter();
+    ~TouchEventFilter();
 
-    ~TouchEventFilter() {
-        if (m_source != nullptr) m_source->removeEventFilter(this);
-    }
-
-    void setSource(QObject *source) {
-        source->installEventFilter(this);
-        m_source = source;
-    }
-
+    void     setSource(QObject *source);
     QObject *getSource() { return m_source; }
+    bool     detected() { return true; }
 
-    bool detected() { return true; }
-
- private:
-    bool eventFilter(QObject *obj, QEvent *event) {
-        Q_UNUSED(obj)
-
-        switch (event->type()) {
-            case QEvent::TouchBegin:
-            case QEvent::MouseButtonPress:
-                emit detectedChanged();
-                break;
-            default:  // do nothing
-                break;
-        }
-        return QQuickItem::eventFilter(this, event);
-    }
+    static TouchEventFilter *getInstance() { return s_instance; }
+    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
 
  signals:
     void detectedChanged();
 
  private:
-    QObject *m_source;
+    static TouchEventFilter *s_instance;
+    bool                     eventFilter(QObject *obj, QEvent *event);
+    QObject *                m_source;
+    QLoggingCategory         m_log;
 };
+
+#endif  // TOUCHDETECT_H

@@ -117,6 +117,7 @@ SOURCES += \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
     sources/hardware/device.cpp \
+    sources/hardware/touchdetect.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
     sources/main.cpp \
@@ -209,7 +210,6 @@ SOURCES += $$OTHER_FILES
 
 OTHER_FILES += main.qml \
           MainContainer.qml \
-          StandbyControl.qml \
           ButtonHandler.qml \
           wifiSetup.qml \
           basic_ui/*.qml \

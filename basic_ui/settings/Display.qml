@@ -79,7 +79,7 @@ Item {
             anchors.rightMargin: 20
             anchors.verticalCenter: autobrightnessText.verticalCenter
 
-            checked: standbyControl.display_autobrightness
+            checked: config.settings.autobrightness
             mouseArea.onClicked: {
                 var tmp = config.config;
                 tmp.settings.autobrightness = !tmp.settings.autobrightness;
@@ -91,7 +91,7 @@ Item {
         Slider {
             id: brightnessSlider
             from: 0
-            value: standbyControl.display_brightness
+            value: DisplayControl.userBrightness()
             to: 100
             stepSize: 1
             live: false

@@ -75,7 +75,7 @@ Item {
         Slider {
             id: wifioffSlider
             from: 0
-            value: standbyControl.wifiOffTime/60
+            value: config.settings.wifitime/60
             to: 60
             stepSize: 1
             live: true
@@ -199,7 +199,7 @@ Item {
         Slider {
             id: shutdownSlider
             from: 0
-            value: standbyControl.shutdownTime/60/60
+            value: config.settings.shutdowntime/60/60
             to: 8
             stepSize: 0.5
             live: true

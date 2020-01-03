@@ -32,6 +32,7 @@ import JsonFile 1.0
 import Battery 1.0
 import DisplayControl 1.0
 import Proximity 1.0
+import StandbyControl 1.0
 
 import Entity.Remote 1.0
 
@@ -221,20 +222,9 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
-        // TODO: this is done by the json validator
-//        if (config.config == undefined) {
-//            console.debug("Cannot load configuration file");
-//            // create a temporary standard config
-
-//            // notify user
-//            notifications.add(true, "Cannot load configuration");
-//        }
-
         // change dark mode to the configured value
         Style.darkMode = Qt.binding(function () { return config.ui_config.darkMode });
 
-        // TODO: this will be in the standbycontrol class
-        standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
         // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
@@ -283,22 +273,6 @@ ApplicationWindow {
             } else {
                 loader_main.setSource("qrc:/MainContainer.qml");
             }
-        }
-    }
-
-    // TODO: this will be a singleton c++ class
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // STANDBY CONTROL
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property alias standbyControl: standbyControl
-
-    StandbyControl {
-        id: standbyControl
-        objectName: "standbyControl"
-
-        Component.onCompleted: {
-            standbyControl.wifiOffTime = Qt.binding(function () { return config.settings.wifitime});
-            standbyControl.shutdownTime = Qt.binding(function () { return config.settings.shutdowntime});
         }
     }
 
@@ -554,32 +528,18 @@ ApplicationWindow {
     MouseArea {
         id: touchEventCatcher
         anchors.fill: parent
-        enabled: true
+        enabled: false
         pressAndHoldInterval: 5000
 
         onPressAndHold: {
             console.debug("Disabling touch even catcher");
+
             touchEventCatcher.enabled = false;
             DisplayControl.setMode(DisplayControl.StandbyOff);
-            if (standbyControl.display_autobrightness) {
-                standbyControl.setBrightness(standbyControl.display_brightness_ambient);
+            if (config.settings.autobrightness) {
+                DisplayControl.setBrightness(DisplayControl.ambientBrightness());
             } else {
-                standbyControl.setBrightness(standbyControl.display_brightness_set);
-            }
-        }
-    }
-
-    Timer {
-        running: standbyControl.mode == "standby" || standbyControl.mode == "on" ? true : false
-        repeat: false
-        interval: 200
-
-        onTriggered: {
-            if (standbyControl.mode == "on") {
-                touchEventCatcher.enabled = false;
-            }
-            if (standbyControl.mode == "standby") {
-                touchEventCatcher.enabled = true;
+                DisplayControl.setBrightness(DisplayControl.userBrightness());
             }
         }
     }

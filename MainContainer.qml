@@ -24,6 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Haptic 1.0
+import StandbyControl 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -50,7 +51,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
         target: buttonHandler
-        enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
+        enabled: loader_main.state === "visible" && StandbyControl.mode === StandbyControl.ON ? true : false
 
         onButtonPress: {
             switch (button) {

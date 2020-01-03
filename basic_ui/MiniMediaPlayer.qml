@@ -24,6 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
+import StandbyControl 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -103,7 +104,7 @@ Item {
 
     Connections {
         target: buttonHandler
-        enabled: miniMediaPlayer.state == "open" && (standbyControl.mode == "on" || standbyControl.mode == "dim")
+        enabled: miniMediaPlayer.state == "open" && (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM)
 
         onButtonPress: {
             switch (button) {

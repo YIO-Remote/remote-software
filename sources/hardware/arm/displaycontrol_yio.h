@@ -32,16 +32,27 @@ class DisplayControlYio : public DisplayControl {
     Q_OBJECT
 
     // define timing
-    struct timespec ts = {0, 40L};
+    struct timespec ts  = {0, 40L};
     struct timespec ts2 = {0, 100L};
     struct timespec ts3 = {0, 300L};
 
  public:
-    Q_INVOKABLE bool setMode(Mode mode) override;
-    Q_INVOKABLE void setBrightness(int from, int to) override;
+    bool setMode(Mode mode) override;
+    void setBrightness(int from, int to) override;
+    void setBrightness(int to) override;
+
+    int  currentBrightness() override { return m_currentBrightness; }
+    int  ambientBrightness() override { return m_ambientBrightness; }
+    int  userBrightness() override { return m_userBrightness; }
+    void setAmbientBrightness(int value) override { m_ambientBrightness = value; }
+    void setUserBrightness(int value) override { m_userBrightness = value; }
 
     explicit DisplayControlYio(QObject *parent = nullptr);
 
  private:
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
+
+    int m_currentBrightness = 100;
+    int m_ambientBrightness = 100;
+    int m_userBrightness    = 100;
 };

@@ -22,9 +22,12 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
+
 import Style 1.0
 
 import Haptic 1.0
+import StandbyControl 1.0
+
 
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
@@ -53,7 +56,7 @@ Rectangle {
             }
         }
     }
-    
+
     Behavior on opacity {
         PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
     }
@@ -78,17 +81,17 @@ Rectangle {
     // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//    layer.enabled: true
-//    layer.effect: OpacityMask {
-//        maskSource: Item {
-//            width: buttonContainer.width
-//            height: buttonContainer.height
-//            Rectangle {
-//                anchors.fill: parent
-//                radius: Style.cornerRadius
-//            }
-//        }
-//    }
+    layer.enabled: true
+    layer.effect: OpacityMask {
+        maskSource: Item {
+            width: buttonContainer.width
+            height: buttonContainer.height
+            Rectangle {
+                anchors.fill: parent
+                radius: Style.cornerRadius
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
@@ -188,11 +191,10 @@ Rectangle {
             anchors.left: parent.left
             anchors.leftMargin: 126
             anchors.verticalCenter: parent.verticalCenter
-//            font.family: "Open Sans"
-//            font.weight: Font.Normal
-//            font.pixelSize: 27
-//            lineHeight: 1
-            font: Style.buttonFont
+            font.family: "Open Sans"
+            font.weight: Font.Normal
+            font.pixelSize: 27
+            lineHeight: 1
         }
 
         Text {
@@ -412,7 +414,7 @@ Rectangle {
         enabled: state == "open" ? true : false
 
         onButtonPress: {
-            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
+            if (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM) {
                 switch (button) {
                 case "top right":
                     buttonContainer.state = "closed"
@@ -429,7 +431,7 @@ Rectangle {
         id: closeButton
         color: Style.colorText
         visible: buttonContainer.state == "open"
-        text: Style.icons.close
+        text: "\uE915"
         renderType: Text.NativeRendering
         width: 70
         height: 70
