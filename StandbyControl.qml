@@ -120,7 +120,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-        //        battery.checkBattery();
+        //        applicationWindow.checkBattery();
 
         switch (mode) {
 

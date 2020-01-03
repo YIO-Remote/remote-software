@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 
+import Battery 1.0
 import InterruptHandler 1.0
 import Proximity 1.0
 
@@ -55,7 +56,7 @@ Item {
             if (InterruptHandler.button == "apds9960") {
                 Proximity.readInterrupt();
             } else if (InterruptHandler.button == "battery") {
-                Battery.checkBattery();
+                applicationWindow.checkBattery();
             } else {
                 if (!wasPressed) {
                     buttonName = InterruptHandler.button;
