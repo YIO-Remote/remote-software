@@ -368,10 +368,8 @@ ApplicationWindow {
             ignoreUnknownSignals: true
 
             onLoadedItems: {
-                if (items === loader_main.item.mainNavigation.menuConfig.count) {
-                    console.debug("Setting loading screen to loaded");
-                    loadingScreen.item.state = "loaded";
-                }
+                console.debug("Setting loading screen to loaded");
+                loadingScreen.item.state = "loaded";
             }
         }
     }
