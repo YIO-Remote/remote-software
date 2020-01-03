@@ -36,7 +36,7 @@ class TouchEventFilter : public QQuickItem {
     Q_PROPERTY(QObject *source READ getSource WRITE setSource)
     Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
 
-    explicit TouchEventFilter();
+    TouchEventFilter();
     ~TouchEventFilter();
 
     void     setSource(QObject *source);

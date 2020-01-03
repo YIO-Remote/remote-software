@@ -182,9 +182,9 @@ int StandbyControl::mapValues(int x, int a, int b, int c, int d) {
     int leftSpan  = b - a;
     int rightSpan = d - c;
 
-    float valueScaled = float(x - a) / float(leftSpan);
+    float valueScaled = static_cast<float>(x - a) / static_cast<float>(leftSpan);
 
-    return int(c + (valueScaled * rightSpan));
+    return static_cast<int>(c + (valueScaled * rightSpan));
 }
 
 QString StandbyControl::secondsToHours(int value) {
@@ -243,7 +243,7 @@ void StandbyControl::onSecondsTimerTimeout() {
         // put the display to standby mode
         m_displayControl->setMode(DisplayControl::StandbyOn);
 
-        // TODO:
+        // TODO(martonborzak):
         // stop bluetooth scanning
 
         // reset battery charging screen
@@ -264,7 +264,7 @@ void StandbyControl::onSecondsTimerTimeout() {
     // TURN OFF BLUETOOTH
     if (m_elapsedTime == m_standByTime + 20 && m_mode == STANDBY &&
         m_config->getSettings().value("bluetootharea").toBool()) {
-        // TODO:
+        // TODO(martonborzak):
         // turn off bluetooth
     }
 
