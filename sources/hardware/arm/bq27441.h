@@ -80,21 +80,22 @@ class BQ27441 : public BatteryFuelGauge {
     Q_OBJECT
 
  public:
-    explicit BQ27441(QObject *parent = nullptr);
-    ~BQ27441();
+    explicit BQ27441(const QString &i2cDevice = "/dev/i2c-3", int i2cDeviceId = BQ27441_I2C_ADDRESS,
+                     QObject *parent = nullptr);
+    ~BQ27441() override;
 
-    Q_INVOKABLE virtual void    begin();
-    Q_INVOKABLE virtual int     getVoltage();
-    Q_INVOKABLE virtual int     getFullChargeCapacity();
-    Q_INVOKABLE virtual int     getAverageCurrent();
-    Q_INVOKABLE virtual int     getAveragePower();
-    Q_INVOKABLE virtual int     getStateOfCharge();
-    Q_INVOKABLE virtual int16_t getInternalTemperatureC();  // Result in 0.1 Celsius
-    Q_INVOKABLE virtual int     getStateOfHealth();
-    Q_INVOKABLE virtual int     getFullAvailableCapacity();
-    Q_INVOKABLE virtual int     getRemainingCapacity();
-    Q_INVOKABLE virtual int     getDesignCapacity();
-    Q_INVOKABLE virtual void    changeCapacity(int newCapacity);
+    Q_INVOKABLE void begin() override;
+    Q_INVOKABLE int  getVoltage() override;
+    Q_INVOKABLE int  getFullChargeCapacity() override;
+    Q_INVOKABLE int  getAverageCurrent() override;
+    Q_INVOKABLE int  getAveragePower() override;
+    Q_INVOKABLE int  getStateOfCharge() override;
+    Q_INVOKABLE int16_t getInternalTemperatureC() override;  // Result in 0.1 Celsius
+    Q_INVOKABLE int     getStateOfHealth() override;
+    Q_INVOKABLE int     getFullAvailableCapacity() override;
+    Q_INVOKABLE int     getRemainingCapacity() override;
+    Q_INVOKABLE int     getDesignCapacity() override;
+    Q_INVOKABLE void    changeCapacity(int newCapacity) override;
 
     int32_t  getTemperatureC();  // Result in 1 Celsius
     uint16_t getFlags();
@@ -120,7 +121,13 @@ class BQ27441 : public BatteryFuelGauge {
     uint16_t getChemID();
     void     reset();
 
+    // Device interface
+ public:
+    bool open() override;
+    void close() override;
+
  private:
-    int  bus;
-    bool m_init = false;
+    QString m_i2cDevice;
+    int     m_i2cDeviceId;
+    int     m_i2cFd;
 };

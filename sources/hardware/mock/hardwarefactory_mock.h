@@ -29,11 +29,14 @@
  */
 class HardwareFactoryMock : public HardwareFactory {
     Q_OBJECT
+
  public:
     explicit HardwareFactoryMock(const QVariantMap &config, QObject *parent = nullptr);
 
     // HardwareFactory interface
  public:
+    int initialize() override { return 0; }
+
     WifiControl *     getWifiControl() override;
     SystemService *   getSystemService() override;
     WebServerControl *getWebServerControl() override;
@@ -47,7 +50,7 @@ class HardwareFactoryMock : public HardwareFactory {
     ProximitySensor * getProximitySensor() override;
 
  protected:
-    bool initialize(const QVariantMap& config) override {
+    bool buildDevices(const QVariantMap& config) override {
         Q_UNUSED(config)
         return true;
     }

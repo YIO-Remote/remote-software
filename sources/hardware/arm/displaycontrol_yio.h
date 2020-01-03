@@ -42,8 +42,6 @@ class DisplayControlYio : public DisplayControl {
 
     explicit DisplayControlYio(QObject *parent = nullptr);
 
-    void setup() override;
-
  private:
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
 };

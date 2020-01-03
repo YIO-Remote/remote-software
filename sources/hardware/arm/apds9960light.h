@@ -37,7 +37,7 @@ class Apds9960LightSensor : public LightSensor {
     int ambientLight() override { return static_cast<int>(m_ambientLight); }
 
     Q_INVOKABLE int readAmbientLight() override {
-        if (p_apds->isInitialized()) {
+        if (p_apds->isOpen()) {
             while (!p_apds->colorDataReady()) {
                 delay(5);
             }

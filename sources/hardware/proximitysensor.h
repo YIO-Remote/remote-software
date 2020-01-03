@@ -21,9 +21,9 @@
  *****************************************************************************/
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class ProximitySensor : public QObject {
+class ProximitySensor : public Device {
     Q_OBJECT
 
  public:
@@ -43,5 +43,5 @@ class ProximitySensor : public QObject {
     void proximityEvent();
 
  protected:
-    explicit ProximitySensor(QObject *parent = nullptr) : QObject(parent) {}
+    explicit ProximitySensor(QObject *parent = nullptr) : Device(parent) {}
 };

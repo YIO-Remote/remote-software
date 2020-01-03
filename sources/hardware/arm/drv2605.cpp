@@ -32,42 +32,30 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include "drv2605.h"
+#include <QLoggingCategory>
+#include <QtDebug>
+
+#include <unistd.h>
+
 #include "../../notifications.h"
+#include "drv2605.h"
 
-// FIXME use strategy pattern for architecture specific device driver instead of multiple
-Drv2605::Drv2605(QObject* parent) : HapticMotor(parent) {
-    if (init()) {
-        selectLibrary(1);
-        setMode(DRV2605_MODE_INTTRIG);
-    } else {
-        Notifications::getInstance()->add(true, tr("Cannot initialize the haptic motor. Please restart the remote."));
-    }
-}
+static Q_LOGGING_CATEGORY(CLASS_LC, "HwYio");
 
-void Drv2605::playEffect(Effect effect) {
-    if (effect == Click) {
-        setWaveform(0, 1);
-        go();
-    }
-    if (effect == Bump) {
-        setWaveform(0, 24);
-        go();
-    }
-    if (effect == Press) {
-        setWaveform(0, 86);
-        go();
-    }
-    if (effect == Buzz) {
-        setWaveform(0, 47);
-        go();
-    }
-}
+Drv2605::Drv2605(const QString& i2cDevice, int i2cDeviceId, QObject* parent)
+    : HapticMotor(parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
 
-bool Drv2605::init() {
-    wiringPiSetup();
-    // TODO(zehnm) make i2c device configurable
-    bus = wiringPiI2CSetupInterface("/dev/i2c-3", DRV2605_ADDR);
+Drv2605::~Drv2605() { close(); }
+
+bool Drv2605::open() {
+    m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
+    if (m_i2cFd == -1) {
+        qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
+        setErrorString(tr("Cannot initialize the haptic motor. Please restart the remote."));
+        return false;
+    }
+
+    Device::open();
 
     //    int id = readRegister8(DRV2605_REG_STATUS);
 
@@ -90,7 +78,40 @@ bool Drv2605::init() {
     // turn on ERM_OPEN_LOOP
     writeRegister8(DRV2605_REG_CONTROL3, readRegister8(DRV2605_REG_CONTROL3) | 0x20);
 
+    selectLibrary(1);
+    setMode(DRV2605_MODE_INTTRIG);
+
+    qCDebug(CLASS_LC) << "Successfully opened";
+
     return true;
+}
+
+void Drv2605::close() {
+    Device::close();
+
+    if (m_i2cFd > 0) {
+        ::close(m_i2cFd);
+        m_i2cFd = 0;
+    }
+}
+
+void Drv2605::playEffect(Effect effect) {
+    if (effect == Click) {
+        setWaveform(0, 1);
+        go();
+    }
+    if (effect == Bump) {
+        setWaveform(0, 24);
+        go();
+    }
+    if (effect == Press) {
+        setWaveform(0, 86);
+        go();
+    }
+    if (effect == Buzz) {
+        setWaveform(0, 47);
+        go();
+    }
 }
 
 void Drv2605::setWaveform(uint8_t slot, uint8_t w) { writeRegister8(DRV2605_REG_WAVESEQ1 + slot, w); }
@@ -105,6 +126,16 @@ void Drv2605::setMode(uint8_t mode) { writeRegister8(DRV2605_REG_MODE, mode); }
 
 void Drv2605::setRealtimeValue(uint8_t rtp) { writeRegister8(DRV2605_REG_RTPIN, rtp); }
 
-int Drv2605::readRegister8(uint8_t reg) { return wiringPiI2CReadReg8(bus, reg); }
+int Drv2605::readRegister8(uint8_t reg) {
+    if (!isOpen()) {
+        return 0;
+    }
+    return wiringPiI2CReadReg8(m_i2cFd, reg);
+}
 
-void Drv2605::writeRegister8(uint8_t reg, uint8_t val) { wiringPiI2CWriteReg8(bus, reg, val); }
+void Drv2605::writeRegister8(uint8_t reg, uint8_t val) {
+    if (!isOpen()) {
+        return;
+    }
+    wiringPiI2CWriteReg8(m_i2cFd, reg, val);
+}

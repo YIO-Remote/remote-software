@@ -34,11 +34,7 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "BatCharger");
 
-BatteryChargerYio::BatteryChargerYio(QObject *parent) : BatteryCharger(parent) { setup(); }
-
-void BatteryChargerYio::setup() {
-    wiringPiSetup();
-}
+BatteryChargerYio::BatteryChargerYio(QObject *parent) : BatteryCharger(parent) {}
 
 void BatteryChargerYio::batteryChargingOn() {
     pinMode(108, OUTPUT);

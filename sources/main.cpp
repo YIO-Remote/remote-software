@@ -191,12 +191,8 @@ int main(int argc, char* argv[]) {
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
-    // TODO(zehnm) put initialization into factory
-    qCInfo(CLASS_LC) << "Initializing WiFi...";
-    if (!wifiControl->init()) {
-        notifications.add(true, QObject::tr("WiFi device was not found."));
-    }
-    qCInfo(CLASS_LC) << "WiFi initialized!";
+    // Ready for device startup!
+    hwFactory->initialize();
 
     // FILE IO
     FileIO fileIO;

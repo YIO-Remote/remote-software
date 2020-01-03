@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class DisplayControl : public QObject {
+class DisplayControl : public Device {
     Q_OBJECT
 
  public:
@@ -38,8 +38,6 @@ class DisplayControl : public QObject {
 
     Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
 
-    virtual void setup() = 0;
-
  protected:
-    explicit DisplayControl(QObject* parent = nullptr) : QObject(parent) {}
+    explicit DisplayControl(QObject* parent = nullptr) : Device(parent) {}
 };

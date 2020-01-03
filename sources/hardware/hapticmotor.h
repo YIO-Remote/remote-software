@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class HapticMotor : public QObject {
+class HapticMotor : public Device {
     Q_OBJECT
 
  public:
@@ -38,8 +38,6 @@ class HapticMotor : public QObject {
 
     Q_INVOKABLE virtual void playEffect(Effect effect) = 0;
 
-    virtual bool init() = 0;
-
  protected:
-    explicit HapticMotor(QObject* parent = nullptr) : QObject(parent) {}
+    explicit HapticMotor(QObject* parent = nullptr) : Device(parent) {}
 };

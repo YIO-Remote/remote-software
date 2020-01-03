@@ -22,17 +22,15 @@
 
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class BatteryCharger : public QObject {
+class BatteryCharger : public Device {
     Q_OBJECT
 
  public:
     Q_INVOKABLE virtual void batteryChargingOn() = 0;
     Q_INVOKABLE virtual void batteryChargingOff() = 0;
 
-    virtual void setup() = 0;
-
  protected:
-    explicit BatteryCharger(QObject* parent = nullptr) : QObject(parent) {}
+    explicit BatteryCharger(QObject* parent = nullptr) : Device(parent) {}
 };

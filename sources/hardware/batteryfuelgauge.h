@@ -22,15 +22,13 @@
 
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class BatteryFuelGauge : public QObject {
+class BatteryFuelGauge : public Device {
     Q_OBJECT
     Q_PROPERTY(int capacity READ getCapacity WRITE setCapacity)
 
  public:
-    explicit BatteryFuelGauge(QObject *parent = nullptr) : QObject(parent) {}
-
     Q_INVOKABLE virtual void    begin() = 0;
     Q_INVOKABLE virtual int     getVoltage() = 0;
     Q_INVOKABLE virtual int     getFullChargeCapacity() = 0;
@@ -48,8 +46,8 @@ class BatteryFuelGauge : public QObject {
 
     int getCapacity() { return m_capacity; }
 
- signals:
-
  protected:
+    explicit BatteryFuelGauge(QObject *parent = nullptr) : Device(parent) {}
+
     int m_capacity;
 };

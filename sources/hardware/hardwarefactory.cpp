@@ -76,7 +76,7 @@ HardwareFactory *HardwareFactory::build(const QVariantMap &config) {
     s_instance = new HardwareFactoryMock(config);
 #endif
 
-    s_instance->initialize(config);
+    s_instance->buildDevices(config);
     return s_instance;
 }
 

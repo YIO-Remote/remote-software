@@ -23,19 +23,17 @@
 #pragma once
 
 #include <QFile>
-#include <QObject>
 #include <QSocketNotifier>
-#include <QtDebug>
 
 #include "../interrupthandler.h"
-
 #include "mcp23017_handler.h"
 
 class Mcp23017InterruptHandler : public InterruptHandler {
     Q_OBJECT
 
  public:
-    explicit Mcp23017InterruptHandler(QObject *parent = nullptr) : InterruptHandler(parent) { setupGPIO(); }
+    explicit Mcp23017InterruptHandler(const QString &i2cDevice = "/dev/i2c-3", int i2cDeviceId = MCP23017_ADDRESS,
+                                      QObject *parent = nullptr);
 
     // ~Mcp23017InterruptHandler() override {}
 
@@ -43,64 +41,18 @@ class Mcp23017InterruptHandler : public InterruptHandler {
 
     QString getButton() override { return m_button; }
 
- private:
-    void setupGPIO() {
-        QFile exportFile("/sys/class/gpio/export");
-        if (!exportFile.open(QIODevice::WriteOnly)) {
-            qDebug() << "Error opening: /sys/class/gpio/export";
-            return;
-        }
-        exportFile.write("18");
-        exportFile.close();
-
-        QFile directionFile("/sys/class/gpio/gpio18/direction");
-        if (!directionFile.open(QIODevice::WriteOnly)) {
-            qDebug() << "Error opening: /sys/class/gpio/gpio18/direction";
-            return;
-        }
-        directionFile.write("in");
-        directionFile.close();
-
-        QFile edgeFile("/sys/class/gpio/gpio18/edge");
-        if (!edgeFile.open(QIODevice::WriteOnly)) {
-            qDebug() << "Error opening: /sys/class/gpio/gpio18/edge";
-            return;
-        }
-        edgeFile.write("falling");
-        edgeFile.close();
-
-        // GPIO to look at; This is connected to the MCP23017 INTA&INTB ports
-        file = new QFile("/sys/class/gpio/gpio18/value");
-        file->open(QIODevice::ReadOnly);
-
-        // connect to a signal
-        notifier = new QSocketNotifier(file->handle(), QSocketNotifier::Exception);
-        notifier->setEnabled(true);
-        connect(notifier, &QSocketNotifier::activated, this, &Mcp23017InterruptHandler::interruptHandler);
-    }
-
-    void interruptHandler() {
-        QFile file("/sys/class/gpio/gpio18/value");
-        if (!file.open(QIODevice::ReadOnly)) {
-            qDebug() << "Error opening: /sys/class/gpio/gpio18/value";
-            return;
-        }
-
-        int gpioVal = file.readAll().toInt();
-
-        // if the GPIO is 0, then it's a button press
-        if (gpioVal == 0) {
-            // check the MCP23017 what caused the interrupt
-            m_button = mcp.readInterrupt();
-
-            // tell qml that there was a button press
-            emit buttonPressed();
-        }
-
-        delay(10);
-    }
+    // Device interface
+ public:
+    bool open() override;
 
  private:
+    bool setupGPIO();
+
+    void interruptHandler();
+
+ private:
+    QString          m_i2cDevice;
+    int              m_i2cDeviceId;
     QString          m_button;
     MCP23017         mcp = MCP23017();
     QSocketNotifier *notifier;

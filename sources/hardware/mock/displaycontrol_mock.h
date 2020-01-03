@@ -41,6 +41,4 @@ class DisplayControlMock : public DisplayControl {
         Q_UNUSED(from)
         Q_UNUSED(to)
     }
-
-    void setup() override {}
 };

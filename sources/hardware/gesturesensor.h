@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class GestureSensor : public QObject {
+class GestureSensor : public Device {
     Q_OBJECT
 
  public:
@@ -46,11 +46,11 @@ class GestureSensor : public QObject {
      * @brief gesture Return gesture
      * @return The last detected gesture
      */
-    virtual Gesture gesture() = 0;
+    virtual Gesture gesture() const = 0;
 
  signals:
     void gestureEvent(Gesture gesture);
 
  protected:
-    explicit GestureSensor(QObject *parent = nullptr) : QObject(parent) {}
+    explicit GestureSensor(QObject *parent = nullptr) : Device(parent) {}
 };

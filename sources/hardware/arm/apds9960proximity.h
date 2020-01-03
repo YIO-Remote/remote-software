@@ -41,7 +41,7 @@ class Apds9960ProximitySensor : public ProximitySensor {
     int proximity() override { return m_proximity; }
 
     Q_INVOKABLE void proximityDetection(bool state) override {
-        if (p_apds->isInitialized()) {
+        if (p_apds->isOpen()) {
             if (state != m_proximityDetection) {
                 if (state) {
                     // turn on
@@ -58,7 +58,7 @@ class Apds9960ProximitySensor : public ProximitySensor {
     }
 
     Q_INVOKABLE void readInterrupt() override {
-        if (p_apds->isInitialized()) {
+        if (p_apds->isOpen()) {
             m_proximity = p_apds->readProximity();
             if (m_proximity > 0) {
                 // prevent log flooding while docking

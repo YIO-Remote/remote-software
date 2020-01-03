@@ -34,6 +34,8 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
+#include "../device.h"
+
 #define APDS9960_ADDRESS (0x39)
 
 /** I2C Registers */
@@ -168,13 +170,13 @@ enum {
 
 typedef unsigned char byte;
 
-class APDS9960 {
+class APDS9960 : public Device {
  public:
-    APDS9960();
-    ~APDS9960();
+    explicit APDS9960(const QString &i2cDevice = "/dev/i2c-3", int i2cDeviceId = APDS9960_ADDRESS,
+                      QObject *parent = nullptr);
+    ~APDS9960() override;
 
     bool            begin(uint16_t iTimeMS = 10, apds9960AGain_t = APDS9960_AGAIN_4X);
-    bool            isInitialized() { return _initialized; }
     void            setADCIntegrationTime(uint16_t iTimeMS);
     float           getADCIntegrationTime();
     void            setADCGain(apds9960AGain_t gain);
@@ -218,10 +220,15 @@ class APDS9960 {
     // turn on/off elements
     void enable(bool en = true);
 
+    // Device interface
+ public:
+    bool open() override;
+    void close() override;
+
  private:
-    uint8_t _i2caddr;
-    int     _fd;
-    bool    _initialized;
+    QString m_i2cDevice;
+    int     m_i2cDeviceId;
+    int     m_i2cFd;
 
     uint32_t read32(uint8_t reg);
     uint16_t read16(uint8_t reg);

@@ -31,10 +31,10 @@ class HardwareFactoryYio : public HardwareFactoryRPi0 {
  public:
     explicit HardwareFactoryYio(const QVariantMap &config, QObject *parent = nullptr);
 
+    int initialize() override;
+
     // HardwareFactoryRPi0 interface
  protected:
-    bool initialize(const QVariantMap& config) override;
-
     DisplayControl *buildDisplayControl(const QVariantMap &config) override;
 
     BatteryCharger *buildBatteryCharger(const QVariantMap &config) override;
@@ -52,5 +52,5 @@ class HardwareFactoryYio : public HardwareFactoryRPi0 {
     ProximitySensor *buildProximitySensor(const QVariantMap &config) override;
 
  private:
-    APDS9960 m_apds;
+    APDS9960 *p_apds9960;
 };

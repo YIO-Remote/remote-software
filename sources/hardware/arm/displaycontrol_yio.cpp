@@ -24,25 +24,23 @@
 #include <QLoggingCategory>
 #include <QtConcurrent/QtConcurrentRun>
 
-#include <mcp23017.h>
 #include <wiringPi.h>
 
 #include "displaycontrol_yio.h"
 #include "mcp23017_handler.h"
 
-#define CLK 107
+#define CLK  107
 #define MOSI 106
-#define CS 105
-#define RST 104
+#define CS   105
+#define RST  104
 
-DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent) { setup(); }
-
-void DisplayControlYio::setup() {
-    wiringPiSetup();
-    mcp23017Setup(100, 0x21);
-}
+DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent) { }
 
 bool DisplayControlYio::setMode(Mode mode) {
+    if (!isOpen()) {
+        return false;
+    }
+
     if (mode == StandbyOn) {
         QFuture<void> future = QtConcurrent::run([&]() {
             delay(400);  // wait until dimming of the display is done
@@ -51,18 +49,22 @@ bool DisplayControlYio::setMode(Mode mode) {
             spi_screenreg_set(0x28, 0xffff, 0xffff);
         });
         return true;
-    }
-    if (mode == StandbyOff) {
+    } else if (mode == StandbyOff) {
         QFuture<void> future = QtConcurrent::run([&]() {
             spi_screenreg_set(0x29, 0xffff, 0xffff);
             spi_screenreg_set(0x11, 0xffff, 0xffff);
         });
         return true;
     }
+
     return false;
 }
 
 void DisplayControlYio::setBrightness(int from, int to) {
+    if (!isOpen()) {
+        return;
+    }
+
     QFuture<void> future = QtConcurrent::run(
         [&](int from, int to) {
             if (from == 0 && digitalRead(26) == 0) {

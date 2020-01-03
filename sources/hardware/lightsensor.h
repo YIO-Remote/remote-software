@@ -22,9 +22,9 @@
 
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class LightSensor : public QObject {
+class LightSensor : public Device {
     Q_OBJECT
 
  public:
@@ -35,5 +35,5 @@ class LightSensor : public QObject {
     virtual int ambientLight() = 0;
 
  protected:
-    explicit LightSensor(QObject *parent = nullptr) : QObject(parent) {}
+    explicit LightSensor(QObject *parent = nullptr) : Device(parent) {}
 };

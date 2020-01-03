@@ -69,6 +69,7 @@ HEADERS += \
     sources/launcher.h \
     sources/logger.h \
     sources/translation.h \
+    sources/hardware/device.h \
     sources/hardware/touchdetect.h \
     sources/hardware/hardwarefactory.h \
     sources/hardware/mock/hardwarefactory_mock.h \
@@ -114,6 +115,7 @@ SOURCES += \
     sources/entities/remote.cpp \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
+    sources/hardware/device.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
     sources/main.cpp \
@@ -193,7 +195,8 @@ linux {
             sources/hardware/arm/batterycharger_yio.cpp \
             sources/hardware/arm/bq27441.cpp \
             sources/hardware/arm/displaycontrol_yio.cpp \
-            sources/hardware/arm/drv2605.cpp
+            sources/hardware/arm/drv2605.cpp \
+            sources/hardware/arm/mcp23017_interrupt.cpp
     }
 
 }
@@ -297,8 +300,8 @@ equals(QT_ARCH, arm): {
     message(Cross compiling for arm system: including Wiringpi config on RPi)
 
     # FIXME hard coded directory path!
-    INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
-    LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+    INCLUDEPATH += /home/yio/projects/yio/remote-os/rpi0/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
+    LIBS += -L"/home/yio/projects/yio/remote-os/rpi0/output/target/usr/lib"
     LIBS += -lwiringPi
 }
 

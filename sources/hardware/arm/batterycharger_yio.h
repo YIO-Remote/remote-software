@@ -32,6 +32,4 @@ class BatteryChargerYio : public BatteryCharger {
     Q_INVOKABLE void batteryChargingOff() override;
 
     explicit BatteryChargerYio(QObject *parent = nullptr);
-
-    void setup() override;
 };

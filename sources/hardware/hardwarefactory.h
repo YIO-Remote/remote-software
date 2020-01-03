@@ -63,6 +63,8 @@ class HardwareFactory : public QObject {
      */
     static HardwareFactory* build(const QVariantMap& config);
 
+    virtual int initialize() = 0;
+
     /**
      * @brief instance Returns a concrete HardwareFactory implementation
      * @return The hardware factory or nullptr if the factory has not yet been initialized
@@ -105,7 +107,7 @@ class HardwareFactory : public QObject {
     explicit HardwareFactory(QObject* parent = nullptr);
     virtual ~HardwareFactory();
 
-    bool virtual initialize(const QVariantMap& config) = 0;
+    bool virtual buildDevices(const QVariantMap& config) = 0;
 
  private:
     static HardwareFactory* s_instance;

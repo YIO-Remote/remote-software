@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,19 +20,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#pragma once
+#include "device.h"
 
-#include "../gesturesensor.h"
+Device::~Device() {
+    if (m_open) {
+        close();
+    }
+}
 
-class GestureSensorMock : public GestureSensor {
-    Q_OBJECT
+bool Device::isOpen() const { return m_open; }
 
- public:
-    explicit GestureSensorMock(QObject *parent = nullptr) : GestureSensor(parent) {}
+bool Device::open() {
+    m_open = true;
+    m_errorString.clear();
 
-    // GestureSensor interface
- public:
-    void gestureDetection(bool state) override { Q_UNUSED(state) }
+    return true;
+}
 
-    Gesture gesture() const override { return None; }
-};
+void Device::close() {
+    if (!m_open) {
+        return;
+    }
+
+    emit aboutToClose();
+    m_open = false;
+}
+
+QString Device::errorString() const { return m_errorString; }
+
+void Device::setErrorString(const QString &str) { m_errorString = str; }

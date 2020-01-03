@@ -37,6 +37,8 @@ class HardwareFactoryRPi0 : public HardwareFactory {
 
     // HardwareFactory interface
  public:
+    int initialize() override;
+
     WifiControl *getWifiControl() override {
         assert(p_wifiControl);
         return p_wifiControl;
@@ -93,7 +95,7 @@ class HardwareFactoryRPi0 : public HardwareFactory {
     }
 
  protected:
-    bool initialize(const QVariantMap& config) override;
+    bool buildDevices(const QVariantMap& config) override;
 
     virtual WifiControl *     buildWifiControl(const QVariantMap &config);
     virtual SystemService *   buildSystemService(const QVariantMap &config);

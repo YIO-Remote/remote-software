@@ -25,6 +25,7 @@
 
 #include <cassert>
 
+#include "../notifications.h"
 #include "hardwarefactory_rpi0.h"
 #include "hw_config.h"
 #include "mock/batterycharger_mock.h"
@@ -59,10 +60,20 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
       p_gestureSensor(nullptr),
       p_lightSensor(nullptr),
       p_proximitySensor(nullptr) {
+    Q_UNUSED(config)
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
-bool HardwareFactoryRPi0::initialize(const QVariantMap &config) {
+int HardwareFactoryRPi0::initialize() {
+    qCInfo(CLASS_LC) << "Initializing WiFi...";
+    if (!p_wifiControl->init()) {
+        Notifications::getInstance()->add(true, QObject::tr("WiFi device was not found."));
+    }
+    qCInfo(CLASS_LC) << "WiFi initialized!";
+    return 0;
+}
+
+bool HardwareFactoryRPi0::buildDevices(const QVariantMap &config) {
     p_systemService = buildSystemService(config);
     p_webServerControl = buildWebServerControl(config);
     p_wifiControl = buildWifiControl(config);

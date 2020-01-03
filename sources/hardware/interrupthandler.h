@@ -22,20 +22,21 @@
 
 #pragma once
 
-#include <QObject>
+#include "device.h"
 
-class InterruptHandler : public QObject {
+class InterruptHandler : public Device {
     Q_OBJECT
 
     Q_PROPERTY(QString button READ getButton NOTIFY buttonPressed)
 
  public:
-    explicit InterruptHandler(QObject *parent = nullptr) : QObject(parent) {}
-
     Q_INVOKABLE virtual void shutdown() = 0;
 
     virtual QString getButton() = 0;
 
  signals:
     void buttonPressed();
+
+ protected:
+    explicit InterruptHandler(QObject *parent = nullptr) : Device(parent) {}
 };

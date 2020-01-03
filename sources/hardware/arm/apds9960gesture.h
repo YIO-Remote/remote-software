@@ -47,7 +47,7 @@ class Apds9960GestureSensor : public GestureSensor {
         }
     }
 
-    Gesture gesture() override { return m_gesture; }
+    Gesture gesture() const override { return m_gesture; }
 
  private:
     APDS9960* p_apds;

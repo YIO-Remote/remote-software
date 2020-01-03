@@ -33,5 +33,4 @@ class BatteryChargerMock : public BatteryCharger {
  public:
     void batteryChargingOn() override {}
     void batteryChargingOff() override {}
-    void setup() override {}
 };

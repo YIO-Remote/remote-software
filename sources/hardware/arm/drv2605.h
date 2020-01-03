@@ -95,9 +95,14 @@ class Drv2605 : public HapticMotor {
     Q_INVOKABLE void playEffect(Effect effect) override;
 
  public:
-    explicit Drv2605(QObject* parent = nullptr);
+    explicit Drv2605(const QString& i2cDevice = "/dev/i2c-3", int i2cDeviceId = DRV2605_ADDR,
+                     QObject* parent = nullptr);
+    ~Drv2605() override;
 
-    bool init() override;
+    // Device interface
+ public:
+    bool open() override;
+    void close() override;
 
  private:
     void writeRegister8(uint8_t reg, uint8_t val);
@@ -110,5 +115,7 @@ class Drv2605 : public HapticMotor {
     void setRealtimeValue(uint8_t rtp);
 
  private:
-    int bus;
+    QString m_i2cDevice;
+    int     m_i2cDeviceId;
+    int     m_i2cFd;
 };

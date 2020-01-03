@@ -22,11 +22,14 @@
 
 #pragma once
 
+#include <QLoggingCategory>
+#include <QtDebug>
 #include <QString>
 
 #include <stdbool.h>
 #include <stdint.h>
 #include <time.h>
+#include <unistd.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
@@ -59,54 +62,67 @@
 
 #define MCP23017_INT_ERR 255
 
+static Q_LOGGING_CATEGORY(CLASS_LC2, "MCP23017");
+
 class MCP23017 {
  public:
-    MCP23017() { setup(); }
+    MCP23017() : m_i2cFd(0) {}
 
-    ~MCP23017() {}
+    ~MCP23017() {
+        if (m_i2cFd > 0) {
+            ::close(m_i2cFd);
+        }
+    }
 
-    void setup() {
-        wiringPiSetup();
+    bool setup(const QString &i2cDevice, int i2cDeviceId) {
+        if (m_i2cFd > 0) {
+            return true;
+        }
 
-        // TODO(zehnm) make i2c device configurable
-        bus = wiringPiI2CSetupInterface("/dev/i2c-3", MCP23017_ADDRESS);
+        m_i2cFd = wiringPiI2CSetupInterface(qPrintable(i2cDevice), i2cDeviceId);
+        if (m_i2cFd == -1) {
+            qCCritical(CLASS_LC2) << "Unable to open or select I2C device" << i2cDevice << "on" << i2cDeviceId;
+            return false;
+        }
 
         // set up all inputs on both ports
-        wiringPiI2CWriteReg8(bus, MCP23017_IODIRA, 0xbf);  // 0xbf 0b10111111
-        wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0xff);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_IODIRA, 0xbf);  // 0xbf 0b10111111
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_IODIRB, 0xff);
 
         // set up interrupts
-        int ioconfValue = wiringPiI2CReadReg8(bus, MCP23017_IOCONA);
+        int ioconfValue = wiringPiI2CReadReg8(m_i2cFd, MCP23017_IOCONA);
         bitWrite(ioconfValue, 6, true);
         bitWrite(ioconfValue, 2, false);
         bitWrite(ioconfValue, 1, false);
-        wiringPiI2CWriteReg8(bus, MCP23017_IOCONA, ioconfValue);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_IOCONA, ioconfValue);
 
-        ioconfValue = wiringPiI2CReadReg8(bus, MCP23017_IOCONB);
+        ioconfValue = wiringPiI2CReadReg8(m_i2cFd, MCP23017_IOCONB);
         bitWrite(ioconfValue, 6, true);   // mirror
         bitWrite(ioconfValue, 2, false);  //
         bitWrite(ioconfValue, 1, false);  // polarity
-        wiringPiI2CWriteReg8(bus, MCP23017_IOCONB, ioconfValue);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_IOCONB, ioconfValue);
 
         // setup pin for interrupt
-        wiringPiI2CWriteReg8(bus, MCP23017_INTCONA, 0x00);
-        wiringPiI2CWriteReg8(bus, MCP23017_GPPUA, 0xbf);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_INTCONA, 0x00);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_GPPUA, 0xbf);
 
-        wiringPiI2CWriteReg8(bus, MCP23017_INTCONB, 0x00);
-        wiringPiI2CWriteReg8(bus, MCP23017_GPPUB, 0xff);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_INTCONB, 0x00);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_GPPUB, 0xff);
 
         // enable pin for interrupt
-        wiringPiI2CWriteReg8(bus, MCP23017_GPINTENA, 0xbf);
-        wiringPiI2CWriteReg8(bus, MCP23017_GPINTENB, 0xff);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_GPINTENA, 0xbf);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_GPINTENB, 0xff);
 
-        wiringPiI2CReadReg8(bus, MCP23017_INTCAPA);
-        wiringPiI2CReadReg8(bus, MCP23017_INTCAPB);
+        wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTCAPA);
+        wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTCAPB);
+
+        return true;
     }
 
     QString readInterrupt() {
         int intf;
 
-        intf = wiringPiI2CReadReg8(bus, MCP23017_INTFA);
+        intf = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFA);
 
         switch (intf) {
             case 0x01:
@@ -132,7 +148,7 @@ class MCP23017 {
                 return "battery";
         }
 
-        intf = wiringPiI2CReadReg8(bus, MCP23017_INTFB);
+        intf = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFB);
 
         switch (intf) {
             case 0x01:
@@ -166,20 +182,20 @@ class MCP23017 {
 
     void clearInterrupt() {
         // clear interrupt registers
-        wiringPiI2CReadReg8(bus, MCP23017_INTCAPA);
-        wiringPiI2CReadReg8(bus, MCP23017_INTCAPB);
+        wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTCAPA);
+        wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTCAPB);
     }
 
     void shutdown() {
         // set pins output
-        wiringPiI2CWriteReg8(bus, MCP23017_IODIRB, 0x00);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_IODIRB, 0x00);
 
         // set pin power button pin low
-        wiringPiI2CWriteReg8(bus, MCP23017_OLATB, 0x00);
+        wiringPiI2CWriteReg8(m_i2cFd, MCP23017_OLATB, 0x00);
     }
 
  private:
-    int bus;
+    int m_i2cFd;
 
  private:
     void bitWrite(int x, int n, bool b) {
