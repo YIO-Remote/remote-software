@@ -31,6 +31,8 @@ import QtQuick 2.7
 import QtQuick.VirtualKeyboard 2.1
 import QtQuick.VirtualKeyboard.Styles 2.1
 
+import Style 1.0
+
 KeyboardStyle {
     id: currentStyle
     readonly property bool compactSelectionList: [InputEngine.Pinyin, InputEngine.Cangjie, InputEngine.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
@@ -59,7 +61,7 @@ KeyboardStyle {
     keyboardRelativeBottomMargin: 13 / keyboardDesignHeight
 
     keyboardBackground: Rectangle {
-        color: colorBackground
+        color: Style.colorBackground
     }
 
     keyPanel: KeyPanel {
@@ -67,14 +69,14 @@ KeyboardStyle {
         Rectangle {
             id: keyBackground
             radius: 5
-            color: colorMedium
+            color: Style.colorMedium
             anchors.fill: keyPanel
             anchors.margins: keyBackgroundMargin
             Text {
                 id: keySmallText
                 text: control.smallText
                 visible: control.smallTextVisible
-                color: colorText
+                color: Style.colorText
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.margins: keyContentMargin / 3
@@ -88,7 +90,7 @@ KeyboardStyle {
             Text {
                 id: keyText
                 text: control.displayText
-                color: colorText
+                color: Style.colorText
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.fill: parent
@@ -137,7 +139,7 @@ KeyboardStyle {
         Rectangle {
             id: backspaceKeyBackground
             radius: 5
-            color: colorMedium
+            color: Style.colorMedium
             anchors.fill: backspaceKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -324,7 +326,7 @@ KeyboardStyle {
         Rectangle {
             id: hideKeyBackground
             radius: 5
-            color: colorMedium
+            color: Style.colorMedium
             anchors.fill: hideKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -369,7 +371,7 @@ KeyboardStyle {
         Rectangle {
             id: shiftKeyBackground
             radius: 5
-            color: colorMedium
+            color: Style.colorMedium
             anchors.fill: shiftKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -386,7 +388,7 @@ KeyboardStyle {
                     when: InputContext.capsLock
                     PropertyChanges {
                         target: shiftKeyBackground
-                        color: colorHighlight1
+                        color: Style.colorHighlight1
                     }
                     PropertyChanges {
                         target: shiftKeyIcon
@@ -477,13 +479,13 @@ KeyboardStyle {
         Rectangle {
             id: symbolKeyBackground
             radius: 5
-            color: colorMedium
+            color: Style.colorMedium
             anchors.fill: symbolKeyPanel
             anchors.margins: keyBackgroundMargin
             Text {
                 id: symbolKeyText
                 text: control.displayText
-                color: colorText
+                color: Style.colorText
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.fill: parent
@@ -643,7 +645,7 @@ KeyboardStyle {
             id: characterPreviewBackground
             width: parent.width+20
             height: parent.height+20
-            color: colorHighlight1
+            color: Style.colorHighlight1
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             radius: 5
