@@ -367,8 +367,8 @@ ApplicationWindow {
             enabled: loader_main.status == Loader.Ready
             ignoreUnknownSignals: true
 
-            onLoaded: {
-                if (loader_main.item.itemsLoaded === loader_main.item.mainNavigation.menuConfig.count) {
+            onLoadedItems: {
+                if (items === loader_main.item.mainNavigation.menuConfig.count) {
                     console.debug("Setting loading screen to loaded");
                     loadingScreen.item.state = "loaded";
                 }
