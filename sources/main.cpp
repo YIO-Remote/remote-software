@@ -48,7 +48,6 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
 int main(int argc, char* argv[]) {
-    qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
@@ -57,6 +56,8 @@ int main(int argc, char* argv[]) {
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/keyboard");
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
