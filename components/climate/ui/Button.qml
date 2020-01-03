@@ -21,8 +21,8 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-//import QtQuick.Controls 2.5
-//import QtGraphicalEffects 1.0
+import Entity.Climate 1.0
+
 import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -41,7 +41,12 @@ Comp.ButtonBase {
         id: info
         color: Style.colorText
         opacity: 0.5
-        text: qsTr("Temperature: ") + obj.temperature + obj.temperatureUnit + translateHandler.emptyString
+        text: {
+            if (obj.isSupported(Climate.F_TEMPERATURE))
+                return qsTr("Temperature: ") + obj.temperature + obj.temperatureUnit + translateHandler.emptyString
+            else if (obj.isSupported(Climate.F_TARGET_TEMPERATURE))
+                return qsTr("Temperature: ") + obj.targetTemperature + obj.temperatureUnit + translateHandler.emptyString
+        }
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         width: title.width
