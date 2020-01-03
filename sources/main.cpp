@@ -167,8 +167,6 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor",
                                           &HardwareFactory::lightSensorProvider);
 
-    qCInfo(CLASS_LC) << "Registered QML types";
-
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
     engine.rootContext()->setContextProperty("bluetoothArea", &bluetoothArea);
@@ -224,8 +222,6 @@ int main(int argc, char* argv[]) {
         QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
         QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
     }
-
-    qCInfo(CLASS_LC) << "Starting UI...";
 
     return app.exec();
 }
