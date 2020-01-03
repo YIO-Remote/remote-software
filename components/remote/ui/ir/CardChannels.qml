@@ -87,7 +87,7 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        haptic.playEffect("click");
+                        haptic.playEffect(Haptic.Click);
                         obj.channel(number);
                     }
                 }

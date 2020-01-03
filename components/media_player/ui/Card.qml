@@ -23,6 +23,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
 
+import Haptic 1.0
 import Entity.MediaPlayer 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -276,7 +277,7 @@ Rectangle {
         Text {
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
-            text: "\uE900"
+            text: Style.icons.home
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -290,7 +291,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = 0;
                     cardSwipeView.setCurrentIndex(0);
                 }
@@ -302,7 +303,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
-            text: "\uE90C"
+            text: Style.icons.search
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -316,7 +317,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
                     cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
                 }
@@ -328,7 +329,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
-            text: "\uE907"
+            text: Style.icons.playlist
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -342,7 +343,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("LIST");
                     cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
                 }
@@ -354,7 +355,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
             color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
-            text: "\uE90D"
+            text: Style.icons.speaker
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -368,7 +369,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
                     cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
                 }

@@ -22,12 +22,13 @@
 
 import QtQuick 2.11
 
+import Battery 1.0
 import InterruptHandler 1.0
+import Proximity 1.0
 
 Item {
 
     property bool wasPressed: false
-    property alias interruptHandler: interruptHandler
 
     signal buttonPress(string button)
     signal buttonRelease(string button)
@@ -45,30 +46,31 @@ Item {
         }
     }
 
-    InterruptHandler {
-        id: interruptHandler
+    Connections {
+        target: InterruptHandler
+        enabled: true
 
         property string buttonName
 
         onButtonPressed: {
-            if (interruptHandler.button == "apds9960") {
-                standbyControl.proximity.readInterrupt();
-            } else if (interruptHandler.button == "battery") {
-                battery.checkBattery();
+            if (InterruptHandler.button == "apds9960") {
+                Proximity.readInterrupt();
+            } else if (InterruptHandler.button == "battery") {
+                applicationWindow.checkBattery();
             } else {
                 if (!wasPressed) {
-                    buttonName = interruptHandler.button;
+                    buttonName = InterruptHandler.button;
                     buttonPress(buttonName);
                     wasPressed = true;
                     standbyControl.buttonPressDetected = true;
 
                 } else if (wasPressed){
-                    if (buttonName != interruptHandler.button) {
+                    if (buttonName != InterruptHandler.button) {
                         // if it's not the same buttn, then release the old one
                         buttonRelease(buttonName);
 
                         // and create a press event for the new one
-                        buttonName = interruptHandler.button;
+                        buttonName = InterruptHandler.button;
                         buttonPress(buttonName);
                         standbyControl.buttonPressDetected = true;
 
@@ -81,4 +83,5 @@ Item {
             }
         }
     }
+
 }

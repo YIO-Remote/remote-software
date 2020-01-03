@@ -29,19 +29,14 @@
 #include <QQmlContext>
 #include <QtDebug>
 
+#include "hardware/hardwarefactory.h"
+#include "hardware/touchdetect.h"
+
 #include "bluetootharea.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
-#include "entities/entities.h"
 #include "fileio.h"
-#include "hardware/bq27441.h"
-#include "hardware/display_control.h"
-#include "hardware/drv2605.h"
-#include "hardware/hardwarefactory.h"
-#include "hardware/interrupt_handler.h"
-#include "hardware/proximity_gesture_control.h"
-#include "hardware/touchdetect.h"
-#include "hardware/wifi_control.h"
+#include "entities/entities.h"
 #include "integrations/integrations.h"
 #include "jsonfile.h"
 #include "launcher.h"
@@ -53,7 +48,6 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
 int main(int argc, char* argv[]) {
-    qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
@@ -62,6 +56,8 @@ int main(int argc, char* argv[]) {
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/keyboard");
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
@@ -126,12 +122,8 @@ int main(int argc, char* argv[]) {
     // LOADING CUSTOM COMPONENTS
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
-    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
+
     qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
-    qmlRegisterType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler");
-    qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
-    qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
-    qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
 
     qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum",
                                                       "Not creatable as it is an enum type");
@@ -159,6 +151,21 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();
     engine.rootContext()->setContextProperty("webserver", webServerControl);
+    DisplayControl* displayControl = hwFactory->getDisplayControl();
+    engine.rootContext()->setContextProperty("displayControl", displayControl);
+
+    qmlRegisterSingletonType<BatteryCharger>("BatteryCharger", 1, 0, "BatteryCharger",
+                                          &HardwareFactory::batteryChargerProvider);
+    qmlRegisterSingletonType<BatteryFuelGauge>("Battery", 1, 0, "Battery", &HardwareFactory::batteryFuelGaugeProvider);
+    qmlRegisterSingletonType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl",
+                                             &HardwareFactory::displayControlProvider);
+    qmlRegisterSingletonType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler",
+                                               &HardwareFactory::interruptHandlerProvider);
+    qmlRegisterSingletonType<HapticMotor>("Haptic", 1, 0, "Haptic", &HardwareFactory::hapticMotorProvider);
+    qmlRegisterSingletonType<ProximitySensor>("Proximity", 1, 0, "Proximity",
+                                              &HardwareFactory::proximitySensorProvider);
+    qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor",
+                                          &HardwareFactory::lightSensorProvider);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
@@ -183,10 +190,8 @@ int main(int argc, char* argv[]) {
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
-    // TODO(zehnm) put initialization into factory
-    if (!wifiControl->init()) {
-        notifications.add(true, QObject::tr("WiFi device was not found."));
-    }
+    // Ready for device startup!
+    hwFactory->initialize();
 
     // FILE IO
     FileIO fileIO;
@@ -203,14 +208,14 @@ int main(int argc, char* argv[]) {
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty()) {
+        qCCritical(CLASS_LC) << "No QML root entities available! Terminating.";
         return -1;
     }
 
     // FIXME move initialization code to a device driver factory
     QObject* standbyControl = config.getQMLObject("standbyControl");
     if (standbyControl == nullptr) {
-        qCritical() << "Error looking up QML object:"
-                    << "standbyControl";
+        qCCritical(CLASS_LC) << "Error looking up QML object:" << "standbyControl";
     } else {
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
         QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));

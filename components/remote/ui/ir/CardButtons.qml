@@ -40,7 +40,7 @@ Item {
 
         Text {
             color: Style.colorLine
-            text: "\uE908"
+            text: Style.icons.power_on
             renderType: Text.NativeRendering
             width: 70
             height: 70
@@ -54,7 +54,7 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                haptic.playEffect("click");
+                haptic.playEffect(Haptic.Click);
                 if (obj.isSupported(Remote.F_POWER_TOGGLE)) {
                     obj.powerToggle();
                 } else if (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) {

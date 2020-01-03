@@ -21,6 +21,8 @@
  *****************************************************************************/
 
 import QtQuick 2.0
+
+import Haptic 1.0
 import Entity.MediaPlayer 1.0
 import Style 1.0
 
@@ -165,7 +167,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE909"
+            text: Style.icons.prev
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -180,7 +182,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 obj.previous();
             }
         }
@@ -199,7 +201,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE905"
+            text: Style.icons.pause
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -216,7 +218,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE906"
+            text: Style.icons.play
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -236,7 +238,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 if (obj.state === 3) {
                     obj.pause();
                 } else {
@@ -259,7 +261,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE904"
+            text: Style.icons.next
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -274,7 +276,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 obj.next();
             }
         }

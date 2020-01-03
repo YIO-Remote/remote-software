@@ -22,6 +22,9 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+
+import Haptic 1.0
+
 import Style 1.0
 import "qrc:/basic_ui" as BasicUI
 
@@ -101,7 +104,7 @@ Item {
                     anchors.fill: parent
 
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         popup.open();
                     }
                 }
@@ -157,7 +160,7 @@ Item {
                         enabled: obj.state == 0 ? false : true
 
                         onClicked: {
-                            haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             obj.connect();
                             popup.close();
                         }
@@ -192,7 +195,7 @@ Item {
                         enabled: obj.state == 2 ? false : true
 
                         onClicked: {
-                            haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             obj.disconnect();
                             popup.close();
                         }

@@ -66,6 +66,10 @@ $RECYCLE.BIN/
 ### Project specific ###
 software/build-*
 build
+qml_qmlcache.qrc
+
+# binary translation files
+translations/*.qm
 
 # plugins
 plugins/*.so
@@ -81,3 +85,6 @@ plugins/*.so
 *.autosave
 # Makefile should always be generated with qmake
 Makefile
+
+# Translation binary files
+translations/*.qm

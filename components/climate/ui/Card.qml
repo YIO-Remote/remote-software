@@ -281,7 +281,7 @@ Item {
     Text {
         id: icon
         color: Style.colorText
-        text: "\uE913"
+        text: Style.icons.climate
         renderType: Text.NativeRendering
         width: 85
         height: 85
@@ -349,7 +349,7 @@ Item {
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
@@ -363,7 +363,7 @@ Item {
         visible: obj.isSupported(Climate.F_HVAC_MODES)
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            haptic.playEffect(Haptic.Click);
             var list = [];
 
             if (obj.isSupported(Climate.OFF)) {

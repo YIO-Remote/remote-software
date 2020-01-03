@@ -22,53 +22,45 @@
  *****************************************************************************/
 
 #include <QLoggingCategory>
-#include <QtDebug>
 #include <QVector>
+#include <QtDebug>
 
-#include "hw_config.h"
 #include "../fileio.h"
+#include "hw_config.h"
 #include "wifi_shellscripts.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");
 
+WifiShellScripts::WifiShellScripts(SystemService *systemService, QObject *parent)
+    : WifiControl(parent),
+      p_systemService(systemService),
+      m_scriptTimeout(HW_DEF_WIFI_SH_TIMEOUT),
+      m_useSudo(HW_DEF_WIFI_SH_SUDO),
+      m_scriptClearNetworks(HW_DEF_WIFI_SH_CLEAR_NET),
+      m_scriptConnectWifi(HW_DEF_WIFI_SH_CONNECT),
+      m_scriptListNetworks(HW_DEF_WIFI_SH_LIST),
+      m_scriptStartAP(HW_DEF_WIFI_SH_START_AP),
+      m_scriptGetSsid(HW_DEF_WIFI_SH_GET_SSID),
+      m_scriptGetIp(HW_DEF_WIFI_SH_GET_IP),
+      m_scriptGetMac(HW_DEF_WIFI_SH_GET_MAC),
+      m_scriptGetRssi(HW_DEF_WIFI_SH_GET_RSSI) {}
 
-WifiShellScripts::WifiShellScripts(SystemService *systemService,
-                                   QObject *parent)
-    : WifiControl(parent)
-    , p_systemService(systemService)
-    , m_scriptTimeout(HW_DEF_WIFI_SH_TIMEOUT)
-    , m_useSudo(HW_DEF_WIFI_SH_SUDO)
-    , m_scriptClearNetworks(HW_DEF_WIFI_SH_CLEAR_NET)
-    , m_scriptConnectWifi(HW_DEF_WIFI_SH_CONNECT)
-    , m_scriptListNetworks(HW_DEF_WIFI_SH_LIST)
-    , m_scriptStartAP(HW_DEF_WIFI_SH_START_AP)
-    , m_scriptGetSsid(HW_DEF_WIFI_SH_GET_SSID)
-    , m_scriptGetIp(HW_DEF_WIFI_SH_GET_IP)
-    , m_scriptGetMac(HW_DEF_WIFI_SH_GET_MAC)
-    , m_scriptGetRssi(HW_DEF_WIFI_SH_GET_RSSI)
-{
-}
-
-bool WifiShellScripts::init()
-{
+bool WifiShellScripts::init() {
     startSignalStrengthScanning();
     startWifiStatusScanning();
     startNetworkScan();
     return true;
 }
 
-void WifiShellScripts::on()
-{
+void WifiShellScripts::on() {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
     p_systemService->startService(SystemServiceName::WIFI);
-    // TODO emit signal
     startScanTimer();
     setConnected(true);
 }
 
-void WifiShellScripts::off()
-{
+void WifiShellScripts::off() {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
 
     stopScanTimer();
@@ -76,21 +68,17 @@ void WifiShellScripts::off()
     setConnected(false);
 }
 
-
-bool WifiShellScripts::reset()
-{
+bool WifiShellScripts::reset() {
     // just make sure all timers are running
     return init();
 }
 
-bool WifiShellScripts::clearConfiguredNetworks()
-{
+bool WifiShellScripts::clearConfiguredNetworks() {
     launch(m_scriptClearNetworks);
     return true;
 }
 
-bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSecurity security)
-{
+bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSecurity security) {
     if (!validateAuthentication(security, password)) {
         return false;
     }
@@ -102,14 +90,12 @@ bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSe
     return true;
 }
 
-bool WifiShellScripts::isConnected()
-{
+bool WifiShellScripts::isConnected() {
     FileIO fileIO;
     return wifiStatus().name() == fileIO.read("/ssid").trimmed();
 }
 
-void WifiShellScripts::startNetworkScan()
-{
+void WifiShellScripts::startNetworkScan() {
     setScanStatus(Scanning);
     QString scanResult = launch(m_scriptListNetworks);
     m_scanResults = parseScanresult(scanResult);
@@ -118,23 +104,20 @@ void WifiShellScripts::startNetworkScan()
     emit networksFound(m_scanResults);
 }
 
-bool WifiShellScripts::startAccessPoint()
-{
+bool WifiShellScripts::startAccessPoint() {
     qCDebug(CLASS_LC) << "Resetting WiFi and starting access point...";
 
     launch(m_scriptStartAP);
     return true;
 }
 
-QString WifiShellScripts::countryCode() {
-    return "";
-}
+QString WifiShellScripts::countryCode() { return ""; }
 
-void WifiShellScripts::setCountryCode(QString &countryCode) {
+void WifiShellScripts::setCountryCode(const QString &countryCode) {
     qCWarning(CLASS_LC) << "setCountryCode not implemented! Requested:" << countryCode;
 }
 
-WifiNetwork WifiShellScripts::lineToNetwork(int index, const QStringRef& line) {
+WifiNetwork WifiShellScripts::lineToNetwork(int index, const QStringRef &line) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO;
     QVector<QStringRef> list = line.split(",");
 
@@ -142,20 +125,20 @@ WifiNetwork WifiShellScripts::lineToNetwork(int index, const QStringRef& line) {
         auto name = list.at(1).toString();
         auto signal = list.at(0).toInt();
         qCDebug(CLASS_LC) << "network:" << name << signal;
-        WifiNetwork nw { QVariant(index).toString(), name, "", signal };
+        WifiNetwork nw{QVariant(index).toString(), name, "", signal};
         return nw;
     } else {
         throw std::runtime_error("parse error");
     }
 }
 
-QList<WifiNetwork> WifiShellScripts::parseScanresult(const QString& buffer) {
-    auto lines = buffer.splitRef("\n");
+QList<WifiNetwork> WifiShellScripts::parseScanresult(const QString &buffer) {
+    auto               lines = buffer.splitRef("\n");
     QList<WifiNetwork> cont;
     for (int i = 0; i < lines.length() - 1; i++) {
         try {
             cont.append(lineToNetwork(i, lines[i]));
-        } catch (std::exception& e) {
+        } catch (std::exception &e) {
             setScanStatus(ScanFailed);
             qCCritical(CLASS_LC) << e.what() << lines[i];
         }
@@ -163,8 +146,7 @@ QList<WifiNetwork> WifiShellScripts::parseScanresult(const QString& buffer) {
     return cont;
 }
 
-void WifiShellScripts::timerEvent(QTimerEvent *event)
-{
+void WifiShellScripts::timerEvent(QTimerEvent *event) {
     Q_UNUSED(event)
 
     if (!(m_wifiStatusScanning || m_signalStrengthScanning)) {
@@ -190,14 +172,12 @@ void WifiShellScripts::timerEvent(QTimerEvent *event)
     }
 }
 
-QString WifiShellScripts::launch(const QString &command)
-{
+QString WifiShellScripts::launch(const QString &command) {
     QStringList arguments;
     return launch(command, arguments);
 }
 
-QString WifiShellScripts::launch(const QString &command, const QStringList &arguments)
-{
+QString WifiShellScripts::launch(const QString &command, const QStringList &arguments) {
     qCDebug(CLASS_LC) << Q_FUNC_INFO << command;
 
     if (command.isNull() || command.isEmpty()) {
@@ -213,56 +193,6 @@ QString WifiShellScripts::launch(const QString &command, const QStringList &argu
         return "";
     }
     QByteArray bytes = process.readAllStandardOutput();
-    QString output = QString::fromLocal8Bit(bytes);
+    QString    output = QString::fromLocal8Bit(bytes);
     return output;
-}
-
-void WifiShellScripts::setUseSudo(bool useSudo)
-{
-    m_useSudo = useSudo;
-}
-
-void WifiShellScripts::setScriptGetRssi(const QString &script)
-{
-    m_scriptGetRssi = script;
-}
-
-void WifiShellScripts::setScriptGetMacAddress(const QString &script)
-{
-    m_scriptGetMac = script;
-}
-
-void WifiShellScripts::setScriptGetIp(const QString &script)
-{
-    m_scriptGetIp = script;
-}
-
-void WifiShellScripts::setScriptGetSsid(const QString &script)
-{
-    m_scriptGetSsid = script;
-}
-
-void WifiShellScripts::setScriptStartAP(const QString &script)
-{
-    m_scriptStartAP = script;
-}
-
-void WifiShellScripts::setScriptListNetworks(const QString &script)
-{
-    m_scriptListNetworks = script;
-}
-
-void WifiShellScripts::setScriptConnectWifi(const QString &script)
-{
-    m_scriptConnectWifi = script;
-}
-
-void WifiShellScripts::setScriptClearNetworks(const QString &script)
-{
-    m_scriptClearNetworks = script;
-}
-
-void WifiShellScripts::setScriptTimeout(int scriptTimeoutMs)
-{
-    m_scriptTimeout = scriptTimeoutMs;
 }

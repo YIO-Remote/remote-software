@@ -24,6 +24,8 @@ import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
@@ -147,13 +149,13 @@ Rectangle {
         enabled: buttonContainer.state == "open" ? false : true
 
         onPressAndHold: {
-            haptic.playEffect("press");
+            Haptic.playEffect(Haptic.Press);
 
             addToFavButton.state = "open"
         }
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             originParent = buttonContainer.parent
 //            buttonContainer.state = "open"
             cardLoader.active = true;
@@ -292,7 +294,7 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 addToFavButton.state = "closed"
             }
         }
@@ -427,7 +429,7 @@ Rectangle {
         id: closeButton
         color: Style.colorText
         visible: buttonContainer.state == "open"
-        text: "\uE915"
+        text: Style.icons.close
         renderType: Text.NativeRendering
         width: 70
         height: 70
@@ -446,7 +448,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 buttonContainer.state = "closed"
                 cardLoader.active = false;
             }

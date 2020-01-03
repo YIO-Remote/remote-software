@@ -84,11 +84,11 @@ Rectangle {
                     color: Style.colorText
                     text: {
                         if (list[index]["original"] === "Off")
-                            return "\uE908"
+                            return Style.icons.power_on
                         else if (list[index]["original"] === "Heat")
-                            return "\uE91F"
+                            return Style.icons.heat
                         else if (list[index]["original"] === "Cool")
-                            return "\uE91E"
+                            return Style.icons.cool
                     }
                     renderType: Text.NativeRendering
                     width: 70
@@ -115,7 +115,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        haptic.playEffect("click");
+                        haptic.playEffect(Haptic.Click);
                         main.state = "closed";
                         if (list[index]["original"] === "Off")
                             climateObj.turnOff();
@@ -147,7 +147,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    haptic.playEffect("click");
+                    haptic.playEffect(Haptic.Click);
                     main.state = "closed";
                 }
             }

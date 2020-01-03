@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 import QtQuick 2.11
+import Haptic 1.0
 import Style 1.0
 
 Rectangle {
@@ -86,11 +87,11 @@ Rectangle {
                     color: Style.colorText
                     text: {
                         if (list[index] == "PLAY")
-                            return "\uE903"
+                            return Style.icons.music
                         else if (list[index] == "QUEUE")
-                            return "\uE907"
+                            return Style.icons.playlist
                         else if (list[index] == "SONGRADIO")
-                            return "\uE90A"
+                            return Style.icons.radio
                         else
                             return ""
                     }
@@ -128,7 +129,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         if (list[index] == "PLAY")
                             obj.playMedia(id, type);
                         else if (list[index] == "QUEUE")
@@ -163,7 +164,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     main.state = "closed";
                 }
             }

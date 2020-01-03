@@ -44,7 +44,7 @@ void Notifications::show(const int id) {
     // let's check if the qml files are loaded first
     if (m_engine->rootObjects().size() > 0) {
         // find the root object
-        QObject *root = m_engine->rootObjects().at(0);  //->findChild<QObject*>("notificationsRow")
+        QObject *root = m_engine->rootObjects().at(0);  // ->findChild<QObject*>("notificationsRow")
 
         // create q qml object in qml space
         // this way it knows all the color and other global qml variables

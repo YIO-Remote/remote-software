@@ -24,6 +24,8 @@ import QtQuick 2.11
 import Launcher 1.0
 import Style 1.0
 
+import InterruptHandler 1.0
+
 Rectangle {
     id: closingScreen
     anchors.fill: parent
@@ -54,7 +56,7 @@ Rectangle {
             console.debug("NOW SHUTDOWN");
             // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
             launcher.launch("fbv -d 1 /bye.png")
-            buttonHandler.interruptHandler.shutdown();
+            InterruptHandler.shutdown();
             // TODO create a device class for system shutdown instead of launching hard coded shell scripts from QML
             launcher.launch("halt");
         }

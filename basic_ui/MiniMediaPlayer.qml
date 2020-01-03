@@ -27,6 +27,8 @@ import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
+import Haptic 1.0
+
 import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
 
@@ -112,14 +114,14 @@ Item {
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
                     mediaPlayers.currentIndex += 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case "dpad left":
                 if (mediaPlayers.currentIndex > 0) {
                     mediaPlayers.currentIndex -= 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case "top right":
@@ -489,7 +491,7 @@ Item {
     Text {
         id: closeButton
         color: Style.colorText
-        text: "\uE916"
+        text: Style.icons.down_arrow
         renderType: Text.NativeRendering
         width: 70
         height: 70
@@ -508,7 +510,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 miniMediaPlayer.state = "closed"
             }
         }
@@ -527,7 +529,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE909"
+            text: Style.icons.prev
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -542,7 +544,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].previous();
             }
         }
@@ -563,7 +565,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE905"
+            text: Style.icons.pause
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -580,7 +582,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE906"
+            text: Style.icons.play
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -600,7 +602,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ) {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
                 } else {
@@ -623,7 +625,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: "\uE904"
+            text: Style.icons.next
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -638,7 +640,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].next();
             }
         }
