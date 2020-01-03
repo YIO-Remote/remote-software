@@ -20,8 +20,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QFuture>
+#include <QtDebug>
 #include <QLoggingCategory>
+#include <QFuture>
 #include <QtConcurrent/QtConcurrentRun>
 
 #include <wiringPi.h>
@@ -34,14 +35,19 @@
 #define CS   105
 #define RST  104
 
+static Q_LOGGING_CATEGORY(CLASS_LC, "Display");
+
 DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent) { }
 
 bool DisplayControlYio::setMode(Mode mode) {
     if (!isOpen()) {
+        qCWarning(CLASS_LC()) << "Display device is closed. Cannot change mode to" << mode;
         return false;
     }
 
     if (mode == StandbyOn) {
+        qCDebug(CLASS_LC) << "Entering standby";
+
         QFuture<void> future = QtConcurrent::run([&]() {
             delay(400);  // wait until dimming of the display is done
             spi_screenreg_set(0x10, 0xffff, 0xffff);
@@ -50,6 +56,8 @@ bool DisplayControlYio::setMode(Mode mode) {
         });
         return true;
     } else if (mode == StandbyOff) {
+        qCDebug(CLASS_LC) << "Leaving standby";
+
         QFuture<void> future = QtConcurrent::run([&]() {
             spi_screenreg_set(0x29, 0xffff, 0xffff);
             spi_screenreg_set(0x11, 0xffff, 0xffff);
@@ -62,7 +70,23 @@ bool DisplayControlYio::setMode(Mode mode) {
 
 void DisplayControlYio::setBrightness(int from, int to) {
     if (!isOpen()) {
+        qCWarning(CLASS_LC()) << "Display device is closed. Cannot change brightness";
         return;
+    }
+
+    qCDebug(CLASS_LC) << "Changing brightness:" << from << " -> " << to;
+
+    if (from < 0) {
+        from = 0;
+    }
+    if (from > 100) {
+        from = 100;
+    }
+    if (to < 0) {
+        to = 0;
+    }
+    if (to > 100) {
+        to = 100;
     }
 
     QFuture<void> future = QtConcurrent::run(
