@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 import QtQuick 2.11
+import Haptic 1.0
 import Style 1.0
 
 Rectangle {
@@ -69,7 +70,7 @@ Rectangle {
         anchors.centerIn: parent
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
         }
     }
 }

@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,27 +20,24 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#pragma once
 
-#include "systemservice_mock.h"
+#include "device.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "SysSrvMock");
+class DisplayControl : public Device {
+    Q_OBJECT
 
-SystemServiceMock::SystemServiceMock(QObject *parent) : SystemService(parent)
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-}
+ public:
+    enum Mode {
+        StandbyOn,
+        StandbyOff
+    };
+    Q_ENUM(Mode)
 
+    Q_INVOKABLE virtual bool setMode(Mode mode) = 0;
 
-bool SystemServiceMock::startService(SystemServiceName serviceName)
-{
-    qCDebug(CLASS_LC) << "start service:" << serviceName;
-    return true;
-}
+    Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
 
-bool SystemServiceMock::stopService(SystemServiceName serviceName)
-{
-    qCDebug(CLASS_LC) << "stop service:" << serviceName;
-    return true;
-}
+ protected:
+    explicit DisplayControl(QObject* parent = nullptr) : Device(parent) {}
+};

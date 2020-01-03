@@ -25,6 +25,8 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -48,7 +50,7 @@ Rectangle {
         property int percent
 
         onPositionChanged: {
-            haptic.playEffect("bump");
+            Haptic.playEffect(Haptic.Bump);
             dragger.percent = Math.round((parent.height - 10 - mouse.y)/(parent.height-10)*100);
             if (dragger.percent < 0) dragger.percent = 0;
             if (dragger.percent > 100) dragger.percent = 100;
@@ -172,7 +174,7 @@ Rectangle {
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
@@ -198,7 +200,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 lightButton.state = "closed"
             }
         }

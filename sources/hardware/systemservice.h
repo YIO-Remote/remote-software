@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICE_H
-#define SYSTEMSERVICE_H
+#pragma once
 
 #include <QObject>
 
@@ -31,10 +30,10 @@
  * @brief The SystemService interface allows to control system services.
  * @details The concrete implementations handle the OS specific interactions.
  */
-class SystemService : public QObject
-{
+class SystemService : public QObject {
     Q_OBJECT
-public:
+
+ public:
     explicit SystemService(QObject *parent = nullptr);
 
     /**
@@ -65,8 +64,5 @@ public:
      */
     Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName);
 
-signals:
-
+ signals:
 };
-
-#endif // SYSTEMSERVICE_H

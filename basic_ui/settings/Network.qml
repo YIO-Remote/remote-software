@@ -24,6 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import Style 1.0
 
+import Haptic 1.0
 import WifiControl 1.0
 
 Item {
@@ -102,7 +103,7 @@ Item {
                 anchors.fill: parent
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 
                     // Start wifi network scan
                     wifiNetworks = [];

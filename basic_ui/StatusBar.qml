@@ -25,6 +25,8 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+
 Item {
     id: statusBar
     width: parent.width
@@ -288,7 +290,7 @@ Item {
         }
 
         onPressAndHold: {
-            haptic.playEffect("press");
+            Haptic.playEffect(Haptic.Press);
             loader_second.setSource("qrc:/basic_ui/Profiles.qml");
         }
     }

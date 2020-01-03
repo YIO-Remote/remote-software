@@ -20,46 +20,43 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WEBSERVERLIGHTTPD_H
-#define WEBSERVERLIGHTTPD_H
+#pragma once
 
-#include "webserver_control.h"
 #include "systemservice.h"
+#include "webserver_control.h"
 
 /**
  * @brief A lighttpd implementation of the WebServerControl interface.
  */
-class WebServerLighttpd : public WebServerControl
-{
+class WebServerLighttpd : public WebServerControl {
     Q_OBJECT
-public:
-    WebServerLighttpd(SystemService *systemService, QObject *parent = nullptr);
 
-private:
+ public:
+    explicit WebServerLighttpd(SystemService *systemService, QObject *parent = nullptr);
+
+ private:
     SystemService *p_systemService;
 
     // WebServerControl interface
-public:
-    Q_INVOKABLE virtual bool startService() override;
-    Q_INVOKABLE virtual bool stopService() override;
-    Q_INVOKABLE virtual bool restartService() override;
-    Q_INVOKABLE virtual bool reloadService() override;
-    Q_INVOKABLE virtual bool startWifiSetupPortal() override;
-    Q_INVOKABLE virtual bool startWebConfigurator() override;
+ public:
+    Q_INVOKABLE bool startService() override;
+    Q_INVOKABLE bool stopService() override;
+    Q_INVOKABLE bool restartService() override;
+    Q_INVOKABLE bool reloadService() override;
+    Q_INVOKABLE bool startWifiSetupPortal() override;
+    Q_INVOKABLE bool startWebConfigurator() override;
 
     QString configFile() const;
-    void setConfigFile(const QString &configFile);
+    void    setConfigFile(const QString &configFile);
 
     QString wifiSetupConfig() const;
-    void setWifiSetupConfig(const QString &wifiSetupConfig);
+    void    setWifiSetupConfig(const QString &wifiSetupConfig);
 
     QString webConfiguratorConfig() const;
-    void setWebConfiguratorConfig(const QString &webConfiguratorConfig);
+    void    setWebConfiguratorConfig(const QString &webConfiguratorConfig);
 
-private:
+ private:
     QString m_configFile;
     QString m_wifiSetupConfig;
     QString m_webConfiguratorConfig;
 };
-
-#endif // WEBSERVERLIGHTTPD_H

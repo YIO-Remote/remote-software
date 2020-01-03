@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFINETWORK_H
-#define WIFINETWORK_H
+#pragma once
 
 #include <QObject>
 #include <QString>
@@ -36,29 +35,27 @@
  */
 class WifiNetwork {
     Q_GADGET
-    Q_PROPERTY (QString         id             READ id             CONSTANT)
-    Q_PROPERTY (QString         name           READ name           CONSTANT)
-    Q_PROPERTY (QString         bssid          READ bssid          CONSTANT)
-    Q_PROPERTY (int             rssi           READ rssi           CONSTANT)
-    Q_PROPERTY (SignalStrength  signalStrength READ signalStrength CONSTANT)
-    Q_PROPERTY (bool            encrypted      READ isEncrypted    CONSTANT)
-    Q_PROPERTY (WifiSecurity    security       READ security       CONSTANT)
-    Q_PROPERTY (bool            wpsAvailable   READ isWpsAvailable CONSTANT)
-    Q_PROPERTY (bool            connected      READ isConnected    CONSTANT)
+    Q_PROPERTY(QString id READ id CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString bssid READ bssid CONSTANT)
+    Q_PROPERTY(int rssi READ rssi CONSTANT)
+    Q_PROPERTY(SignalStrength signalStrength READ signalStrength CONSTANT)
+    Q_PROPERTY(bool encrypted READ isEncrypted CONSTANT)
+    Q_PROPERTY(WifiSecurity security READ security CONSTANT)
+    Q_PROPERTY(bool wpsAvailable READ isWpsAvailable CONSTANT)
+    Q_PROPERTY(bool connected READ isConnected CONSTANT)
 
-public:
+ public:
     WifiNetwork() {}
-    WifiNetwork(QString id, QString name, QString bssid, int rssi,
-                WifiSecurity security = WifiSecurity::WPA_PSK,
-                bool wpsAvailable = false,
-                bool connected = false)
-        : m_id(id)
-        , m_name(name)
-        , m_bssid(bssid)
-        , m_rssi(rssi)
-        , m_security(security)
-        , m_wpsAvailable(wpsAvailable)
-        , m_connected(connected) {}
+    WifiNetwork(QString id, QString name, QString bssid, int rssi, WifiSecurity security = WifiSecurity::WPA_PSK,
+                bool wpsAvailable = false, bool connected = false)
+        : m_id(id),
+          m_name(name),
+          m_bssid(bssid),
+          m_rssi(rssi),
+          m_security(security),
+          m_wpsAvailable(wpsAvailable),
+          m_connected(connected) {}
 
     /**
      * @brief id Network identification
@@ -78,31 +75,27 @@ public:
     /**
      * @brief rssi Signal strength in dBm. This might not be true for all wpa_supplicant drivers.
      */
-    int     rssi() const { return m_rssi; }
+    int rssi() const { return m_rssi; }
 
     /**
      * @brief isEncrypted Convenience method for the client if the network is open or needs authentication.
      */
-    bool    isEncrypted() const { return m_security != WifiSecurity::NONE_OPEN; } // what about NoneWep?
+    bool isEncrypted() const { return m_security != WifiSecurity::NONE_OPEN; }  // what about NoneWep?
 
     WifiSecurity security() const { return m_security; }
 
-    bool    isWpsAvailable() const { return m_wpsAvailable; }
+    bool isWpsAvailable() const { return m_wpsAvailable; }
 
-    bool    isConnected() const { return m_connected; }
+    bool isConnected() const { return m_connected; }
 
-    SignalStrength signalStrength() const {
-        return SignalStrengthEnum::fromRssi(m_rssi);
-    }
+    SignalStrength signalStrength() const { return SignalStrengthEnum::fromRssi(m_rssi); }
 
-private:
-    QString m_id;
-    QString m_name;
-    QString m_bssid;
-    int m_rssi = -100;
+ private:
+    QString      m_id;
+    QString      m_name;
+    QString      m_bssid;
+    int          m_rssi = -100;
     WifiSecurity m_security = WifiSecurity::WPA_PSK;
-    bool m_wpsAvailable = false;
-    bool m_connected = false;
+    bool         m_wpsAvailable = false;
+    bool         m_connected = false;
 };
-
-#endif // WIFINETWORK_H

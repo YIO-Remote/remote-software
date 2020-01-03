@@ -20,18 +20,17 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WEBSERVERCONTROL_H
-#define WEBSERVERCONTROL_H
+#pragma once
 
 #include <QObject>
 
 /**
  * @brief The WebServerControl interface defines all web server specific functionality.
  */
-class WebServerControl : public QObject
-{
+class WebServerControl : public QObject {
     Q_OBJECT
-public:
+
+ public:
     explicit WebServerControl(QObject *parent = nullptr);
 
     Q_INVOKABLE virtual bool startService() = 0;
@@ -41,9 +40,4 @@ public:
 
     Q_INVOKABLE virtual bool startWifiSetupPortal() = 0;
     Q_INVOKABLE virtual bool startWebConfigurator() = 0;
-
-signals:
-
 };
-
-#endif // WEBSERVERCONTROL_H

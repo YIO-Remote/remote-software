@@ -21,6 +21,8 @@
  *****************************************************************************/
 
 import QtQuick 2.0
+
+import Haptic 1.0
 import Entity.MediaPlayer 1.0
 import Style 1.0
 
@@ -180,7 +182,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 obj.previous();
             }
         }
@@ -236,7 +238,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 if (obj.state === 3) {
                     obj.pause();
                 } else {
@@ -274,7 +276,7 @@ Item {
 //            enabled: card.state === "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 obj.next();
             }
         }

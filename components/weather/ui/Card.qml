@@ -24,6 +24,8 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -246,7 +248,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 weatherButton.state = "closed"
             }
         }

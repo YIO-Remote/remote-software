@@ -20,11 +20,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWARE_HARDWAREFACTORY_H_
-#define HARDWARE_HARDWAREFACTORY_H_
+#pragma once
 
 #include <QObject>
+#include <QQmlApplicationEngine>
 
+#include "batterycharger.h"
+#include "batteryfuelgauge.h"
+#include "displaycontrol.h"
+#include "gesturesensor.h"
+#include "hapticmotor.h"
+#include "interrupthandler.h"
+#include "lightsensor.h"
+#include "proximitysensor.h"
 #include "systemservice.h"
 #include "webserver_control.h"
 #include "wifi_control.h"
@@ -55,6 +63,8 @@ class HardwareFactory : public QObject {
      */
     static HardwareFactory* build(const QVariantMap& config);
 
+    virtual int initialize() = 0;
+
     /**
      * @brief instance Returns a concrete HardwareFactory implementation
      * @return The hardware factory or nullptr if the factory has not yet been initialized
@@ -67,12 +77,38 @@ class HardwareFactory : public QObject {
 
     virtual WebServerControl* getWebServerControl() = 0;
 
+    virtual DisplayControl* getDisplayControl() = 0;
+
+    virtual BatteryCharger* getBatteryCharger() = 0;
+
+    virtual BatteryFuelGauge* getBatteryFuelGauge() = 0;
+
+    virtual InterruptHandler* getInterruptHandler() = 0;
+
+    virtual HapticMotor* getHapticMotor() = 0;
+
+    virtual GestureSensor* getGestureSensor() = 0;
+
+    virtual LightSensor* getLightSensor() = 0;
+
+    virtual ProximitySensor* getProximitySensor() = 0;
+
+    // QML callback providers for qmlRegisterSingletonType
+    static QObject* batteryChargerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* batteryFuelGaugeProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* displayControlProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* interruptHandlerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* hapticMotorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* gestureSensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* lightSensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* proximitySensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+
  protected:
     explicit HardwareFactory(QObject* parent = nullptr);
     virtual ~HardwareFactory();
 
+    bool virtual buildDevices(const QVariantMap& config) = 0;
+
  private:
     static HardwareFactory* s_instance;
 };
-
-#endif  // HARDWARE_HARDWAREFACTORY_H_

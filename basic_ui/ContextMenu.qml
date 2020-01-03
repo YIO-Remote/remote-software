@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 import QtQuick 2.11
+import Haptic 1.0
 import Style 1.0
 
 Rectangle {
@@ -128,7 +129,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         if (list[index] == "PLAY")
                             obj.playMedia(id, type);
                         else if (list[index] == "QUEUE")
@@ -163,7 +164,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
                     main.state = "closed";
                 }
             }

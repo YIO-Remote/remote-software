@@ -25,6 +25,8 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -38,7 +40,7 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
@@ -108,7 +110,7 @@ Rectangle {
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
@@ -135,7 +137,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 lightButton.state = "closed"
             }
         }

@@ -23,6 +23,8 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
 
+import Haptic 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -193,7 +195,7 @@ Rectangle {
                         anchors.fill: parent
 
                         onClicked: {
-                            haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             load(item_key, item_type);
                         }
                     }
@@ -203,7 +205,7 @@ Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
 
                         mouseArea.onClicked: {
-                            haptic.playEffect("click");
+                            Haptic.playEffect(Haptic.Click);
                             contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
                         }
                     }
@@ -241,7 +243,7 @@ Rectangle {
                     anchors.centerIn: parent
 
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         swipeView.currentIndex = 0;
                     }
                 }

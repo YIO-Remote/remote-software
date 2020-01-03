@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,26 +20,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WEBSERVERMOCK_H
-#define WEBSERVERMOCK_H
+#include "device.h"
 
-#include "webserver_control.h"
+Device::~Device() {
+    if (m_open) {
+        close();
+    }
+}
 
-/**
- * @brief A mock implementation of the WebServerControl interface for unsupported platforms.
- */
-class WebServerMock : public WebServerControl
-{
-    Q_OBJECT
-public:
-    WebServerMock(QObject *parent = nullptr);
+bool Device::isOpen() const { return m_open; }
 
-    // WebServerControl interface
-public:
-    Q_INVOKABLE virtual bool startService() override;
-    Q_INVOKABLE virtual bool stopService() override;
-    Q_INVOKABLE virtual bool startWifiSetupPortal() override;
-    Q_INVOKABLE virtual bool startWebConfigurator() override;
-};
+bool Device::open() {
+    m_open = true;
+    m_errorString.clear();
 
-#endif // WEBSERVERMOCK_H
+    return true;
+}
+
+void Device::close() {
+    if (!m_open) {
+        return;
+    }
+
+    emit aboutToClose();
+    m_open = false;
+}
+
+QString Device::errorString() const { return m_errorString; }
+
+void Device::setErrorString(const QString &str) { m_errorString = str; }

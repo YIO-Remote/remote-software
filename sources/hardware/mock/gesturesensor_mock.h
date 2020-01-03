@@ -20,40 +20,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#pragma once
 
-#include "systemservice_mock.h"
-#include "webserver_mock.h"
-#include "wifi_mock.h"
+#include "../gesturesensor.h"
 
-#include "hardwarefactory_mock.h"
+class GestureSensorMock : public GestureSensor {
+    Q_OBJECT
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwMock");
+ public:
+    explicit GestureSensorMock(QObject *parent = nullptr) : GestureSensor(parent) {}
 
-HardwareFactoryMock::HardwareFactoryMock(const QVariantMap &config, QObject *parent) : HardwareFactory(parent)
-{
-    Q_UNUSED(config)
+    // GestureSensor interface
+ public:
+    void gestureDetection(bool state) override { Q_UNUSED(state) }
 
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-}
-
-
-WifiControl *HardwareFactoryMock::getWifiControl()
-{
-    static WifiMock singleton;
-    return &singleton;
-}
-
-SystemService *HardwareFactoryMock::getSystemService()
-{
-    static SystemServiceMock singleton;
-    return &singleton;
-}
-
-
-WebServerControl *HardwareFactoryMock::getWebServerControl()
-{
-    static WebServerMock singleton;
-    return &singleton;
-}
+    Gesture gesture() const override { return None; }
+};

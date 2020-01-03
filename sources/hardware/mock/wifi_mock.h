@@ -20,44 +20,42 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFIMOCK_H
-#define WIFIMOCK_H
+#pragma once
 
 #include <QObject>
 
-#include "wifi_control.h"
+#include "../wifi_control.h"
 
 /**
  * @brief Mock implementation for the WifiControl interface for unsupported platforms.
  */
-class WifiMock : public WifiControl
-{
+class WifiMock : public WifiControl {
     Q_OBJECT
-public:
+
+ public:
     explicit WifiMock(QObject *parent = nullptr);
-    virtual ~WifiMock() override;
+    ~WifiMock() override;
 
-    virtual bool init() override;
+    bool init() override;
 
-    Q_INVOKABLE virtual bool reset() override;
-    Q_INVOKABLE virtual bool clearConfiguredNetworks() override;
-    Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password, WifiSecurity security = WifiSecurity::DEFAULT) override;
-    Q_INVOKABLE virtual bool isConnected() override;
-    Q_INVOKABLE virtual void startNetworkScan() override;
-    Q_INVOKABLE virtual bool startAccessPoint() override;
+    Q_INVOKABLE bool reset() override;
+    Q_INVOKABLE bool clearConfiguredNetworks() override;
+    Q_INVOKABLE bool join(const QString &ssid, const QString &password,
+                                  WifiSecurity security = WifiSecurity::DEFAULT) override;
+    Q_INVOKABLE bool isConnected() override;
+    Q_INVOKABLE void startNetworkScan() override;
+    Q_INVOKABLE bool startAccessPoint() override;
 
-    virtual QString countryCode() override;
-    virtual void setCountryCode(QString &countryCode) override;
-    virtual WifiStatus wifiStatus() const override;
+    QString    countryCode() override;
+    void       setCountryCode(const QString &countryCode) override;
+    WifiStatus wifiStatus() const override;
 
-public slots:
-    virtual void on() override;
-    virtual void off() override;
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void on() override;
+    void off() override;
 
-private:
-    virtual void timerEvent(QTimerEvent *event) override;
+ private:
+    void timerEvent(QTimerEvent *event) override;
 
     QString m_countryCode;
 };
-
-#endif // WIFIMOCK_H

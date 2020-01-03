@@ -20,25 +20,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HARDWAREFACTORYMOCK_H
-#define HARDWAREFACTORYMOCK_H
+#pragma once
 
-#include "hardwarefactory.h"
+#include "device.h"
 
-/**
- * @brief A mock implementation of the abstract hardware factory for unsupported platforms.
- */
-class HardwareFactoryMock : public HardwareFactory
-{
+class LightSensor : public Device {
     Q_OBJECT
-public:
-    explicit HardwareFactoryMock(const QVariantMap &config, QObject* parent = nullptr);
 
-    // HardwareFactory interface
-public:
-    virtual WifiControl *getWifiControl() override;
-    virtual SystemService *getSystemService() override;
-    virtual WebServerControl *getWebServerControl() override;
+ public:
+    Q_PROPERTY(int ambientLight READ ambientLight)
+
+    Q_INVOKABLE virtual int readAmbientLight() = 0;
+
+    virtual int ambientLight() = 0;
+
+ protected:
+    explicit LightSensor(QObject *parent = nullptr) : Device(parent) {}
 };
-
-#endif // HARDWAREFACTORYMOCK_H

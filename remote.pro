@@ -23,7 +23,7 @@
 
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++14 disable-desktop
-# disable qtquickcompiler for QML debugging!
+#disable qtquickcompiler for QML debugging!
 CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -46,32 +46,44 @@ HEADERS += \
     sources/entities/weather.h \
     sources/entities/weatherinterface.h \
     sources/fileio.h \
+    sources/hardware/batterycharger.h \
+    sources/hardware/batteryfuelgauge.h \
+    sources/hardware/mock/batterycharger_mock.h \
+    sources/hardware/mock/batteryfuelgauge_mock.h \
+    sources/hardware/displaycontrol.h \
+    sources/hardware/mock/displaycontrol_mock.h \
+    sources/hardware/gesturesensor.h \
+    sources/hardware/mock/gesturesensor_mock.h \
+    sources/hardware/hapticmotor.h \
+    sources/hardware/mock/hapticmotor_mock.h \
+    sources/hardware/mock/interrupthandler_mock.h \
+    sources/hardware/lightsensor.h \
+    sources/hardware/mock/lightsensor_mock.h \
+    sources/hardware/proximitysensor.h \
+    sources/hardware/mock/proximitysensor_mock.h \
     sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
     sources/integrations/integrationinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
-    sources/hardware/display_control.h \
     sources/logger.h \
     sources/translation.h \
+    sources/hardware/device.h \
     sources/hardware/touchdetect.h \
-    sources/hardware/proximity_gesture_control.h \
-    sources/hardware/interrupt_handler.h \
-    sources/hardware/drv2605.h \
-    sources/hardware/bq27441.h \
     sources/hardware/hardwarefactory.h \
-    sources/hardware/hardwarefactory_mock.h \
+    sources/hardware/mock/hardwarefactory_mock.h \
     sources/hardware/hw_config.h \
+    sources/hardware/interrupthandler.h \
     sources/hardware/systemd.h \
     sources/hardware/systemservice.h \
-    sources/hardware/systemservice_mock.h \
+    sources/hardware/mock/systemservice_mock.h \
     sources/hardware/systemservice_name.h \
     sources/hardware/webserver_control.h \
     sources/hardware/webserver_lighttpd.h \
-    sources/hardware/webserver_mock.h \
+    sources/hardware/mock/webserver_mock.h \
     sources/hardware/wifi_control.h \
-    sources/hardware/wifi_mock.h \
+    sources/hardware/mock/wifi_mock.h \
     sources/hardware/wifi_network.h \
     sources/hardware/wifi_security.h \
     sources/hardware/wifi_signal.h \
@@ -103,24 +115,22 @@ SOURCES += \
     sources/entities/remote.cpp \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
+    sources/hardware/device.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
-    sources/hardware/display_control.cpp \
-    sources/hardware/drv2605.cpp \
-    sources/hardware/bq27441.cpp \
     sources/hardware/hardwarefactory.cpp \
-    sources/hardware/hardwarefactory_mock.cpp \
+    sources/hardware/mock/hardwarefactory_mock.cpp \
     sources/hardware/systemd.cpp \
     sources/hardware/systemservice.cpp \
-    sources/hardware/systemservice_mock.cpp \
+    sources/hardware/mock/systemservice_mock.cpp \
     sources/hardware/webserver_control.cpp \
     sources/hardware/webserver_lighttpd.cpp \
-    sources/hardware/webserver_mock.cpp \
+    sources/hardware/mock/webserver_mock.cpp \
     sources/hardware/wifi_control.cpp \
-    sources/hardware/wifi_mock.cpp \
+    sources/hardware/mock/wifi_mock.cpp \
     sources/entities/entities.cpp \
     sources/entities/entity.cpp \
     sources/entities/light.cpp \
@@ -156,27 +166,37 @@ linux {
             wpa_supplicant/src/common/wpa_ctrl.c \
             wpa_supplicant/src/utils/os_unix.c
 
-    } else {
-        HEADERS +=
-            sources/hardware/wifi_mock.h
-        SOURCES +=
-            sources/hardware/wifi_mock.cpp
     }
 
     HEADERS += \
-        sources/hardware/wifi_shellscripts.h \
-        sources/hardware/hardwarefactory_rpi0.h
+        sources/hardware/hardwarefactory_rpi0.h \
+        sources/hardware/wifi_shellscripts.h
     SOURCES += \
-        sources/hardware/wifi_shellscripts.cpp \
-        sources/hardware/hardwarefactory_rpi0.cpp
+        sources/hardware/hardwarefactory_rpi0.cpp \
+        sources/hardware/wifi_shellscripts.cpp
 
     equals(QT_ARCH, arm): {
         HEADERS += \
-            sources/hardware/apds9960.h \
-            sources/hardware/mcp23017.h
+            sources/hardware/hardwarefactory_yio.h \
+            sources/hardware/arm/apds9960.h \
+            sources/hardware/arm/apds9960gesture.h \
+            sources/hardware/arm/apds9960light.h \
+            sources/hardware/arm/apds9960proximity.h \
+            sources/hardware/arm/batterycharger_yio.h \
+            sources/hardware/arm/bq27441.h \
+            sources/hardware/arm/displaycontrol_yio.h \
+            sources/hardware/arm/drv2605.h \
+            sources/hardware/arm/mcp23017_interrupt.h \
+            sources/hardware/arm/mcp23017_handler.h
 
         SOURCES += \
-            sources/hardware/apds9960.cpp
+            sources/hardware/hardwarefactory_yio.cpp \
+            sources/hardware/arm/apds9960.cpp \
+            sources/hardware/arm/batterycharger_yio.cpp \
+            sources/hardware/arm/bq27441.cpp \
+            sources/hardware/arm/displaycontrol_yio.cpp \
+            sources/hardware/arm/drv2605.cpp \
+            sources/hardware/arm/mcp23017_interrupt.cpp
     }
 
 }
@@ -280,8 +300,8 @@ equals(QT_ARCH, arm): {
     message(Cross compiling for arm system: including Wiringpi config on RPi)
 
     # FIXME hard coded directory path!
-    INCLUDEPATH += /buildroot/buildroot-remote/output/target/usr/lib/
-    LIBS += -L"/buildroot/buildroot-remote/output/target/usr/lib"
+    INCLUDEPATH += /home/yio/projects/yio/remote-os/rpi0/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
+    LIBS += -L"/home/yio/projects/yio/remote-os/rpi0/output/target/usr/lib"
     LIBS += -lwiringPi
 }
 

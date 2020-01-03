@@ -23,6 +23,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
 
+import Haptic 1.0
 import Entity.MediaPlayer 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -289,7 +290,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = 0;
                     cardSwipeView.setCurrentIndex(0);
                 }
@@ -315,7 +316,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
                     cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
                 }
@@ -341,7 +342,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("LIST");
                     cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
                 }
@@ -367,7 +368,7 @@ Rectangle {
                 height: width
 
                 onClicked: {
-                    haptic.playEffect("click");
+                    Haptic.playEffect(Haptic.Click);
 //                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
                     cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
                 }

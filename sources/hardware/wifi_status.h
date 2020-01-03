@@ -20,11 +20,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFISTATUS_H
-#define WIFISTATUS_H
+#pragma once
 
-#include <QString>
 #include <QObject>
+#include <QString>
 
 #include "wifi_signal.h"
 
@@ -35,28 +34,23 @@
  */
 class WifiStatus {
     Q_GADGET
-    Q_PROPERTY (QString         name            READ name            CONSTANT)
-    Q_PROPERTY (QString         bssid           READ bssid           CONSTANT)
-    Q_PROPERTY (QString         ipAddress       READ ipAddress       CONSTANT)
-    Q_PROPERTY (QString         macAddress      READ macAddress      CONSTANT)
-    Q_PROPERTY (int             rssi            READ rssi            CONSTANT)
-    Q_PROPERTY (SignalStrength  signalStrength  READ signalStrength  CONSTANT)
-    Q_PROPERTY (bool            connected       READ isConnected     CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString bssid READ bssid CONSTANT)
+    Q_PROPERTY(QString ipAddress READ ipAddress CONSTANT)
+    Q_PROPERTY(QString macAddress READ macAddress CONSTANT)
+    Q_PROPERTY(int rssi READ rssi CONSTANT)
+    Q_PROPERTY(SignalStrength signalStrength READ signalStrength CONSTANT)
+    Q_PROPERTY(bool connected READ isConnected CONSTANT)
 
-public:
-    WifiStatus(QString name = "",
-               QString bssid = "",
-               QString ipAddress = "",
-               QString macAddress = "",
-               int rssi = -100,
+ public:
+    WifiStatus(QString name = "", QString bssid = "", QString ipAddress = "", QString macAddress = "", int rssi = -100,
                bool connected = false)
-        : m_name(name)
-        , m_bssid(bssid)
-        , m_ipAddress(ipAddress)
-        , m_macAddress(macAddress)
-        , m_rssi(rssi)
-        , m_connected(connected)
-    {}
+        : m_name(name),
+          m_bssid(bssid),
+          m_ipAddress(ipAddress),
+          m_macAddress(macAddress),
+          m_rssi(rssi),
+          m_connected(connected) {}
 
     /**
      * @brief name Service set ID (SSID) of the network.
@@ -87,17 +81,14 @@ public:
     /**
      * @brief signalStrength Signal strength classification based on rssi.
      */
-    SignalStrength signalStrength() const {
-        return SignalStrengthEnum::fromRssi(m_rssi);
-    }
+    SignalStrength signalStrength() const { return SignalStrengthEnum::fromRssi(m_rssi); }
 
     /**
      * @brief isConnected Returns the access point connection status.
      */
-    bool    isConnected() const { return m_connected; }
+    bool isConnected() const { return m_connected; }
 
-
-private:
+ private:
     QString m_name;
     QString m_bssid;
     QString m_ipAddress;
@@ -105,6 +96,3 @@ private:
     int     m_rssi;
     bool    m_connected;
 };
-
-
-#endif // WIFISTATUS_H

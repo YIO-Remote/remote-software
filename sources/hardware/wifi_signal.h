@@ -20,8 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef WIFISIGNALSTRENGTH_H
-#define WIFISIGNALSTRENGTH_H
+#pragma once
 
 #include <QObject>
 
@@ -32,7 +31,7 @@
 class SignalStrengthEnum {
     Q_GADGET
 
-public:
+ public:
     enum Value {
         NONE,
         WEAK,
@@ -40,7 +39,7 @@ public:
         GOOD,
         EXCELLENT
     };
-    Q_ENUM (Value)
+    Q_ENUM(Value)
 
     static Value fromRssi(int rssi) {
         // Calibration is based on "various Internet sources", taken from wpa_cute project
@@ -55,10 +54,9 @@ public:
         else
             return NONE;
     }
-private:
-    explicit SignalStrengthEnum() {}
+
+ private:
+    SignalStrengthEnum() {}
 };
 
 typedef SignalStrengthEnum::Value SignalStrength;
-
-#endif // WIFISIGNALSTRENGTH_H

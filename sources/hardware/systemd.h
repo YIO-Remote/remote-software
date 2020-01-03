@@ -20,42 +20,39 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMD_H
-#define SYSTEMD_H
+#pragma once
 
-#include <QObject>
 #include <QMap>
+#include <QObject>
 
 #include "systemservice.h"
 
 /**
  * @brief Linux systemd implementation of the SystemService interface.
  */
-class Systemd : public SystemService
-{
+class Systemd : public SystemService {
     Q_OBJECT
-public:
-    Systemd(QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
+
+ public:
+    explicit Systemd(const QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
 
     void setUseSudo(bool sudo);
     bool isUseSudo();
 
     // SystemService interface
-public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName) override;
+ public:
+    Q_INVOKABLE bool startService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool stopService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool restartService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool reloadService(SystemServiceName serviceName) override;
 
-    int systemctlTimeout() const;
+    int  systemctlTimeout() const;
     void setSystemctlTimeout(int systemctlTimeout);
 
-private:
+ private:
     bool launch(const QString &command);
 
-    bool m_useSudo;
-    int  m_systemctlTimeout;
+    bool                             m_useSudo;
+    int                              m_systemctlTimeout;
     QMap<SystemServiceName, QString> m_serviceNameMap;
 };
-
-#endif // SYSTEMD_H

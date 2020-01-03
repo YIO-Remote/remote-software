@@ -170,17 +170,14 @@
         <file>sources/entities/light.h</file>
         <file>sources/entities/mediaplayer.cpp</file>
         <file>sources/entities/mediaplayer.h</file>
-        <file>sources/hardware/apds9960.cpp</file>
-        <file>sources/hardware/apds9960.h</file>
-        <file>sources/hardware/bq27441.cpp</file>
-        <file>sources/hardware/bq27441.h</file>
-        <file>sources/hardware/display_control.cpp</file>
-        <file>sources/hardware/display_control.h</file>
-        <file>sources/hardware/drv2605.cpp</file>
-        <file>sources/hardware/drv2605.h</file>
-        <file>sources/hardware/interrupt_handler.h</file>
-        <file>sources/hardware/mcp23017.h</file>
-        <file>sources/hardware/proximity_gesture_control.h</file>
+        <file>sources/hardware/arm/apds9960.cpp</file>
+        <file>sources/hardware/arm/apds9960.h</file>
+        <file>sources/hardware/arm/bq27441.cpp</file>
+        <file>sources/hardware/arm/bq27441.h</file>
+        <file>sources/hardware/arm/drv2605.cpp</file>
+        <file>sources/hardware/arm/drv2605.h</file>
+        <file>sources/hardware/arm/mcp23017_handler.h</file>
+        <file>sources/hardware/arm/mcp23017_interrupt.h</file>
         <file>sources/hardware/touchdetect.h</file>
         <file>sources/integrations/integration.h</file>
         <file>sources/integrations/plugininterface.h</file>

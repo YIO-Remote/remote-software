@@ -24,6 +24,7 @@ import QtQuick 2.11
 
 import DisplayControl 1.0
 import TouchEventFilter 1.0
+import LightSensor 1.0
 import Proximity 1.0
 import Launcher 1.0
 
@@ -70,10 +71,10 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // PROXIMITY SENSOR APDS9960
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property alias proximity: proximity
 
-    Proximity {
-        id: proximity
+    Connections {
+        target: Proximity
+        enabled: true
 
         onProximityEvent: {
             standbyControl.proximityDetected = true;
@@ -87,7 +88,7 @@ Item {
         interval: 400
 
         onTriggered: {
-            standbyControl.display_brightness_ambient = JSHelper.mapValues(proximity.readAmbientLight(),0,30,15,100);
+            standbyControl.display_brightness_ambient = JSHelper.mapValues(LightSensor.readAmbientLight(),0,30,15,100);
             // set the display brightness
             if (standbyControl.display_autobrightness) {
                 setBrightness(display_brightness_ambient);
@@ -100,13 +101,9 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY CONTROL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property alias displayControl: displayControl
-    DisplayControl {
-        id: displayControl
-    }
 
     function setBrightness(brightness) {
-        displayControl.setBrightness(display_brightness_old, brightness);
+        DisplayControl.setBrightness(display_brightness_old, brightness);
         display_brightness_old = brightness;
         display_brightness = brightness;
     }
@@ -123,7 +120,7 @@ Item {
 
     function wakeUp() {
         // get battery readings
-        //        battery.checkBattery();
+        //        applicationWindow.checkBattery();
 
         switch (mode) {
 
@@ -137,7 +134,7 @@ Item {
 
             case "standby":
                 // turn off standby
-                if (displayControl.setmode("standbyoff")) {
+                if (DisplayControl.setMode(DisplayControl.StandbyOff)) {
                     standbyoffDelay.start();
                 }
 
@@ -149,7 +146,7 @@ Item {
                 wifi.on()
 
                 // turn off standby
-                if (displayControl.setmode("standbyoff")) {
+                if (DisplayControl.setMode(DisplayControl.StandbyOff)) {
                     standbyoffDelay.start();
                 }
 
@@ -193,7 +190,7 @@ Item {
         if (touchDetected) {
             wakeUp();
             touchDetected = false;
-            proximity.proximityDetection(false);
+            Proximity.proximityDetection(false);
         }
     }
 
@@ -210,7 +207,7 @@ Item {
         if (buttonPressDetected) {
             wakeUp();
             buttonPressDetected = false;
-            proximity.proximityDetection(false);
+            Proximity.proximityDetection(false);
         }
     }
 
@@ -261,13 +258,13 @@ Item {
             // mode = standby
             if (time - standbyBaseTime > standbyTime * 1000 && mode == "dim") {
                 // turn on proximity detection
-                proximity.proximityDetection(true);
+                Proximity.proximityDetection(true);
 
                 // turn off the backlight
                 setBrightness(0);
 
                 // put the display to standby mode
-                displayControl.setmode("standbyon");
+                DisplayControl.setMode(DisplayControl.StandbyOn);
 
                 // stop bluetooth scanning
                 if (config.settings.bluetootharea) bluetoothArea.stopScan();

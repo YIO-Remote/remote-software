@@ -20,18 +20,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <assert.h>
-
 #include <QLoggingCategory>
 #include <QtDebug>
+
+#include <cassert>
 
 #include "../jsonfile.h"
 #include "hardwarefactory.h"
 
-#if defined(Q_OS_LINUX)
+#if defined(__arm__)
+#include "hardwarefactory_yio.h"
+#elif defined(Q_OS_LINUX)
 #include "hardwarefactory_rpi0.h"
 #else
-#include "hardwarefactory_mock.h"
+#include "mock/hardwarefactory_mock.h"
 #endif
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "HwFactory");
@@ -66,12 +68,15 @@ HardwareFactory *HardwareFactory::build(const QVariantMap &config) {
     }
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
-#if defined(Q_OS_LINUX)
+#if defined(__arm__)
+    s_instance = new HardwareFactoryYio(config);
+#elif defined(Q_OS_LINUX)
     s_instance = new HardwareFactoryRPi0(config);
 #else  // anyone wants to write Android, macOS or Windows factories?
     s_instance = new HardwareFactoryMock(config);
 #endif
 
+    s_instance->buildDevices(config);
     return s_instance;
 }
 
@@ -79,4 +84,76 @@ HardwareFactory *HardwareFactory::instance() {
     assert(s_instance);
 
     return s_instance;
+}
+
+QObject *HardwareFactory::batteryChargerProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getBatteryCharger();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getBatteryFuelGauge();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::displayControlProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getDisplayControl();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::interruptHandlerProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getInterruptHandler();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::hapticMotorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getHapticMotor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::gestureSensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getGestureSensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::lightSensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getLightSensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::proximitySensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    assert(s_instance);
+
+    QObject *device = s_instance->getProximitySensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
 }

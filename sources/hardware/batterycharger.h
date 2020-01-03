@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,24 +20,17 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef SYSTEMSERVICEMOCK_H
-#define SYSTEMSERVICEMOCK_H
+#pragma once
 
-#include "systemservice.h"
+#include "device.h"
 
-/**
- * @brief A mock implementation of the SystemService interface for unsupported platforms.
- */
-class SystemServiceMock : public SystemService
-{
+class BatteryCharger : public Device {
     Q_OBJECT
-public:
-    SystemServiceMock(QObject *parent = nullptr);
 
-    // SystemService interface
-public:
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) override;
+ public:
+    Q_INVOKABLE virtual void batteryChargingOn() = 0;
+    Q_INVOKABLE virtual void batteryChargingOff() = 0;
+
+ protected:
+    explicit BatteryCharger(QObject* parent = nullptr) : Device(parent) {}
 };
-
-#endif // SYSTEMSERVICEMOCK_H

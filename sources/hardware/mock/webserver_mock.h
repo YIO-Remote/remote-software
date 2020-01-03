@@ -20,40 +20,23 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#pragma once
 
-#include "webserver_mock.h"
+#include "../webserver_control.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "WebMock");
+/**
+ * @brief A mock implementation of the WebServerControl interface for unsupported platforms.
+ */
+class WebServerMock : public WebServerControl {
+    Q_OBJECT
 
-WebServerMock::WebServerMock(QObject *parent) : WebServerControl(parent)
+ public:
+    explicit WebServerMock(QObject *parent = nullptr);
 
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
-}
-
-
-bool WebServerMock::startService()
-{
-    qCDebug(CLASS_LC) << "startService";
-    return true;
-}
-
-bool WebServerMock::stopService()
-{
-    qCDebug(CLASS_LC) << "stopService";
-    return true;
-}
-
-bool WebServerMock::startWifiSetupPortal()
-{
-    qCDebug(CLASS_LC) << "startWifiSetupPortal";
-    return true;
-}
-
-bool WebServerMock::startWebConfigurator()
-{
-    qCDebug(CLASS_LC) << "startWebConfiugorator";
-    return true;
-}
+    // WebServerControl interface
+ public:
+    Q_INVOKABLE bool startService() override;
+    Q_INVOKABLE bool stopService() override;
+    Q_INVOKABLE bool startWifiSetupPortal() override;
+    Q_INVOKABLE bool startWebConfigurator() override;
+};
