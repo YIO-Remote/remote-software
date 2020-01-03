@@ -83,7 +83,6 @@ Rectangle {
                     id: icon
                     color: Style.colorText
                     text: {
-                        console.debug(list[index])
                         if (list[index]["original"] === "Off")
                             return Style.icons.power_on
                         else if (list[index]["original"] === "Heat")

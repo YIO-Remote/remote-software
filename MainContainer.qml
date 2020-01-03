@@ -123,6 +123,8 @@ Item {
     property int itemsLoaded: 0
     property bool startUp: false
 
+    signal loaded(int items)
+
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
@@ -157,8 +159,9 @@ Item {
                 }
 
                 onStatusChanged: {
-                    if (status == Loader.Ready) {
+                    if (mainNavigationLoader.status == Loader.Ready) {
                         itemsLoaded += 1;
+                        main_container.loaded(itemsLoaded);
                     }
                 }
             }
