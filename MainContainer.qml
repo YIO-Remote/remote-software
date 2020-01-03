@@ -163,10 +163,7 @@ Item {
                 onStatusChanged: {
                     if (mainNavigationLoader.status == Loader.Ready) {
                         itemsLoaded += 1;
-                        console.debug("PAGE LOADED: " + itemsLoaded);
-
                         if (itemsLoaded === mainNavigation.menuConfig.count) {
-                            console.debug("ALL PAGES LOADED. SENDING SIGNAL.");
                             main_container.loadedItems();
                         }
                     }

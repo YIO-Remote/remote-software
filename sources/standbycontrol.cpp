@@ -115,6 +115,13 @@ void StandbyControl::wakeup() {
 
             setMode(ON);
 
+            // integrations out of standby mode
+            for (int i = 0; i < m_integrations->list().length(); i++) {
+                IntegrationInterface *integrationObj =
+                    qobject_cast<IntegrationInterface *>(m_integrations->list().at(i));
+                integrationObj->leaveStandby();
+            }
+
             // start bluetooth scanning
 
             // reset battery charging screen
@@ -244,6 +251,13 @@ void StandbyControl::onSecondsTimerTimeout() {
         QMetaObject::invokeMethod(resetClock, "start", Qt::AutoConnection);
 
         setMode(STANDBY);
+
+        // integrations set standby mode
+        for (int i = 0; i < m_integrations->list().length(); i++) {
+            IntegrationInterface *integrationObj = qobject_cast<IntegrationInterface *>(m_integrations->list().at(i));
+            integrationObj->enterStandby();
+        }
+
         qCDebug(m_log) << "State set to STANDBY";
     }
 

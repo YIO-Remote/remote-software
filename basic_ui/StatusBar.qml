@@ -33,7 +33,7 @@ Item {
     height: 40
     clip: true
 
-//    property alias bg: bg
+    property alias bg: bg
 
     Rectangle {
         id: bg
