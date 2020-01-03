@@ -78,6 +78,7 @@ class Notifications : public QObject, NotificationsInterface {
 
  signals:
     void listChanged();
+    void listIsEmpty();
     void errorChanged();
 
  private:
