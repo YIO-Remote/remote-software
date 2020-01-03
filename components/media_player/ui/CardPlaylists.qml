@@ -21,6 +21,7 @@
  *****************************************************************************/
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -28,7 +29,7 @@ Rectangle {
     id: main
     width: parent.width
     height: parent.height
-    color: colorDark
+    color: Style.colorDark
 
     property var playListBrowseModel
     property bool isCurrentItem: parent._currentItem
@@ -111,7 +112,7 @@ Rectangle {
 
                         Text {
                             id: title
-                            color: colorText
+                            color: Style.colorText
                             text: qsTr("My playlists") + translateHandler.emptyString
                             font.family: "Open Sans Bold"
                             font.pixelSize: 40
@@ -161,7 +162,7 @@ Rectangle {
                         elide: Text.ElideRight
                         width: itemFlickable.width-60-albumImage.width-20-80
                         wrapMode: Text.NoWrap
-                        color: colorText
+                        color: Style.colorText
                         anchors.left: albumImage.right
                         anchors.leftMargin: 20
                         anchors.top: albumImage.top
@@ -178,7 +179,7 @@ Rectangle {
                         visible: item_subtitle == "" ? false : true
                         width: albumTitleText.width
                         wrapMode: Text.NoWrap
-                        color: colorText
+                        color: Style.colorText
                         opacity: 0.6
                         anchors.left: albumTitleText.left
                         anchors.top: albumTitleText.bottom
@@ -220,8 +221,8 @@ Rectangle {
 
             Text {
                 id: backButton
-                color: colorText
-                text: "\uE917"
+                color: Style.colorText
+                text: Style.icons.left_arrow
                 renderType: Text.NativeRendering
                 width: 70
                 height: 70

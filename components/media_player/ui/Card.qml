@@ -21,6 +21,7 @@
  *****************************************************************************/
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import Style 1.0
 
 import Entity.MediaPlayer 1.0
 
@@ -30,7 +31,7 @@ Rectangle {
     id: card
     width: parent.width
     height: parent.height
-    color: mediaplayerUtils.pixelColor === "#000000" ? colorDark : mediaplayerUtils.pixelColor
+    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
 
     Behavior on color {
         ColorAnimation { duration: 300 }
@@ -272,9 +273,9 @@ Rectangle {
 
         // home
         Text {
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
-            text: "\uE900"
+            text: Style.icons.home
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -298,9 +299,9 @@ Rectangle {
         // search
         Text {
             visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
-            text: "\uE90C"
+            text: Style.icons.search
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -324,9 +325,9 @@ Rectangle {
         // playlists
         Text {
             visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
-            text: "\uE907"
+            text: Style.icons.playlist
             renderType: Text.NativeRendering
             width: 60
             height: 60
@@ -350,9 +351,9 @@ Rectangle {
         // speakers
         Text {
             visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
-            color: colorText
+            color: Style.colorText
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
-            text: "\uE90D"
+            text: Style.icons.speaker
             renderType: Text.NativeRendering
             width: 60
             height: 60

@@ -6,5 +6,18 @@
         <file>keyboard/layouts/en_GB/main.qml</file>
         <file>keyboard/layouts/en_GB/numbers.qml</file>
         <file>keyboard/layouts/en_GB/symbols.qml</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/style.qml</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/backspace-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/check-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/enter-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/globe-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/handwriting-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/hidekeyboard-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/search-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/selectionhandle-bottom.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/shift-80c342.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/shift-868482.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/shift-c5d6b6.svg</file>
+        <file>keyboard/QtQuick/VirtualKeyboard/Styles/remotestyle/images/textmode-868482.svg</file>
     </qresource>
 </RCC>

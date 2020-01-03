@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import Entity.Blind 1.0
 
@@ -100,8 +101,8 @@ Rectangle {
     width: 460
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
-    color: colorDark
-    radius: cornerRadius
+    color: Style.colorDark
+    radius: Style.cornerRadius
 
     property var originParent: blindButton.parent
 
@@ -116,7 +117,7 @@ Rectangle {
             height: blindButton.height
             Rectangle {
                 anchors.fill: parent
-                radius: cornerRadius
+                radius: Style.cornerRadius
             }
         }
     }
@@ -209,7 +210,7 @@ Rectangle {
 
         Text {
             id: title
-            color: colorText
+            color: Style.colorText
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
@@ -226,8 +227,8 @@ Rectangle {
 
         Text {
             id: icon
-            color: colorText
-            text: "\uE914"
+            color: Style.colorText
+            text: Style.icons.blind
             renderType: Text.NativeRendering
             width: 85
             height: 85
@@ -270,20 +271,20 @@ Rectangle {
         radius: 200
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        color: colorHighlight1
+        color: Style.colorHighlight1
 
         state: "closed"
 
         states: [
             State {
                 name: "closed"
-                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: colorHighlight1}
+                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: Style.colorHighlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 0}
                 PropertyChanges {target: addToFavButtonText; opacity: 0}
             },
             State {
                 name: "open"
-                PropertyChanges {target: addToFavButton; width:500; height: 500; color: colorHighlight1}
+                PropertyChanges {target: addToFavButton; width:500; height: 500; color: Style.colorHighlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 1}
                 PropertyChanges {target: addToFavButtonText; opacity: 1}
             }
@@ -329,7 +330,7 @@ Rectangle {
             width: 80
             height: width
             radius: width/2
-            color: colorDark
+            color: Style.colorDark
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 40
@@ -340,7 +341,7 @@ Rectangle {
                 when: mouseAreaFav.pressed === true
                 PropertyChanges {
                     target: addToFavButtonCircle
-                    color: colorHighlight1
+                    color: Style.colorHighlight1
                 }
             }
 
@@ -361,10 +362,10 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 ColorOverlay {
-                    visible: !darkMode
+                    visible: !Style.darkMode
                     anchors.fill: parent
                     source: parent
-                    color: colorText
+                    color: Style.colorText
                 }
             }
 
@@ -382,7 +383,7 @@ Rectangle {
 
         Text {
             id: addToFavButtonText
-            color: colorText
+            color: Style.colorText
             text: obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors.verticalCenter: addToFavButtonCircle.verticalCenter

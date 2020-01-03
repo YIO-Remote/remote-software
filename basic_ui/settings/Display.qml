@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
@@ -36,7 +37,7 @@ Item {
 
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Display") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -49,15 +50,15 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 40
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: autobrightnessText
-            color: colorText
+            color: Style.colorText
             text: qsTr("Auto brightness") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -108,13 +109,13 @@ Item {
                 width: brightnessSlider.availableWidth
                 height: implicitHeight
                 radius: 4
-                color: colorBackground
+                color: Style.colorBackground
 
                 Rectangle {
                     width: brightnessSlider.visualPosition * parent.width
                     height: 4
                     radius: 2
-                    color: colorBackgroundTransparent
+                    color: Style.colorBackgroundTransparent
 
                     Rectangle {
                         width: parent.height
@@ -122,8 +123,8 @@ Item {
                         anchors.centerIn: parent
                         rotation: -90
                         gradient: Gradient {
-                            GradientStop { position: 0.0; color: colorMedium }
-                            GradientStop { position: 1.0; color: colorHighlight1 }
+                            GradientStop { position: 0.0; color: Style.colorMedium }
+                            GradientStop { position: 1.0; color: Style.colorHighlight1 }
                         }
                     }
                 }
@@ -134,8 +135,8 @@ Item {
                 y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
                 implicitWidth: 28
                 implicitHeight: 28
-                radius: cornerRadius
-                color: colorLine
+                radius: Style.cornerRadius
+                color: Style.colorLine
             }
 
             onValueChanged: {
@@ -155,14 +156,14 @@ Item {
             id: line1
             width: parent.width
             height: 2
-            color: colorBackground
+            color: Style.colorBackground
             anchors.top: brightnessSlider.bottom
             anchors.topMargin: 20
         }
 
         Text {
-            id: darkmodeText
-            color: colorText
+            id: darkModeText
+            color: Style.colorText
             text: qsTr("Dark mode") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -175,16 +176,16 @@ Item {
         }
 
         BasicUI.CustomSwitch {
-            id: darkmodeButton
+            id: darkModeButton
 
             anchors.right: parent.right
             anchors.rightMargin: 20
-            anchors.verticalCenter: darkmodeText.verticalCenter
+            anchors.verticalCenter: darkModeText.verticalCenter
 
-            checked: darkMode
+            checked: Style.darkMode
             mouseArea.onClicked: {
                 var tmp = config.ui_config
-                tmp.darkmode = !tmp.darkmode
+                tmp.darkMode = !tmp.darkMode
                 config.ui_config = tmp;
             }
         }
@@ -193,14 +194,14 @@ Item {
             id: line2
             width: parent.width
             height: 2
-            color: colorBackground
-            anchors.top: darkmodeText.bottom
+            color: Style.colorBackground
+            anchors.top: darkModeText.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: cleaningText
-            color: colorText
+            color: Style.colorText
             text: qsTr("Cleaning mode") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -214,7 +215,7 @@ Item {
 
         Text {
             id: cleaningsmallText
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: qsTr("Touch the display for 10 seconds to turn cleaning mode off.") + translateHandler.emptyString
             wrapMode: Text.WordWrap

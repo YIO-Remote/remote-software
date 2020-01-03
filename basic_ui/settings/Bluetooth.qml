@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
@@ -36,7 +37,7 @@ Item {
 
     Text {
         id: header
-        color: colorText
+        color: Style.colorText
         text: qsTr("Bluetooth") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans"
@@ -49,15 +50,15 @@ Item {
         id: section
         width: parent.width
         height: childrenRect.height + 40 //bluetoothText.height + smallText.height + 60
-        radius: cornerRadius
-        color: colorDark
+        radius: Style.cornerRadius
+        color: Style.colorDark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: bluetoothText
-            color: colorText
+            color: Style.colorText
             text: qsTr("Area detection") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -95,7 +96,7 @@ Item {
 
         Text {
             id: smallText
-            color: colorText
+            color: Style.colorText
             opacity: 0.5
             text: qsTr("Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.") + translateHandler.emptyString
             wrapMode: Text.WordWrap

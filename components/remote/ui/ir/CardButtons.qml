@@ -20,6 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 import QtQuick 2.11
+import Style 1.0
 
 import Entity.Remote 1.0
 
@@ -33,13 +34,13 @@ Item {
         width: 110
         height: 60
         radius: height/2
-        color: colorRed
+        color: Style.colorRed
         anchors.top: parent.top
         anchors.left: parent.left
 
         Text {
-            color: colorLine
-            text: "\uE908"
+            color: Style.colorLine
+            text: Style.icons.power_on
             renderType: Text.NativeRendering
             width: 70
             height: 70

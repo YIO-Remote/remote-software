@@ -19,42 +19,39 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-import QtQuick 2.11
-import Style 1.0
 
-import Entity.Remote 1.0
+#pragma once
 
-Rectangle {
-    id: bg
-    width: 110
-    height: 60
-    radius: height/2
-    border.color: Style.colorLight
-    border.width: 2
-    color: Style.colorBackgroundTransparent
+#include <QObject>
+#include <QVariant>
 
-    property alias title: title.text
-    property alias mouseArea: mouseArea
+#include "entity.h"
+#include "switchinterface.h"
 
-    Text {
-        id: title
-        color: Style.colorText
-        width: parent.width-20
-        elide: Text.ElideRight
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        anchors.centerIn: parent
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 24
-        lineHeight: 1
-    }
+class Switch : public Entity, SwitchInterface {
+    Q_OBJECT
+    Q_INTERFACES(SwitchInterface)
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        onClicked: {
-            haptic.playEffect("click");
-        }
-    }
-} // Rectangle end
+ public:
+    Q_PROPERTY(int power READ power NOTIFY powerChanged)
+
+    // switch commands
+    Q_INVOKABLE void toggle();
+
+    bool updateAttrByIndex(int attrIndex, const QVariant& value) override;
+
+    void turnOn() override;
+    void turnOff() override;
+    int  power() override { return m_power; }
+    bool isOn() override { return m_state == SwitchDef::ON; }
+
+    explicit Switch(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent = nullptr);
+
+    static QString Type;
+
+ signals:
+    void powerChanged();
+
+ private:
+    int m_power;
+};

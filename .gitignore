@@ -81,3 +81,6 @@ plugins/*.so
 *.autosave
 # Makefile should always be generated with qmake
 Makefile
+
+# Translation binary files
+translations/*.qm

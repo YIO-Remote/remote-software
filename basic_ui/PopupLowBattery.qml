@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
+import Style 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Popup {
@@ -49,7 +51,7 @@ Popup {
 
     background: Rectangle {
         anchors.fill: parent
-        color: colorHighlight1
+        color: Style.colorHighlight1
         radius: 8
     }
 
@@ -68,9 +70,9 @@ Popup {
         anchors.topMargin: 10
 
         size: 40
-        colorCircle: colorLine
-        colorCircleGrad: colorLine
-        colorBackground: colorDark
+        colorCircle: Style.colorLine
+        colorCircleGrad: Style.colorLine
+        colorBackground: Style.colorDark
         showBackground: false
         arcBegin: 0
         arcEnd: 0
@@ -108,15 +110,15 @@ Popup {
         anchors.topMargin: 175
 
         ColorOverlay {
-            visible: !darkMode
+            visible: !Style.darkMode
             anchors.fill: parent
             source: parent
-            color: colorText
+            color: Style.colorText
         }
     }
 
     Text {
-        color: colorText
+        color: Style.colorText
         text: qsTr("Low battery") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap
@@ -131,7 +133,7 @@ Popup {
     }
 
     Text {
-        color: colorText
+        color: Style.colorText
         text: qsTr("Please charge the remote soon") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap

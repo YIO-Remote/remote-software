@@ -20,14 +20,15 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 import QtQuick 2.0
+import Style 1.0
 
 Rectangle {
     id: main
     width: title.implicitWidth + 40
     height: 40
-    color: selected ? colorLine : colorBackgroundTransparent
+    color: selected ? Style.colorLine : Style.colorBackgroundTransparent
     radius: height/2
-    border.color: colorLine
+    border.color: Style.colorLine
     border.width: 2
     opacity: selected ? 1 : 0.5
 
@@ -43,7 +44,7 @@ Rectangle {
 
     Text {
         id: title
-        color: selected ? colorBackground : colorText
+        color: selected ? Style.colorBackground : Style.colorText
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: "Open Sans"

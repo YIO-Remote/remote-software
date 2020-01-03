@@ -22,6 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/components" as Comp
@@ -32,7 +33,7 @@ import MediaPlayerUtils 1.0
 
 Comp.ButtonBase {
     id: mediaplayerButton
-    icon: "\uE903"
+    icon: Style.icons.music
     cardLoader.source: "qrc:/components/media_player/ui/Card.qml"
 
     // override default settings
@@ -56,7 +57,7 @@ Comp.ButtonBase {
     // additional UI elements
     Text {
         id: info
-        color: colorText
+        color: Style.colorText
         opacity: 0.5
         text: obj.source
         elide: Text.ElideRight
@@ -100,7 +101,7 @@ Comp.ButtonBase {
                 height: image.height
                 Rectangle {
                     anchors.fill: parent
-                    radius: cornerRadius/2
+                    radius: Style.cornerRadius/2
                 }
             }
         }

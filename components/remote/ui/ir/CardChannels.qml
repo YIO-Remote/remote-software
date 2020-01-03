@@ -21,6 +21,7 @@
  *****************************************************************************/
 import QtQuick 2.11
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import Entity.Remote 1.0
 
@@ -49,8 +50,8 @@ Item {
                 width: 80
                 height: width
                 anchors.centerIn: parent
-                radius: cornerRadius
-                color: colorMedium
+                radius: Style.cornerRadius
+                color: Style.colorMedium
 
 //                layer.enabled: true
 //                layer.effect: OpacityMask {
@@ -59,13 +60,13 @@ Item {
 //                        height: imageContainer.height
 //                        Rectangle {
 //                            anchors.fill: parent
-//                            radius: cornerRadius
+//                            radius: Style.cornerRadius
 //                        }
 //                    }
 //                }
 
                 Text {
-                    color: colorText
+                    color: Style.colorText
                     text: number
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter

@@ -55,8 +55,9 @@ class SearchModel : public QAbstractListModel {
     QVariant               data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     QHash<int, QByteArray> roleNames() const;
 
-    void append(SearchModelItem* o);
-    void insert(SearchModelItem* o, int i);
+    void             append(SearchModelItem* o);
+    void             insert(SearchModelItem* o, int i);
+    SearchModelItem* get(int i);
 
     Q_INVOKABLE QObject* returnSubModel(int index) { return m_data.at(index)->item_model(); }
     Q_INVOKABLE void     clear();

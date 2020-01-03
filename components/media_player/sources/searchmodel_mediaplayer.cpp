@@ -71,6 +71,8 @@ void SearchModel::insert(SearchModelItem *o, int i) {
     endInsertRows();
 }
 
+SearchModelItem *SearchModel::get(int i) { return m_data.value(i); }
+
 void SearchModel::clear() {
     beginResetModel();
     m_data.clear();

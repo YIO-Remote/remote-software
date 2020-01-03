@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 import QtQuick 2.9
+import Style 1.0
 
 Rectangle {
 
@@ -31,17 +32,17 @@ Rectangle {
     id: button
     width: buttonText.implicitWidth+60
     height: 60
-    color: buttonState ? colorHighlight1 : colorBackgroundTransparent
+    color: buttonState ? Style.colorHighlight1 : Style.colorBackgroundTransparent
     radius: 40
-    border.color: buttonState ? colorHighlight1 : colorLine
+    border.color: buttonState ? Style.colorHighlight1 : Style.colorLine
 
     states: State {
         name: "pressed"
         when: mouseArea.pressed === true
         PropertyChanges {
             target: button
-            color: buttonState ? colorBackgroundTransparent : colorHighlight1
-            border.color: buttonState ? colorLine : colorBackgroundTransparent
+            color: buttonState ? Style.colorBackgroundTransparent : Style.colorHighlight1
+            border.color: buttonState ? Style.colorLine : Style.colorBackgroundTransparent
         }
     }
 
@@ -54,7 +55,7 @@ Rectangle {
 
     Text {
         id: buttonText
-        color: colorText
+        color: Style.colorText
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter

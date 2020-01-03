@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -30,7 +31,7 @@ Rectangle {
     id: cardDimmable
     width: parent.width
     height: parent.height
-    color: colorDark
+    color: Style.colorDark
 
     MouseArea {
         id: dragger
@@ -44,10 +45,10 @@ Rectangle {
 
     Rectangle {
         id: percentageBG
-        color: obj.state ? colorHighlight1 : colorBackgroundTransparent
+        color: obj.state ? Style.colorHighlight1 : Style.colorBackgroundTransparent
         width: parent.width
         height: parent.height
-        radius: cornerRadius
+        radius: Style.cornerRadius
         anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
 
         Behavior on color {
@@ -57,8 +58,8 @@ Rectangle {
 
     Text {
         id: icon
-        color: colorText
-        text: "\uE901"
+        color: Style.colorText
+        text: Style.icons.light
         renderType: Text.NativeRendering
         width: 85
         height: 85
@@ -70,7 +71,7 @@ Rectangle {
 
     Text {
         id: percentage
-        color: colorText
+        color: Style.colorText
         text: obj.state ? "On" : "Off"
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
@@ -79,7 +80,7 @@ Rectangle {
 
     Text {
         id: title
-        color: colorText
+        color: Style.colorText
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
@@ -90,7 +91,7 @@ Rectangle {
 
     Text {
         id: areaText
-        color: colorText
+        color: Style.colorText
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
@@ -102,8 +103,8 @@ Rectangle {
 
     BasicUI.CustomButton {
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: colorText
-        buttonTextColor: colorBackground
+        color: Style.colorText
+        buttonTextColor: Style.colorBackground
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
@@ -115,8 +116,8 @@ Rectangle {
 
     Text {
         id: closeButton
-        color: colorText
-        text: "\uE915"
+        color: Style.colorText
+        text: Style.icons.close
         renderType: Text.NativeRendering
         width: 70
         height: 70

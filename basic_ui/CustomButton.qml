@@ -22,6 +22,7 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 Rectangle {
 
@@ -32,17 +33,17 @@ Rectangle {
     id: button
     width: buttonText.implicitWidth+60
     height: 60
-    color: colorBackgroundTransparent
+    color: Style.colorBackgroundTransparent
     radius: 40
-    border.color: colorLine
+    border.color: Style.colorLine
 
     states: State {
         name: "pressed"
         when: mouseArea.pressed == true
         PropertyChanges {
             target: button
-            color: colorLine
-            border.color: colorBackgroundTransparent
+            color: Style.colorLine
+            border.color: Style.colorBackgroundTransparent
         }
     }
 
@@ -55,7 +56,7 @@ Rectangle {
 
     Text {
         id: buttonText
-        color: colorText
+        color: Style.colorText
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter

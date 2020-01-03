@@ -29,10 +29,11 @@
 #include <QQmlContext>
 #include <QtDebug>
 
-#include "jsonfile.h"
-#include "launcher.h"
-#include "translation.h"
-
+#include "bluetootharea.h"
+#include "components/media_player/sources/utils_mediaplayer.h"
+#include "config.h"
+#include "entities/entities.h"
+#include "fileio.h"
 #include "hardware/bq27441.h"
 #include "hardware/display_control.h"
 #include "hardware/drv2605.h"
@@ -41,23 +42,17 @@
 #include "hardware/proximity_gesture_control.h"
 #include "hardware/touchdetect.h"
 #include "hardware/wifi_control.h"
-
-#include "entities/entities.h"
 #include "integrations/integrations.h"
-
-#include "bluetootharea.h"
-#include "notifications.h"
-
-#include "components/media_player/sources/utils_mediaplayer.h"
-#include "config.h"
-#include "fileio.h"
+#include "jsonfile.h"
+#include "launcher.h"
 #include "logger.h"
+#include "notifications.h"
+#include "translation.h"
 #include "yioapi.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
 int main(int argc, char* argv[]) {
-    qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
@@ -66,6 +61,8 @@ int main(int argc, char* argv[]) {
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/keyboard");
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
@@ -120,6 +117,9 @@ int main(int argc, char* argv[]) {
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
+
+    // LOAD STYLES
+    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/Style.qml")), "Style", 1, 0, "Style");
 
     // LOAD ICONS
     QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");

@@ -8,7 +8,7 @@
 # Modified by Markus Zehnder:
 # - limit by path: only commits including .h or .cpp files
 # - limit to feature branches in pushes: gradually increase code quality for new features
-# - compare changes against dev branch instead of master
+# - compare changes against develop branch instead of master
 # - custom rule and file exclusions for remote-software project
 # - clean exit without stacktrace
 
@@ -36,7 +36,7 @@ jobs:
       - run: sudo update-alternatives --install /usr/bin/python python ${pythonLocation}/bin/python3.8 10
       - run: python -m pip install cpplint
       - run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-      - run: git diff origin/dev --name-only > git_diff.txt
+      - run: git diff origin/develop --name-only > git_diff.txt
       - name: cpplint_modified_files
         shell: python
         run: |

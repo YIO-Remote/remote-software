@@ -123,6 +123,8 @@ Item {
     property int itemsLoaded: 0
     property bool startUp: false
 
+    signal loadedItems()
+
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
@@ -157,8 +159,14 @@ Item {
                 }
 
                 onStatusChanged: {
-                    if (status == Loader.Ready) {
+                    if (mainNavigationLoader.status == Loader.Ready) {
                         itemsLoaded += 1;
+                        console.debug("PAGE LOADED: " + itemsLoaded);
+
+                        if (itemsLoaded === mainNavigation.menuConfig.count) {
+                            console.debug("ALL PAGES LOADED. SENDING SIGNAL.");
+                            main_container.loadedItems();
+                        }
                     }
                 }
             }

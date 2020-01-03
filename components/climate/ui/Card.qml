@@ -22,6 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
+import Style 1.0
 
 import Entity.Climate 1.0
 
@@ -132,7 +133,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: colorDark
+        color: Style.colorDark
     }
 
     Dial {
@@ -154,11 +155,11 @@ Item {
             height: width
             color: {
                 if ((obj.state === Climate.HEAT && targetTemperature > obj.temperature) || (targetTemperature > obj.temperature)) {
-                    return colorOrange
+                    return Style.colorOrange
                 } else if ((obj.state === Climate.COOL && targetTemperature < obj.temperature) || targetTemperature < obj.temperature) {
-                    return colorBlue
+                    return Style.colorBlue
                 } else {
-                    return colorHighlight2
+                    return Style.colorHighlight2
                 }
             }
             radius: width / 2
@@ -209,7 +210,7 @@ Item {
 
                         Text {
                             id: temperatureTextDial
-                            color: colorText
+                            color: Style.colorText
                             text: {
                                 var s = temp.toString().split(".")
                                 return s[0]
@@ -220,7 +221,7 @@ Item {
                         }
 
                         Text {
-                            color: colorText
+                            color: Style.colorText
                             text: {
                                 var s = temp.toString().split(".")
                                 if (s[1]) {
@@ -243,7 +244,7 @@ Item {
             y: temperatureDial.background.y + temperatureDial.background.height / 2 - height / 2
             width: 60
             height: 60
-            color: colorBackground
+            color: Style.colorBackground
             opacity: 0.5
             radius: 30
             antialiasing: true
@@ -279,8 +280,8 @@ Item {
 
     Text {
         id: icon
-        color: colorText
-        text: "\uE913"
+        color: Style.colorText
+        text: Style.icons.climate
         renderType: Text.NativeRendering
         width: 85
         height: 85
@@ -292,7 +293,7 @@ Item {
 
     Text {
         id: temperatureText
-        color: colorText
+        color: Style.colorText
         text: {
             var s = targetTemperature.toString().split(".")
             return s[0]
@@ -303,7 +304,7 @@ Item {
     }
 
     Text {
-        color: colorText
+        color: Style.colorText
         opacity: temperatureText.opacity
         text: {
             var s = targetTemperature.toString().split(".")
@@ -319,7 +320,7 @@ Item {
 
     Text {
         id: titleText
-        color: colorText
+        color: Style.colorText
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
@@ -330,7 +331,7 @@ Item {
 
     Text {
         id: areaText
-        color: colorText
+        color: Style.colorText
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
@@ -343,8 +344,8 @@ Item {
     BasicUI.CustomButton {
         id: turnOnButton
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: colorText
-        buttonTextColor: colorBackground
+        color: Style.colorText
+        buttonTextColor: Style.colorBackground
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
@@ -356,8 +357,8 @@ Item {
     BasicUI.CustomButton {
         id: modeButton
         anchors { left:turnOnButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: colorText
-        buttonTextColor: colorBackground
+        color: Style.colorText
+        buttonTextColor: Style.colorBackground
         buttonText: qsTr("Mode") + translateHandler.emptyString
         visible: obj.isSupported(Climate.F_HVAC_MODES)
 

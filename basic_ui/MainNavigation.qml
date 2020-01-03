@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtGraphicalEffects 1.0
 import QtQml.Models 2.3
+import Style 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
 
@@ -33,7 +34,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: colorBackground
+        color: Style.colorBackground
     }
 
     MouseArea {
@@ -205,7 +206,7 @@ Item {
 
                 width: buttonText.implicitWidth+30
                 height: 50
-                color: colorBackgroundTransparent
+                color: Style.colorBackgroundTransparent
                 opacity: selected ? 1 : 0.3
 
                 states: State {
@@ -225,7 +226,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height
-                    color: dragArea.held ? colorHighlight1 : ( selected ? colorHighlight2 : colorBackgroundTransparent )
+                    color: dragArea.held ? Style.colorHighlight1 : ( selected ? Style.colorHighlight2 : Style.colorBackgroundTransparent )
                     radius: width / 2
 
                     Behavior on color {
@@ -234,7 +235,7 @@ Item {
 
                     Text {
                         id: buttonText
-                        color: colorText
+                        color: Style.colorText
                         text: qsTr(friendly_name) + translateHandler.emptyString
                         horizontalAlignment: Text.AlignHCenter
                         anchors.horizontalCenter: parent.horizontalCenter

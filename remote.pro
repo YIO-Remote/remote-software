@@ -37,13 +37,12 @@ HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
     sources/configinterface.h \
-    sources/entities/blindinterface.h \
     sources/entities/climate.h \
     sources/entities/climateinterface.h \
     sources/entities/entityinterface.h \
-    sources/entities/lightinterface.h \
-    sources/entities/mediaplayerinterface.h \
     sources/entities/remote.h \
+    sources/entities/switch.h \
+    sources/entities/switchinterface.h \
     sources/entities/weather.h \
     sources/entities/weatherinterface.h \
     sources/fileio.h \
@@ -79,7 +78,6 @@ HEADERS += \
     sources/hardware/wifi_status.h \
     sources/entities/entities.h \
     sources/entities/entity.h \
-    sources/integrations/plugininterface.h \
     sources/entities/entitiesinterface.h \
     sources/entities/entityinterface.h \
     sources/entities/blindinterface.h \
@@ -103,6 +101,7 @@ SOURCES += \
     sources/config.cpp \
     sources/entities/climate.cpp \
     sources/entities/remote.cpp \
+    sources/entities/switch.cpp \
     sources/entities/weather.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
@@ -135,7 +134,6 @@ SOURCES += \
 RESOURCES += qml.qrc \
     images.qrc \
     keyboard.qrc \
-    style.qrc \
     translations.qrc
 
 # === platform specific devices =======================================
@@ -185,7 +183,9 @@ linux {
 
 # === start TRANSLATION section =======================================
 lupdate_only{
-SOURCES = main.qml \
+SOURCES += $$OTHER_FILES
+
+OTHER_FILES = main.qml \
           MainContainer.qml \
           StandbyControl.qml \
           ButtonHandler.qml \
@@ -389,6 +389,4 @@ win32 {
 } else {
     error(unknown platform! Platform must be configured in remote.pro project file)
 }
-
-DISTFILES +=
 

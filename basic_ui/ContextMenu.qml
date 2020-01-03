@@ -21,13 +21,14 @@
  *****************************************************************************/
 
 import QtQuick 2.11
+import Style 1.0
 
 Rectangle {
     id: main
     width: parent.width
     height: 100+(80*list.length)
-    radius: cornerRadius
-    color: colorBackground
+    radius: Style.cornerRadius
+    color: Style.colorBackground
 
     property var list: []
     property string id
@@ -82,14 +83,14 @@ Rectangle {
 
                 Text {
                     id: icon
-                    color: colorText
+                    color: Style.colorText
                     text: {
                         if (list[index] == "PLAY")
-                            return "\uE903"
+                            return Style.icons.music
                         else if (list[index] == "QUEUE")
-                            return "\uE907"
+                            return Style.icons.playlist
                         else if (list[index] == "SONGRADIO")
-                            return "\uE90A"
+                            return Style.icons.radio
                         else
                             return ""
                     }
@@ -115,7 +116,7 @@ Rectangle {
                         else
                             return "Not supported"
                     }
-                    color: colorText
+                    color: Style.colorText
                     anchors.left: icon.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
@@ -149,7 +150,7 @@ Rectangle {
 
             Text {
                 text: qsTr("Cancel") + translateHandler.emptyString
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 anchors.centerIn: parent
                 font.family: "Open Sans"

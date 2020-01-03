@@ -22,13 +22,14 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
+import Style 1.0
 
 Rectangle {
     id: element
     width: parent.width
     height: 80
-    color: selected ? colorHighlight : colorLine
-    radius: cornerRadius
+    color: selected ? colorHighlight : Style.colorLine
+    radius: Style.cornerRadius
 
     property alias ssid: textSSID.text
     property alias line: line
@@ -45,7 +46,7 @@ Rectangle {
 
     Text {
         id: textSSID
-        color: colorBackground
+        color: Style.colorBackground
         text: "Network SSID"
         width: 370
         anchors.verticalCenter: parent.verticalCenter
@@ -71,7 +72,7 @@ Rectangle {
         width: parent.width
         height: 1
         visible: !selected
-        color: colorBackground
+        color: Style.colorBackground
 //        opacity: 0.15
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter

@@ -20,13 +20,14 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 import QtQuick 2.11
+import Style 1.0
 
 Rectangle {
     id: main
     width: parent.width
     height: 100+(80*list.length)
-    radius: cornerRadius
-    color: colorBackground
+    radius: Style.cornerRadius
+    color: Style.colorBackground
 
     property var list: []
     property var climateObj
@@ -80,15 +81,14 @@ Rectangle {
 
                 Text {
                     id: icon
-                    color: colorText
+                    color: Style.colorText
                     text: {
-                        console.debug(list[index])
                         if (list[index]["original"] === "Off")
-                            return "\uE908"
+                            return Style.icons.power_on
                         else if (list[index]["original"] === "Heat")
-                            return "\uE91F"
+                            return Style.icons.heat
                         else if (list[index]["original"] === "Cool")
-                            return "\uE91E"
+                            return Style.icons.cool
                     }
                     renderType: Text.NativeRendering
                     width: 70
@@ -103,7 +103,7 @@ Rectangle {
 
                 Text {
                     text: list[index]["translated"]
-                    color: colorText
+                    color: Style.colorText
                     anchors.left: icon.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
@@ -134,7 +134,7 @@ Rectangle {
 
             Text {
                 text: qsTr("Cancel") + translateHandler.emptyString
-                color: colorText
+                color: Style.colorText
                 opacity: 0.5
                 anchors.centerIn: parent
                 font.family: "Open Sans"
