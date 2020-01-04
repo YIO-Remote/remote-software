@@ -19,9 +19,8 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
@@ -40,7 +39,6 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     Connections {
         target: ButtonHandler
 
@@ -112,9 +110,9 @@ Rectangle {
                 PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: buttonStop; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: buttonDown; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: buttonUp; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         },
         Transition {
@@ -124,9 +122,9 @@ Rectangle {
                 ParallelAnimation {
                     PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    PropertyAnimation { target: buttonStop; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    PropertyAnimation { target: buttonDown; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    PropertyAnimation { target: buttonUp; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                    PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                    PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                    PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                     SequentialAnimation {
                         PauseAnimation { duration: 100 }
                         PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }

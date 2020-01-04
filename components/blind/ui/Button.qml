@@ -21,9 +21,8 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import Style 1.0
 
-import Haptic 1.0
+import Style 1.0
 import Entity.Blind 1.0
 
 import "qrc:/components" as Comp
@@ -32,5 +31,5 @@ Comp.ButtonBase {
     id: blindButton
     icon: Style.icons.blind
     button.enabled: obj.isSupported(Blind.F_TURN_ON) ? true : false
-    cardLoader.source: "qrc:/components/blind/ui/Card.qml";
+    cardLoader.source: "qrc:/components/blind/ui/Card.qml"
 }
