@@ -97,7 +97,7 @@ class BQ27441 : public BatteryFuelGauge {
     Q_INVOKABLE int     getDesignCapacity() override;
     Q_INVOKABLE void    changeCapacity(int newCapacity) override;
 
-    int32_t  getTemperatureC();  // Result in 1 Celsius
+    int      getTemperatureC();  // Result in 1 Celsius
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
     int16_t  getStandbyCurrent();

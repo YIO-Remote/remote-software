@@ -143,7 +143,7 @@ void APDS9960::setADCIntegrationTime(uint16_t iTimeMS) {
     if (temp < 0) temp = 0;
 
     /* Update the timing register */
-    wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ATIME, (uint8_t)temp);
+    wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ATIME, static_cast<uint8_t>(temp));
 }
 
 float APDS9960::getADCIntegrationTime() {
@@ -297,14 +297,10 @@ void APDS9960::getColorData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c) 
 }
 
 uint16_t APDS9960::getAmbientLight() {
-    uint16_t val_byte;
+    uint16_t low = static_cast<uint16_t>(wiringPiI2CReadReg8(m_i2cFd, APDS9960_CDATAL));
+    uint16_t high = static_cast<uint16_t>(wiringPiI2CReadReg8(m_i2cFd, APDS9960_CDATAH));
 
-    uint16_t val = uint16_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_CDATAL));
-
-    val_byte = uint16_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_CDATAH));
-
-    val = val + ((uint16_t)val_byte << 8);
-    return val;
+    return low + static_cast<uint16_t>(high << 8);
 }
 
 uint16_t APDS9960::calculateLux(uint16_t r, uint16_t g, uint16_t b) {
@@ -314,7 +310,7 @@ uint16_t APDS9960::calculateLux(uint16_t r, uint16_t g, uint16_t b) {
     /* based exclusively on clear since this might be more reliable?      */
     illuminance = (-0.32466F * r) + (1.57837F * g) + (-0.73191F * b);
 
-    return uint16_t(illuminance);
+    return static_cast<uint16_t>(illuminance);
 }
 
 void APDS9960::enableColorInterrupt() {

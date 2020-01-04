@@ -114,7 +114,7 @@ void BQ27441::changeCapacity(int newCapacity) {
     delay(5);
     wiringPiI2CReadReg8(m_i2cFd, 0x06);
     delay(1000);
-    uint8_t checkBit = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x06);
+    uint8_t checkBit = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x06));
     if ((checkBit) & (1 << (4))) {
         // bit changed, let's configure
 
@@ -133,14 +133,14 @@ void BQ27441::changeCapacity(int newCapacity) {
         // read old checksum
         wiringPiI2CWrite(m_i2cFd, 0x60);
         delay(5);
-        uint8_t old_checksum = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x60);
+        uint8_t old_checksum = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x60));
         delay(5);
 
         // read existing capacity
         wiringPiI2CWrite(m_i2cFd, 0x4a);
         delay(5);
-        uint8_t old_descap_msb = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x4a);
-        uint8_t old_descap_lsb = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x4b);
+        uint8_t old_descap_msb = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x4a));
+        uint8_t old_descap_lsb = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x4b));
         delay(5);
 
         // write new capacity
@@ -154,11 +154,11 @@ void BQ27441::changeCapacity(int newCapacity) {
         // read existing energy
         wiringPiI2CWrite(m_i2cFd, 0x4c);
         delay(5);
-        uint8_t old_desen = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x4c);
+        uint8_t old_desen = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x4c));
         delay(5);
 
         // write new energy
-        uint8_t new_desen = (uint8_t)(capacity * 3.8) >> 8;
+        uint8_t new_desen = static_cast<uint8_t>(capacity * 3.8) >> 8;
 
         wiringPiI2CWriteReg8(m_i2cFd, 0x4c, new_desen);
         delay(5);
@@ -166,10 +166,10 @@ void BQ27441::changeCapacity(int newCapacity) {
         // read terminate voltage
         wiringPiI2CWrite(m_i2cFd, 0x50);
         delay(5);
-        uint8_t old_termv = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x50);
+        uint8_t old_termv = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x50));
 
         // write terminate voltage
-        uint8_t new_termv = (uint8_t)(3300) >> 8;
+        uint8_t new_termv = static_cast<uint8_t>(3300) >> 8;
 
         wiringPiI2CWriteReg8(m_i2cFd, 0x50, new_termv);
         delay(5);
@@ -177,10 +177,10 @@ void BQ27441::changeCapacity(int newCapacity) {
         // read taper rate
         wiringPiI2CWrite(m_i2cFd, 0x5b);
         delay(5);
-        uint8_t old_taper = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x5b);
+        uint8_t old_taper = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x5b));
 
         // write taper rate
-        uint8_t new_taper = (uint8_t)(217) >> 8;
+        uint8_t new_taper = static_cast<uint8_t>(217) >> 8;
 
         // calculate new checksum
         uint8_t temp = (255 - old_checksum - old_descap_lsb - old_descap_msb - old_desen - old_termv - old_taper) % 256;
@@ -201,7 +201,7 @@ void BQ27441::changeCapacity(int newCapacity) {
         delay(500);
         wiringPiI2CReadReg8(m_i2cFd, 0x06);
         delay(500);
-        checkBit = (uint8_t)wiringPiI2CReadReg8(m_i2cFd, 0x06);
+        checkBit = static_cast<uint8_t>(wiringPiI2CReadReg8(m_i2cFd, 0x06));
         if (!((checkBit) & (1 << (4)))) {
             // bit changed, let's seal
             wiringPiI2CWriteReg8(m_i2cFd, 0x00, 0x20);
@@ -211,115 +211,93 @@ void BQ27441::changeCapacity(int newCapacity) {
     }
 }
 
-int32_t BQ27441::getTemperatureC() {  // Result in 1 Celcius
+int BQ27441::getTemperatureC() {  // Result in 1 Celcius
     if (!isOpen()) {
         return 0;
     }
-    int32_t result;
-    uint16_t raw;
 
-    raw = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_TEMP);
-    result = ((int32_t)raw / 10) - 273;
-    return result;
+    int raw = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_TEMP);
+    return (raw / 10) - 273;
 }
 
 int BQ27441::getVoltage() {
     if (!isOpen()) {
         return 0;
     }
-    int result;
-    result = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);
-    return result;
+
+    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);
 }
 
 uint16_t BQ27441::getFlags() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FLAGS);
-    return result;
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FLAGS));
 }
 
 uint16_t BQ27441::getNominalAvailableCapacity() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_NOM_CAPACITY);
-    return result;
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_NOM_CAPACITY));
 }
 
 int BQ27441::getFullAvailableCapacity() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVAIL_CAPACITY);
-    return static_cast<int>(result);
+    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVAIL_CAPACITY);
 }
 
 int BQ27441::getRemainingCapacity() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAPACITY);
-    return static_cast<int>(result);
+    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAPACITY);
 }
 
 int BQ27441::getFullChargeCapacity() {
     if (!isOpen()) {
         return 0;
     }
-    int result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAPACITY);
-    return static_cast<int>(result);
+    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAPACITY);
 }
 
 int BQ27441::getAverageCurrent() {
     if (!isOpen()) {
         return 0;
     }
-    int16_t result;
 
-    result = int16_t(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_CURRENT));
-    return static_cast<int>(result);
+    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_CURRENT);
 }
 
 int16_t BQ27441::getStandbyCurrent() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_STDBY_CURRENT);
-    return (int16_t)result;
+    return static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_STDBY_CURRENT));
 }
 
 int16_t BQ27441::getMaxLoadCurrent() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_MAX_CURRENT);
-    return (int16_t)result;
+    return static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_MAX_CURRENT));
 }
 
 int BQ27441::getAveragePower() {
     if (!isOpen()) {
         return 0;
     }
-    int16_t result;
 
-    result = (int16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_POWER);
-    return static_cast<int>(result);
+    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_POWER);
 }
 
 int BQ27441::getStateOfCharge() {
@@ -330,7 +308,8 @@ int BQ27441::getStateOfCharge() {
     int result = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOC);
     if (result < 0) {
         close();
-        Notifications::getInstance()->add(true, tr("Battery sensor communication error. Please restart the remote."));
+        setErrorString(ERR_DEV_BATTERY_COMM);
+        Notifications::getInstance()->add(true, ERR_DEV_BATTERY_COMM);
     }
     return result;
 }
@@ -339,85 +318,69 @@ int16_t BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
     if (!isOpen()) {
         return 0;
     }
-    int16_t result;
-    uint16_t raw;
 
-    raw = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_INT_TEMP);
+    int raw = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_INT_TEMP);
     // Convert to 0.1 Celsius using integer math
-    result = (int16_t)raw - 2731;
-    return result;
+    return static_cast<int16_t>(raw - 2731);
 }
 
 int BQ27441::getStateOfHealth() {
     if (!isOpen()) {
         return 0;
     }
-    uint8_t result;
 
-    uint16_t raw = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOH);
-    result = raw & 0x0ff;
-    return static_cast<int>(result);
+    int raw = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOH);
+    return raw & 0x0ff;
 }
 
 uint16_t BQ27441::getRemainingCapacityUnfiltered() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAP_UNFL);
-    return result;
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAP_UNFL));
 }
 
 uint16_t BQ27441::getRemainingCapacityFiltered() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAP_FIL);
-    return result;
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAP_FIL));
 }
 
 uint16_t BQ27441::getFullChargeCapacityUnfiltered() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAP_UNFL);
-    return result;
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAP_UNFL));
 }
 
 uint16_t BQ27441::getFullChargeCapacityFiltered() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAP_FIL);
-    return result;
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAP_FIL));
 }
 
 uint16_t BQ27441::getStateOfChargeUnfiltered() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOC_UNFL);
-    return result;
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOC_UNFL));
 }
 
 uint16_t BQ27441::getOpConfig() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_EXTENDED_OPCONFIG);
+    uint16_t result = static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_EXTENDED_OPCONFIG));
     if ((result & (1 << 5)) == 0) {
-        qDebug("Device is in sleep mode");
+        qCDebug(CLASS_LC()) << "Device is in sleep mode";
     }
 
     return result;
@@ -427,45 +390,35 @@ int BQ27441::getDesignCapacity() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_EXTENDED_CAPACITY);
-    return static_cast<int>(result);
+    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_EXTENDED_CAPACITY);
 }
 
 uint16_t BQ27441::getControlStatus() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, (uint16_t)BQ27441_CONTROL_STATUS);
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL);
-    return result;
+    wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, static_cast<uint16_t>(BQ27441_CONTROL_STATUS));
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL));
 }
 
 uint16_t BQ27441::getDeviceType() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, (uint16_t)BQ27441_CONTROL_DEVICE_TYPE);
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL);
-
-    return result;
+    wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, static_cast<uint16_t>(BQ27441_CONTROL_DEVICE_TYPE));
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL));
 }
 
 uint16_t BQ27441::getChemID() {
     if (!isOpen()) {
         return 0;
     }
-    uint16_t result;
 
-    wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, (uint16_t)BQ27441_CONTROL_CHEM_ID);
-    result = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL);
-
-    return result;
+    wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, static_cast<uint16_t>(BQ27441_CONTROL_CHEM_ID));
+    return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL));
 }
 
 void BQ27441::reset() {
