@@ -464,10 +464,16 @@ Item {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    Image {
+                    Text {
                         id: speakerIcon
-                        asynchronous: true
-                        source: "qrc:/images/mini-music-player/icon-speaker.png"
+                        color: Style.colorText
+                        text: Style.icons.speaker
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {family: "icons"; pixelSize: 80 }
                     }
 
                     Text {
@@ -478,11 +484,7 @@ Item {
                         font.weight: Font.Normal
                         font.pixelSize: 27
                         lineHeight: 1
-                        anchors {
-                            left: speakerIcon.right
-                            leftMargin: 20
-                            verticalCenter: speakerIcon.verticalCenter
-                        }
+                        anchors { left: speakerIcon.right; verticalCenter: speakerIcon.verticalCenter }
                     }
                 }
             }

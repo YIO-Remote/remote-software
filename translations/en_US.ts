@@ -74,14 +74,14 @@
 <context>
     <name>Button</name>
     <message>
-        <location filename="../components/blind/ui/Button.qml" line="388"/>
+        <location filename="../components/blind/ui/Button.qml" line="389"/>
         <location filename="../components/light/ui/Button.qml" line="382"/>
         <location filename="../components/weather/ui/Button.qml" line="364"/>
         <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/blind/ui/Button.qml" line="388"/>
+        <location filename="../components/blind/ui/Button.qml" line="389"/>
         <location filename="../components/light/ui/Button.qml" line="382"/>
         <location filename="../components/weather/ui/Button.qml" line="364"/>
         <source>Add to favorites</source>
@@ -97,12 +97,12 @@
 <context>
     <name>ButtonBase</name>
     <message>
-        <location filename="../components/ButtonBase.qml" line="363"/>
+        <location filename="../components/ButtonBase.qml" line="337"/>
         <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/ButtonBase.qml" line="363"/>
+        <location filename="../components/ButtonBase.qml" line="337"/>
         <source>Add to favorites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -110,47 +110,47 @@
 <context>
     <name>Card</name>
     <message>
-        <location filename="../components/remote/ui/ir/Card.qml" line="232"/>
+        <location filename="../components/remote/ui/ir/Card.qml" line="234"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/remote/ui/ir/Card.qml" line="266"/>
+        <location filename="../components/remote/ui/ir/Card.qml" line="268"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/remote/ui/ir/Card.qml" line="301"/>
+        <location filename="../components/remote/ui/ir/Card.qml" line="303"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="349"/>
+        <location filename="../components/climate/ui/Card.qml" line="351"/>
         <source>Turn off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="349"/>
+        <location filename="../components/climate/ui/Card.qml" line="351"/>
         <source>Turn on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="362"/>
+        <location filename="../components/climate/ui/Card.qml" line="364"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="372"/>
+        <location filename="../components/climate/ui/Card.qml" line="374"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="378"/>
+        <location filename="../components/climate/ui/Card.qml" line="380"/>
         <source>Heat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/climate/ui/Card.qml" line="384"/>
+        <location filename="../components/climate/ui/Card.qml" line="386"/>
         <source>Cool</source>
         <translation type="unfinished"></translation>
     </message>
@@ -597,7 +597,6 @@
     <name>QObject</name>
     <message>
         <location filename="../sources/hardware/hardwarefactory_rpi0.cpp" line="70"/>
-        <location filename="../sources/main.cpp" line="197"/>
         <source>WiFi device was not found.</source>
         <translation type="unfinished"></translation>
     </message>

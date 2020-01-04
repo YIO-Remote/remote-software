@@ -24,8 +24,6 @@ import QtQuick 2.11
 import Entity.Climate 1.0
 
 import Style 1.0
-
-import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/components" as Comp
 
 Comp.ButtonBase {

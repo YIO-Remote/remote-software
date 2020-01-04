@@ -66,6 +66,11 @@ QtObject {
         readonly property string right_arrow: "\uE918"
         readonly property string up_arrow: "\uE919"
         readonly property string down_arrow: "\uE916"
+        readonly property string up_arrow_bold: "\uE923"
+        readonly property string down_arrow_bold: "\uE922"
+
+        readonly property string fav_add: "\uE920"
+        readonly property string fav_remove: "\uE921"
 
         readonly property string close: "\uE915"
         readonly property string home: "\uE900"

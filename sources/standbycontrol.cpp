@@ -104,9 +104,19 @@ void StandbyControl::wakeup() {
 
         case (STANDBY): {
             qCDebug(m_log) << "Wakeup from STANDBY";
-            if (m_displayControl->setMode(DisplayControl::StandbyOff)) {
+            m_displayControl->setMode(DisplayControl::StandbyOff);
+
+            QTimer timer;
+            timer.setSingleShot(true);
+
+            connect(&timer, &QTimer::timeout, this, [&]() {
                 readAmbientLight();
-            }
+                timer.deleteLater();
+            });
+
+            timer.start(200);
+            //            readAmbientLight();
+
             setMode(ON);
 
             // integrations out of standby mode

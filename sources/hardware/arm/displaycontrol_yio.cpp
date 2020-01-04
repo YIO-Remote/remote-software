@@ -101,15 +101,15 @@ void DisplayControlYioThread::setBrightness(int from, int to) {
         to = 100;
     }
 
-    if (from == 0) {
-        delay(200);
-    }
-
     if (from == 0 && digitalRead(26) == 0) {
         pinMode(26, PWM_OUTPUT);
         pwmSetMode(PWM_MODE_MS);
         pwmSetClock(1000);
         pwmSetRange(100);
+    }
+
+    if (from == 0) {
+        delay(300);
     }
 
     if (from >= to) {
