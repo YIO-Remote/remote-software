@@ -162,6 +162,7 @@ Item {
                         itemsLoaded += 1;
                         console.debug("PAGE LOADED: " + itemsLoaded);
                         if (itemsLoaded === mainNavigation.menuConfig.count) {
+                            console.debug("EVERY PAGE LOADED. Sending signal.");
                             main_container.loadedItems();
                         }
                     }

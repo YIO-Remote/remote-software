@@ -106,15 +106,17 @@ void StandbyControl::wakeup() {
             qCDebug(m_log) << "Wakeup from STANDBY";
             m_displayControl->setMode(DisplayControl::StandbyOff);
 
-            QTimer timer;
-            timer.setSingleShot(true);
+            readAmbientLight();
 
-            connect(&timer, &QTimer::timeout, this, [&]() {
-                readAmbientLight();
-                timer.deleteLater();
-            });
+            //            QTimer timer;
+            //            timer.setSingleShot(true);
 
-            timer.start(200);
+            //            connect(&timer, &QTimer::timeout, this, [&]() {
+            //                readAmbientLight();
+            //                timer.deleteLater();
+            //            });
+
+            //            timer.start(200);
             //            readAmbientLight();
 
             setMode(ON);
@@ -137,9 +139,8 @@ void StandbyControl::wakeup() {
             qCDebug(m_log) << "Wakeup from WIFI_OFF";
             m_wifiControl->on();
 
-            if (m_displayControl->setMode(DisplayControl::StandbyOff)) {
-                readAmbientLight();
-            }
+            m_displayControl->setMode(DisplayControl::StandbyOff);
+            readAmbientLight();
             setMode(ON);
 
             // connect integrations

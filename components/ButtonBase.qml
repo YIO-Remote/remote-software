@@ -78,18 +78,18 @@ Rectangle {
     property var obj
     property var originParent: buttonContainer.parent
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function open() {
         buttonContainer.originParent = buttonContainer.parent
         cardLoader.active = true;
+        buttonContainer.state = "open";
     }
 
     function close() {
         buttonContainer.state = "closed"
-        cardLoader.active = false;
+        cardLoader.item.state = "closed";
     }
 
 
@@ -105,31 +105,36 @@ Rectangle {
             PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1}
             ParentChange { target: buttonContainer; parent: originParent }
             PropertyChanges {target: loader_main; state: "visible" }
+            PropertyChanges {target: cardLoader; opacity: 0}
         },
         State {
             name: "open"
             PropertyChanges {target: buttonContainer; width: 480; height: 720}
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
+            PropertyChanges {target: cardLoader; opacity: 1}
         }
     ]
 
     transitions: [
         Transition {
             to: "closed"
-            ParallelAnimation {
-                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                ParentAnimation {
-                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+            SequentialAnimation {
+                ParallelAnimation {
+                    PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
+                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    ParentAnimation {
+                        NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+                    }
                 }
+                PropertyAction { target: cardLoader; property: "active"; value: false }
             }
         },
         Transition {
             to: "open"
             ParallelAnimation {
                 PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
-                PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 1 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }
@@ -354,21 +359,6 @@ Rectangle {
         asynchronous: true
         active: false
         source: "qrc:/components/remote/ui/Card.qml"
-        opacity: cardLoader.status == Loader.Ready ? 1 : 0
-
-        onStatusChanged: {
-            if (cardLoader.status == Loader.Ready) {
-                buttonContainer.state = "open";
-            }
-        }
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutExpo
-            }
-        }
-
     }
 
 

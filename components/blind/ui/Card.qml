@@ -26,6 +26,7 @@ import QtGraphicalEffects 1.0
 import Style 1.0
 
 import Haptic 1.0
+import ButtonHandler 1.0
 import Entity.Blind 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -35,6 +36,28 @@ Rectangle {
     width: parent.width; height: parent.height
     color: Style.colorDark
     radius: Style.cornerRadius
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Connections {
+        target: ButtonHandler
+
+        onButtonPressed: {
+            switch (button) {
+            case ButtonHandler.DPAD_UP:
+                obj.open()
+                break;
+            case ButtonHandler.DPAD_DOWN:
+                obj.close()
+                break;
+            case ButtonHandler.DPAD_MIDDLE:
+                obj.stop()
+                break;
+            }
+        }
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,6 +89,7 @@ Rectangle {
             name: "closed"
             PropertyChanges { target: percentage; anchors.topMargin: 200; opacity: 0 }
             PropertyChanges { target: title; opacity: 0 }
+            PropertyChanges { target: bgGraphics; opacity: 0 }
             PropertyChanges { target: buttonStop; anchors.bottomMargin: -100; opacity: 0 }
             PropertyChanges { target: buttonDown; anchors.bottomMargin: -100; opacity: 0 }
             PropertyChanges { target: buttonUp; anchors.bottomMargin: -100; opacity: 0 }
@@ -74,6 +98,7 @@ Rectangle {
             name: "open"
             PropertyChanges { target: percentage; anchors.topMargin: 100; opacity: 1 }
             PropertyChanges { target: title; opacity: 1 }
+            PropertyChanges { target: bgGraphics; opacity: 1 }
             PropertyChanges { target: buttonStop; anchors.bottomMargin: 70; opacity: 1 }
             PropertyChanges { target: buttonDown; anchors.bottomMargin: 70; opacity: 1 }
             PropertyChanges { target: buttonUp; anchors.bottomMargin: 70; opacity: 1 }
@@ -86,6 +111,7 @@ Rectangle {
             ParallelAnimation {
                 PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: buttonStop; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: buttonDown; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: buttonUp; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
@@ -94,8 +120,9 @@ Rectangle {
         Transition {
             to: "open"
             SequentialAnimation {
-                PauseAnimation { duration: 200 }
+                PauseAnimation { duration: 50 }
                 ParallelAnimation {
+                    PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                     PropertyAnimation { target: buttonStop; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                     PropertyAnimation { target: buttonDown; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
@@ -123,6 +150,7 @@ Rectangle {
     }
 
     Item {
+        id: bgGraphics
         width: parent.width; height: parent.height
         anchors.centerIn: parent
 
@@ -200,6 +228,7 @@ Rectangle {
 
     Text {
         color: Style.colorText
+        opacity: percentage.opacity
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
         font { family: "Open Sans Light"; pixelSize: 100 }
