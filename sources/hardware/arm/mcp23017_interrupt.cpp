@@ -92,10 +92,10 @@ void Mcp23017InterruptHandler::interruptHandler() {
     // if the GPIO is 0, then it's a button press
     if (gpioVal == 0) {
         // check the MCP23017 what caused the interrupt
-        m_button = mcp.readInterrupt();
+        int button = mcp.readInterrupt();
 
         // tell qml that there was a button press
-        emit buttonPressed();
+        emit interruptEvent(button);
     }
 
     delay(10);

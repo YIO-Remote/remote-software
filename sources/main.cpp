@@ -34,6 +34,7 @@
 #include "config.h"
 #include "entities/entities.h"
 #include "fileio.h"
+#include "hardware/buttonhandler.h"
 #include "hardware/hardwarefactory.h"
 #include "hardware/touchdetect.h"
 #include "integrations/integrations.h"
@@ -48,7 +49,6 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
 int main(int argc, char* argv[]) {
-    qputenv("QML2_IMPORT_PATH", "/keyboard");
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
@@ -57,6 +57,8 @@ int main(int argc, char* argv[]) {
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/keyboard");
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
@@ -193,9 +195,12 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
     // TODO(zehnm) put initialization into factory
-    if (!wifiControl->init()) {
-        notifications.add(true, QObject::tr("WiFi device was not found."));
-    }
+    //    if (!wifiControl->init()) {
+    //        notifications.add(true, QObject::tr("WiFi device was not found."));
+    //    }
+
+    // Ready for device startup!
+    hwFactory->initialize();
 
     // FILE IO
     FileIO fileIO;
@@ -205,10 +210,14 @@ int main(int argc, char* argv[]) {
     YioAPI* yioapi = new YioAPI(&engine);
     engine.rootContext()->setContextProperty("api", yioapi);
 
+    // BUTTON HANDLER
+    ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler());
+    qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
+
     // STANDBY CONTROL
     StandbyControl* standbyControl = new StandbyControl(
         displayControl, hwFactory->getProximitySensor(), hwFactory->getLightSensor(), touchEventFilter,
-        hwFactory->getInterruptHandler(), wifiControl, config, yioapi, integrations);
+        hwFactory->getInterruptHandler(), buttonHandler, wifiControl, config, yioapi, integrations);
     Q_UNUSED(standbyControl);
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 

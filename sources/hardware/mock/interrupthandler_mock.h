@@ -31,6 +31,5 @@ class InterruptHandlerMock : public InterruptHandler {
 
     // InterruptHandler interface
  public:
-    void    shutdown() override {}
-    QString getButton() override { return ""; }
+    void shutdown() override {}
 };

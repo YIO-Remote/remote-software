@@ -94,5 +94,5 @@ class Apds9960ProximitySensor : public ProximitySensor {
 
     uint8_t m_proximity;
     bool    m_proximityDetection = false;
-    int     m_proximitySetting = 70;  // default value
+    int     m_proximitySetting   = 40;  // default value
 };

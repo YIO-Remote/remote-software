@@ -38,12 +38,17 @@ void StandbyControl::setMode(int mode) {
     emit modeChanged();
 }
 
+void StandbyControl::init() { m_secondsTimer->start(); }
+
+void StandbyControl::shutdown() { m_interruptHandler->shutdown(); }
+
 StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *proximitySensor,
                                LightSensor *lightSensor, TouchEventFilter *touchEventFilter,
-                               InterruptHandler *interruptHandler, WifiControl *wifiControl, Config *config,
-                               YioAPI *api, Integrations *integrations, QObject *parent)
+                               InterruptHandler *interruptHandler, ButtonHandler *buttonHandler,
+                               WifiControl *wifiControl, Config *config, YioAPI *api, Integrations *integrations,
+                               QObject *parent)
     : QObject(parent),
-      m_log("STANDBY CONTROL"),
+      m_log("Standby Control"),
       m_config(config),
       m_api(api),
       m_integrations(integrations),
@@ -52,6 +57,7 @@ StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *
       m_lightsensor(lightSensor),
       m_touchEventFilter(touchEventFilter),
       m_interruptHandler(interruptHandler),
+      m_buttonHandler(buttonHandler),
       m_wifiControl(wifiControl) {
     s_instance = this;
 
@@ -67,12 +73,12 @@ StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *
     m_secondsTimer->setInterval(1000);
     // connect to timer signal
     connect(m_secondsTimer, &QTimer::timeout, this, &StandbyControl::onSecondsTimerTimeout);
-    m_secondsTimer->start();
+    //    m_secondsTimer->start();
 
     // connect to signals of hardware devices
     connect(m_touchEventFilter, &TouchEventFilter::detectedChanged, this, &StandbyControl::onTouchDetected);
     connect(m_proximitySensor, &ProximitySensor::proximityEvent, this, &StandbyControl::onProximityDetected);
-    connect(m_interruptHandler, &InterruptHandler::buttonPressed, this, &StandbyControl::onButtonPressDetected);
+    connect(m_buttonHandler, &ButtonHandler::buttonPressed, this, &StandbyControl::onButtonPressDetected);
 
     qCDebug(m_log) << "Standby Control intialized";
 }
@@ -172,7 +178,7 @@ void StandbyControl::wakeup() {
 
 void StandbyControl::readAmbientLight() {
     int lux = m_lightsensor->readAmbientLight();
-    m_displayControl->setAmbientBrightness(mapValues(lux, 0, 30, 15, 100));
+    m_displayControl->setAmbientBrightness(mapValues(lux, 0, 40, 15, 100));
     if (m_config->getSettings().value("autobrightness").toBool()) {
         m_displayControl->setBrightness(m_displayControl->ambientBrightness());
     } else {
@@ -180,13 +186,9 @@ void StandbyControl::readAmbientLight() {
     }
 }
 
-int StandbyControl::mapValues(int x, int a, int b, int c, int d) {
-    int leftSpan  = b - a;
-    int rightSpan = d - c;
-
-    float valueScaled = static_cast<float>(x - a) / static_cast<float>(leftSpan);
-
-    return static_cast<int>(c + (valueScaled * rightSpan));
+int StandbyControl::mapValues(int inValue, int minInRange, int maxInRange, int minOutRange, int maxOutRange) {
+    int x = (inValue - minInRange) / (maxInRange - minInRange);
+    return minOutRange + (maxOutRange - minOutRange) * x;
 }
 
 QString StandbyControl::secondsToHours(int value) {
@@ -316,8 +318,8 @@ void StandbyControl::onProximityDetected() {
     wakeup();
 }
 
-void StandbyControl::onButtonPressDetected() {
-    qCDebug(m_log) << "Button press detected";
+void StandbyControl::onButtonPressDetected(int button) {
+    Q_UNUSED(button)
     wakeup();
     m_proximitySensor->proximityDetection(false);
 }

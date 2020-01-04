@@ -119,6 +119,12 @@ void DisplayControlYio::setBrightness(int from, int to) {
     }
     //        },
     //        from, to);
+    m_currentBrightness = to;
+}
+
+void DisplayControlYio::setBrightness(int to)
+{
+    setBrightness(m_currentBrightness, to);
 }
 
 void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1) {

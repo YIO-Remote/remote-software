@@ -29,6 +29,7 @@ import StandbyControl 1.0
 import "qrc:/basic_ui" as BasicUI
 
 import Haptic 1.0
+import ButtonHandler 1.0
 
 import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
@@ -103,29 +104,29 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: miniMediaPlayer.state == "open" && (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM)
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad middle":
+            case ButtonHandler.DPAD_MIDDLE:
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
                 break;
-            case "dpad right":
+            case ButtonHandler.DPAD_RIGHT:
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
                     mediaPlayers.currentIndex += 1;
                 } else {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad left":
+            case ButtonHandler.DPAD_LEFT:
                 if (mediaPlayers.currentIndex > 0) {
                     mediaPlayers.currentIndex -= 1;
                 } else {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "top right":
+            case ButtonHandler.TOP_RIGHT:
                 miniMediaPlayer.state = "closed";
                 break;
             }
@@ -133,17 +134,17 @@ Item {
     }
 
     Connections {
-        target: buttonHandler
-        enabled: loader_main.state == "visible" || miniMediaPlayer.state == "open" ? true : false
+        target: ButtonHandler
+        enabled: loader_main.state === "visible" || miniMediaPlayer.state == "open" ? true : false
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "volume up":
+            case ButtonHandler.VOLUME_UP:
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = true;
                 buttonTimeout.start();
                 break;
-            case "volume down":
+            case ButtonHandler.VOLUME_DOWN:
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = false;
                 buttonTimeout.start();
@@ -151,7 +152,7 @@ Item {
             }
         }
 
-        onButtonRelease: {
+        onButtonReleased: {
             buttonTimeout.stop();
         }
     }

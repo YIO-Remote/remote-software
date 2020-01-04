@@ -48,6 +48,7 @@ HEADERS += \
     sources/fileio.h \
     sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
+    sources/hardware/buttonhandler.h \
     sources/hardware/mock/batterycharger_mock.h \
     sources/hardware/mock/batteryfuelgauge_mock.h \
     sources/hardware/displaycontrol.h \
@@ -116,6 +117,7 @@ SOURCES += \
     sources/entities/remote.cpp \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
+    sources/hardware/buttonhandler.cpp \
     sources/hardware/device.cpp \
     sources/hardware/touchdetect.cpp \
     sources/integrations/integrations.cpp \

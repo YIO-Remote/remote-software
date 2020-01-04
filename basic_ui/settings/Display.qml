@@ -143,8 +143,8 @@ Item {
 
             onValueChanged: {
                 if (setbyUser) {
-                    standbyControl.setBrightness(brightnessSlider.value);
-                    standbyControl.display_brightness_set = brightnessSlider.value
+                    DisplayControl.setBrightness(brightnessSlider.value);
+                    DisplayControl.setUserBrightness(brightnessSlider.value);
                     setbyUser = false;
                 }
             }

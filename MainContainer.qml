@@ -25,6 +25,7 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Haptic 1.0
 import StandbyControl 1.0
+import ButtonHandler 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -50,12 +51,12 @@ Item {
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: loader_main.state === "visible" && StandbyControl.mode === StandbyControl.ON ? true : false
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad right":
+            case ButtonHandler.DPAD_RIGHT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
 //                    loader_main.item.mainNavigationSwipeview.currentIndex += 1;
                     loader_main.item.mainNavigationSwipeview.incrementCurrentIndex();
@@ -64,7 +65,7 @@ Item {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad left":
+            case ButtonHandler.DPAD_LEFT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
 //                    loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
                     loader_main.item.mainNavigationSwipeview.decrementCurrentIndex();
@@ -73,7 +74,7 @@ Item {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad up":
+            case ButtonHandler.DPAD_UP:
                 var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
                 if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == 0) {
                     Haptic.playEffect(Haptic.Buzz);
@@ -83,7 +84,7 @@ Item {
                 }
                 mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
-            case "dpad down":
+            case ButtonHandler.DPAD_DOWN:
                 newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
                      Haptic.playEffect(Haptic.Buzz);

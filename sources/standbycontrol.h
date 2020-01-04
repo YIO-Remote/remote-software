@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
@@ -26,6 +26,7 @@
 #include <QVariant>
 
 #include "config.h"
+#include "hardware/buttonhandler.h"
 #include "hardware/hardwarefactory.h"
 #include "hardware/touchdetect.h"
 #include "integrations/integrations.h"
@@ -46,13 +47,16 @@ class StandbyControl : public QObject {
     int              mode() { return m_mode; }
     Q_INVOKABLE void setMode(int mode);
 
+    Q_INVOKABLE void init();
+    Q_INVOKABLE void shutdown();
+
     QString screenOnTime() { return secondsToHours(m_screenOnTime); }
     QString screenOffTime() { return secondsToHours(m_screenOffTime); }
 
     explicit StandbyControl(DisplayControl* displayControl, ProximitySensor* proximitySensor, LightSensor* lightSensor,
                             TouchEventFilter* touchEventFilter, InterruptHandler* interruptHandler,
-                            WifiControl* wifiControl, Config* config, YioAPI* api, Integrations* integrations,
-                            QObject* parent = nullptr);
+                            ButtonHandler* buttonHandler, WifiControl* wifiControl, Config* config, YioAPI* api,
+                            Integrations* integrations, QObject* parent = nullptr);
     virtual ~StandbyControl();
 
     static StandbyControl* getInstance() { return s_instance; }
@@ -77,6 +81,7 @@ class StandbyControl : public QObject {
     LightSensor*      m_lightsensor;
     TouchEventFilter* m_touchEventFilter;
     InterruptHandler* m_interruptHandler;
+    ButtonHandler*    m_buttonHandler;
     WifiControl*      m_wifiControl;
 
     int m_mode = ON;
@@ -94,7 +99,7 @@ class StandbyControl : public QObject {
 
     void    wakeup();
     void    readAmbientLight();
-    int     mapValues(int x, int a, int b, int c, int d);
+    int     mapValues(int inValue, int minInRange, int maxInRange, int minOutRange, int maxOutRange);
     QString secondsToHours(int value);
 
  private slots:
@@ -102,5 +107,5 @@ class StandbyControl : public QObject {
     void loadSettings();
     void onTouchDetected();
     void onProximityDetected();
-    void onButtonPressDetected();
+    void onButtonPressDetected(int button);
 };
