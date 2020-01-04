@@ -36,7 +36,7 @@ void Notifications::show(const int id) {
     // get the notification data to show
     QVariantMap map;
     map["id"] = m_notifications.value(id)->m_id;
-    map["error"] = m_notifications.value(id)->m_type;
+    map["error"] = m_notifications.value(id)->m_error;
     map["text"] = m_notifications.value(id)->m_text;
     map["actionlabel"] = m_notifications.value(id)->m_actionLabel;
     map["timestamp"] = m_notifications.value(id)->m_timestamp;
@@ -60,7 +60,7 @@ QVariantList Notifications::list() {
          ++iter) {
         QVariantMap map;
         map["id"] = iter.key();
-        map["error"] = iter.value()->m_type;
+        map["error"] = iter.value()->m_error;
         map["text"] = iter.value()->m_text;
         map["actionlabel"] = iter.value()->m_actionLabel;
         map["timestamp"] = iter.value()->m_timestamp;
@@ -71,9 +71,9 @@ QVariantList Notifications::list() {
     return list;
 }
 
-void Notifications::add(const bool &type, const QString &text, const QString &actionlabel, void (*f)(QObject *),
+void Notifications::add(bool error, const QString &text, const QString &actionlabel, void (*f)(QObject *),
                         QObject *param) {
-    Notification *n = new Notification(m_id, type, text, actionlabel, QDateTime::currentDateTime(), f, param);
+    Notification *n = new Notification(m_id, error, text, actionlabel, QDateTime::currentDateTime(), f, param);
     m_notifications.insert(m_id, n);
     emit listChanged();
     emit errorChanged();
@@ -83,11 +83,11 @@ void Notifications::add(const bool &type, const QString &text, const QString &ac
     m_id++;
 }
 
-void Notifications::add(const bool &type, const QString &text) { add(type, text, "", nullptr, nullptr); }
+void Notifications::add(bool error, const QString &text) { add(error, text, "", nullptr, nullptr); }
 
 void Notifications::add(const QString &text) { add(false, text); }
 
-void Notifications::remove(const int id) {
+void Notifications::remove(int id) {
     m_notifications.remove(id);
     emit listChanged();
     emit errorChanged();
@@ -104,7 +104,7 @@ void Notifications::remove(const QString &text) {
     emit errorChanged();
 }
 
-void Notifications::execute(const int id) {
+void Notifications::execute(int id) {
     qCDebug(m_log) << "Executing function" << m_notifications.value(id)->m_text
                    << m_notifications.value(id)->m_actionLabel;
     qCDebug(m_log) << "Creating pointer";
@@ -120,7 +120,7 @@ bool Notifications::isThereError() {
 
     for (QMap<int, Notification *>::const_iterator iter = m_notifications.begin(); iter != m_notifications.end();
          ++iter) {
-        if (iter.value()->m_type) {
+        if (iter.value()->m_error) {
             r = true;
         }
     }
@@ -128,8 +128,8 @@ bool Notifications::isThereError() {
     return r;
 }
 
-Notification::Notification(int id, bool type, QString text, QString actionLabel, QVariant timestamp,
+Notification::Notification(int id, bool error, QString text, QString actionLabel, QVariant timestamp,
                            void (*action)(QObject *), QObject *param)
-    : m_id(id), m_type(type), m_text(text), m_actionLabel(actionLabel), m_timestamp(timestamp), m_param(param) {
+    : m_id(id), m_error(error), m_text(text), m_actionLabel(actionLabel), m_timestamp(timestamp), m_param(param) {
     m_action = action;
 }
