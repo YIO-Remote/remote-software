@@ -94,9 +94,7 @@ class Apds9960ProximitySensor : public ProximitySensor {
         InterruptHandler* interruptHandler = HardwareFactory::instance()->getInterruptHandler();
 
         connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
-            qCDebug(m_log) << "Event from interrupthandler";
             if (event == InterruptHandler::APDS9960) {
-                qCDebug(m_log) << "Interrupt event";
                 readInterrupt();
             }
         });

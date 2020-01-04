@@ -29,7 +29,7 @@ QtObject {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property int cornerRadius: 18 // radius of the buttons, defined here
 
-    property bool darkMode: true
+    property bool darkMode: config.ui_config.darkmode
 
     property color colorGreen: "#19D37B"
     property color colorRed: "#EA003C"

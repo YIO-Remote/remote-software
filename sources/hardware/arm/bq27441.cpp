@@ -215,10 +215,10 @@ int32_t BQ27441::getTemperatureC() {  // Result in 1 Celcius
     if (!isOpen()) {
         return 0;
     }
-    int32_t result;
+    int32_t  result;
     uint16_t raw;
 
-    raw = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_TEMP);
+    raw    = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_TEMP);
     result = ((int32_t)raw / 10) - 273;
     return result;
 }
@@ -339,7 +339,7 @@ int16_t BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
     if (!isOpen()) {
         return 0;
     }
-    int16_t result;
+    int16_t  result;
     uint16_t raw;
 
     raw = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_INT_TEMP);
@@ -355,7 +355,7 @@ int BQ27441::getStateOfHealth() {
     uint8_t result;
 
     uint16_t raw = (uint16_t)wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOH);
-    result = raw & 0x0ff;
+    result       = raw & 0x0ff;
     return static_cast<int>(result);
 }
 

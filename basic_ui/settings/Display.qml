@@ -184,7 +184,7 @@ Item {
             anchors.rightMargin: 20
             anchors.verticalCenter: darkModeText.verticalCenter
 
-            checked: Style.darkMode
+            checked: config.ui_config.darkmode
             mouseArea.onClicked: {
                 var tmp = config.ui_config
                 tmp.darkMode = !tmp.darkMode

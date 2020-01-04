@@ -222,9 +222,6 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
-        // change dark mode to the configured value
-        Style.darkMode = Qt.binding(function () { return config.ui_config.darkMode });
-
         // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
@@ -243,11 +240,6 @@ ApplicationWindow {
 
         // Start websocket API
         api.start();
-
-        // FIXME initialize capacity in device builder
-        Battery.capacity = 2500;
-        Battery.begin();
-        checkBattery();
     }
 
     // load the entities when the integrations are loaded
