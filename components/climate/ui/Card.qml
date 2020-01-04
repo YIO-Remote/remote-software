@@ -142,7 +142,7 @@ Rectangle {
         Transition {
             to: "open"
             SequentialAnimation {
-                PauseAnimation { duration: 50 }
+                PauseAnimation { duration: 100 }
                 ParallelAnimation {
                     PropertyAnimation { target: temperatureDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     PropertyAnimation { target: temperatureText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
