@@ -26,6 +26,7 @@ import QtGraphicalEffects 1.0
 import Style 1.0
 
 import Haptic 1.0
+import ButtonHandler 1.0
 import Entity.Blind 1.0
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -63,7 +64,7 @@ Rectangle {
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: state == "open" ? true : false
 
         onButtonPress: {

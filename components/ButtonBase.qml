@@ -27,6 +27,7 @@ import Style 1.0
 
 import Haptic 1.0
 import StandbyControl 1.0
+import ButtonHandler 1.0
 
 
 import "qrc:/scripts/helper.js" as JSHelper
@@ -410,13 +411,13 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: state == "open" ? true : false
 
-        onButtonPress: {
+        onButtonPressed: {
             if (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM) {
                 switch (button) {
-                case "top right":
+                case ButtonHandler.TOP_RIGHT:
                     buttonContainer.state = "closed"
                     cardLoader.active = false;
                     break;

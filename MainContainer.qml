@@ -58,25 +58,21 @@ Item {
             switch (button) {
             case ButtonHandler.DPAD_RIGHT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
-//                    loader_main.item.mainNavigationSwipeview.currentIndex += 1;
                     loader_main.item.mainNavigationSwipeview.incrementCurrentIndex();
-                    //                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case ButtonHandler.DPAD_LEFT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
-//                    loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
                     loader_main.item.mainNavigationSwipeview.decrementCurrentIndex();
-                    //                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
             case ButtonHandler.DPAD_UP:
                 var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
-                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == 0) {
+                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY === 0) {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 if (newpos <= 0) {
@@ -164,6 +160,7 @@ Item {
                 onStatusChanged: {
                     if (mainNavigationLoader.status == Loader.Ready) {
                         itemsLoaded += 1;
+                        console.debug("PAGE LOADED: " + itemsLoaded);
                         if (itemsLoaded === mainNavigation.menuConfig.count) {
                             main_container.loadedItems();
                         }

@@ -441,7 +441,6 @@ ApplicationWindow {
             x: parent.width - 1
             width: parent.width
             height: parent.height
-//            color: Style.colorBackgroundTransparent
         }
 
         Rectangle {
@@ -470,14 +469,6 @@ ApplicationWindow {
             active: notificationsDrawer.position > 0 ? true : false
             source: notificationsDrawer.position > 0 ? "qrc:/basic_ui/NotificationDrawer.qml" : ""
         }
-
-//        property int n: notifications.list.length
-
-//        onNChanged: {
-//            if (n==0) {
-//                notificationsDrawer.close();
-//            }
-//        }
 
         Connections {
             target: notifications

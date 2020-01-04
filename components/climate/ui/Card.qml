@@ -24,6 +24,8 @@ import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import ButtonHandler 1.0
+
 import Entity.Climate 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -55,18 +57,18 @@ Item {
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad up":
+            case ButtonHandler.DPAD_UP:
                 if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
                     var t = targetTemperature+0.5
                     targetTemperature = t;
                     obj.setTargetTemperature(targetTemperature);
                 }
                 break;
-            case "dpad down":
+            case ButtonHandler.DPAD_DOWN:
                 if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
                     var t = targetTemperature-0.5
                     targetTemperature = t;

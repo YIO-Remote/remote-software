@@ -105,20 +105,8 @@ void StandbyControl::wakeup() {
         case (STANDBY): {
             qCDebug(m_log) << "Wakeup from STANDBY";
             if (m_displayControl->setMode(DisplayControl::StandbyOff)) {
-                QTimer *timer = new QTimer(this);
-                timer->setSingleShot(true);
-                QObject *context = new QObject(this);
-
-                connect(timer, &QTimer::timeout, context, [=]() {
-                    readAmbientLight();
-
-                    timer->deleteLater();
-                    context->deleteLater();
-                });
-
-                timer->start(300);
+                readAmbientLight();
             }
-
             setMode(ON);
 
             // integrations out of standby mode
@@ -140,20 +128,8 @@ void StandbyControl::wakeup() {
             m_wifiControl->on();
 
             if (m_displayControl->setMode(DisplayControl::StandbyOff)) {
-                QTimer *timer = new QTimer(this);
-                timer->setSingleShot(true);
-                QObject *context = new QObject(this);
-
-                connect(timer, &QTimer::timeout, context, [=]() {
-                    readAmbientLight();
-
-                    timer->deleteLater();
-                    context->deleteLater();
-                });
-
-                timer->start(300);
+                readAmbientLight();
             }
-
             setMode(ON);
 
             // connect integrations
@@ -178,7 +154,9 @@ void StandbyControl::wakeup() {
 
 void StandbyControl::readAmbientLight() {
     int lux = m_lightsensor->readAmbientLight();
-    m_displayControl->setAmbientBrightness(mapValues(lux, 0, 40, 15, 100));
+    qCDebug(m_log) << "LUX" << lux;
+    m_displayControl->setAmbientBrightness(mapValues(lux, 0, 30, 15, 100));
+
     if (m_config->getSettings().value("autobrightness").toBool()) {
         m_displayControl->setBrightness(m_displayControl->ambientBrightness());
     } else {
@@ -187,8 +165,10 @@ void StandbyControl::readAmbientLight() {
 }
 
 int StandbyControl::mapValues(int inValue, int minInRange, int maxInRange, int minOutRange, int maxOutRange) {
-    int x = (inValue - minInRange) / (maxInRange - minInRange);
-    return minOutRange + (maxOutRange - minOutRange) * x;
+    int leftSpan    = maxInRange - minInRange;
+    int rightSpan   = maxOutRange - minOutRange;
+    int valueScaled = (inValue - minInRange) / leftSpan;
+    return (minOutRange + (valueScaled * rightSpan));
 }
 
 QString StandbyControl::secondsToHours(int value) {

@@ -25,6 +25,8 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import ButtonHandler 1.0
+
 import Entity.Remote 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -39,66 +41,66 @@ Rectangle {
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "volume up":
+            case ButtonHandler.VOLUME_UP:
                 if (obj.isSupported(Remote.F_VOLUME_UP)) {
                     obj.volumeUp();
                 }
                 break;
-            case "volume down":
+            case ButtonHandler.VOLUME_DOWN:
                 if (obj.isSupported(Remote.F_VOLUME_DOWN)) {
                     obj.volumeDown();
                 }
                 break;
-            case "channel up":
+            case ButtonHandler.CHANNEL_UP:
                 if (obj.isSupported(Remote.F_CHANNEL_UP)) {
                     obj.channelUp();
                 }
                 break;
-            case "channel down":
+            case ButtonHandler.CHANNEL_DOWN:
                 if (obj.isSupported(Remote.F_CHANNEL_DOWN)) {
                     obj.channelDown();
                 }
                 break;
-            case "dpad up":
+            case ButtonHandler.DPAD_UP:
                 if (obj.isSupported(Remote.F_CURSOR_UP)) {
                     obj.cursorUp();
                 }
                 break;
-            case "dpad down":
+            case ButtonHandler.DPAD_DOWN:
                 if (obj.isSupported(Remote.F_CURSOR_DOWN)) {
                     obj.cursorDown();
                 }
                 break;
-            case "dpad left":
+            case ButtonHandler.DPAD_LEFT:
                 if (obj.isSupported(Remote.F_CURSOR_LEFT)) {
                     obj.cursorLeft();
                 }
                 break;
-            case "dpad right":
+            case ButtonHandler.DPAD_RIGHT:
                 if (obj.isSupported(Remote.F_CURSOR_RIGHT)) {
                     obj.cursorRight();
                 }
                 break;
-            case "dpad middle":
+            case ButtonHandler.DPAD_MIDDLE:
                 if (obj.isSupported(Remote.F_CURSOR_OK)) {
                     obj.cursorOK();
                 }
                 break;
-            case "top left":
+            case ButtonHandler.TOP_LEFT:
                 if (obj.isSupported(Remote.F_MUTE_TOGGLE)) {
                     obj.muteToggle();
                 }
                 break;
-            case "bottom left":
+            case ButtonHandler.BOTTOM_LEFT:
                 if (obj.isSupported(Remote.F_BACK)) {
                     obj.back();
                 }
                 break;
-            case "bottom right":
+            case ButtonHandler.BOTTOM_RIGHT:
                 if (obj.isSupported(Remote.F_MENU)) {
                     obj.menu();
                 }

@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
@@ -26,15 +26,12 @@
 #include <stdio.h>
 #include <time.h>
 
+#include <QThread>
+
 #include "../displaycontrol.h"
 
 class DisplayControlYio : public DisplayControl {
     Q_OBJECT
-
-    // define timing
-    struct timespec ts  = {0, 40L};
-    struct timespec ts2 = {0, 100L};
-    struct timespec ts3 = {0, 300L};
 
  public:
     bool setMode(Mode mode) override;
@@ -47,12 +44,37 @@ class DisplayControlYio : public DisplayControl {
     void setAmbientBrightness(int value) override { m_ambientBrightness = value; }
     void setUserBrightness(int value) override { m_userBrightness = value; }
 
-    explicit DisplayControlYio(QObject *parent = nullptr);
+    explicit DisplayControlYio(QObject* parent = nullptr);
+
+ signals:
+    void enterStandby();
+    void leaveStandby();
+    void setBrightnessSignal(int from, int to);
 
  private:
-    void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
-
     int m_currentBrightness = 100;
     int m_ambientBrightness = 100;
     int m_userBrightness    = 100;
+
+    QThread* m_thread;
+};
+
+class DisplayControlYioThread : public QObject {
+    Q_OBJECT
+
+    // define timing
+    struct timespec ts  = {0, 40L};
+    struct timespec ts2 = {0, 100L};
+    struct timespec ts3 = {0, 300L};
+
+ public:
+    void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
+
+    explicit DisplayControlYioThread(QObject* parent = nullptr) { Q_UNUSED(parent) }
+    virtual ~DisplayControlYioThread() {}
+
+ public slots:
+    void setBrightness(int from, int to);
+    void enterStandby();
+    void leaveStandby();
 };

@@ -235,16 +235,10 @@ int main(int argc, char* argv[]) {
     touchEventFilter->setSource(mainApplicationWindow);
 
     // FIXME move initialization code to a device driver factory
-    //    QObject* standbyControl = config->getQMLObject("standbyControl");
-    //    if (standbyControl == nullptr) {
-    //        qCCritical(CLASS_LC) << "Error looking up QML object:"
-    //                             << "standbyControl";
-    //    } else {
-    //        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
-    //        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
-    //        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
-    //        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
-    //    }
+    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
 
     return app.exec();
 }

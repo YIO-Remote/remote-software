@@ -27,6 +27,8 @@
 class DisplayControl : public Device {
     Q_OBJECT
 
+    Q_PROPERTY(int currentBrightness READ currentBrightness NOTIFY currentBrightnessChanged)
+
  public:
     enum Mode { StandbyOn, StandbyOff };
     Q_ENUM(Mode)
@@ -36,12 +38,15 @@ class DisplayControl : public Device {
     Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
     Q_INVOKABLE virtual void setBrightness(int to)           = 0;
 
-    virtual int             currentBrightness() = 0;
+    Q_INVOKABLE virtual int currentBrightness() = 0;
     Q_INVOKABLE virtual int ambientBrightness() = 0;
     Q_INVOKABLE virtual int userBrightness()    = 0;
 
     virtual void             setAmbientBrightness(int value) = 0;
     Q_INVOKABLE virtual void setUserBrightness(int value)    = 0;
+
+ signals:
+    void currentBrightnessChanged();
 
  protected:
     explicit DisplayControl(QObject* parent = nullptr) : Device(parent) {}
