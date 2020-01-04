@@ -103,17 +103,17 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1}
+            PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1 }
             ParentChange { target: buttonContainer; parent: originParent }
             PropertyChanges {target: loader_main; state: "visible" }
             PropertyChanges {target: cardLoader; opacity: 0}
         },
         State {
             name: "open"
-            PropertyChanges {target: buttonContainer; width: 480; height: 720}
+            PropertyChanges {target: buttonContainer; width: 480; height: 720 }
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
-            PropertyChanges {target: cardLoader; opacity: 1}
+            PropertyChanges {target: cardLoader; opacity: 1 }
         }
     ]
 
