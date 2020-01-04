@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
@@ -25,6 +25,7 @@
 #include <QVariant>
 
 #include "../logger.h"
+#include "../yioapi.h"
 #include "hardwarefactory.h"
 #include "interrupthandler.h"
 
@@ -49,7 +50,7 @@ class ButtonHandler : public QObject {
     };
     Q_ENUM(Buttons)
 
-    explicit ButtonHandler(InterruptHandler* interruptHandler, QObject* parent = nullptr);
+    explicit ButtonHandler(InterruptHandler* interruptHandler, YioAPI* api, QObject* parent = nullptr);
     virtual ~ButtonHandler();
 
     static ButtonHandler* getInstance() { return s_instance; }
@@ -63,10 +64,13 @@ class ButtonHandler : public QObject {
     static ButtonHandler* s_instance;
     QLoggingCategory      m_log;
     InterruptHandler*     m_itnerruptHandler;
+    YioAPI*               m_api;
 
     int m_buttonPressed  = -1;
     int m_buttonReleased = -1;
 
  private slots:
     void onInterrupt(int event);
+    void onYIOAPIPressed(QString button);
+    void onYIOAPIReleased(QString button);
 };

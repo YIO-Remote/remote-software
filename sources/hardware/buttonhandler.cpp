@@ -23,8 +23,8 @@
 
 ButtonHandler *ButtonHandler::s_instance = nullptr;
 
-ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, QObject *parent)
-    : QObject(parent), m_log("Button Handler"), m_itnerruptHandler(interruptHandler) {
+ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, YioAPI *api, QObject *parent)
+    : QObject(parent), m_log("Button Handler"), m_itnerruptHandler(interruptHandler), m_api(api) {
     s_instance = this;
 
     // define logging category
@@ -32,6 +32,10 @@ ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, QObject *parent
 
     // connect to interrupt handler
     connect(m_itnerruptHandler, &InterruptHandler::interruptEvent, this, &ButtonHandler::onInterrupt);
+
+    // connect to API
+    connect(m_api, &YioAPI::buttonPressed, this, &ButtonHandler::onYIOAPIPressed);
+    connect(m_api, &YioAPI::buttonReleased, this, &ButtonHandler::onYIOAPIReleased);
 
     qCDebug(m_log) << "Intialized";
 }
@@ -244,5 +248,89 @@ void ButtonHandler::onInterrupt(int event) {
                 qCDebug(m_log) << "Channel down released";
             }
         } break;
+    }
+}
+
+void ButtonHandler::onYIOAPIPressed(QString button) {
+    if (button == "dpad up") {
+        emit buttonPressed(DPAD_UP);
+    }
+    if (button == "dpad down") {
+        emit buttonPressed(DPAD_DOWN);
+    }
+    if (button == "dpad left") {
+        emit buttonPressed(DPAD_LEFT);
+    }
+    if (button == "dpad right") {
+        emit buttonPressed(DPAD_RIGHT);
+    }
+    if (button == "dpad middle") {
+        emit buttonPressed(DPAD_MIDDLE);
+    }
+    if (button == "top left") {
+        emit buttonPressed(TOP_LEFT);
+    }
+    if (button == "top right") {
+        emit buttonPressed(TOP_RIGHT);
+    }
+    if (button == "bottom left") {
+        emit buttonPressed(BOTTOM_LEFT);
+    }
+    if (button == "bottom right") {
+        emit buttonPressed(BOTTOM_RIGHT);
+    }
+    if (button == "volume up") {
+        emit buttonPressed(VOLUME_UP);
+    }
+    if (button == "volume down") {
+        emit buttonPressed(VOLUME_DOWN);
+    }
+    if (button == "channel up") {
+        emit buttonPressed(CHANNEL_UP);
+    }
+    if (button == "channel down") {
+        emit buttonPressed(CHANNEL_DOWN);
+    }
+}
+
+void ButtonHandler::onYIOAPIReleased(QString button) {
+    if (button == "dpad up") {
+        emit buttonReleased(DPAD_UP);
+    }
+    if (button == "dpad down") {
+        emit buttonReleased(DPAD_DOWN);
+    }
+    if (button == "dpad left") {
+        emit buttonReleased(DPAD_LEFT);
+    }
+    if (button == "dpad right") {
+        emit buttonReleased(DPAD_RIGHT);
+    }
+    if (button == "dpad middle") {
+        emit buttonReleased(DPAD_MIDDLE);
+    }
+    if (button == "top left") {
+        emit buttonReleased(TOP_LEFT);
+    }
+    if (button == "top right") {
+        emit buttonReleased(TOP_RIGHT);
+    }
+    if (button == "bottom left") {
+        emit buttonReleased(BOTTOM_LEFT);
+    }
+    if (button == "bottom right") {
+        emit buttonReleased(BOTTOM_RIGHT);
+    }
+    if (button == "volume up") {
+        emit buttonReleased(VOLUME_UP);
+    }
+    if (button == "volume down") {
+        emit buttonReleased(VOLUME_DOWN);
+    }
+    if (button == "channel up") {
+        emit buttonReleased(CHANNEL_UP);
+    }
+    if (button == "channel down") {
+        emit buttonReleased(CHANNEL_DOWN);
     }
 }

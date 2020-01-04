@@ -211,7 +211,7 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("api", yioapi);
 
     // BUTTON HANDLER
-    ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler());
+    ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
     qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
 
     // STANDBY CONTROL

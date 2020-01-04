@@ -240,6 +240,8 @@ ApplicationWindow {
 
         // Start websocket API
         api.start();
+
+        Battery.begin();
     }
 
     // load the entities when the integrations are loaded
