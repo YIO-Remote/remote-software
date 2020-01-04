@@ -166,6 +166,8 @@ void StandbyControl::wakeup() {
             QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
         } break;
     }
+
+    m_elapsedTime = 0;
 }
 
 void StandbyControl::readAmbientLight() {
