@@ -123,7 +123,7 @@ Rectangle {
             SequentialAnimation {
                 ParallelAnimation {
                     PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
                     ParentAnimation {
                         NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
                     }
@@ -135,7 +135,7 @@ Rectangle {
             to: "open"
             ParallelAnimation {
                 PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.5; duration: 400 }
-                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 1 }
+                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }
