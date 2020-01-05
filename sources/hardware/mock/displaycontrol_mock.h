@@ -41,4 +41,13 @@ class DisplayControlMock : public DisplayControl {
         Q_UNUSED(from)
         Q_UNUSED(to)
     }
+
+    void setBrightness(int to) override { Q_UNUSED(to) }
+
+    int currentBrightness() override { return 100; }
+    int ambientBrightness() override { return 100; }
+    int userBrightness() override { return 100; }
+
+    void setAmbientBrightness(int value) override { Q_UNUSED(value) }
+    void setUserBrightness(int value) override { Q_UNUSED(value) }
 };

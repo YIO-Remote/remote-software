@@ -19,42 +19,146 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
 import Haptic 1.0
+import ButtonHandler 1.0
 import Entity.Blind 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: blindAdjust
-    width: parent.width
-    height: parent.height
+    id: card
+    width: parent.width; height: parent.height
     color: Style.colorDark
+    radius: Style.cornerRadius
 
-    // blind graphics draggable element
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: ButtonHandler
 
+        onButtonPressed: {
+            switch (button) {
+            case ButtonHandler.DPAD_UP:
+                obj.open()
+                break;
+            case ButtonHandler.DPAD_DOWN:
+                obj.close()
+                break;
+            case ButtonHandler.DPAD_MIDDLE:
+                obj.stop()
+                break;
+            }
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LAYER MASK FOR ROUNDED CORNERS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    layer.enabled: true
+    layer.effect: OpacityMask {
+        maskSource:
+            Rectangle {
+            id: opacityMask
+            width: card.width; height: card.height
+            radius: card.state === "closed" ? 0 : Style.cornerRadius
+
+            Behavior on radius {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STATES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    state: "closed"
+
+    states: [
+        State {
+            name: "closed"
+            PropertyChanges { target: percentage; anchors.topMargin: 200; opacity: 0 }
+            PropertyChanges { target: title; opacity: 0 }
+            PropertyChanges { target: bgGraphics; opacity: 0 }
+            PropertyChanges { target: buttonStop; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges { target: buttonDown; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges { target: buttonUp; anchors.bottomMargin: -100; opacity: 0 }
+        },
+        State {
+            name: "open"
+            PropertyChanges { target: percentage; anchors.topMargin: 100; opacity: 1 }
+            PropertyChanges { target: title; opacity: 1 }
+            PropertyChanges { target: bgGraphics; opacity: 1 }
+            PropertyChanges { target: buttonStop; anchors.bottomMargin: 70; opacity: 1 }
+            PropertyChanges { target: buttonDown; anchors.bottomMargin: 70; opacity: 1 }
+            PropertyChanges { target: buttonUp; anchors.bottomMargin: 70; opacity: 1 }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: "closed"
+            ParallelAnimation {
+                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            }
+        },
+        Transition {
+            to: "open"
+            SequentialAnimation {
+                PauseAnimation { duration: 50 }
+                ParallelAnimation {
+                    PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                    SequentialAnimation {
+                        PauseAnimation { duration: 100 }
+                        ParallelAnimation {
+                            PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                            PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                            PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                        }
+                    }
+                    SequentialAnimation {
+                        PauseAnimation { duration: 100 }
+                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    }
+                }
+            }
+        }
+    ]
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // GRAPHICS FOR DRAGGABLE ELEMENT
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property int position: obj.position
-
     property var percent
     property bool userMove: false
 
     Component.onCompleted: {
-        percent = obj.position
+        percent = obj.position;
+        card.state = "open";
     }
 
     Item {
-        width: parent.width
-        height: parent.height
+        id: bgGraphics
+        width: parent.width; height: parent.height
         anchors.centerIn: parent
 
         Column {
             anchors.top: parent.top
-
             spacing: 10
 
             Repeater {
@@ -62,8 +166,7 @@ Rectangle {
                 model: userMove ? Math.round(percent*36/100) : Math.round(obj.position*36/100)
 
                 delegate: Rectangle {
-                    width: blindAdjust.width
-                    height: 10
+                    width: card.width; height: 10
                     color: Style.colorHighlight2
                 }
             }
@@ -71,8 +174,7 @@ Rectangle {
 
         Rectangle {
             id: dragger_target
-            width: parent.width
-            height: parent.height
+            width: parent.width; height: parent.height
             color: Style.colorBackgroundTransparent
             y: userMove ? Math.round(height*percent/100) : Math.round(obj.position/100)
         }
@@ -80,10 +182,7 @@ Rectangle {
         MouseArea {
             id: dragger
             anchors.fill: parent
-            drag.target: dragger_target
-            drag.axis: Drag.YAxis
-            drag.minimumY: 0
-            drag.maximumY: dragger_target.height
+            drag { target: dragger_target; axis: Drag.YAxis; minimumY: 0; maximumY: dragger_target.height }
 
             onPositionChanged: {
                 Haptic.playEffect(Haptic.Bump);
@@ -103,7 +202,7 @@ Rectangle {
     }
 
     onPositionChanged: {
-        if (userMove && position == percent) {
+        if (userMove && position === percent) {
             userMove = false;
         } else {
             percent = position;
@@ -115,12 +214,10 @@ Rectangle {
         color: Style.colorText
         text: Style.icons.blind
         renderType: Text.NativeRendering
-        width: 85
-        height: 85
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 100 }
-        anchors {top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20}
+        width: 85; height: 85
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 100 }
+        anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
     }
 
     Text {
@@ -129,14 +226,15 @@ Rectangle {
         text: userMove ? percent : obj.position
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 180 }
+        font { family: "Open Sans Light"; pixelSize: 180 }
     }
 
     Text {
         color: Style.colorText
+        opacity: percentage.opacity
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 100 }
+        font { family: "Open Sans Light"; pixelSize: 100 }
     }
 
     Text {
@@ -146,7 +244,7 @@ Rectangle {
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 60 }
+        font { family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
@@ -159,10 +257,11 @@ Rectangle {
         wrapMode: Text.NoWrap
         width: parent.width-60
         anchors { top: title.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 24 }
+        font { family: "Open Sans Regular"; pixelSize: 24 }
     }
 
     BasicUI.CustomButton {
+        id: buttonDown
         anchors { left: parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: Style.colorText
         buttonText: "   "
@@ -173,14 +272,18 @@ Rectangle {
             obj.close()
         }
 
-        Image {
-            asynchronous: true
+        Text {
+            color: Style.colorBackground
+            text: Style.icons.down_arrow_bold
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            source: "qrc:/components/blind/images/down-arrow.png"
         }
     }
 
     BasicUI.CustomButton {
+        id: buttonStop
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 70 }
         color: Style.colorText
         buttonText: "   "
@@ -190,14 +293,18 @@ Rectangle {
             obj.stop()
         }
 
-        Image {
-            asynchronous: true
+        Text {
+            color: Style.colorBackground
+            text: Style.icons.square
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            source: "qrc:/components/blind/images/stop.png"
         }
     }
 
     BasicUI.CustomButton {
+        id: buttonUp
         anchors { right: parent.right; rightMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: Style.colorText
         buttonText: "   "
@@ -208,36 +315,13 @@ Rectangle {
             obj.open()
         }
 
-        Image {
-            asynchronous: true
+        Text {
+            color: Style.colorBackground
+            text: Style.icons.up_arrow_bold
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            source: "qrc:/components/blind/images/up-arrow.png"
-        }
-    }
-
-    Text {
-        color: Style.colorText
-        text: Style.icons.close
-        renderType: Text.NativeRendering
-        width: 70
-        height: 70
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 80 }
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 20
-
-        MouseArea {
-            width: parent.width + 20
-            height: parent.height + 20
-            anchors.centerIn: parent
-
-            onClicked: {
-                Haptic.playEffect(Haptic.Click);
-                blindButton.state = "closed"
-            }
         }
     }
 }

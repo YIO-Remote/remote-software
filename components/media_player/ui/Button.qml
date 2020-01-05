@@ -24,7 +24,6 @@ import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/components" as Comp
 import "qrc:/basic_ui" as BasicUI
 

@@ -27,15 +27,30 @@
 class InterruptHandler : public Device {
     Q_OBJECT
 
-    Q_PROPERTY(QString button READ getButton NOTIFY buttonPressed)
-
  public:
+    enum Events {
+        APDS9960,
+        BATTERY,
+        DPAD_UP,
+        DPAD_DOWN,
+        DPAD_LEFT,
+        DPAD_RIGHT,
+        DPAD_MIDDLE,
+        TOP_RIGHT,
+        TOP_LEFT,
+        BOTTOM_RIGHT,
+        BOTTOM_LEFT,
+        VOLUME_UP,
+        VOLUME_DOWN,
+        CHANNEL_UP,
+        CHANNEL_DOWN
+    };
+    Q_ENUM(Events)
+
     Q_INVOKABLE virtual void shutdown() = 0;
 
-    virtual QString getButton() = 0;
-
  signals:
-    void buttonPressed();
+    void interruptEvent(int event);
 
  protected:
     explicit InterruptHandler(QObject *parent = nullptr) : Device(parent) {}

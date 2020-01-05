@@ -24,6 +24,7 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import ButtonHandler 1.0
 import Haptic 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -38,10 +39,10 @@ Rectangle {
     // CONNECT TO BUTTONS (with long press detection)
     /////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: true
 
-        onButtonPress: {
+        onButtonPressed: {
             if (standbyControl.mode === "on" || standbyControl.mode === "dim") {
                 switch (button) {
                 case "top right":
@@ -50,8 +51,6 @@ Rectangle {
                     break;
                 }
             }
-        }
-        onButtonRelease: {
         }
     }
 

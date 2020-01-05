@@ -39,8 +39,6 @@ class Mcp23017InterruptHandler : public InterruptHandler {
 
     Q_INVOKABLE void shutdown() override { mcp.shutdown(); }
 
-    QString getButton() override { return m_button; }
-
     // Device interface
  public:
     bool open() override;
@@ -53,7 +51,6 @@ class Mcp23017InterruptHandler : public InterruptHandler {
  private:
     QString          m_i2cDevice;
     int              m_i2cDeviceId;
-    QString          m_button;
     MCP23017         mcp = MCP23017();
     QSocketNotifier *notifier;
     QFile *          file;

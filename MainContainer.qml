@@ -24,6 +24,8 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Haptic 1.0
+import StandbyControl 1.0
+import ButtonHandler 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -49,32 +51,28 @@ Item {
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
-        enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
+        target: ButtonHandler
+        enabled: loader_main.state === "visible" && StandbyControl.mode === StandbyControl.ON ? true : false
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad right":
+            case ButtonHandler.DPAD_RIGHT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
-//                    loader_main.item.mainNavigationSwipeview.currentIndex += 1;
                     loader_main.item.mainNavigationSwipeview.incrementCurrentIndex();
-                    //                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad left":
+            case ButtonHandler.DPAD_LEFT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
-//                    loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
                     loader_main.item.mainNavigationSwipeview.decrementCurrentIndex();
-                    //                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad up":
+            case ButtonHandler.DPAD_UP:
                 var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
-                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == 0) {
+                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY === 0) {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 if (newpos <= 0) {
@@ -82,7 +80,7 @@ Item {
                 }
                 mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
                 break;
-            case "dpad down":
+            case ButtonHandler.DPAD_DOWN:
                 newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
                      Haptic.playEffect(Haptic.Buzz);
@@ -124,8 +122,6 @@ Item {
     property int itemsLoaded: 0
     property bool startUp: false
 
-    signal loadedItems()
-
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width
@@ -163,10 +159,10 @@ Item {
                     if (mainNavigationLoader.status == Loader.Ready) {
                         itemsLoaded += 1;
                         console.debug("PAGE LOADED: " + itemsLoaded);
-
                         if (itemsLoaded === mainNavigation.menuConfig.count) {
-                            console.debug("ALL PAGES LOADED. SENDING SIGNAL.");
-                            main_container.loadedItems();
+                            console.debug("EVERY PAGE LOADED.");
+                            loadingScreen.item.state = "loaded";
+                            StandbyControl.init();
                         }
                     }
                 }
