@@ -25,6 +25,27 @@
 #include <QIODevice>
 #include <QObject>
 
+// debug macro from https://stackoverflow.com/a/1644898
+#ifdef QT_DEBUG
+#define DEBUG_TEST 1
+#else
+#define DEBUG_TEST 0
+#endif
+
+// ASSERT_DEVICE_OPEN is a safety check if the device is really open.
+// It should only be used where it is expected that the device is open and
+// MAY NOT be used where it's possible that the device might be closed!
+#define ASSERT_DEVICE_OPEN(retVal) \
+    do { \
+      if (DEBUG_TEST) { \
+        if (!isOpen()) { \
+            qCWarning(CLASS_LC) << DBG_WARN_DEVICE_CLOSED; \
+            return retVal; \
+        } \
+      } \
+    } while (0);
+// end debug macro
+
 /**
  * @brief The Device class is the base interface class of all YIO hardware devices.
  */
@@ -32,8 +53,26 @@ class Device : public QObject {
     Q_OBJECT
 
  public:
-    explicit Device(QObject *parent = nullptr) : QObject(parent) {}
+    enum DeviceError {
+        None,
+        NotFound,
+        InitializationError,
+        CommunicationError
+    };
+    Q_ENUM(DeviceError)
+
+    /**
+     * @brief Device
+     * @param name A human readable name of the device. Intended for debug messages.
+     * @param parent
+     */
+    explicit Device(QString name, QObject *parent = nullptr);
     virtual ~Device();
+
+    /**
+     * @brief name Returns a human readable name of the device. Intended for debug messages.
+     */
+    const QString &name() const { return m_name; }
 
     /**
      * @brief isOpen Returns \c true if the device is open; otherwise returns \c false
@@ -66,14 +105,30 @@ class Device : public QObject {
 
  signals:
     /**
+     * @brief ready This signal is emitted when the device was successfully initialized and ready to use.
+     */
+    void ready();
+
+    /**
      * @brief aboutToClose This signal is emitted when the device is about to close.
      * @details Connect this signal if you have operations that need to be performed before the device closes.
      */
     void aboutToClose();
 
+    void error(DeviceError deviceError, const QString &message);
+
+ protected:
+    virtual const QLoggingCategory &logCategory() const;
+
+    // reduce copy paste of common error string. I'm also not sure if the compiler would optimize duplicated strings...
+    static constexpr const char* DBG_DEVICE_OPENED = "Successfully opened";
+    static constexpr const char* DBG_WARN_DEVICE_OPEN  = "Device is already open. Ignoring open() call!";
+    static constexpr const char* DBG_WARN_DEVICE_CLOSED = "Device is closed. Ignoring call!";
+
  private:
     Q_DISABLE_COPY(Device)
 
     bool    m_open;
+    QString m_name;
     QString m_errorString;
 };

@@ -30,11 +30,11 @@ class NotificationsInterface {
     virtual ~NotificationsInterface();
 
     // add a notification
-    virtual void add(const bool &type, const QString &text, const QString &actionlabel, void (*f)(QObject *),
+    virtual void add(bool error, const QString &text, const QString &actionlabel, void (*f)(QObject *),
                      QObject *param) = 0;
-    virtual void add(const bool &type, const QString &text) = 0;
+    virtual void add(bool error, const QString &text) = 0;
     virtual void add(const QString &text) = 0;
-    virtual void remove(const int id) = 0;
+    virtual void remove(int id) = 0;
     virtual void remove(const QString &text) = 0;
 };
 

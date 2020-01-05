@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -23,6 +23,11 @@
 
 #include "device.h"
 
+// Error translation strings are defined here to include them on every build, independent of the platform!
+static QString ERR_DEV_PROXIMITY_INIT =
+    QObject::tr("Cannot initialize the proximity sensor. Please restart the remote.");
+static QString ERR_DEV_PROXIMITY_COMM = QObject::tr("Battery sensor communication error. Please restart the remote.");
+
 class ProximitySensor : public Device {
     Q_OBJECT
 
@@ -43,5 +48,5 @@ class ProximitySensor : public Device {
     void proximityEvent();
 
  protected:
-    explicit ProximitySensor(QObject *parent = nullptr) : Device(parent) {}
+    explicit ProximitySensor(QString name, QObject *parent = nullptr) : Device(name, parent) {}
 };

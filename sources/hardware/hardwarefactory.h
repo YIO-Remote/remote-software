@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -108,6 +108,9 @@ class HardwareFactory : public QObject {
     virtual ~HardwareFactory();
 
     bool virtual buildDevices(const QVariantMap& config) = 0;
+
+ protected slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void onError(Device::DeviceError deviceError, const QString &message);
 
  private:
     static HardwareFactory* s_instance;

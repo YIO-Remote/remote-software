@@ -25,6 +25,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLoggingCategory>
 #include <QNetworkInterface>
 #include <QTimer>
 #include <QtDebug>
@@ -32,6 +33,8 @@
 #include "entities/entities.h"
 #include "fileio.h"
 #include "logger.h"
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "api");
 
 YioAPI *YioAPI::s_instance = nullptr;
 
@@ -234,13 +237,13 @@ void YioAPI::processMessage(QString message) {
 
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
-        //        qDebug() << message;
+        //        qDebug(CLASS_LC) << message;
 
         // convert message to json
         QJsonParseError parseerror;
         QJsonDocument   doc = QJsonDocument::fromJson(message.toUtf8(), &parseerror);
         if (parseerror.error != QJsonParseError::NoError) {
-            qDebug() << "JSON error : " << parseerror.errorString();
+            qDebug(CLASS_LC) << "JSON error : " << parseerror.errorString();
             return;
         }
         QVariantMap map = doc.toVariant().toMap();
@@ -260,7 +263,7 @@ void YioAPI::processMessage(QString message) {
                 //                                            QCryptographicHash::Sha512);
 
                 if (map.value("token").toString() == m_token) {
-                    qDebug() << "Token OK";
+                    qDebug(CLASS_LC) << "Token OK";
                     r_map.insert("type", "auth_ok");
                     QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
                     QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
@@ -319,7 +322,7 @@ void YioAPI::processMessage(QString message) {
             // Handle buttons
             QString buttonName   = map["name"].toString();
             QString buttonAction = map["action"].toString();
-            qDebug() << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
+            qDebug(CLASS_LC) << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
             if (buttonAction == "pressed") {
                 emit buttonPressed(buttonName);
             } else {

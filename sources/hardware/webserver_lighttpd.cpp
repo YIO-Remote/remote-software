@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -34,7 +34,6 @@ WebServerLighttpd::WebServerLighttpd(SystemService *systemService, QObject *pare
       m_configFile(),
       m_wifiSetupConfig(),
       m_webConfiguratorConfig() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 bool WebServerLighttpd::startService() { return p_systemService->startService(SystemServiceName::WEBSERVER); }

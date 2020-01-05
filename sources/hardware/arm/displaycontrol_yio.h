@@ -1,5 +1,6 @@
-﻿/******************************************************************************
+/******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -34,6 +35,9 @@ class DisplayControlYio : public DisplayControl {
     Q_OBJECT
 
  public:
+    explicit DisplayControlYio(QObject* parent = nullptr);
+    ~DisplayControlYio() override;
+
     bool setMode(Mode mode) override;
     void setBrightness(int from, int to) override;
     void setBrightness(int to) override;
@@ -44,12 +48,18 @@ class DisplayControlYio : public DisplayControl {
     void setAmbientBrightness(int value) override { m_ambientBrightness = value; }
     void setUserBrightness(int value) override { m_userBrightness = value; }
 
-    explicit DisplayControlYio(QObject* parent = nullptr);
-
  signals:
     void enterStandby();
     void leaveStandby();
     void setBrightnessSignal(int from, int to);
+
+    // Device interface
+ public:
+    bool open() override;
+    void close() override;
+
+ protected:
+    const QLoggingCategory &logCategory() const override;
 
  private:
     int m_currentBrightness = 100;
@@ -68,12 +78,13 @@ class DisplayControlYioThread : public QObject {
     struct timespec ts3 = {0, 300L};
 
  public:
-    void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
-
     explicit DisplayControlYioThread(QObject* parent = nullptr) { Q_UNUSED(parent) }
     virtual ~DisplayControlYioThread() {}
 
- public slots:
+ private:
+    void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
+
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void setBrightness(int from, int to);
     void enterStandby();
     void leaveStandby();

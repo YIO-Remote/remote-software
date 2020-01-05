@@ -36,7 +36,7 @@ class Notification {
                           void (*action)(QObject *), QObject *param);
 
     int     m_id;
-    bool    m_type;
+    bool    m_error;
     QString m_text;
     QString m_actionLabel;
     void (*m_action)(QObject *);
@@ -62,17 +62,17 @@ class Notifications : public QObject, NotificationsInterface {
     bool isThereError();
 
     // add notification
-    Q_INVOKABLE void add(const bool &type, const QString &text, const QString &actionlabel, void (*f)(QObject *),
+    Q_INVOKABLE void add(bool type, const QString &text, const QString &actionlabel, void (*f)(QObject *),
                          QObject *param) override;
-    Q_INVOKABLE void add(const bool &type, const QString &text) override;
+    Q_INVOKABLE void add(bool type, const QString &text) override;
     Q_INVOKABLE void add(const QString &text) override;
 
     // remove notification
-    Q_INVOKABLE void remove(const int id) override;
+    Q_INVOKABLE void remove(int id) override;
     Q_INVOKABLE void remove(const QString &text) override;
 
     // execute function
-    Q_INVOKABLE void execute(const int id);
+    Q_INVOKABLE void execute(int id);
 
     static Notifications *getInstance() { return s_instance; }
 
@@ -89,5 +89,5 @@ class Notifications : public QObject, NotificationsInterface {
     QQmlApplicationEngine *m_engine;
     QLoggingCategory       m_log;
 
-    void show(const int id);
+    void show(int id);
 };

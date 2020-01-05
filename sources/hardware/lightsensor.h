@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -35,5 +35,5 @@ class LightSensor : public Device {
     virtual int ambientLight() = 0;
 
  protected:
-    explicit LightSensor(QObject *parent = nullptr) : Device(parent) {}
+    explicit LightSensor(QString name, QObject *parent = nullptr) : Device(name, parent) {}
 };

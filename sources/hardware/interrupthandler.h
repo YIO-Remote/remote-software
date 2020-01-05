@@ -24,6 +24,9 @@
 
 #include "device.h"
 
+// Error translation strings are defined here to include them on every build, independent of the platform!
+static QString ERR_DEV_INTR_INIT = QObject::tr("Cannot initialize the interrupt handler. Please restart the remote.");
+
 class InterruptHandler : public Device {
     Q_OBJECT
 
@@ -53,5 +56,5 @@ class InterruptHandler : public Device {
     void interruptEvent(int event);
 
  protected:
-    explicit InterruptHandler(QObject *parent = nullptr) : Device(parent) {}
+    explicit InterruptHandler(QString name, QObject *parent = nullptr) : Device(name, parent) {}
 };

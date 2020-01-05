@@ -97,7 +97,7 @@ class BQ27441 : public BatteryFuelGauge {
     Q_INVOKABLE int     getDesignCapacity() override;
     Q_INVOKABLE void    changeCapacity(int newCapacity) override;
 
-    int32_t  getTemperatureC();  // Result in 1 Celsius
+    int      getTemperatureC();  // Result in 1 Celsius
     uint16_t getFlags();
     uint16_t getNominalAvailableCapacity();
     int16_t  getStandbyCurrent();
@@ -112,6 +112,12 @@ class BQ27441 : public BatteryFuelGauge {
     // Extended Data Commands
     uint16_t getOpConfig();
 
+    // Device interface
+ public:
+    bool open() override;
+    void close() override;
+
+ protected:
     // Control Subcommands
     uint16_t getControlStatus();
     uint16_t getDeviceType();
@@ -121,10 +127,7 @@ class BQ27441 : public BatteryFuelGauge {
     uint16_t getChemID();
     void     reset();
 
-    // Device interface
- public:
-    bool open() override;
-    void close() override;
+    const QLoggingCategory &logCategory() const override;
 
  private:
     QString m_i2cDevice;

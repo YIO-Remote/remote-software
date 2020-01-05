@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -33,7 +34,7 @@ class Mcp23017InterruptHandler : public InterruptHandler {
 
  public:
     explicit Mcp23017InterruptHandler(const QString &i2cDevice = "/dev/i2c-3", int i2cDeviceId = MCP23017_ADDRESS,
-                                      QObject *parent = nullptr);
+                                      int gpio = 18, QObject *parent = nullptr);
 
     // ~Mcp23017InterruptHandler() override {}
 
@@ -43,6 +44,9 @@ class Mcp23017InterruptHandler : public InterruptHandler {
  public:
     bool open() override;
 
+ protected:
+    const QLoggingCategory &logCategory() const override;
+
  private:
     bool setupGPIO();
 
@@ -51,7 +55,9 @@ class Mcp23017InterruptHandler : public InterruptHandler {
  private:
     QString          m_i2cDevice;
     int              m_i2cDeviceId;
+    int              m_gpio;
     MCP23017         mcp = MCP23017();
     QSocketNotifier *notifier;
     QFile *          file;
+    QString          m_gpioValueDevice;
 };

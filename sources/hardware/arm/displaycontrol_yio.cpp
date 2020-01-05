@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -36,19 +37,40 @@
 #define CS 105
 #define RST 104
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "Display");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.display");
 
-DisplayControlYio::DisplayControlYio(QObject* parent) : DisplayControl(parent) {
+DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl("YIO display control", parent) {
     // move the low level hardware handling to a separate thread
-    m_thread                      = new QThread(this);
-    DisplayControlYioThread* dcyt = new DisplayControlYioThread();
+    m_thread = new QThread(this);
+    DisplayControlYioThread *dcyt = new DisplayControlYioThread();
 
     connect(this, &DisplayControlYio::enterStandby, dcyt, &DisplayControlYioThread::enterStandby);
     connect(this, &DisplayControlYio::leaveStandby, dcyt, &DisplayControlYioThread::leaveStandby);
     connect(this, &DisplayControlYio::setBrightnessSignal, dcyt, &DisplayControlYioThread::setBrightness);
 
     dcyt->moveToThread(m_thread);
+}
+
+DisplayControlYio::~DisplayControlYio() { close(); }
+
+bool DisplayControlYio::open() {
+    if (isOpen()) {
+        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        return true;
+    }
+
     m_thread->start();
+
+    return Device::open();
+}
+
+void DisplayControlYio::close() {
+    Device::close();
+
+    if (m_thread->isRunning()) {
+        m_thread->exit();
+        m_thread->wait(3000);
+    }
 }
 
 bool DisplayControlYio::setMode(Mode mode) {
@@ -82,6 +104,8 @@ void DisplayControlYio::setBrightness(int from, int to) {
 }
 
 void DisplayControlYio::setBrightness(int to) { setBrightness(m_currentBrightness, to); }
+
+const QLoggingCategory &DisplayControlYio::logCategory() const { return CLASS_LC(); }
 
 // THREADED STUFF
 
@@ -149,7 +173,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
 
     digitalWrite(CS, LOW);
     control_bit = 0x0000;
-    Addr        = (control_bit | Addr);
+    Addr = (control_bit | Addr);
 
     for (i = 0; i < 9; i++) {
         if (Addr & (1 << (8 - i))) {
@@ -177,7 +201,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data0       = (control_bit | Data0);
+    Data0 = (control_bit | Data0);
 
     // data
     for (i = 0; i < 9; i++) {
@@ -204,7 +228,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data1       = (control_bit | Data1);
+    Data1 = (control_bit | Data1);
 
     // data
     for (i = 0; i < 9; i++) {

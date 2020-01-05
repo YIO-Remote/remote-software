@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -32,6 +32,9 @@
 
 #include "wifi_network.h"
 #include "wifi_status.h"
+
+// Error translation strings are defined here to include them on every build, independent of the platform!
+static QString ERR_DEV_INIT_WIFI = QObject::tr("WiFi device was not found.");
 
 /**
  * @brief Abstract WiFi control interface for client interactions with Wifi networks.

@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * Third party work used:
@@ -103,6 +104,9 @@ class Drv2605 : public HapticMotor {
  public:
     bool open() override;
     void close() override;
+
+ protected:
+    const QLoggingCategory &logCategory() const override;
 
  private:
     void writeRegister8(uint8_t reg, uint8_t val);

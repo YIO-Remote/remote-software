@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -32,5 +33,5 @@ class BatteryCharger : public Device {
     Q_INVOKABLE virtual void batteryChargingOff() = 0;
 
  protected:
-    explicit BatteryCharger(QObject* parent = nullptr) : Device(parent) {}
+    explicit BatteryCharger(QString name, QObject* parent = nullptr) : Device(name, parent) {}
 };

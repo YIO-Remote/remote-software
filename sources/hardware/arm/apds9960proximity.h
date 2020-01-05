@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -22,85 +23,29 @@
 
 #pragma once
 
-#include <QObject>
-#include <QtDebug>
-
-#include "../../logger.h"
-#include "../hardwarefactory.h"
 #include "../proximitysensor.h"
+#include "../interrupthandler.h"
 #include "apds9960.h"
 
 class Apds9960ProximitySensor : public ProximitySensor {
     Q_OBJECT
 
  public:
+    explicit Apds9960ProximitySensor(APDS9960* apds, InterruptHandler* interruptHandler, QObject* parent = nullptr);
+
     int proximitySetting() override { return m_proximitySetting; }
 
     void setProximitySetting(int proximity) override { m_proximitySetting = proximity; }
 
     int proximity() override { return m_proximity; }
 
-    Q_INVOKABLE void proximityDetection(bool state) override {
-        qCDebug(m_log) << "Proximity detection set to" << state;
+    Q_INVOKABLE void proximityDetection(bool state) override;
 
-        if (p_apds->isOpen()) {
-            if (state != m_proximityDetection) {
-                if (state) {
-                    // turn on
-                    p_apds->enableProximityInterrupt();
-                    qCDebug(m_log) << "Proximity detection enabled";
+    Q_INVOKABLE void readInterrupt() override;
 
-                } else {
-                    // turn off
-                    p_apds->disableProximityInterrupt();
-                    qCDebug(m_log) << "Proximity detection disabled";
-                }
-            }
-        }
-
-        m_proximityDetection = state;
-    }
-
-    Q_INVOKABLE void readInterrupt() override {
-        if (p_apds->isOpen()) {
-            m_proximity = p_apds->readProximity();
-            if (m_proximity > 0) {
-                // prevent log flooding while docking
-                qCDebug(m_log) << "Proximity" << m_proximity;
-            }
-
-            if (m_proximityDetection) {
-                if (m_proximity > m_proximitySetting) {
-                    // turn of proximity detection
-                    qCDebug(m_log) << "Proximity detected, turning detection off";
-                    proximityDetection(false);
-
-                    // let qml know
-                    emit proximityEvent();
-                }
-            }
-
-            // clear the interrupt
-            p_apds->clearInterrupt();
-        }
-    }
-
- public:
-    explicit Apds9960ProximitySensor(APDS9960* apds, QObject* parent = nullptr)
-        : ProximitySensor(parent), p_apds(apds), m_log("APDS9960 Proximity") {
-        Q_ASSERT(apds);
-
-        Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
-        InterruptHandler* interruptHandler = HardwareFactory::instance()->getInterruptHandler();
-
-        connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
-            if (event == InterruptHandler::APDS9960) {
-                readInterrupt();
-            }
-        });
-    }
-
-    ~Apds9960ProximitySensor() override {}
+    // Device interface
+ protected:
+    const QLoggingCategory& logCategory() const override;
 
  private:
     APDS9960* p_apds;
@@ -108,6 +53,4 @@ class Apds9960ProximitySensor : public ProximitySensor {
     uint8_t m_proximity;
     bool    m_proximityDetection = false;
     int     m_proximitySetting   = 40;  // default value
-
-    QLoggingCategory m_log;
 };

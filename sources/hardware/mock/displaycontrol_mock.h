@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -28,7 +28,7 @@ class DisplayControlMock : public DisplayControl {
     Q_OBJECT
 
  public:
-    explicit DisplayControlMock(QObject *parent = nullptr) : DisplayControl(parent) {}
+    explicit DisplayControlMock(QObject *parent = nullptr) : DisplayControl("DisplayControlMock", parent) {}
 
     // DisplayControl interface
  public:
