@@ -6,12 +6,12 @@
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="54"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>De batterij sensor kan niet worden geïnitialiseerd. Herstart de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="333"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Batterij sensor communicatiefout. Herstart de afstandsbediening.</translation>
     </message>
   </context>
   <context>
@@ -336,7 +336,7 @@
     <message>
       <location filename="../sources/hardware/arm/drv2605.cpp" line="54"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>De haptische motor kan niet worden geïnitialiseerd. Herstart de afstandsbediening.</translation>
     </message>
   </context>
   <context>
@@ -369,7 +369,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Wissel</translation>
     </message>
   </context>
   <context>
@@ -387,7 +387,7 @@
       <location filename="../sources/hardware/hardwarefactory_yio.cpp" line="62"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
       <extracomment>Error message that shows up as notification when light value cannot be read</extracomment>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>De nabijheidssensor kan niet worden geïnitialiseerd. Herstart de afstandsbediening.</translation>
     </message>
   </context>
   <context>
@@ -424,27 +424,27 @@
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>geen naam</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>geen gegevens</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>kan het bestand &apos;%1&apos; niet openen voor het schrijven naar: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>kan het bestand &apos;%1&apos; niet openen voor het lezen van: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>ongeldig JSON-bestand &apos;%1&apos; bij offset %2</translation>
     </message>
   </context>
   <context>
@@ -598,7 +598,7 @@
     <message>
       <location filename="../sources/hardware/hardwarefactory_rpi0.cpp" line="70"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>WiFi-apparaat is niet gevonden.</translation>
     </message>
   </context>
   <context>
