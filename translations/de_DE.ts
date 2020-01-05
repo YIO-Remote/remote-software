@@ -6,12 +6,12 @@
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="54"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Akku-Sensor kann nicht initialisiert werden. Bitte Fernbedienung neu starten.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="333"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Fehler bei der Kommunikation des Batterie-Sensors. Bitte Fernbedienung neu starten.</translation>
     </message>
   </context>
   <context>
@@ -85,12 +85,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="342"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Aus Favoriten entfernen</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="342"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Zu Favoriten hinzufügen</translation>
     </message>
   </context>
   <context>
@@ -98,17 +98,17 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Stumm</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Zurück</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menü</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="397"/>
@@ -133,12 +133,12 @@
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
       <source>Heat</source>
-      <translation type="unfinished">Heat</translation>
+      <translation>Wärme</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Kälte</translation>
     </message>
   </context>
   <context>
@@ -174,12 +174,12 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="269"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Einschalten</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="282"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Farbe</translation>
     </message>
   </context>
   <context>
@@ -187,12 +187,12 @@
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="237"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Ausschalten</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="237"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Einschalten</translation>
     </message>
   </context>
   <context>
@@ -200,7 +200,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Meine Playlisten</translation>
     </message>
   </context>
   <context>
@@ -209,41 +209,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Suche</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Zuletzt gesucht</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Leeren</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="409"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Alben</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Titel</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Interpreten</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Playlisten</translation>
     </message>
   </context>
   <context>
@@ -251,12 +251,12 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="163"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Ausschalten</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="163"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Einschalten</translation>
     </message>
   </context>
   <context>
@@ -273,7 +273,7 @@
       <location filename="../basic_ui/ContextMenu.qml" line="153"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="136"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Abbrechen</translation>
     </message>
   </context>
   <context>
@@ -322,7 +322,7 @@
     <message>
       <location filename="../sources/hardware/arm/drv2605.cpp" line="54"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>Der Haptikmotor kann nicht initialisiert werden. Bitte Fernbedienung neu starten.</translation>
     </message>
   </context>
   <context>
@@ -345,17 +345,17 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Fernbedienung</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Klima</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Schalter</translation>
     </message>
   </context>
   <context>
@@ -364,7 +364,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoriten</translation>
     </message>
   </context>
   <context>
@@ -373,7 +373,7 @@
       <location filename="../sources/hardware/hardwarefactory_yio.cpp" line="62"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
       <extracomment>Error message that shows up as notification when light value cannot be read</extracomment>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Konnte Näherungssensor nicht initialisieren. Bitte Fernbedienung neu starten.</translation>
     </message>
   </context>
   <context>
@@ -381,27 +381,27 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="48"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Verbindung getrennt</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="149"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Verbinden</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="185"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Trennen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="215"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrationen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="256"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Neue hinzufügen</translation>
     </message>
   </context>
   <context>
@@ -410,27 +410,27 @@
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>leerer Name</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>Leere Daten</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>Datei &apos;%1&apos; kann nicht geschrieben werden: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>Datei &apos;%1&apos; kann nicht gelesen werden: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>ungültige JSON-Datei &apos;%1&apos; bei Offset %2</translation>
     </message>
   </context>
   <context>
@@ -467,7 +467,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Medien</translation>
     </message>
   </context>
   <context>
@@ -571,12 +571,12 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="97"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profile</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Um Profile zu bearbeiten, verwenden Sie das Web-Konfigurator-Tool in den Einstellungen.</translation>
     </message>
   </context>
   <context>
@@ -584,7 +584,7 @@
     <message>
       <location filename="../sources/hardware/hardwarefactory_rpi0.cpp" line="70"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>WiFi-Gerät nicht gefunden.</translation>
     </message>
   </context>
   <context>
@@ -672,7 +672,7 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="60"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="81"/>
