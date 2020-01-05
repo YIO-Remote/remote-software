@@ -163,7 +163,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 40
         horizontalAlignment: Text.AlignHCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 32
         lineHeight: 0.8

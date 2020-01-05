@@ -63,7 +63,7 @@ Item {
         color: Style.colorText
         text: qsTr("Network") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -93,7 +93,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 27
                 lineHeight: 1
@@ -198,7 +198,7 @@ Item {
                         anchors.leftMargin: 20
                         anchors.top: parent.top
                         anchors.topMargin: 20
-                        font.family: "Open Sans"
+                        font.family: "Open Sans Regular"
                         font.weight: Font.Normal
                         font.pixelSize: 27
                         lineHeight: 1
@@ -248,7 +248,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line0.bottom
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -262,7 +262,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: wifiSignalText.verticalCenter
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -285,7 +285,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line6.bottom
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -298,7 +298,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: ipaddressText.verticalCenter
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -321,7 +321,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line7.bottom
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -334,7 +334,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: macaddressText.verticalCenter
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1

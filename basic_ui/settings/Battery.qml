@@ -74,7 +74,7 @@ Item {
         color: Style.colorText
         text: qsTr("Battery") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -98,7 +98,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: parent.top
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -111,7 +111,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: batteryhealthText.verticalCenter
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -135,7 +135,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line1.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1
@@ -149,7 +149,7 @@ Item {
             anchors.left: screenOnTimeText.left
             anchors.top: screenOnTimeText.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -164,7 +164,7 @@ Item {
             anchors.leftMargin: parent.width/2
             anchors.top: line1.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1
@@ -178,7 +178,7 @@ Item {
             anchors.left: screenOffTimeText.left
             anchors.top: screenOffTimeText.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -202,7 +202,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line2.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1
@@ -262,7 +262,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: batteryLevelBG.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1
@@ -306,7 +306,7 @@ Item {
                     Rectangle {
                         width: 6
                         height: (96 * (Math.abs(battery_data[index].power) / 5500)) + 1
-                        color: battery_data[index].power < 0 ? colorText : colorGreen
+                        color: battery_data[index].power < 0 ? Style.colorText : Style.colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }
@@ -334,7 +334,7 @@ Item {
                         //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
                         text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[hours.length-1-index]
                         color: Style.colorHighlight1
-                        font.family: "Open Sans"
+                        font.family: "Open Sans Regular"
                         font.weight: Font.Normal
                         font.pixelSize: 16
                         lineHeight: 1

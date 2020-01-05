@@ -56,7 +56,7 @@ Item {
                 color: Style.colorText
                 text: qsTr("Settings") + translateHandler.emptyString
                 anchors.centerIn: parent
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 60
                 lineHeight: 1

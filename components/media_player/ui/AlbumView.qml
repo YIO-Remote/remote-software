@@ -29,35 +29,39 @@ import MediaPlayerUtils 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
-Item {
+Rectangle {
     id: main
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
+    color: mediaplayerUtils.pixelColor
 
+    Behavior on color {
+        ColorAnimation { duration: 300 }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var albumModel
 
 
-    // include mediaplayer utils
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UTILITIES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     MediaPlayerUtils {
         id: mediaplayerUtils
         imageURL: albumModel.imageUrl
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: mediaplayerUtils.pixelColor
 
-        Behavior on color {
-            ColorAnimation { duration: 300 }
-        }
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI ELEMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     property alias itemFlickable: itemFlickable
 
     Flickable {
         id: itemFlickable
-        width: parent.width
-        height: parent.height-100
+        width: parent.width; height: parent.height-100
         maximumFlickVelocity: 6000
         flickDeceleration: 1000
         contentHeight: 150 + image.height + title.height + artist.height + trackListView.height
@@ -79,30 +83,23 @@ Item {
 
         BasicUI.CustomImageLoader {
             id: image
-            width: 280
-            height: 280
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            anchors.topMargin: 100
-            url: albumModel.imageUrl == "" ? "qrc:/images/mini-music-player/no_image.png" : albumModel.imageUrl
+            width: 280; height: 280
+            anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 100 }
+            url: albumModel.imageUrl === "" ? "qrc:/images/mini-music-player/no_image.png" : albumModel.imageUrl
         }
 
         Text {
             color: Style.colorText
             text: Style.icons.play
             renderType: Text.NativeRendering
-            width: 70
-            height: 70
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            width: 70; height: 70
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: image
 
             MouseArea {
-                width: parent.width + 20
-                height: parent.height + 20
+                width: parent.width + 20; height: parent.height + 20
                 anchors.centerIn: parent
-
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
                     obj.playMedia(albumModel.id, albumModel.type);
@@ -114,50 +111,35 @@ Item {
             id: title
             color: Style.colorText
             text: albumModel.title
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
             width: parent.width-80
-            font.family: "Open Sans"
-            font.weight: Font.Bold
-            font.styleName: "Bold"
-            font.pixelSize: 30
+            font { family: "Open Sans Bold"; pixelSize: 30 }
             lineHeight: 1
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: image.bottom
-            anchors.topMargin: 20
+            anchors { horizontalCenter: parent.horizontalCenter; top: image.bottom; topMargin: 20 }
         }
 
         Text {
             id: artist
             color: Style.colorText
             text: albumModel.subtitle
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
             width: parent.width-80
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 27
-            lineHeight: 1
-            anchors.top: title.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
+            font: Style.buttonFont
+            anchors { top: title.bottom; horizontalCenter: parent.horizontalCenter }
         }
 
         ListView {
             id: trackListView
-            width: parent.width-60
-            height: childrenRect.height
+            width: parent.width-60; height: childrenRect.height
             spacing: 20
             interactive: false
-            anchors.top: artist.bottom
-            anchors.topMargin: 40
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors { top: artist.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
 
             model: albumModel.model
-
             delegate: trackThumbnail
         }
 
@@ -165,17 +147,14 @@ Item {
             id: trackThumbnail
 
             Item {
-                width: parent.width
-                height: 80
+                width: parent.width; height: 80
 
                 Text {
                     id: trackNumber
                     text: index+1
                     color: Style.colorText
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.family: "Open Sans"
-                    font.pixelSize: 25
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                    font { family: "Open Sans Regular"; pixelSize: 25 }
                     lineHeight: 1
                 }
 
@@ -186,11 +165,8 @@ Item {
                     width: parent.width-100
                     wrapMode: Text.NoWrap
                     color: Style.colorText
-                    anchors.left: parent.left
-                    anchors.leftMargin: 45
-                    anchors.top: parent.top
-                    font.family: "Open Sans"
-                    font.pixelSize: 25
+                    anchors { left: parent.left; leftMargin: 45; top: parent.top }
+                    font { family: "Open Sans Regular"; pixelSize: 25 }
                     lineHeight: 1
                 }
 
@@ -202,17 +178,13 @@ Item {
                     wrapMode: Text.NoWrap
                     color: Style.colorText
                     opacity: 0.6
-                    anchors.left: albumTitleText.left
-                    anchors.top: albumTitleText.bottom
-                    anchors.topMargin: 5
-                    font.family: "Open Sans"
-                    font.pixelSize: 20
+                    anchors { left: albumTitleText.left; top: albumTitleText.bottom; topMargin: 5 }
+                    font { family: "Open Sans Regular"; pixelSize: 20 }
                     lineHeight: 1
                 }
 
                 MouseArea {
                     anchors.fill: parent
-
                     onClicked: {
                         Haptic.playEffect(Haptic.Click);
                         obj.playMedia(item_key, item_type);
@@ -221,8 +193,7 @@ Item {
 
                 BasicUI.ContextMenuIcon {
                     colorBg: mediaplayerUtils.pixelColor
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors { right: parent.right; verticalCenter: parent.verticalCenter }
 
                     mouseArea.onClicked: {
                         Haptic.playEffect(Haptic.Click);

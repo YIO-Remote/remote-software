@@ -32,8 +32,7 @@ import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: card
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
     radius: Style.cornerRadius
 
@@ -41,10 +40,11 @@ Rectangle {
         ColorAnimation { duration: 300 }
     }
 
+    property alias parentCard: card
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     Connections {
         target: ButtonHandler
         enabled: mediaplayerButton.state === "open" ? true : false
@@ -104,69 +104,26 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //    state: "closed"
+    state: "closed"
 
-    //    states: [
-    //        State {
-    //            name: "closed"
-    //            PropertyChanges {target: albumArt; opacity: 0 }
-    //            PropertyChanges {target: songTitle; anchors.topMargin: 60; opacity: 0 }
-    //            PropertyChanges {target: artist; opacity: 0 }
-    //            PropertyChanges {target: playButton; opacity: 0 }
-    //            PropertyChanges {target: prevButton; opacity: 0 }
-    //            PropertyChanges {target: nextButton; opacity: 0 }
-    //            PropertyChanges {target: progressBar; opacity: 0 }
-    //        },
-    //        State {
-    //            name: "open"
-    //            PropertyChanges {target: albumArt; opacity: 1 }
-    //            PropertyChanges {target: songTitle; anchors.topMargin: 20; opacity: 1 }
-    //            PropertyChanges {target: artist; opacity: 0.8 }
-    //            PropertyChanges {target: playButton; opacity: 1 }
-    //            PropertyChanges {target: prevButton; opacity: 1 }
-    //            PropertyChanges {target: nextButton; opacity: 1 }
-    //            PropertyChanges {target: progressBar; opacity: 1 }
-    //        }
-    //    ]
-
-    //    transitions: [
-    //        Transition {to: "closed";
-    //            PropertyAnimation { target: albumArt; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //            PropertyAnimation { target: songTitle; properties: "opacity, anchors.topMargin"; easing.type: Easing.OutExpo; duration: 300 }
-    //            PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //            PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //            PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //            PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //            PropertyAnimation { target: progressBar; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //        },
-    //        Transition {to: "open";
-    //            SequentialAnimation {
-    //                //                PauseAnimation { duration: 200 }
-    //                PropertyAnimation { target: albumArt; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //                ParallelAnimation {
-    //                    PropertyAnimation { target: songTitle; properties: "opacity, anchors.topMargin"; easing.type: Easing.OutExpo; duration: 300 }
-    //                    PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //                    PropertyAnimation { target: progressBar; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //                }
-    //                ParallelAnimation {
-    //                    PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //                    PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //                    PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-    //                }
-    //            }
-    //        }
-    //    ]
-
-    //    Component.onCompleted: {
-    //        card.state = "open";
-    //    }
+    states: [
+        State {
+            name: "closed"
+        },
+        State {
+            name: "open"
+        }
+    ]
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var features: []
     property bool startup: true
 
     Component.onCompleted: {
+        card.state = "open";
+
         features.push("HOME");
         if (obj.isSupported(MediaPlayer.F_SEARCH))
             features.push("SEARCH");
@@ -178,13 +135,19 @@ Rectangle {
         cardRepeater.model = features;
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // SIGNALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     signal looseFocus()
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI ELEMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SwipeView {
         id: cardSwipeView
-        width: parent.width
-        height: parent.height
+        width: parent.width; height: parent.height
         anchors.centerIn: parent
         currentIndex: 0
 
@@ -196,9 +159,7 @@ Rectangle {
             }
         }
 
-        Item {
-            CardHome {}
-        }
+        Item { CardHome {} }
 
         Repeater {
             id: cardRepeater
@@ -218,7 +179,6 @@ Rectangle {
                         return cardSpeakerControl;
                     }
                 }
-
                 property bool _currentItem: SwipeView.isCurrentItem
             }
         }
@@ -238,6 +198,7 @@ Rectangle {
             CardPlaylists {}
         }
 
+        // TODO: Speaker control UI is missing
         Component {
             id: cardSpeakerControl
             Rectangle {
@@ -250,11 +211,8 @@ Rectangle {
     // BOTTOM MENU
     Grid {
         id: bottomMenu
-        width: childrenRect.width
-        height: 60
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
+        width: childrenRect.width; height: 60
+        anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
         spacing: {
             var i = 0;
 
@@ -281,20 +239,17 @@ Rectangle {
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
             text: Style.icons.home
             renderType: Text.NativeRendering
-            width: 60
-            height: 60
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            width: 60; height: 60
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 80 }
 
             MouseArea {
                 anchors.fill: parent
-                width: parent.width + 30
-                height: width
+                width: parent.width + 30; height: width
 
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-//                    cardSwipeView.currentIndex = 0;
+                    //                    cardSwipeView.currentIndex = 0;
                     cardSwipeView.setCurrentIndex(0);
                 }
             }
@@ -307,20 +262,16 @@ Rectangle {
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
             text: Style.icons.search
             renderType: Text.NativeRendering
-            width: 60
-            height: 60
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            width: 60; height: 60
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 80 }
 
             MouseArea {
                 anchors.fill: parent
-                width: parent.width + 30
-                height: width
+                width: parent.width + 30; height: width
 
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-//                    cardSwipeView.currentIndex = features.indexOf("SEARCH");
                     cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
                 }
             }
@@ -333,20 +284,16 @@ Rectangle {
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
             text: Style.icons.playlist
             renderType: Text.NativeRendering
-            width: 60
-            height: 60
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            width: 60; height: 60
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 80 }
 
             MouseArea {
                 anchors.fill: parent
-                width: parent.width + 30
-                height: width
+                width: parent.width + 30; height: width
 
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-//                    cardSwipeView.currentIndex = features.indexOf("LIST");
                     cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
                 }
             }
@@ -359,20 +306,16 @@ Rectangle {
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
             text: Style.icons.speaker
             renderType: Text.NativeRendering
-            width: 60
-            height: 60
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            width: 60; height: 60
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 80 }
 
             MouseArea {
                 anchors.fill: parent
-                width: parent.width + 30
-                height: width
+                width: parent.width + 30; height: width
 
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-//                    cardSwipeView.currentIndex = features.indexOf("SPEAKER_CONTROL");
                     cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
                 }
             }
@@ -383,8 +326,7 @@ Rectangle {
 
     Loader {
         id: contextMenuLoader
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
 
         onStatusChanged: {
             if (contextMenuLoader.status == Loader.Ready)

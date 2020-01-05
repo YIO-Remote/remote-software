@@ -50,7 +50,7 @@ Comp.ButtonBase {
         wrapMode: Text.WordWrap
         width: title.width
         anchors { left: parent.left; leftMargin: title.x; top: parent.top; topMargin: title.y + title.height }
-        font { family: "Open Sans"; pixelSize: 20 }
+        font { family: "Open Sans Regular"; pixelSize: 20 }
         lineHeight: 1
         z: climateButton.state == "open" ? (cardLoader.z - 1) : (cardLoader.z + 1)
     }

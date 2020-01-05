@@ -22,7 +22,6 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
 import Style 1.0
 
 import ButtonHandler 1.0
@@ -33,9 +32,9 @@ import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: cardRemote
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     color: Style.colorDark
+    radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
@@ -116,8 +115,7 @@ Rectangle {
 
     Item {
         id: topItem
-        width: parent.width
-        height: 125
+        width: parent.width; height: 125
         anchors.top: parent.top
 
         Text {
@@ -128,36 +126,25 @@ Rectangle {
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
             width: parent.width-232
-            anchors.left: parent.left
-            anchors.leftMargin: 106
-            anchors.verticalCenter: parent.verticalCenter
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 27
+            anchors { left: parent.left; leftMargin: 106; verticalCenter: parent.verticalCenter }
+            font: Style.buttonFont
             lineHeight: 1
         }
 
         Text {
             color: Style.colorText
             text: icon.text
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 100 }
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.verticalCenter: parent.verticalCenter
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 100 }
+            anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
         }
-
     }
 
     SwipeView {
         id: pagesSwipeView
-        width: parent.width
-        height: parent.height - topItem.height - tooltips.height - 50
-        anchors.top: topItem.bottom
-        anchors.topMargin: 0
+        width: parent.width; height: parent.height - topItem.height - tooltips.height - 50
+        anchors { top: topItem.bottom; topMargin: 0 }
         currentIndex: 0
 
         //buttons
@@ -186,16 +173,13 @@ Rectangle {
 
     PageIndicator {
         id: indicator
-
         count: pagesSwipeView.count
         currentIndex: pagesSwipeView.currentIndex
 
-        anchors.bottom: tooltips.top
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors { bottom: tooltips.top; horizontalCenter: parent.horizontalCenter }
 
         delegate: Rectangle {
-            width: 8
-            height: 8
+            width: 8; height: 8
             radius: height/2
             color: Style.colorText
             opacity: index == pagesSwipeView.currentIndex ? 1 : 0.3
@@ -204,28 +188,21 @@ Rectangle {
 
     Item {
         id: tooltips
-        width: parent.width
-        height: 80
+        width: parent.width; height: 80
         anchors.bottom: parent.bottom
 
         Item {
             id: leftToolTip
-            width: childrenRect.width
-            height: 60
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.verticalCenter: parent.verticalCenter
+            width: childrenRect.width; height: 60
+            anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
 
             Text {
                 color: Style.colorText
                 text: Style.icons.circle
-                width: 60
-                height: 60
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 60 }
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font { family: "icons"; pixelSize: 60 }
+                anchors { left: parent.left; verticalCenter: parent.verticalCenter }
             }
 
             Text {
@@ -233,33 +210,24 @@ Rectangle {
                 opacity: 0.5
                 text: qsTr("Mute") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 50
-                anchors.verticalCenter: parent.verticalCenter
-                font.family: "Open Sans"
-                font.weight: Font.Normal
-                font.pixelSize: 24
+                anchors { left: parent.left; leftMargin: 50; verticalCenter: parent.verticalCenter }
+                font { family: "Open Sans Regular"; pixelSize: 24 }
                 lineHeight: 1
             }
         }
 
         Item {
             id: middleToolTip
-            width: childrenRect.width
-            height: 60
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
+            width: childrenRect.width; height: 60
+            anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
             Text {
                 color: Style.colorText
                 text: Style.icons.square
-                width: 60
-                height: 60
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font {family: "icons"; pixelSize: 60 }
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
+                anchors { left: parent.left; verticalCenter: parent.verticalCenter }
             }
 
             Text {
@@ -267,34 +235,24 @@ Rectangle {
                 opacity: 0.5
                 text: qsTr("Back") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 50
-                anchors.verticalCenter: parent.verticalCenter
-                font.family: "Open Sans"
-                font.weight: Font.Normal
-                font.pixelSize: 24
+                anchors { left: parent.left; leftMargin: 50; verticalCenter: parent.verticalCenter }
+                font { family: "Open Sans Regular"; pixelSize: 24 }
                 lineHeight: 1
             }
         }
 
         Item {
             id: rightToolTip
-            width: childrenRect.width
-            height: 60
-            anchors.right: parent.right
-            anchors.rightMargin: 40
-            anchors.verticalCenter: parent.verticalCenter
+            width: childrenRect.width; height: 60
+            anchors { right: parent.right; rightMargin: 40; verticalCenter: parent.verticalCenter }
 
             Text {
                 color: Style.colorText
                 text: Style.icons.square_full
-                width: 60
-                height: 60
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 60 }
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font { family: "icons"; pixelSize: 60 }
+                anchors { left: parent.left; verticalCenter: parent.verticalCenter }
             }
 
             Text {
@@ -302,12 +260,8 @@ Rectangle {
                 opacity: 0.5
                 text: qsTr("Menu") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 50
-                anchors.verticalCenter: parent.verticalCenter
-                font.family: "Open Sans"
-                font.weight: Font.Normal
-                font.pixelSize: 24
+                anchors { left: parent.left; leftMargin: 50; verticalCenter: parent.verticalCenter }
+                font { family: "Open Sans Regular"; pixelSize: 24 }
                 lineHeight: 1
             }
         }

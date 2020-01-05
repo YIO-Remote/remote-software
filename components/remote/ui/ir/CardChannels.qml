@@ -20,7 +20,6 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 import QtQuick 2.11
-import QtGraphicalEffects 1.0
 import Style 1.0
 
 import Entity.Remote 1.0
@@ -32,8 +31,7 @@ Item {
 
     GridView {
         id: channelGridView
-        width: parent.width-50
-        height: parent.height
+        width: parent.width-50; height: parent.height
         anchors.horizontalCenter: parent.horizontalCenter
         cellWidth: width/3; cellHeight: cellWidth
         clip: true
@@ -42,38 +40,21 @@ Item {
 
         delegate: Item {
             id: main
-            width: channelGridView.cellWidth
-            height: width
+            width: channelGridView.cellWidth; height: width
 
             Rectangle {
                 id: imageContainer
-                width: 80
-                height: width
+                width: 80; height: 80
                 anchors.centerIn: parent
                 radius: Style.cornerRadius
                 color: Style.colorMedium
 
-//                layer.enabled: true
-//                layer.effect: OpacityMask {
-//                    maskSource: Item {
-//                        width: imageContainer.width
-//                        height: imageContainer.height
-//                        Rectangle {
-//                            anchors.fill: parent
-//                            radius: Style.cornerRadius
-//                        }
-//                    }
-//                }
-
                 Text {
                     color: Style.colorText
                     text: number
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                     anchors.centerIn: parent
-                    font.family: "Open Sans Bold"
-                    font.weight: Font.Normal
-                    font.pixelSize: 40
+                    font { family: "Open Sans Bold"; pixelSize: 40 }
                     lineHeight: 1
                 }
 

@@ -40,7 +40,7 @@ Item {
         text: qsTr("Power saving") + translateHandler.emptyString
         anchors.top: parent.top
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -66,7 +66,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: parent.top
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -152,7 +152,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: wifioffSlider.bottom
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1
@@ -165,7 +165,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.top: wifioffSlider.bottom
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1
@@ -190,7 +190,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line3.bottom
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -276,7 +276,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: shutdownSlider.bottom
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1
@@ -289,7 +289,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.top: shutdownSlider.bottom
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1

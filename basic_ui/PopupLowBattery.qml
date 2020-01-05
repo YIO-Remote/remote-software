@@ -126,7 +126,7 @@ Popup {
         anchors.top: lowbatteryIcon.bottom
         anchors.topMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Bold
         font.styleName: "Bold"
         font.pixelSize: 27
@@ -141,7 +141,7 @@ Popup {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 60
         anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 25
     }

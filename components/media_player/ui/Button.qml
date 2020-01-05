@@ -20,7 +20,6 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 import QtQuick 2.12
-import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
@@ -52,7 +51,6 @@ Comp.ButtonBase {
         }
     }
 
-
     // additional UI elements
     Text {
         id: info
@@ -62,13 +60,8 @@ Comp.ButtonBase {
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         width: title.width
-        anchors.left: parent.left
-        anchors.leftMargin: title.x
-        anchors.top: parent.top
-        anchors.topMargin: title.y + title.height
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 20
+        anchors { left: parent.left; leftMargin: title.x; top: parent.top; topMargin: title.y + title.height }
+        font { family: "Open Sans Regular"; pixelSize: 20 }
         lineHeight: 1
         visible: mediaplayerButton.state == "closed" ? true : false
     }
@@ -79,6 +72,7 @@ Comp.ButtonBase {
 
     // album art
     property string m_image: obj.mediaImage
+
     onM_imageChanged: {
         mediaplayerUtils.imageURL = obj.mediaImage
     }
@@ -86,18 +80,14 @@ Comp.ButtonBase {
     BasicUI.CustomImageLoader {
         id: image
         visible: mediaplayerButton.state == "closed" ? true : false
-        width: 80
-        height: 80
-        anchors.left: parent.left
-        anchors.leftMargin: 20
-        anchors.verticalCenter: parent.verticalCenter
+        width: 80; height: 80
+        anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
         url: mediaplayerUtils.smallImage == "" ? "" : mediaplayerUtils.smallImage
 
         layer.enabled: true
         layer.effect: OpacityMask {
             maskSource: Item {
-                width: image.width
-                height: image.height
+                width: image.width; height: image.height
                 Rectangle {
                     anchors.fill: parent
                     radius: Style.cornerRadius/2

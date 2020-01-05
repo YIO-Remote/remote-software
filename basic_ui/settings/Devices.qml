@@ -39,7 +39,7 @@ Item {
         color: Style.colorText
         text: qsTr("Devices") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1

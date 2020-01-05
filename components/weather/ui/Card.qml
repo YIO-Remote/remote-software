@@ -71,7 +71,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
             anchors { centerIn: parent }
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Bold
             font.pixelSize: 32
             lineHeight: 1
@@ -101,7 +101,7 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                     color: Style.colorText
                     text: model.date
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -119,7 +119,7 @@ Rectangle {
                     anchors { left: image.right; top:parent.top; topMargin: 20 }
                     color: Style.colorText
                     text: model.description
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -128,7 +128,7 @@ Rectangle {
                     anchors { right: parent.right; top:parent.top; topMargin: 20; rightMargin: 10 }
                     color: Style.colorText
                     text: model.temp
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -147,7 +147,7 @@ Rectangle {
                     anchors { left: imgRain.right; leftMargin:10; bottom: parent.bottom; bottomMargin: 15 }
                     color: Style.colorText
                     text: model.rain
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -166,7 +166,7 @@ Rectangle {
                     color: Style.colorText
                     text: model.snow
                     visible: model.snow
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -184,7 +184,7 @@ Rectangle {
                     anchors { left: imgWind.right; leftMargin:10; bottom :parent.bottom; bottomMargin: 15 }
                     color: Style.colorText
                     text: model.wind
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -193,7 +193,7 @@ Rectangle {
                     anchors { right: parent.right; rightMargin: 10; bottom : parent.bottom; bottomMargin: 15 }
                     color: Style.colorText
                     text: model.humidity
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }

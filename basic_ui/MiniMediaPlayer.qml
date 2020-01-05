@@ -367,7 +367,7 @@ Item {
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
                         width: 304
-                        font.family: "Open Sans"
+                        font.family: "Open Sans Regular"
                         font.weight: Font.Normal
                         font.pixelSize: 25
                         lineHeight: 1
@@ -381,7 +381,7 @@ Item {
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
                         width: 304
-                        font.family: "Open Sans"
+                        font.family: "Open Sans Regular"
                         font.weight: Font.Normal
                         font.pixelSize: 20
                         lineHeight: 1
@@ -409,7 +409,7 @@ Item {
                     text: entities.mediaplayersPlaying[index].source
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     anchors {
@@ -430,7 +430,7 @@ Item {
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     width: parent.width-80
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Bold
                     font.styleName: "Bold"
                     font.pixelSize: 30
@@ -447,7 +447,7 @@ Item {
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     width: parent.width-80
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     lineHeight: 1
@@ -480,7 +480,7 @@ Item {
                         color: Style.colorText
                         text: entities.mediaplayersPlaying[index].friendly_name
                         verticalAlignment: Text.AlignVCenter
-                        font.family: "Open Sans"
+                        font.family: "Open Sans Regular"
                         font.weight: Font.Normal
                         font.pixelSize: 27
                         lineHeight: 1

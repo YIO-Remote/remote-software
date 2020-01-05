@@ -90,7 +90,9 @@ Rectangle {
 
     function close() {
         buttonContainer.state = "closed"
-        cardLoader.item.state = "closed";
+        if (cardLoader.item) {
+            cardLoader.item.state = "closed"
+        }
     }
 
 
@@ -107,6 +109,7 @@ Rectangle {
             ParentChange { target: buttonContainer; parent: originParent }
             PropertyChanges {target: loader_main; state: "visible" }
             PropertyChanges {target: cardLoader; opacity: 0}
+            PropertyChanges {target: titleElement; opacity: 1}
         },
         State {
             name: "open"
@@ -114,6 +117,7 @@ Rectangle {
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
             PropertyChanges {target: cardLoader; opacity: 1 }
+            PropertyChanges {target: titleElement; opacity: 0}
         }
     ]
 
@@ -121,11 +125,15 @@ Rectangle {
         Transition {
             to: "closed"
             SequentialAnimation {
+                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.InExpo; duration: 200 }
                 ParallelAnimation {
                     PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
                     ParentAnimation {
                         NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+                    }
+                    SequentialAnimation {
+                        PauseAnimation { duration: 150 }
+                        PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     }
                 }
                 PropertyAction { target: cardLoader; property: "active"; value: false }
@@ -135,7 +143,8 @@ Rectangle {
             to: "open"
             ParallelAnimation {
                 PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.5; duration: 400 }
-                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: cardLoader; properties: "opacity"; duration: 1 }
+                PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }
@@ -179,6 +188,7 @@ Rectangle {
     property alias button: button
 
     Item {
+        id: titleElement
         width: parent.width
         height: 125
         anchors.top: parent.top

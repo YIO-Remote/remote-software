@@ -102,7 +102,7 @@ QtObject {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     property font buttonFont: Qt.font({
-                                          family: "Open Sans",
+                                          family: "Open Sans Regular",
                                           weight: Font.Normal,
                                           pixelSize: 27,
                                           lineHeight: 1

@@ -191,7 +191,7 @@ Rectangle {
         anchors.leftMargin: 30
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 30
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 20
         lineHeight: 1

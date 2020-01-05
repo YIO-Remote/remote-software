@@ -47,7 +47,7 @@ Rectangle {
         color: selected ? Style.colorBackground : Style.colorText
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.pixelSize: 20
         lineHeight: 1
         anchors.centerIn: parent
