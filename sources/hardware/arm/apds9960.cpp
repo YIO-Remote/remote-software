@@ -50,13 +50,25 @@ bool APDS9960::open() {
         return true;
     }
 
-    if (!begin()) {
+    bool initialized = false;
+    m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
+    if (m_i2cFd == -1) {
+        qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
+    } else {
+        uint8_t x = uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_ID));
+        if (x == 0xAB) {
+            Device::open();
+            initialized = begin();
+        }
+    }
+
+    if (!initialized) {
         setErrorString(ERR_DEV_PROXIMITY_INIT);
         emit error(InitializationError, ERR_DEV_PROXIMITY_INIT);
         return false;
     }
 
-    return Device::open();
+    return true;
 }
 
 void APDS9960::close() {
@@ -68,9 +80,7 @@ void APDS9960::close() {
     }
 }
 
-const QLoggingCategory &APDS9960::logCategory() const {
-    return CLASS_LC();
-}
+const QLoggingCategory &APDS9960::logCategory() const { return CLASS_LC(); }
 
 void APDS9960::enable(bool en) {
     ASSERT_DEVICE_OPEN()
@@ -90,17 +100,6 @@ bool APDS9960::check() {
 }
 
 bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain) {
-    m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
-    if (m_i2cFd == -1) {
-        qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
-        return false;
-    }
-
-    uint8_t x = uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_ID));
-    if (x != 0xAB) {
-        return false;
-    }
-
     /* Set default integration time and gain */
     setADCIntegrationTime(iTimeMS);
     setADCGain(aGain);
@@ -214,8 +213,12 @@ apds9960PGain_t APDS9960::getProxGain() {
 void APDS9960::setProxPulse(apds9960PPulseLen_t pLen, uint8_t pulses) {
     ASSERT_DEVICE_OPEN()
 
-    if (pulses < 1) pulses = 1;
-    if (pulses > 64) pulses = 64;
+    if (pulses < 1) {
+        pulses = 1;
+    }
+    if (pulses > 64) {
+        pulses = 64;
+    }
     pulses--;
 
     _ppulse.PPLEN = pLen;
@@ -253,7 +256,9 @@ void APDS9960::setProximityInterruptThreshold(uint8_t low, uint8_t high, uint8_t
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_PILT, low);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_PIHT, high);
 
-    if (persistance > 7) persistance = 7;
+    if (persistance > 7) {
+        persistance = 7;
+    }
     _pers.PPERS = persistance;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_PERS, _pers.get());
 }
