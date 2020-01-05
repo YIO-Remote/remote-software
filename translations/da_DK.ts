@@ -264,7 +264,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
       <source>% Charged</source>
-      <translation>% Oladet</translation>
+      <translation>% Opladet</translation>
     </message>
   </context>
   <context>
@@ -532,7 +532,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>
       <source>Never turn off Wi-Fi</source>
-      <translation>Sluk aldrig Wi-Fi</translation>
+      <translation>Sluk aldrig Wi-Fi fra</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>

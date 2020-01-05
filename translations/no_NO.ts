@@ -647,7 +647,7 @@ YIO remote </source>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>Installed version: YIO Remote </source>
-      <translation>Installert versjon: </translation>
+      <translation>Installert versjon: YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
@@ -713,7 +713,8 @@ YIO remote </source>
       <location filename="../wifiSetup.qml" line="73"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation>Koblet til Wi-fi </translation>
+      <translation>Koblet til Wi-fi
+</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="91"/>

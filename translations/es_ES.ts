@@ -39,7 +39,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="199"/>
       <source>Battery level</source>
-      <translation>Nivel de la batería:</translation>
+      <translation>Nivel de la batería</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="259"/>
@@ -113,7 +113,7 @@
     <message>
       <location filename="../components/climate/ui/Card.qml" line="397"/>
       <source>Turn off</source>
-      <translation>¿Apagar?</translation>
+      <translation>Apagar</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="397"/>
@@ -231,7 +231,7 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
       <source>Tracks</source>
-      <translation>Pistas:</translation>
+      <translation>Pistas</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>

@@ -600,7 +600,9 @@
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation>YIO nustatymams naudokite interneto naršyklę arba parsisiųskite ir nusiųskite atsargines duomenų kopijas. Interneto naršyklėje atidarykite: </translation>
+      <translation>YIO nustatymams naudokite interneto naršyklę arba parsisiųskite ir nusiųskite atsargines duomenų kopijas. Interneto naršyklėje atidarykite:
+
+</translation>
     </message>
   </context>
   <context>

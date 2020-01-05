@@ -514,7 +514,7 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="122"/>
       <source>Low battery</source>
-      <translation>schwache Batterie</translation>
+      <translation>Akkustand niedrig</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="137"/>
