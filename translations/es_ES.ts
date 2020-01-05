@@ -6,12 +6,12 @@
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="54"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>No se ha podido inicializar el sensor de batería. Por favor, reinicie el mando.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="333"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Error de comunicación del sensor de batería. Por favor, reinicie el mando.</translation>
     </message>
   </context>
   <context>
@@ -152,7 +152,7 @@
     <message>
       <location filename="../components/climate/ui/Card.qml" line="386"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Frío</translation>
     </message>
   </context>
   <context>
@@ -278,7 +278,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>% Cargado</translation>
     </message>
   </context>
   <context>
@@ -336,7 +336,7 @@
     <message>
       <location filename="../sources/hardware/arm/drv2605.cpp" line="54"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>No se ha podido inicializar el motor háptico. Por favor, reinicie el mando.</translation>
     </message>
   </context>
   <context>
@@ -344,17 +344,17 @@
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Luces</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persianas</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -369,7 +369,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Interruptor</translation>
     </message>
   </context>
   <context>
@@ -387,7 +387,7 @@
       <location filename="../sources/hardware/hardwarefactory_yio.cpp" line="62"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
       <extracomment>Error message that shows up as notification when light value cannot be read</extracomment>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>No se ha podido inicializar el sensor de proximidad. Por favor, reinicie el mando.</translation>
     </message>
   </context>
   <context>
@@ -405,17 +405,17 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="185"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Desconectar</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="215"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integraciones</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="256"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Añadir nuevo</translation>
     </message>
   </context>
   <context>
@@ -424,22 +424,22 @@
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>nombre vacío</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>datos vacíos</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>no es posible abrir el archivo &apos;%1&apos; para escritura: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>no es posible abrir el archivo &apos;%1&apos; para lectura: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
