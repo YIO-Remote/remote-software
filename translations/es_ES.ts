@@ -762,7 +762,7 @@ con éxito a su red Wi-Fi.</translation>
       <location filename="../wifiSetup.qml" line="164"/>
       <location filename="../wifiSetup.qml" line="304"/>
       <source>Next</source>
-      <translation>Siguiente</translation>
+      <translation>Continuar</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="183"/>
@@ -789,12 +789,12 @@ conectarse a su red Wi-Fi.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Conecte el Dock YIO a un adaptador de corriente y espere hasta que comience a parpadear. Para compartir las credenciales de red Wi-Fi con el dock, pulse a continuar.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="336"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Configuración Wi-Fi completada</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="316"/>
