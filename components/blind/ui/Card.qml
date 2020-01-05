@@ -116,24 +116,21 @@ Rectangle {
         },
         Transition {
             to: "open"
-            SequentialAnimation {
-                PauseAnimation { duration: 50 }
-                ParallelAnimation {
-                    PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                        PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 50 }
-                        PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                        }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 100 }
-                        PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 100 }
-                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    }
+            ParallelAnimation {
+                PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                SequentialAnimation {
+                    PauseAnimation { duration: 50 }
+                    PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 }
             }
         }

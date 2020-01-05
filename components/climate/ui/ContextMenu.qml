@@ -22,6 +22,8 @@
 import QtQuick 2.11
 import Style 1.0
 
+import Haptic 1.0
+
 Rectangle {
     id: main
     width: parent.width
@@ -147,7 +149,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    haptic.playEffect(Haptic.Click);
+                    Haptic.playEffect(Haptic.Click);
                     main.state = "closed";
                 }
             }

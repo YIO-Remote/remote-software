@@ -42,14 +42,14 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges { target: percentage; anchors.topMargin: 200; opacity: 0 }
+            PropertyChanges { target: percentage; anchors.topMargin: 80; opacity: 0 }
             PropertyChanges { target: title; opacity: 0 }
             PropertyChanges { target: percentageBG; opacity: 0 }
             PropertyChanges { target: buttonTurnOn; anchors.bottomMargin: -100; opacity: 0 }
         },
         State {
             name: "open"
-            PropertyChanges { target: percentage; anchors.topMargin: 100; opacity: 1 }
+            PropertyChanges { target: percentage; anchors.topMargin: -20; opacity: 1 }
             PropertyChanges { target: title; opacity: 1 }
             PropertyChanges { target: percentageBG; opacity: 1 }
             PropertyChanges { target: buttonTurnOn; anchors.bottomMargin: 70; opacity: 1 }
@@ -68,16 +68,13 @@ Rectangle {
         },
         Transition {
             to: "open"
-            SequentialAnimation {
-                PauseAnimation { duration: 100 }
-                ParallelAnimation {
-                    PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 100 }
-                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    }
+            ParallelAnimation {
+                PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 }
             }
         }

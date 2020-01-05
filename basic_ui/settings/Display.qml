@@ -81,10 +81,9 @@ Item {
 
             checked: config.settings.autobrightness
             mouseArea.onClicked: {
-                var tmp = config.config;
-                tmp.settings.autobrightness = !tmp.settings.autobrightness;
-                config.config = tmp;
-                config.writeConfig();
+                var tmp = config.settings;
+                tmp.autobrightness = !tmp.autobrightness;
+                config.settings = tmp;
             }
         }
 

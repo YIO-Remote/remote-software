@@ -84,17 +84,14 @@ Rectangle {
         },
         Transition {
             to: "open"
-            SequentialAnimation {
-                PauseAnimation { duration: 100 }
-                ParallelAnimation {
-                    PropertyAnimation { target: percentageBG2; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 100 }
-                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    }
+            ParallelAnimation {
+                PropertyAnimation { target: percentageBG2; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 }
             }
         }
@@ -201,6 +198,7 @@ Rectangle {
 
     Text {
         color: Style.colorText
+        opacity: percentage.opacity
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
         font { family: "Open Sans Light"; pixelSize: 100 }

@@ -141,22 +141,22 @@ Rectangle {
         },
         Transition {
             to: "open"
-            SequentialAnimation {
-                PauseAnimation { duration: 50 }
-                ParallelAnimation {
-                    PropertyAnimation { target: temperatureDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: temperatureText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 100 }
-                        ParallelAnimation {
+            ParallelAnimation {
+                PropertyAnimation { target: temperatureDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: temperatureText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    ParallelAnimation {
+                        PropertyAnimation { target: turnOnButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                        SequentialAnimation {
+                            PauseAnimation { duration: 50 }
                             PropertyAnimation { target: modeButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
-                            PropertyAnimation { target: turnOnButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                         }
                     }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 100 }
-                        PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    }
+                }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 }
             }
         }
@@ -416,7 +416,7 @@ Rectangle {
         visible: obj.isSupported(Climate.F_HVAC_MODES)
 
         mouseArea.onClicked: {
-           Haptic.playEffect(Haptic.Click);
+            Haptic.playEffect(Haptic.Click);
             var list = [];
 
             if (obj.isSupported(Climate.OFF)) {

@@ -306,7 +306,7 @@ Item {
                     Rectangle {
                         width: 6
                         height: (96 * (Math.abs(battery_data[index].power) / 5500)) + 1
-                        color: battery_data[index].power < 0 ? colorText : colorGreen
+                        color: battery_data[index].power < 0 ? Style.colorText : Style.colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }
