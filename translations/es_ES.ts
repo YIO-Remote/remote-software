@@ -652,33 +652,33 @@ Las actualizaciones se instalan entre las 03:00 am y las 05:00 am.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>New software is available.
 YIO remote </source>
-      <translation type="unfinished">New software is available.
-YIO remote </translation>
+      <translation>Nuevo software disponible.
+Mando YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Su software está actualizado.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Versión instalada: Mando YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>Mando YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Actualizar</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="181"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Buscar actualizaciones</translation>
     </message>
   </context>
   <context>
@@ -715,7 +715,7 @@ YIO remote </translation>
       <location filename="../main.qml" line="217"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
-      <translation type="unfinished">New software version is available!</translation>
+      <translation>¡Nueva versión de software disponible!</translation>
     </message>
   </context>
   <context>
@@ -723,13 +723,13 @@ YIO remote </translation>
     <message>
       <location filename="../wifiSetup.qml" line="55"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Configuración Wi-Fi</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="73"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation type="unfinished">Connect to the Wi-Fi network
+      <translation>Conectar a la red Wi-Fi
 </translation>
     </message>
     <message>
@@ -737,54 +737,54 @@ YIO remote </translation>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
-      <translation type="unfinished">Open a web browser
-and navigate to
+      <translation>Abra su navegador
+y vaya a
 yio.remote</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="106"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Apagar</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Conectado</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="150"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully
-connected to your Wi-Fi network.</translation>
+      <translation>Mando YIO se ha conectado
+con éxito a su red Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="164"/>
       <location filename="../wifiSetup.qml" line="304"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Siguiente</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="183"/>
       <source>Not connected</source>
-      <translation type="unfinished">Not connected</translation>
+      <translation>Sin conexión</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>Mando YIO no pudo
+conectarse a su red Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="217"/>
       <source>Please try again</source>
-      <translation type="unfinished">Please try again</translation>
+      <translation>Por favor, inténtelo de nuevo</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="231"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Inténtelo de nuevo</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
