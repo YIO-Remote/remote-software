@@ -209,7 +209,7 @@ linux {
 lupdate_only{
 SOURCES += $$OTHER_FILES
 
-OTHER_FILES = main.qml \
+OTHER_FILES += main.qml \
           MainContainer.qml \
           StandbyControl.qml \
           ButtonHandler.qml \
@@ -223,8 +223,7 @@ OTHER_FILES = main.qml \
           components/weather/ui/*.qml \
           components/remote/ui/*.qml \
           components/media_player/ui/*.qml \
-          components/climate/ui/*.qml \
-          sources/proximity_gesture_control.h
+          components/climate/ui/*.qml
 }
 
 TRANSLATIONS = translations/bg_BG.ts \

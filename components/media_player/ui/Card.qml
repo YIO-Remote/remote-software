@@ -33,6 +33,7 @@ Rectangle {
     width: parent.width
     height: parent.height
     color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
+    radius: Style.cornerRadius
 
     Behavior on color {
         ColorAnimation { duration: 300 }

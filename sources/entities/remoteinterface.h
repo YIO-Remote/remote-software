@@ -108,7 +108,7 @@ class RemoteDef : public QObject {
 
         // services
         F_SERVICE_NETFLIX,
-        F_SERVICE_HULUF_
+        F_SERVICE_HULU
     };
     Q_ENUM(Features)
 
@@ -210,7 +210,7 @@ class RemoteDef : public QObject {
 
         // services
         C_SERVICE_NETFLIX,
-        C_SERVICE_HULUC_
+        C_SERVICE_HULU
     };
     Q_ENUM(Commands)
 
