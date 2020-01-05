@@ -29,19 +29,20 @@
 #include <QQmlContext>
 #include <QtDebug>
 
-#include "hardware/hardwarefactory.h"
-#include "hardware/touchdetect.h"
-
 #include "bluetootharea.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
-#include "fileio.h"
 #include "entities/entities.h"
+#include "fileio.h"
+#include "hardware/buttonhandler.h"
+#include "hardware/hardwarefactory.h"
+#include "hardware/touchdetect.h"
 #include "integrations/integrations.h"
 #include "jsonfile.h"
 #include "launcher.h"
 #include "logger.h"
 #include "notifications.h"
+#include "standbycontrol.h"
 #include "translation.h"
 #include "yioapi.h"
 
@@ -84,15 +85,15 @@ int main(int argc, char* argv[]) {
         qCWarning(CLASS_LC) << "Configuration schema not found, configuration file will not be validated! Missing file:"
                             << schemaPath;
     }
-    Config config(&engine, configPath, schemaPath);
-    if (!config.isValid()) {
-        qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config.getError();
+    Config* config = new Config(&engine, configPath, schemaPath);
+    if (!config->isValid()) {
+        qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
         // TODO(marton) show error screen with shutdon / reboot / web-configurator option
     }
-    engine.rootContext()->setContextProperty("config", &config);
+    engine.rootContext()->setContextProperty("config", config);
 
     // LOGGER
-    QVariantMap logCfg = config.getSettings().value("logging").toMap();
+    QVariantMap logCfg = config->getSettings().value("logging").toMap();
     // "path" cfg logic:
     //   - key not set or "." => <application_path>/log
     //   - "" (empty)         => no log file
@@ -123,7 +124,10 @@ int main(int argc, char* argv[]) {
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
 
-    qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
+    //    qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
+    TouchEventFilter* touchEventFilter = new TouchEventFilter();
+    qmlRegisterSingletonType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter",
+                                               &TouchEventFilter::getInstance);
 
     qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum",
                                                       "Not creatable as it is an enum type");
@@ -151,11 +155,12 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();
     engine.rootContext()->setContextProperty("webserver", webServerControl);
+
     DisplayControl* displayControl = hwFactory->getDisplayControl();
     engine.rootContext()->setContextProperty("displayControl", displayControl);
 
     qmlRegisterSingletonType<BatteryCharger>("BatteryCharger", 1, 0, "BatteryCharger",
-                                          &HardwareFactory::batteryChargerProvider);
+                                             &HardwareFactory::batteryChargerProvider);
     qmlRegisterSingletonType<BatteryFuelGauge>("Battery", 1, 0, "Battery", &HardwareFactory::batteryFuelGaugeProvider);
     qmlRegisterSingletonType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl",
                                              &HardwareFactory::displayControlProvider);
@@ -164,8 +169,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<HapticMotor>("Haptic", 1, 0, "Haptic", &HardwareFactory::hapticMotorProvider);
     qmlRegisterSingletonType<ProximitySensor>("Proximity", 1, 0, "Proximity",
                                               &HardwareFactory::proximitySensorProvider);
-    qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor",
-                                          &HardwareFactory::lightSensorProvider);
+    qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor", &HardwareFactory::lightSensorProvider);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
@@ -176,11 +180,11 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
 
     // INTEGRATIONS
-    Integrations integrations(&engine, appPath);
+    Integrations* integrations = new Integrations(&engine, appPath);
     // Make integration state available in QML
     qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations",
                                              "Not creatable, only used for enum.");
-    engine.rootContext()->setContextProperty("integrations", &integrations);
+    engine.rootContext()->setContextProperty("integrations", integrations);
 
     // ENTITIES
     Entities entities;
@@ -190,6 +194,11 @@ int main(int argc, char* argv[]) {
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
+    // TODO(zehnm) put initialization into factory
+    //    if (!wifiControl->init()) {
+    //        notifications.add(true, QObject::tr("WiFi device was not found."));
+    //    }
+
     // Ready for device startup!
     hwFactory->initialize();
 
@@ -198,8 +207,25 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("fileio", &fileIO);
 
     // YIO API
-    YioAPI yioapi(&engine);
-    engine.rootContext()->setContextProperty("api", &yioapi);
+    YioAPI* yioapi = new YioAPI(&engine);
+    engine.rootContext()->setContextProperty("api", yioapi);
+
+    // BUTTON HANDLER
+    ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
+    qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
+
+    // STANDBY CONTROL
+    StandbyControl* standbyControl = new StandbyControl(
+        displayControl, hwFactory->getProximitySensor(), hwFactory->getLightSensor(), touchEventFilter,
+        hwFactory->getInterruptHandler(), buttonHandler, wifiControl, config, yioapi, integrations);
+    Q_UNUSED(standbyControl);
+    qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
+
+    // FIXME move initialization code to a device driver factory
+    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
 
     // UTILS
     qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
@@ -208,20 +234,11 @@ int main(int argc, char* argv[]) {
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty()) {
-        qCCritical(CLASS_LC) << "No QML root entities available! Terminating.";
         return -1;
     }
 
-    // FIXME move initialization code to a device driver factory
-    QObject* standbyControl = config.getQMLObject("standbyControl");
-    if (standbyControl == nullptr) {
-        qCCritical(CLASS_LC) << "Error looking up QML object:" << "standbyControl";
-    } else {
-        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
-        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
-        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
-        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
-    }
+    QObject* mainApplicationWindow = config->getQMLObject("applicationWindow");
+    touchEventFilter->setSource(mainApplicationWindow);
 
     return app.exec();
 }

@@ -24,13 +24,14 @@
 #pragma once
 
 #include "../proximitysensor.h"
+#include "../interrupthandler.h"
 #include "apds9960.h"
 
 class Apds9960ProximitySensor : public ProximitySensor {
     Q_OBJECT
 
  public:
-    explicit Apds9960ProximitySensor(APDS9960* apds, QObject* parent = nullptr);
+    explicit Apds9960ProximitySensor(APDS9960* apds, InterruptHandler* interruptHandler, QObject* parent = nullptr);
 
     int proximitySetting() override { return m_proximitySetting; }
 
@@ -51,5 +52,5 @@ class Apds9960ProximitySensor : public ProximitySensor {
 
     uint8_t m_proximity;
     bool    m_proximityDetection = false;
-    int     m_proximitySetting = 70;  // default value
+    int     m_proximitySetting   = 40;  // default value
 };

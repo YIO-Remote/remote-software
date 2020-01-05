@@ -24,6 +24,8 @@ import QtQuick.Controls 2.12
 import Style 1.0
 
 import Haptic 1.0
+import ButtonHandler 1.0
+
 import Entity.MediaPlayer 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -44,17 +46,17 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: mediaplayerButton.state === "open" ? true : false
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "volume up":
+            case ButtonHandler.VOLUME_UP:
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = true;
                 buttonTimeout.start();
                 break;
-            case "volume down":
+            case ButtonHandler.VOLUME_DOWN:
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = false;
                 buttonTimeout.start();
@@ -62,7 +64,7 @@ Rectangle {
             }
         }
 
-        onButtonRelease: {
+        onButtonReleased: {
             buttonTimeout.stop();
         }
     }

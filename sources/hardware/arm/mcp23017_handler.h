@@ -23,8 +23,8 @@
 #pragma once
 
 #include <QLoggingCategory>
-#include <QtDebug>
 #include <QString>
+#include <QtDebug>
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -32,6 +32,8 @@
 #include <unistd.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+
+#include "../interrupthandler.h"
 
 #define MCP23017_ADDRESS 0x20
 
@@ -119,7 +121,7 @@ class MCP23017 {
         return true;
     }
 
-    QString readInterrupt() {
+    int readInterrupt() {
         int intf;
 
         intf = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFA);
@@ -127,25 +129,25 @@ class MCP23017 {
         switch (intf) {
             case 0x01:
                 clearInterrupt();
-                return "apds9960";
+                return InterruptHandler::APDS9960;
             case 0x02:
                 clearInterrupt();
-                return "dpad up";
+                return InterruptHandler::DPAD_UP;
             case 0x04:
                 clearInterrupt();
-                return "top right";
+                return InterruptHandler::TOP_RIGHT;
             case 0x08:
                 clearInterrupt();
-                return "channel up";
+                return InterruptHandler::CHANNEL_UP;
             case 0x10:
                 clearInterrupt();
-                return "dpad right";
+                return InterruptHandler::DPAD_RIGHT;
             case 0x20:
                 clearInterrupt();
-                return "channel down";
+                return InterruptHandler::CHANNEL_DOWN;
             case 0x80:
                 clearInterrupt();
-                return "battery";
+                return InterruptHandler::BATTERY;
         }
 
         intf = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFB);
@@ -153,31 +155,30 @@ class MCP23017 {
         switch (intf) {
             case 0x01:
                 clearInterrupt();
-                return "bottom right";
+                return InterruptHandler::BOTTOM_RIGHT;
             case 0x02:
                 clearInterrupt();
-                return "dpad middle";
+                return InterruptHandler::DPAD_MIDDLE;
             case 0x04:
                 clearInterrupt();
-                return "dpad down";
+                return InterruptHandler::DPAD_DOWN;
             case 0x08:
                 clearInterrupt();
-                return "bottom left";
+                return InterruptHandler::BOTTOM_LEFT;
             case 0x10:
                 clearInterrupt();
-                return "volume down";
+                return InterruptHandler::VOLUME_DOWN;
             case 0x20:
                 clearInterrupt();
-                return "dpad left";
+                return InterruptHandler::DPAD_LEFT;
             case 0x40:
                 clearInterrupt();
-                return "volume up";
+                return InterruptHandler::VOLUME_UP;
             case 0x80:
                 clearInterrupt();
-                return "top left";
+                return InterruptHandler::TOP_LEFT;
         }
-
-        return "";
+        return -1;
     }
 
     void clearInterrupt() {

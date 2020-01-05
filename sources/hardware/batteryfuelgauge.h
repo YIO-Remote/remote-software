@@ -35,17 +35,17 @@ class BatteryFuelGauge : public Device {
     Q_PROPERTY(int capacity READ getCapacity WRITE setCapacity)
 
  public:
-    Q_INVOKABLE virtual void    begin() = 0;
-    Q_INVOKABLE virtual int     getVoltage() = 0;
-    Q_INVOKABLE virtual int     getFullChargeCapacity() = 0;
-    Q_INVOKABLE virtual int     getAverageCurrent() = 0;
-    Q_INVOKABLE virtual int     getAveragePower() = 0;
-    Q_INVOKABLE virtual int     getStateOfCharge() = 0;
-    Q_INVOKABLE virtual int16_t getInternalTemperatureC() = 0;  // Result in 0.1 Celsius
-    Q_INVOKABLE virtual int     getStateOfHealth() = 0;
-    Q_INVOKABLE virtual int     getFullAvailableCapacity() = 0;
-    Q_INVOKABLE virtual int     getRemainingCapacity() = 0;
-    Q_INVOKABLE virtual int     getDesignCapacity() = 0;
+    Q_INVOKABLE virtual void    begin()                         = 0;
+    Q_INVOKABLE virtual int     getVoltage()                    = 0;
+    Q_INVOKABLE virtual int     getFullChargeCapacity()         = 0;
+    Q_INVOKABLE virtual int     getAverageCurrent()             = 0;
+    Q_INVOKABLE virtual int     getAveragePower()               = 0;
+    Q_INVOKABLE virtual int     getStateOfCharge()              = 0;
+    Q_INVOKABLE virtual int16_t getInternalTemperatureC()       = 0;  // Result in 0.1 Celsius
+    Q_INVOKABLE virtual int     getStateOfHealth()              = 0;
+    Q_INVOKABLE virtual int     getFullAvailableCapacity()      = 0;
+    Q_INVOKABLE virtual int     getRemainingCapacity()          = 0;
+    Q_INVOKABLE virtual int     getDesignCapacity()             = 0;
     Q_INVOKABLE virtual void    changeCapacity(int newCapacity) = 0;
 
     void setCapacity(int capacity) { m_capacity = capacity; }
@@ -55,5 +55,5 @@ class BatteryFuelGauge : public Device {
  protected:
     explicit BatteryFuelGauge(QString name, QObject *parent = nullptr) : Device(name, parent) {}
 
-    int m_capacity;
+    int m_capacity = 2500;
 };

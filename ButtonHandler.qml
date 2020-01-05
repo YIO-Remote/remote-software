@@ -20,6 +20,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+// THIS FILE WILL BE REMOVED AS SOON AS THE BATTERY HANDLING IS DONE
+
 import QtQuick 2.11
 
 import Battery 1.0

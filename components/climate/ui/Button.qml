@@ -21,11 +21,10 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import Entity.Climate 1.0
 
 import Style 1.0
+import Entity.Climate 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/components" as Comp
 
 Comp.ButtonBase {
@@ -50,13 +49,8 @@ Comp.ButtonBase {
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         width: title.width
-        anchors.left: parent.left
-        anchors.leftMargin: title.x
-        anchors.top: parent.top
-        anchors.topMargin: title.y + title.height
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 20
+        anchors { left: parent.left; leftMargin: title.x; top: parent.top; topMargin: title.y + title.height }
+        font { family: "Open Sans"; pixelSize: 20 }
         lineHeight: 1
         z: climateButton.state == "open" ? (cardLoader.z - 1) : (cardLoader.z + 1)
     }

@@ -22,7 +22,9 @@
 
 import QtQuick 2.11
 import QtGraphicalEffects 1.0
+
 import Style 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 
 Rectangle {
@@ -59,6 +61,7 @@ Rectangle {
 
     ParallelAnimation {
         id: resetClock
+        objectName: "resetClock"
         running: false
 
         PropertyAnimation { target: batteryIcon; properties: "x"; to: (parent.width-implicitWidth)/2; duration: 1 }
@@ -72,6 +75,7 @@ Rectangle {
 
     SequentialAnimation {
         id: showClock
+        objectName: "showClock"
         running: false
 
         PauseAnimation {duration: 3000}
@@ -89,8 +93,8 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     Item {
         id: batteryIcon
-//        anchors.verticalCenter: parent.verticalCenter
-//        anchors.horizontalCenter: parent.horizontalCenter
+        //        anchors.verticalCenter: parent.verticalCenter
+        //        anchors.horizontalCenter: parent.horizontalCenter
         x: (parent.width-implicitWidth)/2
         y: (parent.height-implicitHeight)/2
 

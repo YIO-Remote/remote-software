@@ -28,14 +28,24 @@
 
 #include <cassert>
 
+
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960.proximity");
 
-Apds9960ProximitySensor::Apds9960ProximitySensor(APDS9960 *apds, QObject *parent)
+Apds9960ProximitySensor::Apds9960ProximitySensor(APDS9960 *apds, InterruptHandler* interruptHandler, QObject *parent)
     : ProximitySensor("APDS990 proximity sensor", parent), p_apds(apds) {
     assert(apds);
+    assert(interruptHandler);
+
+    connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
+        if (event == InterruptHandler::APDS9960) {
+            readInterrupt();
+        }
+    });
 }
 
 void Apds9960ProximitySensor::proximityDetection(bool state) {
+    qCDebug(CLASS_LC) << "Proximity detection set to" << state;
+
     if (p_apds->isOpen()) {
         if (state != m_proximityDetection) {
             if (state) {

@@ -24,10 +24,11 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
-import Style 1.0
-import Launcher 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
+import Style 1.0
+
+import Launcher 1.0
+import StandbyControl 1.0
 
 Item {
     width: parent.width
@@ -38,8 +39,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        screenOnTimeTextData.text = Qt.binding( function() { return JSHelper.secondsToHours(Math.round(standbyControl.screenOnTime/1000)) } )
-        screenOffTimeTextData.text = Qt.binding( function () { return JSHelper.secondsToHours(Math.round(standbyControl.screenOffTime/1000)) } )
         getHours();
     }
 
@@ -144,6 +143,7 @@ Item {
 
         Text {
             id: screenOnTimeTextData
+            text: StandbyControl.screenOnTime
             color: Style.colorText
             horizontalAlignment: Text.AlignRight
             anchors.left: screenOnTimeText.left
@@ -172,6 +172,7 @@ Item {
 
         Text {
             id: screenOffTimeTextData
+            text: StandbyControl.screenOffTime
             color: Style.colorText
             horizontalAlignment: Text.AlignRight
             anchors.left: screenOffTimeText.left
@@ -305,7 +306,7 @@ Item {
                     Rectangle {
                         width: 6
                         height: (96 * (Math.abs(battery_data[index].power) / 5500)) + 1
-                        color: battery_data[index].power < 0 ? Style.colorText : Style.colorGreen
+                        color: battery_data[index].power < 0 ? colorText : colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }

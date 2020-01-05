@@ -24,51 +24,37 @@ import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+import ButtonHandler 1.0
+
 import Entity.Climate 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
-Item {
-    id: climateCard
+Rectangle {
+    id: card
+    width: parent.width; height: parent.height
+    color: Style.colorDark
+    radius: Style.cornerRadius
 
-    property double targetTemperature: obj.targetTemperature
-
-    Component.onCompleted: {
-        var tempBase = temperatureDial.from;
-        for (var i=temperatureDial.from; i<(temperatureDial.to*2)-3; i++) {
-            var item = {};
-            item["temp"] = tempBase;
-            dialListModel.append(item);
-            tempBase = tempBase + 0.5;
-        }
-        dialListView.currentIndex = findNumber(targetTemperature);
-    }
-
-    function findNumber(temp) {
-        for (var i=0; i<dialListModel.count; i++) {
-            if (dialListModel.get(i).temp == temp) {
-                return i;
-            }
-        }
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad up":
+            case ButtonHandler.DPAD_UP:
                 if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
                     var t = targetTemperature+0.5
                     targetTemperature = t;
                     obj.setTargetTemperature(targetTemperature);
                 }
                 break;
-            case "dpad down":
+            case ButtonHandler.DPAD_DOWN:
                 if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
-                    var t = targetTemperature-0.5
+                    t = targetTemperature-0.5
                     targetTemperature = t;
                     obj.setTargetTemperature(targetTemperature);
                 }
@@ -82,7 +68,7 @@ Item {
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    state: "notmoving"
+    state: "closed"
 
     states: [
         State {
@@ -101,6 +87,24 @@ Item {
             PropertyChanges {target: areaText; opacity: 1}
             PropertyChanges {target: turnOnButton; opacity: 1}
             PropertyChanges {target: modeButton; opacity: 1}
+            PropertyChanges {target: dialListView; opacity: 0}
+        },
+        State {
+            name: "closed"
+            PropertyChanges { target: temperatureText; anchors.topMargin: 100; opacity: 0 }
+            PropertyChanges { target: titleText; opacity: 0 }
+            PropertyChanges { target: temperatureDial; opacity: 0 }
+            PropertyChanges { target: modeButton; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges { target: turnOnButton; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges {target: dialListView; opacity: 0}
+        },
+        State {
+            name: "open"
+            PropertyChanges { target: temperatureText; anchors.topMargin: 0; opacity: 1 }
+            PropertyChanges { target: titleText; opacity: 1 }
+            PropertyChanges { target: temperatureDial; opacity: 1 }
+            PropertyChanges { target: modeButton; anchors.bottomMargin: 70; opacity: 1 }
+            PropertyChanges { target: turnOnButton; anchors.bottomMargin: 70; opacity: 1 }
             PropertyChanges {target: dialListView; opacity: 0}
         }
     ]
@@ -124,35 +128,89 @@ Item {
             PropertyAnimation { target: turnOnButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: modeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: dialListView; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+        },
+        Transition {
+            to: "closed"
+            ParallelAnimation {
+                PropertyAnimation { target: temperatureText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: temperatureDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: modeButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: turnOnButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            }
+        },
+        Transition {
+            to: "open"
+            SequentialAnimation {
+                PauseAnimation { duration: 50 }
+                ParallelAnimation {
+                    PropertyAnimation { target: temperatureDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: temperatureText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                    SequentialAnimation {
+                        PauseAnimation { duration: 100 }
+                        ParallelAnimation {
+                            PropertyAnimation { target: modeButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                            PropertyAnimation { target: turnOnButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                        }
+                    }
+                    SequentialAnimation {
+                        PauseAnimation { duration: 100 }
+                        PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    }
+                }
+            }
         }
     ]
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    property double targetTemperature: obj.targetTemperature
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUNCTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function findNumber(temp) {
+        for (var i=0; i<dialListModel.count; i++) {
+            if (dialListModel.get(i).temp === temp) {
+                return i;
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        card.state = "open";
+
+        var tempBase = temperatureDial.from;
+        for (var i=temperatureDial.from; i<(temperatureDial.to*2)-3; i++) {
+            var item = {};
+            item["temp"] = tempBase;
+            dialListModel.append(item);
+            tempBase = tempBase + 0.5;
+        }
+        dialListView.currentIndex = findNumber(targetTemperature);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        anchors.fill: parent
-        color: Style.colorDark
-    }
-
     Dial {
         id: temperatureDial
-        width: parent.width-100
-        height: width
+        width: parent.width-100; height: width
         anchors { top: parent.top; topMargin: 140; horizontalCenter: parent.horizontalCenter }
-        from: obj.temperatureMin
-        to: obj.temperatureMax
+        from: obj.temperatureMin; to: obj.temperatureMax
         stepSize: 0.5
         snapMode: Dial.SnapAlways
-        value: targetTemperature
+        value: card.state == "moving" ? targetTemperature : obj.targetTemperature
 
         background: Rectangle {
             id: dialBg
-            x: temperatureDial.width / 2 - width / 2
-            y: temperatureDial.height / 2 - height / 2
-            width: Math.max(64, Math.min(temperatureDial.width, temperatureDial.height))
-            height: width
+            x: temperatureDial.width / 2 - width / 2; y: temperatureDial.height / 2 - height / 2
+            width: Math.max(64, Math.min(temperatureDial.width, temperatureDial.height)); height: width
             color: {
                 if ((obj.state === Climate.HEAT && targetTemperature > obj.temperature) || (targetTemperature > obj.temperature)) {
                     return Style.colorOrange
@@ -167,8 +225,7 @@ Item {
             layer.enabled: true
             layer.effect: OpacityMask {
                 maskSource: Item {
-                    width: dialBg.width
-                    height: dialBg.height
+                    width: dialBg.width; height: dialBg.height
                     Rectangle {
                         anchors.fill: parent
                         radius: dialBg.radius
@@ -182,14 +239,12 @@ Item {
 
             ListView {
                 id: dialListView
-                width: parent.width
-                height: parent.height
+                width: parent.width; height: parent.height
                 spacing: 10
                 interactive: false
                 highlightMoveDuration: 200
                 highlightRangeMode: ListView.StrictlyEnforceRange
-                preferredHighlightBegin: height / 2 - 80
-                preferredHighlightEnd: height / 2 + 80
+                preferredHighlightBegin: height / 2 - 80; preferredHighlightEnd: height / 2 + 80
 
                 model: dialListModel
 
@@ -242,8 +297,7 @@ Item {
             id: handleItem
             x: temperatureDial.background.x + temperatureDial.background.width / 2 - width / 2
             y: temperatureDial.background.y + temperatureDial.background.height / 2 - height / 2
-            width: 60
-            height: 60
+            width: 60; height: 60
             color: Style.colorBackground
             opacity: 0.5
             radius: 30
@@ -269,10 +323,10 @@ Item {
 
         onPressedChanged: {
             if (pressed) {
-                climateCard.state = "moving"
+                card.state = "moving"
             }
             else {
-                climateCard.state = "notmoving"
+                card.state = "notmoving"
                 obj.setTargetTemperature(targetTemperature);
             }
         }
@@ -283,12 +337,10 @@ Item {
         color: Style.colorText
         text: Style.icons.climate
         renderType: Text.NativeRendering
-        width: 85
-        height: 85
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 100 }
-        anchors {top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20}
+        width: 85; height: 85
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 100 }
+        anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
     }
 
     Text {
@@ -300,7 +352,7 @@ Item {
         }
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: 0; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 140 }
+        font { family: "Open Sans Light"; pixelSize: 140 }
     }
 
     Text {
@@ -315,7 +367,7 @@ Item {
             }
         }
         anchors { top: temperatureText.top; topMargin: 16; left: temperatureText.right; leftMargin: 0 }
-        font {family: "Open Sans Regular"; pixelSize: 80 }
+        font { family: "Open Sans Regular"; pixelSize: 80 }
     }
 
     Text {
@@ -325,7 +377,7 @@ Item {
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: temperatureText.bottom; topMargin: 0; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 60 }
+        font { family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
@@ -338,7 +390,7 @@ Item {
         wrapMode: Text.NoWrap
         width: parent.width-60
         anchors { top: titleText.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 24 }
+        font { family: "Open Sans Regular"; pixelSize: 24 }
     }
 
     BasicUI.CustomButton {
@@ -384,14 +436,13 @@ Item {
                 item["translated"] = qsTr("Cool")+translateHandler.emptyString;
                 list.push(item);
             }
-            contextMenuLoader.setSource("qrc:/components/climate/ui/ContextMenu.qml", { "width": climateCard.width, "climateObj": obj, "list": list })
+            contextMenuLoader.setSource("qrc:/components/climate/ui/ContextMenu.qml", { "width": card.width, "climateObj": obj, "list": list })
         }
     }
 
     Loader {
         id: contextMenuLoader
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom }
         visible: modeButton.visible
 
         onStatusChanged: {
@@ -399,5 +450,4 @@ Item {
                 contextMenuLoader.item.state = "open"
         }
     }
-
 }

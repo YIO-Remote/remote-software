@@ -21,24 +21,57 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QtDebug>
-#include <QLoggingCategory>
-#include <QFuture>
-#include <QtConcurrent/QtConcurrentRun>
+#include "displaycontrol_yio.h"
 
 #include <wiringPi.h>
 
-#include "displaycontrol_yio.h"
+#include <QFuture>
+#include <QLoggingCategory>
+#include <QtConcurrent/QtConcurrentRun>
+#include <QtDebug>
+
 #include "mcp23017_handler.h"
 
-#define CLK  107
+#define CLK 107
 #define MOSI 106
-#define CS   105
-#define RST  104
+#define CS 105
+#define RST 104
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.display");
 
-DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl("YIO display control", parent) { }
+DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl("YIO display control", parent) {
+    // move the low level hardware handling to a separate thread
+    m_thread = new QThread(this);
+    DisplayControlYioThread *dcyt = new DisplayControlYioThread();
+
+    connect(this, &DisplayControlYio::enterStandby, dcyt, &DisplayControlYioThread::enterStandby);
+    connect(this, &DisplayControlYio::leaveStandby, dcyt, &DisplayControlYioThread::leaveStandby);
+    connect(this, &DisplayControlYio::setBrightnessSignal, dcyt, &DisplayControlYioThread::setBrightness);
+
+    dcyt->moveToThread(m_thread);
+}
+
+DisplayControlYio::~DisplayControlYio() { close(); }
+
+bool DisplayControlYio::open() {
+    if (isOpen()) {
+        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        return true;
+    }
+
+    m_thread->start();
+
+    return Device::open();
+}
+
+void DisplayControlYio::close() {
+    Device::close();
+
+    if (m_thread->isRunning()) {
+        m_thread->exit();
+        m_thread->wait(3000);
+    }
+}
 
 bool DisplayControlYio::setMode(Mode mode) {
     if (!isOpen()) {
@@ -48,21 +81,11 @@ bool DisplayControlYio::setMode(Mode mode) {
 
     if (mode == StandbyOn) {
         qCDebug(CLASS_LC) << "Entering standby";
-
-        QFuture<void> future = QtConcurrent::run([&]() {
-            delay(400);  // wait until dimming of the display is done
-            spi_screenreg_set(0x10, 0xffff, 0xffff);
-            delay(120);
-            spi_screenreg_set(0x28, 0xffff, 0xffff);
-        });
+        emit enterStandby();
         return true;
     } else if (mode == StandbyOff) {
         qCDebug(CLASS_LC) << "Leaving standby";
-
-        QFuture<void> future = QtConcurrent::run([&]() {
-            spi_screenreg_set(0x29, 0xffff, 0xffff);
-            spi_screenreg_set(0x11, 0xffff, 0xffff);
-        });
+        emit leaveStandby();
         return true;
     }
 
@@ -74,7 +97,19 @@ void DisplayControlYio::setBrightness(int from, int to) {
         qCWarning(CLASS_LC()) << "Display device is closed. Cannot change brightness";
         return;
     }
+    emit setBrightnessSignal(from, to);
 
+    m_currentBrightness = to;
+    emit currentBrightnessChanged();
+}
+
+void DisplayControlYio::setBrightness(int to) { setBrightness(m_currentBrightness, to); }
+
+const QLoggingCategory &DisplayControlYio::logCategory() const { return CLASS_LC(); }
+
+// THREADED STUFF
+
+void DisplayControlYioThread::setBrightness(int from, int to) {
     qCDebug(CLASS_LC) << "Changing brightness:" << from << " -> " << to;
 
     if (from < 0) {
@@ -90,38 +125,38 @@ void DisplayControlYio::setBrightness(int from, int to) {
         to = 100;
     }
 
-    QFuture<void> future = QtConcurrent::run(
-        [&](int from, int to) {
-            if (from == 0 && digitalRead(26) == 0) {
-                pinMode(26, PWM_OUTPUT);
-                pwmSetMode(PWM_MODE_MS);
-                pwmSetClock(1000);
-                pwmSetRange(100);
-            }
+    if (from == 0 && digitalRead(26) == 0) {
+        pinMode(26, PWM_OUTPUT);
+        pwmSetMode(PWM_MODE_MS);
+        pwmSetClock(1000);
+        pwmSetRange(100);
+    }
 
-            if (from >= to) {
-                // dim down
-                for (int i = from; i > to - 1; i--) {
-                    pwmWrite(26, i);
-                    delay(10);
-                    if (i == 0) {
-                        delay(100);
-                        pinMode(26, OUTPUT);
-                        digitalWrite(26, 0);
-                    }
-                }
-            } else {
-                // dim up
-                for (int i = from; i < to + 1; i++) {
-                    pwmWrite(26, i);
-                    delay(10);
-                }
+    if (from == 0) {
+        delay(300);
+    }
+
+    if (from >= to) {
+        // dim down
+        for (int i = from; i > to - 1; i--) {
+            pwmWrite(26, i);
+            delay(10);
+            if (i == 0) {
+                delay(100);
+                pinMode(26, OUTPUT);
+                digitalWrite(26, 0);
             }
-        },
-        from, to);
+        }
+    } else {
+        // dim up
+        for (int i = from; i < to + 1; i++) {
+            pwmWrite(26, i);
+            delay(10);
+        }
+    }
 }
 
-void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1) {
+void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1) {
     int32_t i;
     int32_t control_bit;
 
@@ -214,7 +249,14 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     nanosleep(&ts3, NULL);
 }
 
+void DisplayControlYioThread::enterStandby() {
+    delay(400);  // wait until dimming of the display is done
+    spi_screenreg_set(0x10, 0xffff, 0xffff);
+    delay(120);
+    spi_screenreg_set(0x28, 0xffff, 0xffff);
+}
 
-const QLoggingCategory &DisplayControlYio::logCategory() const {
-    return CLASS_LC();
+void DisplayControlYioThread::leaveStandby() {
+    spi_screenreg_set(0x29, 0xffff, 0xffff);
+    spi_screenreg_set(0x11, 0xffff, 0xffff);
 }

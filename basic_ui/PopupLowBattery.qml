@@ -23,7 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
-
+import StandbyControl 1.0
 import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -57,9 +57,9 @@ Popup {
 
     onOpened: {
         lowBatteryNotificationTimer.start()
-        if (standbyControl.mode != "on") {
-            standbyControl.touchDetected = true;
-        }
+//        if (standbyControl.mode != "on") {
+//            standbyControl.touchDetected = true;
+//        }
     }
 
     BasicUI.ProgressCircle {

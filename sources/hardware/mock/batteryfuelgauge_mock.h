@@ -35,7 +35,7 @@ class BatteryFuelGaugeMock : public BatteryFuelGauge {
 
     // BatteryFuelGauge interface
  public:
-    void    begin() override {}
+    void    begin() override{};
     int     getVoltage() override { return 5000; }
     int     getFullChargeCapacity() override { return 2500; }
     int     getAverageCurrent() override { return -1600; }

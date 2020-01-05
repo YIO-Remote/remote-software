@@ -79,7 +79,7 @@ Item {
             anchors.rightMargin: 20
             anchors.verticalCenter: autobrightnessText.verticalCenter
 
-            checked: standbyControl.display_autobrightness
+            checked: config.settings.autobrightness
             mouseArea.onClicked: {
                 var tmp = config.config;
                 tmp.settings.autobrightness = !tmp.settings.autobrightness;
@@ -91,7 +91,7 @@ Item {
         Slider {
             id: brightnessSlider
             from: 0
-            value: standbyControl.display_brightness
+            value: DisplayControl.currentBrightness
             to: 100
             stepSize: 1
             live: false
@@ -143,8 +143,8 @@ Item {
 
             onValueChanged: {
                 if (setbyUser) {
-                    standbyControl.setBrightness(brightnessSlider.value);
-                    standbyControl.display_brightness_set = brightnessSlider.value
+                    DisplayControl.setBrightness(brightnessSlider.value);
+                    DisplayControl.setUserBrightness(brightnessSlider.value);
                     setbyUser = false;
                 }
             }
@@ -184,7 +184,7 @@ Item {
             anchors.rightMargin: 20
             anchors.verticalCenter: darkModeText.verticalCenter
 
-            checked: Style.darkMode
+            checked: config.ui_config.darkmode
             mouseArea.onClicked: {
                 var tmp = config.ui_config
                 tmp.darkMode = !tmp.darkMode

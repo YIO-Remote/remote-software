@@ -73,13 +73,14 @@ int HardwareFactoryRPi0::initialize() {
 }
 
 bool HardwareFactoryRPi0::buildDevices(const QVariantMap &config) {
+    // InterruptHandler might be used by other devices, so make sure it's built first and available!
+    p_interruptHandler = buildInterruptHandler(config);
     p_systemService = buildSystemService(config);
     p_webServerControl = buildWebServerControl(config);
     p_wifiControl = buildWifiControl(config);
     p_displayControl = buildDisplayControl(config);
     p_batteryCharger = buildBatteryCharger(config);
     p_batteryFuelGauge = buildBatteryFuelGauge(config);
-    p_interruptHandler = buildInterruptHandler(config);
     p_hapticMotor = buildHapticMotor(config);
     p_gestureSensor = buildGestureSensor(config);
     p_lightSensor = buildLightSensorr(config);

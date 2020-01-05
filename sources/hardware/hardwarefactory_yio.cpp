@@ -161,7 +161,7 @@ LightSensor *HardwareFactoryYio::buildLightSensorr(const QVariantMap &config) {
 ProximitySensor *HardwareFactoryYio::buildProximitySensor(const QVariantMap &config) {
     Q_UNUSED(config)
     qCDebug(CLASS_LC) << "ProximitySensor: Apds9960ProximitySensor";
-    ProximitySensor *device = new Apds9960ProximitySensor(p_apds9960, this);
+    ProximitySensor *device = new Apds9960ProximitySensor(p_apds9960, getInterruptHandler(), this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
