@@ -310,6 +310,7 @@ Rectangle {
         }
 
         onValueChanged: {
+            Haptic.playEffect(Haptic.Bump);
             targetTemperature = value;
             var i = findNumber(targetTemperature);
             if (i)
@@ -396,7 +397,7 @@ Rectangle {
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
-            haptic.playEffect(Haptic.Click);
+            Haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
@@ -410,7 +411,7 @@ Rectangle {
         visible: obj.isSupported(Climate.F_HVAC_MODES)
 
         mouseArea.onClicked: {
-            haptic.playEffect(Haptic.Click);
+           Haptic.playEffect(Haptic.Click);
             var list = [];
 
             if (obj.isSupported(Climate.OFF)) {

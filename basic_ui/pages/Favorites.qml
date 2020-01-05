@@ -78,7 +78,7 @@ Flickable {
             color: Style.colorText
             text: title
             anchors.centerIn: parent
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 60
             lineHeight: 1

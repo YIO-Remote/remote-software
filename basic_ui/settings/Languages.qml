@@ -46,7 +46,7 @@ Item {
         color: Style.colorText
         text: qsTr("Languages") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -97,7 +97,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     lineHeight: 1

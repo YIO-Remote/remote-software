@@ -83,7 +83,7 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 10
         y: 2
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Bold
         font.styleName: "Bold"
         font.pixelSize: 22
@@ -152,7 +152,7 @@ Item {
         height: parent.height
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 28
         lineHeight: 1
@@ -276,7 +276,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.verticalCenter: statusBar.verticalCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 20
         lineHeight: 1

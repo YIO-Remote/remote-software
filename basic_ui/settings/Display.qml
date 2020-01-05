@@ -42,7 +42,7 @@ Item {
         color: Style.colorText
         text: qsTr("Display") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -66,7 +66,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: parent.top
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -171,7 +171,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line1.bottom
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -209,7 +209,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: line2.bottom
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -226,7 +226,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: cleaningText.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1

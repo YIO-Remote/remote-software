@@ -41,7 +41,7 @@ Item {
         color: Style.colorText
         text: qsTr("Remote configuration") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -65,7 +65,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: parent.top
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -102,7 +102,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: remoteConfigButton.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1

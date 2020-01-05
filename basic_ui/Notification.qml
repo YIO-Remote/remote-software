@@ -228,7 +228,7 @@ Rectangle {
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -244,7 +244,7 @@ Rectangle {
         anchors.topMargin: 10
 
         color: Style.colorText
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 20
         lineHeight: 1

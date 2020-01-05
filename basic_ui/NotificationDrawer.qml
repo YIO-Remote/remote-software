@@ -44,7 +44,7 @@ Item {
 
         color: Style.colorText
         verticalAlignment: Text.AlignVCenter
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 60
         lineHeight: 1

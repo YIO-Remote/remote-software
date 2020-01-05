@@ -59,7 +59,7 @@ Item {
                     topMargin: 210
                     horizontalCenter: parent.horizontalCenter
                 }
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 60
                 lineHeight: 1
@@ -77,7 +77,7 @@ Item {
                     topMargin: 10
                     horizontalCenter: parent.horizontalCenter
                 }
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 27
                 lineHeight: 1
@@ -95,7 +95,7 @@ Item {
                     topMargin: 30
                     horizontalCenter: parent.horizontalCenter
                 }
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 27
                 lineHeight: 1
@@ -137,7 +137,7 @@ Item {
                         topMargin: 300
                         horizontalCenter: parent.horizontalCenter
                     }
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 60
                     lineHeight: 1
@@ -154,7 +154,7 @@ Item {
                         topMargin: 10
                         horizontalCenter: parent.horizontalCenter
                     }
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     lineHeight: 1
@@ -187,7 +187,7 @@ Item {
                         topMargin: 210
                         horizontalCenter: parent.horizontalCenter
                     }
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 60
                     lineHeight: 1
@@ -204,7 +204,7 @@ Item {
                         topMargin: 10
                         horizontalCenter: parent.horizontalCenter
                     }
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     lineHeight: 1
@@ -221,7 +221,7 @@ Item {
                         topMargin: 30
                         horizontalCenter: parent.horizontalCenter
                     }
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 27
                     lineHeight: 1
@@ -293,7 +293,7 @@ Item {
                     topMargin: 80
                     horizontalCenter: parent.horizontalCenter
                 }
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 27
                 lineHeight: 1
@@ -342,7 +342,7 @@ Item {
                     topMargin: 210
                     horizontalCenter: parent.horizontalCenter
                 }
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 60
                 lineHeight: 1
@@ -361,7 +361,7 @@ Item {
                     topMargin: 10
                     horizontalCenter: parent.horizontalCenter
                 }
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.weight: Font.Normal
                 font.pixelSize: 27
                 lineHeight: 1

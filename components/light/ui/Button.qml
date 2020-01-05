@@ -21,9 +21,8 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import Style 1.0
 
-import Haptic 1.0
+import Style 1.0
 import Entity.Light 1.0
 
 import "qrc:/components" as Comp
@@ -31,7 +30,6 @@ import "qrc:/components" as Comp
 Comp.ButtonBase {
     id: lightButton
     icon: Style.icons.light
-
     button.enabled: obj.isSupported(Light.F_TURN_ON) ? true : false
 
     cardLoader.source: {

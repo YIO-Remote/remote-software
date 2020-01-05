@@ -51,7 +51,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
-                font { family: "Open Sans"; weight: Font.Normal; pixelSize: 27 }
+                font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
             }
 
             Rectangle {
@@ -152,7 +152,7 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
-                        font { family: "Open Sans"; weight: Font.Normal; pixelSize: 27 }
+                        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
                     }
 
                     MouseArea {
@@ -187,7 +187,7 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
-                        font { family: "Open Sans"; weight: Font.Normal; pixelSize: 27 }
+                        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
                     }
 
                     MouseArea {
@@ -214,7 +214,7 @@ Item {
         color: Style.colorText
         text: qsTr("Integrations") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1

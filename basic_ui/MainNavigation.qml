@@ -243,7 +243,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.verticalCenterOffset: -5
-                        font.family: "Open Sans"
+                        font.family: "Open Sans Regular"
                         font.weight: Font.Normal
                         font.pixelSize: 27
                         lineHeight: 0.8

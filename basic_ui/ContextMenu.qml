@@ -121,7 +121,7 @@ Rectangle {
                     anchors.left: icon.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.pixelSize: 27
                     lineHeight: 1
                 }
@@ -154,7 +154,7 @@ Rectangle {
                 color: Style.colorText
                 opacity: 0.5
                 anchors.centerIn: parent
-                font.family: "Open Sans"
+                font.family: "Open Sans Regular"
                 font.pixelSize: 25
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter

@@ -29,10 +29,13 @@ import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: main
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     color: Style.colorDark
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var playListBrowseModel
     property bool isCurrentItem: parent._currentItem
     property bool start: true
@@ -49,6 +52,10 @@ Rectangle {
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUNCTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
         main.playListBrowseModel = model.model;
         obj.browseModelChanged.disconnect(onFirstLoadComplete);
@@ -74,12 +81,15 @@ Rectangle {
         obj.browseModelChanged.disconnect(onBrowseModelChanged);
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI ELEMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias swipeView: swipeView
 
     SwipeView {
         id: swipeView
-        width: parent.width
-        height: parent.height
+        width: parent.width; height: parent.height
         currentIndex: 0
         interactive: false
         clip: true
@@ -89,11 +99,9 @@ Rectangle {
 
             ListView {
                 id: playListListView
-                width: parent.width
-                height: parent.height-100
+                width: parent.width; height: parent.height-100
                 spacing: 20
-                anchors.top: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
                 maximumFlickVelocity: 6000
                 flickDeceleration: 1000
                 boundsBehavior: Flickable.DragAndOvershootBounds
@@ -109,23 +117,19 @@ Rectangle {
 
                 header: Component {
                     Item {
-                        width: parent.width
-                        height: 120
+                        width: parent.width; height: 120
 
                         Text {
                             id: title
                             color: Style.colorText
                             text: qsTr("My playlists") + translateHandler.emptyString
-                            font.family: "Open Sans Bold"
-                            font.pixelSize: 40
+                            font { family: "Open Sans Bold"; pixelSize: 40 }
                             lineHeight: 1
-                            anchors.left: parent.left
-                            anchors.leftMargin: 30
-                            anchors.top: parent.top
-                            anchors.topMargin: 30
+                            anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
                         }
                     }
                 }
+
                 populate: Transition {
                     id: popTransition
                     SequentialAnimation {
@@ -141,14 +145,12 @@ Rectangle {
 
                 Item {
                     id: trackThumbnailItem
-                    width: parent.width-60
-                    height: 80
+                    width: parent.width-60; height: 80
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Rectangle {
                         id: albumImage
-                        width: 80
-                        height: 80
+                        width: 80; height: 80
 
                         Image {
                             source: item_image
@@ -165,12 +167,8 @@ Rectangle {
                         width: itemFlickable.width-60-albumImage.width-20-80
                         wrapMode: Text.NoWrap
                         color: Style.colorText
-                        anchors.left: albumImage.right
-                        anchors.leftMargin: 20
-                        anchors.top: albumImage.top
-                        anchors.topMargin: item_subtitle == "" ? 26 : 12
-                        font.family: "Open Sans"
-                        font.pixelSize: 25
+                        anchors { left: albumImage.right; leftMargin: 20; top: albumImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
+                        font { family: "Open Sans Regular"; pixelSize: 25 }
                         lineHeight: 1
                     }
 
@@ -183,11 +181,8 @@ Rectangle {
                         wrapMode: Text.NoWrap
                         color: Style.colorText
                         opacity: 0.6
-                        anchors.left: albumTitleText.left
-                        anchors.top: albumTitleText.bottom
-                        anchors.topMargin: 5
-                        font.family: "Open Sans"
-                        font.pixelSize: 20
+                        anchors { left: albumTitleText.left; top: albumTitleText.bottom; topMargin: 5 }
+                        font { family: "Open Sans Regular"; pixelSize: 20 }
                         lineHeight: 1
                     }
 
@@ -201,8 +196,7 @@ Rectangle {
                     }
 
                     BasicUI.ContextMenuIcon {
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors { right: parent.right; verticalCenter: parent.verticalCenter }
 
                         mouseArea.onClicked: {
                             Haptic.playEffect(Haptic.Click);
@@ -226,20 +220,14 @@ Rectangle {
                 color: Style.colorText
                 text: Style.icons.left_arrow
                 renderType: Text.NativeRendering
-                width: 70
-                height: 70
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
+                width: 70; height: 70
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font {family: "icons"; pixelSize: 80 }
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.top: parent.top
-                anchors.topMargin: 20
+                anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 20 }
 
                 MouseArea {
                     id: backButtonMouseArea
-                    width: parent.width + 20
-                    height: parent.height + 20
+                    width: parent.width + 20; height: parent.height + 20
                     anchors.centerIn: parent
 
                     onClicked: {
@@ -248,8 +236,6 @@ Rectangle {
                     }
                 }
             }
-
         }
-
     }
 }

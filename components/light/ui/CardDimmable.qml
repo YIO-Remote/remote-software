@@ -21,8 +21,6 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
 import Style 1.0
 
 import Haptic 1.0
@@ -30,22 +28,105 @@ import Haptic 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: cardDimmable
-    width: parent.width
-    height: parent.height
+    id: card
+    width: parent.width; height: parent.height
     color: Style.colorDark
+    radius: Style.cornerRadius
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: card
+
+        onUpdateBrightness: {
+            percentageBG.height = parent.height*brightness/100;
+            percentageBG2.height = parent.height*brightness/100;
+            percentage.text = brightness;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STATES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    state: "closed"
+
+    states: [
+        State {
+            name: "closed"
+            PropertyChanges { target: percentage; anchors.topMargin: 200; opacity: 0 }
+            PropertyChanges { target: title; opacity: 0 }
+            PropertyChanges { target: percentageBG2; opacity: 0 }
+            PropertyChanges { target: percentageBG; opacity: 0 }
+            PropertyChanges { target: buttonTurnOn; anchors.bottomMargin: -100; opacity: 0 }
+        },
+        State {
+            name: "open"
+            PropertyChanges { target: percentage; anchors.topMargin: 100; opacity: 1 }
+            PropertyChanges { target: title; opacity: 1 }
+            PropertyChanges { target: percentageBG2; opacity: 1 }
+            PropertyChanges { target: percentageBG; opacity: 1 }
+            PropertyChanges { target: buttonTurnOn; anchors.bottomMargin: 70; opacity: 1 }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: "closed"
+            ParallelAnimation {
+                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: percentageBG2; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            }
+        },
+        Transition {
+            to: "open"
+            SequentialAnimation {
+                PauseAnimation { duration: 100 }
+                ParallelAnimation {
+                    PropertyAnimation { target: percentageBG2; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                    PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                    SequentialAnimation {
+                        PauseAnimation { duration: 100 }
+                        PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    }
+                }
+            }
+        }
+    ]
+
+    Component.onCompleted: {
+        card.state = "open";
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property int brightness: obj.brightness
 
+    onBrightnessChanged: {
+        updateBrightness()
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // SIGNALS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     signal updateBrightness()
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI ELEMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     MouseArea {
         id: dragger
         anchors.fill: parent
-        drag.target: draggerTarget
-        drag.axis: Drag.YAxis
-        drag.minimumY: 0
-        drag.maximumY: parent.height-10
+        drag { target: draggerTarget; axis: Drag.YAxis; minimumY: 0; maximumY: parent.height-10 }
 
         property int percent
 
@@ -67,24 +148,9 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: cardDimmable
-
-        onUpdateBrightness: {
-            percentageBG.height = parent.height*brightness/100;
-            percentageBG2.height = parent.height*brightness/100;
-            percentage.text = brightness;
-        }
-    }
-
-    onBrightnessChanged: {
-        updateBrightness()
-    }
-
     Rectangle {
         id: draggerTarget
-        width: parent.width
-        height: 30
+        width: parent.width; height: 30
         color: "#00000000"
         y: parent.height - percentageBG.height
     }
@@ -92,8 +158,7 @@ Rectangle {
     Rectangle {
         id: percentageBG2
         color: Style.colorMedium
-        width: parent.width
-        height: 0
+        width: parent.width; height: 0
         radius: Style.cornerRadius
         anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
 
@@ -105,8 +170,7 @@ Rectangle {
     Rectangle {
         id: percentageBG
         color: Style.colorHighlight2
-        width: parent.width
-        height: parent.height*obj.brightness/100
+        width: parent.width; height: parent.height*obj.brightness/100
         radius: Style.cornerRadius
         anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
 
@@ -120,12 +184,10 @@ Rectangle {
         color: Style.colorText
         text: Style.icons.light
         renderType: Text.NativeRendering
-        width: 85
-        height: 85
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 100 }
-        anchors {top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20}
+        width: 85; height: 85
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 100 }
+        anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
     }
 
     Text {
@@ -134,14 +196,14 @@ Rectangle {
         text: obj.brightness
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 180 }
+        font { family: "Open Sans Light"; pixelSize: 180 }
     }
 
     Text {
         color: Style.colorText
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 100 }
+        font { family: "Open Sans Light"; pixelSize: 100 }
     }
 
     Text {
@@ -151,7 +213,7 @@ Rectangle {
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 60 }
+        font { family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
@@ -164,10 +226,11 @@ Rectangle {
         wrapMode: Text.NoWrap
         width: parent.width-60
         anchors { top: title.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 24 }
+        font { family: "Open Sans Regular"; pixelSize: 24 }
     }
 
     BasicUI.CustomButton {
+        id: buttonTurnOn
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: Style.colorText
         buttonTextColor: Style.colorBackground
@@ -176,33 +239,6 @@ Rectangle {
         mouseArea.onClicked: {
             Haptic.playEffect(Haptic.Click);
             obj.toggle();
-        }
-    }
-
-    Text {
-        id: closeButton
-        color: Style.colorText
-        text: Style.icons.close
-        renderType: Text.NativeRendering
-        width: 70
-        height: 70
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 80 }
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 20
-
-        MouseArea {
-            width: parent.width + 20
-            height: parent.height + 20
-            anchors.centerIn: parent
-
-            onClicked: {
-                Haptic.playEffect(Haptic.Click);
-                lightButton.state = "closed"
-            }
         }
     }
 }
