@@ -117,7 +117,7 @@ Rectangle {
         Transition {
             to: "open"
             SequentialAnimation {
-                PauseAnimation { duration: 100 }
+                PauseAnimation { duration: 50 }
                 ParallelAnimation {
                     PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }

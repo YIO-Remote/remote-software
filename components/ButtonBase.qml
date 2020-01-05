@@ -103,17 +103,17 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1}
+            PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1 }
             ParentChange { target: buttonContainer; parent: originParent }
             PropertyChanges {target: loader_main; state: "visible" }
             PropertyChanges {target: cardLoader; opacity: 0}
         },
         State {
             name: "open"
-            PropertyChanges {target: buttonContainer; width: 480; height: 720}
+            PropertyChanges {target: buttonContainer; width: 480; height: 720 }
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
-            PropertyChanges {target: cardLoader; opacity: 1}
+            PropertyChanges {target: cardLoader; opacity: 1 }
         }
     ]
 
@@ -123,7 +123,7 @@ Rectangle {
             SequentialAnimation {
                 ParallelAnimation {
                     PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.InExpo; duration: 300 }
                     ParentAnimation {
                         NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
                     }
@@ -135,7 +135,7 @@ Rectangle {
             to: "open"
             ParallelAnimation {
                 PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.5; duration: 400 }
-                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 1 }
+                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }

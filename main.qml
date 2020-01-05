@@ -303,18 +303,6 @@ ApplicationWindow {
             Transition {to: "hidden"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 800 }},
             Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
-
-        Connections {
-            target: loader_main.item
-            enabled: loader_main.status == Loader.Ready
-            ignoreUnknownSignals: true
-
-            onLoadedItems: {
-                console.debug("Setting loading screen to loaded");
-                loadingScreen.item.state = "loaded";
-                StandbyControl.init();
-            }
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
