@@ -21,27 +21,31 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#pragma once
+#include "apds9960light.h"
 
-#include "device.h"
+#include <QLoggingCategory>
+#include <QtDebug>
 
-// Error translation strings are defined here to include them on every build, independent of the platform!
-static QString ERR_DEV_HAPMOT_INIT = QObject::tr("Cannot initialize the haptic motor. Please restart the remote.");
+#include <cassert>
 
-class HapticMotor : public Device {
-    Q_OBJECT
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960.light");
 
- public:
-    enum Effect {
-        Click,
-        Bump,
-        Press,
-        Buzz
-    };
-    Q_ENUM(Effect)
+Apds9960LightSensor::Apds9960LightSensor(APDS9960 *apds, QObject *parent)
+    : LightSensor("APDS9960 light sensor", parent), p_apds(apds) {
+    assert(apds);
+}
 
-    Q_INVOKABLE virtual void playEffect(Effect effect) = 0;
+int Apds9960LightSensor::readAmbientLight() {
+    if (p_apds->isOpen()) {
+        while (!p_apds->colorDataReady()) {
+            delay(5);
+        }
 
- protected:
-    explicit HapticMotor(QString name, QObject* parent = nullptr) : Device(name, parent) {}
-};
+        m_ambientLight = p_apds->getAmbientLight();
+        qCDebug(CLASS_LC) << "Lux:" << m_ambientLight;
+    }
+
+    return static_cast<int>(m_ambientLight);
+}
+
+const QLoggingCategory &Apds9960LightSensor::logCategory() const { return CLASS_LC(); }

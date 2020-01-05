@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -27,7 +27,7 @@
 class InterruptHandlerMock : public InterruptHandler {
     Q_OBJECT
  public:
-    explicit InterruptHandlerMock(QObject* parent = nullptr) : InterruptHandler(parent) {}
+    explicit InterruptHandlerMock(QObject* parent = nullptr) : InterruptHandler("InterruptHandlerMock", parent) {}
 
     // InterruptHandler interface
  public:

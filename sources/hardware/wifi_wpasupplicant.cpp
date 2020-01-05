@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * Third party work used:
  *
@@ -58,12 +58,10 @@ WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl* webServerControl, SystemS
       p_systemService(systemService),
       m_wpaSupplicantSocketPath(HW_DEF_WIFI_WPA_SOCKET),
       m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 /****************************************************************************/
 WifiWpaSupplicant::~WifiWpaSupplicant() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     if (m_ctrl) {
         if (m_ctrlNotifier) {
             m_ctrlNotifier->setEnabled(false);
@@ -420,7 +418,6 @@ void WifiWpaSupplicant::setCountryCode(const QString& countryCode) {
 
 /****************************************************************************/
 bool WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& network) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     QString cmd("WPS_PBC %1");
     return controlRequest(cmd.arg(network.bssid()));
 }

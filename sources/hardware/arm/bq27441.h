@@ -112,6 +112,12 @@ class BQ27441 : public BatteryFuelGauge {
     // Extended Data Commands
     uint16_t getOpConfig();
 
+    // Device interface
+ public:
+    bool open() override;
+    void close() override;
+
+ protected:
     // Control Subcommands
     uint16_t getControlStatus();
     uint16_t getDeviceType();
@@ -121,10 +127,7 @@ class BQ27441 : public BatteryFuelGauge {
     uint16_t getChemID();
     void     reset();
 
-    // Device interface
- public:
-    bool open() override;
-    void close() override;
+    const QLoggingCategory &logCategory() const override;
 
  private:
     QString m_i2cDevice;

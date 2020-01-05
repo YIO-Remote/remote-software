@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -41,6 +42,10 @@ class DisplayControlYio : public DisplayControl {
     Q_INVOKABLE void setBrightness(int from, int to) override;
 
     explicit DisplayControlYio(QObject *parent = nullptr);
+
+    // Device interface
+ protected:
+    const QLoggingCategory &logCategory() const override;
 
  private:
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);

@@ -22,17 +22,28 @@
 
 #include "device.h"
 
+#include <QLoggingCategory>
+#include <QtDebug>
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.device");
+
+Device::Device(QString name, QObject *parent) : QObject(parent), m_open(false), m_name(name) {}
+
 Device::~Device() {
     if (m_open) {
         close();
     }
 }
 
-bool Device::isOpen() const { return m_open; }
+bool Device::isOpen() const {
+    return m_open;
+}
 
 bool Device::open() {
     m_open = true;
     m_errorString.clear();
+    qCDebug(logCategory()) << DBG_DEVICE_OPENED << m_name;
+    emit ready();
 
     return true;
 }
@@ -44,8 +55,13 @@ void Device::close() {
 
     emit aboutToClose();
     m_open = false;
+    qCDebug(logCategory()) << "Closed device" << m_name;
 }
 
 QString Device::errorString() const { return m_errorString; }
 
 void Device::setErrorString(const QString &str) { m_errorString = str; }
+
+const QLoggingCategory &Device::logCategory() const {
+    return CLASS_LC();
+}

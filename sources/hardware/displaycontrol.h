@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -39,5 +40,5 @@ class DisplayControl : public Device {
     Q_INVOKABLE virtual void setBrightness(int from, int to) = 0;
 
  protected:
-    explicit DisplayControl(QObject* parent = nullptr) : Device(parent) {}
+    explicit DisplayControl(QString name, QObject* parent = nullptr) : Device(name, parent) {}
 };

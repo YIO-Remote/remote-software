@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * Third party work used:
@@ -224,6 +225,9 @@ class APDS9960 : public Device {
  public:
     bool open() override;
     void close() override;
+
+ protected:
+    const QLoggingCategory &logCategory() const override;
 
  private:
     QString m_i2cDevice;

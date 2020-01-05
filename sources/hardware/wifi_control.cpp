@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -39,11 +39,9 @@ WifiControl::WifiControl(QObject* parent)
       m_timerId(0),
       m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY),
       m_networkJoinRetryDelay(HW_DEF_WIFI_JOIN_DELAY) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 WifiControl::~WifiControl() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     stopScanTimer();
 }
 
@@ -86,12 +84,10 @@ void WifiControl::setConnected(bool connected) {
 WifiStatus WifiControl::wifiStatus() const { return m_wifiStatus; }
 
 WifiControl::ScanStatus WifiControl::scanStatus() const {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
     return m_scanStatus;
 }
 
 void WifiControl::setScanStatus(ScanStatus stat) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO << stat;
     m_scanStatus = stat;
     scanStatusChanged(m_scanStatus);
 }

@@ -1,6 +1,7 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Foo Bar <foo@bar.com>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -22,11 +23,6 @@
 
 #pragma once
 
-#include <QObject>
-#include <QtDebug>
-
-#include <cassert>
-
 #include "../lightsensor.h"
 #include "apds9960.h"
 
@@ -34,29 +30,17 @@ class Apds9960LightSensor : public LightSensor {
     Q_OBJECT
 
  public:
+    explicit Apds9960LightSensor(APDS9960* apds, QObject* parent = nullptr);
+
     int ambientLight() override { return static_cast<int>(m_ambientLight); }
 
-    Q_INVOKABLE int readAmbientLight() override {
-        if (p_apds->isOpen()) {
-            while (!p_apds->colorDataReady()) {
-                delay(5);
-            }
+    Q_INVOKABLE int readAmbientLight() override;
 
-            m_ambientLight = p_apds->getAmbientLight();
-            qDebug() << "Lux:" << m_ambientLight;
-        }
-
-        return static_cast<int>(m_ambientLight);
-    }
-
-    explicit Apds9960LightSensor(APDS9960* apds, QObject* parent = nullptr) : LightSensor(parent), p_apds(apds) {
-        assert(apds);
-    }
-
-    ~Apds9960LightSensor() override {}
+    // Device interface
+ protected:
+    const QLoggingCategory& logCategory() const override;
 
  private:
     APDS9960* p_apds;
-
-    uint16_t m_ambientLight = 100;
+    uint16_t  m_ambientLight = 100;
 };

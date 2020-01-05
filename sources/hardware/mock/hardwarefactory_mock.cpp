@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -36,7 +36,7 @@
 #include "webserver_mock.h"
 #include "wifi_mock.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwMock");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.mock");
 
 HardwareFactoryMock::HardwareFactoryMock(const QVariantMap &config, QObject *parent) : HardwareFactory(parent) {
     Q_UNUSED(config)

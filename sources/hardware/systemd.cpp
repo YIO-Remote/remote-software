@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -35,7 +35,6 @@ Systemd::Systemd(const QMap<SystemServiceName, QString> &serviceNameMap, QObject
       m_useSudo(HW_DEF_SYSTEMD_SUDO),
       m_systemctlTimeout(HW_DEF_SYSTEMD_TIMEOUT),
       m_serviceNameMap(serviceNameMap) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 void Systemd::setUseSudo(bool sudo) { m_useSudo = sudo; }

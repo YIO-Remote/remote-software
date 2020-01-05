@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -31,7 +32,8 @@ class Apds9960GestureSensor : public GestureSensor {
     Q_OBJECT
 
  public:
-    explicit Apds9960GestureSensor(APDS9960* apds, QObject* parent = nullptr) : GestureSensor(parent), p_apds(apds) {
+    explicit Apds9960GestureSensor(APDS9960* apds, QObject* parent = nullptr)
+        : GestureSensor("APDS9960 gesture sensor", parent), p_apds(apds) {
         assert(apds);
     }
 

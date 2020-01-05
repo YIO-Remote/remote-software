@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -32,9 +33,9 @@
 #define CS 105
 #define RST 104
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "BatCharger");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.battery");
 
-BatteryChargerYio::BatteryChargerYio(QObject *parent) : BatteryCharger(parent) {}
+BatteryChargerYio::BatteryChargerYio(QObject *parent) : BatteryCharger("YIO battery charger", parent) {}
 
 void BatteryChargerYio::batteryChargingOn() {
     pinMode(108, OUTPUT);
@@ -47,3 +48,5 @@ void BatteryChargerYio::batteryChargingOff() {
     digitalWrite(108, HIGH);
     qCDebug(CLASS_LC) << "Turning battery charging off";
 }
+
+const QLoggingCategory &BatteryChargerYio::logCategory() const { return CLASS_LC(); }

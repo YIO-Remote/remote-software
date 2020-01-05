@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * Third party work used:
@@ -32,20 +33,28 @@
 
 #include <unistd.h>
 
+#include "../device.h"
+#include "../proximitysensor.h"
 #include "apds9960.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "APDS9960");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960");
 
 APDS9960::APDS9960(const QString &i2cDevice, int i2cDeviceId, QObject *parent)
-    : Device(parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
+    : Device("APDS9960 sensor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
 
 APDS9960::~APDS9960() { close(); }
 
 bool APDS9960::open() {
+    if (isOpen()) {
+        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        return true;
+    }
+
     if (!begin()) {
+        setErrorString(ERR_DEV_PROXIMITY_INIT);
+        emit error(InitializationError, ERR_DEV_PROXIMITY_INIT);
         return false;
     }
-    qCDebug(CLASS_LC) << "Successfully opened";
 
     return Device::open();
 }
@@ -59,7 +68,13 @@ void APDS9960::close() {
     }
 }
 
+const QLoggingCategory &APDS9960::logCategory() const {
+    return CLASS_LC();
+}
+
 void APDS9960::enable(bool en) {
+    ASSERT_DEVICE_OPEN()
+
     _enable.PON = en;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ENABLE, _enable.get());
 }
@@ -68,6 +83,7 @@ bool APDS9960::check() {
     // Check if the sensor is still there on the I2C bus
     uint8_t x = uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_ID));
     if (x != 0xAB) {
+        emit error(CommunicationError, ERR_DEV_PROXIMITY_COMM);
         return false;
     }
     return true;
@@ -133,20 +149,28 @@ bool APDS9960::begin(uint16_t iTimeMS, apds9960AGain_t aGain) {
 }
 
 void APDS9960::setADCIntegrationTime(uint16_t iTimeMS) {
+    ASSERT_DEVICE_OPEN()
+
     float temp;
 
     // convert ms into 2.78ms increments
     temp = iTimeMS;
     temp /= 2.78f;
     temp = 256 - temp;
-    if (temp > 255) temp = 255;
-    if (temp < 0) temp = 0;
+    if (temp > 255) {
+        temp = 255;
+    }
+    if (temp < 0) {
+        temp = 0;
+    }
 
     /* Update the timing register */
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ATIME, static_cast<uint8_t>(temp));
 }
 
 float APDS9960::getADCIntegrationTime() {
+    ASSERT_DEVICE_OPEN(0)
+
     float temp;
 
     temp = static_cast<float>(wiringPiI2CReadReg8(m_i2cFd, APDS9960_ATIME));
@@ -158,6 +182,8 @@ float APDS9960::getADCIntegrationTime() {
 }
 
 void APDS9960::setADCGain(apds9960AGain_t aGain) {
+    ASSERT_DEVICE_OPEN()
+
     _control.AGAIN = aGain;
 
     /* Update the timing register */
@@ -165,10 +191,14 @@ void APDS9960::setADCGain(apds9960AGain_t aGain) {
 }
 
 apds9960AGain_t APDS9960::getADCGain() {
+    ASSERT_DEVICE_OPEN(APDS9960_AGAIN_1X)
+
     return apds9960AGain_t((wiringPiI2CReadReg8(m_i2cFd, APDS9960_CONTROL) & 0x03));
 }
 
 void APDS9960::setProxGain(apds9960PGain_t pGain) {
+    ASSERT_DEVICE_OPEN()
+
     _control.PGAIN = pGain;
 
     /* Update the timing register */
@@ -176,10 +206,14 @@ void APDS9960::setProxGain(apds9960PGain_t pGain) {
 }
 
 apds9960PGain_t APDS9960::getProxGain() {
+    ASSERT_DEVICE_OPEN(APDS9960_PGAIN_1X)
+
     return apds9960PGain_t((wiringPiI2CReadReg8(m_i2cFd, APDS9960_CONTROL) & 0x0C));
 }
 
 void APDS9960::setProxPulse(apds9960PPulseLen_t pLen, uint8_t pulses) {
+    ASSERT_DEVICE_OPEN()
+
     if (pulses < 1) pulses = 1;
     if (pulses > 64) pulses = 64;
     pulses--;
@@ -191,23 +225,31 @@ void APDS9960::setProxPulse(apds9960PPulseLen_t pLen, uint8_t pulses) {
 }
 
 void APDS9960::enableProximity(bool en) {
+    ASSERT_DEVICE_OPEN()
+
     _enable.PEN = en;
 
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ENABLE, _enable.get());
 }
 
 void APDS9960::enableProximityInterrupt() {
+    ASSERT_DEVICE_OPEN()
+
     _enable.PIEN = 1;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ENABLE, _enable.get());
     clearInterrupt();
 }
 
 void APDS9960::disableProximityInterrupt() {
+    ASSERT_DEVICE_OPEN()
+
     _enable.PIEN = 0;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ENABLE, _enable.get());
 }
 
 void APDS9960::setProximityInterruptThreshold(uint8_t low, uint8_t high, uint8_t persistance) {
+    ASSERT_DEVICE_OPEN()
+
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_PILT, low);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_PIHT, high);
 
@@ -217,35 +259,58 @@ void APDS9960::setProximityInterruptThreshold(uint8_t low, uint8_t high, uint8_t
 }
 
 bool APDS9960::getProximityInterrupt() {
+    ASSERT_DEVICE_OPEN(false)
+
     _status.set(uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_STATUS)));
     return _status.PINT;
 }
 
-uint8_t APDS9960::readProximity() { return uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_PDATA)); }
+uint8_t APDS9960::readProximity() {
+    ASSERT_DEVICE_OPEN(0)
+
+    return uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_PDATA));
+}
 
 bool APDS9960::gestureValid() {
+    if (!isOpen()) {
+        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_CLOSED;
+        return false;
+    }
+
     _gstatus.set(uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_GSTATUS)));
     return _gstatus.GVALID;
 }
 
 void APDS9960::setGestureDimensions(uint8_t dims) {
+    ASSERT_DEVICE_OPEN()
+
     _gconf3.GDIMS = dims;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GCONF3, _gconf3.get());
 }
 
 void APDS9960::setGestureFIFOThreshold(uint8_t thresh) {
+    ASSERT_DEVICE_OPEN()
+
     _gconf1.GFIFOTH = thresh;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GCONF1, _gconf1.get());
 }
 
 void APDS9960::setGestureGain(uint8_t gain) {
+    ASSERT_DEVICE_OPEN()
+
     _gconf2.GGAIN = gain;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GCONF2, _gconf2.get());
 }
 
-void APDS9960::setGestureProximityThreshold(uint8_t thresh) { wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GPENTH, thresh); }
+void APDS9960::setGestureProximityThreshold(uint8_t thresh) {
+    ASSERT_DEVICE_OPEN()
+
+    wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GPENTH, thresh);
+}
 
 void APDS9960::setGestureOffset(uint8_t offset_up, uint8_t offset_down, uint8_t offset_left, uint8_t offset_right) {
+    ASSERT_DEVICE_OPEN()
+
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GOFFSET_U, offset_up);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GOFFSET_D, offset_down);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GOFFSET_L, offset_left);
@@ -253,6 +318,8 @@ void APDS9960::setGestureOffset(uint8_t offset_up, uint8_t offset_down, uint8_t 
 }
 
 void APDS9960::enableGesture(bool en) {
+    ASSERT_DEVICE_OPEN()
+
     if (!en) {
         _gconf4.GMODE = 0;
         wiringPiI2CWriteReg8(m_i2cFd, APDS9960_GCONF4, _gconf4.get());
@@ -271,6 +338,8 @@ void APDS9960::resetCounts() {
 }
 
 void APDS9960::setLED(apds9960LedDrive_t drive, apds9960LedBoost_t boost) {
+    ASSERT_DEVICE_OPEN()
+
     // set BOOST
     _config2.LED_BOOST = boost;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_CONFIG2, _config2.get());
@@ -280,16 +349,22 @@ void APDS9960::setLED(apds9960LedDrive_t drive, apds9960LedBoost_t boost) {
 }
 
 void APDS9960::enableColor(bool en) {
+    ASSERT_DEVICE_OPEN()
+
     _enable.AEN = en;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ENABLE, _enable.get());
 }
 
 bool APDS9960::colorDataReady() {
+    ASSERT_DEVICE_OPEN(false)
+
     _status.set(uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_STATUS)));
     return _status.AVALID;
 }
 
 void APDS9960::getColorData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c) {
+    ASSERT_DEVICE_OPEN()
+
     *c = uint16_t(wiringPiI2CReadReg16(m_i2cFd, APDS9960_CDATAL));
     *r = uint16_t(wiringPiI2CReadReg16(m_i2cFd, APDS9960_RDATAL));
     *g = uint16_t(wiringPiI2CReadReg16(m_i2cFd, APDS9960_GDATAL));
@@ -297,6 +372,8 @@ void APDS9960::getColorData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c) 
 }
 
 uint16_t APDS9960::getAmbientLight() {
+    ASSERT_DEVICE_OPEN(0)
+
     uint16_t low = static_cast<uint16_t>(wiringPiI2CReadReg8(m_i2cFd, APDS9960_CDATAL));
     uint16_t high = static_cast<uint16_t>(wiringPiI2CReadReg8(m_i2cFd, APDS9960_CDATAH));
 
@@ -304,6 +381,8 @@ uint16_t APDS9960::getAmbientLight() {
 }
 
 uint16_t APDS9960::calculateLux(uint16_t r, uint16_t g, uint16_t b) {
+    ASSERT_DEVICE_OPEN(0)
+
     float illuminance;
 
     /* This only uses RGB ... how can we integrate clear or calculate lux */
@@ -314,16 +393,22 @@ uint16_t APDS9960::calculateLux(uint16_t r, uint16_t g, uint16_t b) {
 }
 
 void APDS9960::enableColorInterrupt() {
+    ASSERT_DEVICE_OPEN()
+
     _enable.AIEN = 1;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ENABLE, _enable.get());
 }
 
 void APDS9960::disableColorInterrupt() {
+    ASSERT_DEVICE_OPEN()
+
     _enable.AIEN = 0;
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_ENABLE, _enable.get());
 }
 
 void APDS9960::clearInterrupt() {
+    ASSERT_DEVICE_OPEN()
+
     //  write(APDS9960_AICLEAR, NULL, 0);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_AICLEAR, 0x00);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_PICLEAR, 0x00);
@@ -331,6 +416,8 @@ void APDS9960::clearInterrupt() {
 }
 
 void APDS9960::setIntLimits(uint16_t low, uint16_t high) {
+    ASSERT_DEVICE_OPEN()
+
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_AILTIL, low & 0xFF);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_AILTH, low >> 8);
     wiringPiI2CWriteReg8(m_i2cFd, APDS9960_AIHTL, high & 0xFF);

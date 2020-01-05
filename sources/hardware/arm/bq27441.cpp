@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -30,34 +31,41 @@
 
 #include "../../notifications.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "BQ27441");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.BQ27441");
 
 BQ27441::BQ27441(const QString &i2cDevice, int i2cDeviceId, QObject *parent)
-    : BatteryFuelGauge(parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
+    : BatteryFuelGauge("BQ27441 battery fuel gauge", parent)
+    , m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
 
 BQ27441::~BQ27441() { close(); }
 
 bool BQ27441::open() {
+    if (isOpen()) {
+        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        return true;
+    }
+
     /* Initialize I2C */
+    bool initialized = false;
     m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
     if (m_i2cFd == -1) {
         qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
     } else {
-        Device::open();
+        // Get device type and set lipo_status
+        /// To be implemented later
+        uint16_t bq27441_device_id = getDeviceType();
+
+        initialized = bq27441_device_id == BQ27441_DEVICE_ID;
     }
 
-    // Get device type and set lipo_status
-    /// To be implemented later
-    uint16_t bq27441_device_id = getDeviceType();
-
-    if (bq27441_device_id != BQ27441_DEVICE_ID) {
-        setErrorString(tr("Cannot initialize the battery sensor. Please restart the remote."));
+    if (!initialized) {
+        qCCritical(CLASS_LC) << "Cannot initialize the BQ27441 battery sensor.";
+        setErrorString(ERR_DEV_BATTERY_INIT);
+        emit error(InitializationError, ERR_DEV_BATTERY_INIT);
         return false;
-    } else {
-        qCDebug(CLASS_LC) << "Successfully opened";
     }
 
-    return isOpen();
+    return Device::open();
 }
 
 void BQ27441::close() {
@@ -69,32 +77,33 @@ void BQ27441::close() {
     }
 }
 
+const QLoggingCategory &BQ27441::logCategory() const {
+    return CLASS_LC();
+}
+
 void BQ27441::begin() {
-    if (!isOpen()) {
-        return;
-    }
+    ASSERT_DEVICE_OPEN()
+
     /*        QFile poweronFile("/usr/bin/yio-remote/poweron");
     if (poweronFile.exists()) {
         // remove the file, so on a reboot we won't calibare the gauge again
         poweronFile.remove();
 
         // calibrate the gauge
-        qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+        qCDebug(CLASS_LC) << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
         // changeCapacity(m_capacity);
     } else */
     if (getDesignCapacity() != m_capacity) {
-        qDebug() << "Design capacity does not match.";
+        qCDebug(CLASS_LC) << "Design capacity does not match.";
 
         // calibrate the gauge
-        qDebug() << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+        qCDebug(CLASS_LC) << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
         changeCapacity(m_capacity);
     }
 }
 
 void BQ27441::changeCapacity(int newCapacity) {
-    if (!isOpen()) {
-        return;
-    }
+    ASSERT_DEVICE_OPEN()
 
     uint16_t capacity = uint16_t(newCapacity);
     // unseal the device
@@ -212,112 +221,86 @@ void BQ27441::changeCapacity(int newCapacity) {
 }
 
 int BQ27441::getTemperatureC() {  // Result in 1 Celcius
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     int raw = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_TEMP);
     return (raw / 10) - 273;
 }
 
 int BQ27441::getVoltage() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);
 }
 
 uint16_t BQ27441::getFlags() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FLAGS));
 }
 
 uint16_t BQ27441::getNominalAvailableCapacity() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_NOM_CAPACITY));
 }
 
 int BQ27441::getFullAvailableCapacity() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVAIL_CAPACITY);
 }
 
 int BQ27441::getRemainingCapacity() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAPACITY);
 }
 
 int BQ27441::getFullChargeCapacity() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAPACITY);
 }
 
 int BQ27441::getAverageCurrent() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_CURRENT);
 }
 
 int16_t BQ27441::getStandbyCurrent() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_STDBY_CURRENT));
 }
 
 int16_t BQ27441::getMaxLoadCurrent() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_MAX_CURRENT));
 }
 
 int BQ27441::getAveragePower() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_POWER);
 }
 
 int BQ27441::getStateOfCharge() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     int result = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOC);
     if (result < 0) {
         close();
         setErrorString(ERR_DEV_BATTERY_COMM);
-        Notifications::getInstance()->add(true, ERR_DEV_BATTERY_COMM);
+        emit error(CommunicationError, ERR_DEV_BATTERY_COMM);
     }
     return result;
 }
 
 int16_t BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     int raw = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_INT_TEMP);
     // Convert to 0.1 Celsius using integer math
@@ -325,58 +308,44 @@ int16_t BQ27441::getInternalTemperatureC() {  // Result in 0.1 Celsius
 }
 
 int BQ27441::getStateOfHealth() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     int raw = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOH);
     return raw & 0x0ff;
 }
 
 uint16_t BQ27441::getRemainingCapacityUnfiltered() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAP_UNFL));
 }
 
 uint16_t BQ27441::getRemainingCapacityFiltered() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_REM_CAP_FIL));
 }
 
 uint16_t BQ27441::getFullChargeCapacityUnfiltered() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAP_UNFL));
 }
 
 uint16_t BQ27441::getFullChargeCapacityFiltered() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_FULL_CAP_FIL));
 }
 
 uint16_t BQ27441::getStateOfChargeUnfiltered() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_SOC_UNFL));
 }
 
 uint16_t BQ27441::getOpConfig() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     uint16_t result = static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_EXTENDED_OPCONFIG));
     if ((result & (1 << 5)) == 0) {
@@ -387,44 +356,34 @@ uint16_t BQ27441::getOpConfig() {
 }
 
 int BQ27441::getDesignCapacity() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     return wiringPiI2CReadReg16(m_i2cFd, BQ27441_EXTENDED_CAPACITY);
 }
 
 uint16_t BQ27441::getControlStatus() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, static_cast<uint16_t>(BQ27441_CONTROL_STATUS));
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL));
 }
 
 uint16_t BQ27441::getDeviceType() {
-    if (!isOpen()) {
-        return 0;
-    }
-
+    // do NOT asssert open status: Called from within open() where the device is being initialized!
     wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, static_cast<uint16_t>(BQ27441_CONTROL_DEVICE_TYPE));
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL));
 }
 
 uint16_t BQ27441::getChemID() {
-    if (!isOpen()) {
-        return 0;
-    }
+    ASSERT_DEVICE_OPEN(0)
 
     wiringPiI2CWriteReg16(m_i2cFd, BQ27441_COMMAND_CONTROL, static_cast<uint16_t>(BQ27441_CONTROL_CHEM_ID));
     return static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_CONTROL));
 }
 
 void BQ27441::reset() {
-    if (!isOpen()) {
-        return;
-    }
+    ASSERT_DEVICE_OPEN()
+
     // unseal the device
     wiringPiI2CWriteReg8(m_i2cFd, 0x00, 0x00);
     wiringPiI2CWriteReg8(m_i2cFd, 0x01, 0x80);

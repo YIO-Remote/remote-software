@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -35,9 +36,9 @@
 #define CS   105
 #define RST  104
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "Display");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.display");
 
-DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl(parent) { }
+DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl("YIO display control", parent) { }
 
 bool DisplayControlYio::setMode(Mode mode) {
     if (!isOpen()) {
@@ -211,4 +212,9 @@ void DisplayControlYio::spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t D
     digitalWrite(CLK, LOW);
     digitalWrite(MOSI, LOW);
     nanosleep(&ts3, NULL);
+}
+
+
+const QLoggingCategory &DisplayControlYio::logCategory() const {
+    return CLASS_LC();
 }

@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -26,6 +26,7 @@
 #include <cassert>
 
 #include "../jsonfile.h"
+#include "../notifications.h"
 #include "hardwarefactory.h"
 
 #if defined(__arm__)
@@ -36,13 +37,19 @@
 #include "mock/hardwarefactory_mock.h"
 #endif
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwFactory");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory");
 
 HardwareFactory *HardwareFactory::s_instance = nullptr;
 
 HardwareFactory::HardwareFactory(QObject *parent) : QObject(parent) {}
 
 HardwareFactory::~HardwareFactory() { s_instance = nullptr; }
+
+void HardwareFactory::onError(Device::DeviceError deviceError, const QString &message) {
+    if (deviceError == Device::InitializationError || deviceError == Device::CommunicationError) {
+        Notifications::getInstance()->add(true, message);
+    }
+}
 
 HardwareFactory *HardwareFactory::build(const QString &configFileName, const QString &schemaFileName) {
     JsonFile hwCfg(configFileName, schemaFileName);

@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -27,7 +27,9 @@
 class BatteryFuelGaugeMock : public BatteryFuelGauge {
     Q_OBJECT
  public:
-    explicit BatteryFuelGaugeMock(QObject* parent = nullptr) : BatteryFuelGauge(parent) { setCapacity(2500); }
+    explicit BatteryFuelGaugeMock(QObject* parent = nullptr) : BatteryFuelGauge("BatteryFuelGaugeMock", parent) {
+        setCapacity(2500);
+    }
 
     ~BatteryFuelGaugeMock() override {}
 

@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -45,7 +45,7 @@
 #include "wifi_wpasupplicant.h"
 #endif
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwRpi0");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.rpi0");
 
 HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *parent)
     : HardwareFactory(parent),
@@ -61,15 +61,14 @@ HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *par
       p_lightSensor(nullptr),
       p_proximitySensor(nullptr) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
 }
 
 int HardwareFactoryRPi0::initialize() {
-    qCInfo(CLASS_LC) << "Initializing WiFi...";
     if (!p_wifiControl->init()) {
-        Notifications::getInstance()->add(true, QObject::tr("WiFi device was not found."));
+        Notifications::getInstance()->add(true, ERR_DEV_INIT_WIFI);
+        return Device::InitializationError;
     }
-    qCInfo(CLASS_LC) << "WiFi initialized!";
+    qCDebug(CLASS_LC) << "WiFi initialized!";
     return 0;
 }
 

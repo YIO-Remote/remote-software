@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -32,4 +33,8 @@ class BatteryChargerYio : public BatteryCharger {
     Q_INVOKABLE void batteryChargingOff() override;
 
     explicit BatteryChargerYio(QObject *parent = nullptr);
+
+    // Device interface
+ protected:
+    const QLoggingCategory &logCategory() const override;
 };

@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * Third party work used:
@@ -37,21 +38,26 @@
 
 #include <unistd.h>
 
-#include "../../notifications.h"
 #include "drv2605.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwYio");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.DRV2605");
 
 Drv2605::Drv2605(const QString& i2cDevice, int i2cDeviceId, QObject* parent)
-    : HapticMotor(parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
+    : HapticMotor("DRV2605 haptic motor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
 
 Drv2605::~Drv2605() { close(); }
 
 bool Drv2605::open() {
+    if (isOpen()) {
+        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        return true;
+    }
+
     m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
     if (m_i2cFd == -1) {
         qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
-        setErrorString(tr("Cannot initialize the haptic motor. Please restart the remote."));
+        setErrorString(ERR_DEV_HAPMOT_INIT);
+        emit error(DeviceError::InitializationError, ERR_DEV_HAPMOT_INIT);
         return false;
     }
 
@@ -80,8 +86,6 @@ bool Drv2605::open() {
 
     selectLibrary(1);
     setMode(DRV2605_MODE_INTTRIG);
-
-    qCDebug(CLASS_LC) << "Successfully opened";
 
     return true;
 }
@@ -138,4 +142,9 @@ void Drv2605::writeRegister8(uint8_t reg, uint8_t val) {
         return;
     }
     wiringPiI2CWriteReg8(m_i2cFd, reg, val);
+}
+
+
+const QLoggingCategory &Drv2605::logCategory() const {
+    return CLASS_LC();
 }

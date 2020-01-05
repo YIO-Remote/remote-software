@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -22,11 +23,6 @@
 
 #pragma once
 
-#include <QObject>
-#include <QtDebug>
-
-#include <cassert>
-
 #include "../proximitysensor.h"
 #include "apds9960.h"
 
@@ -34,60 +30,21 @@ class Apds9960ProximitySensor : public ProximitySensor {
     Q_OBJECT
 
  public:
+    explicit Apds9960ProximitySensor(APDS9960* apds, QObject* parent = nullptr);
+
     int proximitySetting() override { return m_proximitySetting; }
 
     void setProximitySetting(int proximity) override { m_proximitySetting = proximity; }
 
     int proximity() override { return m_proximity; }
 
-    Q_INVOKABLE void proximityDetection(bool state) override {
-        if (p_apds->isOpen()) {
-            if (state != m_proximityDetection) {
-                if (state) {
-                    // turn on
-                    p_apds->enableProximityInterrupt();
+    Q_INVOKABLE void proximityDetection(bool state) override;
 
-                } else {
-                    // turn off
-                    p_apds->disableProximityInterrupt();
-                }
-            }
-        }
+    Q_INVOKABLE void readInterrupt() override;
 
-        m_proximityDetection = state;
-    }
-
-    Q_INVOKABLE void readInterrupt() override {
-        if (p_apds->isOpen()) {
-            m_proximity = p_apds->readProximity();
-            if (m_proximity > 0) {
-                // prevent log flooding while docking
-                qDebug() << "Proximity" << m_proximity;
-            }
-
-            if (m_proximityDetection) {
-                if (m_proximity > m_proximitySetting) {
-                    // turn of proximity detection
-                    qDebug() << "Proximity detected, turning detection off";
-                    proximityDetection(false);
-
-                    // let qml know
-                    emit proximityEvent();
-                }
-            }
-
-            // clear the interrupt
-            p_apds->clearInterrupt();
-        }
-    }
-
- public:
-    explicit Apds9960ProximitySensor(APDS9960* apds, QObject* parent = nullptr)
-        : ProximitySensor(parent), p_apds(apds) {
-        assert(apds);
-    }
-
-    ~Apds9960ProximitySensor() override {}
+    // Device interface
+ protected:
+    const QLoggingCategory& logCategory() const override;
 
  private:
     APDS9960* p_apds;
