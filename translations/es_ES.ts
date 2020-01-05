@@ -444,7 +444,7 @@
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>archivo JSON &apos;%1&apos; no válido en offset %2</translation>
     </message>
   </context>
   <context>
@@ -481,7 +481,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
   </context>
   <context>
@@ -512,7 +512,7 @@
     <message>
       <location filename="../basic_ui/Notification.qml" line="267"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Descartar</translation>
     </message>
   </context>
   <context>
@@ -520,7 +520,7 @@
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="39"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Notificaciones</translation>
     </message>
   </context>
   <context>
@@ -585,12 +585,12 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="97"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Perfiles</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Para editar sus perfiles, utilice la herramienta de configuración web en ajustes.</translation>
     </message>
   </context>
   <context>
@@ -598,7 +598,7 @@
     <message>
       <location filename="../sources/hardware/hardwarefactory_rpi0.cpp" line="70"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>Dispositivo WiFi no encontrado.</translation>
     </message>
   </context>
   <context>
@@ -607,14 +607,14 @@
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="42"/>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="63"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>Configuración del mando</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="98"/>
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
+      <translation>Utilice su navegador web para configurar su mando YIO o descargue y restaure una copia de seguridad. Visitar la página:
 
 </translation>
     </message>
@@ -626,7 +626,7 @@
       <location filename="../basic_ui/pages/Settings.qml" line="32"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Settings</translation>
+      <translation>Ajustes</translation>
     </message>
   </context>
   <context>
@@ -645,8 +645,8 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="95"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Busca actualizaciones y actualiza automáticamente cuando esté disponible una nueva versión de software.
+Las actualizaciones se instalan entre las 03:00 am y las 05:00 am.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
@@ -800,7 +800,7 @@ connect to your Wi-Fi network.</translation>
       <location filename="../wifiSetup.qml" line="316"/>
       <location filename="../wifiSetup.qml" line="371"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Reiniciar</translation>
     </message>
   </context>
 </TS>
