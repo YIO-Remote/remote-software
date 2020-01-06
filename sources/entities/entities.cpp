@@ -190,12 +190,13 @@ void Entities::addMediaplayersPlaying(const QString &entity_id) {
         QTimer *timer = m_mediaplayersTimers.value(entity_id);
         if (timer) {
             timer->stop();
-            timer->deleteLater();
+            delete timer;
             m_mediaplayersTimers.remove(entity_id);
         }
     }
 
     QObject *o = get(entity_id);
+    o->setParent(this);
 
     if (!m_mediaplayersPlaying.contains(entity_id) && o) {
         m_mediaplayersPlaying.insert(entity_id, o);
@@ -218,8 +219,8 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id) {
             if (m_mediaplayersTimers.contains(entity_id))
                 m_mediaplayersTimers.remove(entity_id);
 
-            timer->deleteLater();
-            context->deleteLater();
+            delete timer;
+            delete context;
             emit mediaplayersPlayingChanged();
         });
 

@@ -32,6 +32,7 @@
 #include <wiringPiI2C.h>
 
 #include "../batteryfuelgauge.h"
+#include "../interrupthandler.h"
 
 /*****************************************************************************/
 // BQ27441 Device definitions
@@ -80,22 +81,25 @@ class BQ27441 : public BatteryFuelGauge {
     Q_OBJECT
 
  public:
-    explicit BQ27441(const QString &i2cDevice = "/dev/i2c-3", int i2cDeviceId = BQ27441_I2C_ADDRESS,
-                     QObject *parent = nullptr);
+    explicit BQ27441(InterruptHandler *interruptHandler, const QString &i2cDevice = "/dev/i2c-3",
+                     int i2cDeviceId = BQ27441_I2C_ADDRESS, QObject *parent = nullptr);
     ~BQ27441() override;
 
-    Q_INVOKABLE void begin() override;
-    Q_INVOKABLE int  getVoltage() override;
-    Q_INVOKABLE int  getFullChargeCapacity() override;
-    Q_INVOKABLE int  getAverageCurrent() override;
-    Q_INVOKABLE int  getAveragePower() override;
-    Q_INVOKABLE int  getStateOfCharge() override;
-    Q_INVOKABLE int16_t getInternalTemperatureC() override;  // Result in 0.1 Celsius
-    Q_INVOKABLE int     getStateOfHealth() override;
-    Q_INVOKABLE int     getFullAvailableCapacity() override;
-    Q_INVOKABLE int     getRemainingCapacity() override;
-    Q_INVOKABLE int     getDesignCapacity() override;
-    Q_INVOKABLE void    changeCapacity(int newCapacity) override;
+    void    begin() override;
+    int     getVoltage() override;
+    int     getFullChargeCapacity() override;
+    int     getAverageCurrent() override;
+    int     getAveragePower() override;
+    int     getStateOfCharge() override;
+    int16_t getInternalTemperatureC() override;  // Result in 0.1 Celsius
+    int     getStateOfHealth() override;
+    int     getFullAvailableCapacity() override;
+    int     getRemainingCapacity() override;
+    int     getDesignCapacity() override;
+    void    changeCapacity(int newCapacity) override;
+    int     getLevel() override;
+    int     getHealth() override;
+    bool    getIsCharging() override;
 
     int      getTemperatureC();  // Result in 1 Celsius
     uint16_t getFlags();
@@ -133,4 +137,12 @@ class BQ27441 : public BatteryFuelGauge {
     QString m_i2cDevice;
     int     m_i2cDeviceId;
     int     m_i2cFd;
+
+    int  m_level                = 100;
+    int  m_health               = 100;
+    int  m_voltage              = 5;
+    int  m_averagePower         = 300;
+    bool m_isCharging           = false;
+    bool m_wasLowBatteryWarning = false;
+    void updateBatteryValues();
 };

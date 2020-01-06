@@ -29,28 +29,43 @@
 static QString ERR_DEV_BATTERY_INIT = QObject::tr("Cannot initialize the battery sensor. Please restart the remote.");
 static QString ERR_DEV_BATTERY_COMM = QObject::tr("Battery sensor communication error. Please restart the remote.");
 
-
 class BatteryFuelGauge : public Device {
     Q_OBJECT
     Q_PROPERTY(int capacity READ getCapacity WRITE setCapacity)
+    Q_PROPERTY(float level READ getLevel NOTIFY levelChanged)
+    Q_PROPERTY(int health READ getHealth NOTIFY healthChanged)
+    Q_PROPERTY(int averagePower READ getAveragePower NOTIFY averagePowerChanged)
+    Q_PROPERTY(bool isCharging READ getIsCharging NOTIFY isChargingChanged)
 
  public:
-    Q_INVOKABLE virtual void    begin()                         = 0;
-    Q_INVOKABLE virtual int     getVoltage()                    = 0;
-    Q_INVOKABLE virtual int     getFullChargeCapacity()         = 0;
-    Q_INVOKABLE virtual int     getAverageCurrent()             = 0;
-    Q_INVOKABLE virtual int     getAveragePower()               = 0;
-    Q_INVOKABLE virtual int     getStateOfCharge()              = 0;
-    Q_INVOKABLE virtual int16_t getInternalTemperatureC()       = 0;  // Result in 0.1 Celsius
-    Q_INVOKABLE virtual int     getStateOfHealth()              = 0;
-    Q_INVOKABLE virtual int     getFullAvailableCapacity()      = 0;
-    Q_INVOKABLE virtual int     getRemainingCapacity()          = 0;
-    Q_INVOKABLE virtual int     getDesignCapacity()             = 0;
-    Q_INVOKABLE virtual void    changeCapacity(int newCapacity) = 0;
+    virtual void    begin()                         = 0;
+    virtual int     getVoltage()                    = 0;
+    virtual int     getFullChargeCapacity()         = 0;
+    virtual int     getAverageCurrent()             = 0;
+    virtual int     getAveragePower()               = 0;
+    virtual int     getStateOfCharge()              = 0;
+    virtual int16_t getInternalTemperatureC()       = 0;  // Result in 0.1 Celsius
+    virtual int     getStateOfHealth()              = 0;
+    virtual int     getFullAvailableCapacity()      = 0;
+    virtual int     getRemainingCapacity()          = 0;
+    virtual int     getDesignCapacity()             = 0;
+    virtual void    changeCapacity(int newCapacity) = 0;
+    virtual int     getLevel()                      = 0;
+    virtual int     getHealth()                     = 0;
+    virtual bool    getIsCharging()                 = 0;
 
     void setCapacity(int capacity) { m_capacity = capacity; }
 
     int getCapacity() { return m_capacity; }
+
+ signals:
+    void levelChanged();
+    void healthChanged();
+    void averagePowerChanged();
+    void lowBattery();          // Signal emitted around 10%
+    void criticalLowBattery();  // At this point the remote needs to shut down
+    void isChargingChanged();
+    void chargingDone();
 
  protected:
     explicit BatteryFuelGauge(QString name, QObject *parent = nullptr) : Device(name, parent) {}

@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
@@ -21,6 +21,7 @@
  *****************************************************************************/
 #pragma once
 
+#include <QDateTime>
 #include <QObject>
 #include <QTimer>
 #include <QVariant>
@@ -43,6 +44,7 @@ class StandbyControl : public QObject {
     Q_PROPERTY(int mode READ mode WRITE setMode NOTIFY modeChanged)
     Q_PROPERTY(QString screenOnTime READ screenOnTime NOTIFY screenOnTimeChanged)
     Q_PROPERTY(QString screenOffTime READ screenOffTime NOTIFY screenOffTimeChanged)
+    Q_PROPERTY(QVariant batteryData READ batteryData NOTIFY batteryDataChanged)
 
     int              mode() { return m_mode; }
     Q_INVOKABLE void setMode(int mode);
@@ -50,13 +52,17 @@ class StandbyControl : public QObject {
     Q_INVOKABLE void init();
     Q_INVOKABLE void shutdown();
 
+    Q_INVOKABLE void wakeup();
+
     QString screenOnTime() { return secondsToHours(m_screenOnTime); }
     QString screenOffTime() { return secondsToHours(m_screenOffTime); }
 
+    QVariant batteryData() { return m_batteryData; }
+
     explicit StandbyControl(DisplayControl* displayControl, ProximitySensor* proximitySensor, LightSensor* lightSensor,
                             TouchEventFilter* touchEventFilter, InterruptHandler* interruptHandler,
-                            ButtonHandler* buttonHandler, WifiControl* wifiControl, Config* config, YioAPI* api,
-                            Integrations* integrations, QObject* parent = nullptr);
+                            ButtonHandler* buttonHandler, WifiControl* wifiControl, BatteryFuelGauge* batteryFuelGauge,
+                            Config* config, YioAPI* api, Integrations* integrations, QObject* parent = nullptr);
     virtual ~StandbyControl();
 
     static StandbyControl* getInstance() { return s_instance; }
@@ -68,6 +74,7 @@ class StandbyControl : public QObject {
     void standByOff();
     void screenOnTimeChanged();
     void screenOffTimeChanged();
+    void batteryDataChanged();
 
  private:
     static StandbyControl* s_instance;
@@ -83,6 +90,7 @@ class StandbyControl : public QObject {
     InterruptHandler* m_interruptHandler;
     ButtonHandler*    m_buttonHandler;
     WifiControl*      m_wifiControl;
+    BatteryFuelGauge* m_batteryFuelGauge;
 
     int m_mode = ON;
 
@@ -97,10 +105,17 @@ class StandbyControl : public QObject {
     QTimer* m_secondsTimer = new QTimer(this);
     int     m_elapsedTime  = 0;
 
-    void    wakeup();
     void    readAmbientLight();
     int     mapValues(int inValue, int minInRange, int maxInRange, int minOutRange, int maxOutRange);
     QString secondsToHours(int value);
+
+    int     m_batteryCheckElapsedTime = 0;
+    int     m_batteryCheckTime        = 600000;
+    QTimer* m_shutdownTimer           = new QTimer(this);
+    int     m_shutDownDelay           = 20000;
+
+    void         getBatteryData();
+    QVariantList m_batteryData;
 
  private slots:
     void onSecondsTimerTimeout();
@@ -108,4 +123,6 @@ class StandbyControl : public QObject {
     void onTouchDetected();
     void onProximityDetected();
     void onButtonPressDetected(int button);
+    void onAveragePowerChanged();
+    void onCriticalLowBattery();
 };

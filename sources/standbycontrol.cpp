@@ -38,15 +38,18 @@ void StandbyControl::setMode(int mode) {
     emit modeChanged();
 }
 
-void StandbyControl::init() { m_secondsTimer->start(); }
+void StandbyControl::init() {
+    m_secondsTimer->start();
+    m_batteryFuelGauge->begin();
+}
 
 void StandbyControl::shutdown() { m_interruptHandler->shutdown(); }
 
 StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *proximitySensor,
                                LightSensor *lightSensor, TouchEventFilter *touchEventFilter,
                                InterruptHandler *interruptHandler, ButtonHandler *buttonHandler,
-                               WifiControl *wifiControl, Config *config, YioAPI *api, Integrations *integrations,
-                               QObject *parent)
+                               WifiControl *wifiControl, BatteryFuelGauge *batteryFuelGauge, Config *config,
+                               YioAPI *api, Integrations *integrations, QObject *parent)
     : QObject(parent),
       m_log("Standby Control"),
       m_config(config),
@@ -58,7 +61,8 @@ StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *
       m_touchEventFilter(touchEventFilter),
       m_interruptHandler(interruptHandler),
       m_buttonHandler(buttonHandler),
-      m_wifiControl(wifiControl) {
+      m_wifiControl(wifiControl),
+      m_batteryFuelGauge(batteryFuelGauge) {
     s_instance = this;
 
     // define logging category
@@ -79,6 +83,20 @@ StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *
     connect(m_touchEventFilter, &TouchEventFilter::detectedChanged, this, &StandbyControl::onTouchDetected);
     connect(m_proximitySensor, &ProximitySensor::proximityEvent, this, &StandbyControl::onProximityDetected);
     connect(m_buttonHandler, &ButtonHandler::buttonPressed, this, &StandbyControl::onButtonPressDetected);
+
+    // connect to signals of the battery fuel gauge
+    connect(m_batteryFuelGauge, &BatteryFuelGauge::criticalLowBattery, this, &StandbyControl::onCriticalLowBattery);
+    connect(m_batteryFuelGauge, &BatteryFuelGauge::averagePowerChanged, this, &StandbyControl::onAveragePowerChanged);
+
+    // setting up shutdown delay
+    m_shutdownTimer->setSingleShot(true);
+    m_shutdownTimer->setInterval(m_shutDownDelay);
+    connect(m_shutdownTimer, &QTimer::timeout, this, [&]() {
+        // show closing screen
+        QObject *loadingScreen = m_config->getQMLObject("loadingScreen");
+        loadingScreen->setProperty("source", "qrc:/basic_ui/ClosingScreen.qml");
+        loadingScreen->setProperty("active", true);
+    });
 
     qCDebug(m_log) << "Standby Control intialized";
 }
@@ -165,7 +183,6 @@ void StandbyControl::wakeup() {
 
 void StandbyControl::readAmbientLight() {
     int lux = m_lightsensor->readAmbientLight();
-    qCDebug(m_log) << "LUX" << lux;
     m_displayControl->setAmbientBrightness(mapValues(lux, 0, 30, 15, 100));
 
     if (m_config->getSettings().value("autobrightness").toBool()) {
@@ -200,9 +217,28 @@ QString StandbyControl::secondsToHours(int value) {
     return returnString;
 }
 
+void StandbyControl::getBatteryData() {
+    QVariantMap map;
+    map.insert("timestamp", QDateTime::currentDateTime());
+    map.insert("level", m_batteryFuelGauge->getLevel());
+    map.insert("power", m_batteryFuelGauge->getAveragePower());
+    map.insert("voltage", m_batteryFuelGauge->getVoltage());
+
+    m_batteryData.append(map);
+    emit batteryDataChanged();
+}
+
 void StandbyControl::onSecondsTimerTimeout() {
     // increase the elapsed time
     m_elapsedTime++;
+
+    // increase battery data logger time
+    m_batteryCheckElapsedTime++;
+
+    if (m_batteryCheckElapsedTime == m_batteryCheckTime) {
+        m_batteryCheckElapsedTime = 0;
+        getBatteryData();
+    }
 
     // if it's on, then inscrease screen on time
     if (m_mode == ON || m_mode == DIM) {
@@ -314,3 +350,12 @@ void StandbyControl::onButtonPressDetected(int button) {
     wakeup();
     m_proximitySensor->proximityDetection(false);
 }
+
+void StandbyControl::onAveragePowerChanged() {
+    // if the remote was put on charger, stop the shutdown timer
+    if (m_batteryFuelGauge->getAveragePower() >= 0 && m_shutdownTimer->isActive()) {
+        m_shutdownTimer->stop();
+    }
+}
+
+void StandbyControl::onCriticalLowBattery() { m_shutdownTimer->start(); }

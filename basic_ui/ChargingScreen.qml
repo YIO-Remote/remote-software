@@ -25,6 +25,8 @@ import QtGraphicalEffects 1.0
 
 import Style 1.0
 
+import Battery 1.0
+
 import "qrc:/scripts/helper.js" as JSHelper
 
 Rectangle {
@@ -36,8 +38,8 @@ Rectangle {
     state: "hidden"
 
     states: [
-        State { name: "visible"; PropertyChanges {target: chargingScreen; opacity: 1; visible: true} },
-        State { name: "hidden"; PropertyChanges {target: chargingScreen; opacity: 0; visible: false} }
+        State { name: "visible"; when: Battery.isCharging; PropertyChanges {target: chargingScreen; opacity: 1; visible: true} },
+        State { name: "hidden"; when: !Battery.isCharging; PropertyChanges {target: chargingScreen; opacity: 0; visible: false} }
     ]
     transitions: [
         Transition {to: "hidden"; PropertyAnimation { target: chargingScreen; properties: "opacity, visible"; easing.type: Easing.InExpo; duration: 1000 }},
@@ -129,7 +131,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 23
                 width: 106
-                height: battery_level*172
+                height: Battery.level/100*172
                 color: Style.colorGreen
                 radius: 8
             }
@@ -157,7 +159,7 @@ Rectangle {
     Text {
         id: chargeText
         color: Style.colorText
-        text: Math.round(battery_level * 100) + qsTr("% Charged") + translateHandler.emptyString
+        text: Math.round(Battery.level) + qsTr("% Charged") + translateHandler.emptyString
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 230
         anchors.horizontalCenter: parent.horizontalCenter

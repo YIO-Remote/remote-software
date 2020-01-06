@@ -29,6 +29,7 @@ import Style 1.0
 
 import Launcher 1.0
 import StandbyControl 1.0
+import Battery 1.0
 
 Item {
     width: parent.width
@@ -46,24 +47,24 @@ Item {
 
     function getHours() {
         if (hours === [] ) {
-            hours.push(battery_data[battery_data.length-1].timestamp.getHours());
+            hours.push(StandbyControl.batteryData[StandbyControl.batteryData.length-1].timestamp.getHours());
         }
 
         var tmp;
         tmp = hours;
 
-        for (var i=battery_data.length-1; i>0; i--) {
-            if ( hours.indexOf(battery_data[i].timestamp.getHours()) == -1 ) {
-                tmp.push(battery_data[i].timestamp.getHours());
+        for (var i=StandbyControl.batteryData.length-1; i>0; i--) {
+            if ( hours.indexOf(StandbyControl.batteryData[i].timestamp.getHours()) == -1 ) {
+                tmp.push(StandbyControl.batteryData[i].timestamp.getHours());
             }
         }
         hours = tmp;
     }
 
     Connections {
-        target: applicationWindow
+        target: StandbyControl
 
-        onBatteryDataUpdated: {
+        onBatteryDataChanged: {
             getHours();
         }
 
@@ -106,7 +107,7 @@ Item {
 
         Text {
             color: Style.colorText
-            text: battery_health + "%"
+            text: Battery.health + "%"
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -241,12 +242,12 @@ Item {
                 spacing: 4
 
                 Repeater {
-                    model: battery_data.length > 35 ? 36 : battery_data.length
+                    model: StandbyControl.batteryData.length > 35 ? 36 : StandbyControl.batteryData.length
 
                     Rectangle {
                         width: 6
-                        height: 96 * battery_data[index].level
-                        color: battery_data[index].power < 0 ? Style.colorText : Style.colorGreen
+                        height: 96 * StandbyControl.batteryData[index].level
+                        color: StandbyControl.batteryData[index].power < 0 ? Style.colorText : Style.colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }
@@ -301,12 +302,12 @@ Item {
                 spacing: 4
 
                 Repeater {
-                    model: battery_data.length > 35 ? 36 : battery_data.length
+                    model: StandbyControl.batteryData.length > 35 ? 36 : StandbyControl.batteryData.length
 
                     Rectangle {
                         width: 6
-                        height: (96 * (Math.abs(battery_data[index].power) / 5500)) + 1
-                        color: battery_data[index].power < 0 ? Style.colorText : Style.colorGreen
+                        height: (96 * (Math.abs(StandbyControl.batteryData[index].power) / 5500)) + 1
+                        color: StandbyControl.batteryData[index].power < 0 ? Style.colorText : Style.colorGreen
                         anchors.bottom: parent.bottom
                     }
                 }
@@ -345,5 +346,4 @@ Item {
 
         }
     }
-
 }

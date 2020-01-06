@@ -40,7 +40,6 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.yio");
 
 HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *parent)
     : HardwareFactoryRPi0(config, parent) {
-
     // TODO(mze) read i2c device from config
     p_apds9960 = new APDS9960("/dev/i2c-3", APDS9960_ADDRESS, this);
 }
@@ -114,7 +113,7 @@ BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &c
     Q_UNUSED(config)
     qCDebug(CLASS_LC) << "BatteryFuelGauge device: BQ27441";
     // TODO(mze) read i2c device from config
-    BatteryFuelGauge *device = new BQ27441("/dev/i2c-3", BQ27441_I2C_ADDRESS, this);
+    BatteryFuelGauge *device = new BQ27441(getInterruptHandler(), "/dev/i2c-3", BQ27441_I2C_ADDRESS, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
@@ -124,7 +123,7 @@ InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &c
     Q_UNUSED(config)
     qCDebug(CLASS_LC) << "InterruptHandler device: Mcp23017InterruptHandler";
     // TODO(mze) read i2c device from config
-    InterruptHandler *device = new Mcp23017InterruptHandler( "/dev/i2c-3", MCP23017_ADDRESS, 18, this);
+    InterruptHandler *device = new Mcp23017InterruptHandler("/dev/i2c-3", MCP23017_ADDRESS, 18, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;

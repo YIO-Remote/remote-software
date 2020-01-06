@@ -89,7 +89,7 @@ Item {
 
         Slider {
             id: brightnessSlider
-            from: 0
+            from: 10
             value: DisplayControl.currentBrightness
             to: 100
             stepSize: 1

@@ -55,108 +55,6 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // TODO: Battery stuff should be moved to c++
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // BATTERY
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property real battery_voltage: 5
-    property real battery_level: 1
-    property real battery_health: 100
-    property real battery_time: (new Date()).getTime()
-    property int  battery_design_capacity: 0
-    property int  battery_remaining_capacity: 0
-    property int  battery_averagepower: 0
-    property int  battery_averagecurrent: 0
-    property bool wasBatteryWarning: false
-
-    property var battery_data: []
-
-    signal batteryDataUpdated()
-
-    function checkBattery() {
-        // read battery data
-        battery_voltage = Battery.getVoltage() / 1000
-        battery_level = Battery.getStateOfCharge() / 100
-        battery_health = Battery.getStateOfHealth()
-        battery_design_capacity = Battery.getDesignCapacity()
-        battery_remaining_capacity = Battery.getRemainingCapacity()
-        battery_averagepower = Battery.getAveragePower()
-        battery_averagecurrent = Battery.getAverageCurrent()
-
-        if (battery_level != -1) {
-
-            // if the designcapacity is off correct it
-            if (battery_design_capacity != Battery.capacity) {
-                console.debug("Design capacity doesn't match. Recalibrating battery.");
-                Battery.changeCapacity(Battery.capacity);
-            }
-
-            // if voltage is too low and we are sourcing power, turn off the remote after timeout
-            if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
-                shutdownDelayTimer.start();
-            }
-
-            // hide and show the charging screen
-            if (battery_averagepower >= 0 && chargingScreen.item) {
-                console.debug("Charging screen visible");
-                chargingScreen.item.state = "visible";
-                // cancel shutdown when started charging
-                if (shutdownDelayTimer.running) {
-                    shutdownDelayTimer.stop();
-                }
-            } else if (chargingScreen.item) {
-                chargingScreen.item.state = "hidden";
-            }
-
-            // charging is done
-            if (battery_averagepower == 0 && battery_level == 1) {
-                // signal with the dock that the remote is fully charged
-                var obj = integrations.get(config.settings.paired_dock);
-                obj.sendCommand("dock", "", Remote.C_REMOTE_CHARGED, "");
-            }
-
-            console.debug("Average power:" + battery_averagepower + "mW");
-            console.debug("Average current:" + battery_averagecurrent + "mA");
-        }
-    }
-
-    Timer {
-        id: shutdownDelayTimer
-        running: false
-        repeat: false
-        interval: 20000
-
-        onTriggered: {
-            loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
-            loadingScreen.active = true;
-        }
-    }
-
-    // battery data logger
-    Timer {
-        running: true
-        repeat: true
-        interval: 600000
-
-        onTriggered: {
-            if (battery_data.length > 35) {
-                battery_data.splice(0, 1);
-            }
-
-            var tmpA = battery_data;
-
-            var tmp = {};
-            tmp.timestamp = new Date();
-            tmp.level = battery_level;
-            tmp.power = Battery.getAveragePower();
-            tmp.voltage = battery_voltage;
-
-            tmpA.push(tmp);
-            battery_data = tmpA;
-
-            applicationWindow.batteryDataUpdated();
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN WINDOW PROPERTIES
@@ -240,8 +138,6 @@ ApplicationWindow {
 
         // Start websocket API
         api.start();
-
-        Battery.begin();
     }
 
     // load the entities when the integrations are loaded
@@ -360,22 +256,18 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pops up when battery level is under 20%
     // TODO: this should be a signal connection to the singleton c++ class
-    onBattery_levelChanged: {
-        if (battery_level < 0.1 && !wasBatteryWarning) {
+    Connections {
+        target: Battery
+
+        onLowBattery: {
+            StandbyControl.wakeup();
             lowBatteryNotification.item.open();
-            wasBatteryWarning = true;
-            standbyControl.touchDetected = true;
 
             // signal with the dock that it is low battery
             var obj = integrations.get(config.settings.paired_dock);
             obj.sendCommand("dock", "", Remote.C_REMOTE_LOWBATTERY, "");
         }
-        if (battery_level > 0.2) {
-            wasBatteryWarning = false;
-        }
     }
-
-    property alias lowBatteryNotification: lowBatteryNotification
 
     Loader {
         id: lowBatteryNotification
@@ -478,7 +370,6 @@ ApplicationWindow {
         onSourceChanged: {
             if (source == "") {
                 console.debug("Now load the rest off stuff");
-                //battery.checkBattery();
             }
         }
     }

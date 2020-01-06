@@ -25,6 +25,7 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Battery 1.0
 import Haptic 1.0
 
 Item {
@@ -240,9 +241,9 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 5
             id: icon_battery
-            width: battery_level*20
+            width: Battery.level/100*20
             height: 6
-            color: battery_level >= 0.200 ? Style.colorLine : Style.colorRed
+            color: Battery.level >= 20 ? Style.colorLine : Style.colorRed
         }
         // battery frame
         Rectangle {
@@ -270,7 +271,7 @@ Item {
     Text {
         id: batteryPercentText
         color: Style.colorText
-        text: Math.round(battery_level * 100) + "%"
+        text: Math.round(Battery.level) + "%"
         verticalAlignment: Text.AlignVCenter
         height: parent.height
         anchors.right: parent.right

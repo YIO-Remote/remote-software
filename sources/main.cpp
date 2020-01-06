@@ -215,9 +215,10 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
 
     // STANDBY CONTROL
-    StandbyControl* standbyControl = new StandbyControl(
-        displayControl, hwFactory->getProximitySensor(), hwFactory->getLightSensor(), touchEventFilter,
-        hwFactory->getInterruptHandler(), buttonHandler, wifiControl, config, yioapi, integrations);
+    StandbyControl* standbyControl =
+        new StandbyControl(displayControl, hwFactory->getProximitySensor(), hwFactory->getLightSensor(),
+                           touchEventFilter, hwFactory->getInterruptHandler(), buttonHandler, wifiControl,
+                           hwFactory->getBatteryFuelGauge(), config, yioapi, integrations);
     Q_UNUSED(standbyControl);
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
