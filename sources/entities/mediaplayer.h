@@ -76,6 +76,7 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_INVOKABLE void volumeDown();
 
     bool isOn() override { return m_state == MediaPlayerDef::ON || m_state == MediaPlayerDef::PLAYING; }
+    bool supportsOn() override;
     bool updateAttrByIndex(int attrIndex, const QVariant& value) override;
     void turnOn() override;
     void turnOff() override;

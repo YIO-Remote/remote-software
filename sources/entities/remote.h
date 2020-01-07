@@ -88,6 +88,8 @@ class Remote : public Entity, RemoteInterface {
 
     void turnOn() override { powerOn(); }
     void turnOff() override { powerOff(); }
+    bool supportsOn() override;
+    bool isOn() override;
 
     explicit Remote(QObject* parent = nullptr);
     Remote(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent = nullptr);

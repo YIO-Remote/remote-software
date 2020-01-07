@@ -31,7 +31,6 @@ import "qrc:/components" as Comp
 Comp.ButtonBase {
     id: lightButton
     icon: Style.icons.light
-    button.enabled: obj.supportsOn
 
     cardLoader.source: {
         if (obj.isSupported(Light.F_COLOR)) {

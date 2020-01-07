@@ -52,6 +52,7 @@ class Climate : public Entity, ClimateInterface {
     void turnOn() override;
     void turnOff() override;
     bool isOn() override;
+    bool supportsOn() override;
 
     // overrides from ClimateInterface
     double  temperature() override { return m_temperature; }
@@ -73,6 +74,6 @@ class Climate : public Entity, ClimateInterface {
     double  m_temperature;
     double  m_targetTemperature;
     QString m_temperatureUnit = "ºC";
-    double  m_temperatureMax = 35.0;
-    double  m_temperatureMin = 4.0;
+    double  m_temperatureMax  = 35.0;
+    double  m_temperatureMin  = 4.0;
 };

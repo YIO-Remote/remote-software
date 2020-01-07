@@ -113,7 +113,7 @@ Rectangle {
         },
         State {
             name: "open"
-            PropertyChanges {target: buttonContainer; width: 480; height: 720 }
+            PropertyChanges {target: buttonContainer; width: 480; height: 720; scale: 1 }
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
             PropertyChanges {target: cardLoader; opacity: 1 }
@@ -125,15 +125,17 @@ Rectangle {
         Transition {
             to: "closed"
             SequentialAnimation {
-                PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.InExpo; duration: 200 }
                 ParallelAnimation {
-                    PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 0.7; duration: 300 }
-                    ParentAnimation {
-                        NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
-                    }
-                    SequentialAnimation {
-                        PauseAnimation { duration: 150 }
-                        PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
+                    ParallelAnimation {
+                        PropertyAnimation { target: buttonContainer; properties: "width, height, scale"; easing.type: Easing.OutExpo; duration: 300 }
+                        ParentAnimation {
+                            NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+                        }
+                        SequentialAnimation {
+                            PauseAnimation { duration: 150 }
+                            PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        }
                     }
                 }
                 PropertyAction { target: cardLoader; property: "active"; value: false }
@@ -142,7 +144,7 @@ Rectangle {
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.5; duration: 400 }
+                PropertyAnimation { target: buttonContainer; properties: "width, height, scale"; easing.type: Easing.OutBack; easing.overshoot: 1.5; duration: 400 }
                 PropertyAnimation { target: cardLoader; properties: "opacity"; duration: 1 }
                 PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
@@ -219,7 +221,7 @@ Rectangle {
     BasicUI.CustomSwitch {
         id: button
         anchors { right: parent.right; rightMargin: 20; verticalCenter: parent.verticalCenter }
-        enabled: false
+        enabled: obj.supportsOn
         visible: enabled
 
         checked: obj.state

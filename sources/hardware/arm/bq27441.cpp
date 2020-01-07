@@ -340,7 +340,7 @@ int BQ27441::getFullChargeCapacity() {
 int BQ27441::getAverageCurrent() {
     ASSERT_DEVICE_OPEN(0)
 
-    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_CURRENT);
+    return static_cast<int>(static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_CURRENT)));
 }
 
 int16_t BQ27441::getStandbyCurrent() {

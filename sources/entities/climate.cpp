@@ -47,35 +47,35 @@ bool Climate::updateAttrByIndex(int attrIndex, const QVariant &value) {
         case ClimateDef::TEMPERATURE:
             if (m_temperature != value.toDouble()) {
                 m_temperature = value.toDouble();
-                chg = true;
+                chg           = true;
                 emit temperatureChanged();
             }
             break;
         case ClimateDef::TARGET_TEMPERATURE:
             if (m_targetTemperature != value.toDouble()) {
                 m_targetTemperature = value.toDouble();
-                chg = true;
+                chg                 = true;
                 emit targetTemperatureChanged();
             }
             break;
         case ClimateDef::TEMPERATURE_UNIT:
             if (m_temperatureUnit != value.toString()) {
                 m_temperatureUnit = value.toString();
-                chg = true;
+                chg               = true;
                 emit temperatureUnitChanged();
             }
             break;
         case ClimateDef::TEMPERATURE_MAX:
             if (m_temperatureMax != value.toDouble()) {
                 m_temperatureMax = value.toDouble();
-                chg = true;
+                chg              = true;
                 emit temperatureMaxChanged();
             }
             break;
         case ClimateDef::TEMPERATURE_MIN:
             if (m_temperatureMin != value.toDouble()) {
                 m_temperatureMin = value.toDouble();
-                chg = true;
+                chg              = true;
                 emit temperatureMinChanged();
             }
             break;
@@ -89,6 +89,14 @@ void Climate::turnOff() { command(ClimateDef::C_OFF, ""); }
 
 bool Climate::isOn() { return m_state == ClimateDef::ON || m_state == ClimateDef::HEAT || m_state == ClimateDef::COOL; }
 
+bool Climate::supportsOn() {
+    if (isSupported(ClimateDef::F_OFF)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 Climate::Climate(const QVariantMap &config, IntegrationInterface *integrationObj, QObject *parent)
     : Entity(Type, config, integrationObj, parent), m_temperature(0), m_targetTemperature(0) {
     static QMetaEnum metaEnumAttr;
@@ -97,21 +105,21 @@ Climate::Climate(const QVariantMap &config, IntegrationInterface *integrationObj
     static QMetaEnum metaEnumState;
 
     if (!metaEnumAttr.isValid()) {
-        int index = ClimateDef::staticMetaObject.indexOfEnumerator("Attributes");
-        metaEnumAttr = ClimateDef::staticMetaObject.enumerator(index);
-        index = ClimateDef::staticMetaObject.indexOfEnumerator("States");
-        metaEnumState = ClimateDef::staticMetaObject.enumerator(index);
-        index = ClimateDef::staticMetaObject.indexOfEnumerator("Features");
+        int index        = ClimateDef::staticMetaObject.indexOfEnumerator("Attributes");
+        metaEnumAttr     = ClimateDef::staticMetaObject.enumerator(index);
+        index            = ClimateDef::staticMetaObject.indexOfEnumerator("States");
+        metaEnumState    = ClimateDef::staticMetaObject.enumerator(index);
+        index            = ClimateDef::staticMetaObject.indexOfEnumerator("Features");
         metaEnumFeatures = ClimateDef::staticMetaObject.enumerator(index);
-        index = ClimateDef::staticMetaObject.indexOfEnumerator("Commands");
+        index            = ClimateDef::staticMetaObject.indexOfEnumerator("Commands");
         metaEnumCommands = ClimateDef::staticMetaObject.enumerator(index);
         qmlRegisterUncreatableType<ClimateDef>("Entity.Climate", 1, 0, "Climate",
                                                "Not creatable as it is an enum type.");
     }
-    m_enumAttr = &metaEnumAttr;
-    m_enumFeatures = &metaEnumFeatures;
-    m_enumCommands = &metaEnumCommands;
-    m_enumState = &metaEnumState;
+    m_enumAttr          = &metaEnumAttr;
+    m_enumFeatures      = &metaEnumFeatures;
+    m_enumCommands      = &metaEnumCommands;
+    m_enumState         = &metaEnumState;
     m_specificInterface = qobject_cast<ClimateInterface *>(this);
     initializeSupportedFeatures(config);
 }
