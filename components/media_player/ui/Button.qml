@@ -36,7 +36,7 @@ Comp.ButtonBase {
 
     // override default settings
     title.anchors.verticalCenterOffset: obj.source === "" ? 0 : -15
-    button.enabled: obj.isSupported(MediaPlayer.F_TURN_ON) ? true : false
+    button.enabled: obj.supportsOn
 
     // include mediaplayer utils
     MediaPlayerUtils {

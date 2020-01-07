@@ -30,6 +30,6 @@ import "qrc:/components" as Comp
 Comp.ButtonBase {
     id: blindButton
     icon: Style.icons.blind
-    button.enabled: obj.isSupported(Blind.F_TURN_ON) ? true : false
+    button.enabled: obj.supportsOn
     cardLoader.source: "qrc:/components/blind/ui/Card.qml"
 }
