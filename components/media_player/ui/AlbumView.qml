@@ -33,6 +33,7 @@ Rectangle {
     id: main
     width: parent.width; height: parent.height
     color: mediaplayerUtils.pixelColor
+    radius: Style.cornerRadius
 
     Behavior on color {
         ColorAnimation { duration: 300 }
