@@ -300,7 +300,8 @@ void StandbyControl::onSecondsTimerTimeout() {
     }
 
     // TURN OFF WIFI
-    if (m_elapsedTime == m_wifiOffTime && m_wifiOffTime != 0 && m_mode == STANDBY /*&& battery_averagepower <= 0*/) {
+    if (m_elapsedTime == m_wifiOffTime && m_wifiOffTime != 0 && m_mode == STANDBY &&
+        m_batteryFuelGauge->getAveragePower() <= 0) {
         // disconnect integrations
         for (int i = 0; i < m_integrations->list().length(); i++) {
             IntegrationInterface *integrationObj = qobject_cast<IntegrationInterface *>(m_integrations->list().at(i));
@@ -318,8 +319,8 @@ void StandbyControl::onSecondsTimerTimeout() {
     }
 
     // SHUTDOWN
-    if (m_elapsedTime == m_shutDownTime && m_shutDownTime != 0 &&
-        (m_mode == STANDBY || m_mode == WIFI_OFF) /*&& battery_averagepower <= 0*/) {
+    if (m_elapsedTime == m_shutDownTime && m_shutDownTime != 0 && (m_mode == STANDBY || m_mode == WIFI_OFF) &&
+        m_batteryFuelGauge->getAveragePower() <= 0) {
         qCInfo(m_log) << "TIMER SHUTDOWN";
 
         // show closing screen
