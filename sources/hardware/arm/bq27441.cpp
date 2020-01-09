@@ -101,14 +101,15 @@ void BQ27441::updateBatteryValues() {
     emit levelChanged();
     qCDebug(CLASS_LC()) << "Battery level:" << m_level;
 
-    m_voltage = getVoltage();
+    m_voltage = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);  // getVoltage();
     qCDebug(CLASS_LC()) << "Battery voltage:" << m_voltage;
 
     m_health = getStateOfHealth();
     emit healthChanged();
     qCDebug(CLASS_LC()) << "Battery health:" << m_health;
 
-    m_averagePower = getAveragePower();
+    m_averagePower = static_cast<int>(
+        static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_POWER)));  // getAveragePower();
     emit averagePowerChanged();
 
     if (m_level != -1) {
@@ -302,9 +303,10 @@ int BQ27441::getTemperatureC() {  // Result in 1 Celcius
 }
 
 int BQ27441::getVoltage() {
-    ASSERT_DEVICE_OPEN(0)
+    //    ASSERT_DEVICE_OPEN(0)
 
-    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);
+    //    return wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);
+    return m_voltage;
 }
 
 uint16_t BQ27441::getFlags() {
@@ -356,10 +358,11 @@ int16_t BQ27441::getMaxLoadCurrent() {
 }
 
 int BQ27441::getAveragePower() {
-    ASSERT_DEVICE_OPEN(0)
+    //    ASSERT_DEVICE_OPEN(0)
 
     // this is needed otherwise the values are weird
-    return static_cast<int>(static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_POWER)));
+    //    return static_cast<int>(static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_POWER)));
+    return m_averagePower;
 }
 
 int BQ27441::getStateOfCharge() {

@@ -133,7 +133,7 @@ Rectangle {
                             NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
                         }
                         SequentialAnimation {
-                            PauseAnimation { duration: 150 }
+                            PauseAnimation { duration: 100 }
                             PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                         }
                     }
