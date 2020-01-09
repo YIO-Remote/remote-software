@@ -108,10 +108,20 @@ Rectangle {
 
     states: [
         State {
-            name: "closed"
+            name: "open"
         },
         State {
-            name: "open"
+            name: "closed"
+            PropertyChanges {target: bottomMenu; opacity: 0; }
+            PropertyChanges {target: cardSwipeView; opacity: 0; }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: "closed"
+            PropertyAnimation { target: bottomMenu; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: cardSwipeView; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
         }
     ]
 

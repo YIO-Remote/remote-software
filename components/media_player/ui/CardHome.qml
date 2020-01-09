@@ -31,6 +31,8 @@ import "qrc:/basic_ui" as BasicUI
 Item {
     id: cardHome
     width: parent.width; height: parent.height
+//    color:  Style.colorBackgroundTransparent
+//    radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
@@ -56,7 +58,7 @@ Item {
             PropertyChanges {target: prevButton; opacity: 0 }
             PropertyChanges {target: nextButton; opacity: 0 }
             PropertyChanges {target: progressBar; opacity: 0 }
-            PropertyChanges {target: albumArt; opacity: 0; visible: false; anchors.topMargin: 158; scale: 0.8 }
+            PropertyChanges {target: albumArt; opacity: 0; anchors.topMargin: 158; scale: 0.8 }
         }
     ]
 
@@ -94,18 +96,13 @@ Item {
         },
         Transition {
             to: "closed"
-            SequentialAnimation {
-                PropertyAnimation { target: albumArt; properties: "opacity, anchors.topMargin, scale"; easing.type: Easing.OutExpo; duration: 200 }
-                PropertyAnimation { target: albumArt; properties: "visible"; duration: 1 }
-                ParallelAnimation {
-                    PropertyAnimation { target: songTitle; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: progressBar; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: playButton; properties: "opacity, anchors.bottomMargin"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                    PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                }
-            }
+            PropertyAnimation { target: albumArt; properties: "opacity, anchors.topMargin, scale"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: songTitle; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: progressBar; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: playButton; properties: "opacity, anchors.bottomMargin"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
         }
     ]
 
