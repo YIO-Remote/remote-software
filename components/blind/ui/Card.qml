@@ -44,13 +44,19 @@ Rectangle {
         onButtonPressed: {
             switch (button) {
             case ButtonHandler.DPAD_UP:
-                obj.open()
+                if (obj.isSupported(Blind.F_OPEN)) {
+                    obj.open()
+                }
                 break;
             case ButtonHandler.DPAD_DOWN:
-                obj.close()
+                if (obj.isSupported(Blind.F_CLOSE)) {
+                    obj.close()
+                }
                 break;
             case ButtonHandler.DPAD_MIDDLE:
-                obj.stop()
+                if (obj.isSupported(Blind.F_STOP)) {
+                    obj.stop()
+                }
                 break;
             }
         }
@@ -153,6 +159,7 @@ Rectangle {
         id: bgGraphics
         width: parent.width; height: parent.height
         anchors.centerIn: parent
+        visible: obj.isSupported(Blind.F_POSITION)
 
         Column {
             anchors.top: parent.top

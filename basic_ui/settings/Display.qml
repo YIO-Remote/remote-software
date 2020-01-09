@@ -242,7 +242,7 @@ Item {
             mouseArea.onClicked: {
                 cleaningmodeButton.checked = true
                 touchEventCatcher.enabled = true
-                standbyControl.setBrightness(0);
+                DisplayControl.setBrightness(0);
                 DisplayControl.setMode(DisplayControl.StandbyOn);
                 cleaningmodeButtonTimer.start();
             }
