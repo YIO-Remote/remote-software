@@ -21,6 +21,7 @@
  *****************************************************************************/
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.0
 
 import Style 1.0
 
@@ -239,6 +240,24 @@ Rectangle {
     // ADD TO FAVORITE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LAYER MASK FOR ROUNDED CORNERS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    layer.enabled: false
+    layer.effect: OpacityMask {
+        maskSource:
+            Rectangle {
+            id: opacityMask
+            width: buttonContainer.width; height: buttonContainer.height
+            radius: Style.cornerRadius
+
+            Behavior on radius {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
+        }
+    }
+
     property alias addToFavButton: addToFavButton
 
     Rectangle {
@@ -276,11 +295,13 @@ Rectangle {
                     }
                     PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.OutExpo; duration: 400 }
                     PropertyAnimation { target: addToFavButton; properties: "color"; duration: 1 }
+                    PropertyAction { target: buttonContainer; property: "layer.enabled"; value: false }
                 }
             },
             Transition {
                 to: "open"
                 SequentialAnimation {
+                    PropertyAction { target: buttonContainer; property: "layer.enabled"; value: true }
                     PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.InExpo; duration: 400 }
                     ParallelAnimation {
                         PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
@@ -326,7 +347,6 @@ Rectangle {
 
             Text {
                 color: Style.colorText
-                visible: buttonContainer.state == "open"
                 text: obj.favorite ? Style.icons.fav_remove : Style.icons.fav_add
                 renderType: Text.NativeRendering
                 width: 80; height: 80

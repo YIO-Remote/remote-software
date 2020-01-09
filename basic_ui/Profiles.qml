@@ -197,21 +197,20 @@ Rectangle {
         lineHeight: 1
     }
 
-    Image {
+    Text {
         id: closeButton
-        asynchronous: true
-        width: 30
-        height: 30
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/components/close_button.png"
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-        anchors.top: parent.top
-        anchors.topMargin: 20
+        color: Style.colorText
+        visible: buttonContainer.state == "open"
+        text: Style.icons.close
+        renderType: Text.NativeRendering
+        width: 70; height: 70
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 80 }
+        anchors { top: parent.top; topMargin: 20; right: parent.right; rightMargin: 10 }
 
         MouseArea {
-            width: parent.width + 60
-            height: parent.height + 60
+            id: closeButtonMouseArea
+            width: parent.width + 20; height: parent.height + 20
             anchors.centerIn: parent
 
             onClicked: {
