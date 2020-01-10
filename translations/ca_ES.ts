@@ -631,40 +631,39 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="95"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Busca actualitzacions automàticament e instal·la-les quan estigui disponible una nova versió. Les actualitzacions s'instal·len entre les 03.00 am i les 05.00 am.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>New software is available.
 YIO remote </source>
-      <translation type="unfinished">New software is available.
-YIO remote </translation>
+      <translation>Actualització disponible.
+comandament YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>El programa està actualitzat.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Versió instal·lada: comandament YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>Comandament YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Actualització</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="181"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Busca actualització</translation>
     </message>
   </context>
   <context>
@@ -672,27 +671,27 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="60"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Sistema</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="81"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Temps de funcionament</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="118"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Temperatura CPU</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="154"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Reinicia</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="171"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Apaga</translation>
     </message>
   </context>
   <context>
@@ -701,7 +700,7 @@ YIO remote </translation>
       <location filename="../main.qml" line="217"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
-      <translation type="unfinished">New software version is available!</translation>
+      <translation>Una nova versió està disponible!</translation>
     </message>
   </context>
   <context>
@@ -709,13 +708,13 @@ YIO remote </translation>
     <message>
       <location filename="../wifiSetup.qml" line="55"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Configuració Wi-Fi</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="73"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation type="unfinished">Connect to the Wi-Fi network
+      <translation>Connectar a xarxa Wi-Fi
 </translation>
     </message>
     <message>
@@ -723,54 +722,54 @@ YIO remote </translation>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
-      <translation type="unfinished">Open a web browser
-and navigate to
+      <translation>Obre el navegador
+ves a 
 yio.remote</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="106"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Apaga</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Connectat</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="150"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully
-connected to your Wi-Fi network.</translation>
+      <translation>El comandament YIO s'ha connectat 
+correctament a la xarxa Wi-fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="164"/>
       <location filename="../wifiSetup.qml" line="304"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Següent</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="183"/>
       <source>Not connected</source>
-      <translation type="unfinished">Not connected</translation>
+      <translation>No connectat</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>El comandament YIO no pot
+connectar-se a la xarxa Wi-fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="217"/>
       <source>Please try again</source>
-      <translation type="unfinished">Please try again</translation>
+      <translation>Si us plau, torna-ho a provar</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="231"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Torna-ho a provar</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
