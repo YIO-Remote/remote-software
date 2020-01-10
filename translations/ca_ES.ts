@@ -6,12 +6,12 @@
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="54"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>No es pot inicialitzar el sensor de la bateria. Si us plau, reinicia el mando.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="333"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Error de comunicació amb el sensor de la bateria. Si us plau, reinicia el mando.</translation>
     </message>
   </context>
   <context>
@@ -24,33 +24,33 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="96"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Estat de la bateria</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="132"/>
       <source>Screen on</source>
-      <translation type="unfinished">Screen on</translation>
+      <translation>Pantalla encesa</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="161"/>
       <source>Screen off</source>
-      <translation type="unfinished">Screen off</translation>
+      <translation>Pantalla apagada</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="199"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>Nivell de bateria</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="259"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>Poténcia mitja</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="335"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>Sense dades disponibles encara</translation>
     </message>
   </context>
   <context>
@@ -58,17 +58,17 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="41"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Detecció d'área</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Escaneja automàticament aparells bluetooth associats a l'àrea, troba el més proper i mostra els dispositius d'aquesta àrea.</translation>
     </message>
   </context>
   <context>
@@ -77,7 +77,7 @@
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Temperatura: </translation>
     </message>
   </context>
   <context>
@@ -85,12 +85,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="342"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Esborra dels favorits</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="342"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Afegeix als favorits</translation>
     </message>
   </context>
   <context>
@@ -98,47 +98,47 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Silenci</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Enrere</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menú</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="397"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Apaga</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="397"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Encén</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="410"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Mode</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="420"/>
       <source>Off</source>
-      <translation type="unfinished">Off</translation>
+      <translation>Apagat</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
       <source>Heat</source>
-      <translation type="unfinished">Heat</translation>
+      <translation>Calor</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Fred</translation>
     </message>
   </context>
   <context>
@@ -146,7 +146,7 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Font</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
