@@ -63,12 +63,12 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
       <source>Area detection</source>
-      <translation>Detección facial</translation>
+      <translation>Detección de Área</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Escanea automáticamente para balizas bluetooth asociadas con áreas, encuentra el más cercano y muestra dispositivos en esa zona.</translation>
+      <translation>Escanea automáticamente para equipos bluetooth asociados a áreas, encuentra el más cercano y muestra dispositivos en esa zona.</translation>
     </message>
   </context>
   <context>
@@ -90,7 +90,7 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="342"/>
       <source>Add to favorites</source>
-      <translation>Añadir a Favoritos</translation>
+      <translation>Añadir a favoritos</translation>
     </message>
   </context>
   <context>
@@ -118,7 +118,7 @@
     <message>
       <location filename="../components/climate/ui/Card.qml" line="397"/>
       <source>Turn on</source>
-      <translation>Apagar</translation>
+      <translation>Encender</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="410"/>
@@ -128,7 +128,7 @@
     <message>
       <location filename="../components/climate/ui/Card.qml" line="420"/>
       <source>Off</source>
-      <translation>Desconectado</translation>
+      <translation>Apagado</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
@@ -151,12 +151,12 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
       <source>Info</source>
-      <translation>Info</translation>
+      <translation>Información</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
       <source>Menu</source>
-      <translation>Menús</translation>
+      <translation>Menú</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
@@ -174,7 +174,7 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="269"/>
       <source>Turn on</source>
-      <translation>Apagar</translation>
+      <translation>Encender</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="282"/>
@@ -192,7 +192,7 @@
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="237"/>
       <source>Turn on</source>
-      <translation>Apagar</translation>
+      <translation>Encender</translation>
     </message>
   </context>
   <context>
@@ -209,7 +209,7 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation>Buscar preguntas y respuestas</translation>
+      <translation>Buscar</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
@@ -219,7 +219,7 @@
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation>Limpio</translation>
+      <translation>Limpiar</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
@@ -237,7 +237,7 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
       <source>Artists</source>
-      <translation>Artista</translation>
+      <translation>Artistas</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
@@ -256,7 +256,7 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="163"/>
       <source>Turn on</source>
-      <translation>Apagar</translation>
+      <translation>Encender</translation>
     </message>
   </context>
   <context>
@@ -345,7 +345,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
-      <translation>Independiente</translation>
+      <translation>Mando</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -364,7 +364,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Añadida a favoritas</translation>
+      <translation>Favoritos</translation>
     </message>
   </context>
   <context>
@@ -386,7 +386,7 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="149"/>
       <source>Connect</source>
-      <translation>Activada</translation>
+      <translation>Conectado</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="185"/>
@@ -748,7 +748,7 @@ con éxito a su red Wi-Fi.</translation>
       <location filename="../wifiSetup.qml" line="164"/>
       <location filename="../wifiSetup.qml" line="304"/>
       <source>Next</source>
-      <translation>Continuar</translation>
+      <translation>Siguiente</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="183"/>
