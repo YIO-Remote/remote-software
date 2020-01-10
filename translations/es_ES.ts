@@ -748,7 +748,7 @@ con éxito a su red Wi-Fi.</translation>
       <location filename="../wifiSetup.qml" line="164"/>
       <location filename="../wifiSetup.qml" line="304"/>
       <source>Next</source>
-      <translation>Continuar</translation>
+      <translation>Siguiente</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="183"/>
