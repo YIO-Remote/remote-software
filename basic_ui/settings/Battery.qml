@@ -59,6 +59,8 @@ Item {
             }
         }
         hours = tmp;
+
+        console.debug(StandbyControl.batteryData);
     }
 
     Connections {
@@ -246,7 +248,7 @@ Item {
 
                     Rectangle {
                         width: 6
-                        height: 96 * StandbyControl.batteryData[index].level
+                        height: 96 * StandbyControl.batteryData[index].level/100
                         color: StandbyControl.batteryData[index].power < 0 ? Style.colorText : Style.colorGreen
                         anchors.bottom: parent.bottom
                     }
