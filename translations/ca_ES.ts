@@ -6,12 +6,12 @@
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="54"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation>No es pot inicialitzar el sensor de la bateria. Si us plau, reinicia el mando.</translation>
+      <translation>No es pot inicialitzar el sensor de la bateria. Si us plau, reinicia el comandament.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/arm/bq27441.cpp" line="333"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation>Error de comunicació amb el sensor de la bateria. Si us plau, reinicia el mando.</translation>
+      <translation>Error de comunicació amb el sensor de la bateria. Si us plau, reinicia el comandament.</translation>
     </message>
   </context>
   <context>
@@ -44,7 +44,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="259"/>
       <source>Average power</source>
-      <translation>Poténcia mitja</translation>
+      <translation>Potència mitja</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="335"/>
@@ -63,7 +63,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
       <source>Area detection</source>
-      <translation>Detecció d'área</translation>
+      <translation>Detecció d'àrea</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
@@ -151,17 +151,17 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Informació</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menú</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Guia</translation>
     </message>
   </context>
   <context>
@@ -169,17 +169,17 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="269"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Apaga</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="269"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Encén</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="282"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Color</translation>
     </message>
   </context>
   <context>
@@ -187,12 +187,12 @@
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="237"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Apaga</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="237"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Encén</translation>
     </message>
   </context>
   <context>
@@ -200,7 +200,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Les meves llistes</translation>
     </message>
   </context>
   <context>
@@ -209,41 +209,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Busca</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Búsquedes recents</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Neteja</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="409"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Àlbums</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Cançons</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Artistes</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Llistes</translation>
     </message>
   </context>
   <context>
@@ -251,12 +251,12 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="163"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Apaga</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="163"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Encén</translation>
     </message>
   </context>
   <context>
@@ -264,7 +264,7 @@
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>% Carregat</translation>
     </message>
   </context>
   <context>
@@ -273,7 +273,7 @@
       <location filename="../basic_ui/ContextMenu.qml" line="153"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="136"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Cancel·la</translation>
     </message>
   </context>
   <context>
@@ -281,12 +281,12 @@
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="40"/>
       <source>Devices</source>
-      <translation type="unfinished">Devices</translation>
+      <translation>Dispositius</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Devices.qml" line="61"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Afegeix nou</translation>
     </message>
   </context>
   <context>
@@ -294,27 +294,27 @@
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="43"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Pantalla</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="64"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Brillantor Automàtica</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="169"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Mode fosc</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="207"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Mode neteja</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="222"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Toca la pantalla durant 10 segons per apagar el mode neteja.</translation>
     </message>
   </context>
   <context>
@@ -322,7 +322,7 @@
     <message>
       <location filename="../sources/hardware/arm/drv2605.cpp" line="54"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>No es pot iniciar el motor hàptic. Si us plau, reinicia el comandament.</translation>
     </message>
   </context>
   <context>
@@ -330,32 +330,32 @@
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Llums</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persianes</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Comandament</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Clima</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Interruptor</translation>
     </message>
   </context>
   <context>
@@ -364,7 +364,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favorits</translation>
     </message>
   </context>
   <context>
@@ -373,7 +373,7 @@
       <location filename="../sources/hardware/hardwarefactory_yio.cpp" line="62"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
       <extracomment>Error message that shows up as notification when light value cannot be read</extracomment>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>No es pot iniciar el sensor de proximitat. Si us plau, reinicia el comandament.</translation>
     </message>
   </context>
   <context>
@@ -381,27 +381,27 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="48"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Desconnectat</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="149"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Connectat</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="185"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Desconnecta</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="215"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integracions</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="256"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Afegeix nou</translation>
     </message>
   </context>
   <context>
@@ -410,27 +410,27 @@
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>nom buit</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>dades buides</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>no es pot obrir l'arxiu &apos;%1&apos; per escriure: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>no es pot obrir l'arxiu &apos;%1&apos; per llegir: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>arxiu JSON no valid &apos;%1&apos; a la posició %2</translation>
     </message>
   </context>
   <context>
@@ -438,7 +438,7 @@
     <message>
       <location filename="../basic_ui/settings/Languages.qml" line="47"/>
       <source>Languages</source>
-      <translation type="unfinished">Languages</translation>
+      <translation>Idiomes</translation>
     </message>
   </context>
   <context>
@@ -447,27 +447,27 @@
       <location filename="../basic_ui/MainNavigation.qml" line="65"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favorits</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="65"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Configuració</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Llums</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Persianes</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
   </context>
   <context>
@@ -475,22 +475,22 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="64"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Xarxa</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="246"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Potència senyal Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>Direcció IP</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>Adreça MAC</translation>
     </message>
   </context>
   <context>
@@ -498,7 +498,7 @@
     <message>
       <location filename="../basic_ui/Notification.qml" line="267"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Descarta</translation>
     </message>
   </context>
   <context>
@@ -506,7 +506,7 @@
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="39"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Notificacions</translation>
     </message>
   </context>
   <context>
@@ -514,12 +514,12 @@
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="122"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Bateria baixa</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="137"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Si us plau, carrega el comandament aviat</translation>
     </message>
   </context>
   <context>
@@ -527,43 +527,43 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="40"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Estalvi d'energia</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Mai apaguis el Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Apaga el Wi-Fi després de %1 minuts d'inactivitat</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="151"/>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="275"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Mai</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="164"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minuts</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="186"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>No apagar mai el comandament</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="186"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Apaga el comandament després de %1 hores d'inactivitat</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="288"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 hores</translation>
     </message>
   </context>
   <context>
@@ -571,12 +571,12 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="97"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Perfils</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Per editar els perfils, usa les eines de configuració web del menú de configuració.</translation>
     </message>
   </context>
   <context>
@@ -584,7 +584,7 @@
     <message>
       <location filename="../sources/hardware/hardwarefactory_rpi0.cpp" line="70"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>El dispositiu Wi-Fi no es troba.</translation>
     </message>
   </context>
   <context>
@@ -593,14 +593,14 @@
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="42"/>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="63"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>Configuració del Comandament</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="98"/>
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
+      <translation>Usa el navegador per configurar el teu comandament YIO o descarrega i carrega copies de seguretat. Ves amb el navegador a:
 
 </translation>
     </message>
@@ -612,7 +612,7 @@
       <location filename="../basic_ui/pages/Settings.qml" line="32"/>
       <source>Settings</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Settings</translation>
+      <translation>Configuració</translation>
     </message>
   </context>
   <context>
@@ -620,12 +620,12 @@
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="42"/>
       <source>Software update</source>
-      <translation type="unfinished">Software update</translation>
+      <translation>Actualització de programa</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="63"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>Actualitza automàticament</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="95"/>
