@@ -774,18 +774,18 @@ connectar-se a la xarxa Wi-fi.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Connecta la Base YIO a la corrent i espera a que comenci a fer pampallugues. Per compartir les credencials Wi-fi amb la Base, marca següent.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="336"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Configuració Wi-fi finalitzada</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="316"/>
       <location filename="../wifiSetup.qml" line="371"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Reinicia</translation>
     </message>
   </context>
 </TS>
