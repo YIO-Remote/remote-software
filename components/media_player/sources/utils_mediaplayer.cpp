@@ -22,7 +22,10 @@
 
 #include "utils_mediaplayer.h"
 
+#include <QLoggingCategory>
 #include <QDebug>
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer");
 
 void MediaPlayerUtils::generateImages(QString url)
 {
@@ -40,7 +43,7 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
             QImage image;
 
             if (!image.load(reply, nullptr)) {
-                qDebug() << "ERROR LOADING IMAGE";
+                qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
             }
 
             ////////////////////////////////////////////////////////////////////
@@ -110,7 +113,7 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
         });
 
     } else {
-        qDebug() << "ERROR LOADING IMAGE" << reply->errorString();
+        qCWarning(CLASS_LC) << "ERROR LOADING IMAGE" << reply->errorString();
     }
 }
 

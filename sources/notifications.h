@@ -28,7 +28,7 @@
 #include <QQmlApplicationEngine>
 
 #include "logger.h"
-#include "notificationsinterface.h"
+#include "yio-interface/notificationsinterface.h"
 
 class Notification {
  public:

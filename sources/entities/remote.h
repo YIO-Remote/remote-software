@@ -27,7 +27,7 @@
 
 #include "../logger.h"
 #include "entity.h"
-#include "remoteinterface.h"
+#include "yio-interface/entities/remoteinterface.h"
 
 class Remote : public Entity, RemoteInterface {
     Q_OBJECT

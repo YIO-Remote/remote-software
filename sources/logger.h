@@ -32,7 +32,7 @@
 #include <QQueue>
 #include <QTextStream>
 
-#include "integrations/plugininterface.h"
+#include "yio-interface/plugininterface.h"
 
 class Logger : public QObject {
     Q_OBJECT

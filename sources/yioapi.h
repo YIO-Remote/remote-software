@@ -32,7 +32,7 @@
 #include "config.h"
 #include "integrations/integrations.h"
 #include "logger.h"
-#include "yioapiinterface.h"
+#include "yio-interface/yioapiinterface.h"
 
 class YioAPI : public YioAPIInterface {
     Q_OBJECT

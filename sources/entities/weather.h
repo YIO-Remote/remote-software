@@ -7,7 +7,7 @@
 #include <QVariant>
 
 #include "entity.h"
-#include "weatherinterface.h"
+#include "yio-interface/entities/weatherinterface.h"
 
 class QWeatherItem : public QObject, public WeatherItem {
     Q_OBJECT

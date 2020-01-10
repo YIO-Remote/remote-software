@@ -30,21 +30,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(qmake-target-platform.pri)
 include(qmake-destination-path.pri)
+! include(../integrations.library/remote-library.pri) {
+    error( "Couldn't find the remote-library.pri file!" )
+}
+
 
 HEADERS += \
-    components/media_player/sources/albummodel_mediaplayer.h \
-    components/media_player/sources/searchmodel_mediaplayer.h \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
-    sources/configinterface.h \
     sources/entities/climate.h \
-    sources/entities/climateinterface.h \
-    sources/entities/entityinterface.h \
     sources/entities/remote.h \
     sources/entities/switch.h \
-    sources/entities/switchinterface.h \
     sources/entities/weather.h \
-    sources/entities/weatherinterface.h \
     sources/fileio.h \
     sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
@@ -62,10 +59,8 @@ HEADERS += \
     sources/hardware/mock/lightsensor_mock.h \
     sources/hardware/proximitysensor.h \
     sources/hardware/mock/proximitysensor_mock.h \
-    sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
-    sources/integrations/integrationinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/logger.h \
@@ -92,25 +87,15 @@ HEADERS += \
     sources/hardware/wifi_status.h \
     sources/entities/entities.h \
     sources/entities/entity.h \
-    sources/entities/entitiesinterface.h \
-    sources/entities/entityinterface.h \
-    sources/entities/blindinterface.h \
-    sources/entities/lightinterface.h \
-    sources/entities/mediaplayerinterface.h \
-    sources/entities/remoteinterface.h \
     sources/entities/light.h \
     sources/entities/blind.h \
     sources/notifications.h \
-    sources/notificationsinterface.h \
     sources/entities/mediaplayer.h \
     sources/bluetootharea.h \
     sources/utils.h \
-    sources/yioapi.h \
-    sources/yioapiinterface.h
+    sources/yioapi.h
 
 SOURCES += \
-    components/media_player/sources/albummodel_mediaplayer.cpp \
-    components/media_player/sources/searchmodel_mediaplayer.cpp \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/climate.cpp \

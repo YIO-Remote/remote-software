@@ -22,7 +22,7 @@
 
 #include "standbycontrol.h"
 
-#include "integrations/integrationinterface.h"
+#include "yio-interface/integrationinterface.h"
 
 StandbyControl *StandbyControl::s_instance = nullptr;
 

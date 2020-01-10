@@ -21,10 +21,13 @@
  *****************************************************************************/
 
 #include <QPluginLoader>
+#include <QLoggingCategory>
 #include <QtDebug>
 
 #include "launcher.h"
 #include "notifications.h"
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 
 Launcher::Launcher(QObject *parent) :
     QObject(parent),
@@ -53,12 +56,12 @@ QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
     #else
         pluginPath = path + "/plugins/lib" + pluginName;
     #endif
-    qDebug() << "LOADING PLUGIN:" << pluginPath;
+    qCDebug(CLASS_LC) << "LOADING PLUGIN:" << pluginPath;
     QPluginLoader pluginLoader(pluginPath, this);
     QObject *plugin = pluginLoader.instance();
 
     if (!plugin) {
-        qDebug() << "FAILED TO LOAD PLUGIN: " <<  pluginLoader.errorString();
+        qCCritical(CLASS_LC) << "FAILED TO LOAD PLUGIN: " <<  pluginLoader.errorString();
         Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
     }
 

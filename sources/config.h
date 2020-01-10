@@ -27,7 +27,7 @@
 #include <QQmlContext>
 #include <QtDebug>
 
-#include "configinterface.h"
+#include "yio-interface/configinterface.h"
 #include "jsonfile.h"
 
 class Config : public QObject, ConfigInterface {
