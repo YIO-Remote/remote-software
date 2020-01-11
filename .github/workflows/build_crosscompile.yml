@@ -51,11 +51,11 @@ jobs:
       
       - name: build debug
         run: |
+          cd remote-software
           cd build
           PATH=${TOOLCHAIN_PATH}/bin:${TOOLCHAIN_PATH}/sbin:$PATH
           CPU_CORES=$(getconf _NPROCESSORS_ONLN)
           echo "Numbers of CPU cores for make: $CPU_CORES"
-          cd remote-software
           make -j$CPU_CORES
           echo "GitHub Actions debug build
           $(date)
