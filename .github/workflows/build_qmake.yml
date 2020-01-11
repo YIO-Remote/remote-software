@@ -301,7 +301,7 @@ jobs:
         endif()
 
         if ("${{ runner.os }}" STREQUAL "Linux")
-          set(ENV{LD_LIBRARY_PATH} "qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
+          set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
 
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/qtcreator" qtcreator_dir)
@@ -335,7 +335,7 @@ jobs:
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/;$ENV{PATH}")
         else()
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/:$ENV{PATH}")
-          set(ENV{LD_LIBRARY_PATH} "qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
+          set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
 
         include(ProcessorCount)
@@ -343,7 +343,7 @@ jobs:
 
         set(make_program make -j ${N})
         if ("${{ runner.os }}" STREQUAL "Windows")
-          set(make_program "qtcreator/bin/jom")
+          set(make_program "$ENV{GITHUB_WORKSPACE}/qtcreator/bin/jom")
         endif()
 
         execute_process(
