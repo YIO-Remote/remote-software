@@ -61,7 +61,7 @@ QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
     QObject *plugin = pluginLoader.instance();
 
     if (!plugin) {
-        qCCritical(CLASS_LC) << "FAILED TO LOAD PLUGIN: " <<  pluginLoader.errorString();
+        qCCritical(CLASS_LC) << "FAILED TO LOAD PLUGIN: " << pluginPath <<  pluginLoader.errorString();
         Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
     }
 

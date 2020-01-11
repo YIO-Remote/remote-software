@@ -1,6 +1,6 @@
 ###############################################################################
  #
- # Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ # Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  # Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  #
  # This file is part of the YIO-Remote software project.
@@ -28,12 +28,44 @@ CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-include(qmake-target-platform.pri)
-include(qmake-destination-path.pri)
-! include(../integrations.library/remote-library.pri) {
-    error( "Couldn't find the remote-library.pri file!" )
+# === Load integration interface library ======================================
+# Workaround for 'lupdate remote.pro' bug when using variables for including a .pri file:
+# "Project ERROR: COPIES entry extraData defines no .path"
+# This only happens if the variable is assigned more then once, even in an else block!
+# WHY is lupdate integration such a major pain?
+INTG_LIB_PATH = $$(YIO_SRC)
+isEmpty(INTG_LIB_PATH) {
+    message("Environment variables YIO_SRC not defined! Using '$$clean_path($$PWD/..)' for integrations.library project.")
+    # === Integration interface library: all plugin headers and shared data models
+    ! include($$clean_path($$PWD/../integrations.library/yio-interfaces.pri)) {
+        error( "Couldn't find the yio-interfaces.pri file!" )
+    }
+    ! include($$clean_path($$PWD/../integrations.library/yio-model-mediaplayer.pri)) {
+        error( "Couldn't find the yio-model-mediaplayer.pri file!" )
+    }
+    ! include($$clean_path($$PWD/../integrations.library/yio-model-weather.pri)) {
+        error( "Couldn't find the yio-model-weather.pri file!" )
+    }
+    # === QMake helper functions for output path based on platform & compiler
+    ! include($$clean_path($$PWD/../integrations.library/qmake-destination-path.pri)) {
+        error( "Couldn't find the qmake-destination-path.pri file!" )
+    }
+} else {
+    message("YIO_SRC is set: using '$$(YIO_SRC)/integrations.library' for integrations.library project.")
+    ! include($$(YIO_SRC)/integrations.library/yio-interfaces.pri) {
+        error( "Couldn't find the yio-interfaces.pri file!" )
+    }
+    ! include($$(YIO_SRC)/integrations.library/yio-model-mediaplayer.pri) {
+        error( "Couldn't find the yio-model-mediaplayer.pri file!" )
+    }
+    ! include($$(YIO_SRC)/integrations.library/yio-model-weather.pri) {
+        error( "Couldn't find the yio-model-weather.pri file!" )
+    }
+    ! include($$(YIO_SRC)/integrations.library/qmake-destination-path.pri) {
+        error( "Couldn't find the qmake-destination-path.pri file!" )
+    }
 }
-
+# =============================================================================
 
 HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \

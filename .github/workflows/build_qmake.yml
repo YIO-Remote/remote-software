@@ -34,7 +34,22 @@ jobs:
           }
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: remote-software
+
+    - name: Checkout integrations.library
+      uses: actions/checkout@v2
+      with:
+        repository: YIO-Remote/integrations.library
+        path: integrations.library
+
+    - name: Debug pathes
+      run: |
+        ls -lah ${GITHUB_WORKSPACE}
+        ls -lah ${GITHUB_WORKSPACE}/remote-software
+        ls -lah ${GITHUB_WORKSPACE}/integrations.library
 
     - name: Installing system libs
       shell: cmake -P {0}
