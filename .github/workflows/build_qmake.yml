@@ -46,6 +46,7 @@ jobs:
         path: integrations.library
 
     - name: Debug pathes
+      shell: bash
       run: |
         ls -lah ${GITHUB_WORKSPACE}
         ls -lah ${GITHUB_WORKSPACE}/remote-software
@@ -317,6 +318,7 @@ jobs:
             CONFIG+=release
             QTC_SOURCE="${qtcreator_dir}"
             QTC_BUILD="${qtcreator_dir}"
+          WORKING_DIRECTORY $ENV{GITHUB_WORKSPACE}/remote-software
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)
@@ -343,6 +345,7 @@ jobs:
 
         execute_process(
           COMMAND ${make_program}
+          WORKING_DIRECTORY $ENV{GITHUB_WORKSPACE}/remote-software
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)

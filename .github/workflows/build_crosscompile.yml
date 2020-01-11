@@ -27,18 +27,13 @@ jobs:
           # FIXME check for master branch build!
           ref: develop
           path: integrations.library
-      - name: Debug pathes
-        run: |
-          ls -lah ${GITHUB_WORKSPACE}
-          ls -lah ${GITHUB_WORKSPACE}/remote-software
-          ls -lah ${GITHUB_WORKSPACE}/integrations.library
-      - name: install toolchain
+      - name: Install toolchain
         run: |
           mkdir -p /opt
           wget -qO- $BUILDROOT_SDK_BASE_URL/${BUILDROOT_SDK_VERSION}/${BUILDROOT_SDK_NAME}.tar.gz | tar -xz -C /opt
           /opt/${BUILDROOT_SDK_NAME}/relocate-sdk.sh
 
-      - name: configure debug
+      - name: Configure debug
         run: |
           echo "Creating Makefile..."
           cd remote-software
@@ -49,10 +44,9 @@ jobs:
           ${TOOLCHAIN_PATH}/bin/qmake ${GITHUB_WORKSPACE}/remote-software ${YIO_REMOTE_QMAKE_ARGS}
           make qmake_all
       
-      - name: build debug
+      - name: Build debug
         run: |
-          cd remote-software
-          cd build
+          cd remote-software/build
           PATH=${TOOLCHAIN_PATH}/bin:${TOOLCHAIN_PATH}/sbin:$PATH
           CPU_CORES=$(getconf _NPROCESSORS_ONLN)
           echo "Numbers of CPU cores for make: $CPU_CORES"
@@ -81,7 +75,7 @@ jobs:
           path: ../binaries
           name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-debug-ARM-RPi0
 
-      - name: configure release
+      - name: Configure release
         run: |
           cd remote-software
           rm -Rf build
@@ -94,10 +88,9 @@ jobs:
           ${TOOLCHAIN_PATH}/bin/qmake ${GITHUB_WORKSPACE}/remote-software CONFIG+=release
           make qmake_all
       
-      - name: build release
+      - name: Build release
         run: |
-          cd remote-software
-          cd build
+          cd remote-software/build
           PATH=${TOOLCHAIN_PATH}/bin:${TOOLCHAIN_PATH}/sbin:$PATH
           CPU_CORES=$(getconf _NPROCESSORS_ONLN)
           echo "Numbers of CPU cores for make: $CPU_CORES"
