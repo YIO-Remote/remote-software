@@ -9,7 +9,7 @@ env:
   # QT_CREATOR_VERSION: 4.11.0
   APP_PRO: remote.pro
   APP_NAME: remote
-  YIO_BIN: "../binaries"
+  BIN_OUTPUT_PATH: "binaries"
   DEBUG_OUTPUT: "false"
 
 jobs:
@@ -71,8 +71,8 @@ jobs:
         string(REGEX MATCH "([0-9]+.[0-9]+).[0-9]+" outvar "$ENV{QT_CREATOR_VERSION}")
         set(qtc_base_url "https://download.qt.io/official_releases/qtcreator/${CMAKE_MATCH_1}/$ENV{QT_CREATOR_VERSION}")
 
+        file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/$ENV{BIN_OUTPUT_PATH}" qtc_output_directory)
         if ("${{ runner.os }}" STREQUAL "Windows")
-          set(qtc_output_directory "$ENV{YIO_BIN}")
           set(qtc_binary_name "$ENV{APP_NAME}.exe")
           # special handling for Qt Creator 4.8 :-(
           if (${{ env.QT_CREATOR_VERSION }} MATCHES "4.8.*")
@@ -83,11 +83,9 @@ jobs:
             set(qtc_platform "windows_msvc2017_x86")
           endif()
         elseif ("${{ runner.os }}" STREQUAL "Linux")
-          set(qtc_output_directory "$ENV{YIO_BIN}")
           set(qtc_binary_name "$ENV{APP_NAME}")
           set(qtc_platform "linux_gcc_64_rhel72")
         elseif ("${{ runner.os }}" STREQUAL "macOS")
-          set(qtc_output_directory "$ENV{YIO_BIN}")
           set(qtc_binary_name "$ENV{APP_NAME}.app")
           set(qtc_platform "mac_x64")
         endif()
@@ -153,7 +151,6 @@ jobs:
         ls -lah qtcreator || true
         ls -lah qtcreator/bin || true
         ls -lah qtcreator/lib/Qt/lib || true
-        ls -lah ${{ steps.qt.outputs.qt_dir }}/bin || true
 
     - name: Download Qt
       id: qt
@@ -300,6 +297,7 @@ jobs:
           endforeach()
         endif()
 
+        set(ENV{YIO_BIN} "${{ steps.qt_creator.outputs.qtc_output_directory }}")
         if ("${{ runner.os }}" STREQUAL "Linux")
           set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
@@ -337,6 +335,7 @@ jobs:
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/:$ENV{PATH}")
           set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
+        set(ENV{YIO_BIN} "${{ steps.qt_creator.outputs.qtc_output_directory }}")
 
         include(ProcessorCount)
         ProcessorCount(N)
@@ -358,7 +357,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       id: upload_artifact
       with:
-        path: ${{ env.YIO_BIN}}
+        path: ${{ env.BIN_OUTPUT_PATH}}
         name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}
 
   release:
