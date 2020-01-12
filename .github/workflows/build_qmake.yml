@@ -1,14 +1,23 @@
+# GitHub Action to build a YIO Remote Qt project for Linux, macOS and Windows.
+#
+# Based on https://www.qt.io/blog/building-qt-creator-plugins-with-github-actions
+# Enhanced by Markus Zehnder
+
 name: QMake Build Matrix
 
 on: [push]
 
 env:
+  # Attention: Qt version and Qt Creator version should correspond (check releases).
+  # Qt Creator is required for Qt linguist tools only. Hey Qt: why isn't there a simple and easy way to install lupdate & lreleaes on ALL platforms?
   QT_VERSION: 5.12.6
   QT_CREATOR_VERSION: 4.8.2
+  # Alternative non-LTS version:
   # QT_VERSION: 5.14.0
   # QT_CREATOR_VERSION: 4.11.0
   APP_PRO: remote.pro
   APP_NAME: remote
+  # Build artifact output path. Used to set project specific YIO_BIN env var in 'qt_creator' step.
   BIN_OUTPUT_PATH: "binaries"
   DEBUG_OUTPUT: "false"
 
@@ -34,7 +43,7 @@ jobs:
           }
 
     steps:
-    - name: Checkout
+    - name: Checkout remote-software
       uses: actions/checkout@v2
       with:
         path: remote-software
@@ -47,15 +56,7 @@ jobs:
         ref: develop
         path: integrations.library
 
-    - name: Debug pathes
-      shell: bash
-      run: |
-        pwd
-        ls -lah ${GITHUB_WORKSPACE}
-        ls -lah ${GITHUB_WORKSPACE}/remote-software
-        ls -lah ${GITHUB_WORKSPACE}/integrations.library
-
-    - name: Installing system libs
+    - name: Install system libs
       shell: cmake -P {0}
       run: |
         if ("${{ runner.os }}" STREQUAL "Linux")
@@ -92,9 +93,12 @@ jobs:
 
         # Save the path for other steps
         message("::set-output name=qtc_binary_name::${qtc_binary_name}")
-        message("::set-output name=qtc_output_directory::${qtc_output_directory}")
-        # Set for other steps
+        # Set YIO_BIN env var for other steps
         message("::set-env name=YIO_BIN::${qtc_output_directory}")
+        # Qt Creator library path is required for Qt linguist tools. Otherwise we'll get libicui18n.so.56 not found!
+        if ("${{ runner.os }}" STREQUAL "Linux")
+          message("::set-env name=LD_LIBRARY_PATH::$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
+        endif()
 
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/../downloads" download_dir)
 
@@ -299,11 +303,6 @@ jobs:
           endforeach()
         endif()
 
-        # set(ENV{YIO_BIN} "${{ steps.qt_creator.outputs.qtc_output_directory }}")
-        if ("${{ runner.os }}" STREQUAL "Linux")
-          set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
-        endif()
-
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/qtcreator" qtcreator_dir)
 
         if (${{ env.DEBUG_OUTPUT }} STREQUAL "true")
@@ -335,7 +334,6 @@ jobs:
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/;$ENV{PATH}")
         else()
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/:$ENV{PATH}")
-          set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
 
         include(ProcessorCount)
