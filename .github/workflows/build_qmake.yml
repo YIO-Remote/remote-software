@@ -93,6 +93,8 @@ jobs:
         # Save the path for other steps
         message("::set-output name=qtc_binary_name::${qtc_binary_name}")
         message("::set-output name=qtc_output_directory::${qtc_output_directory}")
+        # Set for other steps
+        message("::set-env name=YIO_BIN::${qtc_output_directory}")
 
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/../downloads" download_dir)
 
@@ -297,7 +299,7 @@ jobs:
           endforeach()
         endif()
 
-        set(ENV{YIO_BIN} "${{ steps.qt_creator.outputs.qtc_output_directory }}")
+        # set(ENV{YIO_BIN} "${{ steps.qt_creator.outputs.qtc_output_directory }}")
         if ("${{ runner.os }}" STREQUAL "Linux")
           set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
@@ -335,7 +337,6 @@ jobs:
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/:$ENV{PATH}")
           set(ENV{LD_LIBRARY_PATH} "$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
-        set(ENV{YIO_BIN} "${{ steps.qt_creator.outputs.qtc_output_directory }}")
 
         include(ProcessorCount)
         ProcessorCount(N)
@@ -357,7 +358,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       id: upload_artifact
       with:
-        path: ${{ env.BIN_OUTPUT_PATH}}
+        path: ${{ env.YIO_BIN}}
         name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}
 
   release:
