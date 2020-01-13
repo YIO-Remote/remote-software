@@ -272,34 +272,7 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
-# lupdate & lrelease integration in qmake is a major pain to get working on Linux, macOS, Windows PLUS Linux arm cross compile PLUS qmake / make cmd line!
-# There are so many different ways and each one works great on SOME platform(s) only :-(
-# So this here might look excessive but I found no other reliable way to make it work on as many environments as possible...
-# 1.) Check if we get the linguist cmd line tools from the QT installation (works in Qt Creator on Linux, macOS and Win but not with Buildroot / Linux crosscompile)
-exists($$[QT_INSTALL_BINS]/lupdate):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate
-exists($$[QT_INSTALL_BINS]/lrelease):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
-  # think about our Windows friends
-exists($$[QT_INSTALL_BINS]/lupdate.exe):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate.exe
-exists($$[QT_INSTALL_BINS]/lrelease.exe):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease.exe
-# 2.) Check if it's available from $HOST_DIR env var which is set during Buildroot. Only use it if it's not already defined (*=).
-exists($$(HOST_DIR)/bin/lupdate):QMAKE_LUPDATE *= $$(HOST_DIR)/bin/lupdate
-exists($$(HOST_DIR)/bin/lrelease):QMAKE_LRELEASE *= $$(HOST_DIR)/bin/lrelease
-# 3.) Linux Qt Creator arm cross compile: QT_INSTALL_BINS is NOT available, but host tools should be available in QTDIR
-exists($$(QTDIR)/bin/lupdate):QMAKE_LUPDATE *= $$(QTDIR)/bin/lupdate
-exists($$(QTDIR)/bin/lrelease):QMAKE_LRELEASE *= $$(QTDIR)/bin/lrelease
-# 4.) Fallback: custom env var QT_LINGUIST_DIR (which can also be used to override the tools found in the path)
-exists($$(QT_LINGUIST_DIR)/lupdate):QMAKE_LUPDATE *= $$(QT_LINGUIST_DIR)/lupdate
-exists($$(QT_LINGUIST_DIR)/lrelease):QMAKE_LRELEASE *= $$(QT_LINGUIST_DIR)/lrelease
-# 5.) Last option: check path, plain and simple. (Would most likely be enough on most systems...)
-if(isEmpty(QMAKE_LUPDATE)) {
-    win32:QMAKE_LUPDATE    = $$system(where lupdate)
-    unix|mac:QMAKE_LUPDATE = $$system(which lupdate)
-}
-if(isEmpty(QMAKE_LRELEASE)) {
-    win32:QMAKE_LRELEASE    = $$system(where lrelease)
-    unix|mac:QMAKE_LRELEASE = $$system(which lrelease)
-}
-
+#QMAKE_LUPDATE & _LRELEASE vars are set in qmake-destiation-path.pri
 !isEmpty(QMAKE_LUPDATE):exists("$$QMAKE_LUPDATE") {
     message("Using Qt linguist tools: '$$QMAKE_LUPDATE', '$$QMAKE_LRELEASE'")
     command = $$QMAKE_LUPDATE remote.pro
