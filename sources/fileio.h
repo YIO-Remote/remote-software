@@ -29,7 +29,7 @@
 class FileIO : public QObject {
     Q_OBJECT
 
- public slots:
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     bool write(const QString& source, const QString& data) {
         if (source.isEmpty()) return false;
 

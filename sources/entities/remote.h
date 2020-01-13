@@ -32,6 +32,7 @@
 class Remote : public Entity, RemoteInterface {
     Q_OBJECT
     Q_INTERFACES(RemoteInterface)
+
  public:
     Q_PROPERTY(QVariantList commands READ commands NOTIFY commandsChanged)
     Q_PROPERTY(QVariantList channels READ channels NOTIFY channelsChanged)

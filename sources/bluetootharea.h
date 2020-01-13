@@ -81,7 +81,7 @@ class BluetoothArea : public QObject {
     void dockFound();
     void dockMessage(const QString &message);
 
- public slots:
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void deviceDiscovered(const QString &);
     void foundDock();
 
@@ -105,7 +105,7 @@ class BluetoothThread : public QObject {
     void foundRoom(const QString &area);
     void foundDock();
 
- public slots:
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void startScan();
     void stopScan();
     void turnOff();

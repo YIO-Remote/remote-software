@@ -20,48 +20,43 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QPluginLoader>
+#include "launcher.h"
+
 #include <QLoggingCategory>
+#include <QPluginLoader>
 #include <QtDebug>
 
-#include "launcher.h"
 #include "notifications.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 
-Launcher::Launcher(QObject *parent) :
-    QObject(parent),
-    m_process(new QProcess(this))
-{
-}
+Launcher::Launcher(QObject *parent) : QObject(parent), m_process(new QProcess(this)) {}
 
-QString Launcher::launch(const QString &program)
-{
+QString Launcher::launch(const QString &program) {
     m_process->start(program);
     m_process->waitForFinished(-1);
     QByteArray bytes = m_process->readAllStandardOutput();
-    QString output = QString::fromLocal8Bit(bytes);
+    QString    output = QString::fromLocal8Bit(bytes);
     return output;
 }
 
-QObject* Launcher::loadPlugin(const QString& path, const QString &pluginName)
-{
+QObject *Launcher::loadPlugin(const QString &path, const QString &pluginName) {
     QString pluginPath;
-    #ifdef __arm__
-        pluginPath = path + "/plugins/lib" + pluginName;
-    #elif __APPLE__
-        pluginPath = path + "/plugins/lib" + pluginName + ".dylib";
-    #elif _WIN32
-        pluginPath = path + "/plugins/" + pluginName + ".dll";
-    #else
-        pluginPath = path + "/plugins/lib" + pluginName;
-    #endif
+#ifdef __arm__
+    pluginPath = path + "/plugins/lib" + pluginName;
+#elif __APPLE__
+    pluginPath = path + "/plugins/lib" + pluginName + ".dylib";
+#elif _WIN32
+    pluginPath = path + "/plugins/" + pluginName + ".dll";
+#else
+    pluginPath = path + "/plugins/lib" + pluginName;
+#endif
     qCDebug(CLASS_LC) << "LOADING PLUGIN:" << pluginPath;
     QPluginLoader pluginLoader(pluginPath, this);
-    QObject *plugin = pluginLoader.instance();
+    QObject *     plugin = pluginLoader.instance();
 
     if (!plugin) {
-        qCCritical(CLASS_LC) << "FAILED TO LOAD PLUGIN: " << pluginPath <<  pluginLoader.errorString();
+        qCCritical(CLASS_LC) << "FAILED TO LOAD PLUGIN: " << pluginPath << pluginLoader.errorString();
         Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
     }
 

@@ -20,18 +20,16 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QtDebug>
-#include <QQmlApplicationEngine>
 #include "light.h"
 
-LightInterface::~LightInterface()
-{
-}
+#include <QQmlApplicationEngine>
+#include <QtDebug>
 
-QString     Light::Type = "light";
+LightInterface::~LightInterface() {}
 
-bool Light::updateAttrByIndex (int attrIndex, const QVariant& value)
-{
+QString Light::Type = "light";
+
+bool Light::updateAttrByIndex(int attrIndex, const QVariant& value) {
     bool chg = false;
     switch (attrIndex) {
         case LightDef::STATE:
@@ -48,61 +46,41 @@ bool Light::updateAttrByIndex (int attrIndex, const QVariant& value)
             }
             break;
         case LightDef::COLOR:
-           if (m_color != value) {
+            if (m_color != value) {
                 m_color = QColor(value.toString());
                 chg = true;
                 emit colorChanged();
             }
             break;
         case LightDef::COLORTEMP:
-           if (m_colorTemp != value) {
+            if (m_colorTemp != value) {
                 m_colorTemp = value.toInt();
                 chg = true;
                 emit colorTempChanged();
             }
             break;
-        }
+    }
     return chg;
 }
 
-void Light::turnOn ()
-{
-    command(LightDef::C_ON, "");
-}
-void Light::turnOff ()
-{
-    command(LightDef::C_OFF, "");
-}
-void Light::toggle()
-{
+void Light::turnOn() { command(LightDef::C_ON, ""); }
+void Light::turnOff() { command(LightDef::C_OFF, ""); }
+void Light::toggle() {
     if (state() == LightDef::ON) {
         turnOff();
-    }
-    else {
+    } else {
         turnOn();
     }
 }
 
-void Light::setBrightness(int value)
-{
-    command(LightDef::C_BRIGHTNESS, value);
-}
+void Light::setBrightness(int value) { command(LightDef::C_BRIGHTNESS, value); }
 
-void Light::setColor(QColor value)
-{
-    command(LightDef::C_COLOR, QVariant(value));
-}
+void Light::setColor(QColor value) { command(LightDef::C_COLOR, QVariant(value)); }
 
-void Light::setColorTemp(int value)
-{
-    command(LightDef::C_COLORTEMP, value);
-}
+void Light::setColorTemp(int value) { command(LightDef::C_COLORTEMP, value); }
 
-Light::Light(const QVariantMap& config, IntegrationInterface* integrationObj, QObject *parent):
-    Entity (Type, config, integrationObj, parent),
-    m_brightness(0),
-    m_colorTemp(0)
-{
+Light::Light(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent)
+    : Entity(Type, config, integrationObj, parent), m_brightness(0), m_colorTemp(0) {
     static QMetaEnum metaEnumAttr;
     static QMetaEnum metaEnumFeatures;
     static QMetaEnum metaEnumCommands;

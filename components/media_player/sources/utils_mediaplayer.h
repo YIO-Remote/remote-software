@@ -36,7 +36,7 @@ class MediaPlayerUtils : public QObject {
     Q_OBJECT
 
  public:
-    explicit MediaPlayerUtils() {}
+    MediaPlayerUtils() {}
     virtual ~MediaPlayerUtils() {}
 
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
@@ -74,6 +74,6 @@ class MediaPlayerUtils : public QObject {
     void   generateImages(QString url);
     QColor dominantColor(const QImage& image);
 
- private slots:
+ private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void generateImagesReply(QNetworkReply* reply);
 };

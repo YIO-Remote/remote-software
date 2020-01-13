@@ -85,7 +85,7 @@ void Entities::load() {
 
 QList<EntityInterface *> Entities::getByType(const QString &type) {
     QList<EntityInterface *> e;
-    foreach (QObject *value, m_entities) {
+    for (QObject *value : m_entities) {
         if (value->property("type") == type) {
             e.append(qobject_cast<EntityInterface *>(m_entities.value(value->property("entity_id").toString())));
         }
@@ -93,7 +93,7 @@ QList<EntityInterface *> Entities::getByType(const QString &type) {
     return e;
 }
 
-// TODO this function might be removed
+// TODO(marton) this function might be removed
 QList<EntityInterface *> Entities::getByArea(const QString &area) {
     QList<EntityInterface *> e;
     for (QMap<QString, Entity *>::iterator i = m_entities.begin(); i != m_entities.end(); ++i) {
@@ -142,36 +142,31 @@ void Entities::add(const QString &type, const QVariantMap &config, IntegrationIn
     // Light entity
     if (type == "light") {
         entity = new Light(config, integrationObj, this);
-    }
-    // Blind entity
-    else if (type == "blind") {
+    } else if (type == "blind") {
+        // Blind entity
         entity = new Blind(config, integrationObj, this);
-    }
-    // Media player entity
-    else if (type == "media_player") {
+    } else if (type == "media_player") {
+        // Media player entity
         entity = new MediaPlayer(config, integrationObj, this);
-    }
-    // Remote entity
-    else if (type == "remote") {
+    } else if (type == "remote") {
+        // Remote entity
         entity = new Remote(config, integrationObj, this);
-    }
-    // Weather entity
-    else if (type == "weather") {
+    } else if (type == "weather") {
+        // Weather entity
         entity = new Weather(config, integrationObj, this);
-    }
-    // Climate entity
-    else if (type == "climate") {
+    } else if (type == "climate") {
+        // Climate entity
         entity = new Climate(config, integrationObj, this);
-    }
-    // Switch entity
-    else if (type == "switch") {
+    } else if (type == "switch") {
+        // Switch entity
         entity = new Switch(config, integrationObj, this);
     }
 
-    if (entity == nullptr)
+    if (entity == nullptr) {
         qCDebug(m_log) << "Illegal entity type : " << type;
-    else
+    } else {
         m_entities.insert(entity->entity_id(), entity);
+    }
 }
 
 void Entities::update(const QString &entity_id, const QVariantMap &attributes) {
@@ -213,11 +208,9 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id) {
         QObject *context = new QObject();
 
         connect(timer, &QTimer::timeout, context, [=]() {
-            if (m_mediaplayersPlaying.contains(entity_id))
-                m_mediaplayersPlaying.remove(entity_id);
+            if (m_mediaplayersPlaying.contains(entity_id)) m_mediaplayersPlaying.remove(entity_id);
 
-            if (m_mediaplayersTimers.contains(entity_id))
-                m_mediaplayersTimers.remove(entity_id);
+            if (m_mediaplayersTimers.contains(entity_id)) m_mediaplayersTimers.remove(entity_id);
 
             delete timer;
             delete context;
@@ -226,8 +219,7 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id) {
 
         timer->start(120000);
 
-        if (!m_mediaplayersTimers.contains(entity_id))
-            m_mediaplayersTimers.insert(entity_id, timer);
+        if (!m_mediaplayersTimers.contains(entity_id)) m_mediaplayersTimers.insert(entity_id, timer);
     }
 }
 
