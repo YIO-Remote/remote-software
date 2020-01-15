@@ -69,7 +69,7 @@ class ButtonHandler : public QObject {
     int m_buttonPressed  = -1;
     int m_buttonReleased = -1;
 
- private slots:
+ private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onInterrupt(int event);
     void onYIOAPIPressed(QString button);
     void onYIOAPIReleased(QString button);

@@ -27,9 +27,8 @@
 #include <QStringList>
 #include <QVariant>
 
-//#include "../integrations/integrationinterface.h"
-#include "../integrations/integrationinterface.h"
-#include "entityinterface.h"
+#include "yio-interface/integrationinterface.h"
+#include "yio-interface/entities/entityinterface.h"
 
 class Entity : public QObject, EntityInterface {
     Q_OBJECT

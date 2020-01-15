@@ -31,8 +31,8 @@
 #include <QVariant>
 #include <QtDebug>
 
-#include "../integrations/integrationinterface.h"
-#include "entitiesinterface.h"
+#include "yio-interface/integrationinterface.h"
+#include "yio-interface/entities/entitiesinterface.h"
 #include "entity.h"
 
 class Entities : public QObject, EntitiesInterface {

@@ -27,9 +27,9 @@
 #include <QQmlApplicationEngine>
 #include <QtDebug>
 
-#include "integrationinterface.h"
 #include "integrationsinterface.h"
-#include "plugininterface.h"
+#include "yio-interface/integrationinterface.h"
+#include "yio-interface/plugininterface.h"
 
 class Integrations : public QObject, IntegrationsInterface {
     Q_OBJECT
@@ -66,7 +66,7 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INVOKABLE QString getFriendlyName(QObject* obj);
 
     // get mdns _tcp name
-    Q_INVOKABLE QString     getMDNS(const QString& id);
+    Q_INVOKABLE QString getMDNS(const QString& id);
     Q_INVOKABLE QStringList getMDNSList();
 
     // get the type of integration by id
@@ -81,7 +81,7 @@ class Integrations : public QObject, IntegrationsInterface {
     void listChanged();
     void loadComplete();
 
- public slots:
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onCreateDone(QMap<QObject*, QVariant> map);
 
  private:

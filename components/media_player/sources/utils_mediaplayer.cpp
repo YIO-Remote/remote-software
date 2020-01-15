@@ -23,24 +23,24 @@
 #include "utils_mediaplayer.h"
 
 #include <QDebug>
+#include <QLoggingCategory>
 
-void MediaPlayerUtils::generateImages(QString url)
-{
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer");
+
+void MediaPlayerUtils::generateImages(QString url) {
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished, this, &MediaPlayerUtils::generateImagesReply);
     manager->get(QNetworkRequest(QUrl(url)));
 }
 
-void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
-{
-    if (reply->error() == QNetworkReply::NoError)
-    {
+void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply) {
+    if (reply->error() == QNetworkReply::NoError) {
         // run image processing in different thread
-        QFuture<void> future = QtConcurrent::run([=](){
+        QFuture<void> future = QtConcurrent::run([=]() {
             QImage image;
 
             if (!image.load(reply, nullptr)) {
-                qDebug() << "ERROR LOADING IMAGE";
+                qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
             }
 
             ////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
 
             // change the brightness of the color if it's too bright
             if (m_pixelColor.lightness() > 150) {
-                m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value()-80));
+                m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
             }
 
             // if the color is close to white, return black instead
@@ -66,7 +66,7 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
 
             // create byte array and then convert to base64
             QByteArray bArray;
-            QBuffer buffer(&bArray);
+            QBuffer    buffer(&bArray);
             buffer.open(QIODevice::WriteOnly);
             smallImage.save(&buffer, "JPEG");
 
@@ -93,7 +93,7 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
 
             // create byte array and then convert to base64
             QByteArray lArray;
-            QBuffer lBuffer(&lArray);
+            QBuffer    lBuffer(&lArray);
             lBuffer.open(QIODevice::WriteOnly);
             image.save(&lBuffer, "JPEG");
 
@@ -110,22 +110,21 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply)
         });
 
     } else {
-        qDebug() << "ERROR LOADING IMAGE" << reply->errorString();
+        qCWarning(CLASS_LC) << "ERROR LOADING IMAGE" << reply->errorString();
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// DOMINANT COLOR OF IMAGE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-QColor MediaPlayerUtils::dominantColor(const QImage &image)
-{
+QColor MediaPlayerUtils::dominantColor(const QImage &image) {
     qint32 averageRed = 0, averageGreen = 0, averageBlue = 0;
 
     const qint32 maxX = qMin<qint32>(image.width(), 0 + image.width());
     const qint32 maxY = qMin<qint32>(image.height(), 0 + image.height());
 
-    for (qint32 y = 0; y < maxY; y++)  {
-        for (qint32 x = 0; x < maxX; x++)   {
+    for (qint32 y = 0; y < maxY; y++) {
+        for (qint32 x = 0; x < maxX; x++) {
             QRgb pixel = image.pixel(x, y);
 
             averageRed += qRed(pixel);
@@ -137,8 +136,7 @@ QColor MediaPlayerUtils::dominantColor(const QImage &image)
     qint32 n = image.width() * image.height();
 
     Q_ASSERT(n);
-    if (n <= 0)
-        return Qt::black;
+    if (n <= 0) return Qt::black;
 
     return QColor(averageRed / n, averageGreen / n, averageBlue / n);
 }

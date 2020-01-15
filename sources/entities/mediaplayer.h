@@ -28,11 +28,12 @@
 #include <QVariant>
 
 #include "entity.h"
-#include "mediaplayerinterface.h"
+#include "yio-interface/entities/mediaplayerinterface.h"
 
 class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_OBJECT
     Q_INTERFACES(MediaPlayerInterface)
+
  public:
     // properties
     Q_PROPERTY(int volume READ volume NOTIFY volumeChanged)

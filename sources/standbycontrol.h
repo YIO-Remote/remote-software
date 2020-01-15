@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
@@ -117,7 +117,7 @@ class StandbyControl : public QObject {
     void         getBatteryData();
     QVariantList m_batteryData;
 
- private slots:
+ private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onSecondsTimerTimeout();
     void loadSettings();
     void onTouchDetected();

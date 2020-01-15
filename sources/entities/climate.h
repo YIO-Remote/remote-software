@@ -25,7 +25,7 @@
 #include <QObject>
 #include <QVariant>
 
-#include "climateinterface.h"
+#include "yio-interface/entities/climateinterface.h"
 #include "entity.h"
 
 class Climate : public Entity, ClimateInterface {

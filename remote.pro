@@ -1,6 +1,6 @@
 ###############################################################################
  #
- # Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ # Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  # Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  #
  # This file is part of the YIO-Remote software project.
@@ -28,23 +28,52 @@ CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-include(qmake-target-platform.pri)
-include(qmake-destination-path.pri)
+# === Load integration interface library ======================================
+# Workaround for 'lupdate remote.pro' bug when using variables for including a .pri file:
+# "Project ERROR: COPIES entry extraData defines no .path"
+# This only happens if the variable is assigned more then once, even in an else block!
+# WHY is lupdate integration such a major pain?
+INTG_LIB_PATH = $$(YIO_SRC)
+isEmpty(INTG_LIB_PATH) {
+    message("Environment variables YIO_SRC not defined! Using '$$clean_path($$PWD/..)' for integrations.library project.")
+    # === Integration interface library: all plugin headers and shared data models
+    ! include($$clean_path($$PWD/../integrations.library/yio-interfaces.pri)) {
+        error( "Couldn't find the yio-interfaces.pri file!" )
+    }
+    ! include($$clean_path($$PWD/../integrations.library/yio-model-mediaplayer.pri)) {
+        error( "Couldn't find the yio-model-mediaplayer.pri file!" )
+    }
+    ! include($$clean_path($$PWD/../integrations.library/yio-model-weather.pri)) {
+        error( "Couldn't find the yio-model-weather.pri file!" )
+    }
+    # === QMake helper functions for output path based on platform & compiler
+    ! include($$clean_path($$PWD/../integrations.library/qmake-destination-path.pri)) {
+        error( "Couldn't find the qmake-destination-path.pri file!" )
+    }
+} else {
+    message("YIO_SRC is set: using '$$(YIO_SRC)/integrations.library' for integrations.library project.")
+    ! include($$(YIO_SRC)/integrations.library/yio-interfaces.pri) {
+        error( "Couldn't find the yio-interfaces.pri file!" )
+    }
+    ! include($$(YIO_SRC)/integrations.library/yio-model-mediaplayer.pri) {
+        error( "Couldn't find the yio-model-mediaplayer.pri file!" )
+    }
+    ! include($$(YIO_SRC)/integrations.library/yio-model-weather.pri) {
+        error( "Couldn't find the yio-model-weather.pri file!" )
+    }
+    ! include($$(YIO_SRC)/integrations.library/qmake-destination-path.pri) {
+        error( "Couldn't find the qmake-destination-path.pri file!" )
+    }
+}
+# =============================================================================
 
 HEADERS += \
-    components/media_player/sources/albummodel_mediaplayer.h \
-    components/media_player/sources/searchmodel_mediaplayer.h \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
-    sources/configinterface.h \
     sources/entities/climate.h \
-    sources/entities/climateinterface.h \
-    sources/entities/entityinterface.h \
     sources/entities/remote.h \
     sources/entities/switch.h \
-    sources/entities/switchinterface.h \
     sources/entities/weather.h \
-    sources/entities/weatherinterface.h \
     sources/fileio.h \
     sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
@@ -62,10 +91,8 @@ HEADERS += \
     sources/hardware/mock/lightsensor_mock.h \
     sources/hardware/proximitysensor.h \
     sources/hardware/mock/proximitysensor_mock.h \
-    sources/integrations/plugininterface.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
-    sources/integrations/integrationinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/logger.h \
@@ -92,25 +119,15 @@ HEADERS += \
     sources/hardware/wifi_status.h \
     sources/entities/entities.h \
     sources/entities/entity.h \
-    sources/entities/entitiesinterface.h \
-    sources/entities/entityinterface.h \
-    sources/entities/blindinterface.h \
-    sources/entities/lightinterface.h \
-    sources/entities/mediaplayerinterface.h \
-    sources/entities/remoteinterface.h \
     sources/entities/light.h \
     sources/entities/blind.h \
     sources/notifications.h \
-    sources/notificationsinterface.h \
     sources/entities/mediaplayer.h \
     sources/bluetootharea.h \
     sources/utils.h \
-    sources/yioapi.h \
-    sources/yioapiinterface.h
+    sources/yioapi.h
 
 SOURCES += \
-    components/media_player/sources/albummodel_mediaplayer.cpp \
-    components/media_player/sources/searchmodel_mediaplayer.cpp \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
     sources/entities/climate.cpp \
@@ -255,34 +272,7 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts
 
-# lupdate & lrelease integration in qmake is a major pain to get working on Linux, macOS, Windows PLUS Linux arm cross compile PLUS qmake / make cmd line!
-# There are so many different ways and each one works great on SOME platform(s) only :-(
-# So this here might look excessive but I found no other reliable way to make it work on as many environments as possible...
-# 1.) Check if we get the linguist cmd line tools from the QT installation (works in Qt Creator on Linux, macOS and Win but not with Buildroot / Linux crosscompile)
-exists($$[QT_INSTALL_BINS]/lupdate):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate
-exists($$[QT_INSTALL_BINS]/lrelease):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
-  # think about our Windows friends
-exists($$[QT_INSTALL_BINS]/lupdate.exe):QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate.exe
-exists($$[QT_INSTALL_BINS]/lrelease.exe):QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease.exe
-# 2.) Check if it's available from $HOST_DIR env var which is set during Buildroot. Only use it if it's not already defined (*=).
-exists($$(HOST_DIR)/bin/lupdate):QMAKE_LUPDATE *= $$(HOST_DIR)/bin/lupdate
-exists($$(HOST_DIR)/bin/lrelease):QMAKE_LRELEASE *= $$(HOST_DIR)/bin/lrelease
-# 3.) Linux Qt Creator arm cross compile: QT_INSTALL_BINS is NOT available, but host tools should be available in QTDIR
-exists($$(QTDIR)/bin/lupdate):QMAKE_LUPDATE *= $$(QTDIR)/bin/lupdate
-exists($$(QTDIR)/bin/lrelease):QMAKE_LRELEASE *= $$(QTDIR)/bin/lrelease
-# 4.) Fallback: custom env var QT_LINGUIST_DIR (which can also be used to override the tools found in the path)
-exists($$(QT_LINGUIST_DIR)/lupdate):QMAKE_LUPDATE *= $$(QT_LINGUIST_DIR)/lupdate
-exists($$(QT_LINGUIST_DIR)/lrelease):QMAKE_LRELEASE *= $$(QT_LINGUIST_DIR)/lrelease
-# 5.) Last option: check path, plain and simple. (Would most likely be enough on most systems...)
-if(isEmpty(QMAKE_LUPDATE)) {
-    win32:QMAKE_LUPDATE    = $$system(where lupdate)
-    unix|mac:QMAKE_LUPDATE = $$system(which lupdate)
-}
-if(isEmpty(QMAKE_LRELEASE)) {
-    win32:QMAKE_LRELEASE    = $$system(where lrelease)
-    unix|mac:QMAKE_LRELEASE = $$system(which lrelease)
-}
-
+#QMAKE_LUPDATE & _LRELEASE vars are set in qmake-destiation-path.pri
 !isEmpty(QMAKE_LUPDATE):exists("$$QMAKE_LUPDATE") {
     message("Using Qt linguist tools: '$$QMAKE_LUPDATE', '$$QMAKE_LRELEASE'")
     command = $$QMAKE_LUPDATE remote.pro

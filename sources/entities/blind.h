@@ -27,7 +27,7 @@
 #include <QString>
 #include <QVariant>
 
-#include "blindinterface.h"
+#include "yio-interface/entities/blindinterface.h"
 #include "entity.h"
 
 class Blind : public Entity, BlindInterface {

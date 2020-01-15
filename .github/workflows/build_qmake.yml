@@ -1,15 +1,29 @@
+# GitHub Action to build a YIO Remote Qt project for Linux, macOS and Windows.
+#
+# Based on https://www.qt.io/blog/building-qt-creator-plugins-with-github-actions
+# Enhanced by Markus Zehnder
+#
+# TODO:
+# - debug / release build: either both or a switch which one to create
+# - Version tag / branch for integrations.library
+
 name: QMake Build Matrix
 
 on: [push]
 
 env:
+  # Attention: Qt version and Qt Creator version should correspond (check releases).
+  # Qt Creator is required for Qt linguist tools only. Hey Qt: why isn't there a simple and easy way to install lupdate & lreleaes on ALL platforms?
   QT_VERSION: 5.12.6
   QT_CREATOR_VERSION: 4.8.2
+  # Alternative non-LTS version:
   # QT_VERSION: 5.14.0
   # QT_CREATOR_VERSION: 4.11.0
   APP_PRO: remote.pro
   APP_NAME: remote
-  YIO_BIN: "../binaries"
+  PROJECT_NAME: remote-software
+  # Build artifact output path. Used to set project specific YIO_BIN env var in 'qt_creator' step.
+  BIN_OUTPUT_PATH: "binaries"
   DEBUG_OUTPUT: "false"
 
 jobs:
@@ -34,9 +48,20 @@ jobs:
           }
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout remote-software
+      uses: actions/checkout@v2
+      with:
+        path: ${{ env.PROJECT_NAME}}
 
-    - name: Installing system libs
+    - name: Checkout integrations.library
+      uses: actions/checkout@v2
+      with:
+        repository: YIO-Remote/integrations.library
+        # FIXME check for master branch build!
+        ref: develop
+        path: integrations.library
+
+    - name: Install system libs
       shell: cmake -P {0}
       run: |
         if ("${{ runner.os }}" STREQUAL "Linux")
@@ -52,9 +77,8 @@ jobs:
         string(REGEX MATCH "([0-9]+.[0-9]+).[0-9]+" outvar "$ENV{QT_CREATOR_VERSION}")
         set(qtc_base_url "https://download.qt.io/official_releases/qtcreator/${CMAKE_MATCH_1}/$ENV{QT_CREATOR_VERSION}")
 
+        file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/$ENV{BIN_OUTPUT_PATH}" qtc_output_directory)
         if ("${{ runner.os }}" STREQUAL "Windows")
-          set(qtc_output_directory "$ENV{YIO_BIN}")
-          set(qtc_binary_name "$ENV{APP_NAME}.exe")
           # special handling for Qt Creator 4.8 :-(
           if (${{ env.QT_CREATOR_VERSION }} MATCHES "4.8.*")
             set(qtc_platform "windows_vs2015_64")
@@ -64,18 +88,17 @@ jobs:
             set(qtc_platform "windows_msvc2017_x86")
           endif()
         elseif ("${{ runner.os }}" STREQUAL "Linux")
-          set(qtc_output_directory "$ENV{YIO_BIN}")
-          set(qtc_binary_name "$ENV{APP_NAME}")
           set(qtc_platform "linux_gcc_64_rhel72")
         elseif ("${{ runner.os }}" STREQUAL "macOS")
-          set(qtc_output_directory "$ENV{YIO_BIN}")
-          set(qtc_binary_name "$ENV{APP_NAME}.app")
           set(qtc_platform "mac_x64")
         endif()
 
-        # Save the path for other steps
-        message("::set-output name=qtc_binary_name::${qtc_binary_name}")
-        message("::set-output name=qtc_output_directory::${qtc_output_directory}")
+        # Set YIO_BIN env var for other steps
+        message("::set-env name=YIO_BIN::${qtc_output_directory}")
+        # Qt Creator library path is required for Qt linguist tools. Otherwise we'll get libicui18n.so.56 not found!
+        if ("${{ runner.os }}" STREQUAL "Linux")
+          message("::set-env name=LD_LIBRARY_PATH::$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
+        endif()
 
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/../downloads" download_dir)
 
@@ -134,7 +157,6 @@ jobs:
         ls -lah qtcreator || true
         ls -lah qtcreator/bin || true
         ls -lah qtcreator/lib/Qt/lib || true
-        ls -lah ${{ steps.qt.outputs.qt_dir }}/bin || true
 
     - name: Download Qt
       id: qt
@@ -281,10 +303,6 @@ jobs:
           endforeach()
         endif()
 
-        if ("${{ runner.os }}" STREQUAL "Linux")
-          set(ENV{LD_LIBRARY_PATH} "qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
-        endif()
-
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/qtcreator" qtcreator_dir)
 
         if (${{ env.DEBUG_OUTPUT }} STREQUAL "true")
@@ -302,6 +320,7 @@ jobs:
             CONFIG+=release
             QTC_SOURCE="${qtcreator_dir}"
             QTC_BUILD="${qtcreator_dir}"
+          WORKING_DIRECTORY $ENV{GITHUB_WORKSPACE}/$ENV{PROJECT_NAME}
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)
@@ -315,7 +334,6 @@ jobs:
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/;$ENV{PATH}")
         else()
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/:$ENV{PATH}")
-          set(ENV{LD_LIBRARY_PATH} "qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
 
         include(ProcessorCount)
@@ -323,11 +341,12 @@ jobs:
 
         set(make_program make -j ${N})
         if ("${{ runner.os }}" STREQUAL "Windows")
-          set(make_program "qtcreator/bin/jom")
+          set(make_program "$ENV{GITHUB_WORKSPACE}/qtcreator/bin/jom")
         endif()
 
         execute_process(
           COMMAND ${make_program}
+          WORKING_DIRECTORY $ENV{GITHUB_WORKSPACE}/$ENV{PROJECT_NAME}
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)
@@ -338,7 +357,7 @@ jobs:
       id: upload_artifact
       with:
         path: ${{ env.YIO_BIN}}
-        name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}
+        name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}
 
   release:
     if: contains(github.ref, 'tags/v')
@@ -392,12 +411,12 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v1
       with:
-        name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}
+        name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}
         path: ./
 
     - run: ls -la
 
-    - run: zip -r ${APP_NAME}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}.zip .
+    - run: zip -r ${APP_NAME}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}.zip .
     - run: ls -la
 
     - name: Download URL
@@ -417,6 +436,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.set_upload_url.outputs.upload_url }}
-        asset_path: ./${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}.zip
-        asset_name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}.zip
+        asset_path: ./${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}.zip
+        asset_name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}.zip
         asset_content_type: application/zip

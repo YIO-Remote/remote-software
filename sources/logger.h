@@ -32,7 +32,7 @@
 #include <QQueue>
 #include <QTextStream>
 
-#include "integrations/plugininterface.h"
+#include "yio-interface/plugininterface.h"
 
 class Logger : public QObject {
     Q_OBJECT
@@ -96,7 +96,8 @@ class Logger : public QObject {
 
  private:
     struct SCategory {
-        SCategory(QtMsgType logLevel, QLoggingCategory* logCategory = nullptr, PluginInterface* plugin = nullptr)
+        explicit SCategory(QtMsgType logLevel, QLoggingCategory* logCategory = nullptr,
+                           PluginInterface* plugin = nullptr)
             : logCategory(logCategory), plugin(plugin), logLevel(logLevel), logLevelMask(logLevelToMask(logLevel)) {
             memset(count, 0, sizeof(count));
         }
@@ -119,9 +120,9 @@ class Logger : public QObject {
 
     void processMessage(QtMsgType type, const char* category, const char* source, int line, const QString& msg,
                         bool writeanyHow = false);
-    void writeFile(SMessage& message, const QDateTime& dt);
-    void writeQueue(SMessage& message);
-    void writeConsole(SMessage& message);
+    void writeFile(const SMessage& message, const QDateTime& dt);
+    void writeQueue(const SMessage& message);
+    void writeConsole(const SMessage& message);
 
     static void    messageOutput(QtMsgType type, const QMessageLogContext& context, const QString& msg);
     static quint16 logLevelToMask(QtMsgType logLevel);

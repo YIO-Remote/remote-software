@@ -24,7 +24,7 @@
 #include <QObject>
 #include <QProcess>
 
-#include "./integrations/integrationinterface.h"
+#include "yio-interface/integrationinterface.h"
 
 class Launcher : public QObject {
     Q_OBJECT
