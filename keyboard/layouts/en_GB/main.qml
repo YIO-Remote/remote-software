@@ -90,7 +90,7 @@ KeyboardLayout {
         }
         Key {
             key: Qt.Key_R
-            text: "t"
+            text: "r"
         }
         Key {
             key: Qt.Key_T
