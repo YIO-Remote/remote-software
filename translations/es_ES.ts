@@ -2,52 +2,39 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="es-ES" sourcelanguage="en">
   <context>
-    <name>BQ27441</name>
-    <message>
-      <location filename="../sources/hardware/arm/bq27441.cpp" line="54"/>
-      <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation>No se ha podido inicializar el sensor de batería. Por favor, reinicie el mando.</translation>
-    </message>
-    <message>
-      <location filename="../sources/hardware/arm/bq27441.cpp" line="333"/>
-      <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation>Error de comunicación del sensor de batería. Por favor, reinicie el mando.</translation>
-    </message>
-  </context>
-  <context>
     <name>Battery</name>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="75"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="76"/>
       <source>Battery</source>
       <translation>Batería</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="96"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="97"/>
       <source>Battery health</source>
       <translation>Estado de la batería</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="132"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="133"/>
       <source>Screen on</source>
       <translation>Pantalla apagada</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="161"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="162"/>
       <source>Screen off</source>
       <translation>Pantalla encendida</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="199"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="200"/>
       <source>Battery level</source>
       <translation>Nivel de la batería</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="259"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="260"/>
       <source>Average power</source>
       <translation>Consumo medio</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Battery.qml" line="335"/>
+      <location filename="../basic_ui/settings/Battery.qml" line="336"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
       <translation>No hay información disponible</translation>
@@ -72,6 +59,14 @@
     </message>
   </context>
   <context>
+    <name>BluetoothThread</name>
+    <message>
+      <location filename="../sources/bluetootharea.cpp" line="121"/>
+      <source>Bluetooth device was not found.</source>
+      <translation type="unfinished">Bluetooth device was not found.</translation>
+    </message>
+  </context>
+  <context>
     <name>Button</name>
     <message>
       <location filename="../components/climate/ui/Button.qml" line="45"/>
@@ -83,12 +78,12 @@
   <context>
     <name>ButtonBase</name>
     <message>
-      <location filename="../components/ButtonBase.qml" line="342"/>
+      <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Remove from favorites</source>
       <translation>Eliminar de favoritos</translation>
     </message>
     <message>
-      <location filename="../components/ButtonBase.qml" line="342"/>
+      <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Add to favorites</source>
       <translation>Añadir a favoritos</translation>
     </message>
@@ -111,32 +106,32 @@
       <translation>Menús</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="397"/>
+      <location filename="../components/climate/ui/Card.qml" line="402"/>
       <source>Turn off</source>
       <translation>Apagar</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="397"/>
+      <location filename="../components/climate/ui/Card.qml" line="402"/>
       <source>Turn on</source>
       <translation>Encender</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="410"/>
+      <location filename="../components/climate/ui/Card.qml" line="415"/>
       <source>Mode</source>
       <translation>Modo</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="420"/>
+      <location filename="../components/climate/ui/Card.qml" line="425"/>
       <source>Off</source>
       <translation>Apagado</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="426"/>
+      <location filename="../components/climate/ui/Card.qml" line="431"/>
       <source>Heat</source>
       <translation>calor</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="432"/>
+      <location filename="../components/climate/ui/Card.qml" line="437"/>
       <source>Cool</source>
       <translation>Frío</translation>
     </message>
@@ -167,17 +162,17 @@
   <context>
     <name>CardColor</name>
     <message>
-      <location filename="../components/light/ui/CardColor.qml" line="269"/>
+      <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn off</source>
       <translation>Apagar</translation>
     </message>
     <message>
-      <location filename="../components/light/ui/CardColor.qml" line="269"/>
+      <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
       <translation>Encender</translation>
     </message>
     <message>
-      <location filename="../components/light/ui/CardColor.qml" line="282"/>
+      <location filename="../components/light/ui/CardColor.qml" line="280"/>
       <source>Color</source>
       <translation>Color</translation>
     </message>
@@ -185,12 +180,12 @@
   <context>
     <name>CardDimmable</name>
     <message>
-      <location filename="../components/light/ui/CardDimmable.qml" line="237"/>
+      <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn off</source>
       <translation>Apagar</translation>
     </message>
     <message>
-      <location filename="../components/light/ui/CardDimmable.qml" line="237"/>
+      <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn on</source>
       <translation>Encender</translation>
     </message>
@@ -249,12 +244,12 @@
   <context>
     <name>CardSwitch</name>
     <message>
-      <location filename="../components/light/ui/CardSwitch.qml" line="163"/>
+      <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn off</source>
       <translation>Apagar</translation>
     </message>
     <message>
-      <location filename="../components/light/ui/CardSwitch.qml" line="163"/>
+      <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn on</source>
       <translation>Encender</translation>
     </message>
@@ -262,7 +257,7 @@
   <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="162"/>
       <source>% Charged</source>
       <translation>% Cargado</translation>
     </message>
@@ -271,7 +266,7 @@
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="153"/>
-      <location filename="../components/climate/ui/ContextMenu.qml" line="136"/>
+      <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
       <translation>Cancelar</translation>
     </message>
@@ -302,27 +297,19 @@
       <translation>Brillo automático</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="169"/>
+      <location filename="../basic_ui/settings/Display.qml" line="168"/>
       <source>Dark mode</source>
       <translation>Modo oscuro</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="207"/>
+      <location filename="../basic_ui/settings/Display.qml" line="206"/>
       <source>Cleaning mode</source>
       <translation>Modo de limpieza</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Display.qml" line="222"/>
+      <location filename="../basic_ui/settings/Display.qml" line="221"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
       <translation>Toque la pantalla durante 10 segundos para desactivar el modo de limpieza.</translation>
-    </message>
-  </context>
-  <context>
-    <name>Drv2605</name>
-    <message>
-      <location filename="../sources/hardware/arm/drv2605.cpp" line="54"/>
-      <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation>No se ha podido inicializar el motor háptico. Por favor, reinicie el mando.</translation>
     </message>
   </context>
   <context>
@@ -365,15 +352,6 @@
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
       <translation>Favoritos</translation>
-    </message>
-  </context>
-  <context>
-    <name>HardwareFactoryYio</name>
-    <message>
-      <location filename="../sources/hardware/hardwarefactory_yio.cpp" line="62"/>
-      <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <extracomment>Error message that shows up as notification when light value cannot be read</extracomment>
-      <translation>No se ha podido inicializar el sensor de proximidad. Por favor, reinicie el mando.</translation>
     </message>
   </context>
   <context>
@@ -582,9 +560,35 @@
   <context>
     <name>QObject</name>
     <message>
-      <location filename="../sources/hardware/hardwarefactory_rpi0.cpp" line="70"/>
+      <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
       <translation>Dispositivo WiFi no encontrado.</translation>
+    </message>
+    <message>
+      <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
+      <source>Cannot initialize the battery sensor. Please restart the remote.</source>
+      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+    </message>
+    <message>
+      <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
+      <location filename="../sources/hardware/proximitysensor.h" line="29"/>
+      <source>Battery sensor communication error. Please restart the remote.</source>
+      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+    </message>
+    <message>
+      <location filename="../sources/hardware/hapticmotor.h" line="29"/>
+      <source>Cannot initialize the haptic motor. Please restart the remote.</source>
+      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+    </message>
+    <message>
+      <location filename="../sources/hardware/interrupthandler.h" line="28"/>
+      <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
+      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
+    </message>
+    <message>
+      <location filename="../sources/hardware/proximitysensor.h" line="28"/>
+      <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
+      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
     </message>
   </context>
   <context>
@@ -698,7 +702,7 @@ Mando YIO </translation>
   <context>
     <name>main</name>
     <message>
-      <location filename="../main.qml" line="217"/>
+      <location filename="../main.qml" line="115"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
       <translation>¡Nueva versión de software disponible!</translation>
