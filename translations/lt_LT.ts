@@ -63,7 +63,7 @@
     <message>
       <location filename="../sources/bluetootharea.cpp" line="121"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Bluetooth įrenginys nerastas.</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Temperatūra: </translation>
     </message>
   </context>
   <context>
@@ -80,7 +80,7 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Ištrinti iš mėgstamiausių</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
