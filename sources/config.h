@@ -30,7 +30,7 @@
 #include "yio-interface/configinterface.h"
 #include "jsonfile.h"
 
-class Config : public QObject, ConfigInterface {
+class Config : public QObject, public ConfigInterface {
     Q_OBJECT
     Q_INTERFACES(ConfigInterface)
 

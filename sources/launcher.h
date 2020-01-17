@@ -24,14 +24,13 @@
 #include <QObject>
 #include <QProcess>
 
-#include "yio-interface/integrationinterface.h"
-
 class Launcher : public QObject {
     Q_OBJECT
  public:
     explicit Launcher(QObject *parent = nullptr);
     Q_INVOKABLE QString launch(const QString &program);
-    Q_INVOKABLE QObject *loadPlugin(const QString &path, const QString &pluginName);
+
+    QObject *loadPlugin(const QString &path, const QString &pluginName);
 
  private:
     QProcess *m_process;

@@ -35,7 +35,7 @@
 #include "yio-interface/entities/entitiesinterface.h"
 #include "entity.h"
 
-class Entities : public QObject, EntitiesInterface {
+class Entities : public QObject, public EntitiesInterface {
     Q_OBJECT
     //    Q_PLUGIN_METADATA(IID "YIO.EntitiesInterface")
     Q_INTERFACES(EntitiesInterface)
