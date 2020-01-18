@@ -50,7 +50,7 @@ void Integrations::load() {
     // read the config
     QVariantMap c = config->getIntegrations();  // config->config().value("integrations").toMap();
 
-    int i = 0;
+    int integrationCount = 0;
 
     // let's load the plugins first
     for (QVariantMap::const_iterator iter = c.begin(); iter != c.end(); ++iter) {
@@ -61,7 +61,7 @@ void Integrations::load() {
 
         // push the config to the integration
         QVariantMap map = iter.value().toMap();
-        map.insert("type", iter.key());
+        map.insert(Config::KEY_TYPE, iter.key());
 
         QString type = iter.key();
 
@@ -71,7 +71,7 @@ void Integrations::load() {
             connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
 
             interface->create(map, entities, notifications, api, config);
-            i++;
+            integrationCount++;
         }
     }
 
@@ -92,14 +92,14 @@ void Integrations::load() {
             connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
 
             QVariantMap map;
-            map.insert("type", defaultIntegrations[k]);
+            map.insert(Config::KEY_TYPE, defaultIntegrations[k]);
 
             interface->create(map, entities, notifications, api, config);
-            i++;
+            integrationCount++;
         }
     }
 
-    m_integrationsToLoad = i;
+    m_integrationsToLoad = integrationCount;
 
     if (m_integrationsToLoad == 0) emit loadComplete();
 }
@@ -111,7 +111,7 @@ void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
     }
     m_integrationsLoaded++;
 
-    if (m_integrationsLoaded == m_integrationsToLoad) {
+    if (m_integrationsToLoad == 0 || m_integrationsLoaded == m_integrationsToLoad) {
         emit loadComplete();
     }
 }
@@ -121,10 +121,11 @@ QList<QObject*> Integrations::list() { return m_integrations.values(); }
 QObject* Integrations::get(const QString& id) { return m_integrations.value(id); }
 
 void Integrations::add(const QVariantMap& config, QObject* obj, const QString& type) {
-    m_integrations.insert(config.value("id").toString(), obj);
-    m_integrations_friendly_names.insert(config.value("id").toString(), config.value("friendly_name").toString());
-    m_integrations_mdns.insert(config.value("id").toString(), config.value("mdns").toString());
-    m_integrations_types.insert(config.value("id").toString(), type);
+    const QString id = config.value(Config::KEY_ID).toString();
+    m_integrations.insert(id, obj);
+    m_integrations_friendly_names.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
+    m_integrations_mdns.insert(id, config.value(Config::KEY_MDNS).toString());
+    m_integrations_types.insert(id, type);
     emit listChanged();
 }
 

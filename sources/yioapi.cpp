@@ -61,7 +61,7 @@ void YioAPI::start() {
 
     emit hostnameChanged();
 
-    m_qzero_conf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
+    m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
 
     qCDebug(m_log) << "YIO api started";
 }
@@ -70,7 +70,7 @@ void YioAPI::stop() {
     m_server->close();
     m_clients.clear();
     m_running = false;
-    m_qzero_conf.stopServicePublish();
+    m_zeroConf.stopServicePublish();
     emit runningChanged();
 }
 
@@ -97,8 +97,9 @@ bool YioAPI::setConfig(QVariantMap config) {
 
 bool YioAPI::addEntityToConfig(QVariantMap entity) {
     // check the input if it's OK
-    if (!entity.contains("area") && !entity.contains("entity_id") && !entity.contains("friendly_name") &&
-        !entity.contains("integration") && !entity.contains("supported_features") && !entity.contains("type")) {
+    if (!entity.contains(Config::KEY_AREA) && !entity.contains(Config::KEY_ENTITY_ID) &&
+        !entity.contains(Config::KEY_FRIENDLYNAME) && !entity.contains(Config::KEY_INTEGRATION) &&
+        !entity.contains(Config::KEY_SUPPORTED_FEATURES) && !entity.contains(Config::KEY_TYPE)) {
         return false;
     }
 
@@ -113,7 +114,7 @@ bool YioAPI::addEntityToConfig(QVariantMap entity) {
     for (int i = 0; i < e.length(); i++) {
         if (e[i].toMap().value("type").toString() == entityType) {
             // get the data key array
-            QVariantMap  r  = e[i].toMap();
+            QVariantMap  r = e[i].toMap();
             QVariantList rl = r.value("data").toJsonArray().toVariantList();
 
             // add the entity
@@ -142,13 +143,23 @@ bool YioAPI::addEntityToConfig(QVariantMap entity) {
 }
 
 void YioAPI::discoverNetworkServices() {
+    // FIXME this is not multi threading safe!
+    // m_discoveredServices gets cleared if one of the discoverNetworkServices is called.
+    // At the moment this works since we only have the dock integration using this functionality.
+    // As soon as we have another integration plugin this can fail unpredictably since most integration plugins are
+    // running in their own thread. I.e. during startup and service discovery these methods will be called in parallel!
+    // Possible solution: use an identifier for discoverNetworkServices(), discoverNetworkServices(mdns) and
+    // discoveredServices(), e.g. the mdns name itself: map with mdns -> QZeroConf
+    // Possible solution 2: use a worker thread with signal / slot queuing
     m_discoveredServices.clear();
 
+    // retrieve all configured mdns records from the integration plugins
     m_discoverableServices = Integrations::getInstance()->getMDNSList();
 
     for (int i = 0; i < m_discoverableServices.length(); i++) {
-        m_qzero_conf_browser = new QZeroConf;
-        connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+        // FIXME memory leak
+        m_zeroConfBrowser = new QZeroConf;
+        connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
             QVariantMap txt;
 
             QMap<QByteArray, QByteArray> txtInfo = item->txt();
@@ -169,16 +180,18 @@ void YioAPI::discoverNetworkServices() {
             emit serviceDiscovered(m_discoveredServices);
             emit discoveredServicesChanged();
         });
-        m_qzero_conf_browser->startBrowser(m_discoverableServices[i]);
+        m_zeroConfBrowser->startBrowser(m_discoverableServices[i]);
     }
 }
 
 void YioAPI::discoverNetworkServices(QString mdns) {
+    // FIXME this is not multi threading safe! See discoverNetworkServices()
     m_discoveredServices.clear();
 
-    m_qzero_conf_browser = new QZeroConf;
+    // FIXME memory leak
+    m_zeroConfBrowser = new QZeroConf;
 
-    connect(m_qzero_conf_browser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+    connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
         QVariantMap txt;
 
         QMap<QByteArray, QByteArray> txtInfo = item->txt();
@@ -200,10 +213,11 @@ void YioAPI::discoverNetworkServices(QString mdns) {
         emit discoveredServicesChanged();
     });
 
-    m_qzero_conf_browser->startBrowser(mdns);
+    m_zeroConfBrowser->startBrowser(mdns);
 }
 
 QVariantList YioAPI::discoveredServices() {
+    // FIXME this is not multi threading safe! See discoverNetworkServices()
     QVariantList list;
 
     QMap<QString, QVariantMap>::iterator i;
@@ -224,7 +238,7 @@ void YioAPI::onNewConnection() {
     // send message to client after connected to authenticate
     QVariantMap map;
     map.insert("type", "auth_required");
-    QJsonDocument doc     = QJsonDocument::fromVariant(map);
+    QJsonDocument doc = QJsonDocument::fromVariant(map);
     QString       message = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
     socket->sendTextMessage(message);
@@ -265,7 +279,7 @@ void YioAPI::processMessage(QString message) {
                 if (map.value("token").toString() == m_token) {
                     qDebug(CLASS_LC) << "Token OK";
                     r_map.insert("type", "auth_ok");
-                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
+                    QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
                     QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
@@ -278,7 +292,7 @@ void YioAPI::processMessage(QString message) {
                     qCDebug(m_log) << "Token NOT OK";
                     r_map.insert("type", "auth_error");
                     r_map.insert("message", "Invalid token");
-                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
+                    QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
                     QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
@@ -287,7 +301,7 @@ void YioAPI::processMessage(QString message) {
                 qCDebug(m_log) << "No token";
                 r_map.insert("type", "auth_error");
                 r_map.insert("message", "Token needed");
-                QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
+                QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
                 QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                 client->sendTextMessage(r_message);
@@ -320,7 +334,7 @@ void YioAPI::processMessage(QString message) {
             }
         } else if (type == "button" && m_clients[client]) {
             // Handle buttons
-            QString buttonName   = map["name"].toString();
+            QString buttonName = map["name"].toString();
             QString buttonAction = map["action"].toString();
             qDebug(CLASS_LC) << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
             if (buttonAction == "pressed") {
@@ -330,7 +344,7 @@ void YioAPI::processMessage(QString message) {
             }
         } else if (type == "log" && m_clients[client]) {
             // Handle log
-            Logger *logger    = Logger::getInstance();
+            Logger *logger = Logger::getInstance();
             QString logAction = map["action"].toString();
             QString logTarget = map["target"].toString();
             qCDebug(m_log) << "LOGGER : " << logAction;
@@ -380,12 +394,15 @@ void YioAPI::processMessage(QString message) {
                 int         count = 50;
                 int         level = QtMsgType::QtDebugMsg;
                 QStringList categories;
-                if (map.contains("count"))
+                if (map.contains("count")) {
                     count = map["count"].toInt();
-                if (map.contains("level"))
+                }
+                if (map.contains("level")) {
                     level = logger->toMsgType(map["level"].toString());
-                if (map.contains("categories"))
+                }
+                if (map.contains("categories")) {
                     categories = map["categories"].toStringList();
+                }
                 QJsonArray  messages = logger->getQueuedMessages(count, level, categories);
                 QJsonObject jsonObj;
                 jsonObj.insert("type", "log");
