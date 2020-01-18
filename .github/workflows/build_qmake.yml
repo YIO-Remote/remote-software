@@ -62,7 +62,7 @@ jobs:
         path: integrations.library
 
     - name: Install system libs
-      if: runner.os == "Linux"
+      if: runner.os == 'Linux'
       run: |
         sudo apt install libavahi-client-dev libgl1-mesa-dev
 
