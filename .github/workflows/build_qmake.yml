@@ -62,17 +62,9 @@ jobs:
         path: integrations.library
 
     - name: Install system libs
-      shell: cmake -P {0}
+      if: runner.os == "Linux"
       run: |
-        if ("${{ runner.os }}" STREQUAL "Linux")
-          execute_process(
-            COMMAND sudo apt install libavahi-client-dev libgl1-mesa-dev
-            RESULT_VARIABLE result
-          )
-          if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Error installing required system libs: ${result}")
-          endif()
-        endif()
+        sudo apt install libavahi-client-dev libgl1-mesa-dev
 
     - name: Download Qt Creator
       id: qt_creator
