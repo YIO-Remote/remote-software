@@ -64,6 +64,7 @@ jobs:
     - name: Install system libs
       if: runner.os == 'Linux'
       run: |
+        sudo apt update
         sudo apt install libavahi-client-dev libgl1-mesa-dev
 
     - name: Download Qt Creator
