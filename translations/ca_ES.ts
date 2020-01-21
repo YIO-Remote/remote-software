@@ -745,7 +745,7 @@ yio.remote</translation>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
       <translation>El comandament YIO s'ha connectat 
-correctament a la xarxa Wi-fi.</translation>
+correctament a la xarxa Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="164"/>
@@ -763,7 +763,7 @@ correctament a la xarxa Wi-fi.</translation>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
       <translation>El comandament YIO no pot
-connectar-se a la xarxa Wi-fi.</translation>
+connectar-se a la xarxa Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="217"/>
@@ -778,12 +778,12 @@ connectar-se a la xarxa Wi-fi.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Connecta la Base YIO a la corrent i espera a que comenci a fer pampallugues. Per compartir les credencials Wi-fi amb la Base, marca següent.</translation>
+      <translation>Connecta la Base YIO a la corrent i espera a que comenci a fer pampallugues. Per compartir les credencials Wi-Fi amb la Base, marca següent.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="336"/>
       <source>Wi-Fi setup completed</source>
-      <translation>Configuració Wi-fi finalitzada</translation>
+      <translation>Configuració Wi-Fi finalitzada</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="316"/>
