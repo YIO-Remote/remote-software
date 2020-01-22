@@ -195,7 +195,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Le mie playlist</translation>
     </message>
   </context>
   <context>
@@ -204,41 +204,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Cerca</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Ricerche recenti</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Annulla</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="409"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Album</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Brani</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Artisti</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Playlist</translation>
     </message>
   </context>
   <context>
@@ -246,12 +246,12 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Spegni</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Accendi</translation>
     </message>
   </context>
   <context>
@@ -268,7 +268,7 @@
       <location filename="../basic_ui/ContextMenu.qml" line="153"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Annulla</translation>
     </message>
   </context>
   <context>
@@ -332,17 +332,17 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Remoto</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Clima</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Interruttore</translation>
     </message>
   </context>
   <context>
@@ -351,7 +351,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Preferiti</translation>
     </message>
   </context>
   <context>
@@ -359,27 +359,27 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="48"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Disconnesso</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="149"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Connesso</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="185"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Disconnesso</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="215"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrazioni</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="256"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Aggiungi nuovo</translation>
     </message>
   </context>
   <context>
@@ -388,7 +388,7 @@
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>nome vuoto</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
