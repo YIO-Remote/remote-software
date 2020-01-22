@@ -642,7 +642,7 @@ Uppdateringar installeras mellan 03:00 och 05:00.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>New software is available.
 YIO remote </source>
-      <translation>Ny version finns tillfänglig.
+      <translation>Ny version finns tillgänglig.
 YIO fjärrkontroll </translation>
     </message>
     <message>
