@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="41"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
@@ -63,7 +63,7 @@
     <message>
       <location filename="../sources/bluetootharea.cpp" line="121"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Dispositivo Bluetooth non trovato.</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Temperatura: </translation>
     </message>
   </context>
   <context>
@@ -80,12 +80,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Rimuovere dai preferiti</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Aggiungi ai Preferiti</translation>
     </message>
   </context>
   <context>
@@ -93,47 +93,47 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Muto</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Indietro</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menu</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="402"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Spegni</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="402"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Accendi</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="415"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Modalità</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="425"/>
       <source>Off</source>
-      <translation type="unfinished">Off</translation>
+      <translation>Off</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="431"/>
       <source>Heat</source>
-      <translation type="unfinished">Heat</translation>
+      <translation>Riscaldamento</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="437"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Raffreddamento</translation>
     </message>
   </context>
   <context>
@@ -141,22 +141,22 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Sorgente</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Info</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menu</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Guida</translation>
     </message>
   </context>
   <context>
@@ -164,17 +164,17 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Spegni</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Accendi</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="280"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Colore</translation>
     </message>
   </context>
   <context>
@@ -182,12 +182,12 @@
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Spegni</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Accendi</translation>
     </message>
   </context>
   <context>

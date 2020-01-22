@@ -50,12 +50,12 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Wykrywanie obszaru</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Automagicznie skanuje beacony Bluetooth powiązane z obszarami, znajduje najbliższy i wyświetla urządzenia w tym obszarze.</translation>
     </message>
   </context>
   <context>
@@ -63,7 +63,7 @@
     <message>
       <location filename="../sources/bluetootharea.cpp" line="121"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Nie znaleziono urządzenia Bluetooth.</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Temperatura: </translation>
     </message>
   </context>
   <context>
@@ -80,7 +80,7 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Usuń z ulubionych</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
