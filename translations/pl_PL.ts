@@ -26,18 +26,18 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="200"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>Poziom baterii</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="260"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>Średnie zużycie energii</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="336"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>Brak danych</translation>
     </message>
   </context>
   <context>
@@ -45,7 +45,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="41"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
