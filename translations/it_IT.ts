@@ -567,28 +567,28 @@
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Impossibile inizializzare il sensore di batteria. Riavviare il telecomando.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Errore di comunicazione col sensore di batteria. Riavvia il telecomando.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>Impossibile inizializzare il motore tattile. Riavviare il telecomando.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
+      <translation>Impossibile inizializzare il gestore delle interruzioni. Riavviare il telecomando.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Impossibile inizializzare il sensore di prossimità. Riavviare il telecomando.</translation>
     </message>
   </context>
   <context>
