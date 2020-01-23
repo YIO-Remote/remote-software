@@ -26,7 +26,7 @@
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="200"/>
       <source>Battery level</source>
-      <translation>Percentuale Batteria</translation>
+      <translation>Percentuale batteria</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="260"/>
@@ -55,7 +55,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Scansiona automaticamente le spiagge bluetooth associate alle aree, trova i dispositivi più vicini e visualizza quelli in quella zona.</translation>
+      <translation>Scansiona automaticamente i beacon Bluetooth associati alle aree, trova i dispositivi più vicini e visualizza quelli in quella zona.</translation>
     </message>
   </context>
   <context>
@@ -85,7 +85,7 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Add to favorites</source>
-      <translation>Aggiungi ai Preferiti</translation>
+      <translation>Aggiungi ai preferiti</translation>
     </message>
   </context>
   <context>
@@ -393,22 +393,22 @@
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>dato assente</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>impossibile aprire il file &apos;%1&apos; per la scrittura: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>impossibile aprire il file &apos;%1&apos; per la lettura: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>file JSON &apos;%1&apos; non valido all'offset %2</translation>
     </message>
   </context>
   <context>
@@ -445,7 +445,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
   </context>
   <context>
@@ -549,12 +549,12 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="97"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profili</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Per modificare i tuoi profili, utilizza lo strumento del configuratore web nelle impostazioni.</translation>
     </message>
   </context>
   <context>
@@ -562,7 +562,7 @@
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>Dispositivo WiFi non trovato.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
@@ -681,7 +681,7 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="81"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Tempo di attività</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="118"/>
