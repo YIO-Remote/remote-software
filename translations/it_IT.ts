@@ -327,7 +327,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Media</source>
-      <translation>Multimedia</translation>
+      <translation>Media</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -505,12 +505,12 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="40"/>
       <source>Power saving</source>
-      <translation>Risparmio Energetico</translation>
+      <translation>Risparmio energetico</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>
       <source>Never turn off Wi-Fi</source>
-      <translation>Non disattivare mai il Wi-Fi</translation>
+      <translation>Mai disattivare il Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="62"/>
@@ -531,7 +531,7 @@
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="186"/>
       <source>Never turn off the remote</source>
-      <translation>Non disattivare mai il telecomando</translation>
+      <translation>Mai disattivare il telecomando</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/PowerSaving.qml" line="186"/>
@@ -562,7 +562,7 @@
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation>Dispositivo WiFi non trovato.</translation>
+      <translation>Dispositivo Wi-Fi non trovato.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
@@ -604,7 +604,7 @@
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation>Usa il tuo browser per configurare il tuo YIO remote o scaricare e caricare backup. Naviga nel tuo browser internet per:
+      <translation>Usa il tuo browser per configurare il tuo YIO Remote o scaricare e caricare backup. Naviga nel tuo browser internet per:
 
 </translation>
     </message>
@@ -643,7 +643,7 @@ Aggiornamenti verranno installati tra 03.00 e 05.00 del mattino.</translation>
       <source>New software is available.
 YIO remote </source>
       <translation>Un aggiornamento è disponibile.
-YIO remote </translation>
+YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
@@ -658,7 +658,7 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>YIO Remote </source>
-      <translation>YIO remote </translation>
+      <translation>YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="152"/>
