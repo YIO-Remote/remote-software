@@ -195,7 +195,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
       <source>My playlists</source>
-      <translation>Le mie playlist</translation>
+      <translation>Le mie playlists</translation>
     </message>
   </context>
   <context>
@@ -238,7 +238,7 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
       <source>Playlists</source>
-      <translation>Playlist</translation>
+      <translation>Playlists</translation>
     </message>
   </context>
   <context>
