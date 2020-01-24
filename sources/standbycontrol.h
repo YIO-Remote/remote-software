@@ -110,7 +110,7 @@ class StandbyControl : public QObject {
     QString secondsToHours(int value);
 
     int     m_batteryCheckElapsedTime = 0;
-    int     m_batteryCheckTime        = 600000;
+    int     m_batteryCheckTime        = 600;
     QTimer* m_shutdownTimer           = new QTimer(this);
     int     m_shutDownDelay           = 20000;
 
