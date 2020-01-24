@@ -168,7 +168,7 @@ Item {
 
         onTriggered: {
             if (volumeUp) {
-                if (volume.state != "visible") {
+                if (volume.state !== "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
@@ -177,7 +177,7 @@ Item {
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             } else {
-                if (volume.state != "visible") {
+                if (volume.state !== "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
@@ -217,7 +217,8 @@ Item {
 
                 state: "closed"
 
-                states: [State {
+                states: [
+                    State {
                         name: "open"
                         when: miniMediaPlayer.state == "open"
                         PropertyChanges {target: title; opacity: 0 }
@@ -322,10 +323,10 @@ Item {
                         ColorAnimation { duration: 300 }
                     }
 
-                    property var m_image: entities.mediaplayersPlaying[index].mediaImage
+                    property var m_image: obj ? obj.mediaImage : ""
 
                     onM_imageChanged: {
-                        mediaplayerUtils.imageURL = entities.mediaplayersPlaying[index].mediaImage
+                        mediaplayerUtils.imageURL = obj.mediaImage
                     }
 
                     CustomImageLoader {
@@ -335,7 +336,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.top
                         anchors.topMargin: 86
-                        url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
+                        url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
@@ -348,7 +349,7 @@ Item {
                         left: parent.left
                         leftMargin: 0
                     }
-                    url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
+                    url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
                 Item {
@@ -362,7 +363,7 @@ Item {
                     Text {
                         id: title
                         color: Style.colorText
-                        text: entities.mediaplayersPlaying[index].friendly_name
+                        text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
@@ -376,7 +377,7 @@ Item {
                     Text {
                         id: artist
                         color: Style.colorText
-                        text: entities.mediaplayersPlaying[index].mediaTitle
+                        text: obj ? obj.mediaTitle : ""
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
@@ -406,7 +407,7 @@ Item {
                 Text {
                     id: sourceText
                     color: Style.colorText
-                    text: entities.mediaplayersPlaying[index].source
+                    text: obj ? obj.source : ""
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
                     font.family: "Open Sans Regular"
@@ -424,7 +425,7 @@ Item {
                 Text {
                     id: titleOpen
                     color: Style.colorText
-                    text: entities.mediaplayersPlaying[index].mediaTitle
+                    text: obj ? obj.mediaTitle : ""
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -441,7 +442,7 @@ Item {
                 Text {
                     id: artistOpen
                     color: Style.colorText
-                    text: entities.mediaplayersPlaying[index].mediaArtist
+                    text: obj ? obj.mediaArtist : ""
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -478,7 +479,7 @@ Item {
 
                     Text {
                         color: Style.colorText
-                        text: entities.mediaplayersPlaying[index].friendly_name
+                        text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
                         font.family: "Open Sans Regular"
                         font.weight: Font.Normal
@@ -559,7 +560,7 @@ Item {
         width: 120
         height: 120
 
-        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ? true : false
+        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ? true : false
 
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -607,7 +608,7 @@ Item {
 
             onClicked: {
                 Haptic.playEffect(Haptic.Click);
-                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ) {
+                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ) {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
                 } else {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
