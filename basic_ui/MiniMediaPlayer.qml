@@ -326,7 +326,9 @@ Item {
                     property var m_image: obj ? obj.mediaImage : ""
 
                     onM_imageChanged: {
-                        mediaplayerUtils.imageURL = obj.mediaImage
+                        if (obj) {
+                            mediaplayerUtils.imageURL = obj.mediaImage
+                        }
                     }
 
                     CustomImageLoader {
