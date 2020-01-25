@@ -24,6 +24,18 @@
 
 #include "config.h"
 
+const QString Config::KEY_ID = CFG_KEY_ID;
+const QString Config::KEY_FRIENDLYNAME = CFG_KEY_FRIENDLYNAME;
+const QString Config::KEY_ENTITY_ID = CFG_KEY_ENTITY_ID;
+const QString Config::KEY_AREA = CFG_KEY_AREA;
+const QString Config::KEY_INTEGRATION = CFG_KEY_INTEGRATION;
+const QString Config::KEY_SUPPORTED_FEATURES = CFG_KEY_SUPPORTED_FEATURES;
+const QString Config::KEY_TYPE = CFG_KEY_TYPE;
+const QString Config::KEY_MDNS = CFG_KEY_MDNS;
+const QString Config::KEY_WORKERTHREAD = CFG_KEY_WORKERTHREAD;
+const QString Config::OBJ_DATA = CFG_OBJ_DATA;
+
+
 Config *Config::s_instance = nullptr;
 
 ConfigInterface::~ConfigInterface() {}

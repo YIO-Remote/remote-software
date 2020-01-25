@@ -59,8 +59,6 @@ Item {
             }
         }
         hours = tmp;
-
-        console.debug(StandbyControl.batteryData);
     }
 
     Connections {

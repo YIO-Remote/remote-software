@@ -44,7 +44,7 @@ class Notification {
     QObject *m_param;
 };
 
-class Notifications : public QObject, NotificationsInterface {
+class Notifications : public QObject, public NotificationsInterface {
     Q_OBJECT
     Q_INTERFACES(NotificationsInterface)
 

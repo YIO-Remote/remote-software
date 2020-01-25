@@ -104,8 +104,8 @@ class YioAPI : public YioAPIInterface {
         "1\xFA\x90\xED\x16\xBB";
     QString m_hostname;
 
-    QZeroConf  m_qzero_conf;
-    QZeroConf* m_qzero_conf_browser;
+    QZeroConf  m_zeroConf;
+    QZeroConf* m_zeroConfBrowser;
 
     QStringList m_discoverableServices;
     // name as string, <ip address as string, mdns name as string>  "192.169.100.1", 496

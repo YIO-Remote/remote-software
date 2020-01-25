@@ -30,11 +30,24 @@
 #include "yio-interface/configinterface.h"
 #include "jsonfile.h"
 
-class Config : public QObject, ConfigInterface {
+class Config : public QObject, public ConfigInterface {
     Q_OBJECT
     Q_INTERFACES(ConfigInterface)
 
  public:
+    // Common configuration keys. Initialized in config.cpp
+    // HELP: anyone knows how to properly define "static const QString" constants across Qt plugin boundaries?
+    static const QString KEY_ID;
+    static const QString KEY_FRIENDLYNAME;
+    static const QString KEY_ENTITY_ID;
+    static const QString KEY_AREA;
+    static const QString KEY_INTEGRATION;
+    static const QString KEY_SUPPORTED_FEATURES;
+    static const QString KEY_TYPE;
+    static const QString KEY_MDNS;
+    static const QString KEY_WORKERTHREAD;
+    static const QString OBJ_DATA;
+
     Q_PROPERTY(bool valid READ isValid CONSTANT)
     Q_PROPERTY(QString error READ getError CONSTANT)
     Q_PROPERTY(QVariantMap config READ config WRITE setConfig NOTIFY configChanged)
