@@ -463,7 +463,7 @@
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation>Direcció IP</translation>
+      <translation>Adreça IP</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
@@ -583,12 +583,12 @@
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
+      <translation>No es pot inicialitzar el gestor d'interrupcions. Si us plau, reinicia el comandament.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>No es pot iniciar el sensor de proximitat. Si us plau, reinicia el comandament.</translation>
     </message>
   </context>
   <context>
