@@ -55,7 +55,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Søg automatisk efter bluetooth sendere i området og vis enheder på nærmeste sender.</translation>
     </message>
   </context>
   <context>
@@ -156,7 +156,7 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Vejledning</translation>
     </message>
   </context>
   <context>
@@ -209,7 +209,7 @@
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Seneste søgninger</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
@@ -332,7 +332,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Fjernbetjening</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -342,7 +342,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Skift</translation>
     </message>
   </context>
   <context>
@@ -359,7 +359,7 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="48"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Afbrudt</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="149"/>
@@ -388,12 +388,12 @@
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>blankt navn</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>blankt input</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
@@ -554,7 +554,7 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Brug web konfigurationsværktøjet for at rette dine profiler.</translation>
     </message>
   </context>
   <context>
@@ -567,7 +567,7 @@
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Batterisensoren kan ikke aktiveres. Genstart venligst fjernbetjeningen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
@@ -642,13 +642,13 @@ Updates are installed between 03.00 am and 05.00 am.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>New software is available.
 YIO remote </source>
-      <translation type="unfinished">New software is available.
-YIO remote </translation>
+      <translation>Ny software er tilgængelig
+YIO fjernbetjening </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Dit system er opdateret.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
