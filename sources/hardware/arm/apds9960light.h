@@ -43,4 +43,10 @@ class Apds9960LightSensor : public LightSensor {
  private:
     APDS9960* p_apds;
     uint16_t  m_ambientLight = 100;
+    uint16_t  m_r;
+    uint16_t  m_g;
+    uint16_t  m_b;
+    uint16_t  m_c;
+
+    uint16_t calculateIlluminance(uint16_t r, uint16_t g, uint16_t b);
 };

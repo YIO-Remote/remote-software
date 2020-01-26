@@ -122,20 +122,21 @@ void StandbyControl::wakeup() {
 
         case (STANDBY): {
             qCDebug(m_log) << "Wakeup from STANDBY";
-            m_displayControl->setMode(DisplayControl::StandbyOff);
 
-            readAmbientLight();
+            // delay reading ambient light so the sensor is clear of your hand
+            QTimer *timer = new QTimer(this);
+            timer->setSingleShot(true);
 
-            //            QTimer timer;
-            //            timer.setSingleShot(true);
+            QObject *context = new QObject(this);
 
-            //            connect(&timer, &QTimer::timeout, this, [&]() {
-            //                readAmbientLight();
-            //                timer.deleteLater();
-            //            });
+            connect(timer, &QTimer::timeout, context, [=]() {
+                m_displayControl->setMode(DisplayControl::StandbyOff);
+                readAmbientLight();
+                timer->deleteLater();
+                context->deleteLater();
+            });
 
-            //            timer.start(200);
-            //            readAmbientLight();
+            timer->start(300);
 
             setMode(ON);
 
@@ -183,7 +184,7 @@ void StandbyControl::wakeup() {
 
 void StandbyControl::readAmbientLight() {
     int lux = m_lightsensor->readAmbientLight();
-    m_displayControl->setAmbientBrightness(mapValues(lux, 0, 30, 15, 100));
+    m_displayControl->setAmbientBrightness(mapValues(lux, 0, 40, 15, 100));
 
     if (m_config->getSettings().value("autobrightness").toBool()) {
         m_displayControl->setBrightness(m_displayControl->ambientBrightness());
