@@ -588,7 +588,7 @@
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Nærhedsensoren kan ikke aktiveres. Genstart venligst fjernbetjeningen.</translation>
     </message>
   </context>
   <context>
@@ -635,8 +635,8 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="95"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Søg automatisk efter opdateringer og installer automatisk nye versioner.
+Opdateringer installeres mellem 03.00 og 05.00.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
@@ -775,7 +775,7 @@ connect to your Wi-Fi network.</source>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Tilslut YIO dokken til en strømforsyning og vent indtil den begynder at blinke. Tryk på "Næste" for at sende dine Wi-Fi login-oplysninger til enheden.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="336"/>
