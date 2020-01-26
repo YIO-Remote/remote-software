@@ -63,7 +63,7 @@
     <message>
       <location filename="../sources/bluetootharea.cpp" line="121"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Bluetooth enhed blev ikke fundet.</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Temperatur: </translation>
     </message>
   </context>
   <context>
@@ -80,12 +80,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Fjern fra favoritter</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Tilføj som favorit</translation>
     </message>
   </context>
   <context>
@@ -103,7 +103,7 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menu</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="402"/>
@@ -232,13 +232,13 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Kunstnere</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Afspilningslister</translation>
     </message>
   </context>
   <context>
@@ -246,12 +246,12 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Sluk</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Tænd</translation>
     </message>
   </context>
   <context>
@@ -337,7 +337,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Klima</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -351,7 +351,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoritter</translation>
     </message>
   </context>
   <context>
@@ -364,22 +364,22 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="149"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Forbind</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="185"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Afbryd</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="215"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrationer</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="256"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Tilføj ny</translation>
     </message>
   </context>
   <context>
