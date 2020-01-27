@@ -223,15 +223,15 @@ Item {
                         when: miniMediaPlayer.state == "open"
                         PropertyChanges {target: title; opacity: 0 }
                         PropertyChanges {target: artist; opacity: 0 }
-                        PropertyChanges {target: closeButton; opacity: 1 }
-                        PropertyChanges {target: titleOpen; y: 380; opacity: 1 }
-                        PropertyChanges {target: artistOpen; opacity: 0.8 }
-                        PropertyChanges {target: indicator; opacity: 1 }
-                        PropertyChanges {target: speaker; opacity: 1 }
-                        PropertyChanges {target: playButton; opacity: 1; anchors.bottomMargin: 80 }
-                        PropertyChanges {target: prevButton; opacity: 1 }
-                        PropertyChanges {target: nextButton; opacity: 1 }
-                        PropertyChanges {target: sourceText; opacity: 1 }
+                        PropertyChanges {target: closeButton; opacity: 1; visible: true }
+                        PropertyChanges {target: titleOpen; y: 380; opacity: 1; visible: true }
+                        PropertyChanges {target: artistOpen; opacity: 0.8; visible: true }
+                        PropertyChanges {target: indicator; opacity: 1; visible: true }
+                        PropertyChanges {target: speaker; opacity: 1; visible: true }
+                        PropertyChanges {target: playButton; opacity: 1; anchors.bottomMargin: 80; visible: true }
+                        PropertyChanges {target: prevButton; opacity: 1; visible: true }
+                        PropertyChanges {target: nextButton; opacity: 1; visible: true }
+                        PropertyChanges {target: sourceText; opacity: 1; visible: true }
                         PropertyChanges {target: bgImage; opacity: 1; visible: true; anchors.topMargin: 86; scale: 1 }
                         PropertyChanges {target: image; opacity: 0 }
                     },
@@ -240,15 +240,15 @@ Item {
                         when: miniMediaPlayer.state == "closed"
                         PropertyChanges {target: title; opacity: 1 }
                         PropertyChanges {target: artist; opacity: 1 }
-                        PropertyChanges {target: closeButton; opacity: 0 }
-                        PropertyChanges {target: titleOpen; y: 420; opacity: 0 }
-                        PropertyChanges {target: artistOpen; opacity: 0 }
-                        PropertyChanges {target: indicator; opacity: 0 }
-                        PropertyChanges {target: speaker; opacity: 0 }
-                        PropertyChanges {target: playButton; opacity: 0; anchors.bottomMargin: 40 }
-                        PropertyChanges {target: prevButton; opacity: 0 }
-                        PropertyChanges {target: nextButton; opacity: 0 }
-                        PropertyChanges {target: sourceText; opacity: 0 }
+                        PropertyChanges {target: closeButton; opacity: 0; visible: false }
+                        PropertyChanges {target: titleOpen; y: 420; opacity: 0; visible: false }
+                        PropertyChanges {target: artistOpen; opacity: 0; visible: false }
+                        PropertyChanges {target: indicator; opacity: 0; visible: false }
+                        PropertyChanges {target: speaker; opacity: 0; visible: false }
+                        PropertyChanges {target: playButton; opacity: 0; anchors.bottomMargin: 40; visible: false }
+                        PropertyChanges {target: prevButton; opacity: 0; visible: false }
+                        PropertyChanges {target: nextButton; opacity: 0; visible: false }
+                        PropertyChanges {target: sourceText; opacity: 0; visible: false }
                         PropertyChanges {target: bgImage; opacity: 0; visible: false; anchors.topMargin: 126; scale: 0.8 }
                         PropertyChanges {target: image; opacity: 1 }
                     }]
@@ -257,6 +257,17 @@ Item {
                     Transition {
                         to: "open"
                         SequentialAnimation {
+                            ParallelAnimation {
+                                PropertyAnimation { target: closeButton; properties: "visible"; }
+                                PropertyAnimation { target: titleOpen; properties: "visible"; }
+                                PropertyAnimation { target: artistOpen; properties: "visible"; }
+                                PropertyAnimation { target: indicator; properties: "visible"; }
+                                PropertyAnimation { target: speaker; properties: "visible"; }
+                                PropertyAnimation { target: playButton; properties: "visible"; }
+                                PropertyAnimation { target: prevButton; properties: "visible"; }
+                                PropertyAnimation { target: nextButton; properties: "visible"; }
+                                PropertyAnimation { target: sourceText; properties: "visible"; }
+                            }
                             ParallelAnimation {
                                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
@@ -309,6 +320,17 @@ Item {
                                 PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: image; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                            }
+                            ParallelAnimation {
+                                PropertyAnimation { target: closeButton; properties: "visible"; }
+                                PropertyAnimation { target: titleOpen; properties: "visible"; }
+                                PropertyAnimation { target: artistOpen; properties: "visible"; }
+                                PropertyAnimation { target: indicator; properties: "visible"; }
+                                PropertyAnimation { target: speaker; properties: "visible"; }
+                                PropertyAnimation { target: playButton; properties: "visible"; }
+                                PropertyAnimation { target: prevButton; properties: "visible"; }
+                                PropertyAnimation { target: nextButton; properties: "visible"; }
+                                PropertyAnimation { target: sourceText; properties: "visible"; }
                             }
                         }
                     }
