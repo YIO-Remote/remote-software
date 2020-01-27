@@ -33,7 +33,8 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: card
     width: parent.width; height: parent.height
-    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
+//    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
+    color: Style.colorDark
     radius: Style.cornerRadius
 
     Behavior on color {

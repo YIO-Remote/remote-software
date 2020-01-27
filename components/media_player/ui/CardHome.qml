@@ -28,11 +28,15 @@ import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
-Item {
+Rectangle {
     id: cardHome
     width: parent.width; height: parent.height
-//    color:  Style.colorBackgroundTransparent
-//    radius: Style.cornerRadius
+    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
+    radius: Style.cornerRadius
+
+    Behavior on color {
+        ColorAnimation { duration: 300 }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
