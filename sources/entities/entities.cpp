@@ -180,6 +180,8 @@ void Entities::update(const QString &entity_id, const QVariantMap &attributes) {
 QList<QObject *> Entities::mediaplayersPlaying() { return m_mediaplayersPlaying.values(); }
 
 void Entities::addMediaplayersPlaying(const QString &entity_id) {
+    QMutexLocker locker(&m_mutex);
+
     // check if there is a timer active to remove the media player
     if (m_mediaplayersTimers.contains(entity_id)) {
         qCDebug(m_log) << "There is a timer for:" << entity_id;
@@ -207,6 +209,8 @@ void Entities::addMediaplayersPlaying(const QString &entity_id) {
 }
 
 void Entities::removeMediaplayersPlaying(const QString &entity_id) {
+    QMutexLocker locker(&m_mutex);
+
     if (m_mediaplayersPlaying.contains(entity_id)) {
         qCDebug(m_log) << "There is an object playing list" << entity_id;
         // use a timer to remove the entity with a delay

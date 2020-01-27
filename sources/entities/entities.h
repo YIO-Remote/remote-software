@@ -25,15 +25,16 @@
 #include <QList>
 #include <QLoggingCategory>
 #include <QMap>
+#include <QMutex>
 #include <QObject>
 #include <QQmlComponent>
 #include <QString>
 #include <QVariant>
 #include <QtDebug>
 
-#include "yio-interface/integrationinterface.h"
-#include "yio-interface/entities/entitiesinterface.h"
 #include "entity.h"
+#include "yio-interface/entities/entitiesinterface.h"
+#include "yio-interface/integrationinterface.h"
 
 class Entities : public QObject, public EntitiesInterface {
     Q_OBJECT
@@ -90,7 +91,7 @@ class Entities : public QObject, public EntitiesInterface {
     void            addMediaplayersPlaying(const QString& entity_id);
     void            removeMediaplayersPlaying(const QString& entity_id);
 
-    Q_INVOKABLE void    addLoadedEntity(const QString& entity);
+    Q_INVOKABLE void addLoadedEntity(const QString& entity);
     Q_INVOKABLE QString getSupportedEntityTranslation(const QString& type);
 
     explicit Entities(QObject* parent = nullptr);
@@ -116,4 +117,6 @@ class Entities : public QObject, public EntitiesInterface {
     static Entities* s_instance;
 
     QLoggingCategory m_log;
+
+    QMutex m_mutex;
 };
