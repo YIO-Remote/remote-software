@@ -321,7 +321,7 @@ void StandbyControl::onSecondsTimerTimeout() {
 
     // SHUTDOWN
     if (m_elapsedTime == m_shutDownTime && m_shutDownTime != 0 && (m_mode == STANDBY || m_mode == WIFI_OFF) &&
-        m_batteryFuelGauge->getAveragePower() <= 0) {
+        m_batteryFuelGauge->getAveragePower() < 0 && !m_batteryFuelGauge->getIsCharging()) {
         qCInfo(m_log) << "TIMER SHUTDOWN"
                       << "Average power:" << m_batteryFuelGauge->getAveragePower()
                       << "Is charging:" << m_batteryFuelGauge->getIsCharging();
