@@ -426,17 +426,23 @@ void YioAPI::processMessage(QString message) {
             if (map.contains("integrationId")) {
                 QString integrationId = map["integrationId"].toString();
                 qCDebug(m_log) << "Request for getEntities" << integrationId;
-                IntegrationInterface *i = qobject_cast<IntegrationInterface *>(m_integrations->get(integrationId));
 
-                if (i) {
-                    QStringList entitiesList = i->getAllAvailableEntities();
+                QObject *o = m_integrations->get(integrationId);
 
-                    response.insert("success", true);
-                    response.insert("type", "entities");
-                    response.insert("entities", entitiesList);
+                if (o) {
+                    IntegrationInterface *i = qobject_cast<IntegrationInterface *>(o);
+                    if (i) {
+                        QStringList entitiesList = i->getAllAvailableEntities();
 
-                    QJsonDocument json = QJsonDocument::fromVariant(response);
-                    client->sendTextMessage(json.toJson());
+                        if (entitiesList.length() > 1) {
+                            response.insert("success", true);
+                            response.insert("type", "entities");
+                            response.insert("entities", entitiesList);
+                        } else {
+                            response.insert("success", false);
+                            response.insert("type", "entities");
+                        }
+                    }
                 } else {
                     response.insert("success", false);
                     response.insert("type", "entities");
@@ -445,6 +451,9 @@ void YioAPI::processMessage(QString message) {
                 response.insert("success", false);
                 response.insert("type", "entities");
             }
+
+            QJsonDocument json = QJsonDocument::fromVariant(response);
+            client->sendTextMessage(json.toJson());
         } else {
             emit messageReceived(map);
         }
