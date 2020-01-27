@@ -258,15 +258,15 @@ Item {
                         to: "open"
                         SequentialAnimation {
                             ParallelAnimation {
-                                PropertyAnimation { target: closeButton; properties: "visible"; }
-                                PropertyAnimation { target: titleOpen; properties: "visible"; }
-                                PropertyAnimation { target: artistOpen; properties: "visible"; }
-                                PropertyAnimation { target: indicator; properties: "visible"; }
-                                PropertyAnimation { target: speaker; properties: "visible"; }
-                                PropertyAnimation { target: playButton; properties: "visible"; }
-                                PropertyAnimation { target: prevButton; properties: "visible"; }
-                                PropertyAnimation { target: nextButton; properties: "visible"; }
-                                PropertyAnimation { target: sourceText; properties: "visible"; }
+                                PropertyAnimation { target: closeButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: titleOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: artistOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: indicator; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: speaker; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: playButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: prevButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: nextButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: sourceText; properties: "visible"; duration: 1 }
                             }
                             ParallelAnimation {
                                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
@@ -322,15 +322,15 @@ Item {
                                 PropertyAnimation { target: image; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                             }
                             ParallelAnimation {
-                                PropertyAnimation { target: closeButton; properties: "visible"; }
-                                PropertyAnimation { target: titleOpen; properties: "visible"; }
-                                PropertyAnimation { target: artistOpen; properties: "visible"; }
-                                PropertyAnimation { target: indicator; properties: "visible"; }
-                                PropertyAnimation { target: speaker; properties: "visible"; }
-                                PropertyAnimation { target: playButton; properties: "visible"; }
-                                PropertyAnimation { target: prevButton; properties: "visible"; }
-                                PropertyAnimation { target: nextButton; properties: "visible"; }
-                                PropertyAnimation { target: sourceText; properties: "visible"; }
+                                PropertyAnimation { target: closeButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: titleOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: artistOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: indicator; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: speaker; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: playButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: prevButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: nextButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: sourceText; properties: "visible"; duration: 1 }
                             }
                         }
                     }

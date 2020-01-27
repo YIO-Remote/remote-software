@@ -209,8 +209,7 @@ Item {
     property alias miniMediaPlayer: miniMediaPlayer
     Item {
         id: miniMediaPlayer
-        width: parent.width
-        height: 0
+        width: parent.width; height: 0
         anchors.bottom: parent.bottom
 
         property alias miniMediaPlayerLoader: miniMediaPlayerLoader
@@ -229,9 +228,7 @@ Item {
                     miniMediaPlayer.height = 90;
                     miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
                     miniMediaPlayerLoader.active = true;
-                }
-
-                if (entities.mediaplayersPlaying.length === 0 && miniMediaPlayer.miniMediaPlayerLoader.active) {
+                } else if (miniMediaPlayerLoader.active && entities.mediaplayersPlaying.length === 0) {
                     loader_main.state = "visible";
                     miniMediaPlayer.height = 0;
                     miniMediaPlayer.miniMediaPlayerLoader.active = false;
