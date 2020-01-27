@@ -37,8 +37,8 @@ class Integrations : public QObject, IntegrationsInterface {
 
  public:
     enum States {
-        CONNECTED = IntegrationInterface::CONNECTED,
-        CONNECTING = IntegrationInterface::CONNECTING,
+        CONNECTED    = IntegrationInterface::CONNECTED,
+        CONNECTING   = IntegrationInterface::CONNECTING,
         DISCONNECTED = IntegrationInterface::DISCONNECTED
     };
     Q_ENUM(States)
@@ -52,11 +52,14 @@ class Integrations : public QObject, IntegrationsInterface {
     // get all integrations
     QList<QObject*> list();
 
+    // get all integration ids
+    QStringList listIds();
+
     // get an integration object by id
     Q_INVOKABLE QObject* get(const QString& id);
 
     // add an integration
-    Q_INVOKABLE void add(const QVariantMap& config, QObject* obj, const QString& type);
+    Q_INVOKABLE void add(const QVariantMap& config, QObject* obj, const QString& type) override;
 
     // remove an integraiton
     Q_INVOKABLE void remove(const QString& id);
@@ -66,14 +69,13 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INVOKABLE QString getFriendlyName(QObject* obj);
 
     // get mdns _tcp name
-    Q_INVOKABLE QString getMDNS(const QString& id);
+    Q_INVOKABLE QString     getMDNS(const QString& id);
     Q_INVOKABLE QStringList getMDNSList();
 
     // get the type of integration by id
     Q_INVOKABLE QString getType(const QString& id);
 
     explicit Integrations(QQmlApplicationEngine* engine = nullptr, const QString& appPath = "");
-    virtual ~Integrations();
 
     static Integrations* getInstance() { return s_instance; }
 

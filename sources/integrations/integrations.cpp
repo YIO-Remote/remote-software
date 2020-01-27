@@ -37,13 +37,13 @@ Integrations::Integrations(QQmlApplicationEngine* engine, const QString& appPath
     s_instance = this;
 }
 
-Integrations::~Integrations() { s_instance = nullptr; }
+// Integrations::~Integrations() { s_instance = nullptr; }
 
 void Integrations::load() {
-    Entities*      entities = Entities::getInstance();
+    Entities*      entities      = Entities::getInstance();
     Notifications* notifications = Notifications::getInstance();
-    YioAPI*        api = YioAPI::getInstance();
-    Config*        config = Config::getInstance();
+    YioAPI*        api           = YioAPI::getInstance();
+    Config*        config        = Config::getInstance();
 
     Launcher* l = new Launcher();
 
@@ -101,7 +101,8 @@ void Integrations::load() {
 
     m_integrationsToLoad = integrationCount;
 
-    if (m_integrationsToLoad == 0) emit loadComplete();
+    if (m_integrationsToLoad == 0)
+        emit loadComplete();
 }
 
 void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
@@ -117,6 +118,16 @@ void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
 }
 
 QList<QObject*> Integrations::list() { return m_integrations.values(); }
+
+QStringList Integrations::listIds() {
+    QStringList r_list;
+
+    for (QMap<QString, QObject*>::const_iterator iter = m_integrations.begin(); iter != m_integrations.end(); ++iter) {
+        r_list.append(iter.key());
+    }
+
+    return r_list;
+}
 
 QObject* Integrations::get(const QString& id) { return m_integrations.value(id); }
 

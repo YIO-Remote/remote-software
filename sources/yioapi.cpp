@@ -267,7 +267,7 @@ void YioAPI::processMessage(QString message) {
         QString type = map.value("type").toString();
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // AUTHENTICATION
+        /// AUTHENTICATION
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (type == "auth") {
             qCDebug(m_log) << m_clients[client];
@@ -311,10 +311,20 @@ void YioAPI::processMessage(QString message) {
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // EMIT MESSAGES OF AUTHENTICATED CLIENTS
+        /// API CALLS
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (type == "getconfig" && m_clients[client]) {
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Get config schema
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (type == "getConfigSchema" && m_clients[client]) {
+            qCDebug(m_log) << "Request for config schema";
+
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Get config
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        else if (type == "getconfig" && m_clients[client]) {
             qCDebug(m_log) << "REQUEST FOR GETCONFIG";
 
             QVariantMap response;
@@ -325,7 +335,11 @@ void YioAPI::processMessage(QString message) {
 
             QJsonDocument json = QJsonDocument::fromVariant(response);
             client->sendTextMessage(json.toJson());
-        } else if (type == "setconfig" && m_clients[client]) {
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Set config
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        else if (type == "setconfig" && m_clients[client]) {
             qCDebug(m_log) << "REQUEST FOR SETCONFIG";
 
             QVariantMap config = map.value("config").toMap();
@@ -334,7 +348,11 @@ void YioAPI::processMessage(QString message) {
             } else {
                 // FIXME reply FAIL
             }
-        } else if (type == "button" && m_clients[client]) {
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Button simulation through the api
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        else if (type == "button" && m_clients[client]) {
             // Handle buttons
             QString buttonName   = map["name"].toString();
             QString buttonAction = map["action"].toString();
@@ -344,7 +362,11 @@ void YioAPI::processMessage(QString message) {
             } else {
                 emit buttonReleased(buttonName);
             }
-        } else if (type == "log" && m_clients[client]) {
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Logging
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        else if (type == "log" && m_clients[client]) {
             // Handle log
             Logger *logger    = Logger::getInstance();
             QString logAction = map["action"].toString();
@@ -420,19 +442,23 @@ void YioAPI::processMessage(QString message) {
                 QJsonDocument json = QJsonDocument(jsonObj);
                 client->sendTextMessage(json.toJson());
             }
-        } else if (type == "getEntities" && m_clients[client]) {
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Get all available entities of an integration
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        else if (type == "getEntities" && m_clients[client]) {
             QVariantMap response;
 
             if (map.contains("integrationId")) {
                 QString integrationId = map["integrationId"].toString();
                 qCDebug(m_log) << "Request for getEntities" << integrationId;
 
-                QObject *o = m_integrations->get(integrationId);
+                QObject *object = m_integrations->get(integrationId);
 
-                if (o) {
-                    IntegrationInterface *i = qobject_cast<IntegrationInterface *>(o);
-                    if (i) {
-                        QStringList entitiesList = i->getAllAvailableEntities();
+                if (object) {
+                    IntegrationInterface *integrationInterface = qobject_cast<IntegrationInterface *>(object);
+                    if (integrationInterface) {
+                        QStringList entitiesList = integrationInterface->getAllAvailableEntities();
 
                         if (entitiesList.length() > 1) {
                             response.insert("success", true);
@@ -454,7 +480,27 @@ void YioAPI::processMessage(QString message) {
 
             QJsonDocument json = QJsonDocument::fromVariant(response);
             client->sendTextMessage(json.toJson());
-        } else {
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// Get all loaded integrations
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        else if (type == "getIntegrations" && m_clients[client]) {
+            qCDebug(m_log) << "Request for getIntegrations";
+            QStringList integrations = m_integrations->listIds();
+
+            QVariantMap response;
+            response.insert("success", true);
+            response.insert("type", "integrations");
+            response.insert("integrations", integrations);
+
+            QJsonDocument json = QJsonDocument::fromVariant(response);
+            client->sendTextMessage(json.toJson());
+
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// If none of the above, emit the message
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        else {
             emit messageReceived(map);
         }
     }
