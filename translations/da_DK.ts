@@ -55,7 +55,7 @@
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Søg automatisk efter bluetooth sendere i området og vis enheder på nærmeste sender.</translation>
     </message>
   </context>
   <context>
@@ -63,7 +63,7 @@
     <message>
       <location filename="../sources/bluetootharea.cpp" line="121"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Bluetooth enhed blev ikke fundet.</translation>
     </message>
   </context>
   <context>
@@ -72,7 +72,7 @@
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Temperatur: </translation>
     </message>
   </context>
   <context>
@@ -80,12 +80,12 @@
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Fjern fra favoritter</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="374"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Tilføj som favorit</translation>
     </message>
   </context>
   <context>
@@ -93,47 +93,47 @@
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Lydløs</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Retur</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menu</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="402"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Sluk</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="402"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Tænd</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="415"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Tilstand</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="425"/>
       <source>Off</source>
-      <translation type="unfinished">Off</translation>
+      <translation>Slukket</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="431"/>
       <source>Heat</source>
-      <translation type="unfinished">Heat</translation>
+      <translation>Varme</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="437"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Køling</translation>
     </message>
   </context>
   <context>
@@ -141,22 +141,22 @@
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Kilde</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Info</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menu</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Vejledning</translation>
     </message>
   </context>
   <context>
@@ -164,17 +164,17 @@
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Sluk</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Tænd</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="280"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Farve</translation>
     </message>
   </context>
   <context>
@@ -182,12 +182,12 @@
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Sluk</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Tænd</translation>
     </message>
   </context>
   <context>
@@ -195,7 +195,7 @@
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Mine afspilningslister</translation>
     </message>
   </context>
   <context>
@@ -204,41 +204,41 @@
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Søg</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>Seneste søgninger</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Ryd</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="409"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Album</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Sange</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Kunstnere</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Afspilningslister</translation>
     </message>
   </context>
   <context>
@@ -246,12 +246,12 @@
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Sluk</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Tænd</translation>
     </message>
   </context>
   <context>
@@ -268,7 +268,7 @@
       <location filename="../basic_ui/ContextMenu.qml" line="153"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Fortryd</translation>
     </message>
   </context>
   <context>
@@ -327,22 +327,22 @@
     <message>
       <location filename="../sources/entities/entities.h" line="109"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Medier</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Fjernbetjening</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Klima</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Skift</translation>
     </message>
   </context>
   <context>
@@ -351,7 +351,7 @@
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoritter</translation>
     </message>
   </context>
   <context>
@@ -359,27 +359,27 @@
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="48"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Afbrudt</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="149"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Forbind</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="185"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Afbryd</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="215"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrationer</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="256"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Tilføj ny</translation>
     </message>
   </context>
   <context>
@@ -388,27 +388,27 @@
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>blankt navn</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>blankt input</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>kan ikke åbne filen &apos;%1&apos; for skrivning: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>kan ikke åbne filen &apos;%1&apos; for læsning: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>ugyldig JSON fil &apos;%1&apos; ved %2</translation>
     </message>
   </context>
   <context>
@@ -445,7 +445,7 @@
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Medier</translation>
     </message>
   </context>
   <context>
@@ -549,12 +549,12 @@
     <message>
       <location filename="../basic_ui/Profiles.qml" line="97"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profiler</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Brug web konfigurationsværktøjet for at rette dine profiler.</translation>
     </message>
   </context>
   <context>
@@ -562,33 +562,33 @@
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>Wi-Fi enhed blev ikke fundet.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Batterisensoren kan ikke aktiveres. Genstart venligst fjernbetjeningen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Fejl i kommunikation med batterisensor. Genstart venligst fjernbetjeningen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>Haptisk motor kan ikke aktiveres. Genstart venligst fjernbetjeningen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
+      <translation>Interrupt-handler kan ikke aktiveres. Genstart venligst fjernbetjeningen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Nærhedsensoren kan ikke aktiveres. Genstart venligst fjernbetjeningen.</translation>
     </message>
   </context>
   <context>
@@ -597,14 +597,14 @@
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="42"/>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="63"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>Opsætning af fjernbetjening</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="98"/>
       <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
+      <translation>Brug din browser til at konfigurere fjernbetjeningen og foretage backups. Naviger til:
 
 </translation>
     </message>
@@ -635,40 +635,40 @@
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="95"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Søg automatisk efter opdateringer og installer automatisk nye versioner.
+Opdateringer installeres mellem 03.00 og 05.00.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>New software is available.
 YIO remote </source>
-      <translation type="unfinished">New software is available.
-YIO remote </translation>
+      <translation>Ny software er tilgængelig
+YIO fjernbetjening </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="120"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Dit system er opdateret.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Installeret version: YIO fjernbetjening </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>YIO fjernbetjening </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Opdatér</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="181"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Søg efter opdatering</translation>
     </message>
   </context>
   <context>
@@ -676,7 +676,7 @@ YIO remote </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="60"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="81"/>
@@ -705,7 +705,7 @@ YIO remote </translation>
       <location filename="../main.qml" line="115"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
-      <translation type="unfinished">New software version is available!</translation>
+      <translation>Ny softwareversion er tilgængelig!</translation>
     </message>
   </context>
   <context>
@@ -713,13 +713,13 @@ YIO remote </translation>
     <message>
       <location filename="../wifiSetup.qml" line="55"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Wi-Fi opsætning</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="73"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation type="unfinished">Connect to the Wi-Fi network
+      <translation>Opret forbindelse til et Wi-Fi-netværk
 </translation>
     </message>
     <message>
@@ -727,9 +727,7 @@ YIO remote </translation>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
-      <translation type="unfinished">Open a web browser
-and navigate to
-yio.remote</translation>
+      <translation>Åbn web browser og naviger til yio.remote</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="106"/>
@@ -739,14 +737,13 @@ yio.remote</translation>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Tilsluttet</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="150"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully
-connected to your Wi-Fi network.</translation>
+      <translation>YIO fjernbetjeningen er nu tilsluttet til dit Wi-Fi netværk.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="164"/>
@@ -757,14 +754,13 @@ connected to your Wi-Fi network.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="183"/>
       <source>Not connected</source>
-      <translation type="unfinished">Not connected</translation>
+      <translation>Ikke tilsluttet</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>YIO fjernbetjeningen kunne ikke tilsluttes til dit Wi-Fi netværk.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="217"/>
@@ -779,12 +775,12 @@ connect to your Wi-Fi network.</translation>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Tilslut YIO dokken til en strømforsyning og vent indtil den begynder at blinke. Tryk på "Næste" for at sende dine Wi-Fi login-oplysninger til enheden.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="336"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Wi-Fi-opsætning afsluttet</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="316"/>

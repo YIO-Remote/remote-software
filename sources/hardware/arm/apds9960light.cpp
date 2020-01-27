@@ -42,10 +42,19 @@ int Apds9960LightSensor::readAmbientLight() {
         }
 
         m_ambientLight = p_apds->getAmbientLight();
-        qCDebug(CLASS_LC) << "Lux:" << m_ambientLight;
+        p_apds->getColorData(&m_r, &m_g, &m_b, &m_c);
+
+        qCDebug(CLASS_LC) << "Ambientlight:" << m_ambientLight;
+        qCDebug(CLASS_LC) << "Lux:" << calculateIlluminance(m_r, m_g, m_b);  // not really precise
     }
 
     return static_cast<int>(m_ambientLight);
 }
 
 const QLoggingCategory &Apds9960LightSensor::logCategory() const { return CLASS_LC(); }
+
+uint16_t Apds9960LightSensor::calculateIlluminance(uint16_t r, uint16_t g, uint16_t b) {
+    float lux;
+    lux = (-0.32466F * r) + (1.57837F * g) + (-0.73191F * b);
+    return static_cast<uint16_t>(lux);
+}
