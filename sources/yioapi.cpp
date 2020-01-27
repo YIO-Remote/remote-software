@@ -41,6 +41,8 @@ YioAPI *YioAPI::s_instance = nullptr;
 YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_log("yioapi"), m_engine(engine) {
     s_instance = this;
     Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
+
+    m_integrations = Integrations::getInstance();
 }
 
 YioAPI::~YioAPI() { s_instance = nullptr; }
@@ -114,7 +116,7 @@ bool YioAPI::addEntityToConfig(QVariantMap entity) {
     for (int i = 0; i < e.length(); i++) {
         if (e[i].toMap().value("type").toString() == entityType) {
             // get the data key array
-            QVariantMap  r = e[i].toMap();
+            QVariantMap  r  = e[i].toMap();
             QVariantList rl = r.value("data").toJsonArray().toVariantList();
 
             // add the entity
@@ -238,7 +240,7 @@ void YioAPI::onNewConnection() {
     // send message to client after connected to authenticate
     QVariantMap map;
     map.insert("type", "auth_required");
-    QJsonDocument doc = QJsonDocument::fromVariant(map);
+    QJsonDocument doc     = QJsonDocument::fromVariant(map);
     QString       message = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
     socket->sendTextMessage(message);
@@ -279,7 +281,7 @@ void YioAPI::processMessage(QString message) {
                 if (map.value("token").toString() == m_token) {
                     qDebug(CLASS_LC) << "Token OK";
                     r_map.insert("type", "auth_ok");
-                    QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
+                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
                     QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
@@ -292,7 +294,7 @@ void YioAPI::processMessage(QString message) {
                     qCDebug(m_log) << "Token NOT OK";
                     r_map.insert("type", "auth_error");
                     r_map.insert("message", "Invalid token");
-                    QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
+                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
                     QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
@@ -301,7 +303,7 @@ void YioAPI::processMessage(QString message) {
                 qCDebug(m_log) << "No token";
                 r_map.insert("type", "auth_error");
                 r_map.insert("message", "Token needed");
-                QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
+                QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
                 QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                 client->sendTextMessage(r_message);
@@ -334,7 +336,7 @@ void YioAPI::processMessage(QString message) {
             }
         } else if (type == "button" && m_clients[client]) {
             // Handle buttons
-            QString buttonName = map["name"].toString();
+            QString buttonName   = map["name"].toString();
             QString buttonAction = map["action"].toString();
             qDebug(CLASS_LC) << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
             if (buttonAction == "pressed") {
@@ -344,7 +346,7 @@ void YioAPI::processMessage(QString message) {
             }
         } else if (type == "log" && m_clients[client]) {
             // Handle log
-            Logger *logger = Logger::getInstance();
+            Logger *logger    = Logger::getInstance();
             QString logAction = map["action"].toString();
             QString logTarget = map["target"].toString();
             qCDebug(m_log) << "LOGGER : " << logAction;
@@ -417,6 +419,31 @@ void YioAPI::processMessage(QString message) {
                 jsonObj.insert("info", info);
                 QJsonDocument json = QJsonDocument(jsonObj);
                 client->sendTextMessage(json.toJson());
+            }
+        } else if (type == "getEntities" && m_clients[client]) {
+            QVariantMap response;
+
+            if (map.contains("integrationId")) {
+                QString integrationId = map["integrationId"].toString();
+                qCDebug(m_log) << "Request for getEntities" << integrationId;
+                IntegrationInterface *i = qobject_cast<IntegrationInterface *>(m_integrations->get(integrationId));
+
+                if (i) {
+                    QStringList entitiesList = i->getAllAvailableEntities();
+
+                    response.insert("success", true);
+                    response.insert("type", "entities");
+                    response.insert("entities", entitiesList);
+
+                    QJsonDocument json = QJsonDocument::fromVariant(response);
+                    client->sendTextMessage(json.toJson());
+                } else {
+                    response.insert("success", false);
+                    response.insert("type", "entities");
+                }
+            } else {
+                response.insert("success", false);
+                response.insert("type", "entities");
             }
         } else {
             emit messageReceived(map);

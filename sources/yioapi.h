@@ -110,4 +110,6 @@ class YioAPI : public YioAPIInterface {
     QStringList m_discoverableServices;
     // name as string, <ip address as string, mdns name as string>  "192.169.100.1", 496
     QMap<QString, QVariantMap> m_discoveredServices;
+
+    Integrations* m_integrations;
 };
