@@ -342,7 +342,7 @@
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Przełącznik</translation>
     </message>
   </context>
   <context>
@@ -658,17 +658,17 @@ Pilot YIO </translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="137"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>Pilot YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="152"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Aktualizacja</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="181"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Sprawdź aktualizacje</translation>
     </message>
   </context>
   <context>
@@ -676,7 +676,7 @@ Pilot YIO </translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="60"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="81"/>
@@ -705,7 +705,7 @@ Pilot YIO </translation>
       <location filename="../main.qml" line="115"/>
       <source>New software version is available!</source>
       <extracomment>Notification text when new software update is available</extracomment>
-      <translation type="unfinished">New software version is available!</translation>
+      <translation>Dostępna jest nowa wersja oprogramowania!</translation>
     </message>
   </context>
   <context>
@@ -713,13 +713,13 @@ Pilot YIO </translation>
     <message>
       <location filename="../wifiSetup.qml" line="55"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Ustawienia Wi-Fi</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="73"/>
       <source>Connect to the Wi-Fi network
 </source>
-      <translation type="unfinished">Connect to the Wi-Fi network
+      <translation>Połącz się z siecią Wi-Fi
 </translation>
     </message>
     <message>
@@ -727,70 +727,70 @@ Pilot YIO </translation>
       <source>Open a web browser
 and navigate to
 yio.remote</source>
-      <translation type="unfinished">Open a web browser
-and navigate to
+      <translation>Otwórz przeglądarkę internetową
+i przejdź do
 yio.remote</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="106"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Wyłącz</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="133"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Połączony</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="150"/>
       <source>YIO Remote has successfully
 connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully
-connected to your Wi-Fi network.</translation>
+      <translation>Pilot YIO pomyślnie
+połączył się z Twoją siecią Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="164"/>
       <location filename="../wifiSetup.qml" line="304"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Dalej</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="183"/>
       <source>Not connected</source>
-      <translation type="unfinished">Not connected</translation>
+      <translation>Nie podłączono</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="200"/>
       <source>YIO Remote could not
 connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not
-connect to your Wi-Fi network.</translation>
+      <translation>Pilot YIO nie mógł
+połączyć się z siecią Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="217"/>
       <source>Please try again</source>
-      <translation type="unfinished">Please try again</translation>
+      <translation>Spróbuj ponownie</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="231"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Spróbuj ponownie</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="286"/>
       <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</translation>
+      <translation>Podłącz stację dokującą YIO do źródła zasilania i poczekaj, aż zacznie migać. Aby udostępnić hasło Wi-Fi stacji dokującej, naciśnij dalej.</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="336"/>
       <source>Wi-Fi setup completed</source>
-      <translation type="unfinished">Wi-Fi setup completed</translation>
+      <translation>Konfiguracja Wi-Fi zakończona</translation>
     </message>
     <message>
       <location filename="../wifiSetup.qml" line="316"/>
       <location filename="../wifiSetup.qml" line="371"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Uruchom ponownie</translation>
     </message>
   </context>
 </TS>
