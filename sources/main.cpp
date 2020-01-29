@@ -27,7 +27,6 @@
 #include <QLoggingCategory>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QSurfaceFormat>
 #include <QtDebug>
 
 #include "bluetootharea.h"
@@ -233,10 +232,6 @@ int main(int argc, char* argv[]) {
     qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
 
     engine.addImportPath("qrc:/");
-
-    QSurfaceFormat format = QSurfaceFormat::defaultFormat();
-    format.setSwapInterval(0);
-    QSurfaceFormat::setDefaultFormat(format);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty()) {

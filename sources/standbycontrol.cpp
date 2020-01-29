@@ -122,6 +122,11 @@ void StandbyControl::wakeup() {
 
         case (STANDBY): {
             qCDebug(m_log) << "Wakeup from STANDBY";
+
+            m_format.setSwapInterval(1);
+            QSurfaceFormat::setDefaultFormat(m_format);
+            qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
+
             setMode(ON);
 
             // delay reading ambient light so the sensor is clear of your hand
@@ -161,6 +166,11 @@ void StandbyControl::wakeup() {
 
         case (WIFI_OFF): {
             qCDebug(m_log) << "Wakeup from WIFI_OFF";
+
+            m_format.setSwapInterval(1);
+            QSurfaceFormat::setDefaultFormat(m_format);
+            qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
+
             setMode(ON);
 
             m_wifiControl->on();
@@ -307,6 +317,10 @@ void StandbyControl::onSecondsTimerTimeout() {
         }
 
         qCDebug(m_log) << "State set to STANDBY";
+
+        m_format.setSwapInterval(60);
+        QSurfaceFormat::setDefaultFormat(m_format);
+        qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
     }
 
     // TURN OFF BLUETOOTH
