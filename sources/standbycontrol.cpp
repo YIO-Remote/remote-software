@@ -122,6 +122,7 @@ void StandbyControl::wakeup() {
 
         case (STANDBY): {
             qCDebug(m_log) << "Wakeup from STANDBY";
+            setMode(ON);
 
             // delay reading ambient light so the sensor is clear of your hand
             QTimer *timer = new QTimer(this);
@@ -138,8 +139,6 @@ void StandbyControl::wakeup() {
 
             timer->start(300);
 
-            setMode(ON);
-
             // integrations out of standby mode
             for (int i = 0; i < m_integrations->list().length(); i++) {
                 IntegrationInterface *integrationObj =
@@ -152,15 +151,22 @@ void StandbyControl::wakeup() {
             // reset battery charging screen
             QObject *showClock = m_config->getQMLObject("showClock");
             QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
+
+            QTimer::singleShot(300, this, [=]() {
+                // disable touch event catcher
+                QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
+                touchEventCatcher->setProperty("enabled", false);
+            });
         } break;
 
         case (WIFI_OFF): {
             qCDebug(m_log) << "Wakeup from WIFI_OFF";
+            setMode(ON);
+
             m_wifiControl->on();
 
             m_displayControl->setMode(DisplayControl::StandbyOff);
             readAmbientLight();
-            setMode(ON);
 
             // connect integrations
             for (int i = 0; i < m_integrations->list().length(); i++) {
@@ -176,6 +182,12 @@ void StandbyControl::wakeup() {
             // reset battery charging screen
             QObject *showClock = m_config->getQMLObject("showClock");
             QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
+
+            QTimer::singleShot(300, this, [=]() {
+                // disable touch event catcher
+                QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
+                touchEventCatcher->setProperty("enabled", false);
+            });
         } break;
     }
 
@@ -281,6 +293,10 @@ void StandbyControl::onSecondsTimerTimeout() {
         // reset battery charging screen
         QObject *resetClock = m_config->getQMLObject("resetClock");
         QMetaObject::invokeMethod(resetClock, "start", Qt::AutoConnection);
+
+        // enable touch event catcher
+        QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
+        touchEventCatcher->setProperty("enabled", true);
 
         setMode(STANDBY);
 

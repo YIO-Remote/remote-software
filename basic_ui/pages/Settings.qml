@@ -31,6 +31,8 @@ Flickable {
     //: Name of the settings page
     property string title: qsTr("Settings") + translateHandler.emptyString
 
+    property bool _isCurrentItem: parent._isCurrentItem
+
     signal scrolledUp()
     signal scrolledDown()
     signal scrollupBegin()
@@ -71,5 +73,6 @@ Flickable {
 
     BasicUI.Settings {
         id: settingsPage
+        __isCurrentItem: _isCurrentItem
     }
 }

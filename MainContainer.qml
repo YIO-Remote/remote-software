@@ -139,13 +139,15 @@ Item {
                 id: mainNavigationLoader
                 asynchronous: true
 
+                property bool _isCurrentItem: SwipeView.isCurrentItem
+
                 property alias mainNavigationLoader: mainNavigationLoader
 
                 function determinePageToLoad(type) {
                     if (type === "favorites") {
                         mainNavigationLoader.source = "qrc:/basic_ui/pages/Favorites.qml";
                     } else if (type === "settings") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/Settings.qml";
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/Settings.qml");
                     } else {
                         mainNavigationLoader.setSource("qrc:/basic_ui/pages/Page.qml", { "page": page });
                     }

@@ -24,66 +24,131 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import Style 1.0
 
-import Launcher 1.0
+import Haptic 1.0
 
 import "settings" as Settings
 
-Item {
+SwipeView {
+    id: settingsSwipeView
     width: parent.width-20
-    height: settingsFlow.height
+    height: parent.height
+    interactive: false
+    clip: true
     anchors.horizontalCenter: parent.horizontalCenter
 
-    Launcher {
-        id: settingsLauncher
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property bool __isCurrentItem: false
+
+    on__IsCurrentItemChanged: {
+        if (!__isCurrentItem) {
+            secondPageLoader.active = false;
+            secondPageLoader.source = "";
+            settingsSwipeView.decrementCurrentIndex();
+        }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUNCTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function loadPage(url, buttonTitle) {
+        secondPageLoader.setSource(url);
+        secondPageLoader.active = true;
+        settingsSwipeView.incrementCurrentIndex();
+        backButtonText.text = qsTr(buttonTitle) + translateHandler.emptyString
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SETTINGS BLOCKS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Flow {
-        id: settingsFlow
-        width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 40
-
-        Rectangle {
+    Item {
+        Flow {
+            id: settingsFlow
             width: parent.width
-            height: 240
-            color: Style.colorBackground
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 10
+
+            Rectangle {
+                width: parent.width
+                height: 200
+                color: Style.colorBackground
+
+                Text {
+                    id: titleText
+                    color: Style.colorText
+                    text: qsTr("Settings") + translateHandler.emptyString
+                    anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter; verticalCenterOffset: 20 }
+                    font { family: "Open Sans Regular"; pixelSize: 60 }
+                    lineHeight: 1
+                }
+            }
+
+            Item {
+                width: parent.width; height: 80
+                Text {
+                    color: Style.colorText
+                    text: qsTr("Your software is up to date.") + translateHandler.emptyString
+                    anchors { top:parent.top; horizontalCenter: parent.horizontalCenter }
+                    font: Style.buttonFont
+                    lineHeight: 1
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        loadPage("qrc:/basic_ui/settings/Softwareupdate.qml", "Software update");
+                    }
+                }
+            }
+
+            Settings.RemoteConfig {}
+        }
+    }
+
+    Item {
+        Item {
+            id: backButton
+            visible: secondPageLoader.active && __isCurrentItem
+            width: parent.width; height: 60
+            anchors { top: parent.top; topMargin: 60 }
 
             Text {
-                id: titleText
+                id: backButtonIcon
                 color: Style.colorText
-                text: qsTr("Settings") + translateHandler.emptyString
-                anchors.centerIn: parent
-                font.family: "Open Sans Regular"
-                font.weight: Font.Normal
-                font.pixelSize: 60
+                text: Style.icons.left_arrow
+                renderType: Text.NativeRendering
+                width: 70; height: 70
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
+                anchors { left: parent.left; leftMargin: -15; verticalCenter: parent.verticalCenter }
+            }
+
+            Text {
+                id: backButtonText
+                color: Style.colorText
+                anchors { left: backButtonIcon.right; verticalCenter: parent.verticalCenter }
+                font: Style.buttonFont
                 lineHeight: 1
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    Haptic.playEffect(Haptic.Click);
+                    secondPageLoader.active = false;
+                    secondPageLoader.source = "";
+                    settingsSwipeView.decrementCurrentIndex();
+                }
             }
         }
 
-        Settings.Display {}
-
-        Settings.Softwareupdate {}
-
-        Settings.PowerSaving {}
-
-        Settings.Languages {}
-
-        Settings.Integrations {
-            visible: integrations.list.length == 0 ? false : true
+        Loader {
+            id: secondPageLoader
+            width: parent.width
+            active: false
+            anchors { top: backButton.bottom; topMargin: 10 }
         }
-
-        Settings.Battery {}
-
-        Settings.Bluetooth {}
-
-        Settings.Network {}
-
-        Settings.RemoteConfig {}
-
-        Settings.System {}
-
     }
 }

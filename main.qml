@@ -184,6 +184,7 @@ ApplicationWindow {
         y: 0
         active: false
         state: "visible"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
 
         transform: Scale {
             id: scale
@@ -209,6 +210,7 @@ ApplicationWindow {
     Loader {
         id: loader_second
         asynchronous: true
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
     property alias contentWrapper: contentWrapper
@@ -219,6 +221,7 @@ ApplicationWindow {
         height: 800
         x: 0
         y: 0
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,6 +231,7 @@ ApplicationWindow {
 
     BasicUI.Volume {
         id: volume
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
@@ -248,6 +252,7 @@ ApplicationWindow {
         y: 0
         asynchronous: true
         source: "qrc:/basic_ui/ChargingScreen.qml"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
 
@@ -271,6 +276,7 @@ ApplicationWindow {
 
     Loader {
         id: lowBatteryNotification
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         width: 480
         height: 800
         x: 0
@@ -292,6 +298,7 @@ ApplicationWindow {
     Column {
         objectName: "notificationsRow"
         id: notificationsRow
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         anchors.fill: parent
         spacing: 10
         topPadding: 20
@@ -360,6 +367,7 @@ ApplicationWindow {
     Loader {
         id: loadingScreen
         objectName: "loadingScreen"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         width: parent.width
         height: parent.height
 
@@ -382,6 +390,7 @@ ApplicationWindow {
 
     MouseArea {
         id: touchEventCatcher
+        objectName: "touchEventCatcher"
         anchors.fill: parent
         enabled: false
         pressAndHoldInterval: 5000
@@ -405,6 +414,7 @@ ApplicationWindow {
 
     InputPanel {
         id: inputPanel
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         width: parent.width
         y: applicationWindow.height
 

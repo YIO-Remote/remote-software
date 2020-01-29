@@ -327,8 +327,8 @@ Rectangle {
                 card.state = "moving"
             }
             else {
-                card.state = "notmoving"
                 obj.setTargetTemperature(targetTemperature);
+                card.state = "notmoving"
             }
         }
     }
@@ -396,6 +396,7 @@ Rectangle {
 
     BasicUI.CustomButton {
         id: turnOnButton
+        visible: obj.isSupported(Climate.F_OFF) && obj.isSupported(Climate.F_ON)
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: Style.colorText
         buttonTextColor: Style.colorBackground
@@ -409,7 +410,7 @@ Rectangle {
 
     BasicUI.CustomButton {
         id: modeButton
-        anchors { left:turnOnButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
+        anchors { left: (obj.isSupported(Climate.F_OFF) && obj.isSupported(Climate.F_ON)) ? turnOnButton.right : parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
         color: Style.colorText
         buttonTextColor: Style.colorBackground
         buttonText: qsTr("Mode") + translateHandler.emptyString
