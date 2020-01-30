@@ -49,6 +49,7 @@ SwipeView {
         }
     }
 
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +58,7 @@ SwipeView {
         secondPageLoader.active = true;
         settingsSwipeView.incrementCurrentIndex();
         backButtonText.text = qsTr(buttonTitle) + translateHandler.emptyString
+        backButton.offset = settingsSwipeView.parent.parent.contentY + 60;
     }
 
 
@@ -104,6 +106,18 @@ SwipeView {
             }
 
             Settings.RemoteConfig {}
+
+            Settings.Button {
+                title: qsTr("Display") + translateHandler.emptyString //: Settings page title for the display settings (LCD display)
+                icon: Style.icons.tv
+                url: "qrc:/basic_ui/settings/Display.qml"
+            }
+
+            Settings.Button {
+                title: qsTr("Language") + translateHandler.emptyString //: Settings page title for language settings
+                subtitle: "English"
+                icon: Style.icons.tv
+            }
         }
     }
 
@@ -112,7 +126,9 @@ SwipeView {
             id: backButton
             visible: secondPageLoader.active && __isCurrentItem
             width: parent.width; height: 60
-            anchors { top: parent.top; topMargin: 60 }
+            anchors { top: parent.top; topMargin: offset }
+
+            property int offset: 60
 
             Text {
                 id: backButtonIcon
@@ -137,9 +153,20 @@ SwipeView {
                 anchors.fill: parent
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-                    secondPageLoader.active = false;
-                    secondPageLoader.source = "";
                     settingsSwipeView.decrementCurrentIndex();
+                    backButtonTimer.start();
+                }
+
+                Timer {
+                    id: backButtonTimer
+                    repeat: false
+                    running: false
+                    interval: 300
+
+                    onTriggered: {
+                        secondPageLoader.active = false;
+                        secondPageLoader.source = "";
+                    }
                 }
             }
         }
