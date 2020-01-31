@@ -90,8 +90,8 @@ class MediaPlayerUtils : public QObject {
     QString m_smallImage;
     QColor  m_pixelColor;
 
-    void generateImages(QString url);
+    void generateImages(const QString& url);
 
-    QThread                 m_workerThread;
+    QThread*                m_workerThread;
     MediaPlayerUtilsWorker* m_worker = new MediaPlayerUtilsWorker();
 };

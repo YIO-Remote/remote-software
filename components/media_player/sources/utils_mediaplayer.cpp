@@ -28,15 +28,16 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
 MediaPlayerUtils::MediaPlayerUtils() {
-    m_worker->moveToThread(&m_workerThread);
+    m_worker->moveToThread(m_workerThread);
     connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
-    m_workerThread.start();
+    m_workerThread->start();
 }
 
 MediaPlayerUtils::~MediaPlayerUtils() {
-    if (m_workerThread.isRunning()) {
-        m_workerThread.quit();
-        m_workerThread.deleteLater();
+    if (m_workerThread->isRunning()) {
+        m_workerThread->quit();
+        m_workerThread->wait(3000);
+        m_workerThread->deleteLater();
         qCDebug(CLASS_LC()) << "Thread removed and deleted";
     }
 }
@@ -53,7 +54,7 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
     emit imageChanged();
 }
 
-void MediaPlayerUtils::generateImages(QString url) {
+void MediaPlayerUtils::generateImages(const QString &url) {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished, m_worker, &MediaPlayerUtilsWorker::generateImagesReply);
     manager->get(QNetworkRequest(QUrl(url)));

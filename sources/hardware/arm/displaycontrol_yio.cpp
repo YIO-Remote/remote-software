@@ -41,7 +41,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.display");
 
 DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl("YIO display control", parent) {
     // move the low level hardware handling to a separate thread
-    m_thread = new QThread(this);
+    m_thread                      = new QThread(this);
     DisplayControlYioThread *dcyt = new DisplayControlYioThread();
 
     connect(this, &DisplayControlYio::enterStandby, dcyt, &DisplayControlYioThread::enterStandby);
@@ -70,6 +70,7 @@ void DisplayControlYio::close() {
     if (m_thread->isRunning()) {
         m_thread->exit();
         m_thread->wait(3000);
+        m_thread->deleteLater();
     }
 }
 
@@ -173,7 +174,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
 
     digitalWrite(CS, LOW);
     control_bit = 0x0000;
-    Addr = (control_bit | Addr);
+    Addr        = (control_bit | Addr);
 
     for (i = 0; i < 9; i++) {
         if (Addr & (1 << (8 - i))) {
@@ -201,7 +202,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data0 = (control_bit | Data0);
+    Data0       = (control_bit | Data0);
 
     // data
     for (i = 0; i < 9; i++) {
@@ -228,7 +229,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data1 = (control_bit | Data1);
+    Data1       = (control_bit | Data1);
 
     // data
     for (i = 0; i < 9; i++) {
