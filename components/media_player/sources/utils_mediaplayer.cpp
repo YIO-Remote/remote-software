@@ -28,6 +28,7 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
 MediaPlayerUtils::MediaPlayerUtils() {
+    m_workerThread = new QThread(this);
     m_worker->moveToThread(m_workerThread);
     connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
     m_workerThread->start();
@@ -36,7 +37,6 @@ MediaPlayerUtils::MediaPlayerUtils() {
 MediaPlayerUtils::~MediaPlayerUtils() {
     if (m_workerThread->isRunning()) {
         m_workerThread->quit();
-        m_workerThread->wait(3000);
         m_workerThread->deleteLater();
         qCDebug(CLASS_LC()) << "Thread removed and deleted";
     }
