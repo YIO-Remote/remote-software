@@ -24,20 +24,36 @@
 
 #include <QBuffer>
 #include <QColor>
-#include <QFuture>
 #include <QImage>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
 #include <QPainter>
-#include <QtConcurrent/QtConcurrentRun>
+#include <QThread>
+
+class MediaPlayerUtilsWorker : public QObject {
+    Q_OBJECT
+
+ public:
+    MediaPlayerUtilsWorker() {}
+    virtual ~MediaPlayerUtilsWorker() {}
+
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void generateImagesReply(QNetworkReply* reply);
+
+ signals:
+    void processingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
+
+ private:
+    QColor dominantColor(const QImage& image);
+};
 
 class MediaPlayerUtils : public QObject {
     Q_OBJECT
 
  public:
-    MediaPlayerUtils() {}
-    virtual ~MediaPlayerUtils() {}
+    MediaPlayerUtils();
+    virtual ~MediaPlayerUtils();
 
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
 
@@ -60,6 +76,9 @@ class MediaPlayerUtils : public QObject {
 
     QColor pixelColor() { return m_pixelColor; }
 
+ public slots:
+    void onProcessingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
+
  signals:
     void imageChanged();
     void smallImageChanged();
@@ -71,9 +90,8 @@ class MediaPlayerUtils : public QObject {
     QString m_smallImage;
     QColor  m_pixelColor;
 
-    void   generateImages(QString url);
-    QColor dominantColor(const QImage& image);
+    void generateImages(QString url);
 
- private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
-    void generateImagesReply(QNetworkReply* reply);
+    QThread                 m_workerThread;
+    MediaPlayerUtilsWorker* m_worker = new MediaPlayerUtilsWorker();
 };

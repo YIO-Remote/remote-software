@@ -25,89 +25,111 @@
 #include <QDebug>
 #include <QLoggingCategory>
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer");
+static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
+
+MediaPlayerUtils::MediaPlayerUtils() {
+    m_worker->moveToThread(&m_workerThread);
+    connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
+    m_workerThread.start();
+}
+
+MediaPlayerUtils::~MediaPlayerUtils() {
+    if (m_workerThread.isRunning()) {
+        m_workerThread.quit();
+        m_workerThread.deleteLater();
+        qCDebug(CLASS_LC()) << "Thread removed and deleted";
+    }
+}
+
+void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString &smallImage,
+                                        const QString &largeImage) {
+    m_pixelColor = pixelColor;
+    emit pixelColorChanged();
+
+    m_smallImage = smallImage;
+    emit smallImageChanged();
+
+    m_image = largeImage;
+    emit imageChanged();
+}
 
 void MediaPlayerUtils::generateImages(QString url) {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, &QNetworkAccessManager::finished, this, &MediaPlayerUtils::generateImagesReply);
+    connect(manager, &QNetworkAccessManager::finished, m_worker, &MediaPlayerUtilsWorker::generateImagesReply);
     manager->get(QNetworkRequest(QUrl(url)));
 }
 
-void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply) {
+void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
         // run image processing in different thread
-        QFuture<void> future = QtConcurrent::run([=]() {
-            QImage image;
+        QImage image;
 
-            if (!image.load(reply, nullptr)) {
-                qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
-            }
+        if (!image.load(reply, nullptr)) {
+            qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
+        }
 
-            ////////////////////////////////////////////////////////////////////
-            /// GET DOMINANT COLOR
-            ////////////////////////////////////////////////////////////////////
-            m_pixelColor = dominantColor(image);
+        ////////////////////////////////////////////////////////////////////
+        /// GET DOMINANT COLOR
+        ////////////////////////////////////////////////////////////////////
+        QColor m_pixelColor = dominantColor(image);
 
-            // change the brightness of the color if it's too bright
-            if (m_pixelColor.lightness() > 150) {
-                m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
-            }
+        // change the brightness of the color if it's too bright
+        if (m_pixelColor.lightness() > 150) {
+            m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
+        }
 
-            // if the color is close to white, return black instead
-            if (m_pixelColor.lightness() > 210) {
-                m_pixelColor = QColor("black");
-            }
+        // if the color is close to white, return black instead
+        if (m_pixelColor.lightness() > 210) {
+            m_pixelColor = QColor("black");
+        }
 
-            ////////////////////////////////////////////////////////////////////
-            /// CREATE A SMALL THUMBNAIL IMAGE
-            ////////////////////////////////////////////////////////////////////
-            QImage smallImage = image;
-            smallImage.scaledToHeight(90, Qt::SmoothTransformation);
+        ////////////////////////////////////////////////////////////////////
+        /// CREATE A SMALL THUMBNAIL IMAGE
+        ////////////////////////////////////////////////////////////////////
+        QImage smallImage = image;
+        smallImage.scaledToHeight(90, Qt::SmoothTransformation);
 
-            // create byte array and then convert to base64
-            QByteArray bArray;
-            QBuffer    buffer(&bArray);
-            buffer.open(QIODevice::WriteOnly);
-            smallImage.save(&buffer, "JPEG");
+        // create byte array and then convert to base64
+        QByteArray bArray;
+        QBuffer    buffer(&bArray);
+        buffer.open(QIODevice::WriteOnly);
+        smallImage.save(&buffer, "JPEG");
 
-            QString bImage("data:image/jpg;base64,");
-            bImage.append(QString::fromLatin1(bArray.toBase64().data()));
+        QString bImage("data:image/jpg;base64,");
+        bImage.append(QString::fromLatin1(bArray.toBase64().data()));
 
-            m_smallImage = bImage;
+        QString m_smallImage = bImage;
 
-            ////////////////////////////////////////////////////////////////////
-            /// CREATE LARGE BACKGROUND IMAGE
-            ////////////////////////////////////////////////////////////////////
-            // resize image
-            image.scaledToHeight(280, Qt::SmoothTransformation);
+        ////////////////////////////////////////////////////////////////////
+        /// CREATE LARGE BACKGROUND IMAGE
+        ////////////////////////////////////////////////////////////////////
+        // resize image
+        image.scaledToHeight(280, Qt::SmoothTransformation);
 
-            // create noise layer
-            QImage noise(":/images/mini-music-player/noise.png");
-            noise.scaledToHeight(280, Qt::SmoothTransformation);
-            noise = noise.convertToFormat(QImage::Format_ARGB32);
+        // create noise layer
+        QImage noise(":/images/mini-music-player/noise.png");
+        noise.scaledToHeight(280, Qt::SmoothTransformation);
+        noise = noise.convertToFormat(QImage::Format_ARGB32);
 
-            // merge the images together
-            QPainter painter(&image);
-            painter.drawImage(image.rect(), noise);
-            painter.end();
+        // merge the images together
+        QPainter painter(&image);
+        painter.drawImage(image.rect(), noise);
+        painter.end();
 
-            // create byte array and then convert to base64
-            QByteArray lArray;
-            QBuffer    lBuffer(&lArray);
-            lBuffer.open(QIODevice::WriteOnly);
-            image.save(&lBuffer, "JPEG");
+        // create byte array and then convert to base64
+        QByteArray lArray;
+        QBuffer    lBuffer(&lArray);
+        lBuffer.open(QIODevice::WriteOnly);
+        image.save(&lBuffer, "JPEG");
 
-            QString lImage("data:image/jpg;base64,");
-            lImage.append(QString::fromLatin1(lArray.toBase64().data()));
+        QString lImage("data:image/jpg;base64,");
+        lImage.append(QString::fromLatin1(lArray.toBase64().data()));
 
-            m_image = lImage;
+        QString m_largeImage = lImage;
 
-            emit pixelColorChanged();
-            emit smallImageChanged();
-            emit imageChanged();
+        emit processingDone(m_pixelColor, m_smallImage, m_largeImage);
 
-            reply->deleteLater();
-        });
+        reply->deleteLater();
 
     } else {
         qCWarning(CLASS_LC) << "ERROR LOADING IMAGE" << reply->errorString();
@@ -117,7 +139,7 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// DOMINANT COLOR OF IMAGE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-QColor MediaPlayerUtils::dominantColor(const QImage &image) {
+QColor MediaPlayerUtilsWorker::dominantColor(const QImage &image) {
     qint32 averageRed = 0, averageGreen = 0, averageBlue = 0;
 
     const qint32 maxX = qMin<qint32>(image.width(), 0 + image.width());
@@ -136,7 +158,8 @@ QColor MediaPlayerUtils::dominantColor(const QImage &image) {
     qint32 n = image.width() * image.height();
 
     Q_ASSERT(n);
-    if (n <= 0) return Qt::black;
+    if (n <= 0)
+        return Qt::black;
 
     return QColor(averageRed / n, averageGreen / n, averageBlue / n);
 }
