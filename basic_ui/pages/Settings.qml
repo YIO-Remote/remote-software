@@ -169,28 +169,34 @@ SwipeView {
                 Settings.Button {
                     title: qsTr("Language") + translateHandler.emptyString //: Settings page title for language settings
                     subtitle: config.settings.language
+                    url: "qrc:/basic_ui/settings/Languages.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("Integrations") + translateHandler.emptyString //: Settings page title for integration settings
                     subtitle: integrations.list.length > 1 ? (integrations.list.length + " integrations loaded" + translateHandler.emptyString) : (integrations.list.length + " integration loaded" + translateHandler.emptyString)
+                    url: "qrc:/basic_ui/settings/Integrations.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("Battery & power") + translateHandler.emptyString //: Settings page title for battery and power settings
                     subtitle: qsTr("Battery level: ") + Battery.level + "%" + translateHandler.emptyString
+                    url: "qrc:/basic_ui/settings/Battery.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("WiFi & bluetooth") + translateHandler.emptyString //: Settings page title for wifi and bluetooth settings
+                    url: "qrc:/basic_ui/settings/Wifi.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("System") + translateHandler.emptyString //: Settings page title for system settings
+                    url: "qrc:/basic_ui/settings/System.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("About") + translateHandler.emptyString //: Settings page title for about
+                    url: "qrc:/basic_ui/settings/About.qml"
                 }
             }
         }
@@ -245,11 +251,33 @@ SwipeView {
             }
         }
 
-        Loader {
-            id: secondPageLoader
-            width: parent.width - 20
-            active: false
+        Flickable {
+            id: settingsSecondPageFlickable
+            width: parent.width - 20; height: parent.height - backButton.height
             anchors { top: backButton.bottom; topMargin: 10; horizontalCenter: parent.horizontalCenter }
+            maximumFlickVelocity: 6000
+            flickDeceleration: 1000
+            contentHeight: secondPageLoader.height + 120
+            boundsBehavior: Flickable.DragAndOvershootBounds
+            flickableDirection: Flickable.VerticalFlick
+            clip: true
+
+            Behavior on contentY {
+                PropertyAnimation {
+                    duration: 300
+                    easing.type: Easing.OutExpo
+                }
+            }
+
+            ScrollBar.vertical: ScrollBar {
+                opacity: 0.5
+            }
+
+            Loader {
+                id: secondPageLoader
+                width: parent.width
+                active: false
+            }
         }
     }
 }
