@@ -36,10 +36,17 @@ MediaPlayerUtils::MediaPlayerUtils() {
 
 MediaPlayerUtils::~MediaPlayerUtils() {
     if (m_workerThread->isRunning()) {
+        qCDebug(CLASS_LC()) << "Thread is running. Quitting.";
         m_workerThread->quit();
-        m_workerThread->deleteLater();
-        qCDebug(CLASS_LC()) << "Thread removed and deleted";
+        if (!m_workerThread->wait(3000)) {
+            qCWarning(CLASS_LC()) << "Thread didn't quit. Terminating.";
+            m_workerThread->terminate();
+            m_workerThread->wait();
+            qCWarning(CLASS_LC()) << "Thread terminated.";
+        }
     }
+    m_workerThread->deleteLater();
+    qCDebug(CLASS_LC()) << "Thread removed and deleted";
 }
 
 void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString &smallImage,
