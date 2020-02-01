@@ -70,6 +70,7 @@ ApplicationWindow {
     Component.onCompleted: {
         // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
+        //           This can be done by connecting to a signal of the config in the hardware factory
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
         // load the integrations

@@ -92,6 +92,7 @@ class MediaPlayerUtils : public QObject {
 
     void generateImages(const QString& url);
 
+    QNetworkAccessManager*  m_manager;
     QThread*                m_workerThread;
-    MediaPlayerUtilsWorker* m_worker = new MediaPlayerUtilsWorker();
+    MediaPlayerUtilsWorker* m_worker;
 };

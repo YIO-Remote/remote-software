@@ -13,7 +13,6 @@
         <file>basic_ui/StatusBar.qml</file>
         <file>basic_ui/MainNavigation.qml</file>
         <file>components/light/ui/Button.qml</file>
-        <file>basic_ui/Settings.qml</file>
         <file>basic_ui/settings/Display.qml</file>
         <file>basic_ui/settings/PowerSaving.qml</file>
         <file>basic_ui/settings/Languages.qml</file>
