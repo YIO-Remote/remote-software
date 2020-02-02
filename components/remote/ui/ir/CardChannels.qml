@@ -54,7 +54,7 @@ Item {
                     text: number
                     verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                     anchors.centerIn: parent
-                    font { family: "Open Sans Bold"; pixelSize: 40 }
+                    font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                     lineHeight: 1
                 }
 

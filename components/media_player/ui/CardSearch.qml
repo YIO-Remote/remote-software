@@ -128,7 +128,7 @@ Rectangle {
                     color: Style.colorText
                     text: qsTr("Search") + translateHandler.emptyString
                     anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
-                    font { family: "Open Sans Bold"; pixelSize: 40 }
+                    font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                     lineHeight: 1
                 }
 
@@ -297,7 +297,7 @@ Rectangle {
                         id: searchResultsTitle
                         color: Style.colorText
                         anchors { left: parent.left; top: parent.top }
-                        font { family: "Open Sans Bold"; pixelSize: 30 }
+                        font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 30 }
                         lineHeight: 1
                     }
 

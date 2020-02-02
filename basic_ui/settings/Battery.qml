@@ -335,7 +335,7 @@ Rectangle {
                 id: powerSavingText
                 color: Style.colorText
                 text: qsTr("Power saving") + translateHandler.emptyString
-                font { family: "Open Sans Bold"; pixelSize: 27 }
+                font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 27 }
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
             }
 

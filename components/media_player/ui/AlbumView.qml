@@ -116,7 +116,7 @@ Rectangle {
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
             width: parent.width-80
-            font { family: "Open Sans Bold"; pixelSize: 30 }
+            font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 30 }
             lineHeight: 1
             anchors { horizontalCenter: parent.horizontalCenter; top: image.bottom; topMargin: 20 }
         }

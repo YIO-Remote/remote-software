@@ -237,7 +237,7 @@ SwipeView {
                 id: backButtonText
                 color: Style.colorText
                 anchors { left: backButtonIcon.right; verticalCenter: parent.verticalCenter }
-                font { family: "Open Sans Bold"; pixelSize: 27 }
+                font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 27 }
                 lineHeight: 1
             }
 

@@ -123,7 +123,7 @@ Rectangle {
                             id: title
                             color: Style.colorText
                             text: qsTr("My playlists") + translateHandler.emptyString
-                            font { family: "Open Sans Bold"; pixelSize: 40 }
+                            font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                             lineHeight: 1
                             anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
                         }
