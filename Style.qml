@@ -95,6 +95,10 @@ QtObject {
         readonly property string weather: "\uE911"
         readonly property string climate: "\uE913"
         readonly property string blind: "\uE914"
+
+        readonly property string wifi_1: "\uE924"
+        readonly property string wifi_2: "\uE925"
+        readonly property string wifi_3: "\uE926"
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

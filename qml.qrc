@@ -14,13 +14,11 @@
         <file>basic_ui/MainNavigation.qml</file>
         <file>components/light/ui/Button.qml</file>
         <file>basic_ui/settings/Display.qml</file>
-        <file>basic_ui/settings/PowerSaving.qml</file>
         <file>basic_ui/settings/Languages.qml</file>
         <file>basic_ui/settings/Battery.qml</file>
         <file>basic_ui/settings/Network.qml</file>
         <file>basic_ui/settings/System.qml</file>
         <file>basic_ui/settings/Integrations.qml</file>
-        <file>basic_ui/settings/Devices.qml</file>
         <file>basic_ui/pages/Favorites.qml</file>
         <file>basic_ui/pages/Settings.qml</file>
         <file>basic_ui/pages/Page.qml</file>
@@ -39,7 +37,6 @@
         <file>basic_ui/Volume.qml</file>
         <file>components/media_player/ui/Button.qml</file>
         <file>basic_ui/settings/Bluetooth.qml</file>
-        <file>basic_ui/settings/RemoteConfig.qml</file>
         <file>basic_ui/settings/WifiNetworkListElement.qml</file>
         <file>wifiSetup.qml</file>
         <file>basic_ui/pages/Group.qml</file>
@@ -66,5 +63,7 @@
         <file>Style.qml</file>
         <file>basic_ui/settings/Button.qml</file>
         <file>basic_ui/settings/About.qml</file>
+        <file>basic_ui/settings/RemoteConfig.qml</file>
+        <file>basic_ui/settings/Wifi.qml</file>
     </qresource>
 </RCC>

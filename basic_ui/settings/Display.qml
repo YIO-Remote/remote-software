@@ -84,11 +84,9 @@ Rectangle {
                     id: sliderBG
                     x: parent.leftPadding
                     y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
-                    implicitWidth: 200
-                    implicitHeight: brightnessSlider.setbyUser ? 28 : 4
-                    width: brightnessSlider.availableWidth
-                    height: implicitHeight
-                    radius: brightnessSlider.setbyUser ? 14 : 2
+                    implicitWidth: 200; implicitHeight: brightnessSlider.pressed ? 28 : 4
+                    width: brightnessSlider.availableWidth; height: implicitHeight
+                    radius: brightnessSlider.pressed ? 14 : 2
                     color: Style.colorBackground
 
                     layer.enabled: true
@@ -113,8 +111,7 @@ Rectangle {
                     }
 
                     Rectangle {
-                        width: brightnessSlider.visualPosition * parent.width
-                        height: brightnessSlider.setbyUser ? 28 : 4
+                        width: brightnessSlider.visualPosition * parent.width; height: brightnessSlider.pressed ? 28 : 4
                         radius: 2
                         color: Style.colorHighlight1
 
@@ -130,8 +127,7 @@ Rectangle {
                 handle: Rectangle {
                     x: brightnessSlider.visualPosition * (brightnessSlider.availableWidth - width/2)
                     y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
-                    implicitWidth: 28
-                    implicitHeight: 28
+                    implicitWidth: 28; implicitHeight: 28
                     radius: Style.cornerRadius
                     color: Style.colorLine
                 }
