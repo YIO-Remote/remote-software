@@ -27,9 +27,9 @@
 
 #include <QLoggingCategory>
 #include <QtDebug>
-#include "QFile"
 
 #include "../../notifications.h"
+#include "QFile"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.BQ27441");
 
@@ -146,8 +146,12 @@ void BQ27441::updateBatteryValues() {
         }
     }
 
+    // calculate remaining battery life
+    m_remainingLife = getRemainingCapacity() / abs(m_averagePower);
+
     qCDebug(CLASS_LC()) << "Average power" << m_averagePower << "mW";
     qCDebug(CLASS_LC()) << "Average current" << getAverageCurrent() << "mA";
+    qCDebug(CLASS_LC()) << "Remaining battery life" << m_remainingLife << "h";
 }
 
 void BQ27441::begin() {
@@ -294,6 +298,8 @@ int BQ27441::getLevel() { return m_level; }
 int BQ27441::getHealth() { return m_health; }
 
 bool BQ27441::getIsCharging() { return m_isCharging; }
+
+int BQ27441::remainingLife() { return m_remainingLife; }
 
 int BQ27441::getTemperatureC() {  // Result in 1 Celcius
     ASSERT_DEVICE_OPEN(0)

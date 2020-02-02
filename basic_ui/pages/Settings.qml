@@ -168,7 +168,13 @@ SwipeView {
 
                 Settings.Button {
                     title: qsTr("Language") + translateHandler.emptyString //: Settings page title for language settings
-                    subtitle: config.settings.language
+                    subtitle: {
+                        for (var i=0; i<translations.length; i++) {
+                            if (translations[i].id === config.settings.language) {
+                                return translations[i].name;
+                            }
+                        }
+                    }
                     url: "qrc:/basic_ui/settings/Languages.qml"
                 }
 
@@ -180,7 +186,7 @@ SwipeView {
 
                 Settings.Button {
                     title: qsTr("Battery & power") + translateHandler.emptyString //: Settings page title for battery and power settings
-                    subtitle: qsTr("Battery level: ") + Battery.level + "%" + translateHandler.emptyString
+                    subtitle: Battery.remainingLife + qsTr("h remaining") + translateHandler.emptyString
                     url: "qrc:/basic_ui/settings/Battery.qml"
                 }
 

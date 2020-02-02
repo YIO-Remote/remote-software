@@ -44,10 +44,10 @@ Rectangle {
         opacity: 0.5
         text: qsTr("
 YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:\n
+Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
-Christian Riedl
 
 To learn more about the project, visit
 www.yio-remote.com

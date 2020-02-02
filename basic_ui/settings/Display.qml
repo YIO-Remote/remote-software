@@ -30,9 +30,8 @@ import DisplayControl 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: section
-    width: parent.width
-    height: childrenRect.height
+    id: container
+    width: parent.width; height: childrenRect.height
     radius: Style.cornerRadius
     color: Style.colorDark
 
