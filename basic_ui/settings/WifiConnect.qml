@@ -82,17 +82,18 @@ Rectangle {
     Text {
         id: titleText
         color: Style.colorText
-        width: parent.width - 80
+        width: parent.width - 100
         wrapMode: Text.WordWrap
         text: qsTr("Enter password for \"%1\"").arg(obj.name) + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
         font: Style.buttonFont
+        lineHeight: 1.2
     }
 
     Rectangle {
         id: searchContainer
         width: parent.width - 40; height: 80
-        anchors { top: titleText.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
+        anchors { top: closeButton.bottom; topMargin: 20; horizontalCenter: parent.horizontalCenter }
         color: Style.colorText
         radius: Style.cornerRadius
 
