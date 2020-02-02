@@ -186,7 +186,14 @@ SwipeView {
 
                 Settings.Button {
                     title: qsTr("Battery & power") + translateHandler.emptyString //: Settings page title for battery and power settings
-                    subtitle: Battery.remainingLife + qsTr("h remaining") + translateHandler.emptyString
+                    subtitle: {
+                        var hours = Battery.remainingLife;
+                        var rhours = Math.floor(hours);
+                        var minutes = (hours - rhours) * 60;
+                        var rminutes = Math.round(minutes);
+
+                        return rhours + "h " + rminutes + qsTr("m remaining") + translateHandler.emptyString
+                    }
                     url: "qrc:/basic_ui/settings/Battery.qml"
                 }
 

@@ -51,5 +51,5 @@ class BatteryFuelGaugeMock : public BatteryFuelGauge {
     int     getLevel() override { return 100; }
     int     getHealth() override { return 100; }
     bool    getIsCharging() override { return false; }
-    int     remainingLife() override { return 2; }
+    float   remainingLife() override { return 2; }
 };

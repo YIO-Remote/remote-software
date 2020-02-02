@@ -147,7 +147,8 @@ void BQ27441::updateBatteryValues() {
     }
 
     // calculate remaining battery life
-    m_remainingLife = getRemainingCapacity() / abs(m_averagePower);
+    m_remainingLife = static_cast<float>(getRemainingCapacity()) / static_cast<float>(abs(getAverageCurrent()));
+    emit remainingLifeChanged();
 
     qCDebug(CLASS_LC()) << "Average power" << m_averagePower << "mW";
     qCDebug(CLASS_LC()) << "Average current" << getAverageCurrent() << "mA";
@@ -299,7 +300,7 @@ int BQ27441::getHealth() { return m_health; }
 
 bool BQ27441::getIsCharging() { return m_isCharging; }
 
-int BQ27441::remainingLife() { return m_remainingLife; }
+float BQ27441::remainingLife() { return m_remainingLife; }
 
 int BQ27441::getTemperatureC() {  // Result in 1 Celcius
     ASSERT_DEVICE_OPEN(0)

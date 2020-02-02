@@ -33,7 +33,7 @@ class BatteryFuelGauge : public Device {
     Q_OBJECT
     Q_PROPERTY(int capacity READ getCapacity WRITE setCapacity)
     Q_PROPERTY(float level READ getLevel NOTIFY levelChanged)
-    Q_PROPERTY(int remainingLife READ remainingLife NOTIFY remainingLifeChanged)
+    Q_PROPERTY(float remainingLife READ remainingLife NOTIFY remainingLifeChanged)
     Q_PROPERTY(int health READ getHealth NOTIFY healthChanged)
     Q_PROPERTY(int averagePower READ getAveragePower NOTIFY averagePowerChanged)
     Q_PROPERTY(bool isCharging READ getIsCharging NOTIFY isChargingChanged)
@@ -54,7 +54,7 @@ class BatteryFuelGauge : public Device {
     virtual int     getLevel()                      = 0;
     virtual int     getHealth()                     = 0;
     virtual bool    getIsCharging()                 = 0;
-    virtual int     remainingLife()                 = 0;  // result in hours
+    virtual float   remainingLife()                 = 0;  // result in hours
 
     void setCapacity(int capacity) { m_capacity = capacity; }
 
