@@ -158,6 +158,8 @@ ApplicationWindow {
 
     Loader {
         id: loader_second
+        width: 480; height: 800
+        x: 0; y: 0
         asynchronous: true
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
@@ -166,10 +168,8 @@ ApplicationWindow {
 
     Item {
         id: contentWrapper
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 

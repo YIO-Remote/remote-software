@@ -245,6 +245,10 @@ SwipeView {
                 anchors.fill: parent
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
+                    loader_second.source = "";
+                    loader_second.active = false;
+                    inputPanel.active = false;
+
                     settingsSwipeView.decrementCurrentIndex();
                     backButtonTimer.start();
                     evaluateHeader();

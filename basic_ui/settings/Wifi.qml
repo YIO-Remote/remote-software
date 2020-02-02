@@ -23,11 +23,14 @@
 import QtQuick 2.11
 import Style 1.0
 
+import Haptic 1.0
 import WifiControl 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
 Item {
+    width: parent.width; height: childrenRect.height
+
     Rectangle {
         id: containerBluetooth
         width: parent.width; height: childrenRect.height
@@ -87,7 +90,7 @@ Item {
     Rectangle {
         id: containerWifi
         width: parent.width; height: childrenRect.height
-        anchors { top: containerBluetooth.bottom; topMargin: 10 }
+        anchors { top: containerBluetooth.bottom; topMargin: 20 }
         radius: Style.cornerRadius
         color: Style.colorDark
 
@@ -132,7 +135,7 @@ Item {
                 Text {
                     id: currentWifiSSID
                     color: Style.colorText
-                    text: wifi.wifiStatus.name + translateHandler.emptyString
+                    text: wifi.wifiStatus.name
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                     font: Style.buttonFont
                 }
@@ -149,15 +152,15 @@ Item {
                 }
 
                 Text {
-                    id: buttonIcon
                     color: Style.colorText
                     text: {
-                        if (wifi.wifiStatus.rssi <= -88)
-                            return Style.icons.wifi_3
-                        else if (wifi.wifiStatus.rssi > -88 && wifi.wifiStatus.rssi <= -30)
-                            return Style.icons.wifi_2
-                        else
+                        if (wifi.wifiStatus.signalStrength == SignalStrengthEnum.WEAK || wifi.wifiStatus.signalStrength == SignalStrengthEnum.NONE)
                             return Style.icons.wifi_1
+                        else if (wifi.wifiStatus.signalStrength == SignalStrengthEnum.OK)
+                            return Style.icons.wifi_2
+                        else if (wifi.wifiStatus.signalStrength == SignalStrengthEnum.GOOD || wifi.wifiStatus.signalStrength == SignalStrengthEnum.EXCELLENT)
+                            return Style.icons.wifi_3
+                        else return ""
                     }
                     renderType: Text.NativeRendering
                     width: 70; height: 70
@@ -177,6 +180,7 @@ Item {
                 width: parent.width; height: childrenRect.height + 40
 
                 Text {
+                    id: otherNetworksText
                     color: Style.colorHighlight1
                     text: qsTr("Other networks") + translateHandler.emptyString
                     wrapMode: Text.WordWrap
@@ -190,17 +194,76 @@ Item {
                     repeat: true
                     running: true
                     interval: 10000
+                    triggeredOnStart: true
 
                     onTriggered: {
                         wifi.startNetworkScan();
                     }
                 }
 
-                Connections {
-                    target: wifi
+                ListView {
+                    model: wifi.networkScanResult
+                    anchors { top: otherNetworksText.bottom; topMargin: 20 }
+                    width: parent.width; height: childrenRect.height
+                    interactive: false
 
-                    onNetworksFound: {
-                        console.debug(wifi.networkScanResult);
+                    delegate: Item {
+                        width: parent.width; height: 80
+
+                        Text {
+                            id: delegateSSID
+                            color: Style.colorText
+                            text: wifi.networkScanResult[index].name
+                            anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                            font: Style.buttonFont
+                        }
+
+                        Text {
+                            color: Style.colorText
+                            opacity: 0.3
+                            text: Style.icons.wifi_3
+                            renderType: Text.NativeRendering
+                            width: 70; height: 70
+                            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                            font {family: "icons"; pixelSize: 60 }
+                            anchors { right: parent.right; verticalCenter: delegateSSID.verticalCenter }
+                        }
+
+                        Text {
+                            color: Style.colorText
+                            text: {
+                                if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
+                                    return Style.icons.wifi_1
+                                else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.OK)
+                                    return Style.icons.wifi_2
+                                else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.GOOD || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.EXCELLENT)
+                                    return Style.icons.wifi_3
+                                else return ""
+                            }
+                            renderType: Text.NativeRendering
+                            width: 70; height: 70
+                            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                            font {family: "icons"; pixelSize: 60 }
+                            anchors { right: parent.right; verticalCenter: delegateSSID.verticalCenter }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click);
+                                loader_second.setSource("qrc:/basic_ui/settings/WifiConnect.qml", { "obj": wifi.networkScanResult[index]})
+                                loader_second.active = true;
+                            }
+                        }
+
+                    }
+
+                    add: Transition {
+                        PropertyAnimation { properties: "opacity"; from: 0; to: 1; duration: 400; easing.type: Easing.OutExpo }
+                    }
+
+                    displaced: Transition {
+                        PropertyAnimation { properties: "x,y"; duration: 400; easing.type: Easing.OutBounce }
                     }
                 }
             }
