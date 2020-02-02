@@ -32,6 +32,10 @@ Rectangle {
     width: parent.width; height: 400 //childrenRect.height + 40
     color: Style.colorBackground
 
+    MouseArea {
+        anchors.fill: parent
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,8 +88,9 @@ Rectangle {
         color: Style.colorText
         width: parent.width - 100
         wrapMode: Text.WordWrap
-        text: qsTr("Enter password for \"%1\"").arg(obj.name) + translateHandler.emptyString
-        anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+        verticalAlignment: Text.AlignVCenter
+        text: qsTr("Enter password for\n\"%1\"").arg(obj.name) + translateHandler.emptyString
+        anchors { left: parent.left; leftMargin: 20; verticalCenter: closeButton.verticalCenter }
         font: Style.buttonFont
         lineHeight: 1.2
     }
@@ -127,7 +132,7 @@ Rectangle {
         }
 
         BasicUI.CustomButton {
-            anchors { top: passwordField.bottom; topMargin: 20; left: passwordField.left }
+            anchors { top: passwordField.bottom; topMargin: 40; left: passwordField.left }
             buttonText: qsTr("Join") + translateHandler.emptyString
             mouseArea.onClicked: {
                 Haptic.playEffect(Haptic.Click);
