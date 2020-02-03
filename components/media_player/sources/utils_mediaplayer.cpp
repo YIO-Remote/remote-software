@@ -79,73 +79,72 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
 
         if (!image.load(reply, nullptr)) {
             qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
+        } else {
+            ////////////////////////////////////////////////////////////////////
+            /// GET DOMINANT COLOR
+            ////////////////////////////////////////////////////////////////////
+            QColor m_pixelColor = dominantColor(image);
+
+            // change the brightness of the color if it's too bright
+            if (m_pixelColor.lightness() > 150) {
+                m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
+            }
+
+            // if the color is close to white, return black instead
+            if (m_pixelColor.lightness() > 210) {
+                m_pixelColor = QColor("black");
+            }
+
+            ////////////////////////////////////////////////////////////////////
+            /// CREATE A SMALL THUMBNAIL IMAGE
+            ////////////////////////////////////////////////////////////////////
+            QImage smallImage = image;
+            smallImage.scaledToHeight(90, Qt::SmoothTransformation);
+
+            // create byte array and then convert to base64
+            QByteArray bArray;
+            QBuffer    buffer(&bArray);
+            buffer.open(QIODevice::WriteOnly);
+            smallImage.save(&buffer, "JPEG");
+
+            QString bImage("data:image/jpg;base64,");
+            bImage.append(QString::fromLatin1(bArray.toBase64().data()));
+
+            QString m_smallImage = bImage;
+
+            ////////////////////////////////////////////////////////////////////
+            /// CREATE LARGE BACKGROUND IMAGE
+            ////////////////////////////////////////////////////////////////////
+            // resize image
+            image.scaledToHeight(280, Qt::SmoothTransformation);
+
+            // create noise layer
+            QImage noise(":/images/mini-music-player/noise.png");
+            noise.scaledToHeight(280, Qt::SmoothTransformation);
+            noise = noise.convertToFormat(QImage::Format_ARGB32);
+
+            // merge the images together
+            QPainter painter(&image);
+            painter.drawImage(image.rect(), noise);
+            painter.end();
+
+            // create byte array and then convert to base64
+            QByteArray lArray;
+            QBuffer    lBuffer(&lArray);
+            lBuffer.open(QIODevice::WriteOnly);
+            image.save(&lBuffer, "JPEG");
+
+            QString lImage("data:image/jpg;base64,");
+            lImage.append(QString::fromLatin1(lArray.toBase64().data()));
+
+            QString m_largeImage = lImage;
+
+            emit processingDone(m_pixelColor, m_smallImage, m_largeImage);
+
+            reply->deleteLater();
         }
-
-        ////////////////////////////////////////////////////////////////////
-        /// GET DOMINANT COLOR
-        ////////////////////////////////////////////////////////////////////
-        QColor m_pixelColor = dominantColor(image);
-
-        // change the brightness of the color if it's too bright
-        if (m_pixelColor.lightness() > 150) {
-            m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
-        }
-
-        // if the color is close to white, return black instead
-        if (m_pixelColor.lightness() > 210) {
-            m_pixelColor = QColor("black");
-        }
-
-        ////////////////////////////////////////////////////////////////////
-        /// CREATE A SMALL THUMBNAIL IMAGE
-        ////////////////////////////////////////////////////////////////////
-        QImage smallImage = image;
-        smallImage.scaledToHeight(90, Qt::SmoothTransformation);
-
-        // create byte array and then convert to base64
-        QByteArray bArray;
-        QBuffer    buffer(&bArray);
-        buffer.open(QIODevice::WriteOnly);
-        smallImage.save(&buffer, "JPEG");
-
-        QString bImage("data:image/jpg;base64,");
-        bImage.append(QString::fromLatin1(bArray.toBase64().data()));
-
-        QString m_smallImage = bImage;
-
-        ////////////////////////////////////////////////////////////////////
-        /// CREATE LARGE BACKGROUND IMAGE
-        ////////////////////////////////////////////////////////////////////
-        // resize image
-        image.scaledToHeight(280, Qt::SmoothTransformation);
-
-        // create noise layer
-        QImage noise(":/images/mini-music-player/noise.png");
-        noise.scaledToHeight(280, Qt::SmoothTransformation);
-        noise = noise.convertToFormat(QImage::Format_ARGB32);
-
-        // merge the images together
-        QPainter painter(&image);
-        painter.drawImage(image.rect(), noise);
-        painter.end();
-
-        // create byte array and then convert to base64
-        QByteArray lArray;
-        QBuffer    lBuffer(&lArray);
-        lBuffer.open(QIODevice::WriteOnly);
-        image.save(&lBuffer, "JPEG");
-
-        QString lImage("data:image/jpg;base64,");
-        lImage.append(QString::fromLatin1(lArray.toBase64().data()));
-
-        QString m_largeImage = lImage;
-
-        emit processingDone(m_pixelColor, m_smallImage, m_largeImage);
-
-        reply->deleteLater();
-
     } else {
-        qCWarning(CLASS_LC) << "ERROR LOADING IMAGE" << reply->errorString();
+        qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << reply->errorString();
     }
 }
 
@@ -170,9 +169,9 @@ QColor MediaPlayerUtilsWorker::dominantColor(const QImage &image) {
 
     qint32 n = image.width() * image.height();
 
-    Q_ASSERT(n);
-    if (n <= 0)
+    if (n <= 0) {
         return Qt::black;
-
-    return QColor(averageRed / n, averageGreen / n, averageBlue / n);
+    } else {
+        return QColor(averageRed / n, averageGreen / n, averageBlue / n);
+    }
 }
