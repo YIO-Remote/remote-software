@@ -28,11 +28,14 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
 MediaPlayerUtils::MediaPlayerUtils() {
-    m_manager      = new QNetworkAccessManager(this);
-    m_worker       = new MediaPlayerUtilsWorker();
+    m_worker = new MediaPlayerUtilsWorker();
+
+    m_manager = new QNetworkAccessManager(this);
+    connect(m_manager, &QNetworkAccessManager::finished, m_worker, &MediaPlayerUtilsWorker::generateImagesReply);
+
     m_workerThread = new QThread(this);
-    m_worker->moveToThread(m_workerThread);
     connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
+    m_worker->moveToThread(m_workerThread);
     m_workerThread->start();
 }
 
@@ -67,10 +70,7 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
     emit imageChanged();
 }
 
-void MediaPlayerUtils::generateImages(const QString &url) {
-    connect(m_manager, &QNetworkAccessManager::finished, m_worker, &MediaPlayerUtilsWorker::generateImagesReply);
-    m_manager->get(QNetworkRequest(QUrl(url)));
-}
+void MediaPlayerUtils::generateImages(const QString &url) { m_manager->get(QNetworkRequest(QUrl(url))); }
 
 void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
@@ -83,6 +83,7 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
             ////////////////////////////////////////////////////////////////////
             /// GET DOMINANT COLOR
             ////////////////////////////////////////////////////////////////////
+            qCDebug(CLASS_LC()) << "Getting dominant color";
             QColor m_pixelColor = dominantColor(image);
 
             // change the brightness of the color if it's too bright
@@ -98,6 +99,7 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
             ////////////////////////////////////////////////////////////////////
             /// CREATE A SMALL THUMBNAIL IMAGE
             ////////////////////////////////////////////////////////////////////
+            qCDebug(CLASS_LC()) << "Creating small image";
             QImage smallImage = image;
             smallImage.scaledToHeight(90, Qt::SmoothTransformation);
 
@@ -111,10 +113,12 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
             bImage.append(QString::fromLatin1(bArray.toBase64().data()));
 
             QString m_smallImage = bImage;
+            qCDebug(CLASS_LC()) << "Creating small image DONE";
 
             ////////////////////////////////////////////////////////////////////
             /// CREATE LARGE BACKGROUND IMAGE
             ////////////////////////////////////////////////////////////////////
+            qCDebug(CLASS_LC()) << "Creating large image";
             // resize image
             image.scaledToHeight(280, Qt::SmoothTransformation);
 
@@ -138,10 +142,12 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
             lImage.append(QString::fromLatin1(lArray.toBase64().data()));
 
             QString m_largeImage = lImage;
+            qCDebug(CLASS_LC()) << "Creating large image DONE";
 
             emit processingDone(m_pixelColor, m_smallImage, m_largeImage);
 
             reply->deleteLater();
+            qCDebug(CLASS_LC()) << "Network reply deleted";
         }
     } else {
         qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << reply->errorString();
