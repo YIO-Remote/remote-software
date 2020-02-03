@@ -28,6 +28,7 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
 MediaPlayerUtils::MediaPlayerUtils() {
+    m_manager      = new QNetworkAccessManager(this);
     m_worker       = new MediaPlayerUtilsWorker();
     m_workerThread = new QThread(this);
     m_worker->moveToThread(m_workerThread);
@@ -67,7 +68,6 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
 }
 
 void MediaPlayerUtils::generateImages(const QString &url) {
-    m_manager = new QNetworkAccessManager(this);
     connect(m_manager, &QNetworkAccessManager::finished, m_worker, &MediaPlayerUtilsWorker::generateImagesReply);
     m_manager->get(QNetworkRequest(QUrl(url)));
 }
