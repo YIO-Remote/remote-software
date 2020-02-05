@@ -53,6 +53,9 @@ SwipeView {
     //: Name of the settings page
     property string title: ""
 
+    property alias _contentY: settingsFirstPageFlickable.contentY
+    property alias _contentHeight: settingsFirstPageFlickable.contentHeight
+    property alias _height: settingsFirstPageFlickable.height
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS

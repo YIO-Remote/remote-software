@@ -241,6 +241,10 @@ QString StandbyControl::secondsToHours(int value) {
 }
 
 void StandbyControl::getBatteryData() {
+    if (m_batteryData.length() == 36 && !m_batteryData.isEmpty()) {
+        m_batteryData.removeFirst();
+    }
+
     QVariantMap map;
     map.insert("timestamp", QDateTime::currentDateTime());
     map.insert("level", m_batteryFuelGauge->getLevel());
