@@ -101,17 +101,17 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Sluk aldrig fjernbetjeningen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Sluk fjernbetjeningen efter %1 timers inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 timer</translation>
     </message>
   </context>
   <context>
@@ -360,12 +360,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Langt væk</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Tæt på</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
@@ -639,47 +639,47 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="150"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Dit system er opdateret.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="167"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Skærm</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Sprog</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="185"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrationer</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="191"/>
       <source>Battery &amp; power</source>
-      <translation type="unfinished">Battery &amp; power</translation>
+      <translation>Batteri &amp; strøm</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="198"/>
       <source>m remaining</source>
-      <translation type="unfinished">m remaining</translation>
+      <translation>m resterende</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="204"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>WiFi &amp; bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="214"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>Om</translation>
     </message>
   </context>
   <context>
@@ -762,17 +762,17 @@ YIO fjernbetjening </translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="80"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Søg automatisk efter bluetooth sendere i området og vis enheder på nærmeste sender.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="109"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>WiFi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="185"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>Andre netværk</translation>
     </message>
   </context>
   <context>
@@ -781,18 +781,18 @@ YIO fjernbetjening </translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation type="unfinished">Enter password for
+      <translation>Indtast adgangskode for
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Adgangskode</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Tilmeld</translation>
     </message>
   </context>
   <context>
