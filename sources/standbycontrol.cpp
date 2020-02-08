@@ -98,10 +98,15 @@ StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *
         loadingScreen->setProperty("active", true);
     });
 
+    m_launcher = new Launcher(this);
+
     qCDebug(m_log) << "Standby Control intialized";
 }
 
-StandbyControl::~StandbyControl() { s_instance = nullptr; }
+StandbyControl::~StandbyControl() {
+    s_instance = nullptr;
+    m_launcher->deleteLater();
+}
 
 QObject *StandbyControl::getQMLInstance(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(scriptEngine)
@@ -122,6 +127,11 @@ void StandbyControl::wakeup() {
 
         case (STANDBY): {
             qCDebug(m_log) << "Wakeup from STANDBY";
+
+            // change CPU scaling governor
+            qCDebug(m_log) << "Changing CPU scaling governor"
+                           << m_launcher->launch(
+                                  "echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
 
             m_format.setSwapInterval(1);
             QSurfaceFormat::setDefaultFormat(m_format);
@@ -320,11 +330,14 @@ void StandbyControl::onSecondsTimerTimeout() {
             integrationObj->enterStandby();
         }
 
-        qCDebug(m_log) << "State set to STANDBY";
-
         m_format.setSwapInterval(60);
         QSurfaceFormat::setDefaultFormat(m_format);
         qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
+
+        qCDebug(m_log) << "Changing CPU scaling governor"
+                       << m_launcher->launch("echo powersave > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
+
+        qCDebug(m_log) << "State set to STANDBY";
     }
 
     // TURN OFF BLUETOOTH

@@ -64,7 +64,7 @@ class BatteryFuelGauge : public Device {
     void levelChanged();
     void healthChanged();
     void averagePowerChanged();
-    void lowBattery();          // Signal emitted around 10%
+    void lowBattery();          // Signal emitted around 20%
     void criticalLowBattery();  // At this point the remote needs to shut down
     void isChargingChanged();
     void remainingLifeChanged();

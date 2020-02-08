@@ -32,6 +32,7 @@
 #include "hardware/hardwarefactory.h"
 #include "hardware/touchdetect.h"
 #include "integrations/integrations.h"
+#include "launcher.h"
 #include "logger.h"
 #include "yioapi.h"
 
@@ -122,6 +123,8 @@ class StandbyControl : public QObject {
     // This can be used to sync the GL drawing into a window to the vertical refresh of the screen.
     // The default interval is 1.
     QSurfaceFormat m_format = QSurfaceFormat::defaultFormat();
+
+    Launcher* m_launcher;
 
  private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onSecondsTimerTimeout();

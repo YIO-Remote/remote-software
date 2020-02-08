@@ -118,8 +118,8 @@ void BQ27441::updateBatteryValues() {
             emit criticalLowBattery();
         }
 
-        // check for low battery
-        if (m_level < 15 && !m_wasLowBatteryWarning) {
+        // check for low battery, below 20%
+        if (m_level <= 20 && !m_wasLowBatteryWarning) {
             m_wasLowBatteryWarning = true;
             emit lowBattery();
         }
