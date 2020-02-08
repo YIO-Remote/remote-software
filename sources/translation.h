@@ -27,6 +27,12 @@
 #include <QQmlEngine>
 #include <QTranslator>
 
+#include "integrations/integrations.h"
+#include "logger.h"
+#include "yio-interface/plugininterface.h"
+
+static Q_LOGGING_CATEGORY(m_log, "translation");
+
 class TranslationHandler : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString emptyString READ getEmptyString NOTIFY languageChanged)
@@ -34,16 +40,30 @@ class TranslationHandler : public QObject {
  public:
     explicit TranslationHandler(QQmlEngine *engine) {
         m_translator = new QTranslator(this);
-        m_engine = engine;
+        m_engine     = engine;
     }
 
     QString getEmptyString() { return ""; }
 
     Q_INVOKABLE void selectLanguage(QString language) {
+        qCDebug(m_log) << "Language selected:" << language;
+
         qGuiApp->removeTranslator(m_translator);
         m_translator->load(":/translations/" + language);
         qGuiApp->installTranslator(m_translator);
-        //          m_engine->retranslate();
+        qCDebug(m_log) << "Installed transslation for main app" << language;
+
+        // install plugin translations
+        QList<QObject *> plugins = Integrations::getInstance()->getAllPlugins();
+        for (QList<QObject *>::const_iterator iter = plugins.begin(); iter != plugins.end(); ++iter) {
+            PluginInterface *pInterface = qobject_cast<PluginInterface *>(*iter);
+            if (pInterface) {
+                qGuiApp->removeTranslator(pInterface->pluginTranslator());
+                qGuiApp->installTranslator(pInterface->installTranslator(language));
+                qCDebug(m_log) << "Installed transslation for plugin" << language << pInterface;
+            }
+        }
+
         emit languageChanged();
     }
 

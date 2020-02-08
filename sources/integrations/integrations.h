@@ -77,6 +77,9 @@ class Integrations : public QObject, IntegrationsInterface {
 
     explicit Integrations(QQmlApplicationEngine* engine = nullptr, const QString& appPath = "");
 
+    // get all plugins
+    QList<QObject*> getAllPlugins();
+
     static Integrations* getInstance() { return s_instance; }
 
  signals:

@@ -37,6 +37,8 @@ Integrations::Integrations(QQmlApplicationEngine* engine, const QString& appPath
     s_instance = this;
 }
 
+QList<QObject*> Integrations::getAllPlugins() { return m_plugins.values(); }
+
 // Integrations::~Integrations() { s_instance = nullptr; }
 
 void Integrations::load() {
