@@ -6,7 +6,7 @@
     <message>
       <location filename="../basic_ui/settings/About.qml" line="36"/>
       <source>Thank you!</source>
-      <translation type="unfinished">Thank you!</translation>
+      <translation>Köszönjük!</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="45"/>
@@ -44,7 +44,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
       <source>Remaining time</source>
-      <translation type="unfinished">Remaining time</translation>
+      <translation>Hátralévő idő</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
@@ -75,43 +75,43 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Energiatakarékosság</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Soha ne kapcsold ki a Wi-Fi-t</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Kapcsold ki a Wi-Fi-t %1 perc inaktivitás után</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
       <location filename="../basic_ui/settings/Battery.qml" line="549"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Soha</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="442"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 perc</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Soha ne kapcsold ki a távirányítót</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Kapcsold ki a távirányítót %1 óra inaktivitás után</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 óra</translation>
     </message>
   </context>
   <context>
@@ -137,7 +137,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/bluetootharea.cpp" line="121"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Bluetooth nem található.</translation>
     </message>
   </context>
   <context>
@@ -355,22 +355,22 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>Közelség érzékelés</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Távol</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Közel</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>Milyen távolságból érzékelje a kezed a közelség szenzor.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
@@ -418,7 +418,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Kapcsoló</translation>
     </message>
   </context>
   <context>
@@ -581,33 +581,33 @@ www.yio-remote.com
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>WiFi eszköz nem található.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Akkumlátor szenzor inicializálása sikertelen. Indítsd újra a távirányítót.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Akkumlátor szenzor kommunikációs hiba. Indítsd újra a távirányítót.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>Vibrációs motor inicializálása sikertelen. Indítsd újra a távirányítót.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
+      <translation>Beviteli szenzor inicializálása sikertelen. Indítsd újra a távirányítót.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Közelség érzékelő szenzor inicializálása sikertelen. Indítsd újra a távirányítót.</translation>
     </message>
   </context>
   <context>
@@ -639,47 +639,47 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="150"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Nem érhető el frissebb verzió.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="167"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Kijelző</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Nyelvek</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="185"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrációk</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="191"/>
       <source>Battery &amp; power</source>
-      <translation type="unfinished">Battery &amp; power</translation>
+      <translation>Akkumulátor és energia</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="198"/>
       <source>m remaining</source>
-      <translation type="unfinished">m remaining</translation>
+      <translation>m fennmaradó</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="204"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>WiFi &amp; bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Rendszer</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="214"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>Névjegy</translation>
     </message>
   </context>
   <context>
@@ -757,22 +757,22 @@ YIO távirányító </translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Szoba detektálás</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="80"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Automatikusan keres blueooth jeladókat, amik a szobákhoz vannak rendelve és ha talál, akkor a legközelebbihez rendelt szobát mutatja.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="109"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>WiFi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="185"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>További hálózatok</translation>
     </message>
   </context>
   <context>
@@ -781,18 +781,18 @@ YIO távirányító </translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation type="unfinished">Enter password for
+      <translation>Írd be a jelszót a
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Jelszó</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Csatlakozás</translation>
     </message>
   </context>
   <context>
