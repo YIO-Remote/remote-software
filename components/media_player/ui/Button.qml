@@ -35,7 +35,7 @@ Comp.ButtonBase {
     cardLoader.source: "qrc:/components/media_player/ui/Card.qml"
 
     // override default settings
-    title.anchors.verticalCenterOffset: obj.source === "" ? 0 : -15
+    title.anchors.verticalCenterOffset: obj && obj.source === "" ? 0 : -15
 
     // include mediaplayer utils
     MediaPlayerUtils {

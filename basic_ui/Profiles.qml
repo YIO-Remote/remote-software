@@ -156,7 +156,7 @@ Rectangle {
                     text: name.substring(0,1);
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font {family: "Open Sans Bold"; pixelSize: 40 }
+                    font {family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                 }
             }
 
@@ -200,7 +200,6 @@ Rectangle {
     Text {
         id: closeButton
         color: Style.colorText
-        visible: buttonContainer.state == "open"
         text: Style.icons.close
         renderType: Text.NativeRendering
         width: 70; height: 70

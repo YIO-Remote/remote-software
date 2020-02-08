@@ -200,7 +200,7 @@ Rectangle {
             id: title
             color: Style.colorText
             width: parent.width-232
-            text: obj.friendly_name
+            text: obj ? obj.friendly_name : ""
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
@@ -222,10 +222,10 @@ Rectangle {
     BasicUI.CustomSwitch {
         id: button
         anchors { right: parent.right; rightMargin: 20; verticalCenter: parent.verticalCenter }
-        enabled: obj.supportsOn
+        enabled: obj ? obj.supportsOn : false
         visible: enabled
 
-        checked: obj.state
+        checked: obj ? obj.state : false
         mouseArea.enabled: buttonContainer.state == "open" ? false: true
         mouseArea.onClicked: {
             if (obj.state) {
@@ -347,7 +347,7 @@ Rectangle {
 
             Text {
                 color: Style.colorText
-                text: obj.favorite ? Style.icons.fav_remove : Style.icons.fav_add
+                text: obj && obj.favorite ? Style.icons.fav_remove : Style.icons.fav_add
                 renderType: Text.NativeRendering
                 width: 80; height: 80
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -371,7 +371,7 @@ Rectangle {
             id: addToFavButtonText
             color: Style.colorText
             opacity: 0
-            text: obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
+            text: obj && obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors { left: addToFavButtonCircle.right; leftMargin: 26; verticalCenter: addToFavButtonCircle.verticalCenter }
             font: Style.buttonFont

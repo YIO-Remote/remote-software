@@ -33,6 +33,7 @@ class BatteryFuelGauge : public Device {
     Q_OBJECT
     Q_PROPERTY(int capacity READ getCapacity WRITE setCapacity)
     Q_PROPERTY(float level READ getLevel NOTIFY levelChanged)
+    Q_PROPERTY(float remainingLife READ remainingLife NOTIFY remainingLifeChanged)
     Q_PROPERTY(int health READ getHealth NOTIFY healthChanged)
     Q_PROPERTY(int averagePower READ getAveragePower NOTIFY averagePowerChanged)
     Q_PROPERTY(bool isCharging READ getIsCharging NOTIFY isChargingChanged)
@@ -53,6 +54,7 @@ class BatteryFuelGauge : public Device {
     virtual int     getLevel()                      = 0;
     virtual int     getHealth()                     = 0;
     virtual bool    getIsCharging()                 = 0;
+    virtual float   remainingLife()                 = 0;  // result in hours
 
     void setCapacity(int capacity) { m_capacity = capacity; }
 
@@ -62,9 +64,10 @@ class BatteryFuelGauge : public Device {
     void levelChanged();
     void healthChanged();
     void averagePowerChanged();
-    void lowBattery();          // Signal emitted around 10%
+    void lowBattery();          // Signal emitted around 20%
     void criticalLowBattery();  // At this point the remote needs to shut down
     void isChargingChanged();
+    void remainingLifeChanged();
     void chargingDone();
 
  protected:

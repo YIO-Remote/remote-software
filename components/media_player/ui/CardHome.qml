@@ -184,7 +184,7 @@ Rectangle {
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-80
-        font { family: "Open Sans Bold"; pixelSize: 30 }
+        font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 30 }
         lineHeight: 1
         anchors { top: albumArt.bottom; topMargin: 20; horizontalCenter: parent.horizontalCenter }
     }

@@ -30,6 +30,10 @@ Flickable {
     //: Name of the settings page
     property string title: qsTr("Favorites") + translateHandler.emptyString
 
+    property alias _contentY: itemFlickable.contentY
+    property alias _contentHeight: itemFlickable.contentHeight
+    property alias _height: itemFlickable.height
+
     signal scrolledUp()
     signal scrolledDown()
     signal scrollupBegin()

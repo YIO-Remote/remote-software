@@ -216,10 +216,10 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id) {
         // use a timer to remove the entity with a delay
         if (!m_mediaplayersTimers.contains(entity_id)) {
             qCDebug(m_log) << "No timer found for object" << entity_id;
-            QTimer *timer = new QTimer(this);
+            QTimer *timer = new QTimer();
             timer->setSingleShot(true);
 
-            QObject *context = new QObject(this);
+            QObject *context = new QObject();
 
             qCDebug(m_log) << "Connecting signals" << entity_id;
             connect(timer, &QTimer::timeout, context, [=]() {

@@ -37,23 +37,11 @@ import StandbyControl 1.0
 import Entity.Remote 1.0
 
 // TODO: Softwareupdate needs to be moved to c++
-import "qrc:/scripts/softwareupdate.js" as JSUpdate
 import "qrc:/basic_ui" as BasicUI // TODO: can this be done in a singleton?
 
 ApplicationWindow {
     id: applicationWindow
     objectName : "applicationWindow"
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
-    //
-    // CURRENT SOFTWARE VERSION
-    property real _current_version: 0.2 // change this when bumping the software version
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,46 +63,6 @@ ApplicationWindow {
         name: appPath + "/translations.json"
     }
 
-    // TODO: Softwareupdate in c++
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // SOFTWARE UPDATE
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    property bool updateAvailable: false
-    property real _new_version
-    property string updateURL
-
-    Timer {
-        repeat: true
-        running: true
-        interval: 3600000
-        triggeredOnStart: true
-
-        onTriggered: {
-            if (config.settings.softwareupdate) {
-                JSUpdate.checkForUpdate();
-
-                if (updateAvailable) {
-                    var hour = new Date().getHours();
-                    if (hour >= 3 && hour <= 5) {
-                        // TODO create a update service class instead of launching hard coded shell scripts from QML
-                        fileio.write("/usr/bin/updateURL", updateURL);
-                        mainLauncher.launch("systemctl restart update.service");
-                        Qt.quit();
-                    }
-                }
-            }
-        }
-    }
-
-    Launcher { id: mainLauncher }
-
-    onUpdateAvailableChanged: {
-        if (updateAvailable) {
-            //: Notification text when new software update is available
-            notifications.add(qsTr("New software version is available!") + translateHandler.emptyString);
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
@@ -122,6 +70,7 @@ ApplicationWindow {
     Component.onCompleted: {
         // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
+        //           This can be done by connecting to a signal of the config in the hardware factory
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
         // load the integrations
@@ -184,6 +133,7 @@ ApplicationWindow {
         y: 0
         active: false
         state: "visible"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
 
         transform: Scale {
             id: scale
@@ -208,17 +158,19 @@ ApplicationWindow {
 
     Loader {
         id: loader_second
+        width: 480; height: 800
+        x: 0; y: 0
         asynchronous: true
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
     property alias contentWrapper: contentWrapper
 
     Item {
         id: contentWrapper
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,6 +180,7 @@ ApplicationWindow {
 
     BasicUI.Volume {
         id: volume
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
@@ -248,6 +201,7 @@ ApplicationWindow {
         y: 0
         asynchronous: true
         source: "qrc:/basic_ui/ChargingScreen.qml"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
 
@@ -271,6 +225,7 @@ ApplicationWindow {
 
     Loader {
         id: lowBatteryNotification
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         width: 480
         height: 800
         x: 0
@@ -292,6 +247,7 @@ ApplicationWindow {
     Column {
         objectName: "notificationsRow"
         id: notificationsRow
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         anchors.fill: parent
         spacing: 10
         topPadding: 20
@@ -360,18 +316,13 @@ ApplicationWindow {
     Loader {
         id: loadingScreen
         objectName: "loadingScreen"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         width: parent.width
         height: parent.height
 
         asynchronous: true
         active: true
         source: "qrc:/basic_ui/LoadingScreen.qml"
-
-        onSourceChanged: {
-            if (source == "") {
-                console.debug("Now load the rest off stuff");
-            }
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -382,6 +333,7 @@ ApplicationWindow {
 
     MouseArea {
         id: touchEventCatcher
+        objectName: "touchEventCatcher"
         anchors.fill: parent
         enabled: false
         pressAndHoldInterval: 5000
@@ -405,6 +357,7 @@ ApplicationWindow {
 
     InputPanel {
         id: inputPanel
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         width: parent.width
         y: applicationWindow.height
 

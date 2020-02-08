@@ -71,24 +71,24 @@ Item {
                 }
                 break;
             case ButtonHandler.DPAD_UP:
-                var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
-                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY === 0) {
+                var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY - 200;
+                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY === 0) {
                     Haptic.playEffect(Haptic.Buzz);
                 }
                 if (newpos <= 0) {
                     newpos = 0;
                 }
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY = newpos;
                 break;
             case ButtonHandler.DPAD_DOWN:
-                newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
-                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
+                newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY + 200;
+                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height)) {
                      Haptic.playEffect(Haptic.Buzz);
                 }
-                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
-                    newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
+                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height)) {
+                    newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height;
                 }
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY = newpos;
                 break;
             }
         }
@@ -139,13 +139,15 @@ Item {
                 id: mainNavigationLoader
                 asynchronous: true
 
+                property bool _isCurrentItem: SwipeView.isCurrentItem
+
                 property alias mainNavigationLoader: mainNavigationLoader
 
                 function determinePageToLoad(type) {
                     if (type === "favorites") {
                         mainNavigationLoader.source = "qrc:/basic_ui/pages/Favorites.qml";
                     } else if (type === "settings") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/Settings.qml";
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/Settings.qml");
                     } else {
                         mainNavigationLoader.setSource("qrc:/basic_ui/pages/Page.qml", { "page": page });
                     }

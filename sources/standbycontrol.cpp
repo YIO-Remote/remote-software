@@ -123,6 +123,12 @@ void StandbyControl::wakeup() {
         case (STANDBY): {
             qCDebug(m_log) << "Wakeup from STANDBY";
 
+            m_format.setSwapInterval(1);
+            QSurfaceFormat::setDefaultFormat(m_format);
+            qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
+
+            setMode(ON);
+
             // delay reading ambient light so the sensor is clear of your hand
             QTimer *timer = new QTimer(this);
             timer->setSingleShot(true);
@@ -138,8 +144,6 @@ void StandbyControl::wakeup() {
 
             timer->start(300);
 
-            setMode(ON);
-
             // integrations out of standby mode
             for (int i = 0; i < m_integrations->list().length(); i++) {
                 IntegrationInterface *integrationObj =
@@ -152,15 +156,27 @@ void StandbyControl::wakeup() {
             // reset battery charging screen
             QObject *showClock = m_config->getQMLObject("showClock");
             QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
+
+            QTimer::singleShot(300, this, [=]() {
+                // disable touch event catcher
+                QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
+                touchEventCatcher->setProperty("enabled", false);
+            });
         } break;
 
         case (WIFI_OFF): {
             qCDebug(m_log) << "Wakeup from WIFI_OFF";
+
+            m_format.setSwapInterval(1);
+            QSurfaceFormat::setDefaultFormat(m_format);
+            qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
+
+            setMode(ON);
+
             m_wifiControl->on();
 
             m_displayControl->setMode(DisplayControl::StandbyOff);
             readAmbientLight();
-            setMode(ON);
 
             // connect integrations
             for (int i = 0; i < m_integrations->list().length(); i++) {
@@ -176,6 +192,12 @@ void StandbyControl::wakeup() {
             // reset battery charging screen
             QObject *showClock = m_config->getQMLObject("showClock");
             QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
+
+            QTimer::singleShot(300, this, [=]() {
+                // disable touch event catcher
+                QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
+                touchEventCatcher->setProperty("enabled", false);
+            });
         } break;
     }
 
@@ -219,6 +241,10 @@ QString StandbyControl::secondsToHours(int value) {
 }
 
 void StandbyControl::getBatteryData() {
+    if (m_batteryData.length() == 36 && !m_batteryData.isEmpty()) {
+        m_batteryData.removeFirst();
+    }
+
     QVariantMap map;
     map.insert("timestamp", QDateTime::currentDateTime());
     map.insert("level", m_batteryFuelGauge->getLevel());
@@ -282,6 +308,10 @@ void StandbyControl::onSecondsTimerTimeout() {
         QObject *resetClock = m_config->getQMLObject("resetClock");
         QMetaObject::invokeMethod(resetClock, "start", Qt::AutoConnection);
 
+        // enable touch event catcher
+        QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
+        touchEventCatcher->setProperty("enabled", true);
+
         setMode(STANDBY);
 
         // integrations set standby mode
@@ -289,6 +319,10 @@ void StandbyControl::onSecondsTimerTimeout() {
             IntegrationInterface *integrationObj = qobject_cast<IntegrationInterface *>(m_integrations->list().at(i));
             integrationObj->enterStandby();
         }
+
+        m_format.setSwapInterval(60);
+        QSurfaceFormat::setDefaultFormat(m_format);
+        qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
 
         qCDebug(m_log) << "State set to STANDBY";
     }

@@ -23,6 +23,7 @@
 
 #include <QDateTime>
 #include <QObject>
+#include <QSurfaceFormat>
 #include <QTimer>
 #include <QVariant>
 
@@ -116,6 +117,11 @@ class StandbyControl : public QObject {
 
     void         getBatteryData();
     QVariantList m_batteryData;
+
+    // The swap interval specifies the minimum number of video frames that are displayed before a buffer swap occurs.
+    // This can be used to sync the GL drawing into a window to the vertical refresh of the screen.
+    // The default interval is 1.
+    QSurfaceFormat m_format = QSurfaceFormat::defaultFormat();
 
  private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onSecondsTimerTimeout();

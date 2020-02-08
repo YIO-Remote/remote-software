@@ -22,14 +22,14 @@
 
 #pragma once
 
-#include <QObject>
-#include <QtDebug>
-
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+
+#include <QObject>
+#include <QtDebug>
 
 #include "../batteryfuelgauge.h"
 #include "../interrupthandler.h"
@@ -100,6 +100,7 @@ class BQ27441 : public BatteryFuelGauge {
     int     getLevel() override;
     int     getHealth() override;
     bool    getIsCharging() override;
+    float   remainingLife() override;
 
     int      getTemperatureC();  // Result in 1 Celsius
     uint16_t getFlags();
@@ -138,11 +139,12 @@ class BQ27441 : public BatteryFuelGauge {
     int     m_i2cDeviceId;
     int     m_i2cFd;
 
-    int  m_level                = 100;
-    int  m_health               = 100;
-    int  m_voltage              = 5;
-    int  m_averagePower         = 300;
-    bool m_isCharging           = false;
-    bool m_wasLowBatteryWarning = false;
-    void updateBatteryValues();
+    int   m_level                = 100;
+    int   m_health               = 100;
+    int   m_voltage              = 5;
+    int   m_averagePower         = 300;
+    bool  m_isCharging           = false;
+    bool  m_wasLowBatteryWarning = false;
+    float m_remainingLife        = 0;
+    void  updateBatteryValues();
 };

@@ -25,28 +25,66 @@
 #include <QDebug>
 #include <QLoggingCategory>
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer");
+static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
-void MediaPlayerUtils::generateImages(QString url) {
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, &QNetworkAccessManager::finished, this, &MediaPlayerUtils::generateImagesReply);
-    manager->get(QNetworkRequest(QUrl(url)));
+MediaPlayerUtils::MediaPlayerUtils() {
+    m_worker = new MediaPlayerUtilsWorker();
+
+    m_manager = new QNetworkAccessManager(this);
+    connect(m_manager, &QNetworkAccessManager::finished, m_worker, &MediaPlayerUtilsWorker::generateImagesReply);
+
+    m_workerThread = new QThread(this);
+    connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
+    m_worker->moveToThread(m_workerThread);
+    m_workerThread->start();
 }
 
-void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply) {
+MediaPlayerUtils::~MediaPlayerUtils() {
+    if (m_workerThread->isRunning()) {
+        qCDebug(CLASS_LC()) << "Thread is running. Quitting.";
+        m_workerThread->quit();
+        if (!m_workerThread->wait(3000)) {
+            qCWarning(CLASS_LC()) << "Thread didn't quit. Terminating.";
+            m_workerThread->terminate();
+            m_workerThread->wait();
+            qCWarning(CLASS_LC()) << "Thread terminated.";
+        }
+    }
+    m_workerThread->deleteLater();
+    qCDebug(CLASS_LC()) << "Thread removed and deleted";
+    m_worker->deleteLater();
+    qCDebug(CLASS_LC()) << "Worker class deleted";
+    m_manager->deleteLater();
+    qCDebug(CLASS_LC()) << "QNetworkAccessManager deleted";
+}
+
+void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString &smallImage,
+                                        const QString &largeImage) {
+    m_pixelColor = pixelColor;
+    emit pixelColorChanged();
+
+    m_smallImage = smallImage;
+    emit smallImageChanged();
+
+    m_image = largeImage;
+    emit imageChanged();
+}
+
+void MediaPlayerUtils::generateImages(const QString &url) { m_manager->get(QNetworkRequest(QUrl(url))); }
+
+void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
         // run image processing in different thread
-        QFuture<void> future = QtConcurrent::run([=]() {
-            QImage image;
+        QImage image;
 
-            if (!image.load(reply, nullptr)) {
-                qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
-            }
-
+        if (!image.load(reply, nullptr)) {
+            qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
+        } else {
             ////////////////////////////////////////////////////////////////////
             /// GET DOMINANT COLOR
             ////////////////////////////////////////////////////////////////////
-            m_pixelColor = dominantColor(image);
+            qCDebug(CLASS_LC()) << "Getting dominant color";
+            QColor m_pixelColor = dominantColor(image);
 
             // change the brightness of the color if it's too bright
             if (m_pixelColor.lightness() > 150) {
@@ -61,6 +99,7 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply) {
             ////////////////////////////////////////////////////////////////////
             /// CREATE A SMALL THUMBNAIL IMAGE
             ////////////////////////////////////////////////////////////////////
+            qCDebug(CLASS_LC()) << "Creating small image";
             QImage smallImage = image;
             smallImage.scaledToHeight(90, Qt::SmoothTransformation);
 
@@ -73,11 +112,13 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply) {
             QString bImage("data:image/jpg;base64,");
             bImage.append(QString::fromLatin1(bArray.toBase64().data()));
 
-            m_smallImage = bImage;
+            QString m_smallImage = bImage;
+            qCDebug(CLASS_LC()) << "Creating small image DONE";
 
             ////////////////////////////////////////////////////////////////////
             /// CREATE LARGE BACKGROUND IMAGE
             ////////////////////////////////////////////////////////////////////
+            qCDebug(CLASS_LC()) << "Creating large image";
             // resize image
             image.scaledToHeight(280, Qt::SmoothTransformation);
 
@@ -100,24 +141,23 @@ void MediaPlayerUtils::generateImagesReply(QNetworkReply *reply) {
             QString lImage("data:image/jpg;base64,");
             lImage.append(QString::fromLatin1(lArray.toBase64().data()));
 
-            m_image = lImage;
+            QString m_largeImage = lImage;
+            qCDebug(CLASS_LC()) << "Creating large image DONE";
 
-            emit pixelColorChanged();
-            emit smallImageChanged();
-            emit imageChanged();
+            emit processingDone(m_pixelColor, m_smallImage, m_largeImage);
 
             reply->deleteLater();
-        });
-
+            qCDebug(CLASS_LC()) << "Network reply deleted";
+        }
     } else {
-        qCWarning(CLASS_LC) << "ERROR LOADING IMAGE" << reply->errorString();
+        qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << reply->errorString();
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// DOMINANT COLOR OF IMAGE
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-QColor MediaPlayerUtils::dominantColor(const QImage &image) {
+QColor MediaPlayerUtilsWorker::dominantColor(const QImage &image) {
     qint32 averageRed = 0, averageGreen = 0, averageBlue = 0;
 
     const qint32 maxX = qMin<qint32>(image.width(), 0 + image.width());
@@ -135,8 +175,9 @@ QColor MediaPlayerUtils::dominantColor(const QImage &image) {
 
     qint32 n = image.width() * image.height();
 
-    Q_ASSERT(n);
-    if (n <= 0) return Qt::black;
-
-    return QColor(averageRed / n, averageGreen / n, averageBlue / n);
+    if (n <= 0) {
+        return Qt::black;
+    } else {
+        return QColor(averageRed / n, averageGreen / n, averageBlue / n);
+    }
 }
