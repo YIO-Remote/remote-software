@@ -73,9 +73,6 @@ ApplicationWindow {
         //           This can be done by connecting to a signal of the config in the hardware factory
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
 
-        // load the integrations
-        integrations.load();
-
         // load bluetooth
         bluetoothArea.init(config.config);
         if (config.settings.bluetootharea) {
@@ -84,6 +81,9 @@ ApplicationWindow {
 
         // Start websocket API
         api.start();
+
+        // load the integrations
+        integrations.load();
     }
 
     // load the entities when the integrations are loaded
