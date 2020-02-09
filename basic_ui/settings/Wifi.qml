@@ -118,7 +118,11 @@ Item {
 
                     checked: wifi.isConnected()
                     mouseArea.onClicked: {
-                        // implement wifi turn off?
+                        if (autobrightnessButton.checked) {
+                            wifi.off();
+                        } else {
+                            wifi.on();
+                        }
                     }
                 }
             } // WIFI ON OFF END

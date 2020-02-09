@@ -76,9 +76,6 @@ ApplicationWindow {
         // load the integrations
         integrations.load();
 
-        // set the language
-        translateHandler.selectLanguage(config.settings.language);
-
         // load bluetooth
         bluetoothArea.init(config.config);
         if (config.settings.bluetootharea) {
@@ -96,6 +93,9 @@ ApplicationWindow {
         onLoadComplete: {
             console.debug("Integrations are loaded.");
             entities.load();
+
+            // set the language
+            translateHandler.selectLanguage(config.settings.language);
         }
     }
 
