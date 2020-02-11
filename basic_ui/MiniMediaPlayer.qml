@@ -110,7 +110,11 @@ Item {
         onButtonPressed: {
             switch (button) {
             case ButtonHandler.DPAD_MIDDLE:
-                entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ) {
+                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
+                } else {
+                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+                }
                 break;
             case ButtonHandler.DPAD_RIGHT:
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
