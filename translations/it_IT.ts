@@ -659,27 +659,27 @@ www. io-remote.com
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="191"/>
       <source>Battery &amp; power</source>
-      <translation type="unfinished">Battery &amp; power</translation>
+      <translation>Batteria e alimentazione</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="198"/>
       <source>m remaining</source>
-      <translation type="unfinished">m remaining</translation>
+      <translation>m rimanenti</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="204"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>Wi-Fi e bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Sistema</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="214"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>Informazioni</translation>
     </message>
   </context>
   <context>
@@ -757,22 +757,22 @@ YIO Remote </translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Rilevamento area</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="80"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Scansiona automaticamente i beacon Bluetooth associati alle aree, trova i dispositivi più vicini e visualizza quelli in quella zona.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="109"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="185"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>Altre reti</translation>
     </message>
   </context>
   <context>
@@ -781,18 +781,18 @@ YIO Remote </translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation type="unfinished">Enter password for
+      <translation>Inserisci la password per
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Password</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Entra</translation>
     </message>
   </context>
   <context>
