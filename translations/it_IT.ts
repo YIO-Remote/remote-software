@@ -370,7 +370,7 @@ www. io-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>A che distanza il sensore di prossimità rileva la tua mano.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
@@ -639,22 +639,22 @@ www. io-remote.com
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="150"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Hai installato l'ultima versione disponibile.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="167"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Schermo</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Lingua</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="185"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrazioni</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="191"/>
