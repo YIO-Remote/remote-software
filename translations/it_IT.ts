@@ -6,7 +6,7 @@
     <message>
       <location filename="../basic_ui/settings/About.qml" line="36"/>
       <source>Thank you!</source>
-      <translation type="unfinished">Thank you!</translation>
+      <translation>Grazie!</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="45"/>
@@ -21,16 +21,16 @@ Niels de Klerk
 To learn more about the project, visit
 www.yio-remote.com
 </source>
-      <translation type="unfinished">
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>
+Essendo YIO un progetto open source, beneficia di ogni contributore. Un grande ringraziamento a coloro che, finora, hanno aggiunto qualcosa al progetto:
 
 Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
 
-To learn more about the project, visit
-www.yio-remote.com
+Per saperne di più sul progetto, visita
+www. io-remote.com
 </translation>
     </message>
   </context>
@@ -44,7 +44,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
       <source>Remaining time</source>
-      <translation type="unfinished">Remaining time</translation>
+      <translation>Tempo rimanente</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
@@ -75,43 +75,43 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Risparmio energetico</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Mai disattivare il Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Disattiva Wi-Fi dopo %1 minuti di inattività</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
       <location filename="../basic_ui/settings/Battery.qml" line="549"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Mai</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="442"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minuti</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Mai disattivare il telecomando</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Disattiva il telecomando dopo %1 ore di inattività</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 ore</translation>
     </message>
   </context>
   <context>
@@ -355,17 +355,17 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>Rilevamento di prossimità</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Lontano</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Vicino</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
