@@ -1,0 +1,99 @@
+#include "softwareupdate.h"
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "softwareupdate");
+
+SoftwareUpdate::SoftwareUpdate(QObject *parent) : QObject(parent) {}
+
+SoftwareUpdate::~SoftwareUpdate() {}
+
+void SoftwareUpdate::checkForUpdate() {
+    m_manager = new QNetworkAccessManager(this);
+    connect(m_manager, &QNetworkAccessManager::finished, this, &SoftwareUpdate::checkForUpdateFinished);
+}
+
+void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
+    if (reply->error() == QNetworkReply::NoError) {
+        // process reply here
+        // if update is available
+        // update m_downloadUrl
+        emit updateAvailable(true);
+        // else
+        emit updateAvailable(false);
+    } else {
+        qCWarning(CLASS_LC) << "Network reply error: " << reply->errorString();
+    }
+
+    reply->deleteLater();
+    qCDebug(CLASS_LC()) << "Network reply deleted";
+
+    m_manager->deleteLater();
+    qCDebug(CLASS_LC()) << "Networkaccessmanager deleted";
+}
+
+void SoftwareUpdate::downloadUpdate() { downloadUpdate(m_downloadUrl); }
+
+void SoftwareUpdate::downloadUpdate(QUrl url) {
+    // open the file
+    m_file = new QFile(m_destination);
+    m_file->open(QIODevice::WriteOnly);
+    qCDebug(CLASS_LC()) << "File opened";
+
+    // create network manager
+    m_manager = new QNetworkAccessManager(this);
+    QNetworkRequest request(url);
+    m_download = m_manager->get(request);
+
+    connect(m_download, &QNetworkReply::downloadProgress, this, &SoftwareUpdate::downloadProgress);
+    connect(m_download, &QNetworkReply::finished, this, &SoftwareUpdate::downloadFinished);
+
+    qCDebug(CLASS_LC()) << "Downloading" << url.toEncoded().constData();
+    m_downloadTimer->start();
+}
+
+void SoftwareUpdate::downloadProgress(qint64 bytesReceived, qint64 bytesTotal) {
+    QByteArray  b = m_download->readAll();
+    QDataStream out(m_file);
+    out << b;
+
+    m_bytesReceived = bytesReceived;
+    emit bytesReceivedChanged();
+
+    m_bytesTotal = bytesTotal;
+    emit bytesTotalChanged();
+
+    double  speed = bytesReceived * 1000.0 / m_downloadTimer->elapsed();
+    QString unit;
+    if (speed < 1024) {
+        unit = "bytes/sec";
+    } else if (speed < 1024 * 1024) {
+        speed /= 1024;
+        unit = "kB/s";
+    } else {
+        speed /= 1024 * 1014;
+        unit = "MB/s";
+    }
+
+    m_downloadSpeed = QString::number(speed);
+    m_downloadSpeed.append(unit);
+    emit downloadSpeedChanged();
+}
+
+void SoftwareUpdate::downloadFinished() {
+    m_file->close();
+    qCDebug(CLASS_LC()) << "File closed";
+
+    m_file->deleteLater();
+    qCDebug(CLASS_LC()) << "File deleted";
+
+    m_download->deleteLater();
+    qCDebug(CLASS_LC()) << "NetowrkReply deleted";
+
+    m_manager->deleteLater();
+    qCDebug(CLASS_LC()) << "Networkaccessmanager deleted";
+}
+
+void SoftwareUpdate::startUpdate() {
+    // start software update procedure
+}
+
+void SoftwareUpdate::startDockUpdate() {}
