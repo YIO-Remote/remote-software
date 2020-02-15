@@ -20,6 +20,8 @@
  #
  # SPDX-License-Identifier: GPL-3.0-or-later
  #############################################################################/
+VERSION = 0.2.2
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++14 disable-desktop
@@ -96,6 +98,7 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/logger.h \
+    sources/softwareupdate.h \
     sources/standbycontrol.h \
     sources/translation.h \
     sources/hardware/device.h \
@@ -159,6 +162,7 @@ SOURCES += \
     sources/notifications.cpp \
     sources/entities/mediaplayer.cpp \
     sources/bluetootharea.cpp \
+    sources/softwareupdate.cpp \
     sources/standbycontrol.cpp \
     sources/utils.cpp \
     sources/yioapi.cpp

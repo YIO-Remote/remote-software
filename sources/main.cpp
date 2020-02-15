@@ -42,6 +42,7 @@
 #include "launcher.h"
 #include "logger.h"
 #include "notifications.h"
+#include "softwareupdate.h"
 #include "standbycontrol.h"
 #include "translation.h"
 #include "yioapi.h"
@@ -54,6 +55,8 @@ int main(int argc, char* argv[]) {
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
 
     //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    QGuiApplication::setApplicationVersion(QString(APP_VERSION));
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
@@ -221,6 +224,11 @@ int main(int argc, char* argv[]) {
                            hwFactory->getBatteryFuelGauge(), config, yioapi, integrations);
     Q_UNUSED(standbyControl);
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
+
+    // SOFTWARE UPDATE
+    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(config->getSettings().value("softwareupdate").toBool());
+    Q_UNUSED(softwareUpdate);
+    qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 
     // FIXME move initialization code to a device driver factory
     QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
