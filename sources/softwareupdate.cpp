@@ -13,7 +13,7 @@ SoftwareUpdate::SoftwareUpdate(bool autoUpdate, QObject *parent) : QObject(paren
     connect(m_checkForUpdateTimer, &QTimer::timeout, this, &SoftwareUpdate::onCheckForUpdateTimerTimeout);
     m_checkForUpdateTimer->start();
 
-    qCDebug(CLASS_LC) << "Current version:" << m_version;
+    qCDebug(CLASS_LC) << "Current version:" << m_currentVersion;
 
     // check for update on startup as well
     checkForUpdate();
@@ -40,10 +40,8 @@ void SoftwareUpdate::checkForUpdate() {
     m_manager = new QNetworkAccessManager(this);
     connect(m_manager, &QNetworkAccessManager::finished, this, &SoftwareUpdate::checkForUpdateFinished);
 
-    m_updateUrl.append("/?curr_version=").append(m_version);
+    m_updateUrl.append("/?curr_version=").append(m_currentVersion);
     m_manager->get(QNetworkRequest(QUrl(m_updateUrl)));
-
-    qCDebug(CLASS_LC) << "URL: " << m_updateUrl;
 }
 
 void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
@@ -51,7 +49,8 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
         // process reply here
         // if update is available
         // update m_downloadUrl
-        emit updateAvailable(true);
+        m_updateAvailable = true;
+        emit updateAvailableChanged();
 
         // send a notification
         QObject *param = this;
@@ -64,9 +63,11 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
             param);
 
         // else
-        emit updateAvailable(false);
+        m_updateAvailable = false;
+        emit updateAvailableChanged();
     } else {
         qCWarning(CLASS_LC) << "Network reply error: " << reply->errorString();
+        Notifications::getInstance()->add(true, "Cannot connect to the update server.");
     }
 
     reply->deleteLater();
@@ -99,6 +100,7 @@ void SoftwareUpdate::downloadUpdate(QUrl url) {
 void SoftwareUpdate::setAutoUpdate(bool update) {
     m_autoUpdate = update;
     emit autoUpdateChanged();
+    qCDebug(CLASS_LC) << "Autoupdate:" << m_autoUpdate;
 }
 
 void SoftwareUpdate::downloadProgress(qint64 bytesReceived, qint64 bytesTotal) {

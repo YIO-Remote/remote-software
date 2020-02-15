@@ -618,100 +618,171 @@ www.yio-remote.com
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="68"/>
-        <location filename="../basic_ui/pages/Settings.qml" line="81"/>
-        <location filename="../basic_ui/pages/Settings.qml" line="139"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="69"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="82"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="140"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="150"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="151"/>
         <source>Your software is up to date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="167"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="151"/>
+        <source>New software version is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/pages/Settings.qml" line="168"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="173"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="174"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="185"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="186"/>
         <source>Integrations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="191"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="192"/>
         <source>Battery &amp; power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="198"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="199"/>
         <source>m remaining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="204"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="205"/>
         <source>WiFi &amp; bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="209"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="210"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="214"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="215"/>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SoftwareUpdate</name>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="58"/>
+        <source>New software is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="58"/>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Softwareupdate</name>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="41"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
         <source>Auto update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
         <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="98"/>
-        <source>New software is available.
-YIO remote </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="98"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="101"/>
         <source>Your software is up to date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="115"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="101"/>
+        <source>New software is available.
+YIO remote %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
         <source>Installed version: YIO Remote </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="115"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
         <source>YIO Remote </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="122"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="159"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="145"/>
         <source>Check for update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Step1</name>
+    <message>
+        <location filename="../setup/Step1.qml" line="34"/>
+        <source>Hello</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/Step1.qml" line="45"/>
+        <source>Tap the screen to begin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Step3</name>
+    <message>
+        <location filename="../setup/Step3.qml" line="61"/>
+        <source>Wi-Fi setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/Step3.qml" line="72"/>
+        <source>Select a Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Step4</name>
+    <message>
+        <location filename="../setup/Step4.qml" line="94"/>
+        <source>Enter password for
+&quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/Step4.qml" line="112"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/Step4.qml" line="138"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Step5</name>
+    <message>
+        <location filename="../setup/Step5.qml" line="63"/>
+        <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -756,7 +827,7 @@ YIO remote </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Wifi.qml" line="185"/>
+        <location filename="../basic_ui/settings/Wifi.qml" line="189"/>
         <source>Other networks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -777,86 +848,6 @@ YIO remote </source>
     <message>
         <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
         <source>Join</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>wifiSetup</name>
-    <message>
-        <location filename="../wifiSetup.qml" line="55"/>
-        <source>Wi-Fi setup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="73"/>
-        <source>Connect to the Wi-Fi network
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="91"/>
-        <source>Open a web browser
-and navigate to
-yio.remote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="106"/>
-        <source>Shutdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="133"/>
-        <source>Connected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="150"/>
-        <source>YIO Remote has successfully
-connected to your Wi-Fi network.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="164"/>
-        <location filename="../wifiSetup.qml" line="304"/>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="183"/>
-        <source>Not connected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="200"/>
-        <source>YIO Remote could not
-connect to your Wi-Fi network.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="217"/>
-        <source>Please try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="231"/>
-        <source>Try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="286"/>
-        <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="336"/>
-        <source>Wi-Fi setup completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wifiSetup.qml" line="316"/>
-        <location filename="../wifiSetup.qml" line="371"/>
-        <source>Reboot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -130,4 +130,8 @@ Rectangle {
             loadingScreen.active = true;
         }
     }
+
+    Softwareupdate {
+        anchors { top: buttonShutdown.bottom; topMargin: 30 }
+    }
 }

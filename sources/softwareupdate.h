@@ -45,6 +45,9 @@ class SoftwareUpdate : public QObject {
     Q_PROPERTY(qint64 bytesTotal READ bytesTotal NOTIFY bytesTotalChanged)
     Q_PROPERTY(QString downloadSpeed READ downloadSpeed NOTIFY downloadSpeedChanged)
     Q_PROPERTY(bool autoUpdate READ autoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
+    Q_PROPERTY(QString currentVersion READ currentVersion NOTIFY currentVersionChanged)
+    Q_PROPERTY(QString newVersion READ newVersion NOTIFY newVersionChanged)
+    Q_PROPERTY(bool updateAvailable READ updateAvailable NOTIFY updateAvailableChanged)
 
     Q_INVOKABLE void checkForUpdate();
     Q_INVOKABLE void downloadUpdate();
@@ -60,20 +63,28 @@ class SoftwareUpdate : public QObject {
     bool autoUpdate() { return m_autoUpdate; }
     void setAutoUpdate(bool update);
 
+    QString currentVersion() { return m_currentVersion; }
+    QString newVersion() { return m_newVersion; }
+    bool    updateAvailable() { return m_updateAvailable; }
+
     static SoftwareUpdate* getInstance() { return s_instance; }
     static QObject*        getQMLInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
 
  signals:
-    void updateAvailable(bool available);
     void bytesReceivedChanged();
     void bytesTotalChanged();
     void downloadSpeedChanged();
     void autoUpdateChanged();
+    void currentVersionChanged();
+    void newVersionChanged();
+    void updateAvailableChanged();
 
  private:
     static SoftwareUpdate* s_instance;
 
-    QString m_version = QGuiApplication::applicationVersion();
+    QString m_currentVersion  = QGuiApplication::applicationVersion();
+    QString m_newVersion      = "";
+    bool    m_updateAvailable = false;
 
     bool m_autoUpdate = true;
 
