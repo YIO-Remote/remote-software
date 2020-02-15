@@ -2,9 +2,33 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "softwareupdate");
 
-SoftwareUpdate::SoftwareUpdate(QObject *parent) : QObject(parent) {}
+SoftwareUpdate *SoftwareUpdate::s_instance = nullptr;
 
-SoftwareUpdate::~SoftwareUpdate() {}
+SoftwareUpdate::SoftwareUpdate(bool autoUpdate, QObject *parent) : QObject(parent), m_autoUpdate(autoUpdate) {
+    s_instance = this;
+
+    // start update checker timer
+    m_checkForUpdateTimer->setInterval(3600000);  // 1 hour
+    connect(m_checkForUpdateTimer, &QTimer::timeout, this, &SoftwareUpdate::onCheckForUpdateTimerTimeout);
+    m_checkForUpdateTimer->start();
+}
+
+SoftwareUpdate::~SoftwareUpdate() {
+    s_instance = nullptr;
+    m_checkForUpdateTimer->stop();
+    m_checkForUpdateTimer->deleteLater();
+}
+
+QObject *SoftwareUpdate::getQMLInstance(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *instance = s_instance;
+    engine->setObjectOwnership(instance, QQmlEngine::CppOwnership);
+    return instance;
+}
+
+void SoftwareUpdate::onCheckForUpdateTimerTimeout() { checkForUpdate(); }
 
 void SoftwareUpdate::checkForUpdate() {
     m_manager = new QNetworkAccessManager(this);
@@ -17,6 +41,17 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
         // if update is available
         // update m_downloadUrl
         emit updateAvailable(true);
+
+        // send a notification
+        QObject *param = this;
+        Notifications::getInstance()->add(
+            false, tr("New software is available"), tr("Update"),
+            [](QObject *param) {
+                SoftwareUpdate *i = qobject_cast<SoftwareUpdate *>(param);
+                i->startUpdate();
+            },
+            param);
+
         // else
         emit updateAvailable(false);
     } else {
@@ -24,10 +59,10 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
     }
 
     reply->deleteLater();
-    qCDebug(CLASS_LC()) << "Network reply deleted";
+    qCDebug(CLASS_LC) << "Network reply deleted";
 
     m_manager->deleteLater();
-    qCDebug(CLASS_LC()) << "Networkaccessmanager deleted";
+    qCDebug(CLASS_LC) << "Networkaccessmanager deleted";
 }
 
 void SoftwareUpdate::downloadUpdate() { downloadUpdate(m_downloadUrl); }
@@ -36,7 +71,7 @@ void SoftwareUpdate::downloadUpdate(QUrl url) {
     // open the file
     m_file = new QFile(m_destination);
     m_file->open(QIODevice::WriteOnly);
-    qCDebug(CLASS_LC()) << "File opened";
+    qCDebug(CLASS_LC) << "File opened";
 
     // create network manager
     m_manager = new QNetworkAccessManager(this);
@@ -46,8 +81,13 @@ void SoftwareUpdate::downloadUpdate(QUrl url) {
     connect(m_download, &QNetworkReply::downloadProgress, this, &SoftwareUpdate::downloadProgress);
     connect(m_download, &QNetworkReply::finished, this, &SoftwareUpdate::downloadFinished);
 
-    qCDebug(CLASS_LC()) << "Downloading" << url.toEncoded().constData();
+    qCDebug(CLASS_LC) << "Downloading" << url.toEncoded().constData();
     m_downloadTimer->start();
+}
+
+void SoftwareUpdate::setAutoUpdate(bool update) {
+    m_autoUpdate = update;
+    emit autoUpdateChanged();
 }
 
 void SoftwareUpdate::downloadProgress(qint64 bytesReceived, qint64 bytesTotal) {
@@ -80,16 +120,16 @@ void SoftwareUpdate::downloadProgress(qint64 bytesReceived, qint64 bytesTotal) {
 
 void SoftwareUpdate::downloadFinished() {
     m_file->close();
-    qCDebug(CLASS_LC()) << "File closed";
+    qCDebug(CLASS_LC) << "File closed";
 
     m_file->deleteLater();
-    qCDebug(CLASS_LC()) << "File deleted";
+    qCDebug(CLASS_LC) << "File deleted";
 
     m_download->deleteLater();
-    qCDebug(CLASS_LC()) << "NetowrkReply deleted";
+    qCDebug(CLASS_LC) << "NetowrkReply deleted";
 
     m_manager->deleteLater();
-    qCDebug(CLASS_LC()) << "Networkaccessmanager deleted";
+    qCDebug(CLASS_LC) << "Networkaccessmanager deleted";
 }
 
 void SoftwareUpdate::startUpdate() {

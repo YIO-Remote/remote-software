@@ -27,19 +27,23 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
+#include <QQmlEngine>
+#include <QTimer>
 
 #include "logger.h"
+#include "notifications.h"
 
 class SoftwareUpdate : public QObject {
     Q_OBJECT
 
  public:
-    explicit SoftwareUpdate(QObject* parent = nullptr);
+    explicit SoftwareUpdate(bool autoUpdate = true, QObject* parent = nullptr);
     ~SoftwareUpdate();
 
     Q_PROPERTY(qint64 bytesReceived READ bytesReceived NOTIFY bytesReceivedChanged)
     Q_PROPERTY(qint64 bytesTotal READ bytesTotal NOTIFY bytesTotalChanged)
     Q_PROPERTY(QString downloadSpeed READ downloadSpeed NOTIFY downloadSpeedChanged)
+    Q_PROPERTY(bool autoUpdate READ autoUpdate WRITE setAutoUpdate NOTIFY autoUpdateChanged)
 
     Q_INVOKABLE void checkForUpdate();
     Q_INVOKABLE void downloadUpdate();
@@ -52,13 +56,26 @@ class SoftwareUpdate : public QObject {
     qint64  bytesTotal() { return m_bytesTotal; }
     QString downloadSpeed() { return m_downloadSpeed; }
 
+    bool autoUpdate() { return m_autoUpdate; }
+    void setAutoUpdate(bool update);
+
+    static SoftwareUpdate* getInstance() { return s_instance; }
+    static QObject*        getQMLInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
+
  signals:
     void updateAvailable(bool available);
     void bytesReceivedChanged();
     void bytesTotalChanged();
     void downloadSpeedChanged();
+    void autoUpdateChanged();
 
  private:
+    static SoftwareUpdate* s_instance;
+
+    bool m_autoUpdate = true;
+
+    QTimer* m_checkForUpdateTimer;
+
     qint64  m_bytesReceived = 0;
     qint64  m_bytesTotal    = 0;
     QString m_downloadSpeed;
@@ -74,4 +91,5 @@ class SoftwareUpdate : public QObject {
     void checkForUpdateFinished(QNetworkReply* reply);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void downloadFinished();
+    void onCheckForUpdateTimerTimeout();
 };
