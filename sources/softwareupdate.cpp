@@ -8,9 +8,15 @@ SoftwareUpdate::SoftwareUpdate(bool autoUpdate, QObject *parent) : QObject(paren
     s_instance = this;
 
     // start update checker timer
+    m_checkForUpdateTimer = new QTimer(this);
     m_checkForUpdateTimer->setInterval(3600000);  // 1 hour
     connect(m_checkForUpdateTimer, &QTimer::timeout, this, &SoftwareUpdate::onCheckForUpdateTimerTimeout);
     m_checkForUpdateTimer->start();
+
+    qCDebug(CLASS_LC) << "Current version:" << m_version;
+
+    // check for update on startup as well
+    checkForUpdate();
 }
 
 SoftwareUpdate::~SoftwareUpdate() {
@@ -33,6 +39,11 @@ void SoftwareUpdate::onCheckForUpdateTimerTimeout() { checkForUpdate(); }
 void SoftwareUpdate::checkForUpdate() {
     m_manager = new QNetworkAccessManager(this);
     connect(m_manager, &QNetworkAccessManager::finished, this, &SoftwareUpdate::checkForUpdateFinished);
+
+    m_updateUrl.append("/?curr_version=").append(m_version);
+    m_manager->get(QNetworkRequest(QUrl(m_updateUrl)));
+
+    qCDebug(CLASS_LC) << "URL: " << m_updateUrl;
 }
 
 void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {

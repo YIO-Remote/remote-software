@@ -24,6 +24,7 @@
 
 #include <QDataStream>
 #include <QElapsedTimer>
+#include <QGuiApplication>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
@@ -72,6 +73,8 @@ class SoftwareUpdate : public QObject {
  private:
     static SoftwareUpdate* s_instance;
 
+    QString m_version = QGuiApplication::applicationVersion();
+
     bool m_autoUpdate = true;
 
     QTimer* m_checkForUpdateTimer;
@@ -80,6 +83,7 @@ class SoftwareUpdate : public QObject {
     qint64  m_bytesTotal    = 0;
     QString m_downloadSpeed;
 
+    QString                m_updateUrl = "https://update.yio.app";
     QUrl                   m_downloadUrl;
     QNetworkAccessManager* m_manager;
     QNetworkReply*         m_download = nullptr;
