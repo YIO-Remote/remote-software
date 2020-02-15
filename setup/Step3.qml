@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 import QtQuick 2.11
+import QtQuick.Controls 2.5
 import Style 1.0
 import Haptic 1.0
 import WifiControl 1.0
@@ -33,104 +34,126 @@ Item {
         networkScanTimer.start();
     }
 
-    Text {
-        id: titleText
-        color: Style.colorText
-        text: qsTr("Wi-Fi setup") + translateHandler.emptyString
-        horizontalAlignment: Text.AlignHCenter
-        anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
-        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 60 }
-        lineHeight: 1
-    }
+    Flickable {
+        id: settingsFirstPageFlickable
+        width: parent.width
+        height: parent.height
+        maximumFlickVelocity: 6000
+        flickDeceleration: 1000
+        contentHeight: networkList.y + networkList.height
+        boundsBehavior: Flickable.DragAndOvershootBounds
+        flickableDirection: Flickable.VerticalFlick
 
-    Text {
-        id: smalltext
-        color: Style.colorText
-        opacity: 0.5
-        text: qsTr("Select a Wi-Fi network.") + translateHandler.emptyString
-        horizontalAlignment: Text.AlignHCenter
-        anchors { top: titleText.bottom; topMargin: 10; horizontalCenter: parent.horizontalCenter }
-        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
-        lineHeight: 1
-    }
-
-    Timer {
-        id: networkScanTimer
-        repeat: true
-        running: false
-        interval: 10000
-        triggeredOnStart: true
-
-        onTriggered: {
-            wifi.startNetworkScan();
+        Behavior on contentY {
+            PropertyAnimation {
+                duration: 300
+                easing.type: Easing.OutExpo
+            }
         }
-    }
 
-    ListView {
-        model: wifi.networkScanResult
-        anchors { top: smalltext.bottom; topMargin: 80 }
-        width: parent.width; height: childrenRect.height
-        interactive: false
+        ScrollBar.vertical: ScrollBar {
+            opacity: 0.5
+        }
 
-        delegate: Item {
-            width: parent.width; height: 80
+        Text {
+            id: titleText
+            color: Style.colorText
+            text: qsTr("Wi-Fi setup") + translateHandler.emptyString
+            horizontalAlignment: Text.AlignHCenter
+            anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
+            font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 60 }
+            lineHeight: 1
+        }
 
-            Text {
-                id: delegateSSID
-                color: Style.colorText
-                text: wifi.networkScanResult[index].name
-                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+        Text {
+            id: smalltext
+            color: Style.colorText
+            opacity: 0.5
+            text: qsTr("Select a Wi-Fi network.") + translateHandler.emptyString
+            horizontalAlignment: Text.AlignHCenter
+            anchors { top: titleText.bottom; topMargin: 10; horizontalCenter: parent.horizontalCenter }
+            font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
+            lineHeight: 1
+        }
+
+        Timer {
+            id: networkScanTimer
+            repeat: true
+            running: false
+            interval: 10000
+            triggeredOnStart: true
+
+            onTriggered: {
+                wifi.startNetworkScan();
             }
+        }
 
-            Text {
-                color: Style.colorText
-                opacity: 0.3
-                text: Style.icons.wifi_3
-                renderType: Text.NativeRendering
-                width: 70; height: 70
-                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 60 }
-                anchors { right: parent.right; verticalCenter: delegateSSID.verticalCenter }
-            }
+        ListView {
+            id: networkList
+            model: wifi.networkScanResult
+            anchors { top: smalltext.bottom; topMargin: 80 }
+            width: parent.width; height: childrenRect.height
+            interactive: false
 
-            Text {
-                color: Style.colorText
-                text: {
-                    if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
-                        return Style.icons.wifi_1
-                    else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.OK)
-                        return Style.icons.wifi_2
-                    else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.GOOD || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.EXCELLENT)
-                        return Style.icons.wifi_3
-                    else return ""
+            delegate: Item {
+                width: parent.width; height: 80
+
+                Text {
+                    id: delegateSSID
+                    color: Style.colorText
+                    text: wifi.networkScanResult[index].name
+                    anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                    font: Style.buttonFont
                 }
-                renderType: Text.NativeRendering
-                width: 70; height: 70
-                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 60 }
-                anchors { right: parent.right; verticalCenter: delegateSSID.verticalCenter }
-            }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    loader_second.setSource("qrc:/setup/Step4.qml", { "obj": wifi.networkScanResult[index], "swipeViewObj": container.parent.parent })
-                    loader_second.active = true;
-                    networkScanTimer.stop();
+                Text {
+                    color: Style.colorText
+                    opacity: 0.3
+                    text: Style.icons.wifi_3
+                    renderType: Text.NativeRendering
+                    width: 70; height: 70
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                    font {family: "icons"; pixelSize: 60 }
+                    anchors { right: parent.right; verticalCenter: delegateSSID.verticalCenter }
                 }
+
+                Text {
+                    color: Style.colorText
+                    text: {
+                        if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
+                            return Style.icons.wifi_1
+                        else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.OK)
+                            return Style.icons.wifi_2
+                        else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.GOOD || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.EXCELLENT)
+                            return Style.icons.wifi_3
+                        else return ""
+                    }
+                    renderType: Text.NativeRendering
+                    width: 70; height: 70
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                    font {family: "icons"; pixelSize: 60 }
+                    anchors { right: parent.right; verticalCenter: delegateSSID.verticalCenter }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        loader_second.setSource("qrc:/setup/Step4.qml", { "obj": wifi.networkScanResult[index], "swipeViewObj": container.parent.parent })
+                        loader_second.active = true;
+                        networkScanTimer.stop();
+                    }
+                }
+
             }
 
-        }
+            add: Transition {
+                PropertyAnimation { properties: "opacity"; from: 0; to: 1; duration: 400; easing.type: Easing.OutExpo }
+            }
 
-        add: Transition {
-            PropertyAnimation { properties: "opacity"; from: 0; to: 1; duration: 400; easing.type: Easing.OutExpo }
-        }
-
-        displaced: Transition {
-            PropertyAnimation { properties: "x,y"; duration: 400; easing.type: Easing.OutBounce }
+            displaced: Transition {
+                PropertyAnimation { properties: "x,y"; duration: 400; easing.type: Easing.OutBounce }
+            }
         }
     }
-
 }

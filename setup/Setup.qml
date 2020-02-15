@@ -38,6 +38,7 @@ Item {
         Step2 {}
         Step3 {}
         Step5 {}
+        Step1 {}
     }
 
     Component.onCompleted:  {

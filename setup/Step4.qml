@@ -43,7 +43,7 @@ Rectangle {
     property var swipeViewObj
 
     function joinNetwork(name, security) {
-        wifi.join(name, passwordField.text, security);
+        console.debug("----------------------WIFI JOIN: " + wifi.join(name, passwordField.text, security));
         inputPanel.active = false;
         container.state = "closed";
         swipeViewObj.incrementCurrentIndex();

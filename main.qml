@@ -82,8 +82,14 @@ ApplicationWindow {
         // Start websocket API
         api.start();
 
-        // load the integrations
-        integrations.load();
+        // load the integrations if it's not the first time setup
+        if (fileio.exists("/firstrun")) {
+            console.debug("Starting first time setup");
+            loader_main.setSource("qrc:/setup/Setup.qml");
+            translateHandler.selectLanguage(config.settings.language);
+        } else {
+            integrations.load();
+        }
     }
 
     // load the entities when the integrations are loaded
@@ -106,13 +112,7 @@ ApplicationWindow {
             console.debug("Entities are loaded.");
 
             // when everything is loaded, load the main UI
-            loader_main.setSource("qrc:/setup/Setup.qml");
-//            if (fileio.exists("/firstrun")) {
-//                console.debug("Starting first time setup");
-//                loader_main.setSource("qrc:/setup/Setup.qml");
-//            } else {
-//                loader_main.setSource("qrc:/MainContainer.qml");
-//            }
+            loader_main.setSource("qrc:/MainContainer.qml");
         }
     }
 
@@ -304,7 +304,7 @@ ApplicationWindow {
             target: notifications
 
             onListIsEmpty: {
-                    notificationsDrawer.close();
+                notificationsDrawer.close();
             }
         }
     }

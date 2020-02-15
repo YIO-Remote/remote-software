@@ -33,6 +33,10 @@ Item {
         target: wifi
         onWifiStatusChanged: {
             console.debug("Wifi status changed:" + wifi.wifiStatus);
+            if (wifi.wifiStatus.connected) {
+                loadingIconAnim.stop();
+                container.parent.parent.incrementCurrentIndex();
+            }
         }
     }
 
