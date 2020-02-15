@@ -231,7 +231,6 @@ SOURCES += $$OTHER_FILES
 
 OTHER_FILES += main.qml \
           MainContainer.qml \
-          wifiSetup.qml \
           basic_ui/*.qml \
           basic_ui/pages/*.qml \
           basic_ui/settings/*.qml \

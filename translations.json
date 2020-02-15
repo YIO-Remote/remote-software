@@ -1,22 +1,110 @@
 [
     {
-        "name": "Dansk",
-        "id": "da_DK"
+        "name": "български",
+        "id": "bg_BG"
     },
     {
-        "name": "Nederlands",
-        "id": "nl_NL"
+        "name": "čeština",
+        "id": "cs_CZ"
+    },
+    {
+        "name": "Dansk",
+        "id": "da_DK"
     },
     {
         "name": "Deutsche",
         "id": "de_DE"
     },
     {
+        "name": "Ελληνικά",
+        "id": "el_GR"
+    },
+    {
         "name": "English",
         "id": "en_US"
     },
     {
+        "name": "Español",
+        "id": "es_ES"
+    },
+    {
+        "name": "Eestlane",
+        "id": "et_EE"
+    },
+    {
+        "name": "Suomalainen",
+        "id": "fi_FI"
+    },
+    {
+        "name": "Français (CA)",
+        "id": "fr_CA"
+    },
+    {
+        "name": "Français",
+        "id": "fr_FR"
+    },
+    {
+        "name": "Gaeilge",
+        "id": "ga_IE"
+    },
+    {
+        "name": "Hrvatski",
+        "id": "hr_HR"
+    },
+    {
         "name": "Magyar",
         "id": "hu_HU"
+    },
+    {
+        "name": "Italiano",
+        "id": "it_IT"
+    },
+    {
+        "name": "Lietuvis",
+        "id": "lt_LT"
+    },
+    {
+        "name": "Latvietis",
+        "id": "lv_LV"
+    },
+    {
+        "name": "Malti",
+        "id": "mt_MT"
+    },
+    {
+        "name": "Nederlands",
+        "id": "nl_NL"
+    },
+    {
+        "name": "Norsk",
+        "id": "no_NO"
+    },
+    {
+        "name": "Polskie",
+        "id": "pl_PL"
+    },
+    {
+        "name": "Português (BR)",
+        "id": "pt_BR"
+    },
+    {
+        "name": "Português",
+        "id": "pt_PT"
+    },
+    {
+        "name": "Română",
+        "id": "ro_RO"
+    },
+    {
+        "name": "Slovenský",
+        "id": "sk_SK"
+    },
+    {
+        "name": "Slovenščina",
+        "id": "sl_SI"
+    },
+    {
+        "name": "Svenska",
+        "id": "sv_SE"
     }
 ]

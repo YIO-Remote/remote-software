@@ -106,12 +106,13 @@ ApplicationWindow {
             console.debug("Entities are loaded.");
 
             // when everything is loaded, load the main UI
-            if (fileio.exists("/wifisetup")) {
-                console.debug("Starting WiFi setup");
-                loader_main.setSource("qrc:/wifiSetup.qml");
-            } else {
-                loader_main.setSource("qrc:/MainContainer.qml");
-            }
+            loader_main.setSource("qrc:/setup/Setup.qml");
+//            if (fileio.exists("/firstrun")) {
+//                console.debug("Starting first time setup");
+//                loader_main.setSource("qrc:/setup/Setup.qml");
+//            } else {
+//                loader_main.setSource("qrc:/MainContainer.qml");
+//            }
         }
     }
 
@@ -209,7 +210,6 @@ ApplicationWindow {
     // LOW BATTERY POPUP NOTIFICAITON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pops up when battery level is under 20%
-    // TODO: this should be a signal connection to the singleton c++ class
     Connections {
         target: Battery
 

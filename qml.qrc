@@ -37,7 +37,6 @@
         <file>basic_ui/Volume.qml</file>
         <file>components/media_player/ui/Button.qml</file>
         <file>basic_ui/settings/Bluetooth.qml</file>
-        <file>wifiSetup.qml</file>
         <file>basic_ui/pages/Group.qml</file>
         <file>components/remote/ui/Button.qml</file>
         <file>basic_ui/Profiles.qml</file>
@@ -65,5 +64,11 @@
         <file>basic_ui/settings/RemoteConfig.qml</file>
         <file>basic_ui/settings/Wifi.qml</file>
         <file>basic_ui/settings/WifiConnect.qml</file>
+        <file>setup/Setup.qml</file>
+        <file>setup/Step1.qml</file>
+        <file>setup/Step2.qml</file>
+        <file>setup/Step3.qml</file>
+        <file>setup/Step4.qml</file>
+        <file>setup/Step5.qml</file>
     </qresource>
 </RCC>
