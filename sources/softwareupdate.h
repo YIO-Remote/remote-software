@@ -70,7 +70,7 @@ class SoftwareUpdate : public QObject {
     QString                m_destination = "/usr/bin/yio-remote/downloads/latest.zip";
     QElapsedTimer*         m_downloadTimer;
 
- private slots:
+ private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void checkForUpdateFinished(QNetworkReply* reply);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void downloadFinished();
