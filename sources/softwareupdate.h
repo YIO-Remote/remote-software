@@ -50,7 +50,6 @@ class SoftwareUpdate : public QObject {
     Q_PROPERTY(bool updateAvailable READ updateAvailable NOTIFY updateAvailableChanged)
 
     Q_INVOKABLE void checkForUpdate();
-    Q_INVOKABLE void downloadUpdate();
     Q_INVOKABLE void startUpdate();
     Q_INVOKABLE void startDockUpdate();
 

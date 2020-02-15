@@ -77,8 +77,6 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
     qCDebug(CLASS_LC) << "Networkaccessmanager deleted";
 }
 
-void SoftwareUpdate::downloadUpdate() { downloadUpdate(m_downloadUrl); }
-
 void SoftwareUpdate::downloadUpdate(QUrl url) {
     // open the file
     m_file = new QFile(m_destination);
@@ -147,6 +145,7 @@ void SoftwareUpdate::downloadFinished() {
 
 void SoftwareUpdate::startUpdate() {
     // start software update procedure
+    downloadUpdate(m_downloadUrl);
 }
 
 void SoftwareUpdate::startDockUpdate() {}
