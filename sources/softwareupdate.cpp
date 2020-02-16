@@ -121,7 +121,7 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
                 // send a notification
                 QObject *param = this;
                 Notifications::getInstance()->add(
-                    false, tr("New software is available"), tr("Update"),
+                    false, tr("New software is available"), tr("Download"),
                     [](QObject *param) {
                         SoftwareUpdate *i = qobject_cast<SoftwareUpdate *>(param);
                         i->startUpdate();
@@ -147,9 +147,9 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
 void SoftwareUpdate::downloadUpdate(QUrl url) {
     qCDebug(CLASS_LC) << "Downloading file" << url.toString();
 
-    qCDebug(CLASS_LC) << "DIR" << QDir(m_appPath).mkpath("../downloads");
+    qCDebug(CLASS_LC) << "DIR" << QDir(m_appPath).mkpath("downloads");
 
-    QString path = m_appPath.append("/../downloads/latest.zip");
+    QString path = m_appPath.append("/downloads/latest.zip");
 
     // open the file
     m_file = new QFile(path);
