@@ -109,7 +109,7 @@ Rectangle {
 
             BasicUI.CustomButton {
                 id: updateButton
-                buttonText: qsTr("Update") + translateHandler.emptyString
+                buttonText: qsTr("Download") + translateHandler.emptyString
                 anchors { top: uptodateTextsmall.bottom; topMargin: 30; left: parent.left; leftMargin: 20 }
                 visible: SoftwareUpdate.updateAvailable ? true : false
 

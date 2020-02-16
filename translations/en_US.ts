@@ -739,7 +739,7 @@ YIO remote %1</source>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-        <source>Update</source>
+        <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
