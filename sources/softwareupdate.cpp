@@ -90,7 +90,7 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
             Notifications::getInstance()->add(true, tr("Software update: ") + jsonObject["error"].toString());
         } else {
             m_downloadUrl = jsonObject["url"].toString();
-            m_newVersion  = jsonObject["latest"].toString();
+            m_newVersion  = "v3.0.0";   // jsonObject["latest"].toString();
             m_newVersion.remove(0, 1);  // remove the "v"
 
             qCDebug(CLASS_LC) << "Url:" << m_downloadUrl << "Version:" << m_newVersion;

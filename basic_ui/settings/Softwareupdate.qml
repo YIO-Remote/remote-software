@@ -109,15 +109,20 @@ Rectangle {
 
             BasicUI.CustomButton {
                 id: updateButton
-                buttonText: qsTr("Download") + translateHandler.emptyString
+                buttonText: fileio.exists(appPath + "/downloads/latest.zip") ? qsTr("Update") + translateHandler.emptyString : qsTr("Download") + translateHandler.emptyString
                 anchors { top: uptodateTextsmall.bottom; topMargin: 30; left: parent.left; leftMargin: 20 }
                 visible: SoftwareUpdate.updateAvailable ? true : false
 
                 mouseArea.onClicked: {
-                    if (SoftwareUpdate.updateAvailable) {
-                        console.debug("Updating the app")
-                        SoftwareUpdate.startUpdate();
-                    }
+                    var t = appPath + "/downloads/latest.zip"
+                    console.debug(t);
+//                    if (SoftwareUpdate.updateAvailable) {
+//                        if (fileio.exists(appPath + "/downloads/latest.zip")) {
+
+//                        } else {
+//                            SoftwareUpdate.startUpdate();
+//                        }
+//                    }
                 }
             }
         }
