@@ -631,7 +631,7 @@ www.yio-remote.com
     </message>
     <message>
         <location filename="../basic_ui/pages/Settings.qml" line="151"/>
-        <source>New software version is available.</source>
+        <source>New software is available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -689,7 +689,7 @@ www.yio-remote.com
     </message>
     <message>
         <location filename="../sources/softwareupdate.cpp" line="124"/>
-        <source>Update</source>
+        <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -743,7 +743,12 @@ YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="135"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="138"/>
         <source>Check for update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -761,8 +766,13 @@ YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="65"/>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

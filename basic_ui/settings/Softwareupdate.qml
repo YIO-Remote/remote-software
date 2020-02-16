@@ -114,15 +114,13 @@ Rectangle {
                 visible: SoftwareUpdate.updateAvailable ? true : false
 
                 mouseArea.onClicked: {
-                    var t = appPath + "/downloads/latest.zip"
-                    console.debug(t);
-//                    if (SoftwareUpdate.updateAvailable) {
-//                        if (fileio.exists(appPath + "/downloads/latest.zip")) {
+                    if (SoftwareUpdate.updateAvailable) {
+                        if (fileio.exists(appPath + "/downloads/latest.zip")) {
 
-//                        } else {
-//                            SoftwareUpdate.startUpdate();
-//                        }
-//                    }
+                        } else {
+                            SoftwareUpdate.startUpdate();
+                        }
+                    }
                 }
             }
         }

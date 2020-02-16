@@ -58,18 +58,40 @@ Rectangle {
         lineHeight: 1
     }
 
-    BasicUI.CustomButton {
-        id: updateButton
-        opacity: 0
+    Item {
+        width: childrenRect.width; height: childrenRect.height
         anchors { bottom: parent.bottom; bottomMargin: 60; horizontalCenter: parent.horizontalCenter }
-        buttonText: qsTr("Update") + translateHandler.emptyString
-        mouseArea.onClicked: {
-            Haptic.playEffect(Haptic.Click);
-            // now perform update
+
+        BasicUI.CustomButton {
+            id: updateButton
+            opacity: 0
+            buttonText: qsTr("Update") + translateHandler.emptyString
+            mouseArea.onClicked: {
+                Haptic.playEffect(Haptic.Click);
+                // now perform update
+            }
+
+            Behavior on opacity {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
         }
 
-        Behavior on opacity {
-            NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        BasicUI.CustomButton {
+            id: cancelButton
+            anchors { left: updateButton.right; leftMargin: updateButton.opacity == 0 ? -updateButton.width : 30 }
+            buttonText: qsTr("Cancel") + translateHandler.emptyString
+            mouseArea.onClicked: {
+                Haptic.playEffect(Haptic.Click);
+                loader_second.source = "";
+            }
+
+            Behavior on opacity {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
+
+            Behavior on anchors.leftMargin {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
         }
     }
 }
