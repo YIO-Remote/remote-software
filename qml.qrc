@@ -70,5 +70,6 @@
         <file>setup/Step3.qml</file>
         <file>setup/Step4.qml</file>
         <file>setup/Step5.qml</file>
+        <file>basic_ui/settings/SoftwareupdateDownloading.qml</file>
     </qresource>
 </RCC>

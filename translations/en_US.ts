@@ -678,13 +678,28 @@ www.yio-remote.com
 <context>
     <name>SoftwareUpdate</name>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="58"/>
+        <location filename="../sources/softwareupdate.cpp" line="90"/>
+        <source>Software update: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="124"/>
         <source>New software is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="58"/>
+        <location filename="../sources/softwareupdate.cpp" line="124"/>
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="137"/>
+        <source>Cannot connect to the update server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="230"/>
+        <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -702,34 +717,52 @@ Updates are installed between 03.00 am and 05.00 am.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="101"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
         <source>Your software is up to date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="101"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
         <source>New software is available.
 YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
         <source>Installed version: YIO Remote </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
         <source>YIO Remote </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="122"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="145"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="135"/>
         <source>Check for update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SoftwareupdateDownloading</name>
+    <message>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
+        <source>Download completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+        <source>Downloading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="65"/>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

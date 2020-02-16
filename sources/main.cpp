@@ -226,7 +226,8 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
     // SOFTWARE UPDATE
-    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(config->getSettings().value("softwareupdate").toBool());
+    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(config->getSettings().value("softwareupdate").toBool(), appPath,
+                                                        hwFactory->getBatteryFuelGauge());
     Q_UNUSED(softwareUpdate);
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 

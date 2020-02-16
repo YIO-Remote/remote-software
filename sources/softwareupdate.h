@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -23,14 +23,18 @@
 #pragma once
 
 #include <QDataStream>
+#include <QDir>
 #include <QElapsedTimer>
 #include <QGuiApplication>
+#include <QJsonDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
 #include <QQmlEngine>
 #include <QTimer>
 
+#include "config.h"
+#include "hardware/hardwarefactory.h"
 #include "logger.h"
 #include "notifications.h"
 
@@ -38,7 +42,8 @@ class SoftwareUpdate : public QObject {
     Q_OBJECT
 
  public:
-    explicit SoftwareUpdate(bool autoUpdate = true, QObject* parent = nullptr);
+    explicit SoftwareUpdate(bool autoUpdate, QString appPath, BatteryFuelGauge* batteryFuelGauge,
+                            QObject* parent = nullptr);
     ~SoftwareUpdate();
 
     Q_PROPERTY(qint64 bytesReceived READ bytesReceived NOTIFY bytesReceivedChanged)
@@ -77,9 +82,12 @@ class SoftwareUpdate : public QObject {
     void currentVersionChanged();
     void newVersionChanged();
     void updateAvailableChanged();
+    void downloadComplete();
 
  private:
     static SoftwareUpdate* s_instance;
+
+    BatteryFuelGauge* m_batteryFuelGauge;
 
     QString m_currentVersion  = QGuiApplication::applicationVersion();
     QString m_newVersion      = "";
@@ -93,12 +101,12 @@ class SoftwareUpdate : public QObject {
     qint64  m_bytesTotal    = 0;
     QString m_downloadSpeed;
 
-    QString                m_updateUrl = "https://update.yio.app";
-    QUrl                   m_downloadUrl;
+    QString                m_updateUrl = "https://update.yio.app/update";
+    QString                m_downloadUrl;
     QNetworkAccessManager* m_manager;
     QNetworkReply*         m_download = nullptr;
     QFile*                 m_file;
-    QString                m_destination = "/usr/bin/yio-remote/downloads/latest.zip";
+    QString                m_appPath;
     QElapsedTimer*         m_downloadTimer;
 
  private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99

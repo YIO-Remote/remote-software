@@ -159,6 +159,7 @@ ApplicationWindow {
 
     Loader {
         id: loader_second
+        objectName : "loader_second"
         width: 480; height: 800
         x: 0; y: 0
         asynchronous: true

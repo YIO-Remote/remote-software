@@ -83,16 +83,6 @@ Rectangle {
             color: Style.colorBackground
         }
 
-        // NEW UPDATE
-
-        Connections {
-            target: SoftwareUpdate
-
-            onUpdateAvailableChanged: {
-                console.debug("UPDATE AVAILABLE:  " + _updateAvailable)
-            }
-        }
-
         Item {
             width: parent.width; height: SoftwareUpdate.updateAvailable ? (childrenRect.height + 40) : (childrenRect.height + 20 - updateButton.height)
             Text {
