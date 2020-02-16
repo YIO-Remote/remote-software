@@ -104,16 +104,16 @@ class StandbyControl : public QObject {
     int m_screenOffTime = 0;  // seconds
 
     QTimer* m_secondsTimer = new QTimer(this);
-    int     m_elapsedTime  = 0;
+    int     m_elapsedTime  = 0;  // seconds
 
     void    readAmbientLight();
     int     mapValues(int inValue, int minInRange, int maxInRange, int minOutRange, int maxOutRange);
     QString secondsToHours(int value);
 
-    int     m_batteryCheckElapsedTime = 0;
-    int     m_batteryCheckTime        = 600;
+    int     m_batteryCheckElapsedTime = 0;    // seconds
+    int     m_batteryCheckTime        = 600;  // seconds
     QTimer* m_shutdownTimer           = new QTimer(this);
-    int     m_shutDownDelay           = 20000;
+    int     m_shutDownDelay           = 20000;  // miliseconds
 
     void         getBatteryData();
     QVariantList m_batteryData;
