@@ -31,13 +31,14 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include "wifi_wpasupplicant.h"
+
 #include <QEventLoop>
 #include <QFile>
 #include <QLoggingCategory>
 #include <QThread>
 #include <QTimer>
 #include <QVector>
-
 #include <cerrno>
 #include <cstdio>
 #include <exception>
@@ -45,7 +46,6 @@
 #include "common/wpa_ctrl.h"
 #include "hw_config.h"
 #include "systemservice_name.h"
-#include "wifi_wpasupplicant.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
@@ -56,9 +56,9 @@ WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl* webServerControl, SystemS
       m_ctrl(nullptr),
       p_webServerControl(webServerControl),
       p_systemService(systemService),
+      p_networkJoinTimer(nullptr),
       m_wpaSupplicantSocketPath(HW_DEF_WIFI_WPA_SOCKET),
-      m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN) {
-}
+      m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN) {}
 
 /****************************************************************************/
 WifiWpaSupplicant::~WifiWpaSupplicant() {
@@ -215,6 +215,7 @@ bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiS
             return false;
     }
 
+    // remove old network configuration if it already exists to start with a clean configuration
     char    buf[WPA_BUF_SIZE];
     QString cmd;
     if (m_removeNetworksBeforeJoin) {
@@ -230,6 +231,9 @@ bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiS
             }
         }
     }
+
+    // start connection configuration
+    setConnected(false);
 
     if (!controlRequest("ADD_NETWORK", buf, WPA_BUF_SIZE)) {
         return false;
@@ -266,29 +270,22 @@ bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiS
         }
     }
 
+    // start establishing network connection
     cmd = "ENABLE_NETWORK %1";
     if (!controlRequest(cmd.arg(networkId), buf, WPA_BUF_SIZE)) {
         controlRequest("RECONFIGURE");  // reload from cfg and hope for the best
         return false;
     }
 
-    // wait for successful connection and save configuration once connected.
-    // TODO(zehnm) asynchronous check using a timer. Return immediately and notify caller with signal.
-    for (int i = 0; i < getNetworkJoinRetryCount(); i++) {
-        qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << (i + 1) << "/"
-                          << getNetworkJoinRetryCount() << ")";
-
-        if (checkConnection()) {
-            bool resetIfFailed = false;
-            return saveConfiguration(resetIfFailed);
-        }
-
-        QThread::currentThread()->msleep(getNetworkJoinRetryDelay());
+    // use a timer to check for successful connection. The configuration is saved within the timer once connected!
+    if (p_networkJoinTimer == nullptr) {
+        p_networkJoinTimer = new QTimer(this);
+        connect(p_networkJoinTimer, SIGNAL(timeout()), this, SLOT(checkNetworkJoin()));
     }
+    m_checkNetworkCount = 0;
+    p_networkJoinTimer->start(getNetworkJoinRetryDelay());
 
-    qCWarning(CLASS_LC) << "Failed to establish connection to AP" << ssid << "after" << getNetworkJoinRetryCount()
-                        << "retries";
-    return false;
+    return true;
 }
 
 bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString& parm, const QString& val,
@@ -306,6 +303,31 @@ bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString&
     }
 
     return true;
+}
+
+void WifiWpaSupplicant::checkNetworkJoin() {
+    m_checkNetworkCount++;
+
+    qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << m_checkNetworkCount << "/"
+                      << getNetworkJoinRetryCount() << ")";
+
+    if (checkConnection()) {
+        p_networkJoinTimer->stop();
+        bool resetIfFailed = true;
+        if (!saveConfiguration(resetIfFailed)) {
+            // we're fu**ed: wifi connection is established but we can't save configuration! Treat this as an error...
+            emit joinError(JoinError::ConfigSaveError);
+        }
+        return;
+    }
+
+    if (m_checkNetworkCount >= getNetworkJoinRetryCount()) {
+        p_networkJoinTimer->stop();
+
+        qCWarning(CLASS_LC) << "Failed to establish connection to AP after" << getNetworkJoinRetryCount() << "retries";
+
+        emit joinError(JoinError::Timeout);
+    }
 }
 
 bool WifiWpaSupplicant::writeWepKey(const QString& networkId, const QString& value, int keyId) {
@@ -345,7 +367,7 @@ bool WifiWpaSupplicant::startAccessPoint() {
     if (!controlRequest(cmd)) {
         return false;
     }
-    controlRequest("SAVE_CONFIG");
+    saveConfiguration(false);
 
     // FIXME set wpa_supplicant access point configuration:
     // # reset configuration file
@@ -412,7 +434,7 @@ QString WifiWpaSupplicant::countryCode() {
 void WifiWpaSupplicant::setCountryCode(const QString& countryCode) {
     QString cmd = "SET country %1";
     if (controlRequest(cmd.arg(countryCode.toUpper()))) {
-        controlRequest("SAVE_CONFIG");
+        saveConfiguration(false);
     }
 }
 
@@ -464,7 +486,11 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
 
     // check response, e.g. when requesting information from an invalid network id
     QString response = QString::fromLocal8Bit(buf);
-    qCDebug(CLASS_LC) << cmd << "response:" << response;
+
+    // filter out responses which are too verbose. Unfortunately there's no qCTrace()
+    if (!cmd.startsWith("BSS ")) {
+        qCDebug(CLASS_LC) << cmd << "response:" << response;
+    }
 
     if (response.startsWith("FAIL\n")) {
         return false;
@@ -521,6 +547,12 @@ void WifiWpaSupplicant::parseEvent(char* msg) {
         setConnected(false);
     } else if (event.startsWith(WPA_EVENT_TERMINATING)) {
         setConnected(false);
+    } else if (event.startsWith(WPA_EVENT_TEMP_DISABLED)) {
+        // Note: this control event should be enough for a rejected authentication.
+        // Otherwise WPA_EVENT_ASSOC_REJECT must be handled as well.
+        emit joinError(JoinError::AuthFailure);
+    } else if (event.startsWith(WPA_EVENT_NETWORK_NOT_FOUND)) {
+        emit joinError(JoinError::NetworkNotFound);
     }
 }
 
@@ -586,6 +618,8 @@ void WifiWpaSupplicant::readScanResults() {
     for (int i = 0; i < maxScanResults(); i++) {
         if (!addBSS(i)) break;
     }
+
+    qCDebug(CLASS_LC) << "Networks found:" << m_scanResults.size();
     emit networksFound(m_scanResults);
 }
 
@@ -631,7 +665,8 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
 
     WifiSecurity security = getSecurityFromFlags(flags, networkId);
     WifiNetwork  network{id, ssid, bssid, level, security, flags.contains("[WPS")};
-    qCDebug(CLASS_LC) << "Network found:" << network;
+
+    // qCDebug(CLASS_LC) << "Network found:" << network; // too verbose
 
     m_scanResults.append(network);
 
@@ -749,10 +784,10 @@ bool WifiWpaSupplicant::checkConnection() {
 
     WifiStatus wifiStatus = parseStatus(buf);
     setConnected(wifiStatus.isConnected());
-    return true;
+    return wifiStatus.isConnected();
 }
 
-bool WifiWpaSupplicant::saveConfiguration(bool resetCfgIfFailed) {
+bool WifiWpaSupplicant::saveConfiguration(bool resetCfgIfFailed /* = true */) {
     if (!controlRequest("SAVE_CONFIG")) {
         qCWarning(CLASS_LC) << "Error saving current wpa_supplicant configuration! Please verify that "
                                "/etc/wpa_supplicant/wpa_supplicant-wlan0.conf has 'update_config=1' set. Otherwise the "

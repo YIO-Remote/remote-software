@@ -34,6 +34,7 @@ WifiControl::WifiControl(QObject* parent)
       m_scanResults(QList<WifiNetwork>()),
       m_signalStrengthScanning(false),
       m_wifiStatusScanning(false),
+      m_connected(false),
       m_maxScanResults(HW_DEF_WIFI_SCAN_RESULTS),
       m_pollInterval(HW_DEF_WIFI_POLL_INTERVAL),
       m_timerId(0),
@@ -72,13 +73,19 @@ bool WifiControl::validateAuthentication(WifiSecurity security, const QString& p
  */
 bool WifiControl::isConnected() { return m_connected; }
 
-void WifiControl::setConnected(bool connected) {
-    if (connected == m_connected) {
+void WifiControl::setConnected(bool state) {
+    if (state == m_connected) {
         return;
     }
-    qCDebug(CLASS_LC) << "Connection status changed to:" << connected;
-    m_connected = connected;
-    // TODO(zehnm) emit signal on connection status change?
+
+    qCDebug(CLASS_LC) << "Connection status changed to:" << state;
+    m_connected = state;
+
+    if (state) {
+        emit connected();
+    } else {
+        emit disconnected();
+    }
 }
 
 WifiStatus WifiControl::wifiStatus() const { return m_wifiStatus; }

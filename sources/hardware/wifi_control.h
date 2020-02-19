@@ -50,7 +50,7 @@ class WifiControl : public QObject {
     virtual ~WifiControl();
 
     /**
-     * Component state during scanning
+     * @brief Component state during scanning
      */
     enum ScanStatus {
         Idle,        //!< Never started a scan
@@ -59,6 +59,18 @@ class WifiControl : public QObject {
         ScanOk       //!< Scan o.k. probably with results
     };
     Q_ENUM(ScanStatus)
+
+    /**
+     * @brief Network join error states
+     */
+    enum JoinError {
+        Unknown,          //!< Unknown error while connecting to access point
+        Timeout,          //!< Could not connect to access point within timeframe
+        NetworkNotFound,  //!< Network not found (wrong name or out of reach)
+        AuthFailure,      //!< Authentication failure
+        ConfigSaveError   //!< Configuration could not be safed
+    };
+    Q_ENUM(JoinError)
 
     /**
      * @brief init Initializes the driver.
@@ -82,7 +94,16 @@ class WifiControl : public QObject {
     Q_INVOKABLE virtual bool clearConfiguredNetworks() = 0;
 
     /**
-     * @brief Joins the WiFi network with the given ssid. The network will be added to the known networks.
+     * @brief Initiates joining the WiFi network with the given ssid.
+     *        If the operation returns true then wait for the connected() and joinError() signals.
+     * @details If the connection succeeds the WiFi network configuration is added to the known networks.
+     *          Call clearConfiguredNetworks() to start with a fresh configuration and to make sure the device only
+     *          attempts to connect to the given access point. Otherwise another network might be preferred!
+     * @param ssid Network name
+     * @param password Network password. Use empty string for open networks.
+     * @param security Network security
+     * @return true if connection SETUP succeeded and client is trying to connect to access point.
+     *         false if connection setup failed.
      */
     Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password,
                                   WifiSecurity security = WifiSecurity::DEFAULT) = 0;
@@ -164,6 +185,26 @@ class WifiControl : public QObject {
      */
     void networksFound(const QList<WifiNetwork> &network);
 
+    /**
+     * @brief The WiFi connection has been established.
+     * Emitted if the connection changes from disconnected to connected.
+     */
+    void connected();
+
+    /**
+     * @brief The WiFi is disconnected.
+     * Emitted if the connection changes from connected to disconnected.
+     */
+    void disconnected();
+
+    /**
+     * @brief The network join operation failed either through an assocation error or a timeout.
+     * This signal is emitted multiple times until the network can be joined or the network configuration is removed
+     * (e.g. through clearConfiguredNetworks()).
+     * @param error reason if network could not be joined
+     */
+    void joinError(WifiControl::JoinError error);
+
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     /**
      * @brief Enable WiFi device
@@ -199,7 +240,8 @@ class WifiControl : public QObject {
     bool validateAuthentication(WifiSecurity security, const QString &preSharedKey);
 
     /**
-     * @brief setConnected Set Wifi connection status
+     * @brief Set Wifi connection status.
+     * Emits the connected() or disconnected() signal if the connection state changes.
      * @param connected true = connection to network established
      */
     virtual void setConnected(bool connected);
