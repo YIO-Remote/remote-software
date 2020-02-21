@@ -20,12 +20,16 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#include "hardwarefactory_yio.h"
 
 #include <mcp23017.h>
 #include <wiringPi.h>
 
+#include <QDateTime>
+#include <QLoggingCategory>
+#include <QtDebug>
+
+#include "../configutil.h"
 #include "arm/apds9960gesture.h"
 #include "arm/apds9960light.h"
 #include "arm/apds9960proximity.h"
@@ -34,106 +38,117 @@
 #include "arm/displaycontrol_yio.h"
 #include "arm/drv2605.h"
 #include "arm/mcp23017_interrupt.h"
-#include "hardwarefactory_yio.h"
+#include "hw_config.h"
+
+const QString HardwareFactoryYio::DEF_I2C_DEVICE = "/dev/i2c-3";
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.yio");
 
 HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *parent)
     : HardwareFactoryRPi0(config, parent) {
-    // TODO(mze) read i2c device from config
-    p_apds9960 = new APDS9960("/dev/i2c-3", APDS9960_ADDRESS, this);
+    // gesture, light and proximity are handled by the same hardware sensor!
+    // The device needs to be shared among three device abstractions.
+    QVariantMap deviceCfg = ConfigUtil::getValue(config, HW_CFG_PROXIMITY).toMap();
+    if (ConfigUtil::isEnabled(deviceCfg)) {
+        auto dev = ConfigUtil::getValue(deviceCfg, HW_CFG_PATH_I2C_DEV, DEF_I2C_DEVICE).toString();
+        auto id = ConfigUtil::getValue(deviceCfg, HW_CFG_PATH_I2C_ID, APDS9960_ADDRESS).toInt();
+
+        p_apds9960 = new APDS9960(dev, id, this);
+    } else {
+        p_apds9960 = nullptr;
+    }
 }
 
 int HardwareFactoryYio::initialize() {
-    HardwareFactoryRPi0::initialize();
-
     // WiringPi should only be initialized once (even though there's a failsafe now in newer versions)
+    // Attention: wiringPiSetup() needs to be called with root privileges!
+    // TODO(zehnm) Verify if wiringPiSetupSys() could be used with remote-os
     wiringPiSetup();
+    // The 1st IO expander for the buttons is directly handled with an interrupt.
+    // The 2nd IO expander is accessed through wiringPi
     mcp23017Setup(100, 0x21);
 
     // intialize the proximity sensor
-    connect(p_apds9960, &Device::error, this, &HardwareFactoryYio::onError);
-    if (p_apds9960->open()) {
-        delay(100);
+    if (p_apds9960) {
+        connect(p_apds9960, &Device::error, this, &HardwareFactoryYio::onError);
+        if (p_apds9960->open()) {
+            delay(100);
 
-        // turn on the light sensor
-        p_apds9960->enableColor(true);
+            // turn on the light sensor
+            p_apds9960->enableColor(true);
 
-        // turn on proximity sensor
-        p_apds9960->enableProximity(true);
+            // turn on proximity sensor
+            p_apds9960->enableProximity(true);
 
-        // set the proximity threshold
-        p_apds9960->setProximityInterruptThreshold(0, uint8_t(getProximitySensor()->proximitySetting()), 1);
+            // set the proximity threshold
+            p_apds9960->setProximityInterruptThreshold(0, uint8_t(getProximitySensor()->proximitySetting()), 1);
 
-        // set the proximity gain
-        p_apds9960->setProxGain(APDS9960_PGAIN_2X);
+            // set the proximity gain
+            p_apds9960->setProxGain(APDS9960_PGAIN_2X);
 
-        // m_apds.setLED(APDS9960_LEDDRIVE_100MA, APDS9960_LEDBOOST_200PCNT);
-        p_apds9960->setLED(APDS9960_LEDDRIVE_25MA, APDS9960_LEDBOOST_100PCNT);
+            // m_apds.setLED(APDS9960_LEDDRIVE_100MA, APDS9960_LEDBOOST_200PCNT);
+            p_apds9960->setLED(APDS9960_LEDDRIVE_25MA, APDS9960_LEDBOOST_100PCNT);
 
-        // read ambient light
-        while (!p_apds9960->colorDataReady()) {
-            delay(5);
+            // read ambient light
+            qint64 timeout = QDateTime::currentMSecsSinceEpoch() + 3000;
+            while (!p_apds9960->colorDataReady()) {
+                delay(5);
+                if (QDateTime::currentMSecsSinceEpoch() > timeout) {
+                    qCWarning(CLASS_LC) << "Error retrieving color data from APDS9960 sensor";
+                    break;
+                }
+            }
+            getLightSensor()->readAmbientLight();
         }
-        getLightSensor()->readAmbientLight();
     }
 
-    // Quick and dirty for now
-    getHapticMotor()->open();
-    getLightSensor()->open();
-    getGestureSensor()->open();
-    getBatteryCharger()->open();
-    getDisplayControl()->open();
-    getProximitySensor()->open();
-    getBatteryFuelGauge()->open();
-    getInterruptHandler()->open();
-
-    return 0;
+    return HardwareFactoryRPi0::initialize();
 }
 
 DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config) {
-    Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "DisplayControl device: DisplayControlYio";
-    DisplayControl *device = new DisplayControlYio(this);
+    auto pin = ConfigUtil::getValue(config, HW_CFG_PATH_GPIO_PIN, 26).toInt();
+
+    DisplayControl *device = new DisplayControlYio(pin, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
 }
 
 BatteryCharger *HardwareFactoryYio::buildBatteryCharger(const QVariantMap &config) {
-    Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "BatteryCharger device: BatteryChargerYio";
-    BatteryCharger *device = new BatteryChargerYio(this);
+    auto pin = ConfigUtil::getValue(config, HW_CFG_PATH_GPIO_PIN, 108).toInt();
+
+    BatteryCharger *device = new BatteryChargerYio(pin, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
 }
 
 BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &config) {
-    Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "BatteryFuelGauge device: BQ27441";
-    // TODO(mze) read i2c device from config
-    BatteryFuelGauge *device = new BQ27441(getInterruptHandler(), "/dev/i2c-3", BQ27441_I2C_ADDRESS, this);
+    auto dev = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_DEV, DEF_I2C_DEVICE).toString();
+    auto id = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_ID, BQ27441_I2C_ADDRESS).toInt();
+
+    BatteryFuelGauge *device = new BQ27441(getInterruptHandler(), dev, id, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
 }
 
 InterruptHandler *HardwareFactoryYio::buildInterruptHandler(const QVariantMap &config) {
-    Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "InterruptHandler device: Mcp23017InterruptHandler";
-    // TODO(mze) read i2c device from config
-    InterruptHandler *device = new Mcp23017InterruptHandler("/dev/i2c-3", MCP23017_ADDRESS, 18, this);
+    auto dev = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_DEV, DEF_I2C_DEVICE).toString();
+    auto id = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_ID, MCP23017_ADDRESS).toInt();
+    auto gpio = ConfigUtil::getValue(config, HW_CFG_PATH_INTR_GPIO_PIN, 18).toInt();
+
+    InterruptHandler *device = new Mcp23017InterruptHandler(dev, id, gpio, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
 }
 
 HapticMotor *HardwareFactoryYio::buildHapticMotor(const QVariantMap &config) {
-    Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "HapticMotor device: Drv2605";
-    // TODO(mze) read i2c device from config
-    HapticMotor *device = new Drv2605("/dev/i2c-3", DRV2605_ADDR, this);
+    auto dev = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_DEV, DEF_I2C_DEVICE).toString();
+    auto id = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_ID, DRV2605_ADDR).toInt();
+
+    HapticMotor *device = new Drv2605(dev, id, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
@@ -141,17 +156,15 @@ HapticMotor *HardwareFactoryYio::buildHapticMotor(const QVariantMap &config) {
 
 GestureSensor *HardwareFactoryYio::buildGestureSensor(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "GestureSensor device: Apds9960GestureSensor";
-    GestureSensor *device = new Apds9960GestureSensor(p_apds9960, this);
+    GestureSensor *device = p_apds9960 ? new Apds9960GestureSensor(p_apds9960, this) : dummyGestureSensor();
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
 }
 
-LightSensor *HardwareFactoryYio::buildLightSensorr(const QVariantMap &config) {
+LightSensor *HardwareFactoryYio::buildLightSensor(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "LightSensor device: Apds9960LightSensor";
-    LightSensor *device = new Apds9960LightSensor(p_apds9960, this);
+    LightSensor *device = p_apds9960 ? new Apds9960LightSensor(p_apds9960, this) : dummyLightSensor();
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
@@ -159,8 +172,8 @@ LightSensor *HardwareFactoryYio::buildLightSensorr(const QVariantMap &config) {
 
 ProximitySensor *HardwareFactoryYio::buildProximitySensor(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "ProximitySensor: Apds9960ProximitySensor";
-    ProximitySensor *device = new Apds9960ProximitySensor(p_apds9960, getInterruptHandler(), this);
+    ProximitySensor *device =
+        p_apds9960 ? new Apds9960ProximitySensor(p_apds9960, getInterruptHandler(), this) : dummyProximitySensor();
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;

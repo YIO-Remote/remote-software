@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include <cassert>
-
 #include "../gesturesensor.h"
 #include "apds9960.h"
 
@@ -34,7 +32,7 @@ class Apds9960GestureSensor : public GestureSensor {
  public:
     explicit Apds9960GestureSensor(APDS9960* apds, QObject* parent = nullptr)
         : GestureSensor("APDS9960 gesture sensor", parent), p_apds(apds) {
-        assert(apds);
+        Q_ASSERT(apds);
     }
 
     // GestureSensor interface

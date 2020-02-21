@@ -26,15 +26,14 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include <cassert>
-
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960.proximity");
 
 Apds9960ProximitySensor::Apds9960ProximitySensor(APDS9960 *apds, InterruptHandler* interruptHandler, QObject *parent)
     : ProximitySensor("APDS990 proximity sensor", parent), p_apds(apds) {
-    assert(apds);
-    assert(interruptHandler);
+    Q_ASSERT(apds);
+    Q_ASSERT(interruptHandler);
+    qCDebug(CLASS_LC) << name();
 
     connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
         if (event == InterruptHandler::APDS9960) {

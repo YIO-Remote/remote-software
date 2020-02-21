@@ -20,22 +20,13 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include "hardwarefactory_rpi0.h"
+
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include <cassert>
-
-#include "../notifications.h"
-#include "hardwarefactory_rpi0.h"
+#include "../configutil.h"
 #include "hw_config.h"
-#include "mock/batterycharger_mock.h"
-#include "mock/batteryfuelgauge_mock.h"
-#include "mock/displaycontrol_mock.h"
-#include "mock/gesturesensor_mock.h"
-#include "mock/hapticmotor_mock.h"
-#include "mock/interrupthandler_mock.h"
-#include "mock/lightsensor_mock.h"
-#include "mock/proximitysensor_mock.h"
 #include "systemd.h"
 #include "systemservice_name.h"
 #include "webserver_lighttpd.h"
@@ -47,52 +38,52 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.rpi0");
 
-HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *parent)
-    : HardwareFactory(parent),
-      p_wifiControl(nullptr),
-      p_systemService(nullptr),
-      p_webServerControl(nullptr),
-      p_displayControl(nullptr),
-      p_batteryCharger(nullptr),
-      p_batteryFuelGauge(nullptr),
-      p_interruptHandler(nullptr),
-      p_hapticMotor(nullptr),
-      p_gestureSensor(nullptr),
-      p_lightSensor(nullptr),
-      p_proximitySensor(nullptr) {
+HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *parent) : HardwareFactoryDefault(parent) {
     Q_UNUSED(config)
-}
-
-int HardwareFactoryRPi0::initialize() {
-    if (!p_wifiControl->init()) {
-        Notifications::getInstance()->add(true, ERR_DEV_INIT_WIFI);
-        return Device::InitializationError;
-    }
-    qCDebug(CLASS_LC) << "WiFi initialized!";
-    return 0;
 }
 
 bool HardwareFactoryRPi0::buildDevices(const QVariantMap &config) {
     // InterruptHandler might be used by other devices, so make sure it's built first and available!
-    p_interruptHandler = buildInterruptHandler(config);
-    p_systemService = buildSystemService(config);
-    p_webServerControl = buildWebServerControl(config);
-    p_wifiControl = buildWifiControl(config);
-    p_displayControl = buildDisplayControl(config);
-    p_batteryCharger = buildBatteryCharger(config);
-    p_batteryFuelGauge = buildBatteryFuelGauge(config);
-    p_hapticMotor = buildHapticMotor(config);
-    p_gestureSensor = buildGestureSensor(config);
-    p_lightSensor = buildLightSensorr(config);
-    p_proximitySensor = buildProximitySensor(config);
+    QVariantMap deviceCfg = ConfigUtil::getValue(config, HW_CFG_IOEXPANDER).toMap();
+    p_interruptHandler = ConfigUtil::isEnabled(deviceCfg) ? buildInterruptHandler(deviceCfg) : dummyInterruptHandler();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_SYSTEMSERVICE).toMap();
+    p_systemService = ConfigUtil::isEnabled(deviceCfg) ? buildSystemService(deviceCfg) : dummySystemService();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_WEBSERVER).toMap();
+    p_webServerControl = ConfigUtil::isEnabled(deviceCfg) ? buildWebServerControl(deviceCfg) : dummyWebServerControl();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_WIFI).toMap();
+    p_wifiControl = ConfigUtil::isEnabled(deviceCfg) ? buildWifiControl(deviceCfg) : dummyWifiControl();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_DISPLAY).toMap();
+    p_displayControl = ConfigUtil::isEnabled(deviceCfg) ? buildDisplayControl(deviceCfg) : dummyDisplayControl();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_BATTERY_CHARGER).toMap();
+    p_batteryCharger = ConfigUtil::isEnabled(deviceCfg) ? buildBatteryCharger(deviceCfg) : dummyBatteryCharger();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_BATTERY_FUEL_GAUGE).toMap();
+    p_batteryFuelGauge = ConfigUtil::isEnabled(deviceCfg) ? buildBatteryFuelGauge(deviceCfg) : dummyBatteryFuelGauge();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_HAPTIC_MOTOR).toMap();
+    p_hapticMotor = ConfigUtil::isEnabled(deviceCfg) ? buildHapticMotor(deviceCfg) : dummyHapticMotor();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_GESTURE).toMap();
+    p_gestureSensor = ConfigUtil::isEnabled(deviceCfg) ? buildGestureSensor(deviceCfg) : dummyGestureSensor();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_LIGHT).toMap();
+    p_lightSensor = ConfigUtil::isEnabled(deviceCfg) ? buildLightSensor(deviceCfg) : dummyLightSensor();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_PROXIMITY).toMap();
+    p_proximitySensor = ConfigUtil::isEnabled(deviceCfg) ? buildProximitySensor(deviceCfg) : dummyProximitySensor();
 
     return true;
 }
 
 // -- System services - RPi uses systemd
 SystemService *HardwareFactoryRPi0::buildSystemService(const QVariantMap &config) {
-    QMap<QString, QVariant> systemdCfg = config.value(HW_CFG_SYSTEMSERVICE).toMap().value(HW_CFG_SYSTEMD).toMap();
-    QMap<QString, QVariant> serviceCfg = systemdCfg.value(HW_CFG_SYSTEMD_SERVICES).toMap();
+    QVariantMap systemdCfg = ConfigUtil::getValue(config, HW_CFG_SYSTEMD).toMap();
+    QVariantMap serviceCfg = systemdCfg.value(HW_CFG_SYSTEMD_SERVICES).toMap();
 
     QMap<SystemServiceName, QString> serviceNameMap;
     serviceNameMap.insert(SystemServiceName::WIFI,
@@ -122,8 +113,8 @@ SystemService *HardwareFactoryRPi0::buildSystemService(const QVariantMap &config
 
 // -- Web Server control - RPi uses httpd
 WebServerControl *HardwareFactoryRPi0::buildWebServerControl(const QVariantMap &config) {
-    QMap<QString, QVariant> webCfg = config.value(HW_CFG_WEBSERVER).toMap().value(HW_CFG_LIGHTTPD).toMap();
-    WebServerLighttpd *     lighttpd = new WebServerLighttpd(getSystemService(), this);
+    QVariantMap        webCfg = ConfigUtil::getValue(config, HW_CFG_LIGHTTPD).toMap();
+    WebServerLighttpd *lighttpd = new WebServerLighttpd(getSystemService(), this);
     lighttpd->setConfigFile(webCfg.value(HW_CFG_LIGHTTPD_CFG_FILE, HW_DEF_LIGHTTPD_CFG_FILE).toString());
     lighttpd->setWifiSetupConfig(webCfg.value(HW_CFG_LIGHTTPD_WIFI_CFG, HW_DEF_LIGHTTPD_WIFI_CFG).toString());
     lighttpd->setWebConfiguratorConfig(webCfg.value(HW_CFG_LIGHTTPD_WEB_CFG, HW_DEF_LIGHTTPD_WEB_CFG).toString());
@@ -131,9 +122,8 @@ WebServerControl *HardwareFactoryRPi0::buildWebServerControl(const QVariantMap &
 }
 
 // -- WiFi control - RPi uses wpa_supplicant control interface and as fallback the old shell scripts
-WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &config) {
-    WifiControl *           wifiControl = nullptr;
-    QMap<QString, QVariant> wifiCfg = config.value(HW_CFG_WIFI).toMap();
+WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &wifiCfg) {
+    WifiControl *wifiControl = nullptr;
     // determine which interface driver to use
     bool useShellScript = wifiCfg.value(HW_CFG_WIFI_USE_SH, HW_DEF_WIFI_USE_SH).toBool();
     bool wpaSupplicantAvailable = false;
@@ -144,8 +134,7 @@ WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &config) {
         qCDebug(CLASS_LC()) << "Using wpa_supplicant as WiFi control interface";
         WifiWpaSupplicant *wps = new WifiWpaSupplicant(getWebServerControl(), getSystemService(), this);
 
-        QMap<QString, QVariant> wpaCfg =
-            wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_WPA_SUPP).toMap();
+        QVariantMap wpaCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_WPA_SUPP).toMap();
         wps->setWpaSupplicantSocketPath(wpaCfg.value(HW_CFG_WIFI_WPA_SOCKET, HW_DEF_WIFI_WPA_SOCKET).toString());
         wps->setRemoveNetworksBeforeJoin(wpaCfg.value(HW_CFG_WIFI_RM_BEFORE_JOIN, HW_DEF_WIFI_RM_BEFORE_JOIN).toBool());
 
@@ -156,8 +145,7 @@ WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &config) {
         qCDebug(CLASS_LC()) << "Using shell scripts to control WiFi";
         WifiShellScripts *wss = new WifiShellScripts(getSystemService(), this);
 
-        QMap<QString, QVariant> shCfg =
-            wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_SHELLSCRIPT).toMap();
+        QVariantMap shCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_SHELLSCRIPT).toMap();
         wss->setUseSudo(shCfg.value(HW_CFG_WIFI_SH_SUDO, HW_DEF_WIFI_SH_SUDO).toBool());
         wss->setScriptTimeout(shCfg.value(HW_CFG_WIFI_SH_TIMEOUT, HW_DEF_WIFI_SH_TIMEOUT).toInt());
         wss->setScriptGetIp(shCfg.value(HW_CFG_WIFI_SH_GET_IP, HW_DEF_WIFI_SH_GET_IP).toString());
@@ -172,7 +160,7 @@ WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &config) {
         wifiControl = wss;
     }
 
-    assert(wifiControl);
+    Q_ASSERT(wifiControl);
 
     wifiControl->setMaxScanResults(wifiCfg.value(HW_CFG_WIFI_SCAN_RESULTS, HW_DEF_WIFI_SCAN_RESULTS).toInt());
     wifiControl->setPollInterval(wifiCfg.value(HW_CFG_WIFI_POLL_INTERVAL, HW_DEF_WIFI_POLL_INTERVAL).toInt());
@@ -184,50 +172,40 @@ WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &config) {
 
 DisplayControl *HardwareFactoryRPi0::buildDisplayControl(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using DisplayControlMock";
-    // TODO(zehnm) create a minimal RPi HDMI display controller? We could certainly switch it on and off.
-    // What about the RPi 7" screen brightness controll?
-    return new DisplayControlMock(this);
+    return dummyDisplayControl();
 }
 
 BatteryCharger *HardwareFactoryRPi0::buildBatteryCharger(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using BatteryChargerMock";
-    return new BatteryChargerMock(this);
+    return dummyBatteryCharger();
 }
 
 BatteryFuelGauge *HardwareFactoryRPi0::buildBatteryFuelGauge(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using BatteryFuelGaugeMock";
-    return new BatteryFuelGaugeMock(this);
+    return dummyBatteryFuelGauge();
 }
 
 InterruptHandler *HardwareFactoryRPi0::buildInterruptHandler(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using InterruptHandlerMock";
-    return new InterruptHandlerMock(this);
+    return dummyInterruptHandler();
 }
 
 HapticMotor *HardwareFactoryRPi0::buildHapticMotor(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using HapticMotorMock";
-    return new HapticMotorMock(this);
+    return dummyHapticMotor();
 }
 
 GestureSensor *HardwareFactoryRPi0::buildGestureSensor(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using GestureSensorMock";
-    return new GestureSensorMock(this);
+    return dummyGestureSensor();
 }
 
-LightSensor *HardwareFactoryRPi0::buildLightSensorr(const QVariantMap &config) {
+LightSensor *HardwareFactoryRPi0::buildLightSensor(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using LightSensorMock";
-    return new LightSensorMock(this);
+    return dummyLightSensor();
 }
 
 ProximitySensor *HardwareFactoryRPi0::buildProximitySensor(const QVariantMap &config) {
     Q_UNUSED(config)
-    qCDebug(CLASS_LC) << "Using ProximitySensorMock";
-    return new ProximitySensorMock(this);
+    return dummyProximitySensor();
 }

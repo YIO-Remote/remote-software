@@ -33,17 +33,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#include "drv2605.h"
 
 #include <unistd.h>
 
-#include "drv2605.h"
+#include <QLoggingCategory>
+#include <QtDebug>
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.DRV2605");
 
 Drv2605::Drv2605(const QString& i2cDevice, int i2cDeviceId, QObject* parent)
-    : HapticMotor("DRV2605 haptic motor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {}
+    : HapticMotor("DRV2605 haptic motor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {
+    Q_ASSERT(!i2cDevice.isEmpty());
+    qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId;
+}
 
 Drv2605::~Drv2605() { close(); }
 
@@ -144,7 +147,4 @@ void Drv2605::writeRegister8(uint8_t reg, uint8_t val) {
     wiringPiI2CWriteReg8(m_i2cFd, reg, val);
 }
 
-
-const QLoggingCategory &Drv2605::logCategory() const {
-    return CLASS_LC();
-}
+const QLoggingCategory& Drv2605::logCategory() const { return CLASS_LC(); }

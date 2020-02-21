@@ -20,9 +20,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QJsonDocument>
-
 #include "config.h"
+
+#include <QJsonDocument>
 
 const QString Config::KEY_ID = CFG_KEY_ID;
 const QString Config::KEY_FRIENDLYNAME = CFG_KEY_FRIENDLYNAME;
@@ -34,7 +34,6 @@ const QString Config::KEY_TYPE = CFG_KEY_TYPE;
 const QString Config::KEY_MDNS = CFG_KEY_MDNS;
 const QString Config::KEY_WORKERTHREAD = CFG_KEY_WORKERTHREAD;
 const QString Config::OBJ_DATA = CFG_OBJ_DATA;
-
 
 Config *Config::s_instance = nullptr;
 

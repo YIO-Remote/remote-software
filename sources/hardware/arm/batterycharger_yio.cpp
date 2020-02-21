@@ -21,31 +21,30 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#include "batterycharger_yio.h"
 
 #include <wiringPi.h>
 
-#include "batterycharger_yio.h"
-
-#define CLK 107
-#define MOSI 106
-#define CS 105
-#define RST 104
+#include <QLoggingCategory>
+#include <QtDebug>
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.battery");
 
-BatteryChargerYio::BatteryChargerYio(QObject *parent) : BatteryCharger("YIO battery charger", parent) {}
+BatteryChargerYio::BatteryChargerYio(int pin, QObject *parent)
+    : BatteryCharger("YIO battery charger", parent), m_pin(pin) {
+    Q_ASSERT(pin);
+    qCDebug(CLASS_LC()) << name() << "on GPIO" << pin;
+}
 
 void BatteryChargerYio::batteryChargingOn() {
-    pinMode(108, OUTPUT);
-    digitalWrite(108, LOW);
+    pinMode(m_pin, OUTPUT);
+    digitalWrite(m_pin, LOW);
     qCDebug(CLASS_LC) << "Turning battery charging on";
 }
 
 void BatteryChargerYio::batteryChargingOff() {
-    pinMode(108, OUTPUT);
-    digitalWrite(108, HIGH);
+    pinMode(m_pin, OUTPUT);
+    digitalWrite(m_pin, HIGH);
     qCDebug(CLASS_LC) << "Turning battery charging off";
 }
 

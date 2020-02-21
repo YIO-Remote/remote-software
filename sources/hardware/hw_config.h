@@ -22,6 +22,20 @@
 
 #pragma once
 
+#define HW_CFG_PATH_I2C_DEV       "i2c/device"
+#define HW_CFG_PATH_I2C_ID        "i2c/id"
+
+#define HW_CFG_PATH_GPIO_PIN      "gpio/pin"
+#define HW_CFG_PATH_INTR_GPIO_PIN "interrupt/gpio/pin"
+
+#define HW_CFG_DISPLAY            "display"
+#define HW_CFG_IOEXPANDER         "ioExpander"
+#define HW_CFG_BATTERY_CHARGER    "batteryCharger"
+#define HW_CFG_BATTERY_FUEL_GAUGE "batteryFuelGauge"
+#define HW_CFG_HAPTIC_MOTOR       "hapticMotor"
+#define HW_CFG_GESTURE            "gesture"
+#define HW_CFG_LIGHT              "light"
+#define HW_CFG_PROXIMITY          "proximity"
 
 #define HW_CFG_SYSTEMSERVICE      "systemservice"
 

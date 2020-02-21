@@ -45,52 +45,101 @@ class HardwareFactory : public QObject {
 
  public:
     /**
-     * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
+     * @brief Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param configFileName the JSON configuration file name to load the hardware configuration from.
      * @param schemaFileName the JSON schema file to validate the configuration file.
-     * @return The concrete instance or nullptr if construction failed. In this case the application should be
+     * @return The concrete instance or nullptr if construction failed. In this case the application MUST be
      * terminated.
      */
     static HardwareFactory* build(const QString& configFileName, const QString& schemaFileName);
 
     /**
-     * @brief build Constructs the singleton hardware factory with a concrete implementation of the factory.
+     * @brief Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param config The configuration map to retrieve build configuration options.
-     * @return The concrete instance or nullptr if construction failed. In this case the application should be
+     * @return The concrete instance or nullptr if construction failed. In this case the application MUST be
      * terminated.
      */
     static HardwareFactory* build(const QVariantMap& config);
 
+    /**
+     * @brief Initialization hook function for the concrete factory to initialize all devices.
+     * All devices must be ready to use after this call.
+     * @return Initialization error code. 0 = no error.
+     */
     virtual int initialize() = 0;
 
     /**
-     * @brief instance Returns a concrete HardwareFactory implementation
-     * @return The hardware factory or nullptr if the factory has not yet been initialized
+     * @brief Returns a concrete HardwareFactory implementation.
+     * @return The hardware factory or nullptr if the factory has not yet been initialized.
      */
     static HardwareFactory* instance();
 
+    /**
+     * @brief Returns the concrete WifiControl device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual WifiControl* getWifiControl() = 0;
 
+    /**
+     * @brief Returns the concrete SystemService device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual SystemService* getSystemService() = 0;
 
+    /**
+     * @brief Returns the concrete WebServerControl device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual WebServerControl* getWebServerControl() = 0;
 
+    /**
+     * @brief Returns the concrete DisplayControl device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual DisplayControl* getDisplayControl() = 0;
 
+    /**
+     * @brief Returns the concrete BatteryCharger device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual BatteryCharger* getBatteryCharger() = 0;
 
+    /**
+     * @brief Returns the concrete BatteryFuelGauge device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual BatteryFuelGauge* getBatteryFuelGauge() = 0;
 
+    /**
+     * @brief Returns the concrete InterruptHandler device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual InterruptHandler* getInterruptHandler() = 0;
 
+    /**
+     * @brief Returns the concrete HapticMotor device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual HapticMotor* getHapticMotor() = 0;
 
+    /**
+     * @brief Returns the concrete GestureSensor device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual GestureSensor* getGestureSensor() = 0;
 
+    /**
+     * @brief Returns the concrete LightSensor device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual LightSensor* getLightSensor() = 0;
 
+    /**
+     * @brief Returns the concrete ProximitySensor device implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
     virtual ProximitySensor* getProximitySensor() = 0;
 
     // QML callback providers for qmlRegisterSingletonType
@@ -107,10 +156,24 @@ class HardwareFactory : public QObject {
     explicit HardwareFactory(QObject* parent = nullptr);
     virtual ~HardwareFactory();
 
-    bool virtual buildDevices(const QVariantMap& config) = 0;
+    /**
+     * @brief Hook function for the concrete implementation to construct all devices before the client can access an
+     * instance of the factory.
+     * @details This method is called from the build() operation.
+     * @see initialize() for device initialization.
+     * @param config The configuration map to retrieve build configuration options.
+     * @return
+     */
+    virtual bool buildDevices(const QVariantMap& config) = 0;
 
  protected slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
-    void onError(Device::DeviceError deviceError, const QString &message);
+    /**
+     * @brief Error callback function for device drivers. InitializationError and CommunicationError are propagated as
+     * user notifications.
+     * @param deviceError The error type.
+     * @param message A human readable message to display. Preferrably a translated text.
+     */
+    void onError(Device::DeviceError deviceError, const QString& message);
 
  private:
     static HardwareFactory* s_instance;

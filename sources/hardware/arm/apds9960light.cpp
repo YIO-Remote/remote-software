@@ -26,13 +26,12 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include <cassert>
-
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960.light");
 
 Apds9960LightSensor::Apds9960LightSensor(APDS9960 *apds, QObject *parent)
     : LightSensor("APDS9960 light sensor", parent), p_apds(apds) {
-    assert(apds);
+    Q_ASSERT(apds);
+    qCDebug(CLASS_LC) << name();
 }
 
 int Apds9960LightSensor::readAmbientLight() {

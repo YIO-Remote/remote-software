@@ -39,10 +39,14 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.display");
 
-DisplayControlYio::DisplayControlYio(QObject *parent) : DisplayControl("YIO display control", parent) {
+DisplayControlYio::DisplayControlYio(int pin, QObject *parent)
+    : DisplayControl("YIO display control", parent) {
+    Q_ASSERT(pin);
+    qCDebug(CLASS_LC()) << name() << "on GPIO" << pin;
+
     // move the low level hardware handling to a separate thread
-    m_thread                      = new QThread(this);
-    DisplayControlYioThread *dcyt = new DisplayControlYioThread();
+    m_thread = new QThread(this);
+    DisplayControlYioThread *dcyt = new DisplayControlYioThread(pin);
 
     connect(this, &DisplayControlYio::enterStandby, dcyt, &DisplayControlYioThread::enterStandby);
     connect(this, &DisplayControlYio::leaveStandby, dcyt, &DisplayControlYioThread::leaveStandby);
@@ -126,8 +130,8 @@ void DisplayControlYioThread::setBrightness(int from, int to) {
         to = 100;
     }
 
-    if (from == 0 && digitalRead(26) == 0) {
-        pinMode(26, PWM_OUTPUT);
+    if (from == 0 && digitalRead(m_pin) == 0) {
+        pinMode(m_pin, PWM_OUTPUT);
         pwmSetMode(PWM_MODE_MS);
         pwmSetClock(1000);
         pwmSetRange(100);
@@ -140,18 +144,18 @@ void DisplayControlYioThread::setBrightness(int from, int to) {
     if (from >= to) {
         // dim down
         for (int i = from; i > to - 1; i--) {
-            pwmWrite(26, i);
+            pwmWrite(m_pin, i);
             delay(10);
             if (i == 0) {
                 delay(100);
-                pinMode(26, OUTPUT);
-                digitalWrite(26, 0);
+                pinMode(m_pin, OUTPUT);
+                digitalWrite(m_pin, 0);
             }
         }
     } else {
         // dim up
         for (int i = from; i < to + 1; i++) {
-            pwmWrite(26, i);
+            pwmWrite(m_pin, i);
             delay(10);
         }
     }
@@ -174,7 +178,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
 
     digitalWrite(CS, LOW);
     control_bit = 0x0000;
-    Addr        = (control_bit | Addr);
+    Addr = (control_bit | Addr);
 
     for (i = 0; i < 9; i++) {
         if (Addr & (1 << (8 - i))) {
@@ -202,7 +206,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data0       = (control_bit | Data0);
+    Data0 = (control_bit | Data0);
 
     // data
     for (i = 0; i < 9; i++) {
@@ -229,7 +233,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data1       = (control_bit | Data1);
+    Data1 = (control_bit | Data1);
 
     // data
     for (i = 0; i < 9; i++) {

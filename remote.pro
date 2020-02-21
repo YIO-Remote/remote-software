@@ -70,6 +70,7 @@ isEmpty(INTG_LIB_PATH) {
 HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \
     sources/config.h \
+    sources/configutil.h \
     sources/entities/climate.h \
     sources/entities/remote.h \
     sources/entities/switch.h \
@@ -78,6 +79,7 @@ HEADERS += \
     sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
     sources/hardware/buttonhandler.h \
+    sources/hardware/hardwarefactory_default.h \
     sources/hardware/mock/batterycharger_mock.h \
     sources/hardware/mock/batteryfuelgauge_mock.h \
     sources/hardware/displaycontrol.h \
@@ -101,7 +103,6 @@ HEADERS += \
     sources/hardware/device.h \
     sources/hardware/touchdetect.h \
     sources/hardware/hardwarefactory.h \
-    sources/hardware/mock/hardwarefactory_mock.h \
     sources/hardware/hw_config.h \
     sources/hardware/interrupthandler.h \
     sources/hardware/systemd.h \
@@ -130,12 +131,14 @@ HEADERS += \
 SOURCES += \
     components/media_player/sources/utils_mediaplayer.cpp \
     sources/config.cpp \
+    sources/configutil.cpp \
     sources/entities/climate.cpp \
     sources/entities/remote.cpp \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
     sources/hardware/buttonhandler.cpp \
     sources/hardware/device.cpp \
+    sources/hardware/hardwarefactory_default.cpp \
     sources/hardware/touchdetect.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
@@ -143,7 +146,6 @@ SOURCES += \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
     sources/hardware/hardwarefactory.cpp \
-    sources/hardware/mock/hardwarefactory_mock.cpp \
     sources/hardware/systemd.cpp \
     sources/hardware/systemservice.cpp \
     sources/hardware/mock/systemservice_mock.cpp \

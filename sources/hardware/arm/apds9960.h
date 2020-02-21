@@ -173,7 +173,7 @@ typedef unsigned char byte;
 
 class APDS9960 : public Device {
  public:
-    explicit APDS9960(const QString &i2cDevice = "/dev/i2c-3", int i2cDeviceId = APDS9960_ADDRESS,
+    explicit APDS9960(const QString &i2cDevice, int i2cDeviceId = APDS9960_ADDRESS,
                       QObject *parent = nullptr);
     ~APDS9960() override;
 

@@ -47,10 +47,14 @@ class HardwareFactoryYio : public HardwareFactoryRPi0 {
 
     GestureSensor *buildGestureSensor(const QVariantMap &config) override;
 
-    LightSensor *buildLightSensorr(const QVariantMap &config) override;
+    LightSensor *buildLightSensor(const QVariantMap &config) override;
 
     ProximitySensor *buildProximitySensor(const QVariantMap &config) override;
 
  private:
+    // shared device for gesture / light / proximity sensors
     APDS9960 *p_apds9960;
+
+    // default values for YIO
+    static const QString DEF_I2C_DEVICE;
 };

@@ -35,7 +35,7 @@ class DisplayControlYio : public DisplayControl {
     Q_OBJECT
 
  public:
-    explicit DisplayControlYio(QObject* parent = nullptr);
+    explicit DisplayControlYio(int pin, QObject* parent = nullptr);
     ~DisplayControlYio() override;
 
     bool setMode(Mode mode) override;
@@ -59,12 +59,12 @@ class DisplayControlYio : public DisplayControl {
     void close() override;
 
  protected:
-    const QLoggingCategory &logCategory() const override;
+    const QLoggingCategory& logCategory() const override;
 
  private:
     int m_currentBrightness = 100;
     int m_ambientBrightness = 100;
-    int m_userBrightness    = 100;
+    int m_userBrightness = 100;
 
     QThread* m_thread;
 };
@@ -73,12 +73,12 @@ class DisplayControlYioThread : public QObject {
     Q_OBJECT
 
     // define timing
-    struct timespec ts  = {0, 40L};
+    struct timespec ts = {0, 40L};
     struct timespec ts2 = {0, 100L};
     struct timespec ts3 = {0, 300L};
 
  public:
-    explicit DisplayControlYioThread(QObject* parent = nullptr) { Q_UNUSED(parent) }
+    explicit DisplayControlYioThread(int pin) : m_pin(pin) {}
     virtual ~DisplayControlYioThread() {}
 
  private:
@@ -88,4 +88,8 @@ class DisplayControlYioThread : public QObject {
     void setBrightness(int from, int to);
     void enterStandby();
     void leaveStandby();
+
+ private:
+    // GPIO pin
+    int m_pin;
 };

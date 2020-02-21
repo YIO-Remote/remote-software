@@ -38,7 +38,9 @@ BQ27441::BQ27441(InterruptHandler *interruptHandler, const QString &i2cDevice, i
       m_i2cDevice(i2cDevice),
       m_i2cDeviceId(i2cDeviceId),
       m_i2cFd(0) {
-    assert(interruptHandler);
+    Q_ASSERT(interruptHandler);
+    Q_ASSERT(!i2cDevice.isEmpty());
+    qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId;
 
     connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
         if (event == InterruptHandler::BATTERY) {

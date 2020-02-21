@@ -33,7 +33,7 @@ class Mcp23017InterruptHandler : public InterruptHandler {
     Q_OBJECT
 
  public:
-    explicit Mcp23017InterruptHandler(const QString &i2cDevice = "/dev/i2c-3", int i2cDeviceId = MCP23017_ADDRESS,
+    explicit Mcp23017InterruptHandler(const QString &i2cDevice, int i2cDeviceId = MCP23017_ADDRESS,
                                       int gpio = 18, QObject *parent = nullptr);
 
     // ~Mcp23017InterruptHandler() override {}

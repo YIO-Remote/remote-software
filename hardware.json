@@ -1,5 +1,68 @@
 {
+    "display": {
+        "yio": {
+            "backlight": {
+                "enabled": true,
+                "gpio": 26
+            },
+            "standby": {
+                "enabled": true,
+                "spi": {
+                    "clk":  107,
+                    "mosi": 106,
+                    "cs":   105,
+                    "rst":  104
+                }
+            }
+        }
+    },
+    "gesture": {
+        "enabled": true
+    },
+    "light": {
+        "enabled": true
+    },
+    "proximity": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 57
+        }
+    },
+    "batteryCharger": {
+        "enabled": true,
+        "gpio": {
+            "pin": 108
+        }
+    },
+    "batteryFuelGauge": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 85
+        }
+    },
+    "ioExpander": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 32
+        },
+        "interrupt": {
+            "gpio": {
+                "pin": 18
+            }
+        }
+    },
+    "hapticMotor": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 90
+        }
+    },
     "systemservice": {
+        "enabled": true,
         "systemd": {
             "sudo" : false,
             "timeout" : 30000,
@@ -17,6 +80,7 @@
         }
     },
     "wifi": {
+        "enabled": true,
         "maxScanResults": 20,
         "joinRetryCount": 5,
         "joinRetryDelay": 3000,
@@ -45,6 +109,7 @@
         }
     },
     "webserver" : {
+        "enabled": true,
         "lighttpd" : {
             "configFile": "/etc/lighttpd/lighttpd.conf",
             "wifiSetupConfig": "/etc/lighttpd/lighttpd-wifisetup.conf",

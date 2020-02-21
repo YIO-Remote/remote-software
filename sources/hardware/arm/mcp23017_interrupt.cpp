@@ -21,16 +21,23 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include "mcp23017_interrupt.h"
+
 #include <QLoggingCategory>
 #include <QtDebug>
-
-#include "mcp23017_interrupt.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.MCP23017");
 
 Mcp23017InterruptHandler::Mcp23017InterruptHandler(const QString& i2cDevice, int i2cDeviceId, int gpio, QObject* parent)
-    : InterruptHandler("Mcp23017InterruptHandler", parent)
-    , m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_gpio(gpio) {
+    : InterruptHandler("Mcp23017 interrupt handler", parent),
+      m_i2cDevice(i2cDevice),
+      m_i2cDeviceId(i2cDeviceId),
+      m_gpio(gpio) {
+    Q_ASSERT(!i2cDevice.isEmpty());
+    Q_ASSERT(i2cDeviceId);
+    Q_ASSERT(gpio);
+    qCDebug(CLASS_LC) << name() << i2cDevice << "with id:" << i2cDeviceId << "using interrupt on gpio" << gpio;
+
     m_gpioValueDevice = QString("/sys/class/gpio/gpio%1/value").arg(gpio);
 }
 
@@ -70,7 +77,7 @@ bool Mcp23017InterruptHandler::setupGPIO() {
     exportFile.close();
 
     QString directionDev = QString("/sys/class/gpio/gpio%1/direction").arg(m_gpio);
-    QFile directionFile(directionDev);
+    QFile   directionFile(directionDev);
     if (!directionFile.open(QIODevice::WriteOnly)) {
         qCCritical(CLASS_LC) << "Error opening:" << directionDev;
         return false;
@@ -79,7 +86,7 @@ bool Mcp23017InterruptHandler::setupGPIO() {
     directionFile.close();
 
     QString edgeDev = QString("/sys/class/gpio/gpio%1/edge").arg(m_gpio);
-    QFile edgeFile(edgeDev);
+    QFile   edgeFile(edgeDev);
     if (!edgeFile.open(QIODevice::WriteOnly)) {
         qCCritical(CLASS_LC) << "Error opening:" << edgeDev;
         return false;
@@ -117,6 +124,4 @@ void Mcp23017InterruptHandler::interruptHandler() {
     delay(10);
 }
 
-const QLoggingCategory &Mcp23017InterruptHandler::logCategory() const {
-    return CLASS_LC();
-}
+const QLoggingCategory& Mcp23017InterruptHandler::logCategory() const { return CLASS_LC(); }

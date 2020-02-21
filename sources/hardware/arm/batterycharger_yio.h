@@ -32,9 +32,13 @@ class BatteryChargerYio : public BatteryCharger {
     Q_INVOKABLE void batteryChargingOn() override;
     Q_INVOKABLE void batteryChargingOff() override;
 
-    explicit BatteryChargerYio(QObject *parent = nullptr);
+    explicit BatteryChargerYio(int pin, QObject *parent = nullptr);
 
     // Device interface
  protected:
     const QLoggingCategory &logCategory() const override;
+
+ private:
+    // GPIO pin
+    int m_pin;
 };
