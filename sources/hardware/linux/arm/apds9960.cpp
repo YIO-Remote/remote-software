@@ -33,8 +33,8 @@
 
 #include <unistd.h>
 
-#include "../device.h"
-#include "../proximitysensor.h"
+#include "../../device.h"
+#include "../../proximitysensor.h"
 #include "apds9960.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960");
@@ -42,6 +42,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960");
 APDS9960::APDS9960(const QString &i2cDevice, int i2cDeviceId, QObject *parent)
     : Device("APDS9960 sensor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {
     Q_ASSERT(!i2cDevice.isEmpty());
+    Q_ASSERT(i2cDeviceId);
     qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId;
 }
 

@@ -1,7 +1,6 @@
 /******************************************************************************
  *
  * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -21,24 +20,15 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#pragma once
+#include "hw_factory_win.h"
 
-#include "../batterycharger.h"
+HardwareFactoryWindows::HardwareFactoryWindows(const QVariantMap &config, QObject *parent)
+    : HardwareFactoryDefault(parent) {
+    Q_UNUSED(config)
+}
 
-class BatteryChargerYio : public BatteryCharger {
-    Q_OBJECT
-
- public:
-    Q_INVOKABLE void batteryChargingOn() override;
-    Q_INVOKABLE void batteryChargingOff() override;
-
-    explicit BatteryChargerYio(int pin, QObject *parent = nullptr);
-
-    // Device interface
- protected:
-    const QLoggingCategory &logCategory() const override;
-
- private:
-    // GPIO pin
-    int m_pin;
-};
+bool HardwareFactoryWindows::buildDevices(const QVariantMap &config) {
+    // TODO(anyone) add your Windows specific device building here...
+    // At the moment there's no Windows specific drivers, so we're just using the dummy implementations!
+    return HardwareFactoryDefault::buildDevices(config);
+}

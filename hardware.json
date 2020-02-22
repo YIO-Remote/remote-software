@@ -1,18 +1,16 @@
 {
     "display": {
-        "yio": {
+        "control": {
+            "enabled": true,
             "backlight": {
-                "enabled": true,
-                "gpio": 26
-            },
-            "standby": {
-                "enabled": true,
-                "spi": {
-                    "clk":  107,
-                    "mosi": 106,
-                    "cs":   105,
-                    "rst":  104
+                "gpio": {
+                    "pin": 26
                 }
+            },
+            "spi-over-gpio": {
+                "clk":  107,
+                "mosi": 106,
+                "cs":   105
             }
         }
     },
@@ -42,7 +40,7 @@
             "id": 85
         }
     },
-    "ioExpander": {
+    "buttonInterruptHandler": {
         "enabled": true,
         "i2c": {
             "device": "/dev/i2c-3",
@@ -52,6 +50,13 @@
             "gpio": {
                 "pin": 18
             }
+        }
+    },
+    "wiringPi": {
+        "enabled": true,
+        "ioExpander": {
+            "pinBase": 100,
+            "i2cId": 33
         }
     },
     "hapticMotor": {

@@ -22,18 +22,17 @@
 
 #pragma once
 
-#include "hardwarefactory_default.h"
+#include "../hardwarefactory_default.h"
 
-// TODO(zehnm) This is more a Linux factory than a specific Raspberry Pi factory.
-//             Should be renamed and once there is specific RPi functionality create a dedicated factory.
 /**
- * @brief Concrete hardware factory implementation for the Raspberry Pi Zero in the YIO Remote.
+ * @brief Generic Linux hardware factory implementation.
+ * May be sub-classed by more specific hardware factories. E.g. RPi or YIO remote.
  */
-class HardwareFactoryRPi0 : public HardwareFactoryDefault {
+class HardwareFactoryLinux : public HardwareFactoryDefault {
     Q_OBJECT
 
  public:
-    explicit HardwareFactoryRPi0(const QVariantMap &config, QObject *parent = nullptr);
+    explicit HardwareFactoryLinux(const QVariantMap &config, QObject *parent = nullptr);
 
     // HardwareFactory interface
  protected:
@@ -44,12 +43,4 @@ class HardwareFactoryRPi0 : public HardwareFactoryDefault {
     virtual WifiControl *     buildWifiControl(const QVariantMap &config);
     virtual SystemService *   buildSystemService(const QVariantMap &config);
     virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
-    virtual DisplayControl *  buildDisplayControl(const QVariantMap &config);
-    virtual BatteryCharger *  buildBatteryCharger(const QVariantMap &config);
-    virtual BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config);
-    virtual InterruptHandler *buildInterruptHandler(const QVariantMap &config);
-    virtual HapticMotor *     buildHapticMotor(const QVariantMap &config);
-    virtual GestureSensor *   buildGestureSensor(const QVariantMap &config);
-    virtual LightSensor *     buildLightSensor(const QVariantMap &config);
-    virtual ProximitySensor * buildProximitySensor(const QVariantMap &config);
 };

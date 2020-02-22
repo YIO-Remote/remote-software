@@ -23,41 +23,22 @@
 
 #pragma once
 
-#include <QFile>
-#include <QSocketNotifier>
+#include "../../batterycharger.h"
 
-#include "../interrupthandler.h"
-#include "mcp23017_handler.h"
-
-class Mcp23017InterruptHandler : public InterruptHandler {
+class BatteryChargerYio : public BatteryCharger {
     Q_OBJECT
 
  public:
-    explicit Mcp23017InterruptHandler(const QString &i2cDevice, int i2cDeviceId = MCP23017_ADDRESS,
-                                      int gpio = 18, QObject *parent = nullptr);
+    Q_INVOKABLE void batteryChargingOn() override;
+    Q_INVOKABLE void batteryChargingOff() override;
 
-    // ~Mcp23017InterruptHandler() override {}
-
-    Q_INVOKABLE void shutdown() override { mcp.shutdown(); }
+    explicit BatteryChargerYio(int pin, QObject *parent = nullptr);
 
     // Device interface
- public:
-    bool open() override;
-
  protected:
     const QLoggingCategory &logCategory() const override;
 
  private:
-    bool setupGPIO();
-
-    void interruptHandler();
-
- private:
-    QString          m_i2cDevice;
-    int              m_i2cDeviceId;
-    int              m_gpio;
-    MCP23017         mcp = MCP23017();
-    QSocketNotifier *notifier;
-    QFile *          file;
-    QString          m_gpioValueDevice;
+    // GPIO pin
+    int m_pin;
 };

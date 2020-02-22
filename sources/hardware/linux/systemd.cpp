@@ -24,7 +24,7 @@
 #include <QProcess>
 #include <QtDebug>
 
-#include "hw_config.h"
+#include "../hw_config.h"
 #include "systemd.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "systemd");

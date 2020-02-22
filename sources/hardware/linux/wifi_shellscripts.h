@@ -26,8 +26,8 @@
 #include <QObject>
 #include <QProcess>
 
-#include "systemservice.h"
-#include "wifi_control.h"
+#include "../systemservice.h"
+#include "../wifi_control.h"
 
 /**
  * @brief Deprecated WifiControl implementation using the legacy shell scripts

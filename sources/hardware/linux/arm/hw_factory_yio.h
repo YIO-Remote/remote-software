@@ -22,34 +22,37 @@
 
 #pragma once
 
-#include "arm/apds9960.h"
-#include "hardwarefactory_rpi0.h"
+#include "apds9960.h"
+#include "../hw_factory_linux.h"
 
-class HardwareFactoryYio : public HardwareFactoryRPi0 {
+/**
+ * @brief Concrete hardware factory for the YIO Remote running on Raspberry Pi Zero remote-os.
+ */
+class HardwareFactoryYio : public HardwareFactoryLinux {
     Q_OBJECT
 
  public:
     explicit HardwareFactoryYio(const QVariantMap &config, QObject *parent = nullptr);
 
+    // HardwareFactory interface
+ public:
     int initialize() override;
 
-    // HardwareFactoryRPi0 interface
  protected:
-    DisplayControl *buildDisplayControl(const QVariantMap &config) override;
+    bool buildDevices(const QVariantMap &config) override;
 
-    BatteryCharger *buildBatteryCharger(const QVariantMap &config) override;
+    // Local helper methods
+ private:
+    bool  initializeWiringPi(const QVariantMap &config);
 
-    BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config) override;
-
-    InterruptHandler *buildInterruptHandler(const QVariantMap &config) override;
-
-    HapticMotor *buildHapticMotor(const QVariantMap &config) override;
-
-    GestureSensor *buildGestureSensor(const QVariantMap &config) override;
-
-    LightSensor *buildLightSensor(const QVariantMap &config) override;
-
-    ProximitySensor *buildProximitySensor(const QVariantMap &config) override;
+    InterruptHandler *buildInterruptHandler(const QVariantMap &config);
+    DisplayControl *  buildDisplayControl(const QVariantMap &config);
+    BatteryCharger *  buildBatteryCharger(const QVariantMap &config);
+    BatteryFuelGauge *buildBatteryFuelGauge(const QVariantMap &config);
+    HapticMotor *     buildHapticMotor(const QVariantMap &config);
+    GestureSensor *   buildGestureSensor(const QVariantMap &config);
+    LightSensor *     buildLightSensor(const QVariantMap &config);
+    ProximitySensor * buildProximitySensor(const QVariantMap &config);
 
  private:
     // shared device for gesture / light / proximity sensors

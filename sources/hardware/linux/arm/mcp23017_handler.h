@@ -33,9 +33,10 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-#include "../interrupthandler.h"
+#include "../../interrupthandler.h"
 
-#define MCP23017_ADDRESS 0x20
+#define MCP23017_ADDRESS  0x20
+#define MCP23017_ADDRESS2 0x21
 
 // registers
 #define MCP23017_IODIRA 0x00

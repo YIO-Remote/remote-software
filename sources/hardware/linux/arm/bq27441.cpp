@@ -28,7 +28,7 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include "../../notifications.h"
+#include "../../../notifications.h"
 #include "QFile"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.BQ27441");

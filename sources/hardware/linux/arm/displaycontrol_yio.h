@@ -29,13 +29,13 @@
 
 #include <QThread>
 
-#include "../displaycontrol.h"
+#include "../../displaycontrol.h"
 
 class DisplayControlYio : public DisplayControl {
     Q_OBJECT
 
  public:
-    explicit DisplayControlYio(int pin, QObject* parent = nullptr);
+    explicit DisplayControlYio(int backlightPin, QObject* parent = nullptr);
     ~DisplayControlYio() override;
 
     bool setMode(Mode mode) override;
@@ -78,7 +78,7 @@ class DisplayControlYioThread : public QObject {
     struct timespec ts3 = {0, 300L};
 
  public:
-    explicit DisplayControlYioThread(int pin) : m_pin(pin) {}
+    explicit DisplayControlYioThread(int backlightPin) : m_backlightPin(backlightPin) {}
     virtual ~DisplayControlYioThread() {}
 
  private:
@@ -91,5 +91,5 @@ class DisplayControlYioThread : public QObject {
 
  private:
     // GPIO pin
-    int m_pin;
+    int m_backlightPin;
 };

@@ -35,7 +35,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-#include "../device.h"
+#include "../../device.h"
 
 #define APDS9960_ADDRESS (0x39)
 

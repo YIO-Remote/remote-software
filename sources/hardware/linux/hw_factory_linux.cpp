@@ -20,15 +20,15 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include "hardwarefactory_rpi0.h"
+#include "hw_factory_linux.h"
 
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include "../configutil.h"
-#include "hw_config.h"
+#include "../../configutil.h"
+#include "../hw_config.h"
+#include "../systemservice_name.h"
 #include "systemd.h"
-#include "systemservice_name.h"
 #include "webserver_lighttpd.h"
 #include "wifi_shellscripts.h"
 
@@ -36,18 +36,16 @@
 #include "wifi_wpasupplicant.h"
 #endif
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.rpi0");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.linux");
 
-HardwareFactoryRPi0::HardwareFactoryRPi0(const QVariantMap &config, QObject *parent) : HardwareFactoryDefault(parent) {
+HardwareFactoryLinux::HardwareFactoryLinux(const QVariantMap &config, QObject *parent)
+    : HardwareFactoryDefault(parent) {
     Q_UNUSED(config)
 }
 
-bool HardwareFactoryRPi0::buildDevices(const QVariantMap &config) {
-    // InterruptHandler might be used by other devices, so make sure it's built first and available!
-    QVariantMap deviceCfg = ConfigUtil::getValue(config, HW_CFG_IOEXPANDER).toMap();
-    p_interruptHandler = ConfigUtil::isEnabled(deviceCfg) ? buildInterruptHandler(deviceCfg) : dummyInterruptHandler();
-
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_SYSTEMSERVICE).toMap();
+bool HardwareFactoryLinux::buildDevices(const QVariantMap &config) {
+    // real Linux devices
+    QVariantMap deviceCfg = ConfigUtil::getValue(config, HW_CFG_SYSTEMSERVICE).toMap();
     p_systemService = ConfigUtil::isEnabled(deviceCfg) ? buildSystemService(deviceCfg) : dummySystemService();
 
     deviceCfg = ConfigUtil::getValue(config, HW_CFG_WEBSERVER).toMap();
@@ -56,32 +54,21 @@ bool HardwareFactoryRPi0::buildDevices(const QVariantMap &config) {
     deviceCfg = ConfigUtil::getValue(config, HW_CFG_WIFI).toMap();
     p_wifiControl = ConfigUtil::isEnabled(deviceCfg) ? buildWifiControl(deviceCfg) : dummyWifiControl();
 
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_DISPLAY).toMap();
-    p_displayControl = ConfigUtil::isEnabled(deviceCfg) ? buildDisplayControl(deviceCfg) : dummyDisplayControl();
-
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_BATTERY_CHARGER).toMap();
-    p_batteryCharger = ConfigUtil::isEnabled(deviceCfg) ? buildBatteryCharger(deviceCfg) : dummyBatteryCharger();
-
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_BATTERY_FUEL_GAUGE).toMap();
-    p_batteryFuelGauge = ConfigUtil::isEnabled(deviceCfg) ? buildBatteryFuelGauge(deviceCfg) : dummyBatteryFuelGauge();
-
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_HAPTIC_MOTOR).toMap();
-    p_hapticMotor = ConfigUtil::isEnabled(deviceCfg) ? buildHapticMotor(deviceCfg) : dummyHapticMotor();
-
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_GESTURE).toMap();
-    p_gestureSensor = ConfigUtil::isEnabled(deviceCfg) ? buildGestureSensor(deviceCfg) : dummyGestureSensor();
-
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_LIGHT).toMap();
-    p_lightSensor = ConfigUtil::isEnabled(deviceCfg) ? buildLightSensor(deviceCfg) : dummyLightSensor();
-
-    deviceCfg = ConfigUtil::getValue(config, HW_CFG_PROXIMITY).toMap();
-    p_proximitySensor = ConfigUtil::isEnabled(deviceCfg) ? buildProximitySensor(deviceCfg) : dummyProximitySensor();
+    // dummy devices
+    p_interruptHandler = dummyInterruptHandler();
+    p_displayControl = dummyDisplayControl();
+    p_batteryCharger = dummyBatteryCharger();
+    p_batteryFuelGauge = dummyBatteryFuelGauge();
+    p_hapticMotor = dummyHapticMotor();
+    p_gestureSensor = dummyGestureSensor();
+    p_lightSensor = dummyLightSensor();
+    p_proximitySensor = dummyProximitySensor();
 
     return true;
 }
 
 // -- System services - RPi uses systemd
-SystemService *HardwareFactoryRPi0::buildSystemService(const QVariantMap &config) {
+SystemService *HardwareFactoryLinux::buildSystemService(const QVariantMap &config) {
     QVariantMap systemdCfg = ConfigUtil::getValue(config, HW_CFG_SYSTEMD).toMap();
     QVariantMap serviceCfg = systemdCfg.value(HW_CFG_SYSTEMD_SERVICES).toMap();
 
@@ -112,7 +99,7 @@ SystemService *HardwareFactoryRPi0::buildSystemService(const QVariantMap &config
 }
 
 // -- Web Server control - RPi uses httpd
-WebServerControl *HardwareFactoryRPi0::buildWebServerControl(const QVariantMap &config) {
+WebServerControl *HardwareFactoryLinux::buildWebServerControl(const QVariantMap &config) {
     QVariantMap        webCfg = ConfigUtil::getValue(config, HW_CFG_LIGHTTPD).toMap();
     WebServerLighttpd *lighttpd = new WebServerLighttpd(getSystemService(), this);
     lighttpd->setConfigFile(webCfg.value(HW_CFG_LIGHTTPD_CFG_FILE, HW_DEF_LIGHTTPD_CFG_FILE).toString());
@@ -122,7 +109,7 @@ WebServerControl *HardwareFactoryRPi0::buildWebServerControl(const QVariantMap &
 }
 
 // -- WiFi control - RPi uses wpa_supplicant control interface and as fallback the old shell scripts
-WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &wifiCfg) {
+WifiControl *HardwareFactoryLinux::buildWifiControl(const QVariantMap &wifiCfg) {
     WifiControl *wifiControl = nullptr;
     // determine which interface driver to use
     bool useShellScript = wifiCfg.value(HW_CFG_WIFI_USE_SH, HW_DEF_WIFI_USE_SH).toBool();
@@ -168,44 +155,4 @@ WifiControl *HardwareFactoryRPi0::buildWifiControl(const QVariantMap &wifiCfg) {
     wifiControl->setNetworkJoinRetryDelay(wifiCfg.value(HW_CFG_WIFI_JOIN_DELAY, HW_DEF_WIFI_JOIN_DELAY).toInt());
 
     return wifiControl;
-}
-
-DisplayControl *HardwareFactoryRPi0::buildDisplayControl(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyDisplayControl();
-}
-
-BatteryCharger *HardwareFactoryRPi0::buildBatteryCharger(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyBatteryCharger();
-}
-
-BatteryFuelGauge *HardwareFactoryRPi0::buildBatteryFuelGauge(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyBatteryFuelGauge();
-}
-
-InterruptHandler *HardwareFactoryRPi0::buildInterruptHandler(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyInterruptHandler();
-}
-
-HapticMotor *HardwareFactoryRPi0::buildHapticMotor(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyHapticMotor();
-}
-
-GestureSensor *HardwareFactoryRPi0::buildGestureSensor(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyGestureSensor();
-}
-
-LightSensor *HardwareFactoryRPi0::buildLightSensor(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyLightSensor();
-}
-
-ProximitySensor *HardwareFactoryRPi0::buildProximitySensor(const QVariantMap &config) {
-    Q_UNUSED(config)
-    return dummyProximitySensor();
 }

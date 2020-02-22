@@ -45,6 +45,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.DRV2605");
 Drv2605::Drv2605(const QString& i2cDevice, int i2cDeviceId, QObject* parent)
     : HapticMotor("DRV2605 haptic motor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {
     Q_ASSERT(!i2cDevice.isEmpty());
+    Q_ASSERT(i2cDeviceId);
     qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId;
 }
 

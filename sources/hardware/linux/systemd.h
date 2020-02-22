@@ -22,41 +22,37 @@
 
 #pragma once
 
-#include "systemservice.h"
-#include "webserver_control.h"
+#include <QMap>
+#include <QObject>
+
+#include "../systemservice.h"
 
 /**
- * @brief A lighttpd implementation of the WebServerControl interface.
+ * @brief Linux systemd implementation of the SystemService interface.
  */
-class WebServerLighttpd : public WebServerControl {
+class Systemd : public SystemService {
     Q_OBJECT
 
  public:
-    explicit WebServerLighttpd(SystemService *systemService, QObject *parent = nullptr);
+    explicit Systemd(const QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
 
- private:
-    SystemService *p_systemService;
+    void setUseSudo(bool sudo);
+    bool isUseSudo();
 
-    // WebServerControl interface
+    // SystemService interface
  public:
-    Q_INVOKABLE bool startService() override;
-    Q_INVOKABLE bool stopService() override;
-    Q_INVOKABLE bool restartService() override;
-    Q_INVOKABLE bool reloadService() override;
-    Q_INVOKABLE bool startWifiSetupPortal() override;
-    Q_INVOKABLE bool startWebConfigurator() override;
+    Q_INVOKABLE bool startService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool stopService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool restartService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool reloadService(SystemServiceName serviceName) override;
 
-    QString configFile() const;
-    void    setConfigFile(const QString &configFile);
-
-    QString wifiSetupConfig() const;
-    void    setWifiSetupConfig(const QString &wifiSetupConfig);
-
-    QString webConfiguratorConfig() const;
-    void    setWebConfiguratorConfig(const QString &webConfiguratorConfig);
+    int  systemctlTimeout() const;
+    void setSystemctlTimeout(int systemctlTimeout);
 
  private:
-    QString m_configFile;
-    QString m_wifiSetupConfig;
-    QString m_webConfiguratorConfig;
+    bool launch(const QString &command);
+
+    bool                             m_useSudo;
+    int                              m_systemctlTimeout;
+    QMap<SystemServiceName, QString> m_serviceNameMap;
 };

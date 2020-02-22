@@ -20,7 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include "hardwarefactory_yio.h"
+#include "hw_factory_yio.h"
 
 #include <mcp23017.h>
 #include <wiringPi.h>
@@ -29,23 +29,23 @@
 #include <QLoggingCategory>
 #include <QtDebug>
 
-#include "../configutil.h"
-#include "arm/apds9960gesture.h"
-#include "arm/apds9960light.h"
-#include "arm/apds9960proximity.h"
-#include "arm/batterycharger_yio.h"
-#include "arm/bq27441.h"
-#include "arm/displaycontrol_yio.h"
-#include "arm/drv2605.h"
-#include "arm/mcp23017_interrupt.h"
-#include "hw_config.h"
+#include "../../../configutil.h"
+#include "../../hw_config.h"
+#include "apds9960gesture.h"
+#include "apds9960light.h"
+#include "apds9960proximity.h"
+#include "batterycharger_yio.h"
+#include "bq27441.h"
+#include "displaycontrol_yio.h"
+#include "drv2605.h"
+#include "mcp23017_interrupt.h"
 
 const QString HardwareFactoryYio::DEF_I2C_DEVICE = "/dev/i2c-3";
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.yio");
 
 HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *parent)
-    : HardwareFactoryRPi0(config, parent) {
+    : HardwareFactoryLinux(config, parent) {
     // gesture, light and proximity are handled by the same hardware sensor!
     // The device needs to be shared among three device abstractions.
     QVariantMap deviceCfg = ConfigUtil::getValue(config, HW_CFG_PROXIMITY).toMap();
@@ -59,15 +59,74 @@ HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *paren
     }
 }
 
-int HardwareFactoryYio::initialize() {
+bool HardwareFactoryYio::buildDevices(const QVariantMap &config) {
+    QVariantMap deviceCfg = ConfigUtil::getValue(config, "wiringPi").toMap();
+    if (ConfigUtil::isEnabled(deviceCfg)) {
+        initializeWiringPi(deviceCfg);
+    }
+
+    // InterruptHandler is used by other devices, so make sure it's built first and available!
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_BTN_INTR_HANDLER).toMap();
+    p_interruptHandler = ConfigUtil::isEnabled(deviceCfg) ? buildInterruptHandler(deviceCfg) : dummyInterruptHandler();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_SYSTEMSERVICE).toMap();
+    p_systemService = ConfigUtil::isEnabled(deviceCfg) ? buildSystemService(deviceCfg) : dummySystemService();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_WEBSERVER).toMap();
+    p_webServerControl = ConfigUtil::isEnabled(deviceCfg) ? buildWebServerControl(deviceCfg) : dummyWebServerControl();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_WIFI).toMap();
+    p_wifiControl = ConfigUtil::isEnabled(deviceCfg) ? buildWifiControl(deviceCfg) : dummyWifiControl();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_DISPLAY_CONTROL).toMap();
+    p_displayControl = ConfigUtil::isEnabled(deviceCfg) ? buildDisplayControl(deviceCfg) : dummyDisplayControl();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_BATTERY_CHARGER).toMap();
+    p_batteryCharger = ConfigUtil::isEnabled(deviceCfg) ? buildBatteryCharger(deviceCfg) : dummyBatteryCharger();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_BATTERY_FUEL_GAUGE).toMap();
+    p_batteryFuelGauge = ConfigUtil::isEnabled(deviceCfg) ? buildBatteryFuelGauge(deviceCfg) : dummyBatteryFuelGauge();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_HAPTIC_MOTOR).toMap();
+    p_hapticMotor = ConfigUtil::isEnabled(deviceCfg) ? buildHapticMotor(deviceCfg) : dummyHapticMotor();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_GESTURE).toMap();
+    p_gestureSensor = ConfigUtil::isEnabled(deviceCfg) ? buildGestureSensor(deviceCfg) : dummyGestureSensor();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_LIGHT).toMap();
+    p_lightSensor = ConfigUtil::isEnabled(deviceCfg) ? buildLightSensor(deviceCfg) : dummyLightSensor();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_PROXIMITY).toMap();
+    p_proximitySensor = ConfigUtil::isEnabled(deviceCfg) ? buildProximitySensor(deviceCfg) : dummyProximitySensor();
+
+    return true;
+}
+
+bool HardwareFactoryYio::initializeWiringPi(const QVariantMap &config) {
     // WiringPi should only be initialized once (even though there's a failsafe now in newer versions)
-    // Attention: wiringPiSetup() needs to be called with root privileges!
+    // Attention:
+    // - wiringPiSetup() terminates the app in case of failure!
+    // - wiringPiSetup() needs to be called with root privileges!
     // TODO(zehnm) Verify if wiringPiSetupSys() could be used with remote-os
     wiringPiSetup();
-    // The 1st IO expander for the buttons is directly handled with an interrupt.
-    // The 2nd IO expander is accessed through wiringPi
-    mcp23017Setup(100, 0x21);
 
+    // The 1st IO expander for the buttons is directly handled with an interrupt and i2c access.
+    // The 2nd IO expander for display SPI and battery charger is accessed through WiringPi
+    auto pinBase = ConfigUtil::getValue(config, "ioExpander/pinBase", 100).toInt();
+    auto id = ConfigUtil::getValue(config, "ioExpander/i2cId", MCP23017_ADDRESS2).toInt();
+    qCDebug(CLASS_LC) << "Initializing 2nd MCP23017ML IO expander using WiringPi on i2c address" << id
+                      << "with pin base" << pinBase;
+
+    if (mcp23017Setup(pinBase, id) == 0) {
+        qCCritical(CLASS_LC) << "Error initializing 2nd MCP23017ML IO expander! i2c id:" << id
+                             << "pin base:" << pinBase;
+        return false;
+    }
+
+    return true;
+}
+
+int HardwareFactoryYio::initialize() {
     // intialize the proximity sensor
     if (p_apds9960) {
         connect(p_apds9960, &Device::error, this, &HardwareFactoryYio::onError);
@@ -102,7 +161,7 @@ int HardwareFactoryYio::initialize() {
         }
     }
 
-    return HardwareFactoryRPi0::initialize();
+    return HardwareFactoryLinux::initialize();
 }
 
 DisplayControl *HardwareFactoryYio::buildDisplayControl(const QVariantMap &config) {

@@ -29,11 +29,18 @@
 #include "../jsonfile.h"
 #include "../notifications.h"
 
-
-#if defined(__arm__)
-#include "hardwarefactory_yio.h"
+#if defined(Q_OS_ANDROID)
+#include "android/hw_factory_android.h"
 #elif defined(Q_OS_LINUX)
-#include "hardwarefactory_rpi0.h"
+    #if defined(Q_PROCESSOR_ARM)
+    #include "linux/arm/hw_factory_yio.h"
+    #else
+    #include "linux/hw_factory_linux.h"
+    #endif
+#elif defined(Q_OS_WIN)
+#include "windows/hw_factory_win.h"
+#elif defined(Q_OS_MACOS)
+#include "macos/hw_factory_mac.h"
 #else
 #include "hardwarefactory_default.h"
 #endif
@@ -76,12 +83,19 @@ HardwareFactory *HardwareFactory::build(const QVariantMap &config) {
     }
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
-#if defined(__arm__)
-    s_instance = new HardwareFactoryYio(config);
+#if defined(Q_OS_ANDROID)
+    s_instance = new HardwareFactoryAndroid(config);
 #elif defined(Q_OS_LINUX)
-    // TODO(zehnm) add a common Linux factory as base for RPi devices
-    s_instance = new HardwareFactoryRPi0(config);
-#else  // anyone wants to write Android, macOS or Windows factories?
+    #if defined(Q_PROCESSOR_ARM)
+    s_instance = new HardwareFactoryYio(config);
+    #else
+    s_instance = new HardwareFactoryLinux(config);
+    #endif
+#elif defined(Q_OS_WIN)
+    s_instance = new HardwareFactoryWindows(config);
+#elif defined(Q_OS_MACOS)
+    s_instance = new HardwareFactoryMacOS(config);
+#else
     s_instance = new HardwareFactoryDefault();
 #endif
 

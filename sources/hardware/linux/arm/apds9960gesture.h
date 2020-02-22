@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include "../gesturesensor.h"
+#include "../../gesturesensor.h"
 #include "apds9960.h"
 
 class Apds9960GestureSensor : public GestureSensor {

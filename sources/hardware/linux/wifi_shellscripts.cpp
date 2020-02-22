@@ -25,8 +25,8 @@
 #include <QVector>
 #include <QtDebug>
 
-#include "../fileio.h"
-#include "hw_config.h"
+#include "../../fileio.h"
+#include "../hw_config.h"
 #include "wifi_shellscripts.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");

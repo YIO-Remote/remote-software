@@ -1,7 +1,6 @@
 /******************************************************************************
  *
  * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -23,30 +22,20 @@
 
 #pragma once
 
-#include "../lightsensor.h"
-#include "apds9960.h"
+#include "../hardwarefactory_default.h"
 
-class Apds9960LightSensor : public LightSensor {
+/**
+ * @brief Concrete hardware factory for Windows.
+ * This is only a placeholder without any Windows support at the moment!
+ * Please feel free to implement :-)
+ */
+class HardwareFactoryWindows : public HardwareFactoryDefault {
     Q_OBJECT
 
  public:
-    explicit Apds9960LightSensor(APDS9960* apds, QObject* parent = nullptr);
+    explicit HardwareFactoryWindows(const QVariantMap &config, QObject *parent = nullptr);
 
-    int ambientLight() override { return static_cast<int>(m_ambientLight); }
-
-    Q_INVOKABLE int readAmbientLight() override;
-
-    // Device interface
+    // HardwareFactory interface
  protected:
-    const QLoggingCategory& logCategory() const override;
-
- private:
-    APDS9960* p_apds;
-    uint16_t  m_ambientLight = 100;
-    uint16_t  m_r;
-    uint16_t  m_g;
-    uint16_t  m_b;
-    uint16_t  m_c;
-
-    uint16_t calculateIlluminance(uint16_t r, uint16_t g, uint16_t b);
+    bool buildDevices(const QVariantMap &config) override;
 };

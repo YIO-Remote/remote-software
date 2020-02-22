@@ -1,7 +1,6 @@
 /******************************************************************************
  *
  * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -23,34 +22,20 @@
 
 #pragma once
 
-#include "../proximitysensor.h"
-#include "../interrupthandler.h"
-#include "apds9960.h"
+#include "../hardwarefactory_default.h"
 
-class Apds9960ProximitySensor : public ProximitySensor {
+/**
+ * @brief Concrete hardware factory for Android.
+ * This is only a placeholder without any Android support at the moment!
+ * Please feel free to implement :-)
+ */
+class HardwareFactoryAndroid : public HardwareFactoryDefault {
     Q_OBJECT
 
  public:
-    explicit Apds9960ProximitySensor(APDS9960* apds, InterruptHandler* interruptHandler, QObject* parent = nullptr);
+    explicit HardwareFactoryAndroid(const QVariantMap &config, QObject *parent = nullptr);
 
-    int proximitySetting() override { return m_proximitySetting; }
-
-    void setProximitySetting(int proximity) override { m_proximitySetting = proximity; }
-
-    int proximity() override { return m_proximity; }
-
-    Q_INVOKABLE void proximityDetection(bool state) override;
-
-    Q_INVOKABLE void readInterrupt() override;
-
-    // Device interface
+    // HardwareFactory interface
  protected:
-    const QLoggingCategory& logCategory() const override;
-
- private:
-    APDS9960* p_apds;
-
-    uint8_t m_proximity;
-    bool    m_proximityDetection = false;
-    int     m_proximitySetting   = 40;  // default value
+    bool buildDevices(const QVariantMap &config) override;
 };

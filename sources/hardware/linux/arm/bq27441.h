@@ -31,8 +31,8 @@
 #include <QObject>
 #include <QtDebug>
 
-#include "../batteryfuelgauge.h"
-#include "../interrupthandler.h"
+#include "../../batteryfuelgauge.h"
+#include "../../interrupthandler.h"
 
 /*****************************************************************************/
 // BQ27441 Device definitions
