@@ -287,7 +287,7 @@ Item {
         anchors.fill: parent
 
         onClicked: {
-            loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = 0;
+            loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY = 0;
         }
 
         onPressAndHold: {
