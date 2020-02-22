@@ -116,7 +116,7 @@ Rectangle {
                 mouseArea.onClicked: {
                     if (SoftwareUpdate.updateAvailable) {
                         if (fileio.exists(appPath + "/downloads/latest.zip")) {
-
+                            //TODO(Marton): launch updater script
                         } else {
                             SoftwareUpdate.startUpdate();
                         }

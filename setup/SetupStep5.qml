@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -31,12 +31,14 @@ Item {
 
     Connections {
         target: wifi
-        onWifiStatusChanged: {
-            console.debug("Wifi status changed:" + wifi.wifiStatus);
-            if (wifi.wifiStatus.connected) {
-                loadingIconAnim.stop();
-                container.parent.parent.incrementCurrentIndex();
-            }
+        onConnected: {
+            console.debug("Wifi connected");
+            loadingIconAnim.stop();
+            container.parent.parent.incrementCurrentIndex();
+        }
+
+        onJoinError: {
+            console.debug("Wifi error:" + error);
         }
     }
 

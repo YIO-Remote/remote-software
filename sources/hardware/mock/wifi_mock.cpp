@@ -20,10 +20,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include "wifi_mock.h"
+
 #include <QLoggingCategory>
 #include <QtDebug>
-
-#include "wifi_mock.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiMock");
 
@@ -60,6 +60,8 @@ bool WifiMock::join(const QString &ssid, const QString &password, WifiSecurity s
     if (!validateAuthentication(security, password)) {
         return false;
     }
+
+    emit connected();
 
     return true;
 }

@@ -1,9 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>scripts/softwareupdate.js</file>
         <file>basic_ui/ChargingScreen.qml</file>
-        <file>scripts/helper.js</file>
         <file>basic_ui/PopupLowBattery.qml</file>
         <file>basic_ui/LoadingScreen.qml</file>
         <file>basic_ui/ClosingScreen.qml</file>
@@ -65,11 +63,11 @@
         <file>basic_ui/settings/Wifi.qml</file>
         <file>basic_ui/settings/WifiConnect.qml</file>
         <file>setup/Setup.qml</file>
-        <file>setup/Step1.qml</file>
-        <file>setup/Step2.qml</file>
-        <file>setup/Step3.qml</file>
-        <file>setup/Step4.qml</file>
-        <file>setup/Step5.qml</file>
+        <file>setup/SetupStep1.qml</file>
+        <file>setup/SetupStep2.qml</file>
+        <file>setup/SetupStep3.qml</file>
+        <file>setup/SetupStep4.qml</file>
+        <file>setup/SetupStep5.qml</file>
         <file>basic_ui/settings/SoftwareupdateDownloading.qml</file>
     </qresource>
 </RCC>

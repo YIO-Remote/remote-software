@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -34,11 +34,11 @@ Item {
         interactive: false
         currentIndex: 0
 
-        Step1 {}
-        Step2 {}
-        Step3 {}
-        Step5 {}
-        Step1 {}
+        SetupStep1 {}
+        SetupStep2 {}
+        SetupStep3 {}
+        SetupStep5 {}
+        SetupStep1 {}
     }
 
     Component.onCompleted:  {

@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -139,7 +139,7 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         Haptic.playEffect(Haptic.Click);
-                        loader_second.setSource("qrc:/setup/Step4.qml", { "obj": wifi.networkScanResult[index], "swipeViewObj": container.parent.parent })
+                        loader_second.setSource("qrc:/setup/SetupStep4.qml", { "obj": wifi.networkScanResult[index], "swipeViewObj": container.parent.parent })
                         loader_second.active = true;
                         networkScanTimer.stop();
                     }

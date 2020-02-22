@@ -676,6 +676,59 @@ www.yio-remote.com
     </message>
 </context>
 <context>
+    <name>SetupStep1</name>
+    <message>
+        <location filename="../setup/SetupStep1.qml" line="34"/>
+        <source>Hello</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep1.qml" line="45"/>
+        <source>Tap the screen to begin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep3</name>
+    <message>
+        <location filename="../setup/SetupStep3.qml" line="61"/>
+        <source>Wi-Fi setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep3.qml" line="72"/>
+        <source>Select a Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep4</name>
+    <message>
+        <location filename="../setup/SetupStep4.qml" line="94"/>
+        <source>Enter password for
+&quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep4.qml" line="112"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep4.qml" line="138"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep5</name>
+    <message>
+        <location filename="../setup/SetupStep5.qml" line="65"/>
+        <source>Connecting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SoftwareUpdate</name>
     <message>
         <location filename="../sources/softwareupdate.cpp" line="90"/>
@@ -773,59 +826,6 @@ YIO remote %1</source>
     <message>
         <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Step1</name>
-    <message>
-        <location filename="../setup/Step1.qml" line="34"/>
-        <source>Hello</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../setup/Step1.qml" line="45"/>
-        <source>Tap the screen to begin</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Step3</name>
-    <message>
-        <location filename="../setup/Step3.qml" line="61"/>
-        <source>Wi-Fi setup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../setup/Step3.qml" line="72"/>
-        <source>Select a Wi-Fi network.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Step4</name>
-    <message>
-        <location filename="../setup/Step4.qml" line="94"/>
-        <source>Enter password for
-&quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../setup/Step4.qml" line="112"/>
-        <source>Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../setup/Step4.qml" line="138"/>
-        <source>Join</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Step5</name>
-    <message>
-        <location filename="../setup/Step5.qml" line="63"/>
-        <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

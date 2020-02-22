@@ -749,7 +749,7 @@
               "$id": "#/properties/settings/properties/logging/properties/console",
               "type": "boolean",
               "title": "Log to console",
-              "default": false
+              "default": true
             },
             "showSource": {
               "$id": "#/properties/settings/properties/logging/properties/showSource",
@@ -768,7 +768,7 @@
               "$id": "#/properties/settings/properties/logging/properties/purgeHours",
               "type": "integer",
               "title": "Purge log files in hours",
-              "default": 0,
+              "default": 12,
               "minimum": 0
             }
           }
