@@ -42,9 +42,9 @@
 #include <cstdio>
 #include <exception>
 
+#include "../hw_config.h"
+#include "../systemservice_name.h"
 #include "common/wpa_ctrl.h"
-#include "hw_config.h"
-#include "systemservice_name.h"
 #include "wifi_wpasupplicant.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
@@ -57,8 +57,7 @@ WifiWpaSupplicant::WifiWpaSupplicant(WebServerControl* webServerControl, SystemS
       p_webServerControl(webServerControl),
       p_systemService(systemService),
       m_wpaSupplicantSocketPath(HW_DEF_WIFI_WPA_SOCKET),
-      m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN) {
-}
+      m_removeNetworksBeforeJoin(HW_DEF_WIFI_RM_BEFORE_JOIN) {}
 
 /****************************************************************************/
 WifiWpaSupplicant::~WifiWpaSupplicant() {

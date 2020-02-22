@@ -43,10 +43,10 @@
 #include <mutex>
 #include <thread>
 
+#include "../systemservice.h"
+#include "../webserver_control.h"
+#include "../wifi_control.h"
 #include "common/wpa_ctrl.h"
-#include "systemservice.h"
-#include "webserver_control.h"
-#include "wifi_control.h"
 
 /**
  * Function to register as callback for the wpa_supplicant control interface
@@ -83,7 +83,7 @@ class WifiWpaSupplicant : public WifiControl {
     Q_INVOKABLE bool reset() override;
     Q_INVOKABLE bool clearConfiguredNetworks() override;
     Q_INVOKABLE bool join(const QString& ssid, const QString& password,
-                                  WifiSecurity security = WifiSecurity::DEFAULT) override;
+                          WifiSecurity security = WifiSecurity::DEFAULT) override;
     Q_INVOKABLE void startNetworkScan() override;
     Q_INVOKABLE bool startAccessPoint() override;
 
