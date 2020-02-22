@@ -103,8 +103,9 @@ void Integrations::load() {
 
     m_integrationsToLoad = integrationCount;
 
-    if (m_integrationsToLoad == 0)
+    if (m_integrationsToLoad == 0) {
         emit loadComplete();
+    }
 }
 
 void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
@@ -114,7 +115,7 @@ void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
     }
     m_integrationsLoaded++;
 
-    if (m_integrationsToLoad == 0 || m_integrationsLoaded == m_integrationsToLoad) {
+    if (m_integrationsLoaded == m_integrationsToLoad) {
         emit loadComplete();
     }
 }
