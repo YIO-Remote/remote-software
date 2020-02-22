@@ -127,8 +127,6 @@ void StandbyControl::wakeup() {
             QSurfaceFormat::setDefaultFormat(m_format);
             qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
 
-            setMode(ON);
-
             // delay reading ambient light so the sensor is clear of your hand
             QTimer *timer = new QTimer(this);
             timer->setSingleShot(true);
@@ -162,6 +160,8 @@ void StandbyControl::wakeup() {
                 QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
                 touchEventCatcher->setProperty("enabled", false);
             });
+
+            setMode(ON);
         } break;
 
         case (WIFI_OFF): {
@@ -170,8 +170,6 @@ void StandbyControl::wakeup() {
             m_format.setSwapInterval(1);
             QSurfaceFormat::setDefaultFormat(m_format);
             qCDebug(m_log) << "Changing swap interval to " << m_format.swapInterval();
-
-            setMode(ON);
 
             m_wifiControl->on();
 
@@ -198,6 +196,8 @@ void StandbyControl::wakeup() {
                 QObject *touchEventCatcher = m_config->getQMLObject("touchEventCatcher");
                 touchEventCatcher->setProperty("enabled", false);
             });
+
+            setMode(ON);
         } break;
     }
 

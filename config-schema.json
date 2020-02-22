@@ -794,7 +794,7 @@
           "$id": "#/properties/settings/properties/shutdowntime",
           "type": "integer",
           "title": "Shutdown time in seconds",
-          "default": 0
+          "default": 21600
         },
         "softwareupdate": {
           "$id": "#/properties/settings/properties/softwareupdate",
