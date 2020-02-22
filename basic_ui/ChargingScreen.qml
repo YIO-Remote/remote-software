@@ -27,8 +27,6 @@ import Style 1.0
 
 import Battery 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
-
 Rectangle {
     id: chargingScreen
     width: parent.width

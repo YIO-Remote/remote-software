@@ -29,8 +29,6 @@ import Haptic 1.0
 import StandbyControl 1.0
 import ButtonHandler 1.0
 
-
-import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {

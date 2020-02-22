@@ -26,7 +26,6 @@ import WifiControl 1.0
 import Style 1.0
 import Launcher 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
