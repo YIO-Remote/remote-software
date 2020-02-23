@@ -28,8 +28,6 @@
 #include <QQmlApplicationEngine>
 #include <QQuickItem>
 
-#include "../logger.h"
-
 class TouchEventFilter : public QQuickItem {
     Q_OBJECT
  public:
@@ -53,7 +51,6 @@ class TouchEventFilter : public QQuickItem {
     static TouchEventFilter *s_instance;
     bool                     eventFilter(QObject *obj, QEvent *event);
     QObject *                m_source;
-    QLoggingCategory         m_log;
 };
 
 #endif  // TOUCHDETECT_H

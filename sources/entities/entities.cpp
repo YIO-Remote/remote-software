@@ -24,6 +24,7 @@
 
 #include <QJsonArray>
 #include <QTimer>
+#include <QLoggingCategory>
 #include <QtDebug>
 
 #include "../config.h"
@@ -39,17 +40,17 @@
 #include "switch.h"
 #include "weather.h"
 
+static Q_LOGGING_CATEGORY(CLASS_LC, "entities");
+
 EntitiesInterface::~EntitiesInterface() {}
 
 Entities *Entities::s_instance = nullptr;
 
-Entities::Entities(QObject *parent) : QObject(parent), m_log("entities class") {
+Entities::Entities(QObject *parent) : QObject(parent) {
     s_instance = this;
 
     // Remote is special. Register class before entity creation (for use in Main.qml)
     Remote::staticInitialize();
-
-    Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
 }
 
 Entities::~Entities() { s_instance = nullptr; }
@@ -163,7 +164,7 @@ void Entities::add(const QString &type, const QVariantMap &config, IntegrationIn
     }
 
     if (entity == nullptr) {
-        qCDebug(m_log) << "Illegal entity type : " << type;
+        qCDebug(CLASS_LC) << "Illegal entity type : " << type;
     } else {
         m_entities.insert(entity->entity_id(), entity);
     }
@@ -172,7 +173,7 @@ void Entities::add(const QString &type, const QVariantMap &config, IntegrationIn
 void Entities::update(const QString &entity_id, const QVariantMap &attributes) {
     Entity *e = static_cast<Entity *>(m_entities.value(entity_id));
     if (e == nullptr)
-        qCDebug(m_log) << "Entity not found : " << entity_id;
+        qCDebug(CLASS_LC) << "Entity not found : " << entity_id;
     else
         e->update(attributes);
 }
@@ -184,7 +185,7 @@ void Entities::addMediaplayersPlaying(const QString &entity_id) {
 
     // check if there is a timer active to remove the media player
     if (m_mediaplayersTimers.contains(entity_id)) {
-        qCDebug(m_log) << "There is a timer for:" << entity_id;
+        qCDebug(CLASS_LC) << "There is a timer for:" << entity_id;
         QTimer *timer = m_mediaplayersTimers.value(entity_id);
         if (timer) {
             timer->stop();
@@ -192,18 +193,18 @@ void Entities::addMediaplayersPlaying(const QString &entity_id) {
             m_mediaplayersTimers.remove(entity_id);
             timer->deleteLater();
         }
-        qCDebug(m_log) << "Removing timer";
+        qCDebug(CLASS_LC) << "Removing timer";
     }
 
     if (!m_mediaplayersPlaying.contains(entity_id)) {
-        qCDebug(m_log) << "Getting entity object" << entity_id;
+        qCDebug(CLASS_LC) << "Getting entity object" << entity_id;
         QObject *o = get(entity_id);
-        qCDebug(m_log) << "Object parent:" << o->parent();
+        qCDebug(CLASS_LC) << "Object parent:" << o->parent();
         //        o->setParent(this);
 
-        qCDebug(m_log) << "Object is not in the list, adding to list" << entity_id;
+        qCDebug(CLASS_LC) << "Object is not in the list, adding to list" << entity_id;
         m_mediaplayersPlaying.insert(entity_id, o);
-        qCDebug(m_log) << "Emitting mediaplayersPlayingChanged";
+        qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
         emit mediaplayersPlayingChanged();
     }
 }
@@ -212,40 +213,40 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id) {
     QMutexLocker locker(&m_mutex);
 
     if (m_mediaplayersPlaying.contains(entity_id)) {
-        qCDebug(m_log) << "There is an object playing list" << entity_id;
+        qCDebug(CLASS_LC) << "There is an object playing list" << entity_id;
         // use a timer to remove the entity with a delay
         if (!m_mediaplayersTimers.contains(entity_id)) {
-            qCDebug(m_log) << "No timer found for object" << entity_id;
+            qCDebug(CLASS_LC) << "No timer found for object" << entity_id;
             QTimer *timer = new QTimer();
             timer->setSingleShot(true);
 
             QObject *context = new QObject();
 
-            qCDebug(m_log) << "Connecting signals" << entity_id;
+            qCDebug(CLASS_LC) << "Connecting signals" << entity_id;
             connect(timer, &QTimer::timeout, context, [=]() {
-                qCDebug(m_log) << "Timer timeout" << entity_id;
+                qCDebug(CLASS_LC) << "Timer timeout" << entity_id;
                 if (m_mediaplayersPlaying.contains(entity_id)) {
-                    qCDebug(m_log) << "Removing object" << entity_id;
+                    qCDebug(CLASS_LC) << "Removing object" << entity_id;
                     m_mediaplayersPlaying.remove(entity_id);
                 }
 
                 if (m_mediaplayersTimers.contains(entity_id)) {
-                    qCDebug(m_log) << "Removing timer" << entity_id;
+                    qCDebug(CLASS_LC) << "Removing timer" << entity_id;
                     m_mediaplayersTimers.remove(entity_id);
                 }
 
-                qCDebug(m_log) << "Emitting mediaplayersPlayingChanged";
+                qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
                 emit mediaplayersPlayingChanged();
-                qCDebug(m_log) << "Context deleteLater";
+                qCDebug(CLASS_LC) << "Context deleteLater";
                 context->deleteLater();
-                qCDebug(m_log) << "Timer deleteLater";
+                qCDebug(CLASS_LC) << "Timer deleteLater";
                 timer->deleteLater();
             });
 
-            qCDebug(m_log) << "Starting timer" << entity_id;
+            qCDebug(CLASS_LC) << "Starting timer" << entity_id;
             timer->start(120000);
 
-            qCDebug(m_log) << "Inserting timer to the list" << entity_id;
+            qCDebug(CLASS_LC) << "Inserting timer to the list" << entity_id;
             m_mediaplayersTimers.insert(entity_id, timer);
         }
     }

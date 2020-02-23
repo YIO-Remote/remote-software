@@ -32,7 +32,6 @@
 #include "hardware/hardwarefactory.h"
 #include "hardware/touchdetect.h"
 #include "integrations/integrations.h"
-#include "logger.h"
 #include "yioapi.h"
 
 class StandbyControl : public QObject {
@@ -80,7 +79,6 @@ class StandbyControl : public QObject {
  private:
     static StandbyControl* s_instance;
 
-    QLoggingCategory  m_log;
     Config*           m_config;
     YioAPI*           m_api;
     Integrations*     m_integrations;

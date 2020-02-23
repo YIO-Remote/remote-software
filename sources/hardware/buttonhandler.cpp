@@ -19,16 +19,19 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
+
 #include "buttonhandler.h"
+
+#include <QLoggingCategory>
+#include <QtDebug>
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.buttonhandler");
 
 ButtonHandler *ButtonHandler::s_instance = nullptr;
 
 ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, YioAPI *api, QObject *parent)
-    : QObject(parent), m_log("Button Handler"), m_itnerruptHandler(interruptHandler), m_api(api) {
+    : QObject(parent), m_itnerruptHandler(interruptHandler), m_api(api) {
     s_instance = this;
-
-    // define logging category
-    Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
 
     // connect to interrupt handler
     connect(m_itnerruptHandler, &InterruptHandler::interruptEvent, this, &ButtonHandler::onInterrupt);
@@ -37,7 +40,7 @@ ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, YioAPI *api, QO
     connect(m_api, &YioAPI::buttonPressed, this, &ButtonHandler::onYIOAPIPressed);
     connect(m_api, &YioAPI::buttonReleased, this, &ButtonHandler::onYIOAPIReleased);
 
-    qCDebug(m_log) << "Intialized";
+    qCDebug(CLASS_LC) << "Intialized";
 }
 
 ButtonHandler::~ButtonHandler() { s_instance = nullptr; }
@@ -59,13 +62,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = DPAD_UP;
                 emit buttonPressed(DPAD_UP);
-                qCDebug(m_log) << "Dpad up pressed";
+                qCDebug(CLASS_LC) << "Dpad up pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = DPAD_UP;
                 emit buttonReleased(DPAD_UP);
-                qCDebug(m_log) << "Dpad up released";
+                qCDebug(CLASS_LC) << "Dpad up released";
             }
         } break;
         case (DPAD_DOWN): {
@@ -74,13 +77,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = DPAD_DOWN;
                 emit buttonPressed(DPAD_DOWN);
-                qCDebug(m_log) << "Dpad down pressed";
+                qCDebug(CLASS_LC) << "Dpad down pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = DPAD_DOWN;
                 emit buttonReleased(DPAD_DOWN);
-                qCDebug(m_log) << "Dpad down released";
+                qCDebug(CLASS_LC) << "Dpad down released";
             }
         } break;
         case (DPAD_LEFT): {
@@ -89,13 +92,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = DPAD_LEFT;
                 emit buttonPressed(DPAD_LEFT);
-                qCDebug(m_log) << "Dpad left pressed";
+                qCDebug(CLASS_LC) << "Dpad left pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = DPAD_LEFT;
                 emit buttonReleased(DPAD_LEFT);
-                qCDebug(m_log) << "Dpad left released";
+                qCDebug(CLASS_LC) << "Dpad left released";
             }
         } break;
         case (DPAD_RIGHT): {
@@ -104,13 +107,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = DPAD_RIGHT;
                 emit buttonPressed(DPAD_RIGHT);
-                qCDebug(m_log) << "Dpad right pressed";
+                qCDebug(CLASS_LC) << "Dpad right pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = DPAD_RIGHT;
                 emit buttonReleased(DPAD_RIGHT);
-                qCDebug(m_log) << "Dpad right released";
+                qCDebug(CLASS_LC) << "Dpad right released";
             }
         } break;
         case (DPAD_MIDDLE): {
@@ -119,13 +122,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = DPAD_MIDDLE;
                 emit buttonPressed(DPAD_MIDDLE);
-                qCDebug(m_log) << "Dpad middle pressed";
+                qCDebug(CLASS_LC) << "Dpad middle pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = DPAD_MIDDLE;
                 emit buttonReleased(DPAD_MIDDLE);
-                qCDebug(m_log) << "Dpad middle released";
+                qCDebug(CLASS_LC) << "Dpad middle released";
             }
         } break;
         case (TOP_LEFT): {
@@ -134,13 +137,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = TOP_LEFT;
                 emit buttonPressed(TOP_LEFT);
-                qCDebug(m_log) << "Top left pressed";
+                qCDebug(CLASS_LC) << "Top left pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = TOP_LEFT;
                 emit buttonReleased(TOP_LEFT);
-                qCDebug(m_log) << "Top left released";
+                qCDebug(CLASS_LC) << "Top left released";
             }
         } break;
         case (TOP_RIGHT): {
@@ -149,13 +152,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = TOP_RIGHT;
                 emit buttonPressed(TOP_RIGHT);
-                qCDebug(m_log) << "Top right pressed";
+                qCDebug(CLASS_LC) << "Top right pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = TOP_RIGHT;
                 emit buttonReleased(TOP_RIGHT);
-                qCDebug(m_log) << "Top right released";
+                qCDebug(CLASS_LC) << "Top right released";
             }
         } break;
         case (BOTTOM_LEFT): {
@@ -164,13 +167,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = BOTTOM_LEFT;
                 emit buttonPressed(BOTTOM_LEFT);
-                qCDebug(m_log) << "Bottom left pressed";
+                qCDebug(CLASS_LC) << "Bottom left pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = BOTTOM_LEFT;
                 emit buttonReleased(BOTTOM_LEFT);
-                qCDebug(m_log) << "Bottom left released";
+                qCDebug(CLASS_LC) << "Bottom left released";
             }
         } break;
         case (BOTTOM_RIGHT): {
@@ -179,13 +182,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = BOTTOM_RIGHT;
                 emit buttonPressed(BOTTOM_RIGHT);
-                qCDebug(m_log) << "Bottom right pressed";
+                qCDebug(CLASS_LC) << "Bottom right pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = BOTTOM_RIGHT;
                 emit buttonReleased(BOTTOM_RIGHT);
-                qCDebug(m_log) << "Bottom right released";
+                qCDebug(CLASS_LC) << "Bottom right released";
             }
         } break;
         case (VOLUME_UP): {
@@ -194,13 +197,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = VOLUME_UP;
                 emit buttonPressed(VOLUME_UP);
-                qCDebug(m_log) << "Volume up pressed";
+                qCDebug(CLASS_LC) << "Volume up pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = VOLUME_UP;
                 emit buttonReleased(VOLUME_UP);
-                qCDebug(m_log) << "Volume up released";
+                qCDebug(CLASS_LC) << "Volume up released";
             }
         } break;
         case (VOLUME_DOWN): {
@@ -209,13 +212,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = VOLUME_DOWN;
                 emit buttonPressed(VOLUME_DOWN);
-                qCDebug(m_log) << "Volume down pressed";
+                qCDebug(CLASS_LC) << "Volume down pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = VOLUME_DOWN;
                 emit buttonReleased(VOLUME_DOWN);
-                qCDebug(m_log) << "Volume down released";
+                qCDebug(CLASS_LC) << "Volume down released";
             }
         } break;
         case (CHANNEL_UP): {
@@ -224,13 +227,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = CHANNEL_UP;
                 emit buttonPressed(CHANNEL_UP);
-                qCDebug(m_log) << "Channel up pressed";
+                qCDebug(CLASS_LC) << "Channel up pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = CHANNEL_UP;
                 emit buttonReleased(CHANNEL_UP);
-                qCDebug(m_log) << "Channel up released";
+                qCDebug(CLASS_LC) << "Channel up released";
             }
         } break;
         case (CHANNEL_DOWN): {
@@ -239,13 +242,13 @@ void ButtonHandler::onInterrupt(int event) {
 
                 m_buttonPressed = CHANNEL_DOWN;
                 emit buttonPressed(CHANNEL_DOWN);
-                qCDebug(m_log) << "Channel down pressed";
+                qCDebug(CLASS_LC) << "Channel down pressed";
             } else {
                 m_buttonPressed = -1;
 
                 m_buttonReleased = CHANNEL_DOWN;
                 emit buttonReleased(CHANNEL_DOWN);
-                qCDebug(m_log) << "Channel down released";
+                qCDebug(CLASS_LC) << "Channel down released";
             }
         } break;
     }
