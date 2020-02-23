@@ -134,7 +134,7 @@ void BQ27441::updateBatteryValues() {
         // check if the battery is charging
         if (m_averagePower >= 0) {
             m_isCharging = true;
-            qCDebug(CLASS_LC()) << "Battery is charing";
+            qCDebug(CLASS_LC()) << "Battery is charging";
             emit isChargingChanged();
         } else {
             m_isCharging = false;
