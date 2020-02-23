@@ -21,10 +21,6 @@
  # SPDX-License-Identifier: GPL-3.0-or-later
  #############################################################################/
 
-# SOFTWARE VERSION
-VERSION = 0.2.3
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++14 disable-desktop
 #disable qtquickcompiler for QML debugging!

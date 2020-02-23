@@ -58,8 +58,6 @@ int main(int argc, char* argv[]) {
     // must be set before creating QCoreApplication, therefore not possible to set in CommandLineHelper
     // QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication::setApplicationVersion(QString(APP_VERSION));
-
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
 
