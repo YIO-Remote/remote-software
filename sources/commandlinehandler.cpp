@@ -77,12 +77,12 @@ void CommandLineHandler::process(const QCoreApplication &app, const QString &def
     // Plain and simple profile option: apply to configuration files as suffix
     if (!m_profile.isEmpty()) {
         m_cfgFile = QString("%1/config-%2.json").arg(m_cfgPath).arg(m_profile);
-        m_cfgSchemaFile = QString("%1/config-%2-schema.json").arg(m_cfgPath).arg(m_profile);
+        m_cfgSchemaFile = QString("%1/config-%2-schema.json").arg(defaultConfigPath).arg(m_profile);
         m_hwCfgFile = QString("%1/hardware-%2.json").arg(defaultConfigPath).arg(m_profile);
         m_hwCfgSchemaFile = QString("%1/hardware-%2-schema.json").arg(defaultConfigPath).arg(m_profile);
     } else {
         m_cfgFile = QString("%1/config.json").arg(m_cfgPath);
-        m_cfgSchemaFile = QString("%1/config-schema.json").arg(m_cfgPath);
+        m_cfgSchemaFile = QString("%1/config-schema.json").arg(defaultConfigPath);
         m_hwCfgFile = QString("%1/hardware.json").arg(defaultConfigPath);
         m_hwCfgSchemaFile = QString("%1/hardware-schema.json").arg(defaultConfigPath);
     }
