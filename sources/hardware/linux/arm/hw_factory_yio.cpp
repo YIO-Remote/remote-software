@@ -44,8 +44,8 @@ const QString HardwareFactoryYio::DEF_I2C_DEVICE = "/dev/i2c-3";
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.yio");
 
-HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, QObject *parent)
-    : HardwareFactoryLinux(config, parent) {
+HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, const QString &profile, QObject *parent)
+    : HardwareFactoryLinux(config, profile, parent) {
     // gesture, light and proximity are handled by the same hardware sensor!
     // The device needs to be shared among three device abstractions.
     QVariantMap deviceCfg = ConfigUtil::getValue(config, HW_CFG_PROXIMITY).toMap();

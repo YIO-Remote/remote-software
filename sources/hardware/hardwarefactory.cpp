@@ -32,11 +32,11 @@
 #if defined(Q_OS_ANDROID)
 #include "android/hw_factory_android.h"
 #elif defined(Q_OS_LINUX)
-    #if defined(Q_PROCESSOR_ARM)
-    #include "linux/arm/hw_factory_yio.h"
-    #else
-    #include "linux/hw_factory_linux.h"
-    #endif
+#if defined(Q_PROCESSOR_ARM)
+#include "linux/arm/hw_factory_yio.h"
+#else
+#include "linux/hw_factory_linux.h"
+#endif
 #elif defined(Q_OS_WIN)
 #include "windows/hw_factory_win.h"
 #elif defined(Q_OS_MACOS)
@@ -59,7 +59,8 @@ void HardwareFactory::onError(Device::DeviceError deviceError, const QString &me
     }
 }
 
-HardwareFactory *HardwareFactory::build(const QString &configFileName, const QString &schemaFileName) {
+HardwareFactory *HardwareFactory::build(const QString &configFileName, const QString &schemaFileName,
+                                        const QString &profile) {
     JsonFile hwCfg(configFileName, schemaFileName);
 
     QVariantMap config = hwCfg.read().toMap();
@@ -72,30 +73,34 @@ HardwareFactory *HardwareFactory::build(const QString &configFileName, const QSt
                                        << hwCfg.error();
         config.clear();
     }
-    return build(config);
+    return build(config, profile);
 }
 
-HardwareFactory *HardwareFactory::build(const QVariantMap &config) {
+HardwareFactory *HardwareFactory::build(const QVariantMap &config, const QString &profile) {
     if (s_instance != nullptr) {
-        qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow!"
-                             << "HardwareFactory already initialized, ignoring build() call.";
+        qCCritical(CLASS_LC)
+            << "BUG ALERT: Invalid program flow! HardwareFactory already initialized, ignoring build() call.";
         return s_instance;
     }
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
 #if defined(Q_OS_ANDROID)
+    Q_UNUSED(profile)
     s_instance = new HardwareFactoryAndroid(config);
 #elif defined(Q_OS_LINUX)
-    #if defined(Q_PROCESSOR_ARM)
-    s_instance = new HardwareFactoryYio(config);
-    #else
-    s_instance = new HardwareFactoryLinux(config);
-    #endif
+#if defined(Q_PROCESSOR_ARM)
+    s_instance = new HardwareFactoryYio(config, profile);
+#else
+    s_instance = new HardwareFactoryLinux(config, profile);
+#endif
 #elif defined(Q_OS_WIN)
+    Q_UNUSED(profile)
     s_instance = new HardwareFactoryWindows(config);
 #elif defined(Q_OS_MACOS)
+    Q_UNUSED(profile)
     s_instance = new HardwareFactoryMacOS(config);
 #else
+    Q_UNUSED(profile)
     s_instance = new HardwareFactoryDefault();
 #endif
 

@@ -38,9 +38,11 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.linux");
 
-HardwareFactoryLinux::HardwareFactoryLinux(const QVariantMap &config, QObject *parent)
+HardwareFactoryLinux::HardwareFactoryLinux(const QVariantMap &config, const QString &profile, QObject *parent)
     : HardwareFactoryDefault(parent) {
     Q_UNUSED(config)
+    // profile might come in handy later on...
+    Q_UNUSED(profile)
 }
 
 bool HardwareFactoryLinux::buildDevices(const QVariantMap &config) {

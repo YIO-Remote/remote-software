@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -22,25 +22,32 @@
 
 #pragma once
 
-#include "../hardwarefactory_default.h"
+#include <QObject>
+#include <QCoreApplication>
 
-/**
- * @brief Generic Linux hardware factory implementation.
- * May be sub-classed by more specific hardware factories. E.g. RPi or YIO remote.
- */
-class HardwareFactoryLinux : public HardwareFactoryDefault {
+class CommandLineHandler : public QObject {
     Q_OBJECT
 
  public:
-    explicit HardwareFactoryLinux(const QVariantMap &config, const QString &profile, QObject *parent = nullptr);
+    explicit CommandLineHandler(QObject *parent = nullptr);
 
-    // HardwareFactory interface
- protected:
-    bool buildDevices(const QVariantMap &config) override;
+    void process(const QCoreApplication &app, const QString &defaultConfigPath);
 
-    // Helper methods
- protected:
-    virtual WifiControl *     buildWifiControl(const QVariantMap &config);
-    virtual SystemService *   buildSystemService(const QVariantMap &config);
-    virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
+    QString getProfile() { return m_profile; }
+
+    QString configFile() { return m_cfgFile; }
+    QString configSchemaFile() { return m_cfgSchemaFile; }
+    QString hardwareConfigFile() { return m_hwCfgFile; }
+    QString hardwareConfigSchemaFile() { return m_hwCfgSchemaFile; }
+
+ private:
+    bool validateJson(const QString &filePath, const QString &schemaPath);
+
+ private:
+    QString m_profile;
+    QString m_cfgPath;
+    QString m_cfgFile;
+    QString m_cfgSchemaFile;
+    QString m_hwCfgFile;
+    QString m_hwCfgSchemaFile;
 };

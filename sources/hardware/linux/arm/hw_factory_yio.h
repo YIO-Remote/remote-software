@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include "apds9960.h"
 #include "../hw_factory_linux.h"
+#include "apds9960.h"
 
 /**
  * @brief Concrete hardware factory for the YIO Remote running on Raspberry Pi Zero remote-os.
@@ -32,7 +32,7 @@ class HardwareFactoryYio : public HardwareFactoryLinux {
     Q_OBJECT
 
  public:
-    explicit HardwareFactoryYio(const QVariantMap &config, QObject *parent = nullptr);
+    explicit HardwareFactoryYio(const QVariantMap &config, const QString &profile, QObject *parent = nullptr);
 
     // HardwareFactory interface
  public:
@@ -43,7 +43,7 @@ class HardwareFactoryYio : public HardwareFactoryLinux {
 
     // Local helper methods
  private:
-    bool  initializeWiringPi(const QVariantMap &config);
+    bool initializeWiringPi(const QVariantMap &config);
 
     InterruptHandler *buildInterruptHandler(const QVariantMap &config);
     DisplayControl *  buildDisplayControl(const QVariantMap &config);

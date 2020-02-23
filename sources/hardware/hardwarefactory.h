@@ -49,19 +49,21 @@ class HardwareFactory : public QObject {
      * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param configFileName the JSON configuration file name to load the hardware configuration from.
      * @param schemaFileName the JSON schema file to validate the configuration file.
+     * @param profile Optional profile name for further customization.
      * @return The concrete instance or nullptr if construction failed. In this case the application MUST be
      * terminated.
      */
-    static HardwareFactory* build(const QString& configFileName, const QString& schemaFileName);
+    static HardwareFactory* build(const QString& configFileName, const QString& schemaFileName, const QString& profile);
 
     /**
      * @brief Constructs the singleton hardware factory with a concrete implementation of the factory.
      * @details One of the build operations must be called once before using the singleton instance() accessor.
      * @param config The configuration map to retrieve build configuration options.
+     * @param profile Optional profile name for further customization.
      * @return The concrete instance or nullptr if construction failed. In this case the application MUST be
      * terminated.
      */
-    static HardwareFactory* build(const QVariantMap& config);
+    static HardwareFactory* build(const QVariantMap& config, const QString& profile);
 
     /**
      * @brief Initialization hook function for the concrete factory to initialize all devices.

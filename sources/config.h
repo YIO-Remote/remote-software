@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -61,7 +62,7 @@ class Config : public QObject, public ConfigInterface {
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
 
-    Q_INVOKABLE bool readConfig(const QString& path);
+    bool             readConfig(const QString& filePath);
     Q_INVOKABLE bool writeConfig();
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
@@ -111,7 +112,7 @@ class Config : public QObject, public ConfigInterface {
     void    setProfile(QString id);
 
  public:
-    explicit Config(QQmlApplicationEngine* engine = nullptr, QString path = "", QString schemaPath = "");
+    explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath);
     virtual ~Config();
 
     static Config* getInstance() { return s_instance; }
@@ -125,6 +126,7 @@ class Config : public QObject, public ConfigInterface {
     void uiConfigChanged();
     void pagesChanged();
     void groupsChanged();
+    void configWriteError(const QString& error);
 
  private:
     void syncConfigToCache();

@@ -21,6 +21,10 @@
  # SPDX-License-Identifier: GPL-3.0-or-later
  #############################################################################/
 
+# SOFTWARE VERSION
+VERSION = 0.2.3
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++14 disable-desktop
 #disable qtquickcompiler for QML debugging!
@@ -69,6 +73,7 @@ isEmpty(INTG_LIB_PATH) {
 
 HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \
+    sources/commandlinehandler.h \
     sources/config.h \
     sources/configutil.h \
     sources/entities/climate.h \
@@ -128,6 +133,7 @@ HEADERS += \
 
 SOURCES += \
     components/media_player/sources/utils_mediaplayer.cpp \
+    sources/commandlinehandler.cpp \
     sources/config.cpp \
     sources/configutil.cpp \
     sources/entities/climate.cpp \

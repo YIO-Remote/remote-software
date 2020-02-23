@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -39,13 +40,16 @@ Config *Config::s_instance = nullptr;
 
 ConfigInterface::~ConfigInterface() {}
 
-Config::Config(QQmlApplicationEngine *engine, QString path, QString schemaPath) : m_engine(engine), m_error("") {
+Config::Config(QQmlApplicationEngine *engine, QString configFilePath, QString schemaFilePath)
+    : m_engine(engine), m_error("") {
+    Q_ASSERT(engine);
+
     m_jsf = new JsonFile();
-    m_jsf->setSchemaPath(schemaPath);
+    m_jsf->setSchemaPath(schemaFilePath);
     s_instance = this;
 
     // load the config file
-    readConfig(path);
+    readConfig(configFilePath);
 }
 
 Config::~Config() { s_instance = nullptr; }
@@ -79,9 +83,9 @@ void Config::setConfig(const QVariantMap &config) {
 
 QVariant Config::getContextProperty(const QString &name) { return m_engine->rootContext()->contextProperty(name); }
 
-bool Config::readConfig(const QString &path) {
+bool Config::readConfig(const QString &filePath) {
     // load the config.json file from the filesystem
-    m_jsf->setName(path + "/config.json");
+    m_jsf->setName(filePath);
     m_config = m_jsf->read().toMap();
     m_error = m_jsf->error();
     syncConfigToCache();
@@ -100,13 +104,19 @@ bool Config::writeConfig() {
 void Config::setSettings(const QVariantMap &config) {
     m_cacheSettings = config;
     emit settingsChanged();
-    writeConfig();
+    if (!writeConfig()) {
+        // this is a Q_PROPERTY write method: can't return false!
+        emit configWriteError(m_error);
+    }
 }
 
 void Config::setUIConfig(const QVariantMap &config) {
     m_cacheUIConfig = config;
     emit uiConfigChanged();
-    writeConfig();
+    if (writeConfig()) {
+        // this is a Q_PROPERTY write method: can't return false!
+        emit configWriteError(m_error);
+    }
 }
 
 QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {
@@ -130,7 +140,10 @@ void Config::setProfile(QString id) {
     p.insert("selected_profile", id);
     m_config.insert("ui_config", p);
 
-    writeConfig();
+    if (!writeConfig()) {
+        // this is a Q_PROPERTY write method: can't return false!
+        emit configWriteError(m_error);
+    }
     emit profileChanged();
 }
 
