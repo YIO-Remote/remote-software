@@ -46,7 +46,6 @@
 #include "../hw_config.h"
 #include "../systemservice_name.h"
 #include "common/wpa_ctrl.h"
-#include "wifi_wpasupplicant.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
