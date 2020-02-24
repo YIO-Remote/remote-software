@@ -23,14 +23,12 @@
 #pragma once
 
 #include <QList>
-#include <QLoggingCategory>
 #include <QMap>
 #include <QMutex>
 #include <QObject>
 #include <QQmlComponent>
 #include <QString>
 #include <QVariant>
-#include <QtDebug>
 
 #include "entity.h"
 #include "yio-interface/entities/entitiesinterface.h"
@@ -115,8 +113,6 @@ class Entities : public QObject, public EntitiesInterface {
     QMap<QString, QTimer*>  m_mediaplayersTimers;
 
     static Entities* s_instance;
-
-    QLoggingCategory m_log;
 
     QMutex m_mutex;
 };

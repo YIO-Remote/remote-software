@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,37 +20,34 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include <QObject>
+#include <QCoreApplication>
 
-class TouchEventFilter : public QQuickItem {
+class CommandLineHandler : public QObject {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    explicit CommandLineHandler(QObject *parent = nullptr);
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+    void process(const QCoreApplication &app, const QString &defaultConfigPath);
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
+    QString getProfile() { return m_profile; }
 
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-
- signals:
-    void detectedChanged();
+    QString configFile() { return m_cfgFile; }
+    QString configSchemaFile() { return m_cfgSchemaFile; }
+    QString hardwareConfigFile() { return m_hwCfgFile; }
+    QString hardwareConfigSchemaFile() { return m_hwCfgSchemaFile; }
 
  private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
-};
+    bool validateJson(const QString &filePath, const QString &schemaPath);
 
-#endif  // TOUCHDETECT_H
+ private:
+    QString m_profile;
+    QString m_cfgPath;
+    QString m_cfgFile;
+    QString m_cfgSchemaFile;
+    QString m_hwCfgFile;
+    QString m_hwCfgSchemaFile;
+};

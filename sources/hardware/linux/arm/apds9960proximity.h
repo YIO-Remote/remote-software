@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -20,37 +21,36 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include "../../proximitysensor.h"
+#include "../../interrupthandler.h"
+#include "apds9960.h"
 
-class TouchEventFilter : public QQuickItem {
+class Apds9960ProximitySensor : public ProximitySensor {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    explicit Apds9960ProximitySensor(APDS9960* apds, InterruptHandler* interruptHandler, QObject* parent = nullptr);
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+    int proximitySetting() override { return m_proximitySetting; }
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
+    void setProximitySetting(int proximity) override { m_proximitySetting = proximity; }
 
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
+    int proximity() override { return m_proximity; }
 
- signals:
-    void detectedChanged();
+    Q_INVOKABLE void proximityDetection(bool state) override;
+
+    Q_INVOKABLE void readInterrupt() override;
+
+    // Device interface
+ protected:
+    const QLoggingCategory& logCategory() const override;
 
  private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
-};
+    APDS9960* p_apds;
 
-#endif  // TOUCHDETECT_H
+    uint8_t m_proximity;
+    bool    m_proximityDetection = false;
+    int     m_proximitySetting   = 40;  // default value
+};

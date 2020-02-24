@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,37 +20,15 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
+#include "hw_factory_win.h"
 
-#pragma once
+HardwareFactoryWindows::HardwareFactoryWindows(const QVariantMap &config, QObject *parent)
+    : HardwareFactoryDefault(parent) {
+    Q_UNUSED(config)
+}
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
-
-class TouchEventFilter : public QQuickItem {
-    Q_OBJECT
- public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
-
-    TouchEventFilter();
-    ~TouchEventFilter();
-
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
-
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-
- signals:
-    void detectedChanged();
-
- private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
-};
-
-#endif  // TOUCHDETECT_H
+bool HardwareFactoryWindows::buildDevices(const QVariantMap &config) {
+    // TODO(anyone) add your Windows specific device building here...
+    // At the moment there's no Windows specific drivers, so we're just using the dummy implementations!
+    return HardwareFactoryDefault::buildDevices(config);
+}

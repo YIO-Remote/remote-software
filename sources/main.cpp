@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -30,6 +31,7 @@
 #include <QtDebug>
 
 #include "bluetootharea.h"
+#include "commandlinehandler.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
 #include "entities/entities.h"
@@ -53,7 +55,8 @@ int main(int argc, char* argv[]) {
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
 
-    //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // must be set before creating QCoreApplication, therefore not possible to set in CommandLineHelper
+    // QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
@@ -72,20 +75,17 @@ int main(int argc, char* argv[]) {
     }
     engine.rootContext()->setContextProperty("appPath", appPath);
 
-    // Determine configuration path
-    QString configPath = appPath;
-    if (QFile::exists("/boot/config.json")) {
-        configPath = "/boot";
-    }
-    engine.rootContext()->setContextProperty("configPath", configPath);
+    // Process command line arguments
+    CommandLineHandler cmdLineHandler;
+    // Attention: app might terminate within process depending on cmd line arguments!
+    cmdLineHandler.process(app, appPath);
 
     // LOAD CONFIG
-    QString schemaPath = appPath + "/config-schema.json";
-    if (!QFile::exists(schemaPath)) {
-        qCWarning(CLASS_LC) << "Configuration schema not found, configuration file will not be validated! Missing file:"
-                            << schemaPath;
+    if (!QFile::exists(cmdLineHandler.configFile())) {
+        qFatal("App configuration file not found: %s", cmdLineHandler.configFile().toLatin1().constData());
+        return 1;
     }
-    Config* config = new Config(&engine, configPath, schemaPath);
+    Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile());
     if (!config->isValid()) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
         // TODO(marton) show error screen with shutdon / reboot / web-configurator option
@@ -145,12 +145,8 @@ int main(int argc, char* argv[]) {
     qRegisterMetaType<WifiStatus>("WifiStatus");
 
     // DRIVERS
-    QString hwConfigPath = appPath;
-    if (QFile::exists("/boot/hardware.json")) {
-        hwConfigPath = "/boot";
-    }
-    HardwareFactory* hwFactory =
-        HardwareFactory::build(hwConfigPath + "/hardware.json", hwConfigPath + "/hardware-schema.json");
+    HardwareFactory* hwFactory = HardwareFactory::build(
+        cmdLineHandler.hardwareConfigFile(), cmdLineHandler.hardwareConfigSchemaFile(), cmdLineHandler.getProfile());
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();
@@ -193,11 +189,6 @@ int main(int argc, char* argv[]) {
     // NOTIFICATIONS
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
-
-    // TODO(zehnm) put initialization into factory
-    //    if (!wifiControl->init()) {
-    //        notifications.add(true, QObject::tr("WiFi device was not found."));
-    //    }
 
     // Ready for device startup!
     hwFactory->initialize();

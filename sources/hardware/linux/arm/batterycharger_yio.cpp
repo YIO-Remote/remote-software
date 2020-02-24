@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -20,37 +21,31 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
+#include "batterycharger_yio.h"
 
-#pragma once
+#include <wiringPi.h>
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include <QLoggingCategory>
+#include <QtDebug>
 
-class TouchEventFilter : public QQuickItem {
-    Q_OBJECT
- public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.battery");
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+BatteryChargerYio::BatteryChargerYio(int pin, QObject *parent)
+    : BatteryCharger("YIO battery charger", parent), m_pin(pin) {
+    Q_ASSERT(pin);
+    qCDebug(CLASS_LC()) << name() << "on GPIO" << pin;
+}
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
+void BatteryChargerYio::batteryChargingOn() {
+    pinMode(m_pin, OUTPUT);
+    digitalWrite(m_pin, LOW);
+    qCDebug(CLASS_LC) << "Turning battery charging on";
+}
 
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
+void BatteryChargerYio::batteryChargingOff() {
+    pinMode(m_pin, OUTPUT);
+    digitalWrite(m_pin, HIGH);
+    qCDebug(CLASS_LC) << "Turning battery charging off";
+}
 
- signals:
-    void detectedChanged();
-
- private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
-};
-
-#endif  // TOUCHDETECT_H
+const QLoggingCategory &BatteryChargerYio::logCategory() const { return CLASS_LC(); }

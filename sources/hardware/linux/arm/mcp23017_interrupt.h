@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -20,37 +21,43 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include <QFile>
+#include <QSocketNotifier>
 
-class TouchEventFilter : public QQuickItem {
+#include "../../interrupthandler.h"
+#include "mcp23017_handler.h"
+
+class Mcp23017InterruptHandler : public InterruptHandler {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    explicit Mcp23017InterruptHandler(const QString &i2cDevice, int i2cDeviceId = MCP23017_ADDRESS,
+                                      int gpio = 18, QObject *parent = nullptr);
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+    // ~Mcp23017InterruptHandler() override {}
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
+    Q_INVOKABLE void shutdown() override { mcp.shutdown(); }
 
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
+    // Device interface
+ public:
+    bool open() override;
 
- signals:
-    void detectedChanged();
+ protected:
+    const QLoggingCategory &logCategory() const override;
 
  private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
-};
+    bool setupGPIO();
 
-#endif  // TOUCHDETECT_H
+    void interruptHandler();
+
+ private:
+    QString          m_i2cDevice;
+    int              m_i2cDeviceId;
+    int              m_gpio;
+    MCP23017         mcp = MCP23017();
+    QSocketNotifier *notifier;
+    QFile *          file;
+    QString          m_gpioValueDevice;
+};
