@@ -107,17 +107,17 @@ www.yio-remote.com
 <context>
     <name>Bluetooth</name>
     <message>
-        <location filename="../basic_ui/settings/Bluetooth.qml" line="41"/>
+        <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
         <source>Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
+        <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
         <source>Area detection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
+        <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
         <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -142,12 +142,12 @@ www.yio-remote.com
 <context>
     <name>ButtonBase</name>
     <message>
-        <location filename="../components/ButtonBase.qml" line="374"/>
+        <location filename="../components/ButtonBase.qml" line="372"/>
         <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/ButtonBase.qml" line="374"/>
+        <location filename="../components/ButtonBase.qml" line="372"/>
         <source>Add to favorites</source>
         <translation type="unfinished"></translation>
     </message>
@@ -321,8 +321,41 @@ www.yio-remote.com
 <context>
     <name>ChargingScreen</name>
     <message>
-        <location filename="../basic_ui/ChargingScreen.qml" line="162"/>
+        <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
         <source>% Charged</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CommandLineHandler</name>
+    <message>
+        <location filename="../sources/commandlinehandler.cpp" line="40"/>
+        <source>Use configuration profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/commandlinehandler.cpp" line="43"/>
+        <source>Use configuration file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/commandlinehandler.cpp" line="44"/>
+        <source>Use configuration schema file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/commandlinehandler.cpp" line="45"/>
+        <source>Use hardware configuration file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/commandlinehandler.cpp" line="46"/>
+        <source>Use hardware configuration schema file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/commandlinehandler.cpp" line="50"/>
+        <source>Validate json configuration files and exit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -381,32 +414,32 @@ www.yio-remote.com
 <context>
     <name>Entities</name>
     <message>
-        <location filename="../sources/entities/entities.h" line="110"/>
+        <location filename="../sources/entities/entities.h" line="108"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="110"/>
+        <location filename="../sources/entities/entities.h" line="108"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="110"/>
+        <location filename="../sources/entities/entities.h" line="108"/>
         <source>Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="111"/>
+        <location filename="../sources/entities/entities.h" line="109"/>
         <source>Remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="111"/>
+        <location filename="../sources/entities/entities.h" line="109"/>
         <source>Climate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="111"/>
+        <location filename="../sources/entities/entities.h" line="109"/>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -475,28 +508,28 @@ www.yio-remote.com
 <context>
     <name>MainNavigation</name>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="65"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="63"/>
         <source>Favorites</source>
         <extracomment>menu items that are in the bottom menu</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="65"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="63"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="64"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="64"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="64"/>
         <source>Media</source>
         <translation type="unfinished"></translation>
     </message>
@@ -603,12 +636,12 @@ www.yio-remote.com
 <context>
     <name>RemoteConfig</name>
     <message>
-        <location filename="../basic_ui/settings/RemoteConfig.qml" line="42"/>
+        <location filename="../basic_ui/settings/RemoteConfig.qml" line="41"/>
         <source>Remote configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/RemoteConfig.qml" line="77"/>
+        <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
         <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
 
 </source>

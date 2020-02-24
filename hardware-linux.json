@@ -1,70 +1,26 @@
 {
     "display": {
         "control": {
-            "enabled": true,
-            "backlight": {
-                "gpio": {
-                    "pin": 26
-                }
-            },
-            "spi-over-gpio": {
-                "clk":  107,
-                "mosi": 106,
-                "cs":   105
-            }
+            "enabled": false
         }
-    },
-    "gesture": {
-        "enabled": true
-    },
-    "light": {
-        "enabled": true
     },
     "proximity": {
-        "enabled": true,
-        "i2c": {
-            "device": "/dev/i2c-3",
-            "id": 57
-        }
+        "enabled": false
     },
     "batteryCharger": {
-        "enabled": true,
-        "gpio": {
-            "pin": 108
-        }
+        "enabled": false
     },
     "batteryFuelGauge": {
-        "enabled": true,
-        "i2c": {
-            "device": "/dev/i2c-3",
-            "id": 85
-        }
+        "enabled": false
     },
     "buttonInterruptHandler": {
-        "enabled": true,
-        "i2c": {
-            "device": "/dev/i2c-3",
-            "id": 32
-        },
-        "interrupt": {
-            "gpio": {
-                "pin": 18
-            }
-        }
+        "enabled": false
     },
     "wiringPi": {
-        "enabled": true,
-        "ioExpander": {
-            "pinBase": 100,
-            "i2cId": 33
-        }
+        "enabled": false
     },
     "hapticMotor": {
-        "enabled": true,
-        "i2c": {
-            "device": "/dev/i2c-3",
-            "id": 90
-        }
+        "enabled": false
     },
     "systemservice": {
         "enabled": true,

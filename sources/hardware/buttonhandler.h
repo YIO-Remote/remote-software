@@ -24,7 +24,6 @@
 #include <QObject>
 #include <QVariant>
 
-#include "../logger.h"
 #include "../yioapi.h"
 #include "hardwarefactory.h"
 #include "interrupthandler.h"
@@ -62,7 +61,6 @@ class ButtonHandler : public QObject {
 
  private:
     static ButtonHandler* s_instance;
-    QLoggingCategory      m_log;
     InterruptHandler*     m_itnerruptHandler;
     YioAPI*               m_api;
 

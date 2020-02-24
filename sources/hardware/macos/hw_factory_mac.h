@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,37 +20,22 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include "../hardwarefactory_default.h"
 
-class TouchEventFilter : public QQuickItem {
+/**
+ * @brief Concrete hardware factory for macOS.
+ * This is only a placeholder without any macOS support at the moment!
+ * Please feel free to implement :-)
+ */
+class HardwareFactoryMacOS : public HardwareFactoryDefault {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    explicit HardwareFactoryMacOS(const QVariantMap &config, QObject *parent = nullptr);
 
-    TouchEventFilter();
-    ~TouchEventFilter();
-
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
-
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-
- signals:
-    void detectedChanged();
-
- private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
+    // HardwareFactory interface
+ protected:
+    bool buildDevices(const QVariantMap &config) override;
 };
-
-#endif  // TOUCHDETECT_H

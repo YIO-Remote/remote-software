@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -20,37 +21,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include "../../lightsensor.h"
+#include "apds9960.h"
 
-class TouchEventFilter : public QQuickItem {
+class Apds9960LightSensor : public LightSensor {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    explicit Apds9960LightSensor(APDS9960* apds, QObject* parent = nullptr);
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+    int ambientLight() override { return static_cast<int>(m_ambientLight); }
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
+    Q_INVOKABLE int readAmbientLight() override;
 
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-
- signals:
-    void detectedChanged();
+    // Device interface
+ protected:
+    const QLoggingCategory& logCategory() const override;
 
  private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
-};
+    APDS9960* p_apds;
+    uint16_t  m_ambientLight = 100;
+    uint16_t  m_r;
+    uint16_t  m_g;
+    uint16_t  m_b;
+    uint16_t  m_c;
 
-#endif  // TOUCHDETECT_H
+    uint16_t calculateIlluminance(uint16_t r, uint16_t g, uint16_t b);
+};

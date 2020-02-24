@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -20,37 +21,24 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include "../../batterycharger.h"
 
-class TouchEventFilter : public QQuickItem {
+class BatteryChargerYio : public BatteryCharger {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    Q_INVOKABLE void batteryChargingOn() override;
+    Q_INVOKABLE void batteryChargingOff() override;
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+    explicit BatteryChargerYio(int pin, QObject *parent = nullptr);
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
-
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-
- signals:
-    void detectedChanged();
+    // Device interface
+ protected:
+    const QLoggingCategory &logCategory() const override;
 
  private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
+    // GPIO pin
+    int m_pin;
 };
-
-#endif  // TOUCHDETECT_H

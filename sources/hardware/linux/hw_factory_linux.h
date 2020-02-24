@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,37 +20,27 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include "../hardwarefactory_default.h"
 
-class TouchEventFilter : public QQuickItem {
+/**
+ * @brief Generic Linux hardware factory implementation.
+ * May be sub-classed by more specific hardware factories. E.g. RPi or YIO remote.
+ */
+class HardwareFactoryLinux : public HardwareFactoryDefault {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    explicit HardwareFactoryLinux(const QVariantMap &config, const QString &profile, QObject *parent = nullptr);
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+    // HardwareFactory interface
+ protected:
+    bool buildDevices(const QVariantMap &config) override;
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
-
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-
- signals:
-    void detectedChanged();
-
- private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
+    // Helper methods
+ protected:
+    virtual WifiControl *     buildWifiControl(const QVariantMap &config);
+    virtual SystemService *   buildSystemService(const QVariantMap &config);
+    virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
 };
-
-#endif  // TOUCHDETECT_H

@@ -73,7 +73,9 @@ isEmpty(INTG_LIB_PATH) {
 
 HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \
+    sources/commandlinehandler.h \
     sources/config.h \
+    sources/configutil.h \
     sources/entities/climate.h \
     sources/entities/remote.h \
     sources/entities/switch.h \
@@ -82,6 +84,7 @@ HEADERS += \
     sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
     sources/hardware/buttonhandler.h \
+    sources/hardware/hardwarefactory_default.h \
     sources/hardware/mock/batterycharger_mock.h \
     sources/hardware/mock/batteryfuelgauge_mock.h \
     sources/hardware/displaycontrol.h \
@@ -106,15 +109,12 @@ HEADERS += \
     sources/hardware/device.h \
     sources/hardware/touchdetect.h \
     sources/hardware/hardwarefactory.h \
-    sources/hardware/mock/hardwarefactory_mock.h \
     sources/hardware/hw_config.h \
     sources/hardware/interrupthandler.h \
-    sources/hardware/systemd.h \
     sources/hardware/systemservice.h \
     sources/hardware/mock/systemservice_mock.h \
     sources/hardware/systemservice_name.h \
     sources/hardware/webserver_control.h \
-    sources/hardware/webserver_lighttpd.h \
     sources/hardware/mock/webserver_mock.h \
     sources/hardware/wifi_control.h \
     sources/hardware/mock/wifi_mock.h \
@@ -134,13 +134,16 @@ HEADERS += \
 
 SOURCES += \
     components/media_player/sources/utils_mediaplayer.cpp \
+    sources/commandlinehandler.cpp \
     sources/config.cpp \
+    sources/configutil.cpp \
     sources/entities/climate.cpp \
     sources/entities/remote.cpp \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
     sources/hardware/buttonhandler.cpp \
     sources/hardware/device.cpp \
+    sources/hardware/hardwarefactory_default.cpp \
     sources/hardware/touchdetect.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
@@ -148,12 +151,9 @@ SOURCES += \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
     sources/hardware/hardwarefactory.cpp \
-    sources/hardware/mock/hardwarefactory_mock.cpp \
-    sources/hardware/systemd.cpp \
     sources/hardware/systemservice.cpp \
     sources/hardware/mock/systemservice_mock.cpp \
     sources/hardware/webserver_control.cpp \
-    sources/hardware/webserver_lighttpd.cpp \
     sources/hardware/mock/webserver_mock.cpp \
     sources/hardware/wifi_control.cpp \
     sources/hardware/mock/wifi_mock.cpp \
@@ -187,48 +187,74 @@ linux {
         INCLUDEPATH += wpa_supplicant/src wpa_supplicant/src/utils
 
         HEADERS += \
-            sources/hardware/wifi_wpasupplicant.h
+            sources/hardware/linux/wifi_wpasupplicant.h
 
         SOURCES += \
-            sources/hardware/wifi_wpasupplicant.cpp \
+            sources/hardware/linux/wifi_wpasupplicant.cpp \
             wpa_supplicant/src/common/wpa_ctrl.c \
             wpa_supplicant/src/utils/os_unix.c
 
     }
 
     HEADERS += \
-        sources/hardware/hardwarefactory_rpi0.h \
-        sources/hardware/wifi_shellscripts.h
+        sources/hardware/linux/hw_factory_linux.h \
+        sources/hardware/linux/systemd.h \
+        sources/hardware/linux/webserver_lighttpd.h \
+        sources/hardware/linux/wifi_shellscripts.h
     SOURCES += \
-        sources/hardware/hardwarefactory_rpi0.cpp \
-        sources/hardware/wifi_shellscripts.cpp
+        sources/hardware/linux/hw_factory_linux.cpp \
+        sources/hardware/linux/systemd.cpp \
+        sources/hardware/linux/webserver_lighttpd.cpp \
+        sources/hardware/linux/wifi_shellscripts.cpp
 
     equals(QT_ARCH, arm): {
         HEADERS += \
-            sources/hardware/hardwarefactory_yio.h \
-            sources/hardware/arm/apds9960.h \
-            sources/hardware/arm/apds9960gesture.h \
-            sources/hardware/arm/apds9960light.h \
-            sources/hardware/arm/apds9960proximity.h \
-            sources/hardware/arm/batterycharger_yio.h \
-            sources/hardware/arm/bq27441.h \
-            sources/hardware/arm/displaycontrol_yio.h \
-            sources/hardware/arm/drv2605.h \
-            sources/hardware/arm/mcp23017_interrupt.h \
-            sources/hardware/arm/mcp23017_handler.h
+            sources/hardware/linux/arm/hw_factory_yio.h \
+            sources/hardware/linux/arm/apds9960.h \
+            sources/hardware/linux/arm/apds9960gesture.h \
+            sources/hardware/linux/arm/apds9960light.h \
+            sources/hardware/linux/arm/apds9960proximity.h \
+            sources/hardware/linux/arm/batterycharger_yio.h \
+            sources/hardware/linux/arm/bq27441.h \
+            sources/hardware/linux/arm/displaycontrol_yio.h \
+            sources/hardware/linux/arm/drv2605.h \
+            sources/hardware/linux/arm/mcp23017_interrupt.h \
+            sources/hardware/linux/arm/mcp23017_handler.h
 
         SOURCES += \
-            sources/hardware/hardwarefactory_yio.cpp \
-            sources/hardware/arm/apds9960.cpp \
-            sources/hardware/arm/apds9960light.cpp \
-            sources/hardware/arm/apds9960proximity.cpp \
-            sources/hardware/arm/batterycharger_yio.cpp \
-            sources/hardware/arm/bq27441.cpp \
-            sources/hardware/arm/displaycontrol_yio.cpp \
-            sources/hardware/arm/drv2605.cpp \
-            sources/hardware/arm/mcp23017_interrupt.cpp
+            sources/hardware/linux/arm/hw_factory_yio.cpp \
+            sources/hardware/linux/arm/apds9960.cpp \
+            sources/hardware/linux/arm/apds9960light.cpp \
+            sources/hardware/linux/arm/apds9960proximity.cpp \
+            sources/hardware/linux/arm/batterycharger_yio.cpp \
+            sources/hardware/linux/arm/bq27441.cpp \
+            sources/hardware/linux/arm/displaycontrol_yio.cpp \
+            sources/hardware/linux/arm/drv2605.cpp \
+            sources/hardware/linux/arm/mcp23017_interrupt.cpp
     }
 
+}
+
+# Android specific files (empty template for now)
+android {
+    HEADERS += \
+        sources/hardware/android/hw_factory_android.h
+    SOURCES += \
+        sources/hardware/android/hw_factory_android.cpp
+}
+# macOS specific files (empty template for now)
+macx {
+    HEADERS += \
+        sources/hardware/macos/hw_factory_mac.h
+    SOURCES += \
+        sources/hardware/macos/hw_factory_mac.cpp
+}
+# Windows specific files (empty template for now)
+win32 {
+    HEADERS += \
+        sources/hardware/windows/hw_factory_win.h
+    SOURCES += \
+        sources/hardware/windows/hw_factory_win.cpp
 }
 
 # === start TRANSLATION section =======================================
@@ -299,7 +325,7 @@ equals(QT_ARCH, arm): {
     message(Cross compiling for arm system: including Wiringpi config on RPi)
 
     # FIXME hard coded directory path!
-    INCLUDEPATH += /home/yio/projects/yio/remote-os/rpi0/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/include
+    INCLUDEPATH += /home/yio/projects/yio/remote-os/rpi0/output/host/linux/arm-buildroot-linux-gnueabihf/sysroot/usr/include
     LIBS += -L"/home/yio/projects/yio/remote-os/rpi0/output/target/usr/lib"
     LIBS += -lwiringPi
 }

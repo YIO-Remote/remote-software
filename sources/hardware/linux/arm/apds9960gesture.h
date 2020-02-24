@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -20,37 +21,36 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef TOUCHDETECT_H
-#define TOUCHDETECT_H
-
 #pragma once
 
-#include <QQmlApplicationEngine>
-#include <QQuickItem>
+#include "../../gesturesensor.h"
+#include "apds9960.h"
 
-class TouchEventFilter : public QQuickItem {
+class Apds9960GestureSensor : public GestureSensor {
     Q_OBJECT
+
  public:
-    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
-    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
+    explicit Apds9960GestureSensor(APDS9960* apds, QObject* parent = nullptr)
+        : GestureSensor("APDS9960 gesture sensor", parent), p_apds(apds) {
+        Q_ASSERT(apds);
+    }
 
-    TouchEventFilter();
-    ~TouchEventFilter();
+    // GestureSensor interface
+ public:
+    void gestureDetection(bool state) override {
+        m_gestureDetection = state;
 
-    void     setSource(QObject *source);
-    QObject *getSource() { return m_source; }
-    bool     detected() { return true; }
+        if (state) {
+            // turn on
+        } else {
+            // turn off
+        }
+    }
 
-    static TouchEventFilter *getInstance() { return s_instance; }
-    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-
- signals:
-    void detectedChanged();
+    Gesture gesture() const override { return m_gesture; }
 
  private:
-    static TouchEventFilter *s_instance;
-    bool                     eventFilter(QObject *obj, QEvent *event);
-    QObject *                m_source;
+    APDS9960* p_apds;
+    Gesture   m_gesture;
+    bool      m_gestureDetection = false;
 };
-
-#endif  // TOUCHDETECT_H

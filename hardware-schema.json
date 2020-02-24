@@ -1,25 +1,185 @@
 {
-  "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://yio-remote.com/hardware.json",
+  "title": "YIO remote hardware configuration schema",
+  "$comment": "This schema is optimized for the YIO hardware only. Other platforms can define their own schema and configuration structure: The hardware.json file may only be used by the specific environment factory to initialize its drivers.",
+  "definitions": {
+    "enabled": {
+      "type": "boolean",
+      "title": "Enable device",
+      "description": "A dummy implementation will be used if disabled",
+      "default": true
+    },
+    "i2c": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "type": "string",
+          "title": "Device",
+          "minLength": 1,
+          "default": "/dev/i2c-3",
+          "examples": [ "/dev/i2c-1" ]
+        },
+        "id": {
+           "type": "integer",
+           "title": "Device ID",
+           "minimum": 1
+        }
+      },
+      "required": ["device", "id"]
+    },
+    "gpio": {
+      "type": "object",
+      "properties": {
+        "pin": {
+           "type": "integer",
+           "title": "GPIO pin",
+           "minimum": 0
+        }
+      },
+      "required": ["pin"]
+    },
+    "spi-over-gpio": {
+      "description": "SPI emulation with GPIO pins",
+      "type": "object",
+      "properties": {
+        "clk": {
+           "type": "integer",
+           "title": "Clock GPIO pin",
+           "minimum": 0,
+           "default": 107
+        },
+        "mosi": {
+          "type": "integer",
+          "title": "MOSI GPIO pin",
+          "minimum": 0,
+          "default": 106
+        },
+        "cs": {
+          "type": "integer",
+          "title": "Chip select GPIO pin",
+          "minimum": 0,
+          "default": 105
+        }
+      },
+      "required": ["clk", "mosi", "cs"]
+    }
+  },
   "type": "object",
-  "title": "The YIO hardware configuration schema",
   "required": [
     "systemservice",
     "wifi",
     "webserver"
   ],
   "properties": {
+    "display": {
+      "type": "object",
+      "title": "Display",
+      "properties": {
+        "control": {
+          "properties": {
+            "enabled": { "$ref": "#/definitions/enabled" },
+            "backlight" : {
+              "properties": {
+                "gpio":  { "$ref": "#/definitions/gpio" }
+              }
+            },
+            "spi-over-gpio":  { "$ref": "#/definitions/spi-over-gpio" }
+          }
+        }
+      }
+    },
+    "gesture": {
+      "type": "object",
+      "title": "Gesture sensor",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" }
+      }
+    },
+    "light": {
+      "type": "object",
+      "title": "Ambient light sensor",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" }
+      }
+    },
+    "proximity": {
+      "type": "object",
+      "title": "Proximity sensor",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
+        "i2c":  { "$ref": "#/definitions/i2c" }
+      }
+    },
+    "batteryCharger": {
+      "type": "object",
+      "title": "Battery charger",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
+        "gpio":  { "$ref": "#/definitions/gpio" }
+      }
+    },
+    "batteryFuelGauge": {
+      "type": "object",
+      "title": "Battery fuel gauge",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
+        "i2c":  { "$ref": "#/definitions/i2c" }
+      }
+    },
+    "buttonInterruptHandler": {
+      "$comment": "1st MCP23017ML IO expander using an interrupt",
+      "type": "object",
+      "title": "IO expander 1",
+      "description": "Used for all button using an interrupt handler",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
+        "i2c":  { "$ref": "#/definitions/i2c" },
+        "interrupt": {
+          "gpio":  { "$ref": "#/definitions/gpio" }
+        }
+      }
+    },
+    "wiringPi": {
+      "$comment": "2nd MCP23017ML IO expander using WiringPi. The i2c device is determined by WiringPi. On remote-os this is patched to '/dev/i2c-3'!",
+      "type": "object",
+      "title": "IO expander 2",
+      "description": "Used for display SPI and battery charger",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
+        "ioExpander": {
+          "properties": {
+            "pinBase": {
+              "type":  "integer",
+              "minimum": 65,
+              "default": 100
+            },
+            "i2cId": {
+              "type":  "integer",
+              "minimum": 1,
+              "default": 33
+            }
+          }
+        }
+      }
+    },
+    "hapticMotor": {
+      "type": "object",
+      "title": "Haptic motor",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
+        "i2c":  { "$ref": "#/definitions/i2c" }
+      }
+    },
     "systemservice": {
-      "$id": "#/properties/systemservice",
       "type": "object",
       "title": "System service control",
       "required": [
         "systemd"
       ],
       "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
         "systemd": {
-          "$id": "#/properties/systemservice/properties/systemd",
           "type": "object",
           "title": "Systemd system service",
           "required": [
@@ -29,27 +189,18 @@
           ],
           "properties": {
             "sudo": {
-              "$id": "#/properties/systemservice/properties/systemd/properties/sudo",
               "type": "boolean",
               "title": "Use sudo for systemd interactions",
-              "default": false,
-              "examples": [
-                false
-              ]
+              "default": false
             },
             "timeout": {
-              "$id": "#/properties/systemservice/properties/systemd/properties/timeout",
               "type": "integer",
               "minimum": -1,
               "title": "Interaction timeout",
               "description": "Timeout in milliseconds to wait for systemd interfactions, e.g. starting a service. If timeout is -1, the timeout is disabled",
-              "default": 30000,
-              "examples": [
-                20000
-              ]
+              "default": 30000
             },
             "services": {
-              "$id": "#/properties/systemservice/properties/systemd/properties/services",
               "type": "object",
               "title": "Available services",
               "required": [
@@ -65,7 +216,6 @@
               ],
               "properties": {
                 "wifi": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/wifi",
                   "type": "string",
                   "title": "Wifi service",
                   "default": "",
@@ -75,7 +225,6 @@
                   "pattern": "^(.*)$"
                 },
                 "dns": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/dns",
                   "type": "string",
                   "title": "Name resolution service",
                   "default": "",
@@ -85,7 +234,6 @@
                   "pattern": "^(.*)$"
                 },
                 "webserver": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/webserver",
                   "type": "string",
                   "title": "Webserver service",
                   "default": "",
@@ -95,7 +243,6 @@
                   "pattern": "^(.*)$"
                 },
                 "ntp": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/ntp",
                   "type": "string",
                   "title": "NTP service",
                   "default": "",
@@ -105,7 +252,6 @@
                   "pattern": "^(.*)$"
                 },
                 "dhcp": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/dhcp",
                   "type": "string",
                   "title": "DHCP service",
                   "default": "",
@@ -115,7 +261,6 @@
                   "pattern": "^(.*)$"
                 },
                 "shutdown": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/shutdown",
                   "type": "string",
                   "title": "Shutdown service",
                   "default": "",
@@ -125,7 +270,6 @@
                   "pattern": "^(.*)$"
                 },
                 "yio-update": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/yio-update",
                   "type": "string",
                   "title": "Yio update service",
                   "default": "",
@@ -135,7 +279,6 @@
                   "pattern": "^(.*)$"
                 },
                 "zeroconf": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/zeroconf",
                   "type": "string",
                   "title": "Zeroconf service",
                   "default": "",
@@ -145,7 +288,6 @@
                   "pattern": "^(.*)$"
                 },
                 "networking": {
-                  "$id": "#/properties/systemservice/properties/systemd/properties/services/properties/networking",
                   "type": "string",
                   "title": "Networking service",
                   "default": "",
@@ -174,57 +316,37 @@
         "accessPoint"
       ],
       "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
         "maxScanResults": {
-          "$id": "#/properties/wifi/properties/maxScanResults",
           "type": "integer",
           "minimum": 0,
           "title": "Maximum number of scan results",
-          "default": 50,
-          "examples": [
-            20
-          ]
+          "default": 30
         },
         "joinRetryCount": {
-          "$id": "#/properties/wifi/properties/joinRetryCount",
           "type": "integer",
           "minimum": 0,
           "title": "Number of AP connection attempts",
-          "default": 5,
-          "examples": [
-            5
-          ]
+          "default": 5
         },
         "joinRetryDelay": {
-          "$id": "#/properties/wifi/properties/joinRetryDelay",
           "type": "integer",
           "minimum": 500,
           "title": "Delay in milliseconds between connection attempts",
-          "default": 3000,
-          "examples": [
-            3000
-          ]
+          "default": 3000
         },
         "pollInterval": {
-          "$id": "#/properties/wifi/properties/pollInterval",
           "type": "integer",
           "minimum": 1000,
           "title": "Status polling interval in milliseconds",
-          "default": 30000,
-          "examples": [
-            20000
-          ]
+          "default": 30000
         },
         "useShellScript": {
-          "$id": "#/properties/wifi/properties/useShellScript",
           "type": "boolean",
           "title": "Shell scripts instead wpa_control interface",
-          "default": false,
-          "examples": [
-            false
-          ]
+          "default": false
         },
         "interface": {
-          "$id": "#/properties/wifi/properties/interface",
           "type": "object",
           "title": "WiFi control interface configuration",
           "required": [
@@ -233,7 +355,6 @@
           ],
           "properties": {
             "wpa_supplicant": {
-              "$id": "#/properties/wifi/properties/interface/properties/wpa_supplicant",
               "type": "object",
               "title": "wpa_supplicant control interface",
               "required": [
@@ -242,7 +363,6 @@
               ],
               "properties": {
                 "socketPath": {
-                  "$id": "#/properties/wifi/properties/interface/properties/wpa_supplicant/properties/socketPath",
                   "type": "string",
                   "title": "Socket for wpa_supplicant",
                   "default": "",
@@ -252,18 +372,13 @@
                   "pattern": "^(.*)$"
                 },
                 "removeNetworksBeforeJoin": {
-                  "$id": "#/properties/wifi/properties/interface/properties/wpa_supplicant/properties/removeNetworksBeforeJoin",
                   "type": "boolean",
                   "title": "Remove configured networks before joining a new network",
-                  "default": false,
-                  "examples": [
-                    false
-                  ]
+                  "default": false
                 }
               }
             },
             "shellScript": {
-              "$id": "#/properties/wifi/properties/interface/properties/shellScript",
               "type": "object",
               "title": "WiFi control through shell scripts",
               "required": [
@@ -280,16 +395,11 @@
               ],
               "properties": {
                 "sudo": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/sudo",
                   "type": "boolean",
                   "title": "Use sudo to execute shell scripts",
-                  "default": false,
-                  "examples": [
-                    false
-                  ]
+                  "default": false
                 },
                 "timeout": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/timeout",
                   "type": "integer",
                   "minimum": -1,
                   "title": "Script timeout",
@@ -300,7 +410,6 @@
                   ]
                 },
                 "clearNetworks": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/clearNetworks",
                   "type": "string",
                   "title": "Clear networks script",
                   "default": "",
@@ -310,7 +419,6 @@
                   "pattern": "^(.*)$"
                 },
                 "connect": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/connect",
                   "type": "string",
                   "title": "Connect network script",
                   "default": "",
@@ -320,7 +428,6 @@
                   "pattern": "^(.*)$"
                 },
                 "listNetworks": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/listNetworks",
                   "type": "string",
                   "title": "List networks script",
                   "default": "",
@@ -330,7 +437,6 @@
                   "pattern": "^(.*)$"
                 },
                 "startAP": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/startAP",
                   "type": "string",
                   "title": "Start access point script",
                   "default": "",
@@ -340,7 +446,6 @@
                   "pattern": "^(.*)$"
                 },
                 "getSSID": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getSSID",
                   "type": "string",
                   "title": "Get ssid script",
                   "default": "",
@@ -350,7 +455,6 @@
                   "pattern": "^(.*)$"
                 },
                 "getIP": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getIP",
                   "type": "string",
                   "title": "Get ip address script",
                   "default": "",
@@ -360,7 +464,6 @@
                   "pattern": "^(.*)$"
                 },
                 "getMAC": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getMAC",
                   "type": "string",
                   "title": "Get mac address script",
                   "default": "",
@@ -370,7 +473,6 @@
                   "pattern": "^(.*)$"
                 },
                 "getRSSI": {
-                  "$id": "#/properties/wifi/properties/interface/properties/shellScript/properties/getRSSI",
                   "type": "string",
                   "title": "Get rssi script",
                   "default": "",
@@ -384,7 +486,6 @@
           }
         },
         "accessPoint": {
-          "$id": "#/properties/wifi/properties/accessPoint",
           "type": "object",
           "title": "WiFi accesspoint configuration",
           "required": [
@@ -393,15 +494,14 @@
       }
     },
     "webserver": {
-      "$id": "#/properties/webserver",
       "type": "object",
       "title": "Web server control",
       "required": [
         "lighttpd"
       ],
       "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
         "lighttpd": {
-          "$id": "#/properties/webserver/properties/lighttpd",
           "type": "object",
           "title": "Lighttpd web-server",
           "required": [
@@ -411,7 +511,6 @@
           ],
           "properties": {
             "configFile": {
-              "$id": "#/properties/webserver/properties/lighttpd/properties/configFile",
               "type": "string",
               "title": "lighttpd configuration file",
               "default": "",
@@ -421,7 +520,6 @@
               "pattern": "^(.*)$"
             },
             "wifiSetupConfig": {
-              "$id": "#/properties/webserver/properties/lighttpd/properties/wifiSetupConfig",
               "type": "string",
               "title": "Configuration file to enable web-configurator",
               "default": "",
@@ -431,7 +529,6 @@
               "pattern": "^(.*)$"
             },
             "webConfiguratorConfig": {
-              "$id": "#/properties/webserver/properties/lighttpd/properties/webConfiguratorConfig",
               "type": "string",
               "title": "Configuration file to enable wifi setup through web server portal",
               "default": "",
