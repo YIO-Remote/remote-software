@@ -26,19 +26,19 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLoggingCategory>
-#include <QNetworkInterface>
+//#include <QNetworkInterface>
 #include <QTimer>
 #include <QtDebug>
 
 #include "entities/entities.h"
-#include "fileio.h"
 #include "logger.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "api");
 
 YioAPI *YioAPI::s_instance = nullptr;
 
-YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_log("yioapi"), m_engine(engine) {
+YioAPI::YioAPI(WifiControl *wifiControl, QQmlApplicationEngine *engine)
+    : m_log("yioapi"), m_engine(engine), m_wifiControl(wifiControl) {
     s_instance = this;
     Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
 
@@ -58,9 +58,11 @@ void YioAPI::start() {
         emit runningChanged();
     }
 
-    FileIO fileIO;
-    m_hostname = fileIO.read("/apssid").trimmed();
+    QString macAddr = m_wifiControl->wifiStatus().macAddress().toUtf8();
+    macAddr.replace(":", "");
 
+    m_hostname.append("YIO-Remote-").append(macAddr);
+    qCDebug(m_log) << "NAME" << m_hostname;
     emit hostnameChanged();
 
     m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);

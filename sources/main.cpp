@@ -201,7 +201,7 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("fileio", &fileIO);
 
     // YIO API
-    YioAPI* yioapi = new YioAPI(&engine);
+    YioAPI* yioapi = new YioAPI(hwFactory->getWifiControl(), &engine);
     engine.rootContext()->setContextProperty("api", yioapi);
 
     // BUTTON HANDLER
