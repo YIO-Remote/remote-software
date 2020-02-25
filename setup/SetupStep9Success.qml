@@ -38,7 +38,7 @@ Item {
         color: Style.colorText
         text: qsTr("Connected") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter
-        anchors { top: parent.top; topMargin: 280; horizontalCenter: parent.horizontalCenter }
+        anchors { top: parent.top; topMargin: 220; horizontalCenter: parent.horizontalCenter }
         font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 60 }
         lineHeight: 1
     }
