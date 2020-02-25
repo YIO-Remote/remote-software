@@ -28,17 +28,26 @@ import Style 1.0
 Item {
     width: 480; height: 800
 
+    property string wifiPassword
+
     SwipeView {
         id: swipeView
         width: 480; height: 800
         interactive: false
         currentIndex: 0
 
+        property bool wifiSuccess: false
+        property bool dockSuccess: false
+        property bool dockSkip: false
+
         SetupStep1 {}
         SetupStep2 {}
         SetupStep3 {}
-        SetupStep5 {}
-        SetupStep1 {}
+        SetupStep5 { _swipeView: swipeView; _currentItem: SwipeView.isCurrentItem }
+        Loader { source: swipeView.wifiSuccess ? "qrc:/setup/SetupStep6Success.qml" : "qrc:/setup/SetupStep6Failure.qml" }
+        SetupStep7 {}
+        SetupStep8 { _swipeView: swipeView; _currentItem: SwipeView.isCurrentItem }
+        Loader { source: swipeView.dockSkip ? "qrc:/setup/SetupStep9Skip.qml" : (swipeView.dockSuccess ? "qrc:/setup/SetupStep9Success.qml" : "qrc:/setup/SetupStep9Failure.qml") }
     }
 
     Component.onCompleted:  {

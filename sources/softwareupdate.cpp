@@ -62,21 +62,24 @@ QObject *SoftwareUpdate::getQMLInstance(QQmlEngine *engine, QJSEngine *scriptEng
 void SoftwareUpdate::onCheckForUpdateTimerTimeout() { checkForUpdate(); }
 
 void SoftwareUpdate::checkForUpdate() {
-    m_manager = new QNetworkAccessManager(this);
-    QNetworkRequest request;
+    // only check update if standby mode is not WIFI_OFF
+    if (StandbyControl::getInstance()->mode() != StandbyControl::WIFI_OFF) {
+        m_manager = new QNetworkAccessManager(this);
+        QNetworkRequest request;
 
-    connect(m_manager, &QNetworkAccessManager::finished, this, &SoftwareUpdate::checkForUpdateFinished);
+        connect(m_manager, &QNetworkAccessManager::finished, this, &SoftwareUpdate::checkForUpdateFinished);
 
-    request.setUrl(QUrl(m_updateUrl));
-    request.setRawHeader("Content-Type", "application/json");
-    request.setRawHeader("Accept", "application/json");
+        request.setUrl(QUrl(m_updateUrl));
+        request.setRawHeader("Content-Type", "application/json");
+        request.setRawHeader("Accept", "application/json");
 
-    QJsonObject json;
-    json.insert("version", m_currentVersion);
-    QJsonDocument jsonDoc(json);
-    QByteArray    jsonData = jsonDoc.toJson();
+        QJsonObject json;
+        json.insert("version", m_currentVersion);
+        QJsonDocument jsonDoc(json);
+        QByteArray    jsonData = jsonDoc.toJson();
 
-    m_manager->post(request, jsonData);
+        m_manager->post(request, jsonData);
+    }
 }
 
 void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {

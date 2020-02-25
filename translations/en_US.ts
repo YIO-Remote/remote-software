@@ -643,8 +643,7 @@ www.yio-remote.com
     <message>
         <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
         <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
-
-</source>
+http://</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -737,18 +736,18 @@ www.yio-remote.com
 <context>
     <name>SetupStep4</name>
     <message>
-        <location filename="../setup/SetupStep4.qml" line="94"/>
+        <location filename="../setup/SetupStep4.qml" line="96"/>
         <source>Enter password for
 &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setup/SetupStep4.qml" line="112"/>
+        <location filename="../setup/SetupStep4.qml" line="114"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setup/SetupStep4.qml" line="138"/>
+        <location filename="../setup/SetupStep4.qml" line="140"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
@@ -756,35 +755,162 @@ www.yio-remote.com
 <context>
     <name>SetupStep5</name>
     <message>
-        <location filename="../setup/SetupStep5.qml" line="65"/>
+        <location filename="../setup/SetupStep5.qml" line="70"/>
         <source>Connecting</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep6Failure</name>
+    <message>
+        <location filename="../setup/SetupStep6Failure.qml" line="36"/>
+        <source>Failed to connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep6Failure.qml" line="49"/>
+        <source>YIO Remote could not connect to your Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep6Failure.qml" line="60"/>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep6Success</name>
+    <message>
+        <location filename="../setup/SetupStep6Success.qml" line="36"/>
+        <source>Connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep6Success.qml" line="47"/>
+        <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep6Success.qml" line="58"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep7</name>
+    <message>
+        <location filename="../setup/SetupStep7.qml" line="57"/>
+        <source>Connect the YIO Dock to
+a power source and wait until it starts blinking.
+
+ To share the Wi-Fi network credentials with the dock, tap next.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep7.qml" line="72"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep7.qml" line="83"/>
+        <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep8</name>
+    <message>
+        <location filename="../setup/SetupStep8.qml" line="115"/>
+        <source>Setting up your YIO Dock</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep9Failure</name>
+    <message>
+        <location filename="../setup/SetupStep9Failure.qml" line="36"/>
+        <source>Failed to connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep9Failure.qml" line="49"/>
+        <source>YIO Dock could not connect to your Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep9Failure.qml" line="60"/>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep9Skip</name>
+    <message>
+        <location filename="../setup/SetupStep9Skip.qml" line="39"/>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep9Skip.qml" line="50"/>
+        <source>You can setup your YIO Dock later from the web configurator.
+
+To use the web configurator,
+go to Settings and turn on
+Remote configuration after restarting the remote.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep9Skip.qml" line="61"/>
+        <source>Reboot</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep9Success</name>
+    <message>
+        <location filename="../setup/SetupStep9Success.qml" line="39"/>
+        <source>Connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep9Success.qml" line="50"/>
+        <source>YIO Dock has successfully connected to your Wi-Fi network.
+
+To use the web configurator,
+go to Settings and turn on
+Remote configuration after restarting the remote.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep9Success.qml" line="61"/>
+        <source>Reboot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SoftwareUpdate</name>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="90"/>
+        <location filename="../sources/softwareupdate.cpp" line="93"/>
         <source>Software update: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="124"/>
+        <location filename="../sources/softwareupdate.cpp" line="127"/>
         <source>New software is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="124"/>
+        <location filename="../sources/softwareupdate.cpp" line="127"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="137"/>
+        <location filename="../sources/softwareupdate.cpp" line="140"/>
         <source>Cannot connect to the update server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="230"/>
+        <location filename="../sources/softwareupdate.cpp" line="233"/>
         <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>

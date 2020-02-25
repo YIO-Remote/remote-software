@@ -69,5 +69,12 @@
         <file>setup/SetupStep4.qml</file>
         <file>setup/SetupStep5.qml</file>
         <file>basic_ui/settings/SoftwareupdateDownloading.qml</file>
+        <file>setup/SetupStep6Success.qml</file>
+        <file>setup/SetupStep6Failure.qml</file>
+        <file>setup/SetupStep7.qml</file>
+        <file>setup/SetupStep8.qml</file>
+        <file>setup/SetupStep9Success.qml</file>
+        <file>setup/SetupStep9Failure.qml</file>
+        <file>setup/SetupStep9Skip.qml</file>
     </qresource>
 </RCC>

@@ -33,16 +33,61 @@ Item {
     property bool _currentItem: false
 
     Connections {
-        target: wifi
-        onConnected: {
-            console.debug("Wifi connected");
-            _swipeView.wifiSuccess = true;
+        target: bluetoothArea
+        onDockFound: {
+            console.debug("Dock found! Sending credentials...");
+            // show dock page
+            var msg = {};
+            msg.ssid = wifi.wifiStatus.name;
+            msg.password = wifiPassword;
+            msg.remote_id = api.hostname;
+            bluetoothArea.sendInfoToDock(JSON.stringify(msg));
+
+            // mdns discovery of docks
+            apiConnection.enabled = true;
+            api.discoveredServices("_yio-dock-api._tcp");
+            mdnsDiscoveryTimeout.start();
+        }
+    }
+
+    Connections {
+        id: apiConnection
+        target: api
+        enabled: false
+        onServiceDiscovered: {
+            // stop timeout timer
+            mdnsDiscoveryTimeout.stop();
+            bluetoothDiscoveryTimeout.stop();
+
+            // TODO: need to check if the same dock was found as in the bluetooth setup
+            console.debug("Dock API discovered: " + api.discoveredServices);
+
+            // show success page
+            _swipeView.dockSuccess = true;
             _swipeView.incrementCurrentIndex();
         }
+    }
 
-        onJoinError: {
-            console.debug("Wifi error:" + error);
-            _swipeView.wifiSuccess = false;
+    Timer {
+        id: bluetoothDiscoveryTimeout
+        running: _currentItem
+        interval: 20000
+        repeat: false
+
+        onTriggered: {
+            _swipeView.dockSuccess = false;
+            _swipeView.incrementCurrentIndex();
+        }
+    }
+
+    Timer {
+        id: mdnsDiscoveryTimeout
+        running: false
+        interval: 20000
+        repeat: false
+
+        onTriggered: {
+            _swipeView.dockSuccess = false;
             _swipeView.incrementCurrentIndex();
         }
     }
@@ -67,7 +112,7 @@ Item {
 
     Text {
         color: Style.colorText
-        text: qsTr("Connecting") + translateHandler.emptyString
+        text: qsTr("Setting up your YIO Dock") + translateHandler.emptyString
         anchors { top: yio_O.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
         font: Style.buttonFont
     }

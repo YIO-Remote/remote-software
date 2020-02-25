@@ -58,6 +58,7 @@ bool WifiMock::join(const QString &ssid, const QString &password, WifiSecurity s
     qCDebug(CLASS_LC) << "join " << ssid;
 
     if (!validateAuthentication(security, password)) {
+        emit joinError(WifiControl::AuthFailure);
         return false;
     }
 

@@ -37,6 +37,7 @@
 #include "hardware/hardwarefactory.h"
 #include "logger.h"
 #include "notifications.h"
+#include "standbycontrol.h"
 
 class SoftwareUpdate : public QObject {
     Q_OBJECT
