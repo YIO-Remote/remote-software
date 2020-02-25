@@ -42,6 +42,7 @@ Item {
 
         SetupStep1 {}
         SetupStep2 {}
+        SetupStepCountry {}
         SetupStep3 {}
         SetupStep5 { _swipeView: swipeView; _currentItem: SwipeView.isCurrentItem }
         Loader { source: swipeView.wifiSuccess ? "qrc:/setup/SetupStep6Success.qml" : "qrc:/setup/SetupStep6Failure.qml" }

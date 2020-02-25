@@ -76,5 +76,6 @@
         <file>setup/SetupStep9Success.qml</file>
         <file>setup/SetupStep9Failure.qml</file>
         <file>setup/SetupStep9Skip.qml</file>
+        <file>setup/SetupStepCountry.qml</file>
     </qresource>
 </RCC>
