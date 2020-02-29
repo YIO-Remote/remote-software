@@ -66,7 +66,6 @@ void YioAPI::start() {
     }
 
     macAddr.replace(":", "");
-    macAddr = macAddr.toLower();
     m_hostname.append("YIO-Remote-").append(macAddr);
     qCDebug(m_log) << "NAME" << m_hostname;
     emit hostnameChanged();
