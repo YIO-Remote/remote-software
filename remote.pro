@@ -276,6 +276,7 @@ OTHER_FILES += main.qml \
 }
 
 TRANSLATIONS = translations/bg_BG.ts \
+               translations/ca_ES.ts \
                translations/cs_CZ.ts \
                translations/da_DK.ts \
                translations/de_DE.ts \
@@ -284,11 +285,11 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/es_ES.ts \
                translations/et_EE.ts \
                translations/fi_FI.ts \
-               translations/fr_CA.ts \
                translations/fr_FR.ts \
                translations/ga_IE.ts \
                translations/hr_HR.ts \
                translations/hu_HU.ts \
+               translations/is_IS.ts \
                translations/it_IT.ts \
                translations/lt_LT.ts \
                translations/lv_LV.ts \
@@ -299,9 +300,15 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/pt_BR.ts \
                translations/pt_PT.ts \
                translations/ro_RO.ts \
+               translations/ru_BY.ts \
+               translations/ru_MD.ts \
+               translations/ru_RU.ts \
+               translations/ru_UA.ts \
                translations/sk_SK.ts \
                translations/sl_SI.ts \
-               translations/sv_SE.ts
+               translations/sv_SE.ts \
+               translations/zn_CN.ts \
+               translations/zh_TW.ts
 
 #QMAKE_LUPDATE & _LRELEASE vars are set in qmake-destiation-path.pri
 !isEmpty(QMAKE_LUPDATE):exists("$$QMAKE_LUPDATE") {

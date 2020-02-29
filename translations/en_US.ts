@@ -888,6 +888,14 @@ Remote configuration after restarting the remote.</source>
     </message>
 </context>
 <context>
+    <name>SetupStepCountry</name>
+    <message>
+        <location filename="../setup/SetupStepCountry.qml" line="65"/>
+        <source>Select your country or region</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SoftwareUpdate</name>
     <message>
         <location filename="../sources/softwareupdate.cpp" line="93"/>

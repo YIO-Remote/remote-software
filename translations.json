@@ -4,7 +4,11 @@
         "id": "bg_BG"
     },
     {
-        "name": "čeština",
+        "name": "Català",
+        "id": "ca_ES"
+    },
+    {
+        "name": "Čeština",
         "id": "cs_CZ"
     },
     {
@@ -36,10 +40,6 @@
         "id": "fi_FI"
     },
     {
-        "name": "Français (CA)",
-        "id": "fr_CA"
-    },
-    {
         "name": "Français",
         "id": "fr_FR"
     },
@@ -54,6 +54,10 @@
     {
         "name": "Magyar",
         "id": "hu_HU"
+    },
+    {
+        "name": "Íslensku",
+        "id": "is_IS"
     },
     {
         "name": "Italiano",
@@ -96,6 +100,22 @@
         "id": "ro_RO"
     },
     {
+        "name": "Русская беларусь",
+        "id": "ru_BY"
+    },
+    {
+        "name": "Русская Молдова",
+        "id": "ru_MD"
+    },
+    {
+        "name": "Pусский",
+        "id": "ru_RU"
+    },
+    {
+        "name": "Російська Україна",
+        "id": "ru_UA"
+    },
+    {
         "name": "Slovenský",
         "id": "sk_SK"
     },
@@ -106,5 +126,13 @@
     {
         "name": "Svenska",
         "id": "sv_SE"
+    },
+    {
+        "name": "简体中文",
+        "id": "zh_CN"
+    },
+    {
+        "name": "中國傳統的",
+        "id": "zh_TW"
     }
 ]

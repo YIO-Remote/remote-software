@@ -36,7 +36,7 @@ import Style 1.0
 KeyboardStyle {
     id: currentStyle
     readonly property bool compactSelectionList: [InputEngine.Pinyin, InputEngine.Cangjie, InputEngine.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
-    readonly property string fontFamily: "Neuzeit Grotesk"
+    readonly property string fontFamily: "Open Sans"
     readonly property real keyBackgroundMargin: Math.round(13 * scaleHint)
     readonly property real keyContentMargin: Math.round(45 * scaleHint)
     readonly property real keyIconScale: scaleHint * 1
@@ -184,7 +184,7 @@ KeyboardStyle {
         Rectangle {
             id: languageKeyBackground
             radius: 5
-            color: "#35322f"
+            color: Style.colorMedium
             anchors.fill: languageKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -229,7 +229,7 @@ KeyboardStyle {
         Rectangle {
             id: enterKeyBackground
             radius: 5
-            color: "#1e1b18"
+            color: Style.colorMedium
             anchors.fill: enterKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -667,8 +667,8 @@ KeyboardStyle {
         }
     }
 
-    alternateKeysListItemWidth: 99 * scaleHint
-    alternateKeysListItemHeight: 150 * scaleHint
+    alternateKeysListItemWidth: 299 * scaleHint //99 * scaleHint
+    alternateKeysListItemHeight: 350 * scaleHint //150 * scaleHint
     alternateKeysListDelegate: Item {
         id: alternateKeysListItem
         width: alternateKeysListItemWidth
@@ -680,7 +680,7 @@ KeyboardStyle {
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 52 * scaleHint
+                pixelSize: 100 * scaleHint
             }
             anchors.centerIn: parent
         }
@@ -944,73 +944,69 @@ KeyboardStyle {
         NumberAnimation { property: "opacity"; to: 0; duration: 200 }
     }
 
-//    languagePopupListEnabled: true
+    languagePopupListEnabled: true
 
-//    languageListDelegate: SelectionListItem {
-//        id: languageListItem
-//        width: languageNameTextMetrics.width * 17
-//        height: languageNameTextMetrics.height + languageListLabel.anchors.topMargin + languageListLabel.anchors.bottomMargin
-//        Text {
-//            id: languageListLabel
-//            anchors.left: parent.left
-//            anchors.top: parent.top
-//            anchors.leftMargin: languageNameTextMetrics.height / 2
-//            anchors.rightMargin: anchors.leftMargin
-//            anchors.topMargin: languageNameTextMetrics.height / 3
-//            anchors.bottomMargin: anchors.topMargin
-//            text: languageNameFormatter.elidedText
-//            color: "#5CAA15"
-//            font {
-//                family: fontFamily
-//                weight: Font.Normal
-//                pixelSize: 44 * scaleHint
-//            }
-//        }
-//        TextMetrics {
-//            id: languageNameTextMetrics
-//            font {
-//                family: fontFamily
-//                weight: Font.Normal
-//                pixelSize: 44 * scaleHint
-//            }
-//            text: "X"
-//        }
-//        TextMetrics {
-//            id: languageNameFormatter
-//            font {
-//                family: fontFamily
-//                weight: Font.Normal
-//                pixelSize: 44 * scaleHint
-//            }
-//            elide: Text.ElideRight
-//            elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
-//            text: displayName
-//        }
-//        states: State {
-//            name: "current"
-//            when: languageListItem.ListView.isCurrentItem
-//            PropertyChanges {
-//                target: languageListLabel
-//                color: "black"
-//            }
-//        }
-//    }
+    languageListDelegate: SelectionListItem {
+        id: languageListItem
+        width: languageNameTextMetrics.width * 17
+        height: languageNameTextMetrics.height + languageListLabel.anchors.topMargin + languageListLabel.anchors.bottomMargin
+        Text {
+            id: languageListLabel
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.leftMargin: languageNameTextMetrics.height / 2
+            anchors.rightMargin: anchors.leftMargin
+            anchors.topMargin: languageNameTextMetrics.height / 3
+            anchors.bottomMargin: anchors.topMargin
+            text: languageNameFormatter.elidedText
+            color: Style.colorText //"#5CAA15"
+            font {
+                family: fontFamily
+                weight: Font.Normal
+                pixelSize: 16 //44 * scaleHint
+            }
+        }
+        TextMetrics {
+            id: languageNameTextMetrics
+            font {
+                family: fontFamily
+                weight: Font.Normal
+                pixelSize: 16 //44 * scaleHint
+            }
+            text: "X"
+        }
+        TextMetrics {
+            id: languageNameFormatter
+            font {
+                family: fontFamily
+                weight: Font.Normal
+                pixelSize: 16 //44 * scaleHint
+            }
+            elide: Text.ElideRight
+            elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
+            text: displayName
+        }
+        states: State {
+            name: "current"
+            when: languageListItem.ListView.isCurrentItem
+            PropertyChanges {
+                target: languageListLabel
+                color: "black"
+            }
+        }
+    }
 
-//    languageListBackground: Rectangle {
-//        color: "white"
-//        border {
-//            width: 1
-//            color: "#929495"
-//        }
-//    }
+    languageListBackground: Rectangle {
+        color: Style.colorDark
+    }
 
-//    languageListAdd: Transition {
-//        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
-//    }
+    languageListAdd: Transition {
+        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
+    }
 
-//    languageListRemove: Transition {
-//        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
-//    }
+    languageListRemove: Transition {
+        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
+    }
 
 //    selectionHandle: Image {
 //        sourceSize.width: 20

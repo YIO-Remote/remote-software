@@ -83,6 +83,7 @@ ApplicationWindow {
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
         //           This can be done by connecting to a signal of the config in the hardware factory
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
+        VirtualKeyboardSettings.locale = Qt.binding(function() { return config.settings.language })
 
         // load bluetooth
         bluetoothArea.init(config.config);
