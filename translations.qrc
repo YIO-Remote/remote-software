@@ -33,6 +33,6 @@
         <file>translations/sl_SI.qm</file>
         <file>translations/sv_SE.qm</file>
         <file>translations/zh_TW.qm</file>
-        <file>translations/zn_CN.qm</file>
+        <file>translations/zh_CN.qm</file>
     </qresource>
 </RCC>
