@@ -112,4 +112,12 @@ class YioAPI : public YioAPIInterface {
     QMap<QString, QVariantMap> m_discoveredServices;
 
     Integrations* m_integrations;
+
+    // API CALLS
+    void apiGetConfig(QWebSocket* client);
+    void apiSetConfig(QWebSocket* client, const QVariantMap& map);
+    void apiLogHandle(QWebSocket* client, const QVariantMap& map);
+    void apiButtonHandle(const QVariantMap& map);
+    void apiGetEntities(QWebSocket* client, const QVariantMap& map);
+    void apiGetIntegrations(QWebSocket* client);
 };
