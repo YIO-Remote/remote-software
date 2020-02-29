@@ -156,9 +156,13 @@ KeyboardLayout {
         }
     }
     KeyboardRow {
-        HideKeyboardKey {
+//        HideKeyboardKey {
+//            weight: 200
+//        }
+        ShiftKey {
             weight: 200
         }
+
         Key {
             key: Qt.Key_Z
             text: "z"
@@ -194,7 +198,7 @@ KeyboardLayout {
         SymbolModeKey {}
         Key {
             text: " "
-            displayText: "\u2423"
+            displayText: ""
             repeat: true
             showPreview: false
             key: Qt.Key_Space
