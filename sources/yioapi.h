@@ -30,7 +30,6 @@
 
 #include "../qtzeroconf/qzeroconf.h"
 #include "config.h"
-#include "hardware/hardwarefactory.h"
 #include "integrations/integrations.h"
 #include "logger.h"
 #include "yio-interface/yioapiinterface.h"
@@ -68,7 +67,7 @@ class YioAPI : public YioAPIInterface {
 
     QString hostname() const { return m_hostname; }
 
-    explicit YioAPI(WifiControl* wifiControl, QQmlApplicationEngine* engine = nullptr);
+    explicit YioAPI(QQmlApplicationEngine* engine = nullptr);
     ~YioAPI() override;
 
     static YioAPI* getInstance() { return s_instance; }
@@ -113,5 +112,4 @@ class YioAPI : public YioAPIInterface {
     QMap<QString, QVariantMap> m_discoveredServices;
 
     Integrations* m_integrations;
-    WifiControl*  m_wifiControl;
 };

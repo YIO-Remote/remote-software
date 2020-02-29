@@ -26,7 +26,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLoggingCategory>
-//#include <QNetworkInterface>
+#include <QNetworkInterface>
 #include <QTimer>
 #include <QtDebug>
 
@@ -37,8 +37,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "api");
 
 YioAPI *YioAPI::s_instance = nullptr;
 
-YioAPI::YioAPI(WifiControl *wifiControl, QQmlApplicationEngine *engine)
-    : m_log("yioapi"), m_engine(engine), m_wifiControl(wifiControl) {
+YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_log("yioapi"), m_engine(engine) {
     s_instance = this;
     Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
 
@@ -58,9 +57,16 @@ void YioAPI::start() {
         emit runningChanged();
     }
 
-    QString macAddr = m_wifiControl->wifiStatus().macAddress().toUtf8();
-    macAddr.replace(":", "");
+    QString macAddr;
+    foreach (QNetworkInterface interface, QNetworkInterface::allInterfaces()) {
+        if (!(interface.flags() & QNetworkInterface::IsLoopBack)) {
+            macAddr = interface.hardwareAddress();
+            break;
+        }
+    }
 
+    macAddr.replace(":", "");
+    macAddr = macAddr.toLower();
     m_hostname.append("YIO-Remote-").append(macAddr);
     qCDebug(m_log) << "NAME" << m_hostname;
     emit hostnameChanged();
