@@ -307,7 +307,7 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/sk_SK.ts \
                translations/sl_SI.ts \
                translations/sv_SE.ts \
-               translations/zn_CN.ts \
+               translations/zh_CN.ts \
                translations/zh_TW.ts
 
 #QMAKE_LUPDATE & _LRELEASE vars are set in qmake-destiation-path.pri
