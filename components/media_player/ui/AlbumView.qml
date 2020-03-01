@@ -129,7 +129,7 @@ Rectangle {
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
             width: parent.width-80
-            font: Style.buttonFont
+            font: Style.fonts.button
             anchors { top: title.bottom; horizontalCenter: parent.horizontalCenter }
         }
 

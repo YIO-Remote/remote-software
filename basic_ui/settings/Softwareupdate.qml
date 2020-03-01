@@ -47,7 +47,7 @@ Rectangle {
                 color: Style.colorText
                 text: qsTr("Auto update") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             BasicUI.CustomSwitch {
@@ -92,7 +92,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 width: parent.width-40
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Text {

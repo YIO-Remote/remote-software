@@ -203,7 +203,7 @@ Rectangle {
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
             anchors { left: parent.left; leftMargin: 126; verticalCenter: parent.verticalCenter}
-            font: Style.buttonFont
+            font: Style.fonts.button
         }
 
         Text {
@@ -372,7 +372,7 @@ Rectangle {
             text: obj && obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors { left: addToFavButtonCircle.right; leftMargin: 26; verticalCenter: addToFavButtonCircle.verticalCenter }
-            font: Style.buttonFont
+            font: Style.fonts.button
         }
     }
 

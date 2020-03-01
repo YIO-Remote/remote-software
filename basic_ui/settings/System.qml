@@ -61,7 +61,7 @@ Rectangle {
         color: Style.colorText
         text: qsTr("Uptime") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-        font: Style.buttonFont
+        font: Style.fonts.button
     }
 
     Text {
@@ -70,7 +70,7 @@ Rectangle {
         text: "0h"
         horizontalAlignment: Text.AlignRight
         anchors { right: parent.right; rightMargin: 20; verticalCenter: uptimeText.verticalCenter }
-        font: Style.buttonFont
+        font: Style.fonts.button
     }
 
     Rectangle {
@@ -86,7 +86,7 @@ Rectangle {
         color: Style.colorText
         text: qsTr("CPU temperature") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: line7.bottom; topMargin: 20 }
-        font: Style.buttonFont
+        font: Style.fonts.button
     }
 
     Text {
@@ -95,7 +95,7 @@ Rectangle {
         text: "36ºC"
         horizontalAlignment: Text.AlignRight
         anchors { right: parent.right; rightMargin: 20; verticalCenter: temperatureText.verticalCenter }
-        font: Style.buttonFont
+        font: Style.fonts.button
     }
 
     Rectangle {

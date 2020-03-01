@@ -98,7 +98,7 @@ Rectangle {
                 color: Style.colorText
                 text: qsTr("Battery health") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Text {
@@ -106,7 +106,7 @@ Rectangle {
                 text: Battery.health + "%"
                 horizontalAlignment: Text.AlignRight
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: batteryhealthText.verticalCenter }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
         }
 
@@ -124,7 +124,7 @@ Rectangle {
                 color: Style.colorText
                 text: qsTr("Remaining time") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Text {
@@ -139,7 +139,7 @@ Rectangle {
                 }
                 horizontalAlignment: Text.AlignRight
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: remainingTimeText.verticalCenter }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
         }
 
@@ -168,7 +168,7 @@ Rectangle {
                 color: Style.colorText
                 horizontalAlignment: Text.AlignRight
                 anchors { left: screenOnTimeText.left; top: screenOnTimeText.bottom; topMargin: 10 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Text {
@@ -187,7 +187,7 @@ Rectangle {
                 color: Style.colorText
                 horizontalAlignment: Text.AlignRight
                 anchors { left: screenOffTimeText.left; top: screenOffTimeText.bottom; topMargin: 10 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
         }
 
@@ -346,7 +346,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 width: parent.width-40
                 anchors { left: parent.left; leftMargin: 20; top: powerSavingText.bottom; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Slider {

@@ -69,6 +69,6 @@ Item {
         color: Style.colorText
         text: qsTr("Connecting") + translateHandler.emptyString
         anchors { top: yio_O.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
-        font: Style.buttonFont
+        font: Style.fonts.button
     }
 }

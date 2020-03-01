@@ -150,7 +150,7 @@ SwipeView {
                         color: Style.colorText
                         text: SoftwareUpdate.updateAvailable ? qsTr("New software is available.") + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
                         anchors { top:parent.top; horizontalCenter: parent.horizontalCenter }
-                        font: Style.buttonFont
+                        font: Style.fonts.button
                         lineHeight: 1
                     }
 

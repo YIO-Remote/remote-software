@@ -35,7 +35,7 @@ Rectangle {
         color: Style.colorText
         text: qsTr("Thank you!") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-        font: Style.buttonFont
+        font: Style.fonts.button
     }
 
     Text {

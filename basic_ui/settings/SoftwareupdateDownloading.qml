@@ -44,7 +44,7 @@ Rectangle {
         text: qsTr("Downloading") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter
         anchors { top: progressBg.bottom; topMargin: 30; horizontalCenter: parent.horizontalCenter }
-        font: Style.buttonFont
+        font: Style.fonts.button
     }
 
     Text {

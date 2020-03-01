@@ -143,7 +143,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors { left: parent.left; leftMargin: 106; verticalCenter: parent.verticalCenter; verticalCenterOffset: obj.source === "" ? 0 : -15 }
-            font: Style.buttonFont
+            font: Style.fonts.button
         }
 
         Text {
@@ -197,7 +197,7 @@ Rectangle {
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-80
-        font: Style.buttonFont
+        font: Style.fonts.button
         anchors { top: songTitle.bottom; horizontalCenter: parent.horizontalCenter }
     }
 

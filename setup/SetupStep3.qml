@@ -103,7 +103,7 @@ Item {
                     color: Style.colorText
                     text: wifi.networkScanResult[index].name
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                    font: Style.buttonFont
+                    font: Style.fonts.button
                 }
 
                 Text {
