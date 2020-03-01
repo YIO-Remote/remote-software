@@ -74,6 +74,15 @@ QVariantList Notifications::list() {
 void Notifications::add(bool error, const QString &text, const QString &actionlabel, void (*f)(QObject *),
                         QObject *param) {
     Notification *n = new Notification(m_id, error, text, actionlabel, QDateTime::currentDateTime(), f, param);
+
+    // check if the same notification exists, then remove it
+    for (QMap<int, Notification *>::const_iterator iter = m_notifications.begin(); iter != m_notifications.end();
+         ++iter) {
+        if (iter.value()->m_text == text && m_notifications.contains(iter.key())) {
+            m_notifications.remove(iter.key());
+        }
+    }
+
     m_notifications.insert(m_id, n);
     emit listChanged();
     emit errorChanged();
