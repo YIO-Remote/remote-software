@@ -797,10 +797,35 @@
           "default": 21600
         },
         "softwareupdate": {
-          "$id": "#/properties/settings/properties/softwareupdate",
-          "type": "boolean",
-          "title": "Enable automatic software updates",
-          "default": false
+          "type": "object",
+          "title": "Software Update",
+          "required": [
+            "autoUpdate"
+          ],
+          "properties": {
+            "autoUpdate": {
+              "type": "boolean",
+              "title": "Enable automatic software updates",
+              "default": false
+            },
+            "updateUrl": {
+              "type": "string",
+              "format": "url",
+              "title": "Update URL",
+              "default": true
+            },
+            "checkInterval": {
+              "type": "integer",
+              "title": "Update check interval in seconds",
+              "default": 3600,
+              "minimum": 600
+            },
+            "downloadDir": {
+              "type": "string",
+              "title": "Download directory for update packages",
+              "default": "/tmp/yio"
+            }
+          }
         },
         "wifitime": {
           "$id": "#/properties/settings/properties/wifitime",

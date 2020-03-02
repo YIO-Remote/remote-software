@@ -218,9 +218,8 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
     // SOFTWARE UPDATE
-    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(config->getSettings().value("softwareupdate").toBool(), appPath,
-                                                        hwFactory->getBatteryFuelGauge());
-    Q_UNUSED(softwareUpdate);
+    QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
+    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, appPath, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 
     // FIXME move initialization code to a device driver factory
@@ -238,6 +237,8 @@ int main(int argc, char* argv[]) {
     if (engine.rootObjects().isEmpty()) {
         return -1;
     }
+
+    softwareUpdate->start();
 
     QObject* mainApplicationWindow = config->getQMLObject("applicationWindow");
     touchEventFilter->setSource(mainApplicationWindow);

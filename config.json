@@ -421,7 +421,12 @@
         "paired_dock": "YIO-Dock",
         "proximity": 40,
         "shutdowntime": 7200,
-        "softwareupdate": false,
+        "softwareupdate": {
+            "autoUpdate": false,
+            "updateUrl": "https://update.yio.app/update",
+            "checkInterval": 3600,
+            "downloadDir": "/tmp/yio"
+        },
         "wifitime": 1740
     },
     "ui_config": {

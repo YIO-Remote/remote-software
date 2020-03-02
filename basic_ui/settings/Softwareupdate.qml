@@ -109,13 +109,13 @@ Rectangle {
 
             BasicUI.CustomButton {
                 id: updateButton
-                buttonText: fileio.exists(appPath + "/downloads/latest.zip") ? qsTr("Update") + translateHandler.emptyString : qsTr("Download") + translateHandler.emptyString
+                buttonText: SoftwareUpdate.installAvailable ? qsTr("Update") + translateHandler.emptyString : qsTr("Download") + translateHandler.emptyString
                 anchors { top: uptodateTextsmall.bottom; topMargin: 30; left: parent.left; leftMargin: 20 }
-                visible: SoftwareUpdate.updateAvailable ? true : false
+                visible: SoftwareUpdate.updateAvailable
 
                 mouseArea.onClicked: {
                     if (SoftwareUpdate.updateAvailable) {
-                        if (fileio.exists(appPath + "/downloads/latest.zip")) {
+                        if (SoftwareUpdate.installAvailable) {
                             //TODO(Marton): launch updater script
                         } else {
                             SoftwareUpdate.startUpdate();

@@ -43,7 +43,7 @@ class SoftwareUpdate : public QObject {
     Q_OBJECT
 
  public:
-    explicit SoftwareUpdate(bool autoUpdate, QString appPath, BatteryFuelGauge* batteryFuelGauge,
+    explicit SoftwareUpdate(const QVariantMap &cfg, QString appPath, BatteryFuelGauge* batteryFuelGauge,
                             QObject* parent = nullptr);
     ~SoftwareUpdate();
 
@@ -54,12 +54,15 @@ class SoftwareUpdate : public QObject {
     Q_PROPERTY(QString currentVersion READ currentVersion NOTIFY currentVersionChanged)
     Q_PROPERTY(QString newVersion READ newVersion NOTIFY newVersionChanged)
     Q_PROPERTY(bool updateAvailable READ updateAvailable NOTIFY updateAvailableChanged)
+    Q_PROPERTY(bool installAvailable READ installAvailable)
 
     Q_INVOKABLE void checkForUpdate();
     Q_INVOKABLE void startUpdate();
     Q_INVOKABLE void startDockUpdate();
 
-    void downloadUpdate(QUrl url);
+    void start();
+
+    void downloadUpdate(const QUrl &url);
 
     qint64  bytesReceived() { return m_bytesReceived; }
     qint64  bytesTotal() { return m_bytesTotal; }
@@ -71,6 +74,7 @@ class SoftwareUpdate : public QObject {
     QString currentVersion() { return m_currentVersion; }
     QString newVersion() { return m_newVersion; }
     bool    updateAvailable() { return m_updateAvailable; }
+    bool    installAvailable();
 
     static SoftwareUpdate* getInstance() { return s_instance; }
     static QObject*        getQMLInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
@@ -86,6 +90,10 @@ class SoftwareUpdate : public QObject {
     void downloadComplete();
 
  private:
+    bool checkDiskSpace(const QString &path, int requiredMB);
+    QString getDeviceType();
+
+ private:
     static SoftwareUpdate* s_instance;
 
     BatteryFuelGauge* m_batteryFuelGauge;
@@ -94,7 +102,8 @@ class SoftwareUpdate : public QObject {
     QString m_newVersion      = "";
     bool    m_updateAvailable = false;
 
-    bool m_autoUpdate = true;
+    int  m_checkIntervallSec;
+    bool m_autoUpdate;
 
     QTimer* m_checkForUpdateTimer;
 
@@ -102,11 +111,12 @@ class SoftwareUpdate : public QObject {
     qint64  m_bytesTotal    = 0;
     QString m_downloadSpeed;
 
-    QString                m_updateUrl = "https://update.yio.app/update";
-    QString                m_downloadUrl;
+    QUrl                   m_updateUrl;
+    QUrl                   m_downloadUrl;
     QNetworkAccessManager* m_manager;
     QNetworkReply*         m_download = nullptr;
     QFile*                 m_file;
+    QString                m_downloadDir;
     QString                m_appPath;
     QElapsedTimer*         m_downloadTimer;
 
