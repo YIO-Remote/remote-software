@@ -43,7 +43,7 @@ class SoftwareUpdate : public QObject {
     Q_OBJECT
 
  public:
-    explicit SoftwareUpdate(const QVariantMap &cfg, QString appPath, BatteryFuelGauge* batteryFuelGauge,
+    explicit SoftwareUpdate(const QVariantMap& cfg, QString appPath, BatteryFuelGauge* batteryFuelGauge,
                             QObject* parent = nullptr);
     ~SoftwareUpdate();
 
@@ -54,7 +54,7 @@ class SoftwareUpdate : public QObject {
     Q_PROPERTY(QString currentVersion READ currentVersion NOTIFY currentVersionChanged)
     Q_PROPERTY(QString newVersion READ newVersion NOTIFY newVersionChanged)
     Q_PROPERTY(bool updateAvailable READ updateAvailable NOTIFY updateAvailableChanged)
-    Q_PROPERTY(bool installAvailable READ installAvailable)
+    Q_PROPERTY(bool installAvailable READ installAvailable NOTIFY installAvailableChanged)
 
     Q_INVOKABLE void checkForUpdate();
     Q_INVOKABLE void startUpdate();
@@ -62,7 +62,7 @@ class SoftwareUpdate : public QObject {
 
     void start();
 
-    void downloadUpdate(const QUrl &url);
+    void downloadUpdate(const QUrl& url);
 
     qint64  bytesReceived() { return m_bytesReceived; }
     qint64  bytesTotal() { return m_bytesTotal; }
@@ -87,10 +87,11 @@ class SoftwareUpdate : public QObject {
     void currentVersionChanged();
     void newVersionChanged();
     void updateAvailableChanged();
+    void installAvailableChanged();
     void downloadComplete();
 
  private:
-    bool checkDiskSpace(const QString &path, int requiredMB);
+    bool    checkDiskSpace(const QString& path, int requiredMB);
     QString getDeviceType();
 
  private:
