@@ -108,7 +108,7 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray    responseData = reply->readAll();
         QJsonDocument jsonResponse = QJsonDocument::fromJson(responseData);
-        QJsonObject   jsonObject = jsonResponse.object();
+        QJsonObject   jsonObject   = jsonResponse.object();
 
         if (jsonObject.contains("error")) {
             qCWarning(CLASS_LC) << "Error" << jsonObject["error"].toString();
@@ -116,8 +116,6 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
         } else {
             m_downloadUrl.setUrl(jsonObject["url"].toString());
             m_newVersion = jsonObject["latest"].toString();
-            // TODO(marton) change the server not returning a version prefixed with 'v' to simplify client handling
-            m_newVersion.remove(0, 1);  // remove the "v"
 
             // TODO(zehnm) always validate returned data! Never trust json!
             if (!m_downloadUrl.isValid()) {
@@ -128,17 +126,17 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
             qCDebug(CLASS_LC) << "Url:" << m_downloadUrl << "Version:" << m_newVersion;
 
             QStringList newVersionDigits = m_newVersion.split(".");
-            QString     none = QString("%1").arg(newVersionDigits[0].toInt(), 2, 10, QChar('0'));
-            QString     ntwo = QString("%1").arg(newVersionDigits[1].toInt(), 2, 10, QChar('0'));
-            QString     nthree = QString("%1").arg(newVersionDigits[2].toInt(), 2, 10, QChar('0'));
+            QString     none             = QString("%1").arg(newVersionDigits[0].toInt(), 2, 10, QChar('0'));
+            QString     ntwo             = QString("%1").arg(newVersionDigits[1].toInt(), 2, 10, QChar('0'));
+            QString     nthree           = QString("%1").arg(newVersionDigits[2].toInt(), 2, 10, QChar('0'));
 
             int combinedNewVersion;
             combinedNewVersion = (none.append(ntwo).append(nthree)).toInt();
 
             QStringList currentVersionDigits = m_currentVersion.split(".");
-            QString     cone = QString("%1").arg(currentVersionDigits[0].toInt(), 2, 10, QChar('0'));
-            QString     ctwo = QString("%1").arg(currentVersionDigits[1].toInt(), 2, 10, QChar('0'));
-            QString     cthree = QString("%1").arg(currentVersionDigits[2].toInt(), 2, 10, QChar('0'));
+            QString     cone                 = QString("%1").arg(currentVersionDigits[0].toInt(), 2, 10, QChar('0'));
+            QString     ctwo                 = QString("%1").arg(currentVersionDigits[1].toInt(), 2, 10, QChar('0'));
+            QString     cthree               = QString("%1").arg(currentVersionDigits[2].toInt(), 2, 10, QChar('0'));
 
             int combinedCurrentVersion;
             combinedCurrentVersion = (cone.append(ctwo).append(cthree)).toInt();

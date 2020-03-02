@@ -898,27 +898,32 @@ Remote configuration after restarting the remote.</source>
 <context>
     <name>SoftwareUpdate</name>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="93"/>
+        <location filename="../sources/softwareupdate.cpp" line="115"/>
         <source>Software update: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="127"/>
+        <location filename="../sources/softwareupdate.cpp" line="156"/>
         <source>New software is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="127"/>
+        <location filename="../sources/softwareupdate.cpp" line="156"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="140"/>
+        <location filename="../sources/softwareupdate.cpp" line="165"/>
         <source>Cannot connect to the update server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="233"/>
+        <location filename="../sources/softwareupdate.cpp" line="269"/>
+        <source>The remote requires %1 MB free space to download updates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="271"/>
         <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>
