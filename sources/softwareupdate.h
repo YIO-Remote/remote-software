@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -22,22 +23,16 @@
 
 #pragma once
 
-#include <QDataStream>
 #include <QDir>
-#include <QElapsedTimer>
 #include <QGuiApplication>
-#include <QJsonDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
 #include <QQmlEngine>
 #include <QTimer>
 
-#include "config.h"
-#include "hardware/hardwarefactory.h"
-#include "logger.h"
-#include "notifications.h"
-#include "standbycontrol.h"
+#include "filedownload.h"
+#include "hardware/batteryfuelgauge.h"
 
 class SoftwareUpdate : public QObject {
     Q_OBJECT
@@ -57,12 +52,11 @@ class SoftwareUpdate : public QObject {
     Q_PROPERTY(bool installAvailable READ installAvailable NOTIFY installAvailableChanged)
 
     Q_INVOKABLE void checkForUpdate();
-    Q_INVOKABLE void startUpdate();
-    Q_INVOKABLE void startDockUpdate();
+    Q_INVOKABLE bool startDownload();
+    Q_INVOKABLE bool performUpdate();
+    Q_INVOKABLE bool startDockUpdate();
 
     void start();
-
-    void downloadUpdate(const QUrl& url);
 
     qint64  bytesReceived() { return m_bytesReceived; }
     qint64  bytesTotal() { return m_bytesTotal; }
@@ -90,8 +84,15 @@ class SoftwareUpdate : public QObject {
     void installAvailableChanged();
     void downloadComplete();
 
+ private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void checkForUpdateFinished(QNetworkReply* reply);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void downloadFinished();
+    void onDownloadFailed();
+    void onCheckForUpdateTimerTimeout();
+    void onDownloadSpeed(const QString& speed);
+
  private:
-    bool    checkDiskSpace(const QString& path, int requiredMB);
     QString getDeviceType();
 
  private:
@@ -99,8 +100,8 @@ class SoftwareUpdate : public QObject {
 
     BatteryFuelGauge* m_batteryFuelGauge;
 
-    QString m_currentVersion  = QGuiApplication::applicationVersion();
-    QString m_newVersion      = "";
+    QString m_currentVersion = QGuiApplication::applicationVersion();
+    QString m_newVersion = "";
     bool    m_updateAvailable = false;
 
     int  m_checkIntervallSec;
@@ -109,21 +110,14 @@ class SoftwareUpdate : public QObject {
     QTimer* m_checkForUpdateTimer;
 
     qint64  m_bytesReceived = 0;
-    qint64  m_bytesTotal    = 0;
+    qint64  m_bytesTotal = 0;
     QString m_downloadSpeed;
 
     QUrl                   m_updateUrl;
     QUrl                   m_downloadUrl;
     QNetworkAccessManager* m_manager;
-    QNetworkReply*         m_download = nullptr;
-    QFile*                 m_file;
-    QString                m_downloadDir;
+    QDir                   m_downloadDir;
     QString                m_appPath;
-    QElapsedTimer*         m_downloadTimer;
-
- private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
-    void checkForUpdateFinished(QNetworkReply* reply);
-    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-    void downloadFinished();
-    void onCheckForUpdateTimerTimeout();
+    QString                m_fileName;
+    FileDownload           m_fileDownload;
 };

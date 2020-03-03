@@ -898,32 +898,32 @@ Remote configuration after restarting the remote.</source>
 <context>
     <name>SoftwareUpdate</name>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="115"/>
-        <source>Software update: </source>
+        <location filename="../sources/softwareupdate.cpp" line="134"/>
+        <source>Software update:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="156"/>
+        <location filename="../sources/softwareupdate.cpp" line="179"/>
         <source>New software is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="156"/>
+        <location filename="../sources/softwareupdate.cpp" line="179"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="165"/>
+        <location filename="../sources/softwareupdate.cpp" line="188"/>
         <source>Cannot connect to the update server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="269"/>
+        <location filename="../sources/softwareupdate.cpp" line="247"/>
         <source>The remote requires %1 MB free space to download updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="271"/>
+        <location filename="../sources/softwareupdate.cpp" line="251"/>
         <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -973,7 +973,7 @@ YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="138"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="140"/>
         <source>Check for update</source>
         <translation type="unfinished"></translation>
     </message>

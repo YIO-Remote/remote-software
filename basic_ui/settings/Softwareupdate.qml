@@ -115,10 +115,12 @@ Rectangle {
 
                 mouseArea.onClicked: {
                     if (SoftwareUpdate.updateAvailable) {
+                        // TODO(marton) error handling: coordinate with zehnm which error conditions must be handled manually and which ones are already forwarded to the NotificationHandler
                         if (SoftwareUpdate.installAvailable) {
-                            //TODO(Marton): launch updater script
+                            SoftwareUpdate.performUpdate();
                         } else {
-                            SoftwareUpdate.startUpdate();
+                            // TODO(marton) handle downloadComplete signal to exit download screen
+                            SoftwareUpdate.startDownload();
                         }
                     }
                 }

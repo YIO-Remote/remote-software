@@ -80,6 +80,7 @@ HEADERS += \
     sources/entities/remote.h \
     sources/entities/switch.h \
     sources/entities/weather.h \
+    sources/filedownload.h \
     sources/fileio.h \
     sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
@@ -141,6 +142,7 @@ SOURCES += \
     sources/entities/remote.cpp \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
+    sources/filedownload.cpp \
     sources/hardware/buttonhandler.cpp \
     sources/hardware/device.cpp \
     sources/hardware/hardwarefactory_default.cpp \
