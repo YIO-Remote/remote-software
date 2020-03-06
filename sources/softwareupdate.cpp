@@ -27,6 +27,8 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QLoggingCategory>
+#include <QRegExp>
+#include <QUrlQuery>
 
 #include "config.h"
 #include "notifications.h"
@@ -43,7 +45,8 @@ SoftwareUpdate::SoftwareUpdate(const QVariantMap &cfg, BatteryFuelGauge *battery
     : QObject(parent),
       m_batteryFuelGauge(batteryFuelGauge),
       m_autoUpdate(cfg.value("autoUpdate", false).toBool()),
-      m_updateUrl(cfg.value("updateUrl", "https://update.yio.app/update").toUrl()),
+      m_initialCheckDelay(cfg.value("checkDelay", 60).toInt()),
+      m_baseUpdateUrl(cfg.value("updateUrl", "https://update.yio.app/v1").toUrl()),
       m_downloadDir(cfg.value("downloadDir", "/tmp/yio").toString()) {
     Q_ASSERT(m_batteryFuelGauge);
 
@@ -56,13 +59,13 @@ SoftwareUpdate::SoftwareUpdate(const QVariantMap &cfg, BatteryFuelGauge *battery
         checkIntervallSec = 600;
     }
 
-    qCDebug(CLASS_LC) << "Auto update:" << m_autoUpdate << ", url:" << m_updateUrl.toString()
+    qCDebug(CLASS_LC) << "Auto update:" << m_autoUpdate << ", base url:" << m_baseUpdateUrl.toString()
                       << ", download dir:" << m_downloadDir.path();
 
     m_checkForUpdateTimer.setInterval(checkIntervallSec * 1000);
     connect(&m_checkForUpdateTimer, &QTimer::timeout, this, &SoftwareUpdate::onCheckForUpdateTimerTimeout);
 
-    connect(&m_manager, &QNetworkAccessManager::finished, this, &SoftwareUpdate::checkForUpdateFinished);
+    connect(&m_manager, &QNetworkAccessManager::finished, this, &SoftwareUpdate::onCheckForUpdateFinished);
 
     connect(&m_fileDownload, &FileDownload::downloadProgress, this, &SoftwareUpdate::onDownloadProgress);
     connect(&m_fileDownload, &FileDownload::downloadComplete, this, &SoftwareUpdate::onDownloadComplete);
@@ -83,7 +86,7 @@ void SoftwareUpdate::start() {
 
         // check for update as well after startup delay.
         // WiFi might not yet be ready and update check might delay initial screen loading!
-        QTimer::singleShot(60 * 1000, this, &SoftwareUpdate::checkForUpdate);
+        QTimer::singleShot(m_initialCheckDelay * 1000, this, &SoftwareUpdate::checkForUpdate);
     }
 }
 
@@ -122,33 +125,28 @@ void SoftwareUpdate::checkForUpdate() {
         return;
     }
 
-    if (m_checkOrDownloadActive) {
-        return;
-    }
-    m_checkOrDownloadActive = true;
+    QUrlQuery query;
+    query.addQueryItem("version", currentVersion());
+    query.addQueryItem("device", getDeviceType());
+    // TODO(zehnm) add OS version query parameter
+    QUrl updateUrl = m_baseUpdateUrl.resolved(QUrl("updates/app"));
+    updateUrl.setQuery(query);
 
-    qCDebug(CLASS_LC) << "Checking for update. Current version:" << currentVersion();
-
-    QNetworkRequest request(m_updateUrl);
-    request.setRawHeader("Content-Type", "application/json");
+    QNetworkRequest request(updateUrl);
     request.setRawHeader("Accept", "application/json");
 
-    // TODO(zehm) use GET with query parameters
-    QJsonObject json;
-    json.insert("version", currentVersion());
-    json.insert("device_id", getDeviceType());
-
-    QJsonDocument jsonDoc(json);
-    QByteArray    jsonData = jsonDoc.toJson();
-
-    m_manager.post(request, jsonData);  // QNetworkReply will be deleted in checkForUpdateFinished slot!
+    qCDebug(CLASS_LC) << "Checking for update:" << updateUrl.toString();
+    m_manager.get(request);
+    //  the get request will signal onCheckForUpdateFinished() with QNetworkReply where it will also be deleted
 }
 
-void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
-    if (reply->error() != QNetworkReply::NoError) {
-        qCWarning(CLASS_LC) << "Network reply error: " << reply->errorString();
+void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
+    int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+    // handle well defined API status codes separately. Treat all others as connection error.
+    if (!(status == 200 || status == 400 || status == 501 || status == 503)) {
+        qCWarning(CLASS_LC) << "Network reply error: " << reply->error() << reply->errorString();
         Notifications::getInstance()->add(true, tr("Cannot connect to the update server."));
-        m_checkOrDownloadActive = false;
         reply->deleteLater();
         return;
     }
@@ -156,38 +154,60 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
     QByteArray    responseData = reply->readAll();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(responseData);
     QJsonObject   jsonObject = jsonResponse.object();
+    reply->deleteLater();
 
-    if (jsonObject.contains("error")) {
-        m_downloadUrl.clear();
+    if (status == 200) {
+        m_downloadUrl.setUrl(jsonObject["url"].toString());
+        m_newVersion = jsonObject["latest"].toString();
+
+        // Make sure returned data is valid
+        QRegExp rx("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(-\\w+)?$");
+        if (rx.indexIn(m_newVersion) != 0) {
+            qCWarning(CLASS_LC) << "Invalid new version:" << m_newVersion;
+            status = 500;
+        }
+        if (!m_downloadUrl.isValid()) {
+            qCWarning(CLASS_LC) << "Invalid download URL:" << m_downloadUrl;
+            status = 500;
+        }
+    }
+
+    if (status != 200) {
         m_newVersion.clear();
-        qCWarning(CLASS_LC) << "Error" << jsonObject["error"].toString();
-        Notifications::getInstance()->add(true, tr("Software update:") + " " + jsonObject["error"].toString());
-        m_checkOrDownloadActive = false;
-        reply->deleteLater();
+        m_downloadUrl.clear();
+        QString error;
+        switch (status) {
+            case 400:
+                error = tr("Invalid request.");
+                break;
+            case 501:
+                error = tr("Unsupported device.");
+                break;
+            case 503:
+                error = tr("Service currently not available.");
+                break;
+            default:
+                error = tr("Request error %1").arg(status);
+        }
+
+        qCWarning(CLASS_LC) << "Update check failed:" << status << jsonObject;
+        Notifications::getInstance()->add(true, tr("Software update:") + " " + error);
         return;
     }
 
-    m_downloadUrl.setUrl(jsonObject["url"].toString());
-    m_newVersion = jsonObject["latest"].toString();
-
-    // TODO(zehnm) validate returned data! Never trust json!
-
-    if (!m_downloadUrl.isValid()) {
-        qCWarning(CLASS_LC) << "Invalid download URL:" << m_downloadUrl;
-        // TODO(zehnm) abort / error handling
-    }
-
-    qCDebug(CLASS_LC) << "Url:" << m_downloadUrl << "Version:" << m_newVersion;
     m_updateAvailable = false;
 
     if (isAlreadyDownloaded(m_newVersion)) {
         qCInfo(CLASS_LC) << "Update has already been downloaded:" << m_newVersion;
+        // trigger install screen
+        m_updateAvailable = true;
+        emit downloadComplete();
+        emit installAvailable();
     } else {
-        // check if it's a newer version than we have
+        // we are only interested in newer version than the one we have
         if (isNewerVersion(currentVersion(), m_newVersion)) {
             m_updateAvailable = true;
 
-            // send a notification
             QObject *param = this;
             Notifications::getInstance()->add(
                 false, tr("New software is available"), tr("Download"),
@@ -196,13 +216,11 @@ void SoftwareUpdate::checkForUpdateFinished(QNetworkReply *reply) {
     }
 
     emit updateAvailableChanged();
-    m_checkOrDownloadActive = false;
-    reply->deleteLater();
 }
 
 bool SoftwareUpdate::startDownload() {
-    if (m_downloadUrl.isEmpty() || m_newVersion.isEmpty()) {
-        qCWarning(CLASS_LC) << "Ignoring download: no download URL or version set!";
+    if (!m_downloadUrl.isValid() || m_newVersion.isEmpty()) {
+        qCWarning(CLASS_LC) << "Ignoring download: no valid download URL or version set!";
         m_updateAvailable = false;
         emit updateAvailableChanged();
         return false;
@@ -219,18 +237,13 @@ bool SoftwareUpdate::startDownload() {
         return false;
     }
 
-    if (m_checkOrDownloadActive) {
-        return false;
-    }
-    m_checkOrDownloadActive = true;
-
     QObject *obj = Config::getInstance()->getQMLObject("loader_second");
     obj->setProperty("source", "qrc:/basic_ui/settings/SoftwareupdateDownloading.qml");
 
     // TODO(zehnm) determine required size from update request?
     int requiredMB = 100;
 
-    QString fileName = UPDATE_BASENAME + QFileInfo(m_downloadUrl.path()).suffix();
+    QString fileName = getDownloadFileName(m_downloadUrl);
     m_fileDownload.download(m_downloadUrl, m_downloadDir, fileName, requiredMB);
 
     return true;
@@ -263,8 +276,6 @@ void SoftwareUpdate::onDownloadComplete(int id) {
 
     emit downloadComplete();
     emit installAvailable();
-
-    m_checkOrDownloadActive = false;
 }
 
 void SoftwareUpdate::onDownloadFailed(int id, QString errorMsg) {
@@ -273,14 +284,13 @@ void SoftwareUpdate::onDownloadFailed(int id, QString errorMsg) {
 
     Notifications::getInstance()->add(true, tr("Update download failed: %1").arg(errorMsg));
     emit downloadFailed();
-
-    m_checkOrDownloadActive = false;
 }
 
 bool SoftwareUpdate::installAvailable() { return m_downloadDir.exists(META_FILENAME); }
 
 bool SoftwareUpdate::performUpdate() {
     qCWarning(CLASS_LC) << "performUpdate() NOT YET IMPLEMENTED";
+    Notifications::getInstance()->add(true, "Sorry, not yet implemented! Working on it :-)");
     return false;
 }
 
@@ -301,6 +311,7 @@ bool SoftwareUpdate::isAlreadyDownloaded(const QString &version) {
 }
 
 bool SoftwareUpdate::isNewerVersion(const QString &currentVersion, const QString &updateVersion) {
+    // TODO(zehnm) support optional suffix, use regex
     QStringList newVersionDigits = updateVersion.split(".");
     QString     none = QString("%1").arg(newVersionDigits[0].toInt(), 2, 10, QChar('0'));
     QString     ntwo = QString("%1").arg(newVersionDigits[1].toInt(), 2, 10, QChar('0'));
@@ -317,10 +328,13 @@ bool SoftwareUpdate::isNewerVersion(const QString &currentVersion, const QString
     int combinedCurrentVersion;
     combinedCurrentVersion = (cone.append(ctwo).append(cthree)).toInt();
 
-    qCDebug(CLASS_LC) << "New version:" << combinedNewVersion << "Current version:" << combinedCurrentVersion;
-
     // check if it's a newer version than we have
-    return combinedNewVersion > combinedCurrentVersion;
+    if (combinedNewVersion > combinedCurrentVersion) {
+        qCDebug(CLASS_LC) << "New version available:" << combinedNewVersion;
+        return true;
+    }
+    qCDebug(CLASS_LC) << "Current version is up to date";
+    return false;
 }
 
 QString SoftwareUpdate::getDeviceType() {
@@ -352,8 +366,19 @@ QString SoftwareUpdate::getDeviceType() {
 #elif defined(Q_OS_WIN32)
         return "windows:32";
 #elif defined(Q_OS_MACOS)
-        return "mac";
+        return "remote";
 #else
         return "other";
 #endif
+}
+
+QString SoftwareUpdate::getDownloadFileName(const QUrl &url) const {
+    QString suffix = QFileInfo(url.path()).suffix().toLower();
+
+    // TODO(zehnm) support other archives than .tar and .gz?
+    if (suffix == "gz") {
+        return UPDATE_BASENAME + suffix;
+    }
+
+    return UPDATE_BASENAME + "tar";
 }

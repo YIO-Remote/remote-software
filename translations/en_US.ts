@@ -454,6 +454,19 @@ www.yio-remote.com
     </message>
 </context>
 <context>
+    <name>FileDownload</name>
+    <message>
+        <location filename="../sources/filedownload.cpp" line="115"/>
+        <source>Not enough free space (%1 MB) or destination not writable for download.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/filedownload.cpp" line="122"/>
+        <source>Destination file already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Integrations</name>
     <message>
         <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
@@ -898,32 +911,52 @@ Remote configuration after restarting the remote.</source>
 <context>
     <name>SoftwareUpdate</name>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="134"/>
+        <location filename="../sources/softwareupdate.cpp" line="181"/>
+        <source>Invalid request.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="184"/>
+        <source>Unsupported device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="187"/>
+        <source>Service currently not available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="190"/>
+        <source>Request error %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="194"/>
         <source>Software update:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="179"/>
+        <location filename="../sources/softwareupdate.cpp" line="213"/>
         <source>New software is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="179"/>
+        <location filename="../sources/softwareupdate.cpp" line="213"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="188"/>
+        <location filename="../sources/softwareupdate.cpp" line="285"/>
+        <source>Update download failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="149"/>
         <source>Cannot connect to the update server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="247"/>
-        <source>The remote requires %1 MB free space to download updates.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sources/softwareupdate.cpp" line="251"/>
+        <location filename="../sources/softwareupdate.cpp" line="236"/>
         <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -973,7 +1006,7 @@ YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="140"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
         <source>Check for update</source>
         <translation type="unfinished"></translation>
     </message>

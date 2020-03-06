@@ -85,7 +85,7 @@ class SoftwareUpdate : public QObject {
     void downloadFailed();
 
  private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
-    void checkForUpdateFinished(QNetworkReply* reply);
+    void onCheckForUpdateFinished(QNetworkReply* reply);
     void onDownloadProgress(int id, qint64 bytesReceived, qint64 bytesTotal, const QString& speed);
     void onDownloadComplete(int id);
     void onDownloadFailed(int id, QString errorMsg);
@@ -95,6 +95,7 @@ class SoftwareUpdate : public QObject {
     bool    isAlreadyDownloaded(const QString& version);
     bool    isNewerVersion(const QString& currentVersion, const QString& updateVersion);
     QString getDeviceType();
+    QString getDownloadFileName(const QUrl& url) const;
 
  private:
     static SoftwareUpdate* s_instance;
@@ -102,13 +103,13 @@ class SoftwareUpdate : public QObject {
     BatteryFuelGauge*     m_batteryFuelGauge;
     QString               m_newVersion = "";
     bool                  m_updateAvailable = false;
-    bool                  m_autoUpdate = false;
+    bool                  m_autoUpdate;
+    int                   m_initialCheckDelay;
     QTimer                m_checkForUpdateTimer;
     qint64                m_bytesReceived = 0;
     qint64                m_bytesTotal = 0;
     QString               m_downloadSpeed;
-    bool                  m_checkOrDownloadActive = false;
-    QUrl                  m_updateUrl;
+    QUrl                  m_baseUpdateUrl;
     QUrl                  m_downloadUrl;
     QNetworkAccessManager m_manager;
     QDir                  m_downloadDir;
