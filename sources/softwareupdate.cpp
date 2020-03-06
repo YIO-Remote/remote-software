@@ -366,7 +366,7 @@ QString SoftwareUpdate::getDeviceType() {
 #elif defined(Q_OS_WIN32)
         return "windows:32";
 #elif defined(Q_OS_MACOS)
-        return "remote";
+        return "mac";
 #else
         return "other";
 #endif
