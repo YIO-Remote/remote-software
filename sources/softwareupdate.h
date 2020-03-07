@@ -38,8 +38,7 @@ class SoftwareUpdate : public QObject {
     Q_OBJECT
 
  public:
-    explicit SoftwareUpdate(const QVariantMap& cfg, QString appPath, BatteryFuelGauge* batteryFuelGauge,
-                            QObject* parent = nullptr);
+    explicit SoftwareUpdate(const QVariantMap& cfg, BatteryFuelGauge* batteryFuelGauge, QObject* parent = nullptr);
     ~SoftwareUpdate();
 
     Q_PROPERTY(qint64 bytesReceived READ bytesReceived NOTIFY bytesReceivedChanged)
@@ -65,7 +64,7 @@ class SoftwareUpdate : public QObject {
     bool autoUpdate() { return m_autoUpdate; }
     void setAutoUpdate(bool update);
 
-    QString currentVersion() { return m_currentVersion; }
+    QString currentVersion() { return QGuiApplication::applicationVersion(); }
     QString newVersion() { return m_newVersion; }
     bool    updateAvailable() { return m_updateAvailable; }
     bool    installAvailable();
@@ -83,41 +82,36 @@ class SoftwareUpdate : public QObject {
     void updateAvailableChanged();
     void installAvailableChanged();
     void downloadComplete();
+    void downloadFailed();
 
  private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
-    void checkForUpdateFinished(QNetworkReply* reply);
-    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-    void downloadFinished();
-    void onDownloadFailed();
+    void onCheckForUpdateFinished(QNetworkReply* reply);
+    void onDownloadProgress(int id, qint64 bytesReceived, qint64 bytesTotal, const QString& speed);
+    void onDownloadComplete(int id);
+    void onDownloadFailed(int id, QString errorMsg);
     void onCheckForUpdateTimerTimeout();
-    void onDownloadSpeed(const QString& speed);
 
  private:
+    bool    isAlreadyDownloaded(const QString& version);
+    bool    isNewerVersion(const QString& currentVersion, const QString& updateVersion);
     QString getDeviceType();
+    QString getDownloadFileName(const QUrl& url) const;
 
  private:
     static SoftwareUpdate* s_instance;
 
-    BatteryFuelGauge* m_batteryFuelGauge;
-
-    QString m_currentVersion = QGuiApplication::applicationVersion();
-    QString m_newVersion = "";
-    bool    m_updateAvailable = false;
-
-    int  m_checkIntervallSec;
-    bool m_autoUpdate;
-
-    QTimer* m_checkForUpdateTimer;
-
-    qint64  m_bytesReceived = 0;
-    qint64  m_bytesTotal = 0;
-    QString m_downloadSpeed;
-
-    QUrl                   m_updateUrl;
-    QUrl                   m_downloadUrl;
-    QNetworkAccessManager* m_manager;
-    QDir                   m_downloadDir;
-    QString                m_appPath;
-    QString                m_fileName;
-    FileDownload           m_fileDownload;
+    BatteryFuelGauge*     m_batteryFuelGauge;
+    QString               m_newVersion = "";
+    bool                  m_updateAvailable = false;
+    bool                  m_autoUpdate;
+    int                   m_initialCheckDelay;
+    QTimer                m_checkForUpdateTimer;
+    qint64                m_bytesReceived = 0;
+    qint64                m_bytesTotal = 0;
+    QString               m_downloadSpeed;
+    QUrl                  m_baseUpdateUrl;
+    QUrl                  m_downloadUrl;
+    QNetworkAccessManager m_manager;
+    QDir                  m_downloadDir;
+    FileDownload          m_fileDownload;
 };

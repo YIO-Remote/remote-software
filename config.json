@@ -413,7 +413,7 @@
         "logging": {
             "console": true,
             "level": "DEBUG",
-            "path": "/var/log",
+            "path": "",
             "purgeHours": 72,
             "queueSize": 100,
             "showSource": true
@@ -423,7 +423,7 @@
         "shutdowntime": 7200,
         "softwareupdate": {
             "autoUpdate": false,
-            "updateUrl": "https://update.yio.app/update",
+            "updateUrl": "https://update.yio.app/v1",
             "checkInterval": 3600,
             "downloadDir": "/tmp/yio"
         },

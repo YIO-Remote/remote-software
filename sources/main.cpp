@@ -219,7 +219,7 @@ int main(int argc, char* argv[]) {
 
     // SOFTWARE UPDATE
     QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
-    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, appPath, hwFactory->getBatteryFuelGauge());
+    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 
     // FIXME move initialization code to a device driver factory
