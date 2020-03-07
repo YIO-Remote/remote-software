@@ -78,7 +78,7 @@ void Notifications::add(bool error, const QString &text, const QString &actionla
     // check if the same notification exists, then remove it
     for (QMap<int, Notification *>::const_iterator iter = m_notifications.begin(); iter != m_notifications.end();
          ++iter) {
-        if (iter.value()->m_text == text && m_notifications.contains(iter.key())) {
+        if (iter.value()->m_text.contains(text) && m_notifications.contains(iter.key())) {
             m_notifications.remove(iter.key());
         }
     }
