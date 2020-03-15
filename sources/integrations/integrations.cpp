@@ -22,6 +22,9 @@
 
 #include "integrations.h"
 
+#include <QtDebug>
+#include <QLoggingCategory>
+
 #include "../config.h"
 #include "../entities/entities.h"
 #include "../launcher.h"
@@ -32,8 +35,10 @@ IntegrationsInterface::~IntegrationsInterface() {}
 
 Integrations* Integrations::s_instance = nullptr;
 
-Integrations::Integrations(QQmlApplicationEngine* engine, const QString& appPath)
-    : m_appPath(appPath), m_engine(engine) {
+static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
+
+Integrations::Integrations(const QString& pluginPath)
+    : m_pluginPath(pluginPath) {
     s_instance = this;
 }
 
@@ -50,13 +55,15 @@ void Integrations::load() {
     Launcher* l = new Launcher();
 
     // read the config
-    QVariantMap c = config->getIntegrations();  // config->config().value("integrations").toMap();
+    QVariantMap c = config->getIntegrations();
 
     int integrationCount = 0;
 
+    qCDebug(CLASS_LC) << "Plugin path:" << m_pluginPath;
+
     // let's load the plugins first
     for (QVariantMap::const_iterator iter = c.begin(); iter != c.end(); ++iter) {
-        QObject* obj = l->loadPlugin(m_appPath, iter.key());
+        QObject* obj = l->loadPlugin(m_pluginPath, iter.key());
 
         // store the plugin objects
         m_plugins.insert(iter.key(), obj);
@@ -81,7 +88,7 @@ void Integrations::load() {
     QStringList defaultIntegrations = {"dock"};
 
     for (int k = 0; k < defaultIntegrations.length(); k++) {
-        QObject* obj = l->loadPlugin(m_appPath, defaultIntegrations[k]);
+        QObject* obj = l->loadPlugin(m_pluginPath, defaultIntegrations[k]);
 
         // store the plugin objects
         m_plugins.insert(defaultIntegrations[k], obj);

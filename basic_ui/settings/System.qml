@@ -113,7 +113,7 @@ Rectangle {
 
         mouseArea.onClicked: {
             // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
-            settingsLauncher.launch("fbv -d 1 /bye.png")
+            settingsLauncher.launch("fbv -d 1 $YIO_MEDIA_DIR/splash/bye.png")
             console.debug("now reboot")
             // TODO create a device class for system reboot instead of launching hard coded shell scripts from QML
             settingsLauncher.launch("reboot");

@@ -43,13 +43,13 @@ QString Launcher::launch(const QString &program) {
 QObject *Launcher::loadPlugin(const QString &path, const QString &pluginName) {
     QString pluginPath;
 #ifdef __arm__
-    pluginPath = path + "/plugins/lib" + pluginName;
+    pluginPath = path + "/lib" + pluginName;
 #elif __APPLE__
-    pluginPath = path + "/plugins/lib" + pluginName + ".dylib";
+    pluginPath = path + "/lib" + pluginName + ".dylib";
 #elif _WIN32
-    pluginPath = path + "/plugins/" + pluginName + ".dll";
+    pluginPath = path + "/" + pluginName + ".dll";
 #else
-    pluginPath = path + "/plugins/lib" + pluginName;
+    pluginPath = path + "/lib" + pluginName;
 #endif
     qCDebug(CLASS_LC) << "LOADING PLUGIN:" << pluginPath;
     QPluginLoader pluginLoader(pluginPath, this);
