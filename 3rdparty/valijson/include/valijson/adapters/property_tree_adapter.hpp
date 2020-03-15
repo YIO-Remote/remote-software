@@ -283,8 +283,9 @@ public:
                 array.emplace(tree);         // Treat as empty array
             } else {
                 bool isArray = true;
-                for (const auto node : tree) {
-                    if (!node.first.empty()) {
+                boost::property_tree::ptree::const_iterator itr;
+                for (itr = tree.begin(); itr != tree.end(); itr++) {
+                    if (!itr->first.empty()) {
                         isArray = false;
                         break;
                     }

@@ -29,6 +29,7 @@
 #include <QQmlComponent>
 #include <QString>
 #include <QVariant>
+#include <QTimer>
 
 #include "entity.h"
 #include "yio-interface/entities/entitiesinterface.h"

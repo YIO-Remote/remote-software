@@ -98,7 +98,7 @@ QDebug operator<<(QDebug debug, const WifiStatus& wifiStatus) {
 
 bool WifiWpaSupplicant::init() {
     if (!m_ctrl) {
-        qCDebug(CLASS_LC) << "Initializing driver...";
+        qCDebug(CLASS_LC) << "Initializing driver with socket:" << m_wpaSupplicantSocketPath;
 
         if (!connectWpaControlSocket()) {
             return false;
@@ -448,7 +448,7 @@ bool WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& networ
 bool WifiWpaSupplicant::connectWpaControlSocket() {
     m_ctrl = wpa_ctrl_open(m_wpaSupplicantSocketPath.toStdString().c_str());
     if (!m_ctrl) {
-        qCCritical(CLASS_LC) << "wpa_ctrl_open() failed. Errno:" << errno;
+        qCCritical(CLASS_LC) << "wpa_ctrl_open(" << m_wpaSupplicantSocketPath << ") failed. Error:" << errno << strerror(errno);
         return false;
     }
     auto res = wpa_ctrl_attach(m_ctrl);
