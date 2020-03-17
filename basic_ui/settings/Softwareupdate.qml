@@ -55,10 +55,10 @@ Rectangle {
 
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: softwareUpdateText.verticalCenter }
 
-                checked: config.settings.softwareupdate
+                checked: config.settings.softwareupdate.autoUpdate
                 mouseArea.onClicked: {
                     var tmp = config.config
-                    tmp.settings.softwareupdate = !tmp.settings.softwareupdate
+                    tmp.settings.softwareupdate.autoUpdate = !tmp.settings.softwareupdate.autoUpdate
                     config.config = tmp
                     SoftwareUpdate.autoUpdate = !SoftwareUpdate.autoUpdate
                 }
@@ -119,7 +119,9 @@ Rectangle {
                         if (SoftwareUpdate.installAvailable) {
                             SoftwareUpdate.performUpdate();
                         } else {
-                            // TODO(marton) handle downloadComplete signal to exit download screen
+                            // TODO(marton) handle downloadFailed signal to abort download screen in case of error
+                            // TODO(marton) the installAvailable signal after the downloadComplete() signal makes the "Update" button appear, but it doesn't work or switches the functionality!
+                            //              I think this needs two dedicated buttons. Switching the text only leads to trouble...
                             SoftwareUpdate.startDownload();
                         }
                     }

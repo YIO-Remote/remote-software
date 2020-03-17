@@ -24,8 +24,6 @@
 
 #include <QMap>
 #include <QObject>
-#include <QQmlApplicationEngine>
-#include <QtDebug>
 
 #include "integrationsinterface.h"
 #include "yio-interface/integrationinterface.h"
@@ -75,7 +73,7 @@ class Integrations : public QObject, IntegrationsInterface {
     // get the type of integration by id
     Q_INVOKABLE QString getType(const QString& id);
 
-    explicit Integrations(QQmlApplicationEngine* engine = nullptr, const QString& appPath = "");
+    explicit Integrations(const QString& pluginPath);
 
     // get all plugins
     QList<QObject*> getAllPlugins();
@@ -95,10 +93,9 @@ class Integrations : public QObject, IntegrationsInterface {
     QMap<QString, QString>  m_integrations_friendly_names;
     QMap<QString, QString>  m_integrations_mdns;
     QMap<QString, QString>  m_integrations_types;
-    QString                 m_appPath;
+    QString                 m_pluginPath;
     int                     m_integrationsToLoad = 0;
     int                     m_integrationsLoaded = 0;
 
     static Integrations*   s_instance;
-    QQmlApplicationEngine* m_engine;
 };

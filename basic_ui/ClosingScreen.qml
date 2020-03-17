@@ -55,7 +55,7 @@ Rectangle {
         if (startAnimFinished) {
             console.debug("NOW SHUTDOWN");
             // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
-            launcher.launch("fbv -d 1 /bye.png")
+            launcher.launch("fbv -d 1 $YIO_MEDIA_DIR/splash/bye.png")
             StandbyControl.shutdown();
             // TODO create a device class for system shutdown instead of launching hard coded shell scripts from QML
             launcher.launch("halt");

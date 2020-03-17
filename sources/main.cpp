@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
-    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + QString("/Contents/Resources");
+    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + "/Contents/Resources";
 
     // In case the translation file does not exist at root level (which is copied via the .pro file)
     // we are probably running on a mac, which gives a different result for the applicationDirPath
@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
 
     // INTEGRATIONS
-    Integrations* integrations = new Integrations(&engine, appPath);
+    Integrations* integrations = new Integrations(qEnvironmentVariable("YIO_PLUGIN_DIR", appPath + "/plugins"));
     // Make integration state available in QML
     qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations",
                                              "Not creatable, only used for enum.");
@@ -219,7 +219,7 @@ int main(int argc, char* argv[]) {
 
     // SOFTWARE UPDATE
     QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
-    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, appPath, hwFactory->getBatteryFuelGauge());
+    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 
     // FIXME move initialization code to a device driver factory
