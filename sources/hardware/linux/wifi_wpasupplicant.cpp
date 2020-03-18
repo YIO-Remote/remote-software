@@ -448,7 +448,8 @@ bool WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& networ
 bool WifiWpaSupplicant::connectWpaControlSocket() {
     m_ctrl = wpa_ctrl_open(m_wpaSupplicantSocketPath.toStdString().c_str());
     if (!m_ctrl) {
-        qCCritical(CLASS_LC) << "wpa_ctrl_open(" << m_wpaSupplicantSocketPath << ") failed. Error:" << errno << strerror(errno);
+        qCCritical(CLASS_LC) << "wpa_ctrl_open(" << m_wpaSupplicantSocketPath << ") failed. Error:" << errno
+                             << strerror(errno);
         return false;
     }
     auto res = wpa_ctrl_attach(m_ctrl);
