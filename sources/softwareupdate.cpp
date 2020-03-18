@@ -31,6 +31,7 @@
 #include <QUrlQuery>
 
 #include "config.h"
+#include "environment.h"
 #include "notifications.h"
 #include "standbycontrol.h"
 
@@ -125,9 +126,10 @@ void SoftwareUpdate::checkForUpdate() {
         return;
     }
 
+    Environment env;
     QUrlQuery query;
     query.addQueryItem("version", currentVersion());
-    query.addQueryItem("device", getDeviceType());
+    query.addQueryItem("device", env.getDeviceType());
     // TODO(zehnm) add OS version query parameter
     QUrl updateUrl = m_baseUpdateUrl.resolved(QUrl("updates/app"));
     updateUrl.setQuery(query);
@@ -335,41 +337,6 @@ bool SoftwareUpdate::isNewerVersion(const QString &currentVersion, const QString
     }
     qCDebug(CLASS_LC) << "Current version is up to date";
     return false;
-}
-
-QString SoftwareUpdate::getDeviceType() {
-    // Quick and dirty for now
-    QString cpu =
-#if defined(Q_PROCESSOR_X86_64)
-        ":x86_64";
-#elif defined(Q_PROCESSOR_X86_32)
-        ":x86_32";
-#elif defined(Q_PROCESSOR_ARM)
-        ":arm";
-#else
-        "";
-#endif
-
-#if defined(Q_OS_ANDROID)
-    return QString("android") + cpu;
-#elif defined(Q_OS_IOS)
-    return "ios";
-#elif defined(Q_OS_LINUX)
-#if defined(Q_PROCESSOR_ARM)
-    // TODO(zehnm) further check if running on yio remote hardware or RPi!
-    return "remote";
-#else
-    return QString("linux") + cpu;
-#endif
-#elif defined(Q_OS_WIN64)
-    return "windows:64";
-#elif defined(Q_OS_WIN32)
-        return "windows:32";
-#elif defined(Q_OS_MACOS)
-        return "mac";
-#else
-        return "other";
-#endif
 }
 
 QString SoftwareUpdate::getDownloadFileName(const QUrl &url) const {
