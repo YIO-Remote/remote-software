@@ -117,6 +117,7 @@ void Notifications::remove(const QString &text) {
          ++iter) {
         if (iter.value()->m_text == text && m_notifications.contains(iter.key())) {
             m_notifications.remove(iter.key());
+            break;
         }
     }
     emit listChanged();
