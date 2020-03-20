@@ -22,7 +22,10 @@
 
 #include "environment.h"
 
+#include <QDebug>
 #include <QFile>
+#include <QLoggingCategory>
+#include <QSysInfo>
 #include <QTextStream>
 
 const char *Environment::ENV_YIO_HOME = "YIO_HOME";
@@ -30,12 +33,17 @@ const char *Environment::ENV_YIO_APP_DIR = "YIO_APP_DIR";
 const char *Environment::ENV_YIO_OS_VERSION = "YIO_OS_VERSION";
 const char *Environment::ENV_YIO_PLUGIN_DIR = "YIO_PLUGIN_DIR";
 
+static Q_LOGGING_CATEGORY(CLASS_LC, "env");
+
 Environment::Environment(QObject *parent) : QObject(parent) {
     m_os = determineOS();
     QString rpiRevision = getRaspberryRevision(m_os);
     m_raspberryPi = !rpiRevision.isEmpty();
     m_yioRemote = runningOnYioRemote(rpiRevision);
     m_deviceType = determineDeviceType(m_os, m_yioRemote, rpiRevision);
+
+    qCInfo(CLASS_LC) << "Device type:" << m_deviceType << "RPi revision:" << rpiRevision
+                     << "YIO remote:" << m_yioRemote;
 }
 
 QString Environment::getRemoteOsVersion() const { return qEnvironmentVariable(ENV_YIO_OS_VERSION, "UNKNOWN"); }
@@ -67,21 +75,24 @@ QString Environment::getRaspberryRevision(OS os) {
         return QString();
     }
 
-    QString hardware;
-    QString revision;
+    QString hardware, revision;
     QFile   cpuinfo("/proc/cpuinfo");
     if (cpuinfo.open(QIODevice::ReadOnly)) {
         QTextStream in(&cpuinfo);
-        while (!in.atEnd()) {
-            QString line = in.readLine();
+        QString     line;
+        while (in.readLineInto(&line)) {
             if (line.startsWith("Hardware\t:")) {
-                hardware = line.mid(line.indexOf(':')).trimmed();
+                hardware = line.mid(line.indexOf(':') + 1).trimmed();
             } else if (line.startsWith("Revision\t:")) {
-                revision = line.mid(line.indexOf(':')).trimmed();
+                revision = line.mid(line.indexOf(':') + 1).trimmed();
             }
         }
         cpuinfo.close();
+    } else {
+        qCDebug(CLASS_LC) << "Error opening /proc/cpuinfo:" << cpuinfo.errorString();
     }
+
+    qCDebug(CLASS_LC) << "cpuinfo: hardware=" << hardware << "revision=" << revision;
 
     // TODO(zehnm) is this really required? Or is RPi always BCM2835? Looks like a kernel thing...
     if (hardware.contains(QRegExp("(BCM2835|BCM2836|BCM2837|BCM2838|BCM2711|BCM2708|BCM2709)"))) {
@@ -93,16 +104,21 @@ QString Environment::getRaspberryRevision(OS os) {
 
 bool Environment::runningOnYioRemote(const QString &rpiRevision) {
     if (qEnvironmentVariableIsSet("I_AM_YIO")) {
+        qCInfo(CLASS_LC) << "Magic env variable set: we are now a YIO remote!";
         return true;
     }
+
+    bool envVarsPresent = qEnvironmentVariableIsSet(ENV_YIO_HOME) && qEnvironmentVariableIsSet(ENV_YIO_APP_DIR) &&
+                          qEnvironmentVariableIsSet(ENV_YIO_OS_VERSION);
+
+    qCDebug(CLASS_LC) << "RPi revision:" << rpiRevision << "YIO env vars present:" << envVarsPresent;
 
     if (rpiRevision.isEmpty()) {
         return false;
     }
 
     // RPi revision code: https://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
-    return rpiRevision.compare("9000c1", Qt::CaseInsensitive) == 0 && qEnvironmentVariableIsSet(ENV_YIO_HOME) &&
-           qEnvironmentVariableIsSet(ENV_YIO_APP_DIR) && qEnvironmentVariableIsSet(ENV_YIO_OS_VERSION);
+    return rpiRevision.compare("9000c1", Qt::CaseInsensitive) == 0 && envVarsPresent;
 }
 
 QString Environment::determineDeviceType(OS os, bool yioRemote, const QString &rpiRevision) {
@@ -114,29 +130,20 @@ QString Environment::determineDeviceType(OS os, bool yioRemote, const QString &r
         return QString("rpi:%1").arg(rpiRevision);
     }
 
-    QString cpu =
-#if defined(Q_PROCESSOR_X86_64)
-        ":x86_64";
-#elif defined(Q_PROCESSOR_X86_32)
-        ":x86_32";
-#elif defined(Q_PROCESSOR_ARM)
-        ":arm";
-#else
-        "";
-#endif
+    QString cpu = QSysInfo::currentCpuArchitecture();
 
     switch (os) {
         case OS::Android:
-            return QString("android") + cpu;
+            return QString("android:%1").arg(cpu);
         case OS::iOS:
             return "ios";
         case OS::Linux:
-            return QString("linux") + cpu;
+            return QString("linux:%1").arg(cpu);
         case OS::macOS:
             return "mac";
         case OS::Windows:
-            return QString("windows") + cpu;
+            return QString("windows:%1").arg(cpu);
         default:
-            return "other";
+            return QString("other:%1").arg(cpu);
     }
 }
