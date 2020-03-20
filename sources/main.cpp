@@ -61,7 +61,11 @@ int main(int argc, char* argv[]) {
     // QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    QGuiApplication::setApplicationVersion(QString(APP_VERSION));
+    QString version(APP_VERSION);
+    if (version.startsWith('v')) {
+        version.remove(0, 1);
+    }
+    QGuiApplication::setApplicationVersion(version);
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
@@ -111,7 +115,7 @@ int main(int argc, char* argv[]) {
                   logCfg.value("showSource", true).toBool(), logCfg.value("queueSize", 100).toInt(),
                   logCfg.value("purgeHours", 72).toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
-    Logger::getInstance()->write("Logging started");
+    Logger::getInstance()->write(QString("YIO App %1").arg(version));
 
     // LOAD FONTS
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");

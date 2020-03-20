@@ -22,8 +22,7 @@
  #############################################################################/
 
 # SOFTWARE VERSION
-VERSION = 0.2.3
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+DEFINES += APP_VERSION=\\\"$$system(git describe --match "v[0-9]*" --tags HEAD --always)\\\"
 
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++14 disable-desktop
