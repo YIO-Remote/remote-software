@@ -37,32 +37,30 @@ class SystemService : public QObject {
     explicit SystemService(QObject *parent = nullptr);
 
     /**
-     * @brief startService Starts the given service
+     * @brief Starts the given service
      * @param serviceName the name of the service
      * @return true if the service was started successfully
      */
     Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) = 0;
 
     /**
-     * @brief stopService Stopps the given service
+     * @brief Stopps the given service
      * @param serviceName the name of the service
      * @return true if the service was stopped successfully
      */
     Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) = 0;
 
     /**
-     * @brief restartService Restarts the given service
+     * @brief Restarts the given service
      * @param serviceName the name of the service
      * @return true if the service was restarted successfully
      */
     Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName);
 
     /**
-     * @brief reloadService Reloads the configuration of the given service
+     * @brief Reloads the configuration of the given service
      * @param serviceName the name of the service
      * @return true if the service was reloaded successfully
      */
     Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName);
-
- signals:
 };

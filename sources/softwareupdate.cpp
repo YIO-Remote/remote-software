@@ -27,6 +27,7 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QLoggingCategory>
+#include <QProcess>
 #include <QRegExp>
 #include <QUrlQuery>
 
@@ -35,7 +36,7 @@
 #include "notifications.h"
 #include "standbycontrol.h"
 
-static const QString UPDATE_BASENAME = "latest.";
+static const QString UPDATE_BASENAME = "latest";
 static const QString META_FILENAME = "latest.version";
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "softwareupdate");
@@ -47,8 +48,12 @@ SoftwareUpdate::SoftwareUpdate(const QVariantMap &cfg, BatteryFuelGauge *battery
       m_batteryFuelGauge(batteryFuelGauge),
       m_autoUpdate(cfg.value("autoUpdate", false).toBool()),
       m_initialCheckDelay(cfg.value("checkDelay", 60).toInt()),
-      m_baseUpdateUrl(cfg.value("updateUrl", "https://update.yio.app/v1").toUrl()),
-      m_downloadDir(cfg.value("downloadDir", "/tmp/yio").toString()) {
+      m_appUpdateUrl(cfg.value("updateUrl", "https://update.yio.app/v1/")
+                         .toUrl()
+                         .resolved(cfg.value("updateUrlAppPath", "updates/app").toUrl())),
+      m_downloadDir(cfg.value("downloadDir", "/tmp/yio").toString()),
+      m_appUpdateScript(cfg.value("appUpdateScript", "/opt/yio/scripts/app-update.sh").toString()),
+      m_channel(cfg.value("channel", "release").toString()) {
     Q_ASSERT(m_batteryFuelGauge);
 
     s_instance = this;
@@ -60,7 +65,7 @@ SoftwareUpdate::SoftwareUpdate(const QVariantMap &cfg, BatteryFuelGauge *battery
         checkIntervallSec = 600;
     }
 
-    qCDebug(CLASS_LC) << "Auto update:" << m_autoUpdate << ", base url:" << m_baseUpdateUrl.toString()
+    qCDebug(CLASS_LC) << "Auto update:" << m_autoUpdate << ", app update url:" << m_appUpdateUrl.toString()
                       << ", download dir:" << m_downloadDir.path();
 
     m_checkForUpdateTimer.setInterval(checkIntervallSec * 1000);
@@ -115,6 +120,12 @@ void SoftwareUpdate::setAutoUpdate(bool update) {
     }
 }
 
+void SoftwareUpdate::setChannel(const QString &channel) {
+    m_channel = channel;
+    emit channelChanged();
+    qCDebug(CLASS_LC) << "Software update channel:" << channel;
+}
+
 void SoftwareUpdate::onCheckForUpdateTimerTimeout() { checkForUpdate(); }
 
 void SoftwareUpdate::checkForUpdate() {
@@ -127,11 +138,13 @@ void SoftwareUpdate::checkForUpdate() {
     }
 
     Environment env;
-    QUrlQuery query;
-    query.addQueryItem("version", currentVersion());
+    QUrlQuery   query;
+    query.addQueryItem("appVersion", currentVersion());
+    query.addQueryItem("osVersion", env.getRemoteOsVersion());
     query.addQueryItem("device", env.getDeviceType());
-    // TODO(zehnm) add OS version query parameter
-    QUrl updateUrl = m_baseUpdateUrl.resolved(QUrl("updates/app"));
+    query.addQueryItem("channel", m_channel);
+
+    QUrl updateUrl = m_appUpdateUrl;
     updateUrl.setQuery(query);
 
     QNetworkRequest request(updateUrl);
@@ -290,10 +303,26 @@ void SoftwareUpdate::onDownloadFailed(int id, QString errorMsg) {
 
 bool SoftwareUpdate::installAvailable() { return m_downloadDir.exists(META_FILENAME); }
 
-bool SoftwareUpdate::performUpdate() {
-    qCWarning(CLASS_LC) << "performUpdate() NOT YET IMPLEMENTED";
-    Notifications::getInstance()->add(true, "Sorry, not yet implemented! Working on it :-)");
-    return false;
+bool SoftwareUpdate::performAppUpdate() {
+    qCDebug(CLASS_LC) << "Executing app update script:" << m_appUpdateScript;
+
+    QProcess process;
+    process.setProgram(m_appUpdateScript);
+    process.setArguments({m_downloadDir.path() + "/" + META_FILENAME});
+    // TODO(zehnm) check if working dir and console output are required
+    // process.setWorkingDirectory(...);
+    // process.setStandardOutputFile(QProcess::nullDevice());
+    // process.setStandardErrorFile(QProcess::nullDevice());
+    qint64 pid;
+    // fire and forget: update script will take over and restart YIO app
+    if (process.startDetached(&pid)) {
+        qCDebug(CLASS_LC) << "Started update script, pid:" << pid;
+        return true;
+    } else {
+        qCritical(CLASS_LC) << "Failed to start app update script:" << m_appUpdateScript;
+        Notifications::getInstance()->add(true, tr("Failed to start app update script!"));
+        return false;
+    }
 }
 
 bool SoftwareUpdate::startDockUpdate() {
@@ -344,8 +373,8 @@ QString SoftwareUpdate::getDownloadFileName(const QUrl &url) const {
 
     // TODO(zehnm) support other archives than .tar and .gz?
     if (suffix == "gz") {
-        return UPDATE_BASENAME + suffix;
+        return UPDATE_BASENAME + ".gz";
     }
 
-    return UPDATE_BASENAME + "tar";
+    return UPDATE_BASENAME + ".tar";
 }

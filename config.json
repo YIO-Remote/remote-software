@@ -423,9 +423,13 @@
         "shutdowntime": 7200,
         "softwareupdate": {
             "autoUpdate": false,
-            "updateUrl": "https://update.yio.app/v1",
+            "updateUrl": "https://update.yio.app/v1/",
+            "updateUrlAppPath": "updates/app",
+            "channel": "release",
             "checkInterval": 3600,
-            "downloadDir": "/tmp/yio"
+            "downloadDir": "/tmp/yio",
+            "appUpdateScript": "/opt/yio/scripts/app-update.sh",
+            "systemUpdateScript": "/opt/yio/scripts/TODO.sh"
         },
         "wifitime": 1740
     },

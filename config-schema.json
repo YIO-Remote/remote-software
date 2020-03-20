@@ -811,8 +811,18 @@
             "updateUrl": {
               "type": "string",
               "format": "url",
-              "title": "Update URL",
-              "default": true
+              "title": "Base update URL",
+              "default": "https://update.yio.app/v1/"
+            },
+            "updateUrlAppPath": {
+              "type": "string",
+              "title": "App update path",
+              "default": "updates/app"
+            },
+            "channel": {
+              "type": "string",
+              "title": "Software update channel",
+              "default": "release"
             },
             "checkInterval": {
               "type": "integer",

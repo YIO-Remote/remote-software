@@ -49,10 +49,11 @@ class SoftwareUpdate : public QObject {
     Q_PROPERTY(QString newVersion READ newVersion NOTIFY newVersionChanged)
     Q_PROPERTY(bool updateAvailable READ updateAvailable NOTIFY updateAvailableChanged)
     Q_PROPERTY(bool installAvailable READ installAvailable NOTIFY installAvailableChanged)
+    Q_PROPERTY(QString channel READ channel WRITE setChannel NOTIFY channelChanged)
 
     Q_INVOKABLE void checkForUpdate();
     Q_INVOKABLE bool startDownload();
-    Q_INVOKABLE bool performUpdate();
+    Q_INVOKABLE bool performAppUpdate();
     Q_INVOKABLE bool startDockUpdate();
 
     void start();
@@ -68,6 +69,8 @@ class SoftwareUpdate : public QObject {
     QString newVersion() { return m_newVersion; }
     bool    updateAvailable() { return m_updateAvailable; }
     bool    installAvailable();
+    QString channel() { return m_channel; }
+    void    setChannel(const QString &channel);
 
     static SoftwareUpdate* getInstance() { return s_instance; }
     static QObject*        getQMLInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
@@ -81,6 +84,7 @@ class SoftwareUpdate : public QObject {
     void newVersionChanged();
     void updateAvailableChanged();
     void installAvailableChanged();
+    void channelChanged();
     void downloadComplete();
     void downloadFailed();
 
@@ -108,9 +112,11 @@ class SoftwareUpdate : public QObject {
     qint64                m_bytesReceived = 0;
     qint64                m_bytesTotal = 0;
     QString               m_downloadSpeed;
-    QUrl                  m_baseUpdateUrl;
+    QUrl                  m_appUpdateUrl;
     QUrl                  m_downloadUrl;
     QNetworkAccessManager m_manager;
     QDir                  m_downloadDir;
     FileDownload          m_fileDownload;
+    QString               m_appUpdateScript;
+    QString               m_channel;
 };

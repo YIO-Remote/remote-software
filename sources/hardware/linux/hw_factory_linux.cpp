@@ -84,10 +84,6 @@ SystemService *HardwareFactoryLinux::buildSystemService(const QVariantMap &confi
     serviceNameMap.insert(SystemServiceName::NTP, serviceCfg.value(HW_CFG_SERVICE_NTP, HW_DEF_SERVICE_NTP).toString());
     serviceNameMap.insert(SystemServiceName::DHCP,
                           serviceCfg.value(HW_CFG_SERVICE_DHCP, HW_DEF_SERVICE_DHCP).toString());
-    serviceNameMap.insert(SystemServiceName::SHUTDOWN,
-                          serviceCfg.value(HW_CFG_SERVICE_SHUTDOWN, HW_DEF_SERVICE_SHUTDOWN).toString());
-    serviceNameMap.insert(SystemServiceName::YIO_UPDATE,
-                          serviceCfg.value(HW_CFG_SERVICE_YIO_UPDATE, HW_DEF_SERVICE_YIO_UPDATE).toString());
     serviceNameMap.insert(SystemServiceName::ZEROCONF,
                           serviceCfg.value(HW_CFG_SERVICE_ZEROCONF, HW_DEF_SERVICE_ZEROCONF).toString());
     serviceNameMap.insert(SystemServiceName::NETWORKING,

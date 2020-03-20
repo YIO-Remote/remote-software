@@ -26,6 +26,7 @@
 #include <QtDebug>
 
 #include "../config.h"
+#include "../environment.h"
 #include "../jsonfile.h"
 #include "../notifications.h"
 
@@ -89,7 +90,12 @@ HardwareFactory *HardwareFactory::build(const QVariantMap &config, const QString
     s_instance = new HardwareFactoryAndroid(config);
 #elif defined(Q_OS_LINUX)
 #if defined(Q_PROCESSOR_ARM)
-    s_instance = new HardwareFactoryYio(config, profile);
+    Environment env;
+    if (env.isYioRemote()) {
+        s_instance = new HardwareFactoryYio(config, profile);
+    } else {
+        s_instance = new HardwareFactoryLinux(config, profile);
+    }
 #else
     s_instance = new HardwareFactoryLinux(config, profile);
 #endif

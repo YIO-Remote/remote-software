@@ -209,8 +209,6 @@
                 "webserver",
                 "ntp",
                 "dhcp",
-                "shutdown",
-                "yio-update",
                 "zeroconf",
                 "networking"
               ],
@@ -257,24 +255,6 @@
                   "default": "",
                   "examples": [
                     "dhcpcd.service"
-                  ],
-                  "pattern": "^(.*)$"
-                },
-                "shutdown": {
-                  "type": "string",
-                  "title": "Shutdown service",
-                  "default": "",
-                  "examples": [
-                    "shutdown.service"
-                  ],
-                  "pattern": "^(.*)$"
-                },
-                "yio-update": {
-                  "type": "string",
-                  "title": "Yio update service",
-                  "default": "",
-                  "examples": [
-                    "update.service"
                   ],
                   "pattern": "^(.*)$"
                 },

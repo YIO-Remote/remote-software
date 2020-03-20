@@ -117,7 +117,7 @@ Rectangle {
                     if (SoftwareUpdate.updateAvailable) {
                         // TODO(marton) error handling: coordinate with zehnm which error conditions must be handled manually and which ones are already forwarded to the NotificationHandler
                         if (SoftwareUpdate.installAvailable) {
-                            SoftwareUpdate.performUpdate();
+                            SoftwareUpdate.performAppUpdate();
                         } else {
                             // TODO(marton) handle downloadFailed signal to abort download screen in case of error
                             // TODO(marton) the installAvailable signal after the downloadComplete() signal makes the "Update" button appear, but it doesn't work or switches the functionality!

@@ -414,32 +414,32 @@ www.yio-remote.com
 <context>
     <name>Entities</name>
     <message>
-        <location filename="../sources/entities/entities.h" line="108"/>
+        <location filename="../sources/entities/entities.h" line="109"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="108"/>
+        <location filename="../sources/entities/entities.h" line="109"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="108"/>
+        <location filename="../sources/entities/entities.h" line="109"/>
         <source>Media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="109"/>
+        <location filename="../sources/entities/entities.h" line="110"/>
         <source>Remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="109"/>
+        <location filename="../sources/entities/entities.h" line="110"/>
         <source>Climate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/entities/entities.h" line="109"/>
+        <location filename="../sources/entities/entities.h" line="110"/>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -911,52 +911,57 @@ Remote configuration after restarting the remote.</source>
 <context>
     <name>SoftwareUpdate</name>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="181"/>
+        <location filename="../sources/softwareupdate.cpp" line="196"/>
         <source>Invalid request.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="184"/>
+        <location filename="../sources/softwareupdate.cpp" line="199"/>
         <source>Unsupported device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="187"/>
+        <location filename="../sources/softwareupdate.cpp" line="202"/>
         <source>Service currently not available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="190"/>
+        <location filename="../sources/softwareupdate.cpp" line="205"/>
         <source>Request error %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="194"/>
+        <location filename="../sources/softwareupdate.cpp" line="209"/>
         <source>Software update:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="213"/>
+        <location filename="../sources/softwareupdate.cpp" line="228"/>
         <source>New software is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="213"/>
+        <location filename="../sources/softwareupdate.cpp" line="228"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="285"/>
+        <location filename="../sources/softwareupdate.cpp" line="300"/>
         <source>Update download failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="149"/>
+        <location filename="../sources/softwareupdate.cpp" line="323"/>
+        <source>Failed to start app update script!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/softwareupdate.cpp" line="164"/>
         <source>Cannot connect to the update server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="236"/>
+        <location filename="../sources/softwareupdate.cpp" line="251"/>
         <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -35,6 +35,7 @@
 #include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
 #include "entities/entities.h"
+#include "environment.h"
 #include "fileio.h"
 #include "hardware/buttonhandler.h"
 #include "hardware/hardwarefactory.h"
@@ -180,7 +181,8 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
 
     // INTEGRATIONS
-    Integrations* integrations = new Integrations(qEnvironmentVariable("YIO_PLUGIN_DIR", appPath + "/plugins"));
+    Integrations* integrations =
+        new Integrations(qEnvironmentVariable(Environment::ENV_YIO_PLUGIN_DIR, appPath + "/plugins"));
     // Make integration state available in QML
     qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations",
                                              "Not creatable, only used for enum.");

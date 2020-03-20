@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -25,26 +25,20 @@
 #include <QObject>
 
 /**
- * @brief Enum class for system services
+ * @brief Enum class for system scripts
  * @details Dedicated class for improved QML usability based on https://qml.guide/enums-in-qt-qml/
  */
-class SystemServiceNameEnum {
+class SystemScriptEnum {
     Q_GADGET
 
  public:
     enum Value {
-        WIFI,
-        WEBSERVER,
-        DHCP,
-        NAME_RESOLUTION,
-        NETWORKING,
-        NTP,
-        ZEROCONF
+        YIO_APP_UPDATE
     };
     Q_ENUM(Value)
 
  private:
-    SystemServiceNameEnum() {}
+    SystemScriptEnum() {}
 };
 
-typedef SystemServiceNameEnum::Value SystemServiceName;
+typedef SystemScriptEnum::Value SystemScript;
