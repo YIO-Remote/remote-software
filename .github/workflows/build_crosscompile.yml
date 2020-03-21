@@ -15,20 +15,25 @@ env:
   PROJECT_NAME: remote-software
   TOOLCHAIN_PATH: /opt/arm-buildroot-linux-gnueabihf_sdk-buildroot
   YIO_REMOTE_QMAKE_ARGS: "CONFIG+=debug CONFIG+=qml_debug"
-  YIO_BIN: "${GITHUB_WORKSPACE}/../binaries"
+  YIO_BIN: "${GITHUB_WORKSPACE}/../binaries/app"
   BUILDROOT_SDK_VERSION: v0.2.0  
   BUILDROOT_SDK_BASE_URL: https://github.com/YIO-Remote/remote-os/releases/download
   BUILDROOT_SDK_NAME: arm-buildroot-linux-gnueabihf_sdk-buildroot
 
 jobs:
   cross_compile:
-    name: RPi Zero YIO remote-os
+    name: RPi0 YIO remote-os
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          fetch-depth: 500
           path: ${{ env.PROJECT_NAME}}
+      - name: Fetch all tags to determine version
+        run: |
+          cd ${{ env.PROJECT_NAME}}
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Checkout integrations.library
         uses: actions/checkout@v2
         with:
@@ -41,6 +46,9 @@ jobs:
           mkdir -p /opt
           wget -qO- $BUILDROOT_SDK_BASE_URL/${BUILDROOT_SDK_VERSION}/${BUILDROOT_SDK_NAME}.tar.gz | tar -xz -C /opt
           /opt/${BUILDROOT_SDK_NAME}/relocate-sdk.sh
+
+      - name: Set build timestamp
+        run: echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"
 
       - name: Configure debug
         run: |
@@ -55,11 +63,14 @@ jobs:
       
       - name: Build debug
         run: |
+          # build app
           cd ${{ env.PROJECT_NAME}}/build
           PATH=${TOOLCHAIN_PATH}/bin:${TOOLCHAIN_PATH}/sbin:$PATH
           CPU_CORES=$(getconf _NPROCESSORS_ONLN)
           echo "Numbers of CPU cores for make: $CPU_CORES"
           make -j$CPU_CORES
+
+          # log build information
           echo "GitHub Actions debug build
           $(date)
           GIT branch: $(git rev-parse --abbrev-ref HEAD)
@@ -75,14 +86,36 @@ jobs:
           $(gcc --version)
 
           $(cpp --version)
-          " > ${{ env.YIO_BIN }}/build.info
+          " > ${{ env.YIO_BIN }}/../build.info
+
+      - name: Get app version
+        run: |
+          cd ${{ env.PROJECT_NAME}}/build
+          read -r APP_VERSION<version.txt
+          echo "App version: $APP_VERSION"
+          echo "::set-env name=APP_VERSION::$APP_VERSION"
+
+      - name: Create debug installation
+        run: |
+          cd ${{ env.YIO_BIN }}/..
+
+          # copy additional files for the installation archive
+          cp ${{env.PROJECT_NAME}}/build/version.txt .
+          # hooks are optional: don't fail if missing
+          cp -r ${{env.PROJECT_NAME}}/build/hooks . || :
+
+          # compress app
+          tar -czvf app.tar.gz app
+          rm -Rf app
+          # create checksums
+          md5sum * > md5sums
 
       - uses: actions/upload-artifact@v1
         id: upload_artifact_debug
         with:
           # Dear GitHub: dealing with env resolution is a PITA! ${{ env.YIO_BIN }} leads to a wrong path!!!
           path: ../binaries
-          name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-debug-ARM-RPi0
+          name: ${{ env.APP_NAME}}-${{ env.APP_VERSION}}-${{ env.TIMESTAMP}}-remote-debug
 
       - name: Configure release
         run: |
@@ -93,7 +126,7 @@ jobs:
           cd build
           PATH=${TOOLCHAIN_PATH}/bin:${TOOLCHAIN_PATH}/sbin:$PATH
           YIO_BIN=${{ env.YIO_BIN }}
-          rm -Rf $YIO_BIN
+          rm -Rf ${YIO_BIN}/..
           ${TOOLCHAIN_PATH}/bin/qmake ${GITHUB_WORKSPACE}/${{ env.PROJECT_NAME}} CONFIG+=release
           make qmake_all
       
@@ -104,6 +137,8 @@ jobs:
           CPU_CORES=$(getconf _NPROCESSORS_ONLN)
           echo "Numbers of CPU cores for make: $CPU_CORES"
           make -j$CPU_CORES
+
+          # log build information
           echo "GitHub Actions release build
           $(date)
           GIT branch: $(git rev-parse --abbrev-ref HEAD)
@@ -119,11 +154,26 @@ jobs:
           $(gcc --version)
 
           $(cpp --version)
-          " > ${{ env.YIO_BIN }}/build.info
+          " > ${{ env.YIO_BIN }}/../build.info
+
+      - name: Create release installation
+        run: |
+          cd ${{ env.YIO_BIN }}/..
+
+          # copy additional files for the installation archive
+          cp ${{env.PROJECT_NAME}}/build/version.txt .
+          # hooks are optional: don't fail if missing
+          cp -r ${{env.PROJECT_NAME}}/build/hooks . || :
+
+          # compress app
+          tar -czvf app.tar.gz app
+          rm -Rf app
+          # create checksums
+          md5sum * > md5sums
 
       - uses: actions/upload-artifact@v1
         id: upload_artifact_release
         with:
           # Dear GitHub: dealing with env resolution is a PITA! ${{ env.YIO_BIN }} leads to a wrong path!!!
           path: ../binaries
-          name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-release-ARM-RPi0
+          name: ${{ env.APP_NAME}}-${{ env.APP_VERSION}}-${{ env.TIMESTAMP}}-remote-release

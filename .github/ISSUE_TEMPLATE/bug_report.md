@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Before you open an issue, please search on the [issue tracker](../) if a similar issue already exists or has been closed before.
+<!-- Before you open an issue, please search on the [issue tracker](../) if a similar issue already exists or has been closed before. -->
 
 ## Description
 <!--- A clear and concise description of what the bug is. -->
@@ -28,11 +28,11 @@ Steps to reproduce the behavior:
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
 * Version used: 
-* Running on:
-  - [ ] YIO Remote
-  - [ ] Desktop
-  - [ ] Standalone Raspberry Pi
-* Operating System and version: 
+* Running on: <!-- Remove / add environment(s) -->
+  - YIO Remote
+  - Desktop
+  - Standalone Raspberry Pi
+* Operating System and version if not running on YIO Remote: 
 
 ## Additional context
 <!--- Add any other context about the problem here. Otherwise you can delete this section. -->

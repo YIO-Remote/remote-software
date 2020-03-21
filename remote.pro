@@ -21,15 +21,34 @@
  # SPDX-License-Identifier: GPL-3.0-or-later
  #############################################################################/
 
-# SOFTWARE VERSION
-DEFINES += APP_VERSION=\\\"$$system(git describe --match "v[0-9]*" --tags HEAD --always)\\\"
-
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++14 disable-desktop
 #disable qtquickcompiler for QML debugging!
 CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
+
+# SOFTWARE VERSION
+GIT_HASH = "$$system(git log -1 --format="%H")"
+GIT_BRANCH = "$$system(git rev-parse --abbrev-ref HEAD)"
+GIT_VERSION = "$$system(git describe --match "v[0-9]*" --tags HEAD --always)"
+REMOTE_VERSION = $$replace(GIT_VERSION, v, "")
+DEFINES += APP_VERSION=\\\"$$REMOTE_VERSION\\\"
+
+# build timestamp
+win32 {
+    # not the same format as on Unix systems, but good enough...
+    BUILDDATE=$$system(date /t)
+} else {
+    BUILDDATE=$$system(date +"%Y-%m-%dT%H:%M:%S")
+}
+CONFIG(debug, debug|release) {
+    DEBUG_BUILD = true
+} else {
+    DEBUG_BUILD = false
+}
+
+QMAKE_SUBSTITUTES += version.txt.in
 
 # === Load integration interface library ======================================
 # Workaround for 'lupdate remote.pro' bug when using variables for including a .pri file:
@@ -445,3 +464,13 @@ win32 {
     error(unknown platform! Platform must be configured in remote.pro project file)
 }
 
+DISTFILES += \
+    config.json \
+    config-schema.json \
+    hardware.json \
+    hardware-schema.json \
+    license-template.txt \
+    locale.json \
+    translations.json \
+    version.txt.in \
+    README.md
