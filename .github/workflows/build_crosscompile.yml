@@ -97,14 +97,13 @@ jobs:
 
       - name: Create debug installation
         run: |
-          cd ${{ env.YIO_BIN }}/..
-
           # copy additional files for the installation archive
-          cp ${{env.PROJECT_NAME}}/build/version.txt .
+          cp ${{env.PROJECT_NAME}}/build/version.txt ${{ env.YIO_BIN }}/..
           # hooks are optional: don't fail if missing
-          cp -r ${{env.PROJECT_NAME}}/build/hooks . || :
+          cp -r ${{env.PROJECT_NAME}}/build/hooks ${{ env.YIO_BIN }}/.. || :
 
           # compress app
+          cd ${{ env.YIO_BIN }}/..
           tar -czvf app.tar.gz app
           rm -Rf app
           # create checksums
@@ -158,14 +157,13 @@ jobs:
 
       - name: Create release installation
         run: |
-          cd ${{ env.YIO_BIN }}/..
-
           # copy additional files for the installation archive
-          cp ${{env.PROJECT_NAME}}/build/version.txt .
+          cp ${{env.PROJECT_NAME}}/build/version.txt ${{ env.YIO_BIN }}/..
           # hooks are optional: don't fail if missing
-          cp -r ${{env.PROJECT_NAME}}/build/hooks . || :
+          cp -r ${{env.PROJECT_NAME}}/build/hooks ${{ env.YIO_BIN }}/.. || :
 
           # compress app
+          cd ${{ env.YIO_BIN }}/..
           tar -czvf app.tar.gz app
           rm -Rf app
           # create checksums
