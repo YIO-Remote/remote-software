@@ -97,7 +97,6 @@ class SoftwareUpdate : public QObject {
 
  private:
     bool    isAlreadyDownloaded(const QString& version);
-    bool    isNewerVersion(const QString& currentVersion, const QString& updateVersion);
     QString getDownloadFileName(const QUrl& url) const;
 
  private:

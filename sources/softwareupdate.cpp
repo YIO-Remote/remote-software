@@ -28,7 +28,6 @@
 #include <QJsonDocument>
 #include <QLoggingCategory>
 #include <QProcess>
-#include <QRegExp>
 #include <QUrlQuery>
 
 #include "config.h"
@@ -172,15 +171,14 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
     reply->deleteLater();
 
     if (status == 200) {
+        if (!jsonObject["available"].toBool(false)) {
+            qCInfo(CLASS_LC) << "Current version is up to date";
+            return;
+        }
         m_downloadUrl.setUrl(jsonObject["url"].toString());
-        m_newVersion = jsonObject["latest"].toString();
+        m_newVersion = jsonObject["version"].toString();
 
         // Make sure returned data is valid
-        QRegExp rx("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(-\\w+)?$");
-        if (rx.indexIn(m_newVersion) != 0) {
-            qCWarning(CLASS_LC) << "Invalid new version:" << m_newVersion;
-            status = 500;
-        }
         if (!m_downloadUrl.isValid()) {
             qCWarning(CLASS_LC) << "Invalid download URL:" << m_downloadUrl;
             status = 500;
@@ -219,15 +217,12 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
         emit downloadComplete();
         emit installAvailable();
     } else {
-        // we are only interested in newer version than the one we have
-        if (isNewerVersion(currentVersion(), m_newVersion)) {
-            m_updateAvailable = true;
+        m_updateAvailable = true;
 
-            QObject *param = this;
-            Notifications::getInstance()->add(
-                false, tr("New software is available"), tr("Download"),
-                [](QObject *param) { qobject_cast<SoftwareUpdate *>(param)->startDownload(); }, param);
-        }
+        QObject *param = this;
+        Notifications::getInstance()->add(
+            false, tr("New software is available"), tr("Download"),
+            [](QObject *param) { qobject_cast<SoftwareUpdate *>(param)->startDownload(); }, param);
     }
 
     emit updateAvailableChanged();
@@ -339,33 +334,6 @@ bool SoftwareUpdate::isAlreadyDownloaded(const QString &version) {
 
     QTextStream in(&metafile);
     return version.compare(in.readLine(100), Qt::CaseInsensitive) == 0;
-}
-
-bool SoftwareUpdate::isNewerVersion(const QString &currentVersion, const QString &updateVersion) {
-    // TODO(zehnm) support optional suffix, use regex
-    QStringList newVersionDigits = updateVersion.split(".");
-    QString     none = QString("%1").arg(newVersionDigits[0].toInt(), 2, 10, QChar('0'));
-    QString     ntwo = QString("%1").arg(newVersionDigits[1].toInt(), 2, 10, QChar('0'));
-    QString     nthree = QString("%1").arg(newVersionDigits[2].toInt(), 2, 10, QChar('0'));
-
-    int combinedNewVersion;
-    combinedNewVersion = (none.append(ntwo).append(nthree)).toInt();
-
-    QStringList currentVersionDigits = currentVersion.split(".");
-    QString     cone = QString("%1").arg(currentVersionDigits[0].toInt(), 2, 10, QChar('0'));
-    QString     ctwo = QString("%1").arg(currentVersionDigits[1].toInt(), 2, 10, QChar('0'));
-    QString     cthree = QString("%1").arg(currentVersionDigits[2].toInt(), 2, 10, QChar('0'));
-
-    int combinedCurrentVersion;
-    combinedCurrentVersion = (cone.append(ctwo).append(cthree)).toInt();
-
-    // check if it's a newer version than we have
-    if (combinedNewVersion > combinedCurrentVersion) {
-        qCDebug(CLASS_LC) << "New version available:" << combinedNewVersion;
-        return true;
-    }
-    qCDebug(CLASS_LC) << "Current version is up to date";
-    return false;
 }
 
 QString SoftwareUpdate::getDownloadFileName(const QUrl &url) const {
