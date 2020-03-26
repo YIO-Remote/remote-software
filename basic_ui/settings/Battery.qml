@@ -310,7 +310,7 @@ Rectangle {
 
                         delegate: Text {
                             //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
-                            text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[hours.length-1-index]
+                            text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[index] //hours[hours.length-1-index]
                             color: Style.colorHighlight1
                             font { family: "Open Sans Regular"; pixelSize: 16 }
                             lineHeight: 1
