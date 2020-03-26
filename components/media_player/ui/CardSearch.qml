@@ -394,6 +394,7 @@ Rectangle {
                         anchors { top: tags.bottom; topMargin: 40 }
                         interactive: false
                         spacing: 40
+                        cacheBuffer: 2000
 
                         model: obj.searchModel
 
@@ -452,6 +453,7 @@ Rectangle {
                         orientation: ListView.Horizontal
                         spacing: 30
                         clip: true
+                        cacheBuffer: 3000
 
                         delegate: albumThumbnail
 

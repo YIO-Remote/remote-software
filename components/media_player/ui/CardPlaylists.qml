@@ -107,6 +107,7 @@ Rectangle {
                 boundsBehavior: Flickable.DragAndOvershootBounds
                 flickableDirection: Flickable.VerticalFlick
                 clip: true
+                cacheBuffer: 3000
 
                 delegate: playListThumbnail
                 model: main.playListBrowseModel
