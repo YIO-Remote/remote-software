@@ -32,14 +32,24 @@ Notifications::Notifications(QQmlApplicationEngine *engine) : m_engine(engine), 
     s_instance = this;
 }
 
+QDebug operator<<(QDebug debug, const Notification *notification) {
+    QDebugStateSaver saver(debug);
+    debug.nospace() << "("
+                    << "id: " << notification->m_id << ", "
+                    << "error: " << notification->m_error << ", "
+                    << "label: " << notification->m_actionLabel << ", "
+                    << "text: " << notification->m_text << ")";
+    return debug;
+}
+
 void Notifications::show(const int id) {
     // get the notification data to show
     QVariantMap map;
-    map["id"]          = m_notifications.value(id)->m_id;
-    map["error"]       = m_notifications.value(id)->m_error;
-    map["text"]        = m_notifications.value(id)->m_text;
+    map["id"] = m_notifications.value(id)->m_id;
+    map["error"] = m_notifications.value(id)->m_error;
+    map["text"] = m_notifications.value(id)->m_text;
     map["actionlabel"] = m_notifications.value(id)->m_actionLabel;
-    map["timestamp"]   = m_notifications.value(id)->m_timestamp;
+    map["timestamp"] = m_notifications.value(id)->m_timestamp;
 
     // let's check if the qml files are loaded first
     if (m_engine->rootObjects().size() > 0) {
@@ -59,11 +69,11 @@ QVariantList Notifications::list() {
     for (QMap<int, Notification *>::const_iterator iter = m_notifications.begin(); iter != m_notifications.end();
          ++iter) {
         QVariantMap map;
-        map["id"]          = iter.key();
-        map["error"]       = iter.value()->m_error;
-        map["text"]        = iter.value()->m_text;
+        map["id"] = iter.key();
+        map["error"] = iter.value()->m_error;
+        map["text"] = iter.value()->m_text;
         map["actionlabel"] = iter.value()->m_actionLabel;
-        map["timestamp"]   = iter.value()->m_timestamp;
+        map["timestamp"] = iter.value()->m_timestamp;
 
         list.append(map);
     }
@@ -88,7 +98,7 @@ void Notifications::add(bool error, const QString &text, const QString &actionla
     }
 
     m_notifications.insert(m_id, n);
-    qCDebug(m_log) << "New notification added" << m_id << n;
+    qCDebug(m_log) << "New notification added" << n;
 
     emit listChanged();
     emit errorChanged();
@@ -108,8 +118,7 @@ void Notifications::remove(int id) {
     m_notifications.remove(id);
     emit listChanged();
     emit errorChanged();
-    if (m_notifications.size() == 0)
-        emit listIsEmpty();
+    if (m_notifications.size() == 0) emit listIsEmpty();
 }
 
 void Notifications::remove(const QString &text) {
@@ -122,8 +131,7 @@ void Notifications::remove(const QString &text) {
     }
     emit listChanged();
     emit errorChanged();
-    if (m_notifications.size() == 0)
-        emit listIsEmpty();
+    if (m_notifications.size() == 0) emit listIsEmpty();
 }
 
 void Notifications::execute(int id) {
