@@ -424,7 +424,7 @@
         "softwareupdate": {
             "autoUpdate": false,
             "updateUrl": "https://update.yio.app/v1/",
-            "updateUrlAppPath": "updates/app",
+            "updateUrlAppPath": "app/updates",
             "channel": "release",
             "checkInterval": 3600,
             "downloadDir": "/tmp/yio",

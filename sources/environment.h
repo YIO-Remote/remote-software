@@ -37,6 +37,7 @@ class Environment : public QObject {
     static const char* ENV_YIO_APP_DIR;
     static const char* ENV_YIO_OS_VERSION;
     static const char* ENV_YIO_PLUGIN_DIR;
+    static const char* UNKNOWN;
 
  public:
     /**
@@ -67,7 +68,7 @@ class Environment : public QObject {
 
     /**
      * @brief Returns the YIO remote-os version.
-     * @return The version string, e.g. "v0.2.0" or "UNKNOWN" if the app runs on another platform.
+     * @return The version string, e.g. "v0.2.0" or Environment::UNKNOWN if the app runs on another platform.
      */
     QString getRemoteOsVersion() const;
 

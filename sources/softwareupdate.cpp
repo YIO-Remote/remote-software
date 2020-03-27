@@ -49,7 +49,7 @@ SoftwareUpdate::SoftwareUpdate(const QVariantMap &cfg, BatteryFuelGauge *battery
       m_initialCheckDelay(cfg.value("checkDelay", 60).toInt()),
       m_appUpdateUrl(cfg.value("updateUrl", "https://update.yio.app/v1/")
                          .toUrl()
-                         .resolved(cfg.value("updateUrlAppPath", "updates/app").toUrl())),
+                         .resolved(cfg.value("updateUrlAppPath", "app/updates").toUrl())),
       m_downloadDir(cfg.value("downloadDir", "/tmp/yio").toString()),
       m_appUpdateScript(cfg.value("appUpdateScript", "/opt/yio/scripts/app-update.sh").toString()),
       m_channel(cfg.value("channel", "release").toString()) {
@@ -139,8 +139,10 @@ void SoftwareUpdate::checkForUpdate() {
     Environment env;
     QUrlQuery   query;
     query.addQueryItem("appVersion", currentVersion());
-    query.addQueryItem("osVersion", env.getRemoteOsVersion());
-    query.addQueryItem("device", env.getDeviceType());
+    if (env.getRemoteOsVersion() != Environment::UNKNOWN) {
+        query.addQueryItem("osVersion",  env.getRemoteOsVersion());
+    }
+    query.addQueryItem("device", QUrl::toPercentEncoding(env.getDeviceType()));
     query.addQueryItem("channel", m_channel);
 
     QUrl updateUrl = m_appUpdateUrl;
@@ -149,7 +151,7 @@ void SoftwareUpdate::checkForUpdate() {
     QNetworkRequest request(updateUrl);
     request.setRawHeader("Accept", "application/json");
 
-    qCDebug(CLASS_LC) << "Checking for update:" << updateUrl.toString();
+    qCDebug(CLASS_LC) << "Checking for update:" << updateUrl;
     m_manager.get(request);
     //  the get request will signal onCheckForUpdateFinished() with QNetworkReply where it will also be deleted
 }
@@ -237,13 +239,13 @@ bool SoftwareUpdate::startDownload() {
     }
 
     // start software update procedure if there's enough battery. Free space check is within FileDownload.
-    if (!m_downloadDir.mkpath(m_downloadDir.path())) {
-        qCCritical(CLASS_LC) << "Error creating download directory" << m_downloadDir.path();
+    if (m_batteryFuelGauge->getLevel() < 50) {
+        Notifications::getInstance()->add(true, tr("The remote needs to be at least 50% battery to perform updates."));
         return false;
     }
 
-    if (m_batteryFuelGauge->getLevel() < 50) {
-        Notifications::getInstance()->add(true, tr("The remote needs to be at least 50% battery to perform updates."));
+    if (!m_downloadDir.mkpath(m_downloadDir.path())) {
+        qCCritical(CLASS_LC) << "Error creating download directory" << m_downloadDir.path();
         return false;
     }
 
@@ -292,7 +294,7 @@ void SoftwareUpdate::onDownloadFailed(int id, QString errorMsg) {
     Q_UNUSED(id)
     qCWarning(CLASS_LC) << "Download of update failed:" << errorMsg;
 
-    Notifications::getInstance()->add(true, tr("Update download failed: %1").arg(errorMsg));
+    Notifications::getInstance()->add(true, tr("Download failed: %1").arg(errorMsg));
     emit downloadFailed();
 }
 
@@ -337,12 +339,19 @@ bool SoftwareUpdate::isAlreadyDownloaded(const QString &version) {
 }
 
 QString SoftwareUpdate::getDownloadFileName(const QUrl &url) const {
+    // attention: download file name contains multiple dots, so we cannot use completeSuffix()!
+    // suffix() returns all characters after the LAST dot: https://doc.qt.io/qt-5/qfileinfo.html#suffix
     QString suffix = QFileInfo(url.path()).suffix().toLower();
 
-    // TODO(zehnm) support other archives than .tar and .gz?
-    if (suffix == "gz") {
-        return UPDATE_BASENAME + ".gz";
+    // we only support .zip and .tar
+    if (suffix == "zip") {
+        return UPDATE_BASENAME + ".zip";
     }
 
+    if (suffix == "tar") {
+        return UPDATE_BASENAME + ".tar";
+    }
+
+    qCWarning(CLASS_LC) << "Download file suffix is neither .zip nor .tar: forcing .tar!" << url.toString();
     return UPDATE_BASENAME + ".tar";
 }

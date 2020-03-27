@@ -257,7 +257,7 @@ www.yio-remote.com
 <context>
     <name>CardPlaylists</name>
     <message>
-        <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
+        <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
         <source>My playlists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -282,25 +282,25 @@ www.yio-remote.com
     </message>
     <message>
         <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
-        <location filename="../components/media_player/ui/CardSearch.qml" line="409"/>
+        <location filename="../components/media_player/ui/CardSearch.qml" line="410"/>
         <source>Albums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
-        <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
+        <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
         <source>Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
-        <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
+        <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
         <source>Artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
-        <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
+        <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
         <source>Playlists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -936,32 +936,32 @@ Remote configuration after restarting the remote.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="228"/>
+        <location filename="../sources/softwareupdate.cpp" line="226"/>
         <source>New software is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="228"/>
+        <location filename="../sources/softwareupdate.cpp" line="226"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="300"/>
-        <source>Update download failed: %1</source>
+        <location filename="../sources/softwareupdate.cpp" line="297"/>
+        <source>Download failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="323"/>
+        <location filename="../sources/softwareupdate.cpp" line="320"/>
         <source>Failed to start app update script!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="164"/>
+        <location filename="../sources/softwareupdate.cpp" line="165"/>
         <source>Cannot connect to the update server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/softwareupdate.cpp" line="251"/>
+        <location filename="../sources/softwareupdate.cpp" line="243"/>
         <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>

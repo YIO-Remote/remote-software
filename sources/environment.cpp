@@ -33,6 +33,8 @@ const char *Environment::ENV_YIO_APP_DIR = "YIO_APP_DIR";
 const char *Environment::ENV_YIO_OS_VERSION = "YIO_OS_VERSION";
 const char *Environment::ENV_YIO_PLUGIN_DIR = "YIO_PLUGIN_DIR";
 
+const char *Environment::UNKNOWN = "UNKNOWN";
+
 static Q_LOGGING_CATEGORY(CLASS_LC, "env");
 
 Environment::Environment(QObject *parent) : QObject(parent) {
@@ -46,7 +48,7 @@ Environment::Environment(QObject *parent) : QObject(parent) {
                      << "YIO remote:" << m_yioRemote;
 }
 
-QString Environment::getRemoteOsVersion() const { return qEnvironmentVariable(ENV_YIO_OS_VERSION, "UNKNOWN"); }
+QString Environment::getRemoteOsVersion() const { return qEnvironmentVariable(ENV_YIO_OS_VERSION, UNKNOWN); }
 
 OS Environment::determineOS() {
 #if defined(Q_OS_ANDROID)
@@ -140,7 +142,7 @@ QString Environment::determineDeviceType(OS os, bool yioRemote, const QString &r
         case OS::Linux:
             return QString("linux:%1").arg(cpu);
         case OS::macOS:
-            return "mac";
+            return QString("mac:%1").arg(cpu);
         case OS::Windows:
             return QString("windows:%1").arg(cpu);
         default:
