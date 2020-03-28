@@ -306,7 +306,7 @@ Rectangle {
                     anchors.left: parent.left
 
                     Repeater {
-                        model: hours.length > 7 ? 8 : (hours.length == 0 ? 1 : hours.length)
+                        model: hours.length > 9 ? 9 : (hours.length == 0 ? 1 : hours.length)
 
                         delegate: Text {
                             //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
