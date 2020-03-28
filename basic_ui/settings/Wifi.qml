@@ -212,7 +212,7 @@ Item {
                     interactive: false
 
                     delegate: Item {
-                        width: parent.width; height: 80
+                        width: parent.width; height: wifi.networkScanResult[index].name === wifi.wifiStatus.name ? 0 : 80
                         visible: wifi.networkScanResult[index].name === wifi.wifiStatus.name ? false : true
 
                         Text {
