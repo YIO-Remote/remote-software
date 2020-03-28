@@ -50,8 +50,9 @@ bool FileDownload::checkDiskSpace(const QDir &path, int requiredMB) {
     }
 
     auto availableMB = storage.bytesAvailable() / DATA_UNIT / DATA_UNIT;
-    bool valid =
-        storage.isValid() && storage.isReady() && !storage.isReadOnly() && availableMB >= requiredMB && path.exists();
+    // Note: storage.isReadOnly() doesn't work on macOS Catalina. Maybe in a newer Qt version?
+    bool valid = storage.isValid() && storage.isReady() &&  // && !storage.isReadOnly()
+                 availableMB >= requiredMB && path.exists();
 
     qCDebug(CLASS_LC) << "Storage check for" << requiredMB << "MB:" << valid << "[" << path.path()
                       << ", fileSystemType:" << storage.fileSystemType()
@@ -110,9 +111,7 @@ void FileDownload::startNextDownload() {
 
 bool FileDownload::prepareFileDownload(const Download &download) {
     if (!checkDiskSpace(download.destinationDir, download.requiredMb)) {
-        emit downloadFailed(
-            download.id,
-            tr("Not enough free space (%1 MB) or destination not writable for download.").arg(download.requiredMb));
+        emit downloadFailed(download.id, tr("Not enough free space (%1 MB).").arg(download.requiredMb));
         return false;
     }
 

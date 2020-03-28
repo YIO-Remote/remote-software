@@ -817,7 +817,7 @@
             "updateUrlAppPath": {
               "type": "string",
               "title": "App update path",
-              "default": "updates/app"
+              "default": "app/updates"
             },
             "channel": {
               "type": "string",
