@@ -27,6 +27,8 @@ import Style 1.0
 import Haptic 1.0
 import Battery 1.0
 import SoftwareUpdate 1.0
+import ButtonHandler 1.0
+import StandbyControl 1.0
 
 import "qrc:/basic_ui/settings" as Settings
 
@@ -37,6 +39,29 @@ SwipeView {
     interactive: false
     clip: true
     anchors.horizontalCenter: parent.horizontalCenter
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Connections {
+        target: ButtonHandler
+        enabled: secondPageLoader.active
+
+        onButtonPressed: {
+            if (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM) {
+                if (button === ButtonHandler.TOP_RIGHT) {
+                    loader_second.source = "";
+                    loader_second.active = false;
+                    inputPanel.active = false;
+
+                    settingsSwipeView.decrementCurrentIndex();
+                    backButtonTimer.start();
+                    evaluateHeader();
+                }
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
