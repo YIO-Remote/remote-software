@@ -66,6 +66,7 @@ void YioAPI::start() {
     }
 
     macAddr.replace(":", "");
+    m_hostname = "";
     m_hostname.append("YIO-Remote-").append(macAddr);
     qCDebug(m_log) << "NAME" << m_hostname;
     emit hostnameChanged();
@@ -123,7 +124,7 @@ bool YioAPI::addEntityToConfig(QVariantMap entity) {
     for (int i = 0; i < e.length(); i++) {
         if (e[i].toMap().value("type").toString() == entityType) {
             // get the data key array
-            QVariantMap  r = e[i].toMap();
+            QVariantMap  r  = e[i].toMap();
             QVariantList rl = r.value("data").toJsonArray().toVariantList();
 
             // add the entity
@@ -247,7 +248,7 @@ void YioAPI::onNewConnection() {
     // send message to client after connected to authenticate
     QVariantMap map;
     map.insert("type", "auth_required");
-    QJsonDocument doc = QJsonDocument::fromVariant(map);
+    QJsonDocument doc     = QJsonDocument::fromVariant(map);
     QString       message = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
     socket->sendTextMessage(message);
@@ -286,7 +287,7 @@ void YioAPI::processMessage(QString message) {
                 if (map.value("token").toString() == m_token) {
                     qDebug(CLASS_LC) << "Token OK";
                     r_map.insert("type", "auth_ok");
-                    QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
+                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
                     QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
@@ -299,7 +300,7 @@ void YioAPI::processMessage(QString message) {
                     qCDebug(m_log) << "Token NOT OK";
                     r_map.insert("type", "auth_error");
                     r_map.insert("message", "Invalid token");
-                    QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
+                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
                     QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                     client->sendTextMessage(r_message);
@@ -308,7 +309,7 @@ void YioAPI::processMessage(QString message) {
                 qCDebug(m_log) << "No token";
                 r_map.insert("type", "auth_error");
                 r_map.insert("message", "Token needed");
-                QJsonDocument r_doc = QJsonDocument::fromVariant(r_map);
+                QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
                 QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
 
                 client->sendTextMessage(r_message);
@@ -381,7 +382,7 @@ void YioAPI::apiSetConfig(QWebSocket *client, const QVariantMap &map) {
 }
 
 void YioAPI::apiLogHandle(QWebSocket *client, const QVariantMap &map) {
-    Logger *logger = Logger::getInstance();
+    Logger *logger    = Logger::getInstance();
     QString logAction = map["action"].toString();
     QString logTarget = map["target"].toString();
     qCDebug(m_log) << "LOGGER : " << logAction;
@@ -458,7 +459,7 @@ void YioAPI::apiLogHandle(QWebSocket *client, const QVariantMap &map) {
 }
 
 void YioAPI::apiButtonHandle(const QVariantMap &map) {
-    QString buttonName = map["name"].toString();
+    QString buttonName   = map["name"].toString();
     QString buttonAction = map["action"].toString();
     qDebug(CLASS_LC) << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
 
