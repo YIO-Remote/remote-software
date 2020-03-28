@@ -108,6 +108,13 @@ QtObject {
         readonly property string wifi_1: "\uE924"
         readonly property string wifi_2: "\uE925"
         readonly property string wifi_3: "\uE926"
+
+        readonly property string language: "\uE927"
+        readonly property string integration: "\uE92A"
+        readonly property string battery: "\uE929"
+        readonly property string wifi_bluetooth: "\uE92C"
+        readonly property string system: "\uE92B"
+        readonly property string about: "\uE928"
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

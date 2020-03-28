@@ -456,12 +456,12 @@ www.yio-remote.com
 <context>
     <name>FileDownload</name>
     <message>
-        <location filename="../sources/filedownload.cpp" line="115"/>
-        <source>Not enough free space (%1 MB) or destination not writable for download.</source>
+        <location filename="../sources/filedownload.cpp" line="114"/>
+        <source>Not enough free space (%1 MB).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/filedownload.cpp" line="122"/>
+        <location filename="../sources/filedownload.cpp" line="121"/>
         <source>Destination file already exists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -690,32 +690,32 @@ Navigate your internet browser to: http://</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="186"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="187"/>
         <source>Integrations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="192"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="194"/>
         <source>Battery &amp; power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="199"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="201"/>
         <source>m remaining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="205"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="208"/>
         <source>WiFi &amp; bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="210"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="214"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/pages/Settings.qml" line="215"/>
+        <location filename="../basic_ui/pages/Settings.qml" line="220"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>

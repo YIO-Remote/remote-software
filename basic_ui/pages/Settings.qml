@@ -179,12 +179,14 @@ SwipeView {
                             }
                         }
                     }
+                    icon: Style.icons.language
                     url: "qrc:/basic_ui/settings/Languages.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("Integrations") + translateHandler.emptyString //: Settings page title for integration settings
                     subtitle: integrations.list.length > 1 ? (integrations.list.length + " integrations loaded" + translateHandler.emptyString) : (integrations.list.length + " integration loaded" + translateHandler.emptyString)
+                    icon: Style.icons.integration
                     url: "qrc:/basic_ui/settings/Integrations.qml"
                 }
 
@@ -198,21 +200,25 @@ SwipeView {
 
                         return rhours + "h " + rminutes + qsTr("m remaining") + translateHandler.emptyString
                     }
+                    icon: Style.icons.battery
                     url: "qrc:/basic_ui/settings/Battery.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("WiFi & bluetooth") + translateHandler.emptyString //: Settings page title for wifi and bluetooth settings
+                    icon: Style.icons.wifi_bluetooth
                     url: "qrc:/basic_ui/settings/Wifi.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("System") + translateHandler.emptyString //: Settings page title for system settings
+                    icon: Style.icons.system
                     url: "qrc:/basic_ui/settings/System.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("About") + translateHandler.emptyString //: Settings page title for about
+                    icon: Style.icons.about
                     url: "qrc:/basic_ui/settings/About.qml"
                 }
             }
