@@ -26,6 +26,9 @@ import Style 1.0
 
 import Haptic 1.0
 import Battery 1.0
+import SoftwareUpdate 1.0
+import ButtonHandler 1.0
+import StandbyControl 1.0
 
 import "qrc:/basic_ui/settings" as Settings
 
@@ -36,6 +39,29 @@ SwipeView {
     interactive: false
     clip: true
     anchors.horizontalCenter: parent.horizontalCenter
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Connections {
+        target: ButtonHandler
+        enabled: secondPageLoader.active
+
+        onButtonPressed: {
+            if (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM) {
+                if (button === ButtonHandler.TOP_RIGHT) {
+                    loader_second.source = "";
+                    loader_second.active = false;
+                    inputPanel.active = false;
+
+                    settingsSwipeView.decrementCurrentIndex();
+                    backButtonTimer.start();
+                    evaluateHeader();
+                }
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
@@ -147,9 +173,9 @@ SwipeView {
                     width: parent.width; height: 80
                     Text {
                         color: Style.colorText
-                        text: qsTr("Your software is up to date.") + translateHandler.emptyString
+                        text: SoftwareUpdate.updateAvailable ? qsTr("New software is available.") + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
                         anchors { top:parent.top; horizontalCenter: parent.horizontalCenter }
-                        font: Style.buttonFont
+                        font: Style.fonts.button
                         lineHeight: 1
                     }
 
@@ -178,12 +204,14 @@ SwipeView {
                             }
                         }
                     }
+                    icon: Style.icons.language
                     url: "qrc:/basic_ui/settings/Languages.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("Integrations") + translateHandler.emptyString //: Settings page title for integration settings
                     subtitle: integrations.list.length > 1 ? (integrations.list.length + " integrations loaded" + translateHandler.emptyString) : (integrations.list.length + " integration loaded" + translateHandler.emptyString)
+                    icon: Style.icons.integration
                     url: "qrc:/basic_ui/settings/Integrations.qml"
                 }
 
@@ -197,21 +225,25 @@ SwipeView {
 
                         return rhours + "h " + rminutes + qsTr("m remaining") + translateHandler.emptyString
                     }
+                    icon: Style.icons.battery
                     url: "qrc:/basic_ui/settings/Battery.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("WiFi & bluetooth") + translateHandler.emptyString //: Settings page title for wifi and bluetooth settings
+                    icon: Style.icons.wifi_bluetooth
                     url: "qrc:/basic_ui/settings/Wifi.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("System") + translateHandler.emptyString //: Settings page title for system settings
+                    icon: Style.icons.system
                     url: "qrc:/basic_ui/settings/System.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("About") + translateHandler.emptyString //: Settings page title for about
+                    icon: Style.icons.about
                     url: "qrc:/basic_ui/settings/About.qml"
                 }
             }

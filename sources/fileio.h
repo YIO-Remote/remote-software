@@ -31,10 +31,12 @@ class FileIO : public QObject {
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     bool write(const QString& source, const QString& data) {
-        if (source.isEmpty()) return false;
+        if (source.isEmpty())
+            return false;
 
         QFile file(source);
-        if (!file.open(QFile::WriteOnly | QFile::Truncate)) return false;
+        if (!file.open(QFile::WriteOnly | QFile::Truncate))
+            return false;
 
         QTextStream out(&file);
         out << data;
@@ -66,6 +68,19 @@ class FileIO : public QObject {
         } else {
             return false;
         }
+    }
+
+    bool deleteFile(const QString& source) {
+        if (source.isEmpty()) {
+            return false;
+        }
+
+        bool success = false;
+
+        QFile file(source);
+        success = file.remove();
+
+        return success;
     }
 
  public:

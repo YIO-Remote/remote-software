@@ -1,9 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>scripts/softwareupdate.js</file>
         <file>basic_ui/ChargingScreen.qml</file>
-        <file>scripts/helper.js</file>
         <file>basic_ui/PopupLowBattery.qml</file>
         <file>basic_ui/LoadingScreen.qml</file>
         <file>basic_ui/ClosingScreen.qml</file>
@@ -37,7 +35,6 @@
         <file>basic_ui/Volume.qml</file>
         <file>components/media_player/ui/Button.qml</file>
         <file>basic_ui/settings/Bluetooth.qml</file>
-        <file>wifiSetup.qml</file>
         <file>basic_ui/pages/Group.qml</file>
         <file>components/remote/ui/Button.qml</file>
         <file>basic_ui/Profiles.qml</file>
@@ -65,5 +62,20 @@
         <file>basic_ui/settings/RemoteConfig.qml</file>
         <file>basic_ui/settings/Wifi.qml</file>
         <file>basic_ui/settings/WifiConnect.qml</file>
+        <file>setup/Setup.qml</file>
+        <file>setup/SetupStep1.qml</file>
+        <file>setup/SetupStep2.qml</file>
+        <file>setup/SetupStep3.qml</file>
+        <file>setup/SetupStep4.qml</file>
+        <file>setup/SetupStep5.qml</file>
+        <file>basic_ui/settings/SoftwareupdateDownloading.qml</file>
+        <file>setup/SetupStep6Success.qml</file>
+        <file>setup/SetupStep6Failure.qml</file>
+        <file>setup/SetupStep7.qml</file>
+        <file>setup/SetupStep8.qml</file>
+        <file>setup/SetupStep9Success.qml</file>
+        <file>setup/SetupStep9Failure.qml</file>
+        <file>setup/SetupStep9Skip.qml</file>
+        <file>setup/SetupStepCountry.qml</file>
     </qresource>
 </RCC>

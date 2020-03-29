@@ -29,8 +29,9 @@
                 "$id": "#/properties/entities/properties/light/items/properties/area",
                 "type": "string",
                 "title": "The Area Schema",
+                "default": null,
                 "examples": [
-                  "Előszoba"
+                  "Hallway"
                 ],
                 "pattern": "^(.*)$"
               },
@@ -38,6 +39,7 @@
                 "$id": "#/properties/entities/properties/light/items/properties/entity_id",
                 "type": "string",
                 "title": "The Entity_id Schema",
+                "default": null,
                 "examples": [
                   "light.entrance_light_level"
                 ],
@@ -47,19 +49,21 @@
                 "$id": "#/properties/entities/properties/light/items/properties/friendly_name",
                 "type": "string",
                 "title": "The Friendly_name Schema",
+                "default": null,
                 "examples": [
-                  "Előszoba lámpa"
+                  "Hallway light"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "integration": {
                 "$id": "#/properties/entities/properties/light/items/properties/integration",
                 "type": "string",
                 "title": "The Integration Schema",
+                "default": null,
                 "examples": [
                   "homeassistant"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "supported_features": {
                 "$id": "#/properties/entities/properties/light/items/properties/supported_features",
@@ -69,10 +73,11 @@
                   "$id": "#/properties/entities/properties/light/items/properties/supported_features/items",
                   "type": "string",
                   "title": "The Items Schema",
+                  "default": null,
                   "examples": [
-                    "BRIGHTNESS"
+                    "BRIGHTNESS, COLOR, COLORTEMP"
                   ],
-                  "pattern": "^(.*)$"
+                  "pattern": ""
                 }
               }
             },
@@ -97,10 +102,11 @@
                 "$id": "#/properties/entities/properties/media_player/items/properties/area",
                 "type": "string",
                 "title": "The Area Schema",
+                "default": null,
                 "examples": [
-                  "Nappali"
+                  "Living room"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "entity_id": {
                 "$id": "#/properties/entities/properties/media_player/items/properties/entity_id",
@@ -115,20 +121,22 @@
                 "$id": "#/properties/entities/properties/media_player/items/properties/friendly_name",
                 "type": "string",
                 "title": "The Friendly_name Schema",
+                "default": null,
                 "examples": [
-                  "Nappali hangszóró"
+                  "Living room speaker"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "integration": {
                 "$id": "#/properties/entities/properties/media_player/items/properties/integration",
                 "type": "string",
                 "title": "Integration plugins",
+                "default": null,
                 "examples": [
                   "homeassistant",
                   "spotify"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "supported_features": {
                 "$id": "#/properties/entities/properties/media_player/items/properties/supported_features",
@@ -137,7 +145,6 @@
                 "items": {
                   "$id": "#/properties/entities/properties/media_player/items/properties/supported_features/items",
                   "type": "string",
-                  "title": "Feature",
                   "enum": [
                     "SOURCE",
                     "APP_NAME",
@@ -165,18 +172,21 @@
                     "TURN_OFF",
                     "SEARCH",
                     "LIST",
-                    "CONTROL"
-                  ]
+                    "SPEAKER_CONTROL"
+                  ],
+                  "title": "Feature",
+                  "default": null
                 }
               },
               "type": {
                 "$id": "#/properties/entities/properties/media_player/items/properties/type",
                 "type": "string",
                 "title": "The Type Schema",
+                "default": null,
                 "examples": [
                   "speaker"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               }
             },
             "required": [
@@ -200,22 +210,24 @@
                 "$id": "#/properties/entities/properties/remote/items/properties/area",
                 "type": "string",
                 "title": "The Area Schema",
+                "default": null,
                 "examples": [
                   "Living room"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "settings": {
                 "$id": "#/properties/entities/properties/remote/items/properties/settings",
                 "type": "object",
                 "title": "The Settings Schema",
+                "default": null,
                 "properties": {
                   "delay": {
                     "$id": "#/properties/entities/properties/remote/items/properties/settings/properties/delay",
                     "type": "integer",
-                    "minimum": 0,
                     "title": "Delay in ms",
-                    "default": 300
+                    "default": 0,
+                    "minimum": 0
                   },
                   "channel_switching": {
                     "$id": "#/properties/entities/properties/remote/items/properties/settings/properties/channel_switching",
@@ -224,12 +236,12 @@
                     "items": {
                       "$id": "#/properties/entities/properties/remote/items/properties/settings/properties/channel_switching/items",
                       "type": "string",
-                      "title": "The Items Schema",
                       "enum": [
                         "DIGIT_SEPARATOR",
                         "CHANNEL_NUMBER",
                         "CHANNEL_END"
-                      ]
+                      ],
+                      "title": "The Items Schema"
                     }
                   }
                 },
@@ -247,25 +259,25 @@
                   "title": "The Items Schema",
                   "required": [
                     "name",
-                    "number",
-                    "image"
+                    "number"
                   ],
                   "properties": {
                     "name": {
                       "$id": "#/properties/entities/properties/remote/items/properties/channels/items/properties/name",
                       "type": "string",
                       "title": "Channel name",
+                      "default": null,
                       "examples": [
                         "MTV"
                       ],
-                      "pattern": "^(.*)$"
+                      "pattern": ""
                     },
                     "number": {
                       "$id": "#/properties/entities/properties/remote/items/properties/channels/items/properties/number",
                       "type": "integer",
-                      "minimum": 0,
                       "title": "Channel number",
-                      "default": 0
+                      "default": 0,
+                      "minimum": 0
                     },
                     "image": {
                       "$id": "#/properties/entities/properties/remote/items/properties/channels/items/properties/image",
@@ -275,7 +287,7 @@
                       "examples": [
                         "/usr/bin/yio-remote/images/mtv.jpg"
                       ],
-                      "pattern": "^(.*)$"
+                      "pattern": ""
                     }
                   }
                 }
@@ -290,8 +302,7 @@
                   "title": "The Items Schema",
                   "required": [
                     "button_map",
-                    "code",
-                    "format"
+                    "code"
                   ],
                   "properties": {
                     "button_map": {
@@ -341,18 +352,21 @@
                       "$id": "#/properties/entities/properties/remote/items/properties/commands/items/properties/code",
                       "type": "string",
                       "title": "The Code Schema",
+                      "default": null,
                       "examples": [
                         "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,06FB"
                       ],
-                      "pattern": "^(.*)$"
+                      "pattern": ""
                     },
                     "format": {
                       "$id": "#/properties/entities/properties/remote/items/properties/commands/items/properties/format",
                       "type": "string",
-                      "title": "IR code format",
                       "enum": [
-                        "pronto", "hex"
-                      ]
+                        "pronto",
+                        "hex"
+                      ],
+                      "title": "IR code format",
+                      "default": null
                     }
                   }
                 }
@@ -371,19 +385,21 @@
                 "$id": "#/properties/entities/properties/remote/items/properties/friendly_name",
                 "type": "string",
                 "title": "The Friendly_name Schema",
+                "default": null,
                 "examples": [
-                  "Nappali TV"
+                  "Living room TV"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "integration": {
                 "$id": "#/properties/entities/properties/remote/items/properties/integration",
                 "type": "string",
                 "title": "The Integration Schema",
+                "default": null,
                 "examples": [
                   "YIO-Dock-3C71BFE33DEC"
                 ],
-                "pattern": "^(.*)$"
+                "pattern": ""
               },
               "supported_features": {
                 "$id": "#/properties/entities/properties/remote/items/properties/supported_features",
@@ -392,7 +408,6 @@
                 "items": {
                   "$id": "#/properties/entities/properties/remote/items/properties/supported_features/items",
                   "type": "string",
-                  "title": "Feature",
                   "enum": [
                     "POWER_TOGGLE",
                     "CHANNEL_UP",
@@ -405,12 +420,12 @@
                     "CURSOR_RIGHT",
                     "CURSOR_OK",
                     "MUTE_TOGGLE"
-                  ]
+                  ],
+                  "title": "Feature"
                 }
               }
             },
             "required": [
-              "settings",
               "entity_id",
               "friendly_name",
               "integration",
@@ -469,10 +484,11 @@
                         "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/data/properties/token",
                         "type": "string",
                         "title": "Access token",
+                        "default": null,
                         "examples": [
                           "my super secret T0ken"
                         ],
-                        "pattern": "^(.*)$"
+                        "pattern": ""
                       }
                     }
                   },
@@ -480,19 +496,21 @@
                     "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/friendly_name",
                     "type": "string",
                     "title": "The Friendly_name Schema",
+                    "default": null,
                     "examples": [
                       "Home Assistant"
                     ],
-                    "pattern": "^(.*)$"
+                    "pattern": ""
                   },
                   "id": {
                     "$id": "#/properties/integrations/properties/homeassistant/properties/data/items/properties/id",
                     "type": "string",
                     "title": "The Id Schema",
+                    "default": null,
                     "examples": [
                       "homeassistant"
                     ],
-                    "pattern": "^(.*)$"
+                    "pattern": ""
                   }
                 }
               }
@@ -501,10 +519,11 @@
               "$id": "#/properties/integrations/properties/homeassistant/properties/log",
               "type": "string",
               "title": "The Log Schema",
+              "default": null,
               "examples": [
                 "debug"
               ],
-              "pattern": "^(.*)$"
+              "pattern": ""
             },
             "mdns": {
               "$id": "#/properties/integrations/properties/homeassistant/properties/mdns",
@@ -556,28 +575,31 @@
                         "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/access_token",
                         "type": "string",
                         "title": "The Access_token Schema",
+                        "default": null,
                         "examples": [
                           ""
                         ],
-                        "pattern": "^(.*)$"
+                        "pattern": ""
                       },
                       "client_id": {
                         "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/client_id",
                         "type": "string",
                         "title": "The Client_id Schema",
+                        "default": null,
                         "examples": [
                           ""
                         ],
-                        "pattern": "^(.*)$"
+                        "pattern": ""
                       },
                       "client_secret": {
                         "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/client_secret",
                         "type": "string",
                         "title": "The Client_secret Schema",
+                        "default": null,
                         "examples": [
                           ""
                         ],
-                        "pattern": "^(.*)$"
+                        "pattern": ""
                       },
                       "entity_id": {
                         "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/entity_id",
@@ -592,10 +614,11 @@
                         "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/data/properties/refresh_token",
                         "type": "string",
                         "title": "The Refresh_token Schema",
+                        "default": null,
                         "examples": [
                           ""
                         ],
-                        "pattern": "^(.*)$"
+                        "pattern": ""
                       }
                     }
                   },
@@ -603,19 +626,21 @@
                     "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/friendly_name",
                     "type": "string",
                     "title": "The Friendly_name Schema",
+                    "default": null,
                     "examples": [
                       "Spotify"
                     ],
-                    "pattern": "^(.*)$"
+                    "pattern": ""
                   },
                   "id": {
                     "$id": "#/properties/integrations/properties/spotify/properties/data/items/properties/id",
                     "type": "string",
                     "title": "The Id Schema",
+                    "default": null,
                     "examples": [
                       "spotify"
                     ],
-                    "pattern": "^(.*)$"
+                    "pattern": ""
                   }
                 }
               }
@@ -624,10 +649,11 @@
               "$id": "#/properties/integrations/properties/spotify/properties/log",
               "type": "string",
               "title": "The Log Schema",
+              "default": null,
               "examples": [
                 "debug"
               ],
-              "pattern": "^(.*)$"
+              "pattern": ""
             },
             "mdns": {
               "$id": "#/properties/integrations/properties/spotify/properties/mdns",
@@ -661,7 +687,7 @@
           "$id": "#/properties/settings/properties/autobrightness",
           "type": "boolean",
           "title": "Auto brightness",
-          "default": true
+          "default": false
         },
         "bluetootharea": {
           "$id": "#/properties/settings/properties/bluetootharea",
@@ -673,12 +699,13 @@
           "$id": "#/properties/settings/properties/language",
           "type": "string",
           "title": "Language",
+          "default": "en_US",
           "examples": [
             "hu_HU",
             "en_US",
             "de_DE"
           ],
-          "pattern": "^(.*)$"
+          "pattern": ""
         },
         "logging": {
           "$id": "#/properties/settings/properties/logging",
@@ -708,9 +735,15 @@
             "level": {
               "$id": "#/properties/settings/properties/logging/properties/level",
               "type": "string",
-              "enum": ["DEBUG","INFO","WARN","CRIT","FATAL"],
+              "enum": [
+                "DEBUG",
+                "INFO",
+                "WARN",
+                "CRIT",
+                "FATAL"
+              ],
               "title": "Log level",
-              "default": "INFO"
+              "default": ""
             },
             "console": {
               "$id": "#/properties/settings/properties/logging/properties/console",
@@ -727,16 +760,16 @@
             "queueSize": {
               "$id": "#/properties/settings/properties/logging/properties/queueSize",
               "type": "integer",
-              "minimum": 0,
               "title": "Log message queue size for websocket API",
-              "default": 100
+              "default": 0,
+              "minimum": 0
             },
             "purgeHours": {
               "$id": "#/properties/settings/properties/logging/properties/purgeHours",
               "type": "integer",
-              "minimum": 0,
               "title": "Purge log files in hours",
-              "default": 12
+              "default": 12,
+              "minimum": 0
             }
           }
         },
@@ -752,27 +785,63 @@
         "proximity": {
           "$id": "#/properties/settings/properties/proximity",
           "type": "integer",
-          "minimum": 0,
           "title": "Proximity sensitivity",
-          "default": 40
+          "default": 40,
+          "maximum": 255,
+          "minimum": 10
         },
         "shutdowntime": {
           "$id": "#/properties/settings/properties/shutdowntime",
           "type": "integer",
-          "title": "Shutdown time in minutes",
+          "title": "Shutdown time in seconds",
           "default": 21600
         },
         "softwareupdate": {
-          "$id": "#/properties/settings/properties/softwareupdate",
-          "type": "boolean",
-          "title": "Enable software updates",
-          "default": false
+          "type": "object",
+          "title": "Software Update",
+          "required": [
+            "autoUpdate"
+          ],
+          "properties": {
+            "autoUpdate": {
+              "type": "boolean",
+              "title": "Enable automatic software updates",
+              "default": false
+            },
+            "updateUrl": {
+              "type": "string",
+              "format": "url",
+              "title": "Base update URL",
+              "default": "https://update.yio.app/v1/"
+            },
+            "updateUrlAppPath": {
+              "type": "string",
+              "title": "App update path",
+              "default": "app/updates"
+            },
+            "channel": {
+              "type": "string",
+              "title": "Software update channel",
+              "default": "release"
+            },
+            "checkInterval": {
+              "type": "integer",
+              "title": "Update check interval in seconds",
+              "default": 3600,
+              "minimum": 600
+            },
+            "downloadDir": {
+              "type": "string",
+              "title": "Download directory for update packages",
+              "default": "/tmp/yio"
+            }
+          }
         },
         "wifitime": {
           "$id": "#/properties/settings/properties/wifitime",
           "type": "integer",
-          "title": "WiFi switch off time in minutes",
-          "default": 3600
+          "title": "WiFi switch off time in seconds",
+          "default": 0
         }
       }
     },
@@ -805,8 +874,7 @@
               "title": "The 12216382-3d36-4b21-8b3f-5a43193a4701 Schema",
               "required": [
                 "entities",
-                "name",
-                "switch"
+                "name"
               ],
               "properties": {
                 "entities": {
@@ -827,8 +895,9 @@
                   "$id": "#/properties/ui_config/properties/groups/properties/12216382-3d36-4b21-8b3f-5a43193a4701/properties/name",
                   "type": "string",
                   "title": "The Name Schema",
+                  "default": null,
                   "examples": [
-                    "Lámpák"
+                    "Lights"
                   ],
                   "pattern": "^(.*)$"
                 },
@@ -846,8 +915,7 @@
               "title": "The 15f7f394-4a15-45fc-b590-59f5aa7d89fa Schema",
               "required": [
                 "entities",
-                "name",
-                "switch"
+                "name"
               ],
               "properties": {
                 "entities": {
@@ -869,8 +937,9 @@
                   "$id": "#/properties/ui_config/properties/groups/properties/15f7f394-4a15-45fc-b590-59f5aa7d89fa/properties/name",
                   "type": "string",
                   "title": "The Name Schema",
+                  "default": null,
                   "examples": [
-                    "Hangszórók"
+                    "Speakers"
                   ],
                   "pattern": "^(.*)$"
                 },
@@ -936,8 +1005,9 @@
                   "$id": "#/properties/ui_config/properties/pages/properties/0/properties/name",
                   "type": "string",
                   "title": "The Name Schema",
+                  "default": null,
                   "examples": [
-                    "Nappali"
+                    "Living room"
                   ],
                   "pattern": "^(.*)$"
                 }
@@ -988,8 +1058,9 @@
                   "$id": "#/properties/ui_config/properties/profiles/properties/0/properties/name",
                   "type": "string",
                   "title": "The Name Schema",
+                  "default": null,
                   "examples": [
-                    "Apa"
+                    "Marton"
                   ],
                   "pattern": "^(.*)$"
                 },

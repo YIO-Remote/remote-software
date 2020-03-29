@@ -37,7 +37,7 @@ Rectangle {
     color: Style.colorDark
 
     Component.onCompleted: {
-        getHours();
+        addHours();
     }
 
 
@@ -50,7 +50,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function getHours() {
+    function addHours() {
         if (hours === [] ) {
             hours.push(StandbyControl.batteryData[StandbyControl.batteryData.length-1].timestamp.getHours());
         }
@@ -59,7 +59,7 @@ Rectangle {
         tmp = hours;
 
         for (var i=StandbyControl.batteryData.length-1; i>0; i--) {
-            if ( hours.indexOf(StandbyControl.batteryData[i].timestamp.getHours()) == -1 ) {
+            if ( tmp.indexOf(StandbyControl.batteryData[i].timestamp.getHours()) === -1 ) {
                 tmp.push(StandbyControl.batteryData[i].timestamp.getHours());
             }
         }
@@ -74,7 +74,7 @@ Rectangle {
         target: StandbyControl
 
         onBatteryDataChanged: {
-            getHours();
+            addHours();
         }
 
     }
@@ -98,7 +98,7 @@ Rectangle {
                 color: Style.colorText
                 text: qsTr("Battery health") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Text {
@@ -106,7 +106,7 @@ Rectangle {
                 text: Battery.health + "%"
                 horizontalAlignment: Text.AlignRight
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: batteryhealthText.verticalCenter }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
         }
 
@@ -124,7 +124,7 @@ Rectangle {
                 color: Style.colorText
                 text: qsTr("Remaining time") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Text {
@@ -139,7 +139,7 @@ Rectangle {
                 }
                 horizontalAlignment: Text.AlignRight
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: remainingTimeText.verticalCenter }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
         }
 
@@ -168,7 +168,7 @@ Rectangle {
                 color: Style.colorText
                 horizontalAlignment: Text.AlignRight
                 anchors { left: screenOnTimeText.left; top: screenOnTimeText.bottom; topMargin: 10 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Text {
@@ -187,7 +187,7 @@ Rectangle {
                 color: Style.colorText
                 horizontalAlignment: Text.AlignRight
                 anchors { left: screenOffTimeText.left; top: screenOffTimeText.bottom; topMargin: 10 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
         }
 
@@ -306,11 +306,11 @@ Rectangle {
                     anchors.left: parent.left
 
                     Repeater {
-                        model: hours.length > 7 ? 8 : (hours.length == 0 ? 1 : hours.length)
+                        model: hours.length > 9 ? 9 : (hours.length == 0 ? 1 : hours.length)
 
                         delegate: Text {
                             //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
-                            text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[hours.length-1-index]
+                            text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[index] //hours[hours.length-1-index]
                             color: Style.colorHighlight1
                             font { family: "Open Sans Regular"; pixelSize: 16 }
                             lineHeight: 1
@@ -346,7 +346,7 @@ Rectangle {
                 wrapMode: Text.WordWrap
                 width: parent.width-40
                 anchors { left: parent.left; leftMargin: 20; top: powerSavingText.bottom; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             Slider {

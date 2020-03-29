@@ -27,8 +27,6 @@ import Style 1.0
 
 import Haptic 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
-
 Item {
     id: mainNavigation
     width: parent.width

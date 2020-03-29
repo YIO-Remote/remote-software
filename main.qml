@@ -65,6 +65,17 @@ ApplicationWindow {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LOCALE
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property var countries: countriesJson.read()
+
+    JsonFile {
+        id: countriesJson
+        name: appPath + "/locale.json"
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
@@ -72,6 +83,7 @@ ApplicationWindow {
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
         //           This can be done by connecting to a signal of the config in the hardware factory
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
+        VirtualKeyboardSettings.locale = Qt.binding(function() { return config.settings.language })
 
         // load bluetooth
         bluetoothArea.init(config.config);
@@ -82,8 +94,14 @@ ApplicationWindow {
         // Start websocket API
         api.start();
 
-        // load the integrations
-        integrations.load();
+        // load the integrations if it's not the first time setup
+        if (fileio.exists("/firstrun")) {
+            console.debug("Starting first time setup");
+            loader_main.setSource("qrc:/setup/Setup.qml");
+            translateHandler.selectLanguage(config.settings.language);
+        } else {
+            integrations.load();
+        }
     }
 
     // load the entities when the integrations are loaded
@@ -106,12 +124,7 @@ ApplicationWindow {
             console.debug("Entities are loaded.");
 
             // when everything is loaded, load the main UI
-            if (fileio.exists("/wifisetup")) {
-                console.debug("Starting WiFi setup");
-                loader_main.setSource("qrc:/wifiSetup.qml");
-            } else {
-                loader_main.setSource("qrc:/MainContainer.qml");
-            }
+            loader_main.setSource("qrc:/MainContainer.qml");
         }
     }
 
@@ -158,6 +171,7 @@ ApplicationWindow {
 
     Loader {
         id: loader_second
+        objectName : "loader_second"
         width: 480; height: 800
         x: 0; y: 0
         asynchronous: true
@@ -209,7 +223,6 @@ ApplicationWindow {
     // LOW BATTERY POPUP NOTIFICAITON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pops up when battery level is under 20%
-    // TODO: this should be a signal connection to the singleton c++ class
     Connections {
         target: Battery
 
@@ -304,7 +317,7 @@ ApplicationWindow {
             target: notifications
 
             onListIsEmpty: {
-                    notificationsDrawer.close();
+                notificationsDrawer.close();
             }
         }
     }

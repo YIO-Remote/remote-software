@@ -51,7 +51,7 @@ Rectangle {
         color: Style.colorText
         text: title
         anchors { left: buttonIcon.right; leftMargin: 15; verticalCenter: parent.verticalCenter; verticalCenterOffset: subtitle == "" ? 0 : -16 }
-        font: Style.buttonFont
+        font: Style.fonts.button
         lineHeight: 1
     }
 

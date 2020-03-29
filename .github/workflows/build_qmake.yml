@@ -6,6 +6,7 @@
 # TODO:
 # - debug / release build: either both or a switch which one to create
 # - Version tag / branch for integrations.library
+# - Create a re-usable GitHub Action
 
 name: QMake Build Matrix
 
@@ -349,6 +350,10 @@ jobs:
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Build failed: bad exit status")
         endif()
+
+        execute_process(
+          COMMAND cp $ENV{GITHUB_WORKSPACE}/$ENV{PROJECT_NAME}/version.txt $ENV{YIO_BIN}
+        )
 
     - uses: actions/upload-artifact@v1
       id: upload_artifact

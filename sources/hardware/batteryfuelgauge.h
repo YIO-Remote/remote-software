@@ -32,7 +32,7 @@ static QString ERR_DEV_BATTERY_COMM = QObject::tr("Battery sensor communication 
 class BatteryFuelGauge : public Device {
     Q_OBJECT
     Q_PROPERTY(int capacity READ getCapacity WRITE setCapacity)
-    Q_PROPERTY(float level READ getLevel NOTIFY levelChanged)
+    Q_PROPERTY(int level READ getLevel NOTIFY levelChanged)
     Q_PROPERTY(float remainingLife READ remainingLife NOTIFY remainingLifeChanged)
     Q_PROPERTY(int health READ getHealth NOTIFY healthChanged)
     Q_PROPERTY(int averagePower READ getAveragePower NOTIFY averagePowerChanged)

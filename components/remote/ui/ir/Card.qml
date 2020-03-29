@@ -127,7 +127,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors { left: parent.left; leftMargin: 106; verticalCenter: parent.verticalCenter }
-            font: Style.buttonFont
+            font: Style.fonts.button
             lineHeight: 1
         }
 

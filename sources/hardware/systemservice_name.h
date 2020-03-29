@@ -39,9 +39,7 @@ class SystemServiceNameEnum {
         NAME_RESOLUTION,
         NETWORKING,
         NTP,
-        ZEROCONF,
-        SHUTDOWN,
-        YIO_UPDATE
+        ZEROCONF
     };
     Q_ENUM(Value)
 

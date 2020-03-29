@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * Third party work used:
  *
@@ -38,7 +38,6 @@
 #include <QSocketNotifier>
 #include <QString>
 #include <QStringRef>
-
 #include <memory>
 #include <mutex>
 #include <thread>
@@ -127,7 +126,15 @@ class WifiWpaSupplicant : public WifiControl {
  protected slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
 
     /**
-     * Data on control channel available
+     * @brief p_networkJoinTimer slot to verify network join status.
+     * @details The timer is stopped after successful connection or timeout.
+     *        Saves the wpa_supplicant configuration if connection is established.
+     *        Emits joinError after timeout or if the connection configuration cannot be saved.
+     */
+    void checkNetworkJoin();
+
+    /**
+     * @brief Data on control channel available
      */
     void controlEvent(int fd);
 
@@ -246,23 +253,18 @@ class WifiWpaSupplicant : public WifiControl {
 
     void timerEvent(QTimerEvent* event) override;
 
-    /**
-     * Handle for lower layer wpa_ctrl
-     */
+ private:
+    // Handle for lower layer wpa_ctrl
     struct wpa_ctrl* m_ctrl;
-
-    /**
-     * Mutex to protect concurrent access to wpa_ctrl and buffers m_reply or m_replySize
-     */
+    // Mutex to protect concurrent access to wpa_ctrl
     mutable std::mutex m_wpaMutex;
-
-    /**
-     * Notifier for watching asynchronous events from wpa_ctrl socket
-     */
+    // Notifier for watching asynchronous events from wpa_ctrl socket
     std::unique_ptr<QSocketNotifier> m_ctrlNotifier;
 
     WebServerControl* p_webServerControl;
     SystemService*    p_systemService;
+    QTimer*           p_networkJoinTimer;
+    int               m_checkNetworkCount;
 
     // configuration parameters
     QString m_wpaSupplicantSocketPath;

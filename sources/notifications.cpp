@@ -32,6 +32,16 @@ Notifications::Notifications(QQmlApplicationEngine *engine) : m_engine(engine), 
     s_instance = this;
 }
 
+QDebug operator<<(QDebug debug, const Notification *notification) {
+    QDebugStateSaver saver(debug);
+    debug.nospace() << "("
+                    << "id: " << notification->m_id << ", "
+                    << "error: " << notification->m_error << ", "
+                    << "label: " << notification->m_actionLabel << ", "
+                    << "text: " << notification->m_text << ")";
+    return debug;
+}
+
 void Notifications::show(const int id) {
     // get the notification data to show
     QVariantMap map;
@@ -74,11 +84,28 @@ QVariantList Notifications::list() {
 void Notifications::add(bool error, const QString &text, const QString &actionlabel, void (*f)(QObject *),
                         QObject *param) {
     Notification *n = new Notification(m_id, error, text, actionlabel, QDateTime::currentDateTime(), f, param);
+    qCDebug(m_log) << "Notification object created";
+
+    // check if the same notification exists, then remove it
+    for (QMap<int, Notification *>::const_iterator iter = m_notifications.begin(); iter != m_notifications.end();
+         ++iter) {
+        if (iter.value()->m_text.contains(text) && m_notifications.contains(iter.key())) {
+            qCDebug(m_log) << "Notification with same text found";
+            m_notifications.remove(iter.key());
+            qCDebug(m_log) << "Notification object removed" << iter.key();
+            break;
+        }
+    }
+
     m_notifications.insert(m_id, n);
+    qCDebug(m_log) << "New notification added" << n;
+
     emit listChanged();
     emit errorChanged();
+    qCDebug(m_log) << "Signals emitted";
 
     show(m_id);
+    qCDebug(m_log) << "Notification shown";
 
     m_id++;
 }
@@ -98,8 +125,9 @@ void Notifications::remove(int id) {
 void Notifications::remove(const QString &text) {
     for (QMap<int, Notification *>::const_iterator iter = m_notifications.begin(); iter != m_notifications.end();
          ++iter) {
-        if (iter.value()->m_text == text && m_notifications.contains(iter.key())) {
+        if (iter.value()->m_text.contains(text) && m_notifications.contains(iter.key())) {
             m_notifications.remove(iter.key());
+            break;
         }
     }
     emit listChanged();

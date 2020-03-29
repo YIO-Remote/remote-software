@@ -31,7 +31,6 @@
 #include <QtDebug>
 
 #include "entities/entities.h"
-#include "fileio.h"
 #include "logger.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "api");
@@ -58,9 +57,18 @@ void YioAPI::start() {
         emit runningChanged();
     }
 
-    FileIO fileIO;
-    m_hostname = fileIO.read("/apssid").trimmed();
+    QString macAddr;
+    for (QNetworkInterface interface : QNetworkInterface::allInterfaces()) {
+        if (!(interface.flags() & QNetworkInterface::IsLoopBack)) {
+            macAddr = interface.hardwareAddress();
+            break;
+        }
+    }
 
+    macAddr.replace(":", "");
+    m_hostname = "";
+    m_hostname.append("YIO-Remote-").append(macAddr);
+    qCDebug(m_log) << "NAME" << m_hostname;
     emit hostnameChanged();
 
     m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
@@ -253,7 +261,7 @@ void YioAPI::processMessage(QString message) {
 
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
-        //        qDebug(CLASS_LC) << message;
+        // qDebug(CLASS_LC) << message;
 
         // convert message to json
         QJsonParseError parseerror;
@@ -266,10 +274,8 @@ void YioAPI::processMessage(QString message) {
 
         QString type = map.value("type").toString();
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// AUTHENTICATION
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (type == "auth") {
+            // AUTHENTICATION
             qCDebug(m_log) << m_clients[client];
 
             if (map.contains("token")) {
@@ -308,199 +314,26 @@ void YioAPI::processMessage(QString message) {
 
                 client->sendTextMessage(r_message);
             }
-        }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// API CALLS
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Get config schema
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if (type == "getConfigSchema" && m_clients[client]) {
-            qCDebug(m_log) << "Request for config schema";
-
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Get config
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        else if (type == "getconfig" && m_clients[client]) {
-            qCDebug(m_log) << "REQUEST FOR GETCONFIG";
-
-            QVariantMap response;
-
-            QVariantMap config = getConfig();
-            response.insert("config", config);
-            response.insert("type", "config");
-
-            QJsonDocument json = QJsonDocument::fromVariant(response);
-            client->sendTextMessage(json.toJson());
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Set config
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        else if (type == "setconfig" && m_clients[client]) {
-            qCDebug(m_log) << "REQUEST FOR SETCONFIG";
-
-            QVariantMap config = map.value("config").toMap();
-            if (setConfig(config)) {
-                // FIXME reply SUCCESS
-            } else {
-                // FIXME reply FAIL
-            }
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Button simulation through the api
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        else if (type == "button" && m_clients[client]) {
-            // Handle buttons
-            QString buttonName   = map["name"].toString();
-            QString buttonAction = map["action"].toString();
-            qDebug(CLASS_LC) << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
-            if (buttonAction == "pressed") {
-                emit buttonPressed(buttonName);
-            } else {
-                emit buttonReleased(buttonName);
-            }
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Logging
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        else if (type == "log" && m_clients[client]) {
-            // Handle log
-            Logger *logger    = Logger::getInstance();
-            QString logAction = map["action"].toString();
-            QString logTarget = map["target"].toString();
-            qCDebug(m_log) << "LOGGER : " << logAction;
-            if (logAction == "start") {
-                // enable logger target, default is queue
-                if (logTarget == "file") {
-                    logger->setFileEnabled(true);
-                } else if (logTarget == "console") {
-                    logger->setConsoleEnabled(true);
-                } else {
-                    logger->setQueueEnabled(true);
-                }
-            } else if (logAction == "stop") {
-                // edisable logger queue target, default is queue
-                if (logTarget == "file") {
-                    logger->setFileEnabled(false);
-                } else if (logTarget == "console") {
-                    logger->setConsoleEnabled(false);
-                } else {
-                    logger->setQueueEnabled(false);
-                }
-            } else if (logAction == "showsource") {
-                logger->setShowSourcePos(true);
-            } else if (logAction == "hidesource") {
-                logger->setShowSourcePos(false);
-            } else if (logAction == "purge") {
-                int hours = 24;
-                if (map.contains("hours")) {
-                    hours = map["hours"].toInt();
-                }
-                logger->purgeFiles(hours);
-            } else if (logAction == "setloglevel") {
-                // set log level
-                int     level = QtMsgType::QtDebugMsg;
-                QString category;
-                if (map.contains("level")) {
-                    level = logger->toMsgType(map["level"].toString());
-                }
-                if (map.contains("category")) {
-                    category = map["category"].toString();
-                    logger->setCategoryLogLevel(category, level);
-                } else {
-                    logger->setLogLevel(level);
-                }
-            } else if (logAction == "getmessages") {
-                // get log messages
-                int         count = 50;
-                int         level = QtMsgType::QtDebugMsg;
-                QStringList categories;
-                if (map.contains("count")) {
-                    count = map["count"].toInt();
-                }
-                if (map.contains("level")) {
-                    level = logger->toMsgType(map["level"].toString());
-                }
-                if (map.contains("categories")) {
-                    categories = map["categories"].toStringList();
-                }
-                QJsonArray  messages = logger->getQueuedMessages(count, level, categories);
-                QJsonObject jsonObj;
-                jsonObj.insert("type", "log");
-                jsonObj.insert("messages", messages);
-                QJsonDocument json = QJsonDocument(jsonObj);
-                client->sendTextMessage(json.toJson());
-            } else if (logAction == "getinfo") {
-                // get log info
-                QJsonObject info = logger->getInformation();
-                QJsonObject jsonObj;
-                jsonObj.insert("type", "log");
-                jsonObj.insert("info", info);
-                QJsonDocument json = QJsonDocument(jsonObj);
-                client->sendTextMessage(json.toJson());
-            }
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Get all available entities of an integration
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        else if (type == "getEntities" && m_clients[client]) {
-            QVariantMap response;
-
-            if (map.contains("integrationId")) {
-                QString integrationId = map["integrationId"].toString();
-                qCDebug(m_log) << "Request for getEntities" << integrationId;
-
-                QObject *object = m_integrations->get(integrationId);
-
-                if (object) {
-                    IntegrationInterface *integrationInterface = qobject_cast<IntegrationInterface *>(object);
-                    if (integrationInterface) {
-                        QStringList entitiesList = integrationInterface->getAllAvailableEntities();
-
-                        if (entitiesList.length() > 1) {
-                            response.insert("success", true);
-                            response.insert("type", "entities");
-                            response.insert("entities", entitiesList);
-                        } else {
-                            response.insert("success", false);
-                            response.insert("type", "entities");
-                        }
-                    }
-                } else {
-                    response.insert("success", false);
-                    response.insert("type", "entities");
-                }
-            } else {
-                response.insert("success", false);
-                response.insert("type", "entities");
-            }
-
-            QJsonDocument json = QJsonDocument::fromVariant(response);
-            client->sendTextMessage(json.toJson());
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// Get all loaded integrations
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        else if (type == "getIntegrations" && m_clients[client]) {
-            qCDebug(m_log) << "Request for getIntegrations";
-            QStringList integrations = m_integrations->listIds();
-
-            QVariantMap response;
-            response.insert("success", true);
-            response.insert("type", "integrations");
-            response.insert("integrations", integrations);
-
-            QJsonDocument json = QJsonDocument::fromVariant(response);
-            client->sendTextMessage(json.toJson());
-
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// If none of the above, emit the message
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        else {
+        } else if (type == "getconfig" && m_clients[client]) {
+            /// Get config
+            apiGetConfig(client);
+        } else if (type == "setconfig" && m_clients[client]) {
+            /// Set config
+            apiSetConfig(client, map);
+        } else if (type == "button" && m_clients[client]) {
+            /// Button simulation through the api
+            apiButtonHandle(map);
+        } else if (type == "log" && m_clients[client]) {
+            /// Logging
+            apiLogHandle(client, map);
+        } else if (type == "getEntities" && m_clients[client]) {
+            /// Get all available entities of an integration
+            apiGetEntities(client, map);
+        } else if (type == "getIntegrations" && m_clients[client]) {
+            /// Get all loaded integrations
+            apiGetIntegrations(client);
+        } else {
+            // If none of the above, emit the message
             emit messageReceived(map);
         }
     }
@@ -512,4 +345,182 @@ void YioAPI::onClientDisconnected() {
         m_clients.remove(client);
         client->deleteLater();
     }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// API CALLS
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void YioAPI::apiGetConfig(QWebSocket *client) {
+    qCDebug(m_log) << "Request for get config";
+
+    QVariantMap response;
+
+    QVariantMap config = getConfig();
+    response.insert("config", config);
+    response.insert("type", "config");
+
+    QJsonDocument json = QJsonDocument::fromVariant(response);
+    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+}
+
+void YioAPI::apiSetConfig(QWebSocket *client, const QVariantMap &map) {
+    qCDebug(m_log) << "Request for set config";
+
+    QVariantMap response;
+
+    QVariantMap config = map.value("config").toMap();
+    if (setConfig(config)) {
+        response.insert("success", true);
+        response.insert("type", "setconfig");
+    } else {
+        response.insert("success", false);
+        response.insert("type", "setconfig");
+    }
+
+    QJsonDocument json = QJsonDocument::fromVariant(response);
+    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+}
+
+void YioAPI::apiLogHandle(QWebSocket *client, const QVariantMap &map) {
+    Logger *logger    = Logger::getInstance();
+    QString logAction = map["action"].toString();
+    QString logTarget = map["target"].toString();
+    qCDebug(m_log) << "LOGGER : " << logAction;
+    if (logAction == "start") {
+        // enable logger target, default is queue
+        if (logTarget == "file") {
+            logger->setFileEnabled(true);
+        } else if (logTarget == "console") {
+            logger->setConsoleEnabled(true);
+        } else {
+            logger->setQueueEnabled(true);
+        }
+    } else if (logAction == "stop") {
+        // edisable logger queue target, default is queue
+        if (logTarget == "file") {
+            logger->setFileEnabled(false);
+        } else if (logTarget == "console") {
+            logger->setConsoleEnabled(false);
+        } else {
+            logger->setQueueEnabled(false);
+        }
+    } else if (logAction == "showsource") {
+        logger->setShowSourcePos(true);
+    } else if (logAction == "hidesource") {
+        logger->setShowSourcePos(false);
+    } else if (logAction == "purge") {
+        int hours = 24;
+        if (map.contains("hours")) {
+            hours = map["hours"].toInt();
+        }
+        logger->purgeFiles(hours);
+    } else if (logAction == "setloglevel") {
+        // set log level
+        int     level = QtMsgType::QtDebugMsg;
+        QString category;
+        if (map.contains("level")) {
+            level = logger->toMsgType(map["level"].toString());
+        }
+        if (map.contains("category")) {
+            category = map["category"].toString();
+            logger->setCategoryLogLevel(category, level);
+        } else {
+            logger->setLogLevel(level);
+        }
+    } else if (logAction == "getmessages") {
+        // get log messages
+        int         count = 50;
+        int         level = QtMsgType::QtDebugMsg;
+        QStringList categories;
+        if (map.contains("count")) {
+            count = map["count"].toInt();
+        }
+        if (map.contains("level")) {
+            level = logger->toMsgType(map["level"].toString());
+        }
+        if (map.contains("categories")) {
+            categories = map["categories"].toStringList();
+        }
+        QJsonArray  messages = logger->getQueuedMessages(count, level, categories);
+        QJsonObject jsonObj;
+        jsonObj.insert("type", "log");
+        jsonObj.insert("messages", messages);
+        QJsonDocument json = QJsonDocument(jsonObj);
+        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    } else if (logAction == "getinfo") {
+        // get log info
+        QJsonObject info = logger->getInformation();
+        QJsonObject jsonObj;
+        jsonObj.insert("type", "log");
+        jsonObj.insert("info", info);
+        QJsonDocument json = QJsonDocument(jsonObj);
+        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    }
+}
+
+void YioAPI::apiButtonHandle(const QVariantMap &map) {
+    QString buttonName   = map["name"].toString();
+    QString buttonAction = map["action"].toString();
+    qDebug(CLASS_LC) << "BUTTON SIMULATION : " << buttonName << " : " << buttonAction;
+
+    if (buttonAction == "pressed") {
+        emit buttonPressed(buttonName);
+    } else {
+        emit buttonReleased(buttonName);
+    }
+}
+
+void YioAPI::apiGetEntities(QWebSocket *client, const QVariantMap &map) {
+    QVariantMap response;
+
+    if (map.contains("integrationId")) {
+        QString integrationId = map["integrationId"].toString();
+        qCDebug(m_log) << "Request for getEntities" << integrationId;
+
+        QObject *object = m_integrations->get(integrationId);
+
+        if (object) {
+            IntegrationInterface *integrationInterface = qobject_cast<IntegrationInterface *>(object);
+            if (integrationInterface) {
+                QStringList entitiesList = integrationInterface->getAllAvailableEntities();
+
+                if (entitiesList.length() > 1) {
+                    response.insert("success", true);
+                    response.insert("type", "entities");
+                    response.insert("entities", entitiesList);
+                } else {
+                    response.insert("success", false);
+                    response.insert("type", "entities");
+                }
+            }
+        } else {
+            response.insert("success", false);
+            response.insert("type", "entities");
+        }
+    } else {
+        response.insert("success", false);
+        response.insert("type", "entities");
+    }
+
+    QJsonDocument json = QJsonDocument::fromVariant(response);
+    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+}
+
+void YioAPI::apiGetIntegrations(QWebSocket *client) {
+    QVariantMap response;
+
+    qCDebug(m_log) << "Request for getIntegrations";
+    QStringList integrations = m_integrations->listIds();
+
+    if (integrations.length() > 1) {
+        response.insert("success", true);
+        response.insert("type", "integrations");
+        response.insert("integrations", integrations);
+    } else {
+        response.insert("success", false);
+        response.insert("type", "integrations");
+    }
+
+    QJsonDocument json = QJsonDocument::fromVariant(response);
+    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
 }

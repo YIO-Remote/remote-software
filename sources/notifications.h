@@ -44,6 +44,8 @@ class Notification {
     QObject *m_param;
 };
 
+QDebug operator<<(QDebug debug, const Notification* notification);
+
 class Notifications : public QObject, public NotificationsInterface {
     Q_OBJECT
     Q_INTERFACES(NotificationsInterface)

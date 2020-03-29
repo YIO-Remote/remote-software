@@ -28,6 +28,28 @@ CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+# SOFTWARE VERSION
+GIT_HASH = "$$system(git log -1 --format="%H")"
+GIT_BRANCH = "$$system(git rev-parse --abbrev-ref HEAD)"
+GIT_VERSION = "$$system(git describe --match "v[0-9]*" --tags HEAD --always)"
+REMOTE_VERSION = $$replace(GIT_VERSION, v, "")
+DEFINES += APP_VERSION=\\\"$$REMOTE_VERSION\\\"
+
+# build timestamp
+win32 {
+    # not the same format as on Unix systems, but good enough...
+    BUILDDATE=$$system(date /t)
+} else {
+    BUILDDATE=$$system(date +"%Y-%m-%dT%H:%M:%S")
+}
+CONFIG(debug, debug|release) {
+    DEBUG_BUILD = true
+} else {
+    DEBUG_BUILD = false
+}
+
+QMAKE_SUBSTITUTES += version.txt.in
+
 # === Load integration interface library ======================================
 # Workaround for 'lupdate remote.pro' bug when using variables for including a .pri file:
 # "Project ERROR: COPIES entry extraData defines no .path"
@@ -76,6 +98,8 @@ HEADERS += \
     sources/entities/remote.h \
     sources/entities/switch.h \
     sources/entities/weather.h \
+    sources/environment.h \
+    sources/filedownload.h \
     sources/fileio.h \
     sources/hardware/batterycharger.h \
     sources/hardware/batteryfuelgauge.h \
@@ -99,6 +123,7 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/logger.h \
+    sources/softwareupdate.h \
     sources/standbycontrol.h \
     sources/translation.h \
     sources/hardware/device.h \
@@ -136,6 +161,8 @@ SOURCES += \
     sources/entities/remote.cpp \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
+    sources/environment.cpp \
+    sources/filedownload.cpp \
     sources/hardware/buttonhandler.cpp \
     sources/hardware/device.cpp \
     sources/hardware/hardwarefactory_default.cpp \
@@ -159,6 +186,7 @@ SOURCES += \
     sources/notifications.cpp \
     sources/entities/mediaplayer.cpp \
     sources/bluetootharea.cpp \
+    sources/softwareupdate.cpp \
     sources/standbycontrol.cpp \
     sources/utils.cpp \
     sources/yioapi.cpp
@@ -257,7 +285,6 @@ SOURCES += $$OTHER_FILES
 
 OTHER_FILES += main.qml \
           MainContainer.qml \
-          wifiSetup.qml \
           basic_ui/*.qml \
           basic_ui/pages/*.qml \
           basic_ui/settings/*.qml \
@@ -271,6 +298,7 @@ OTHER_FILES += main.qml \
 }
 
 TRANSLATIONS = translations/bg_BG.ts \
+               translations/ca_ES.ts \
                translations/cs_CZ.ts \
                translations/da_DK.ts \
                translations/de_DE.ts \
@@ -279,11 +307,11 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/es_ES.ts \
                translations/et_EE.ts \
                translations/fi_FI.ts \
-               translations/fr_CA.ts \
                translations/fr_FR.ts \
                translations/ga_IE.ts \
                translations/hr_HR.ts \
                translations/hu_HU.ts \
+               translations/is_IS.ts \
                translations/it_IT.ts \
                translations/lt_LT.ts \
                translations/lv_LV.ts \
@@ -294,9 +322,15 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/pt_BR.ts \
                translations/pt_PT.ts \
                translations/ro_RO.ts \
+               translations/ru_BY.ts \
+               translations/ru_MD.ts \
+               translations/ru_RU.ts \
+               translations/ru_UA.ts \
                translations/sk_SK.ts \
                translations/sl_SI.ts \
-               translations/sv_SE.ts
+               translations/sv_SE.ts \
+               translations/zh_CN.ts \
+               translations/zh_TW.ts
 
 #QMAKE_LUPDATE & _LRELEASE vars are set in qmake-destiation-path.pri
 !isEmpty(QMAKE_LUPDATE):exists("$$QMAKE_LUPDATE") {
@@ -360,7 +394,7 @@ targetPlugins.path = $$target.path/plugins
 win32 {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json $$PWD/locale.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -380,7 +414,7 @@ win32 {
 } else:linux {
     CONFIG += file_copies
     COPIES += extraData
-    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
+    extraData.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json $$PWD/locale.json
     extraData.path = $$DESTDIR
 
     #copy fonts
@@ -405,7 +439,7 @@ win32 {
     }
 
 } else:macx {
-    APP_QML_FILES.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json
+    APP_QML_FILES.files = $$PWD/config.json $$PWD/config-schema.json $$PWD/hardware.json $$PWD/hardware-schema.json $$PWD/translations.json $$PWD/locale.json
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 
@@ -430,3 +464,13 @@ win32 {
     error(unknown platform! Platform must be configured in remote.pro project file)
 }
 
+DISTFILES += \
+    config.json \
+    config-schema.json \
+    hardware.json \
+    hardware-schema.json \
+    license-template.txt \
+    locale.json \
+    translations.json \
+    version.txt.in \
+    README.md

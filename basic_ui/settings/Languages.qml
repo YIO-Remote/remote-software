@@ -63,7 +63,7 @@ Rectangle {
                 text: translations[index].name
                 color: Style.colorText
                 anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             MouseArea {

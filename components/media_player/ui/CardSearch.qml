@@ -225,7 +225,7 @@ Rectangle {
                         color: Style.colorText
                         text: qsTr("Recent searches") + translateHandler.emptyString
                         anchors { left: parent.left; top: parent.top }
-                        font: Style.buttonFont
+                        font: Style.fonts.button
                     }
 
                     Text {
@@ -233,7 +233,7 @@ Rectangle {
                         opacity: 0.5
                         text: qsTr("Clear") + translateHandler.emptyString
                         anchors { right: parent.right; top: parent.top }
-                        font: Style.buttonFont
+                        font: Style.fonts.button
 
                         visible: obj.recentSearches.count > 0 ? true : false
                         enabled: visible
@@ -394,6 +394,7 @@ Rectangle {
                         anchors { top: tags.bottom; topMargin: 40 }
                         interactive: false
                         spacing: 40
+                        cacheBuffer: 2000
 
                         model: obj.searchModel
 
@@ -452,6 +453,7 @@ Rectangle {
                         orientation: ListView.Horizontal
                         spacing: 30
                         clip: true
+                        cacheBuffer: 3000
 
                         delegate: albumThumbnail
 

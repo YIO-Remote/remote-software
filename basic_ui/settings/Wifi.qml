@@ -48,7 +48,7 @@ Item {
                 color: Style.colorText
                 text: qsTr("Area detection") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.buttonFont
+                font: Style.fonts.button
             }
 
             BasicUI.CustomSwitch {
@@ -108,7 +108,7 @@ Item {
                     color: Style.colorText
                     text: qsTr("WiFi") + translateHandler.emptyString
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                    font: Style.buttonFont
+                    font: Style.fonts.button
                 }
 
                 BasicUI.CustomSwitch {
@@ -141,7 +141,7 @@ Item {
                     color: Style.colorText
                     text: wifi.wifiStatus.name
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                    font: Style.buttonFont
+                    font: Style.fonts.button
                 }
 
                 Text {
@@ -212,14 +212,15 @@ Item {
                     interactive: false
 
                     delegate: Item {
-                        width: parent.width; height: 80
+                        width: parent.width; height: wifi.networkScanResult[index].name === wifi.wifiStatus.name ? 0 : 80
+                        visible: wifi.networkScanResult[index].name === wifi.wifiStatus.name ? false : true
 
                         Text {
                             id: delegateSSID
                             color: Style.colorText
                             text: wifi.networkScanResult[index].name
                             anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                            font: Style.buttonFont
+                            font: Style.fonts.button
                         }
 
                         Text {

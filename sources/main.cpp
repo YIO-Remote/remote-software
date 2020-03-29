@@ -35,6 +35,7 @@
 #include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
 #include "entities/entities.h"
+#include "environment.h"
 #include "fileio.h"
 #include "hardware/buttonhandler.h"
 #include "hardware/hardwarefactory.h"
@@ -44,6 +45,7 @@
 #include "launcher.h"
 #include "logger.h"
 #include "notifications.h"
+#include "softwareupdate.h"
 #include "standbycontrol.h"
 #include "translation.h"
 #include "yioapi.h"
@@ -58,6 +60,13 @@ int main(int argc, char* argv[]) {
     // must be set before creating QCoreApplication, therefore not possible to set in CommandLineHelper
     // QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+    QString version(APP_VERSION);
+    if (version.startsWith('v')) {
+        version.remove(0, 1);
+    }
+    QGuiApplication::setApplicationVersion(version);
+
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
 
@@ -65,7 +74,7 @@ int main(int argc, char* argv[]) {
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
-    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + QString("/Contents/Resources");
+    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + "/Contents/Resources";
 
     // In case the translation file does not exist at root level (which is copied via the .pro file)
     // we are probably running on a mac, which gives a different result for the applicationDirPath
@@ -106,7 +115,7 @@ int main(int argc, char* argv[]) {
                   logCfg.value("showSource", true).toBool(), logCfg.value("queueSize", 100).toInt(),
                   logCfg.value("purgeHours", 72).toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
-    Logger::getInstance()->write("Logging started");
+    Logger::getInstance()->write(QString("YIO App %1").arg(version));
 
     // LOAD FONTS
     QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
@@ -176,7 +185,8 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
 
     // INTEGRATIONS
-    Integrations* integrations = new Integrations(&engine, appPath);
+    Integrations* integrations =
+        new Integrations(qEnvironmentVariable(Environment::ENV_YIO_PLUGIN_DIR, appPath + "/plugins"));
     // Make integration state available in QML
     qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations",
                                              "Not creatable, only used for enum.");
@@ -213,6 +223,11 @@ int main(int argc, char* argv[]) {
     Q_UNUSED(standbyControl);
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
+    // SOFTWARE UPDATE
+    QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
+    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
+    qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
+
     // FIXME move initialization code to a device driver factory
     QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
     QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
@@ -228,6 +243,8 @@ int main(int argc, char* argv[]) {
     if (engine.rootObjects().isEmpty()) {
         return -1;
     }
+
+    softwareUpdate->start();
 
     QObject* mainApplicationWindow = config->getQMLObject("applicationWindow");
     touchEventFilter->setSource(mainApplicationWindow);
