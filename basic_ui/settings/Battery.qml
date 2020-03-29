@@ -37,7 +37,7 @@ Rectangle {
     color: Style.colorDark
 
     Component.onCompleted: {
-        getHours();
+        addHours();
     }
 
 
@@ -50,7 +50,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function getHours() {
+    function addHours() {
         if (hours === [] ) {
             hours.push(StandbyControl.batteryData[StandbyControl.batteryData.length-1].timestamp.getHours());
         }
@@ -59,7 +59,7 @@ Rectangle {
         tmp = hours;
 
         for (var i=StandbyControl.batteryData.length-1; i>0; i--) {
-            if ( hours.indexOf(StandbyControl.batteryData[i].timestamp.getHours()) == -1 ) {
+            if ( tmp.indexOf(StandbyControl.batteryData[i].timestamp.getHours()) === -1 ) {
                 tmp.push(StandbyControl.batteryData[i].timestamp.getHours());
             }
         }
@@ -74,7 +74,7 @@ Rectangle {
         target: StandbyControl
 
         onBatteryDataChanged: {
-            getHours();
+            addHours();
         }
 
     }
