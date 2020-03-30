@@ -77,9 +77,10 @@ class FileDownload : public QObject {
 
     /**
      * @brief This signal is emitted after a download has been successfully downloaded.
+     * @param filePath The downloaded filename including path
      * @param id The download identifier
      */
-    void downloadComplete(int id);
+    void downloadComplete(int id, const QString &filePath);
 
     /**
      * @brief This signal is emitted if a download failed.

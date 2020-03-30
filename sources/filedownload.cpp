@@ -188,7 +188,7 @@ void FileDownload::onDownloadFinished() {
         qCDebug(CLASS_LC) << "Download finished. Renaming download file to make install available at:" << finalName;
 
         if (m_outputFile.rename(finalName)) {
-            emit downloadComplete(m_currentDownloadId);
+            emit downloadComplete(m_currentDownloadId, m_outputFile.fileName());
         } else {
             qCCritical(CLASS_LC) << "Error renaming download file:" << m_outputFile.error()
                                  << m_outputFile.errorString();

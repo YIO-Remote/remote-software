@@ -36,7 +36,7 @@
 #include "standbycontrol.h"
 
 static const QString UPDATE_BASENAME = "latest";
-static const QString META_FILENAME = "latest.version";
+static const QString UPDATE_FILEMARKER = "latest.version";
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "softwareupdate");
 
@@ -140,7 +140,7 @@ void SoftwareUpdate::checkForUpdate() {
     QUrlQuery   query;
     query.addQueryItem("appVersion", currentVersion());
     if (env.getRemoteOsVersion() != Environment::UNKNOWN) {
-        query.addQueryItem("osVersion",  env.getRemoteOsVersion());
+        query.addQueryItem("osVersion", env.getRemoteOsVersion());
     }
     query.addQueryItem("device", QUrl::toPercentEncoding(env.getDeviceType()));
     query.addQueryItem("channel", m_channel);
@@ -274,17 +274,23 @@ void SoftwareUpdate::onDownloadProgress(int id, qint64 bytesReceived, qint64 byt
     emit downloadSpeedChanged();
 }
 
-void SoftwareUpdate::onDownloadComplete(int id) {
+void SoftwareUpdate::onDownloadComplete(int id, const QString &filePath) {
     // create meta file containing version string
-    QFile metafile(m_downloadDir.path() + "/" + META_FILENAME);
+    QFile metafile(m_downloadDir.path() + "/" + UPDATE_FILEMARKER);
     if (!metafile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        qCCritical(CLASS_LC) << "Error creating update filemarker for downloaded file:" << filePath
+                             << "Error:" << metafile.errorString();
         onDownloadFailed(id, metafile.errorString());
         return;
     }
 
     QTextStream out(&metafile);
-    out << m_newVersion;
+    out << "Update:\t" << filePath << "\n";
+    out << "Version:\t" << m_newVersion << "\n";
+    out << "Url:\t" << m_downloadUrl.toString() << "\n";
     metafile.close();
+
+    qCInfo(CLASS_LC) << "Created update filemarker '" << metafile.fileName() << "' for downloaded update:" << filePath;
 
     emit downloadComplete();
     emit installAvailable();
@@ -298,18 +304,14 @@ void SoftwareUpdate::onDownloadFailed(int id, QString errorMsg) {
     emit downloadFailed();
 }
 
-bool SoftwareUpdate::installAvailable() { return m_downloadDir.exists(META_FILENAME); }
+bool SoftwareUpdate::installAvailable() { return m_downloadDir.exists(UPDATE_FILEMARKER); }
 
 bool SoftwareUpdate::performAppUpdate() {
     qCDebug(CLASS_LC) << "Executing app update script:" << m_appUpdateScript;
 
     QProcess process;
     process.setProgram(m_appUpdateScript);
-    process.setArguments({m_downloadDir.path() + "/" + META_FILENAME});
-    // TODO(zehnm) check if working dir and console output are required
-    // process.setWorkingDirectory(...);
-    // process.setStandardOutputFile(QProcess::nullDevice());
-    // process.setStandardErrorFile(QProcess::nullDevice());
+    process.setArguments({m_downloadDir.path() + "/" + UPDATE_FILEMARKER});
     qint64 pid;
     // fire and forget: update script will take over and restart YIO app
     if (process.startDetached(&pid)) {
@@ -328,7 +330,7 @@ bool SoftwareUpdate::startDockUpdate() {
 }
 
 bool SoftwareUpdate::isAlreadyDownloaded(const QString &version) {
-    QFile metafile(m_downloadDir.path() + "/" + META_FILENAME);
+    QFile metafile(m_downloadDir.path() + "/" + UPDATE_FILEMARKER);
 
     if (!metafile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return false;
