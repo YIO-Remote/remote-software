@@ -118,6 +118,9 @@ jobs:
 
       - name: Configure release
         run: |
+          # make sure everything is cleaned from the debug build
+          rm -Rf ../binaries
+          # start release build
           cd ${{ env.PROJECT_NAME}}
           rm -Rf build
           echo "Creating Makefile..."
