@@ -141,9 +141,8 @@ bool FileDownload::prepareFileDownload(const Download &download) {
 }
 
 void FileDownload::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal) {
-    QByteArray  b = m_currentReply->readAll();
-    QDataStream out(&m_outputFile);
-    out << b;
+    auto data = m_currentReply->readAll();
+    m_outputFile.write(data);
 
     QString dowloadSpeed;
     if (bytesReceived > 0) {
@@ -176,6 +175,7 @@ void FileDownload::onDownloadError(QNetworkReply::NetworkError error) {
 }
 
 void FileDownload::onDownloadFinished() {
+    m_outputFile.flush();
     m_outputFile.close();
 
     qCDebug(CLASS_LC) << "Elapsed ms:" << m_downloadTimer.elapsed();

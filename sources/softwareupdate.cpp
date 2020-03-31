@@ -285,9 +285,9 @@ void SoftwareUpdate::onDownloadComplete(int id, const QString &filePath) {
     }
 
     QTextStream out(&metafile);
-    out << "Update:\t" << filePath << "\n";
-    out << "Version:\t" << m_newVersion << "\n";
-    out << "Url:\t" << m_downloadUrl.toString() << "\n";
+    out << "Update\t:\t" << filePath << "\n";
+    out << "Version\t:\t" << m_newVersion << "\n";
+    out << "Url\t:\t" << m_downloadUrl.toString() << "\n";
     metafile.close();
 
     qCInfo(CLASS_LC) << "Created update filemarker '" << metafile.fileName() << "' for downloaded update:" << filePath;
