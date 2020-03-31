@@ -11,7 +11,7 @@ on: [push]
 
 env:
   QT_VERSION: 5.12.4
-  APP_NAME: remote
+  APP_NAME: app
   PROJECT_NAME: remote-software
   TOOLCHAIN_PATH: /opt/arm-buildroot-linux-gnueabihf_sdk-buildroot
   YIO_REMOTE_QMAKE_ARGS: "CONFIG+=debug CONFIG+=qml_debug"

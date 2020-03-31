@@ -21,7 +21,7 @@ env:
   # QT_VERSION: 5.14.0
   # QT_CREATOR_VERSION: 4.11.0
   APP_PRO: remote.pro
-  APP_NAME: remote
+  APP_NAME: app
   PROJECT_NAME: remote-software
   # Build artifact output path. Used to set project specific YIO_BIN env var in 'qt_creator' step.
   BIN_OUTPUT_PATH: "binaries"
@@ -52,8 +52,13 @@ jobs:
     - name: Checkout remote-software
       uses: actions/checkout@v2
       with:
+        # history required to determine number of commits since last release tag
+        fetch-depth: 0
         path: ${{ env.PROJECT_NAME}}
-
+    - name: Fetch all tags to determine version
+      run: |
+        cd ${{ env.PROJECT_NAME}}
+        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     - name: Checkout integrations.library
       uses: actions/checkout@v2
       with:
@@ -359,7 +364,7 @@ jobs:
       id: upload_artifact
       with:
         path: ${{ env.YIO_BIN}}
-        name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}
+        name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release
 
   release:
     if: contains(github.ref, 'tags/v')
@@ -413,12 +418,12 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v1
       with:
-        name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}
+        name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release
         path: ./
 
     - run: ls -la
 
-    - run: zip -r ${APP_NAME}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}.zip .
+    - run: zip -r ${APP_NAME}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release.zip .
     - run: ls -la
 
     - name: Download URL
@@ -438,6 +443,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.set_upload_url.outputs.upload_url }}
-        asset_path: ./${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}.zip
-        asset_name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-release-${{ matrix.config.artifact }}.zip
+        asset_path: ./${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release.zip
+        asset_name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release.zip
         asset_content_type: application/zip
