@@ -291,6 +291,7 @@ Item {
         onClicked: {
             Haptic.playEffect(Haptic.Press);
             loader_second.setSource("qrc:/basic_ui/Profiles.qml");
+            loader_second.active = true;
         }
     }
 }
