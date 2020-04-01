@@ -213,6 +213,7 @@ Item {
                 // include mediaplayer utils
                 MediaPlayerUtils {
                     id: mediaplayerUtils
+                    enabled: mediaPlayers.currentItem == player
                 }
 
                 property alias player: player

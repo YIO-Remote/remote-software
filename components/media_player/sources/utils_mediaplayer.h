@@ -55,36 +55,46 @@ class MediaPlayerUtils : public QObject {
     MediaPlayerUtils();
     virtual ~MediaPlayerUtils();
 
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
+    Q_PROPERTY(QString image READ image NOTIFY imageChanged)
+    Q_PROPERTY(QString smallImage READ smallImage NOTIFY smallImageChanged)
+    Q_PROPERTY(QColor pixelColor READ pixelColor NOTIFY pixelColorChanged)
 
+    bool    enabled() { return m_enabled; }
     QString imageURL() { return m_imageURL; }
+    QString image() { return m_image; }
+    QString smallImage() { return m_smallImage; }
+    QColor  pixelColor() { return m_pixelColor; }
 
     void setImageURL(QString url) {
         m_imageURL = url;
-        generateImages(url);
+        if (m_enabled) {
+            generateImages(url);
+        }
     }
 
-    Q_PROPERTY(QString image READ image NOTIFY imageChanged)
+    void setEnabled(bool value) {
+        m_enabled = value;
+        emit enabledChanged();
 
-    QString image() { return m_image; }
-
-    Q_PROPERTY(QString smallImage READ smallImage NOTIFY smallImageChanged)
-
-    QString smallImage() { return m_smallImage; }
-
-    Q_PROPERTY(QColor pixelColor READ pixelColor NOTIFY pixelColorChanged)
-
-    QColor pixelColor() { return m_pixelColor; }
+        if (m_enabled) {
+            generateImages(m_imageURL);
+        }
+    }
 
  public slots:
     void onProcessingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
 
  signals:
+    void enabledChanged();
     void imageChanged();
     void smallImageChanged();
     void pixelColorChanged();
 
  private:
+    bool m_enabled = true;
+
     QString m_imageURL;
     QString m_image;
     QString m_smallImage;
