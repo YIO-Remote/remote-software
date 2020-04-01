@@ -79,16 +79,10 @@ Item {
         text: ""
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
-        height: parent.height
-        width: parent.width/2
-        anchors.left: parent.left
-        anchors.leftMargin: 10
         y: 2
-        font.family: "Open Sans Regular"
-        font.weight: Font.Bold
-        font.styleName: "Bold"
-        font.pixelSize: 22
-        font.capitalization: Font.AllUppercase
+        width: parent.width/2; height: parent.height
+        anchors { left: parent.left; leftMargin: 10 }
+        font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 22; capitalization: Font.AllUppercase }
         lineHeight: 1
     }
 
@@ -151,11 +145,8 @@ Item {
         text: "22:00"
         verticalAlignment: Text.AlignVCenter
         height: parent.height
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        font.family: "Open Sans Regular"
-        font.weight: Font.Normal
-        font.pixelSize: 28
+        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 28 }
         lineHeight: 1
     }
 
@@ -166,14 +157,11 @@ Item {
 
     Rectangle {
         id: notificationCount
-        width: 12
-        height: width
-        radius: width/2
+        width: 12; height: 12
+        radius: 6
         color: Style.color.red
         visible: notifications.list.length > 0 ? true : false
-        anchors.right: timeText.left
-        anchors.rightMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
+        anchors { right: timeText.left; rightMargin: 10; verticalCenter: parent.verticalCenter }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,22 +188,17 @@ Item {
     Image {
         asynchronous: true
         id: loadingIcon
-        width: 26
-        height: 26
+        width: 26; height: 26
         opacity: 0
         visible: false
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: batteryIcon.left
-        anchors.rightMargin: 10
-//        fillMode: Image.PreserveAspectFit
+        anchors { verticalCenter: parent.verticalCenter; right: batteryIcon.left; rightMargin: 10 }
         source: "qrc:/images/statusbar/statusbar-loader.png"
 
         RotationAnimator on rotation {
             id: loadingIconAnim
             running: loadingIcon.visible
             loops: Animation.Infinite
-            from: 0
-            to: 360
+            from: 0; to: 360
             duration: 2000
         }
 
@@ -231,40 +214,30 @@ Item {
     Rectangle {
         id: batteryIcon
         width: 36
-        anchors.right: batteryPercentText.left
-        anchors.rightMargin: 5
-        anchors.verticalCenter: statusBar.verticalCenter
+        anchors { right: batteryPercentText.left; rightMargin: 5; verticalCenter: statusBar.verticalCenter }
 
         // battery fill
         Rectangle {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 5
             id: icon_battery
-            width: Battery.level/100*20
-            height: 6
+            width: Battery.level/100*20; height: 6
             color: Battery.level >= 20 ? Style.color.line : Style.color.red
+            anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: 5 }
         }
         // battery frame
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
-            width: 30
-            height: 18
+            width: 30; height: 18
             color: Style.color.backgroundTransparent
             radius: 4
-            border.width: 2
-            border.color: Style.color.line
+            border { width: 2; color: Style.color.line }
         }
         // battery notch
         Rectangle {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            width: 8
-            height: 10
+            width: 8; height: 10
             color: Style.color.backgroundTransparent
             radius: 2
-            border.width: 2
-            border.color: Style.color.line
+            border { width: 2; color: Style.color.line }
+            anchors { verticalCenter: parent.verticalCenter; right: parent.right }
         }
     }
 
@@ -274,13 +247,31 @@ Item {
         text: Math.round(Battery.level) + "%"
         verticalAlignment: Text.AlignVCenter
         height: parent.height
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.verticalCenter: statusBar.verticalCenter
-        font.family: "Open Sans Regular"
-        font.weight: Font.Normal
-        font.pixelSize: 20
+        anchors { right: profileIcon.left; rightMargin: 10; verticalCenter: statusBar.verticalCenter }
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 20 }
         lineHeight: 1
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // PROFILE ICON
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: profileIcon
+        width: Object.keys(config.profiles).length > 1 ? 26 : 0; height: width
+        radius: 13
+        color: Style.color.medium
+        visible: Object.keys(config.profiles).length > 1
+
+        anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: 10 }
+
+        Text {
+            color: Style.color.text
+            text: config.getProfile().name.substring(0,1);
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            anchors.centerIn: parent
+            font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 16 }
+        }
     }
 
     MouseArea {
@@ -289,11 +280,17 @@ Item {
         onClicked: {
             loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY = 0;
         }
+    }
 
-        onPressAndHold: {
+    MouseArea {
+        width: profileIcon.width + 20
+        height: width
+
+        anchors.centerIn: profileIcon
+
+        onClicked: {
             Haptic.playEffect(Haptic.Press);
             loader_second.setSource("qrc:/basic_ui/Profiles.qml");
         }
     }
-
 }
