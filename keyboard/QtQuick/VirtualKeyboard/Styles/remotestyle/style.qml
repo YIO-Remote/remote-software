@@ -941,22 +941,21 @@ KeyboardStyle {
 
     languageListDelegate: SelectionListItem {
         id: languageListItem
-        width: languageNameTextMetrics.width * 17
-        height: languageNameTextMetrics.height + languageListLabel.anchors.topMargin + languageListLabel.anchors.bottomMargin
+        width: Style.screen.width
+        height: 80
+        x: Style.screen.width
+
         Text {
             id: languageListLabel
             anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: languageNameTextMetrics.height / 2
-            anchors.rightMargin: anchors.leftMargin
-            anchors.topMargin: languageNameTextMetrics.height / 3
-            anchors.bottomMargin: anchors.topMargin
+            anchors.verticalCenter: parent.verticalCenter
             text: languageNameFormatter.elidedText
             color: Style.color.text //"#5CAA15"
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 16 //44 * scaleHint
+                pixelSize: 20 //44 * scaleHint
+                capitalization: Font.Capitalize
             }
         }
         TextMetrics {
@@ -964,7 +963,7 @@ KeyboardStyle {
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 16 //44 * scaleHint
+                pixelSize: 20 //44 * scaleHint
             }
             text: "X"
         }
@@ -973,7 +972,7 @@ KeyboardStyle {
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 16 //44 * scaleHint
+                pixelSize: 20 //44 * scaleHint
             }
             elide: Text.ElideRight
             elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
@@ -984,13 +983,14 @@ KeyboardStyle {
             when: languageListItem.ListView.isCurrentItem
             PropertyChanges {
                 target: languageListLabel
-                color: "black"
+                color: Style.color.highlight1
             }
         }
     }
 
     languageListBackground: Rectangle {
-        color: Style.color.dark
+        color: Style.color.background
+
     }
 
     languageListAdd: Transition {
