@@ -117,18 +117,6 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write(QString("YIO App %1").arg(version));
 
-    // LOAD FONTS
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
-
-    // LOAD STYLES
-    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/Style.qml")), "Style", 1, 0, "Style");
-
-    // LOAD ICONS
-    QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
-
     // LOADING CUSTOM COMPONENTS
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
@@ -224,7 +212,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
     // SOFTWARE UPDATE
-    QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
+    QVariantMap     appUpdCfg      = config->getSettings().value("softwareupdate").toMap();
     SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 
@@ -236,6 +224,18 @@ int main(int argc, char* argv[]) {
 
     // UTILS
     qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
+
+    // LOAD FONTS
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
+
+    // LOAD STYLES
+    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/Style.qml")), "Style", 1, 0, "Style");
+
+    // LOAD ICONS
+    QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
 
     engine.addImportPath("qrc:/");
 

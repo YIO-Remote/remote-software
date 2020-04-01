@@ -22,13 +22,15 @@
 
 #pragma once
 
+#include <QScreen>
+
 #include "../displaycontrol.h"
 
 class DisplayControlMock : public DisplayControl {
     Q_OBJECT
 
  public:
-    explicit DisplayControlMock(QObject *parent = nullptr) : DisplayControl("DisplayControlMock", parent) {}
+    explicit DisplayControlMock(QObject* parent = nullptr) : DisplayControl("DisplayControlMock", parent) {}
 
     // DisplayControl interface
  public:
@@ -50,4 +52,12 @@ class DisplayControlMock : public DisplayControl {
 
     void setAmbientBrightness(int value) override { Q_UNUSED(value) }
     void setUserBrightness(int value) override { Q_UNUSED(value) }
+
+    int width() override { return 480; }
+    int height() override { return 800; }
+
+    qreal pixelDensity() override {
+        QScreen* screen = QGuiApplication::screens().at(0);
+        return qreal(screen->logicalDotsPerInch());
+    }
 };

@@ -48,8 +48,8 @@ ApplicationWindow {
     // MAIN WINDOW PROPERTIES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     visible: true
-    width: 480
-    height: 800
+    width: Style.screen.width
+    height: Style.screen.height
     color: Style.colorBackground
 
 
@@ -79,6 +79,9 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
+        console.debug("UI loading");
+        console.debug("Resolution: " + Style.screen.width + "x" + Style.screen.height);
+        console.debug("Pixel density: " + Style.screen.pixelDensity);
         // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
         //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
         //           This can be done by connecting to a signal of the config in the hardware factory

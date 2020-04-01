@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <QGuiApplication>
+
 #include "device.h"
 
 class DisplayControl : public Device {
@@ -45,6 +47,10 @@ class DisplayControl : public Device {
 
     virtual void             setAmbientBrightness(int value) = 0;
     Q_INVOKABLE virtual void setUserBrightness(int value)    = 0;
+
+    Q_INVOKABLE virtual int   width()        = 0;
+    Q_INVOKABLE virtual int   height()       = 0;
+    Q_INVOKABLE virtual qreal pixelDensity() = 0;
 
  signals:
     void currentBrightnessChanged();

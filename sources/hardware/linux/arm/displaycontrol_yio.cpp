@@ -45,7 +45,7 @@ DisplayControlYio::DisplayControlYio(int backlightPin, QObject *parent)
     qCDebug(CLASS_LC()) << name() << "[backlightPin=" << backlightPin << "]";
 
     // move the low level hardware handling to a separate thread
-    m_thread = new QThread(this);
+    m_thread                      = new QThread(this);
     DisplayControlYioThread *dcyt = new DisplayControlYioThread(backlightPin);
 
     connect(this, &DisplayControlYio::enterStandby, dcyt, &DisplayControlYioThread::enterStandby);
@@ -109,6 +109,11 @@ void DisplayControlYio::setBrightness(int from, int to) {
 }
 
 void DisplayControlYio::setBrightness(int to) { setBrightness(m_currentBrightness, to); }
+
+qreal DisplayControlYio::pixelDensity() {
+    QScreen *screen = QGuiApplication::screens().at(0);
+    return qreal(screen->logicalDotsPerInch());
+}
 
 const QLoggingCategory &DisplayControlYio::logCategory() const { return CLASS_LC(); }
 
@@ -178,7 +183,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
 
     digitalWrite(CS, LOW);
     control_bit = 0x0000;
-    Addr = (control_bit | Addr);
+    Addr        = (control_bit | Addr);
 
     for (i = 0; i < 9; i++) {
         if (Addr & (1 << (8 - i))) {
@@ -206,7 +211,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data0 = (control_bit | Data0);
+    Data0       = (control_bit | Data0);
 
     // data
     for (i = 0; i < 9; i++) {
@@ -233,7 +238,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data1 = (control_bit | Data1);
+    Data1       = (control_bit | Data1);
 
     // data
     for (i = 0; i < 9; i++) {
