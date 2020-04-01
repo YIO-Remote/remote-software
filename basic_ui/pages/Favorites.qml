@@ -34,6 +34,9 @@ Flickable {
     property alias _contentHeight: itemFlickable.contentHeight
     property alias _height: itemFlickable.height
 
+    // property to know if this is the current page, so we know it's visible
+    property bool _isCurrentItem: parent._isCurrentItem
+
     signal scrolledUp()
     signal scrolledDown()
     signal scrollupBegin()
@@ -111,6 +114,8 @@ Flickable {
             width: 460
             height: 125
             anchors.horizontalCenter: parent.horizontalCenter
+
+            property bool __isCurrentItem: _isCurrentItem
 
             Component.onCompleted: {
                 var e = entities.get(config.profileFavorites[index]);

@@ -31,8 +31,8 @@ import "qrc:/basic_ui" as BasicUI
 
 Item {
     id: main_container
-    width: parent.width
-    height: parent.height
+    width: Style.screen.width
+    height: Style.screen.height
     clip: true
     enabled: loader_main.state === "visible" ? true : false
     layer.enabled: true

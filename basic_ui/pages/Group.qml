@@ -30,6 +30,9 @@ Item {
     width: parent.width
     height: childrenRect.height
 
+    // property to know if this is the current page, so we know it's visible
+    property bool _isCurrentItem
+
     property string groupID
 
     function checkGroupState() {
@@ -100,10 +103,10 @@ Item {
                     }
                 } else {
                     // turn on
-                    var eArr = config.groups[groupID].entities;
+                    eArr = config.groups[groupID].entities;
 
-                    for (var i=0; i<eArr.length; i++) {
-                        var eid = entities.get(eArr[i]);
+                    for (i=0; i<eArr.length; i++) {
+                         eid = entities.get(eArr[i]);
 
                         if (eid) {
                             eid.turnOn();
@@ -135,6 +138,8 @@ Item {
             width: 460
             height: 125
             anchors.horizontalCenter: parent.horizontalCenter
+
+            property bool __isCurrentItem: _isCurrentItem
 
             Component.onCompleted: {
                 var e = entities.get(config.groups[groupID].entities[index]);

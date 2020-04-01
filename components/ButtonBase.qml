@@ -76,6 +76,11 @@ Rectangle {
 
     property var obj
     property var originParent: buttonContainer.parent
+    property bool _isCurrentItem: parent.__isCurrentItem ? parent.__isCurrentItem : false
+
+    on_IsCurrentItemChanged: {
+        console.debug("CURRENT ITEM: " + obj)
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS

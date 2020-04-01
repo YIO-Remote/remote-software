@@ -38,6 +38,9 @@ Flickable {
     property alias _contentHeight: itemFlickable.contentHeight
     property alias _height: itemFlickable.height
 
+    // property to know if this is the current page, so we know it's visible
+    property bool _isCurrentItem: parent._isCurrentItem
+
     // image background handling
     property string img_url
 
@@ -189,6 +192,7 @@ Flickable {
 
             Group {
                 groupID: config.pages[page].groups[index]
+                _isCurrentItem: itemFlickable._isCurrentItem
             }
         }
     }

@@ -40,6 +40,7 @@ Comp.ButtonBase {
     // include mediaplayer utils
     MediaPlayerUtils {
         id: mediaplayerUtils
+        enabled: _isCurrentItem
     }
 
     ListModel {
