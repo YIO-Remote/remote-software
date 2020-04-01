@@ -21,8 +21,6 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
 import Style 1.0
 
 import Battery 1.0
@@ -214,7 +212,7 @@ Item {
     Rectangle {
         id: batteryIcon
         width: 36
-        anchors { right: batteryPercentText.left; rightMargin: 5; verticalCenter: statusBar.verticalCenter }
+        anchors { right: batteryPercentText.left; rightMargin: 7; verticalCenter: statusBar.verticalCenter }
 
         // battery fill
         Rectangle {
@@ -270,7 +268,7 @@ Item {
             text: config.getProfile().name.substring(0,1);
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             anchors.centerIn: parent
-            font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 16 }
+            font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 14 }
         }
     }
 
@@ -289,7 +287,7 @@ Item {
         anchors.centerIn: profileIcon
 
         onClicked: {
-            Haptic.playEffect(Haptic.Press);
+            Haptic.playEffect(Haptic.Click);
             loader_second.setSource("qrc:/basic_ui/Profiles.qml");
             loader_second.active = true;
         }
