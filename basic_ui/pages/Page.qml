@@ -101,7 +101,7 @@ Flickable {
         Rectangle {
             id: comp
             anchors.fill: parent
-            color: Style.colorBackground
+            color: Style.color.background
 
             Image {
                 id: bgImage
@@ -122,8 +122,8 @@ Flickable {
                         start: Qt.point(0, 0)
                         end: Qt.point(0, 80)
                         gradient: Gradient {
-                            GradientStop { position: 0.2; color: Style.colorBackgroundTransparent }
-                            GradientStop { position: 1.0; color: Style.colorBackground }
+                            GradientStop { position: 0.2; color: Style.color.backgroundTransparent }
+                            GradientStop { position: 1.0; color: Style.color.background }
                         }
                     }
             }
@@ -154,7 +154,7 @@ Flickable {
         Rectangle {
             id: overlay
             anchors.fill: noise
-            color: Style.colorBackground
+            color: Style.color.background
             opacity: 0.5
         }
     }
@@ -166,7 +166,7 @@ Flickable {
 
         Text {
             id: titleText
-            color: Style.colorText
+            color: Style.color.text
             text: title
             anchors.centerIn: parent
             font.family: "Open Sans Regular"

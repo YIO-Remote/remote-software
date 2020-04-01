@@ -42,7 +42,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 40
 
-        color: Style.colorText
+        color: Style.color.text
         verticalAlignment: Text.AlignVCenter
         font.family: "Open Sans Regular"
         font.weight: Font.Normal

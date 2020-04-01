@@ -38,7 +38,7 @@ Comp.ButtonBase {
     // additional UI elements
     Text {
         id: info
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: {
             if (obj.isSupported(Climate.F_TEMPERATURE))

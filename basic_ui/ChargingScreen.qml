@@ -31,7 +31,7 @@ Rectangle {
     id: chargingScreen
     width: parent.width
     height: parent.height
-    color: Style.colorBackground
+    color: Style.color.background
 
     state: "hidden"
 
@@ -108,7 +108,7 @@ Rectangle {
             color: "#00000000"
             radius: 16
             border.width: 6
-            border.color: Style.colorLine
+            border.color: Style.color.line
         }
 
         // battery frame
@@ -118,9 +118,9 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             width: 151
             height: 218
-            color: Style.colorBackground
+            color: Style.color.background
             border.width: 6
-            border.color: Style.colorLine
+            border.color: Style.color.line
             radius: 32
 
             // battery fill
@@ -130,7 +130,7 @@ Rectangle {
                 anchors.bottomMargin: 23
                 width: 106
                 height: Battery.level/100*172
-                color: Style.colorGreen
+                color: Style.color.green
                 radius: 8
             }
 
@@ -148,7 +148,7 @@ Rectangle {
                     visible: !Style.darkMode
                     anchors.fill: parent
                     source: parent
-                    color: Style.colorText
+                    color: Style.color.text
                 }
             }
         }
@@ -156,7 +156,7 @@ Rectangle {
 
     Text {
         id: chargeText
-        color: Style.colorText
+        color: Style.color.text
         text: Math.round(Battery.level) + qsTr("% Charged") + translateHandler.emptyString
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 230
@@ -171,7 +171,7 @@ Rectangle {
 
     Text {
         id: timeText
-        color: Style.colorText
+        color: Style.color.text
         text: loader_main.item ? loader_main.item.statusBar.timeText.text : ""
         verticalAlignment: Text.AlignVCenter
         anchors.horizontalCenter: parent.horizontalCenter

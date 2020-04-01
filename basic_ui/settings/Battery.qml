@@ -34,7 +34,7 @@ Rectangle {
     id: container
     width: parent.width; height: childrenRect.height
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     Component.onCompleted: {
         addHours();
@@ -95,14 +95,14 @@ Rectangle {
 
             Text {
                 id: batteryhealthText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Battery health") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                 font: Style.fonts.button
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 text: Battery.health + "%"
                 horizontalAlignment: Text.AlignRight
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: batteryhealthText.verticalCenter }
@@ -112,7 +112,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // REMAINGING TIME
@@ -121,14 +121,14 @@ Rectangle {
 
             Text {
                 id: remainingTimeText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Remaining time") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                 font: Style.fonts.button
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 text: {
                     var hours = Battery.remainingLife;
                     var rhours = Math.floor(hours);
@@ -145,7 +145,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // SCREEN ON OFF TIMES
@@ -154,7 +154,7 @@ Rectangle {
 
             Text {
                 id: screenOnTimeText
-                color: Style.colorHighlight1
+                color: Style.color.highlight1
                 text: qsTr("Screen on") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
@@ -165,7 +165,7 @@ Rectangle {
             Text {
                 id: screenOnTimeTextData
                 text: StandbyControl.screenOnTime
-                color: Style.colorText
+                color: Style.color.text
                 horizontalAlignment: Text.AlignRight
                 anchors { left: screenOnTimeText.left; top: screenOnTimeText.bottom; topMargin: 10 }
                 font: Style.fonts.button
@@ -173,7 +173,7 @@ Rectangle {
 
             Text {
                 id: screenOffTimeText
-                color: Style.colorHighlight1
+                color: Style.color.highlight1
                 text: qsTr("Screen off") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; leftMargin: parent.width/2; top: parent.top; topMargin: 20 }
@@ -184,7 +184,7 @@ Rectangle {
             Text {
                 id: screenOffTimeTextData
                 text: StandbyControl.screenOffTime
-                color: Style.colorText
+                color: Style.color.text
                 horizontalAlignment: Text.AlignRight
                 anchors { left: screenOffTimeText.left; top: screenOffTimeText.bottom; topMargin: 10 }
                 font: Style.fonts.button
@@ -193,7 +193,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // BATTERY LEVEL
@@ -202,7 +202,7 @@ Rectangle {
 
             Text {
                 id: batteryLevelText
-                color: Style.colorHighlight1
+                color: Style.color.highlight1
                 text: qsTr("Battery level") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
@@ -222,7 +222,7 @@ Rectangle {
                     visible: !Style.darkMode
                     anchors.fill: parent
                     source: parent
-                    color: Style.colorText
+                    color: Style.color.text
                     antialiasing: true
                 }
             }
@@ -240,7 +240,7 @@ Rectangle {
 
                         Rectangle {
                             width: 6; height: 96 * StandbyControl.batteryData[index].level/100
-                            color: StandbyControl.batteryData[index].power < 0 ? Style.colorText : Style.colorGreen
+                            color: StandbyControl.batteryData[index].power < 0 ? Style.color.text : Style.color.green
                             anchors.bottom: parent.bottom
                         }
                     }
@@ -249,7 +249,7 @@ Rectangle {
 
             Text {
                 id: averagePowerText
-                color: Style.colorHighlight1
+                color: Style.color.highlight1
                 text: qsTr("Average power") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
                 anchors { left: parent.left; leftMargin: 20; top: batteryLevelBG.bottom; topMargin: 10 }
@@ -269,7 +269,7 @@ Rectangle {
                     visible: !Style.darkMode
                     anchors.fill: parent
                     source: parent
-                    color: Style.colorText
+                    color: Style.color.text
                     antialiasing: true
                 }
             }
@@ -287,7 +287,7 @@ Rectangle {
 
                         Rectangle {
                             width: 6; height: (96 * (Math.abs(StandbyControl.batteryData[index].power) / 5500)) + 1
-                            color: StandbyControl.batteryData[index].power < 0 ? Style.colorText : Style.colorGreen
+                            color: StandbyControl.batteryData[index].power < 0 ? Style.color.text : Style.color.green
                             anchors.bottom: parent.bottom
                         }
                     }
@@ -311,7 +311,7 @@ Rectangle {
                         delegate: Text {
                             //: Battery level history data. When no data avaialable yet it shows this text under the empty graph.
                             text: hours.length == 0 ? (qsTr("No data available yet") + translateHandler.emptyString) : hours[index] //hours[hours.length-1-index]
-                            color: Style.colorHighlight1
+                            color: Style.color.highlight1
                             font { family: "Open Sans Regular"; pixelSize: 16 }
                             lineHeight: 1
                             horizontalAlignment: Text.AlignHCenter
@@ -323,7 +323,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // POWER SAVING
@@ -333,7 +333,7 @@ Rectangle {
 
             Text {
                 id: powerSavingText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Power saving") + translateHandler.emptyString
                 font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 27 }
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
@@ -341,7 +341,7 @@ Rectangle {
 
             Text {
                 id: wifioffText
-                color: Style.colorText
+                color: Style.color.text
                 text: config.settings.wifitime === 0 ? qsTr("Never turn off Wi-Fi") + translateHandler.emptyString : qsTr("Turn off Wi-Fi after %1 minutes of inactivity").arg(config.settings.wifitime/60) + translateHandler.emptyString
                 wrapMode: Text.WordWrap
                 width: parent.width-40
@@ -369,7 +369,7 @@ Rectangle {
                     implicitWidth: 200; implicitHeight: wifioffSlider.pressed ? 28 : 4
                     width: wifioffSlider.availableWidth; height: implicitHeight
                     radius: wifioffSlider.pressed ? 14 : 2
-                    color: Style.colorBackground
+                    color: Style.color.background
 
                     layer.enabled: true
                     layer.effect: OpacityMask {
@@ -394,7 +394,7 @@ Rectangle {
                     Rectangle {
                         width: wifioffSlider.visualPosition * parent.width; height: wifioffSlider.pressed ? 28 : 4
                         radius: 2
-                        color: Style.colorHighlight1
+                        color: Style.color.highlight1
 
                         Behavior on height {
                             PropertyAnimation {
@@ -410,7 +410,7 @@ Rectangle {
                     y: wifioffSlider.topPadding + wifioffSlider.availableHeight / 2 - height / 2
                     implicitWidth: 28; implicitHeight: 28
                     radius: Style.cornerRadius
-                    color: Style.colorLine
+                    color: Style.color.line
                 }
 
                 onValueChanged: {
@@ -428,7 +428,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Never") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: wifioffSlider.bottom }
@@ -437,7 +437,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("60 minutes") + translateHandler.emptyString
                 anchors { right: parent.right; rightMargin: 20; top: wifioffSlider.bottom }
@@ -448,7 +448,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // SHUTDOWN
@@ -457,7 +457,7 @@ Rectangle {
 
             Text {
                 id: shutdownText
-                color: Style.colorText
+                color: Style.color.text
                 text: config.settings.shutdowntime === 0 ? qsTr("Never turn off the remote") + translateHandler.emptyString : qsTr("Turn off the remote after %1 hours of inactivity").arg(config.settings.shutdowntime/60/60) + translateHandler.emptyString
                 wrapMode: Text.WordWrap
                 width: parent.width-40
@@ -485,7 +485,7 @@ Rectangle {
                     implicitWidth: 200; implicitHeight: shutdownSlider.pressed ? 28 : 4
                     width: shutdownSlider.availableWidth; height: implicitHeight
                     radius: shutdownSlider.pressed ? 14 : 2
-                    color: Style.colorBackground
+                    color: Style.color.background
 
                     layer.enabled: true
                     layer.effect: OpacityMask {
@@ -510,7 +510,7 @@ Rectangle {
                     Rectangle {
                         width: shutdownSlider.visualPosition * parent.width; height: shutdownSlider.pressed ? 28 : 4
                         radius: 2
-                        color: Style.colorHighlight1
+                        color: Style.color.highlight1
 
                         Behavior on height {
                             PropertyAnimation {
@@ -526,7 +526,7 @@ Rectangle {
                     y: shutdownSlider.topPadding + shutdownSlider.availableHeight / 2 - height / 2
                     implicitWidth: 28; implicitHeight: 28
                     radius: Style.cornerRadius
-                    color: Style.colorLine
+                    color: Style.color.line
                 }
 
                 onValueChanged: {
@@ -544,7 +544,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Never") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: shutdownSlider.bottom }
@@ -553,7 +553,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("8 hours") + translateHandler.emptyString
                 anchors { right: parent.right; rightMargin: 20; top: shutdownSlider.bottom }

@@ -53,7 +53,7 @@ Comp.ButtonBase {
     // additional UI elements
     Text {
         id: info
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: obj.source
         elide: Text.ElideRight

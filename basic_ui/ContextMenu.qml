@@ -29,7 +29,7 @@ Rectangle {
     width: parent.width
     height: 100+(80*list.length)
     radius: Style.cornerRadius
-    color: Style.colorBackground
+    color: Style.color.background
 
     property var list: []
     property string id
@@ -84,7 +84,7 @@ Rectangle {
 
                 Text {
                     id: icon
-                    color: Style.colorText
+                    color: Style.color.text
                     text: {
                         if (list[index] == "PLAY")
                             return Style.icons.music
@@ -117,7 +117,7 @@ Rectangle {
                         else
                             return "Not supported"
                     }
-                    color: Style.colorText
+                    color: Style.color.text
                     anchors.left: icon.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
@@ -151,7 +151,7 @@ Rectangle {
 
             Text {
                 text: qsTr("Cancel") + translateHandler.emptyString
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 anchors.centerIn: parent
                 font.family: "Open Sans Regular"

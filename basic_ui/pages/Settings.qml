@@ -157,11 +157,11 @@ SwipeView {
                 Rectangle {
                     width: parent.width
                     height: 200
-                    color: Style.colorBackground
+                    color: Style.color.background
 
                     Text {
                         id: titleText
-                        color: Style.colorText
+                        color: Style.color.text
                         text: qsTr("Settings") + translateHandler.emptyString
                         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter; verticalCenterOffset: 20 }
                         font { family: "Open Sans Regular"; pixelSize: 60 }
@@ -172,7 +172,7 @@ SwipeView {
                 Item {
                     width: parent.width; height: 80
                     Text {
-                        color: Style.colorText
+                        color: Style.color.text
                         text: SoftwareUpdate.updateAvailable ? qsTr("New software is available.") + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
                         anchors { top:parent.top; horizontalCenter: parent.horizontalCenter }
                         font: Style.fonts.button
@@ -259,7 +259,7 @@ SwipeView {
 
             Text {
                 id: backButtonIcon
-                color: Style.colorText
+                color: Style.color.text
                 text: Style.icons.left_arrow
                 renderType: Text.NativeRendering
                 width: 70; height: 70
@@ -270,7 +270,7 @@ SwipeView {
 
             Text {
                 id: backButtonText
-                color: Style.colorText
+                color: Style.color.text
                 anchors { left: backButtonIcon.right; verticalCenter: parent.verticalCenter }
                 font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 27 }
                 lineHeight: 1

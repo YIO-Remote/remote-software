@@ -66,7 +66,7 @@ Rectangle {
     width: 460
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
 
@@ -196,7 +196,7 @@ Rectangle {
 
         Text {
             id: title
-            color: Style.colorText
+            color: Style.color.text
             width: parent.width-232
             text: obj ? obj.friendly_name : ""
             verticalAlignment: Text.AlignVCenter
@@ -208,7 +208,7 @@ Rectangle {
 
         Text {
             id: icon
-            color: Style.colorText
+            color: Style.color.text
             text: ""
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -264,20 +264,20 @@ Rectangle {
         z: 1000
         radius: 200
         anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter}
-        color: Style.colorHighlight1
+        color: Style.color.highlight1
 
         state: "closed"
 
         states: [
             State {
                 name: "closed"
-                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: Style.colorHighlight1}
+                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: Style.color.highlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 0}
                 PropertyChanges {target: addToFavButtonText; opacity: 0}
             },
             State {
                 name: "open"
-                PropertyChanges {target: addToFavButton; width:500; height: 500; color: Style.colorHighlight1}
+                PropertyChanges {target: addToFavButton; width:500; height: 500; color: Style.color.highlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 1}
                 PropertyChanges {target: addToFavButtonText; opacity: 1}
             }
@@ -323,7 +323,7 @@ Rectangle {
             id: addToFavButtonCircle
             width: 80; height: width
             radius: width/2
-            color: Style.colorDark
+            color: Style.color.dark
             opacity: 0
             anchors { left: parent.left; leftMargin: 40; verticalCenter: parent.verticalCenter }
 
@@ -332,7 +332,7 @@ Rectangle {
                 when: mouseAreaFav.pressed === true
                 PropertyChanges {
                     target: addToFavButtonCircle
-                    color: Style.colorHighlight1
+                    color: Style.color.highlight1
                 }
             }
 
@@ -344,7 +344,7 @@ Rectangle {
                 }]
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 text: obj && obj.favorite ? Style.icons.fav_remove : Style.icons.fav_add
                 renderType: Text.NativeRendering
                 width: 80; height: 80
@@ -367,7 +367,7 @@ Rectangle {
 
         Text {
             id: addToFavButtonText
-            color: Style.colorText
+            color: Style.color.text
             opacity: 0
             text: obj && obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
@@ -414,7 +414,7 @@ Rectangle {
 
     Text {
         id: closeButton
-        color: Style.colorText
+        color: Style.color.text
         visible: buttonContainer.state == "open"
         text: Style.icons.close
         renderType: Text.NativeRendering

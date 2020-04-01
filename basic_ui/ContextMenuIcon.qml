@@ -28,10 +28,10 @@ Rectangle {
     id: circleButton
     width: 30
     height: 30
-    color: Style.colorLine
+    color: Style.color.line
     radius: width/2
 
-    property var colorBg: Style.colorBackground
+    property var colorBg: Style.color.background
     property alias mouseArea: mouseArea
 
 

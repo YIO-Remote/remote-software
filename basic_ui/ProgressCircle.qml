@@ -82,7 +82,7 @@ Item {
             if (root.isPie) {
                 if (root.showBackground) {
                     ctx.beginPath()
-                    ctx.fillStyle = root.Style.colorBackground
+                    ctx.fillStyle = root.Style.color.background
                     ctx.moveTo(x, y)
                     ctx.arc(x, y, width / 2, 0, Math.PI * 2, false)
                     ctx.lineTo(x, y)
@@ -99,7 +99,7 @@ Item {
                     ctx.beginPath();
                     ctx.arc(x, y, (width / 2) - parent.lineWidth / 2, 0, Math.PI * 2, false)
                     ctx.lineWidth = root.lineWidth
-                    ctx.strokeStyle = root.Style.colorBackground
+                    ctx.strokeStyle = root.Style.color.background
                     ctx.stroke()
                 }
                 var radgrad = ctx.createLinearGradient(x+40, y+width/2+20, x, y-width/2);

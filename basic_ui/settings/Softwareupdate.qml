@@ -31,7 +31,7 @@ Rectangle {
     id: container
     width: parent.width; height: childrenRect.height
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     Flow {
         id: flow
@@ -44,7 +44,7 @@ Rectangle {
 
             Text {
                 id: softwareUpdateText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Auto update") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                 font: Style.fonts.button
@@ -66,7 +66,7 @@ Rectangle {
 
             Text {
                 id: smallText
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Automatically look for updates and update when a new software version is available.\nUpdates are installed between 03.00 am and 05.00 am.") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
@@ -80,14 +80,14 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         Item {
             width: parent.width; height: SoftwareUpdate.updateAvailable ? (childrenRect.height + 40) : (childrenRect.height + 20 - updateButton.height)
             Text {
                 id: uptodateText
-                color: Style.colorText
+                color: Style.color.text
                 text: SoftwareUpdate.updateAvailable ? qsTr("New software is available.\nYIO remote %1").arg(SoftwareUpdate.newVersion) + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
                 width: parent.width-40
@@ -97,7 +97,7 @@ Rectangle {
 
             Text {
                 id: uptodateTextsmall
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: SoftwareUpdate.updateAvailable ? qsTr("Installed version: YIO Remote ") + SoftwareUpdate.currentVersion + translateHandler.emptyString : qsTr("YIO Remote ") + SoftwareUpdate.currentVersion
                 wrapMode: Text.WordWrap
@@ -131,7 +131,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         Item {

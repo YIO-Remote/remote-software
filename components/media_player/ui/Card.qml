@@ -33,8 +33,8 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: card
     width: parent.width; height: parent.height
-//    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
-    color: Style.colorDark
+//    color: mediaplayerUtils.pixelColor === "#000000" ? Style.color.dark : mediaplayerUtils.pixelColor
+    color: Style.color.dark
     radius: Style.cornerRadius
 
     Behavior on color {
@@ -246,7 +246,7 @@ Rectangle {
 
         // home
         Text {
-            color: Style.colorText
+            color: Style.color.text
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
             text: Style.icons.home
             renderType: Text.NativeRendering
@@ -269,7 +269,7 @@ Rectangle {
         // search
         Text {
             visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
-            color: Style.colorText
+            color: Style.color.text
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
             text: Style.icons.search
             renderType: Text.NativeRendering
@@ -291,7 +291,7 @@ Rectangle {
         // playlists
         Text {
             visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
-            color: Style.colorText
+            color: Style.color.text
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
             text: Style.icons.playlist
             renderType: Text.NativeRendering
@@ -313,7 +313,7 @@ Rectangle {
         // speakers
         Text {
             visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
-            color: Style.colorText
+            color: Style.color.text
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
             text: Style.icons.speaker
             renderType: Text.NativeRendering

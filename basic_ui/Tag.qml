@@ -26,9 +26,9 @@ Rectangle {
     id: main
     width: title.implicitWidth + 40
     height: 40
-    color: selected ? Style.colorLine : Style.colorBackgroundTransparent
+    color: selected ? Style.color.line : Style.color.backgroundTransparent
     radius: height/2
-    border.color: Style.colorLine
+    border.color: Style.color.line
     border.width: 2
     opacity: selected ? 1 : 0.5
 
@@ -44,7 +44,7 @@ Rectangle {
 
     Text {
         id: title
-        color: selected ? Style.colorBackground : Style.colorText
+        color: selected ? Style.color.background : Style.color.text
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: "Open Sans Regular"

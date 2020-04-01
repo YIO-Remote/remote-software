@@ -30,7 +30,7 @@ Rectangle {
     id: container
     width: parent.width; height: childrenRect.height + 40
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     Launcher {
         id: settingsLauncher
@@ -58,7 +58,7 @@ Rectangle {
 
     Text {
         id: uptimeText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Uptime") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
         font: Style.fonts.button
@@ -66,7 +66,7 @@ Rectangle {
 
     Text {
         id: uptimeValue
-        color: Style.colorText
+        color: Style.color.text
         text: "0h"
         horizontalAlignment: Text.AlignRight
         anchors { right: parent.right; rightMargin: 20; verticalCenter: uptimeText.verticalCenter }
@@ -77,13 +77,13 @@ Rectangle {
         id: line7
         width: parent.width
         height: 2
-        color: Style.colorBackground
+        color: Style.color.background
         anchors { top: uptimeText.bottom; topMargin: 20 }
     }
 
     Text {
         id: temperatureText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("CPU temperature") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: line7.bottom; topMargin: 20 }
         font: Style.fonts.button
@@ -91,7 +91,7 @@ Rectangle {
 
     Text {
         id: temperatureValue
-        color: Style.colorText
+        color: Style.color.text
         text: "36ºC"
         horizontalAlignment: Text.AlignRight
         anchors { right: parent.right; rightMargin: 20; verticalCenter: temperatureText.verticalCenter }
@@ -102,7 +102,7 @@ Rectangle {
         id: line8
         width: parent.width
         height: 2
-        color: Style.colorBackground
+        color: Style.color.background
         anchors { top: temperatureText.bottom; topMargin: 20 }
     }
 

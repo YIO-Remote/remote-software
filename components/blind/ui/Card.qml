@@ -32,7 +32,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: card
     width: parent.width; height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +171,7 @@ Rectangle {
 
                 delegate: Rectangle {
                     width: card.width; height: 10
-                    color: Style.colorHighlight2
+                    color: Style.color.highlight2
                 }
             }
         }
@@ -179,7 +179,7 @@ Rectangle {
         Rectangle {
             id: dragger_target
             width: parent.width; height: parent.height
-            color: Style.colorBackgroundTransparent
+            color: Style.color.backgroundTransparent
             y: userMove ? Math.round(height*percent/100) : Math.round(obj.position/100)
         }
 
@@ -215,7 +215,7 @@ Rectangle {
 
     Text {
         id: icon
-        color: Style.colorText
+        color: Style.color.text
         text: Style.icons.blind
         renderType: Text.NativeRendering
         width: 85; height: 85
@@ -226,7 +226,7 @@ Rectangle {
 
     Text {
         id: percentage
-        color: Style.colorText
+        color: Style.color.text
         text: userMove ? percent : obj.position
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
@@ -234,7 +234,7 @@ Rectangle {
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
         opacity: percentage.opacity
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
@@ -243,7 +243,7 @@ Rectangle {
 
     Text {
         id: title
-        color: Style.colorText
+        color: Style.color.text
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
@@ -254,7 +254,7 @@ Rectangle {
 
     Text {
         id: areaText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
@@ -267,7 +267,7 @@ Rectangle {
     BasicUI.CustomButton {
         id: buttonDown
         anchors { left: parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
+        color: Style.color.text
         buttonText: "   "
         visible: obj.isSupported(Blind.F_CLOSE)
 
@@ -277,7 +277,7 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorBackground
+            color: Style.color.background
             text: Style.icons.down_arrow_bold
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -289,7 +289,7 @@ Rectangle {
     BasicUI.CustomButton {
         id: buttonStop
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
+        color: Style.color.text
         buttonText: "   "
         visible: obj.isSupported(Blind.F_STOP)
         mouseArea.onClicked: {
@@ -298,7 +298,7 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorBackground
+            color: Style.color.background
             text: Style.icons.square
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -310,7 +310,7 @@ Rectangle {
     BasicUI.CustomButton {
         id: buttonUp
         anchors { right: parent.right; rightMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
+        color: Style.color.text
         buttonText: "   "
         visible: obj.isSupported(Blind.F_OPEN)
 
@@ -320,7 +320,7 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorBackground
+            color: Style.color.background
             text: Style.icons.up_arrow_bold
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

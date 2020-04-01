@@ -29,7 +29,7 @@ import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     width: parent.width; height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ Rectangle {
 
                 Text {
                     id: title
-                    color: Style.colorText
+                    color: Style.color.text
                     text: qsTr("Search") + translateHandler.emptyString
                     anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
                     font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
@@ -136,12 +136,12 @@ Rectangle {
                     id: searchContainer
                     width: parent.width - 60; height: 80
                     anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
-                    color: Style.colorText
+                    color: Style.color.text
                     radius: Style.cornerRadius
 
                     Text {
                         id: searchIcon
-                        color: Style.colorBackground
+                        color: Style.color.background
                         text: Style.icons.search
                         renderType: Text.NativeRendering
                         width: 70; height: 70
@@ -164,11 +164,11 @@ Rectangle {
                         width: parent.width-90; height: parent.height
                         anchors { left: searchIcon.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
                         placeholderText: qsTr("Search") + translateHandler.emptyString
-                        color: Style.colorBackground
+                        color: Style.color.background
                         font { family: "Open Sans Regular"; pixelSize: 27 }
 
                         background: Rectangle {
-                            color: Style.colorBackgroundTransparent
+                            color: Style.color.backgroundTransparent
                             border.width: 0
                         }
 
@@ -222,14 +222,14 @@ Rectangle {
 
                     Text {
                         id: recentSearchesTitle
-                        color: Style.colorText
+                        color: Style.color.text
                         text: qsTr("Recent searches") + translateHandler.emptyString
                         anchors { left: parent.left; top: parent.top }
                         font: Style.fonts.button
                     }
 
                     Text {
-                        color: Style.colorText
+                        color: Style.color.text
                         opacity: 0.5
                         text: qsTr("Clear") + translateHandler.emptyString
                         anchors { right: parent.right; top: parent.top }
@@ -258,7 +258,7 @@ Rectangle {
                             width: recentSearches.width; height: 60
 
                             Text {
-                                color: Style.colorText
+                                color: Style.color.text
                                 text: searchString
                                 font { family: "Open Sans Regular"; pixelSize: 25 }
                                 lineHeight: 1
@@ -295,7 +295,7 @@ Rectangle {
 
                     Text {
                         id: searchResultsTitle
-                        color: Style.colorText
+                        color: Style.color.text
                         anchors { left: parent.left; top: parent.top }
                         font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 30 }
                         lineHeight: 1
@@ -415,7 +415,7 @@ Rectangle {
                                     else if (title === "playlists")
                                         return qsTr("Playlists") + translateHandler.emptyString
                                 }
-                                color: Style.colorText
+                                color: Style.color.text
                                 anchors { left: parent.left; top: parent.top }
                                 font { family: "Open Sans Regular"; pixelSize: 40 }
                                 lineHeight: 1
@@ -477,7 +477,7 @@ Rectangle {
                         Rectangle {
                             id: albumImage
                             width: 160; height: 160
-                            color: Style.colorBackground
+                            color: Style.color.background
 
                             Image {
                                 source: item_image
@@ -493,7 +493,7 @@ Rectangle {
                             elide: Text.ElideRight
                             width: albumImage.width
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
+                            color: Style.color.text
                             anchors { left: parent.left; top: albumImage.bottom; topMargin: 20 }
                             font { family: "Open Sans Regular"; pixelSize: 25 }
                             lineHeight: 1
@@ -505,7 +505,7 @@ Rectangle {
                             elide: Text.ElideRight
                             width: albumImage.width
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
+                            color: Style.color.text
                             opacity: 0.6
                             anchors { left: parent.left; top: albumTitleText.bottom; topMargin: 5 }
                             font { family: "Open Sans Regular"; pixelSize: 20 }
@@ -559,7 +559,7 @@ Rectangle {
                             elide: Text.ElideRight
                             width: itemFlickable.width-60-albumImage.width-20-60
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
+                            color: Style.color.text
                             anchors { left: albumImage.right; leftMargin: 20; top: albumImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
                             font { family: "Open Sans Regular"; pixelSize: 25 }
                             lineHeight: 1
@@ -572,7 +572,7 @@ Rectangle {
                             visible: item_subtitle == "" ? false : true
                             width: albumTitleText.width
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
+                            color: Style.color.text
                             opacity: 0.6
                             anchors { left: albumTitleText.left; top: albumTitleText.bottom; topMargin: 5 }
                             font { family: "Open Sans Regular"; pixelSize: 20 }
@@ -610,7 +610,7 @@ Rectangle {
 
             Text {
                 id: backButton
-                color: Style.colorText
+                color: Style.color.text
                 text: Style.icons.left_arrow
                 renderType: Text.NativeRendering
                 width: 70; height: 70

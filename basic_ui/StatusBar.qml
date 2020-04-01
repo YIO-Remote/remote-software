@@ -39,7 +39,7 @@ Item {
     Rectangle {
         id: bg
         anchors.fill: parent
-        color: Style.colorBackground
+        color: Style.color.background
         opacity: 0
 
         Behavior on opacity {
@@ -75,7 +75,7 @@ Item {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: ""
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
@@ -147,7 +147,7 @@ Item {
 
     Text { // time in the middle
         id: timeText
-        color: Style.colorText
+        color: Style.color.text
         text: "22:00"
         verticalAlignment: Text.AlignVCenter
         height: parent.height
@@ -169,7 +169,7 @@ Item {
         width: 12
         height: width
         radius: width/2
-        color: Style.colorRed
+        color: Style.color.red
         visible: notifications.list.length > 0 ? true : false
         anchors.right: timeText.left
         anchors.rightMargin: 10
@@ -243,17 +243,17 @@ Item {
             id: icon_battery
             width: Battery.level/100*20
             height: 6
-            color: Battery.level >= 20 ? Style.colorLine : Style.colorRed
+            color: Battery.level >= 20 ? Style.color.line : Style.color.red
         }
         // battery frame
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             width: 30
             height: 18
-            color: Style.colorBackgroundTransparent
+            color: Style.color.backgroundTransparent
             radius: 4
             border.width: 2
-            border.color: Style.colorLine
+            border.color: Style.color.line
         }
         // battery notch
         Rectangle {
@@ -261,16 +261,16 @@ Item {
             anchors.right: parent.right
             width: 8
             height: 10
-            color: Style.colorBackgroundTransparent
+            color: Style.color.backgroundTransparent
             radius: 2
             border.width: 2
-            border.color: Style.colorLine
+            border.color: Style.color.line
         }
     }
 
     Text {
         id: batteryPercentText
-        color: Style.colorText
+        color: Style.color.text
         text: Math.round(Battery.level) + "%"
         verticalAlignment: Text.AlignVCenter
         height: parent.height

@@ -41,23 +41,25 @@ QtObject {
 
     property bool darkMode: config.ui_config.darkmode
 
-    property color colorGreen: "#19D37B"
-    property color colorRed: "#EA003C"
-    property color colorOrange: "#FF7241"
-    property color colorBlue: "#19435E"
+    readonly property  QtObject color: QtObject {
+        property color green: "#19D37B"
+        property color red: "#EA003C"
+        property color orange: "#FF7241"
+        property color blue: "#19435E"
 
-    property color colorBackground: darkMode ? "#000000" : "#ffffff"
-    property color colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
+        property color background: darkMode ? "#000000" : "#ffffff"
+        property color backgroundTransparent: darkMode ? "#00000000" :  "#00000000"
 
-    property color colorText: darkMode ? "#ffffff" : "#000000"
-    property color colorLine: darkMode ? "#ffffff" : "#000000"
+        property color text: darkMode ? "#ffffff" : "#000000"
+        property color line: darkMode ? "#ffffff" : "#000000"
 
-    property color colorHighlight1: "#918682"
-    property color colorHighlight2: "#313247"
+        property color highlight1: "#918682"
+        property color highlight2: "#313247"
 
-    property color colorLight: darkMode ? "#484848" : "#CBCBCB"
-    property color colorMedium: darkMode ? "#282828" : "#D4D4D4"
-    property color colorDark: darkMode ? "#1C1C1C" : "#ffffff"
+        property color light: darkMode ? "#484848" : "#CBCBCB"
+        property color medium: darkMode ? "#282828" : "#D4D4D4"
+        property color dark: darkMode ? "#1C1C1C" : "#ffffff"
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ICONS

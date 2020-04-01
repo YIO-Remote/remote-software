@@ -51,7 +51,7 @@ Popup {
 
     background: Rectangle {
         anchors.fill: parent
-        color: Style.colorHighlight1
+        color: Style.color.highlight1
         radius: 8
     }
 
@@ -70,9 +70,9 @@ Popup {
         anchors.topMargin: 10
 
         size: 40
-        colorCircle: Style.colorLine
-        colorCircleGrad: Style.colorLine
-        colorBackground: Style.colorDark
+        colorCircle: Style.color.line
+        colorCircleGrad: Style.color.line
+        colorBackground: Style.color.dark
         showBackground: false
         arcBegin: 0
         arcEnd: 0
@@ -113,12 +113,12 @@ Popup {
             visible: !Style.darkMode
             anchors.fill: parent
             source: parent
-            color: Style.colorText
+            color: Style.color.text
         }
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Low battery") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap
@@ -133,7 +133,7 @@ Popup {
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Please charge the remote soon") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap

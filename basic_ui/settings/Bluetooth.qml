@@ -36,7 +36,7 @@ Item {
 
     Text {
         id: header
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Bluetooth") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans Regular"
@@ -50,14 +50,14 @@ Item {
         width: parent.width
         height: childrenRect.height + 40 //bluetoothText.height + smallText.height + 60
         radius: Style.cornerRadius
-        color: Style.colorDark
+        color: Style.color.dark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: bluetoothText
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr("Area detection") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -95,7 +95,7 @@ Item {
 
         Text {
             id: smallText
-            color: Style.colorText
+            color: Style.color.text
             opacity: 0.5
             text: qsTr("Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.") + translateHandler.emptyString
             wrapMode: Text.WordWrap

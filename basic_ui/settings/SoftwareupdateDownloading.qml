@@ -9,7 +9,7 @@ import SoftwareUpdate 1.0
 Rectangle {
     id: container
     width: parent.width; height: parent.height
-    color: Style.colorBackground
+    color: Style.color.background
 
     Connections {
         target: SoftwareUpdate
@@ -23,14 +23,14 @@ Rectangle {
     Rectangle {
         id: progressBg
         width: parent.width - 60; height: 4
-        color: Style.colorDark
+        color: Style.color.dark
         anchors { top: parent.top; topMargin: 380; horizontalCenter: parent.horizontalCenter }
     }
 
     Rectangle {
         width: SoftwareUpdate.bytesReceived/SoftwareUpdate.bytesTotal * progressBg.width
         height: 4
-        color: Style.colorLine
+        color: Style.color.line
         anchors { left: progressBg.left; top: progressBg.top }
 
         Behavior on width {
@@ -40,7 +40,7 @@ Rectangle {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Downloading") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter
         anchors { top: progressBg.bottom; topMargin: 30; horizontalCenter: parent.horizontalCenter }
@@ -49,7 +49,7 @@ Rectangle {
 
     Text {
         id: smalltext
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: SoftwareUpdate.downloadSpeed
         horizontalAlignment: Text.AlignHCenter

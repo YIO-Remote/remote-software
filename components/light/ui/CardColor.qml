@@ -31,7 +31,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: card
     width: parent.width; height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
 
@@ -186,7 +186,7 @@ Rectangle {
 
             Rectangle {
                 id: percentageBG2
-                color: Style.colorMedium
+                color: Style.color.medium
                 width: parent.width; height: 0
                 radius: Style.cornerRadius
                 anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
@@ -198,7 +198,7 @@ Rectangle {
 
             Rectangle {
                 id: percentageBG
-                color: Style.colorHighlight2
+                color: Style.color.highlight2
                 width: parent.width; height: parent.height*brightness/100
                 radius: Style.cornerRadius
                 anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
@@ -210,7 +210,7 @@ Rectangle {
 
             Text {
                 id: icon
-                color: Style.colorText
+                color: Style.color.text
                 text: Style.icons.light
                 renderType: Text.NativeRendering
                 width: 85; height: 85
@@ -221,7 +221,7 @@ Rectangle {
 
             Text {
                 id: percentage
-                color: Style.colorText
+                color: Style.color.text
                 text: brightness
                 horizontalAlignment: Text.AlignLeft
                 anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
@@ -229,7 +229,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: percentage.opacity
                 text: "%"
                 anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
@@ -238,7 +238,7 @@ Rectangle {
 
             Text {
                 id: title
-                color: Style.colorText
+                color: Style.color.text
                 text: obj.friendly_name
                 wrapMode: Text.WordWrap
                 width: parent.width-60
@@ -249,7 +249,7 @@ Rectangle {
 
             Text {
                 id: areaText
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: obj.area
                 elide: Text.ElideRight
@@ -262,8 +262,8 @@ Rectangle {
             BasicUI.CustomButton {
                 id: toggleButton
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: Style.colorText
-                buttonTextColor: Style.colorBackground
+                color: Style.color.text
+                buttonTextColor: Style.color.background
                 buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
                 mouseArea.onClicked: {
@@ -275,8 +275,8 @@ Rectangle {
             BasicUI.CustomButton {
                 id: colorButton
                 anchors { left:toggleButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: Style.colorText
-                buttonTextColor: Style.colorBackground
+                color: Style.color.text
+                buttonTextColor: Style.color.background
                 buttonText: qsTr("Color") + translateHandler.emptyString
 
                 mouseArea.onClicked: {
@@ -379,7 +379,7 @@ Rectangle {
 
             Text {
                 id: icon_b
-                color: Style.colorText
+                color: Style.color.text
                 text: Style.icons.light
                 renderType: Text.NativeRendering
                 width: 85; height: 85
@@ -394,7 +394,7 @@ Rectangle {
 
             Text {
                 id: color_b
-                color: Style.colorText
+                color: Style.color.text
                 text: "R: " + Math.round(picker.color.r*255) + "\nG: " + Math.round(picker.color.g*255) + "\nB: " + Math.round(picker.color.b*255)
                 wrapMode: Text.WordWrap
                 width: parent.width-60
@@ -409,7 +409,7 @@ Rectangle {
 
             Text {
                 id: title_b
-                color: Style.colorText
+                color: Style.color.text
                 text: obj.friendly_name
                 wrapMode: Text.WordWrap
                 width: parent.width-60
@@ -424,7 +424,7 @@ Rectangle {
 
             Text {
                 id: areaText_b
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: obj.area
                 elide: Text.ElideRight
@@ -441,15 +441,15 @@ Rectangle {
             Rectangle {
                 id: picker
                 width: 60; height: width
-                border { color: Style.colorText; width: 4 }
+                border { color: Style.color.text; width: 4 }
                 radius: width/2
             }
 
             BasicUI.CustomButton {
                 id: button_b
                 anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-                color: Style.colorText
-                buttonTextColor: Style.colorBackground
+                color: Style.color.text
+                buttonTextColor: Style.color.background
                 buttonText: "OK"
 
                 mouseArea.onClicked: {

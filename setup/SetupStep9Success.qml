@@ -35,7 +35,7 @@ Item {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Connected") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter
         anchors { top: parent.top; topMargin: 220; horizontalCenter: parent.horizontalCenter }
@@ -45,7 +45,7 @@ Item {
 
     Text {
         id: smalltext
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("YIO Dock has successfully connected to your Wi-Fi network.\n\nTo use the web configurator,\ngo to Settings and turn on\nRemote configuration after restarting the remote.") + translateHandler.emptyString
         wrapMode: Text.WordWrap

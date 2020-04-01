@@ -27,7 +27,7 @@ Rectangle {
     id: container
     width: parent.width; height: languageListView.height
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
@@ -57,11 +57,11 @@ Rectangle {
         delegate:
             Rectangle {
             width: parent.width; height: 74
-            color: Style.colorBackgroundTransparent
+            color: Style.color.backgroundTransparent
 
             Text {
                 text: translations[index].name
-                color: Style.colorText
+                color: Style.color.text
                 anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
                 font: Style.fonts.button
             }
@@ -80,6 +80,6 @@ Rectangle {
             }
         }
 
-        highlight: Rectangle { color: Style.colorHighlight1; radius: Style.cornerRadius }
+        highlight: Rectangle { color: Style.color.highlight1; radius: Style.cornerRadius }
     }
 }

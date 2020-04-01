@@ -57,7 +57,7 @@ Item {
 
         Text {
             id: titleText
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr("Wi-Fi setup") + translateHandler.emptyString
             horizontalAlignment: Text.AlignHCenter
             anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
@@ -67,7 +67,7 @@ Item {
 
         Text {
             id: smalltext
-            color: Style.colorText
+            color: Style.color.text
             opacity: 0.5
             text: qsTr("Select a Wi-Fi network.") + translateHandler.emptyString
             horizontalAlignment: Text.AlignHCenter
@@ -100,14 +100,14 @@ Item {
 
                 Text {
                     id: delegateSSID
-                    color: Style.colorText
+                    color: Style.color.text
                     text: wifi.networkScanResult[index].name
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                     font: Style.fonts.button
                 }
 
                 Text {
-                    color: Style.colorText
+                    color: Style.color.text
                     opacity: 0.3
                     text: Style.icons.wifi_3
                     renderType: Text.NativeRendering
@@ -118,7 +118,7 @@ Item {
                 }
 
                 Text {
-                    color: Style.colorText
+                    color: Style.color.text
                     text: {
                         if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
                             return Style.icons.wifi_1

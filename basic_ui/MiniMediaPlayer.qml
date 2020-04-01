@@ -195,7 +195,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Style.colorBackground
+        color: Style.color.background
     }
 
     SwipeView {
@@ -390,7 +390,7 @@ Item {
 
                     Text {
                         id: title
-                        color: Style.colorText
+                        color: Style.color.text
                         text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -404,7 +404,7 @@ Item {
 
                     Text {
                         id: artist
-                        color: Style.colorText
+                        color: Style.color.text
                         text: obj ? obj.mediaTitle : ""
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -434,7 +434,7 @@ Item {
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 Text {
                     id: sourceText
-                    color: Style.colorText
+                    color: Style.color.text
                     text: obj ? obj.source : ""
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
@@ -452,7 +452,7 @@ Item {
 
                 Text {
                     id: titleOpen
-                    color: Style.colorText
+                    color: Style.color.text
                     text: obj ? obj.mediaTitle : ""
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -469,7 +469,7 @@ Item {
 
                 Text {
                     id: artistOpen
-                    color: Style.colorText
+                    color: Style.color.text
                     text: obj ? obj.mediaArtist : ""
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -495,7 +495,7 @@ Item {
 
                     Text {
                         id: speakerIcon
-                        color: Style.colorText
+                        color: Style.color.text
                         text: Style.icons.speaker
                         renderType: Text.NativeRendering
                         width: 60
@@ -506,7 +506,7 @@ Item {
                     }
 
                     Text {
-                        color: Style.colorText
+                        color: Style.color.text
                         text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
                         font.family: "Open Sans Regular"
@@ -523,7 +523,7 @@ Item {
 
     Text {
         id: closeButton
-        color: Style.colorText
+        color: Style.color.text
         text: Style.icons.down_arrow
         renderType: Text.NativeRendering
         width: 70
@@ -561,7 +561,7 @@ Item {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.prev
             renderType: Text.NativeRendering
             width: 85
@@ -597,7 +597,7 @@ Item {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.pause
             renderType: Text.NativeRendering
             width: 85
@@ -614,7 +614,7 @@ Item {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.play
             renderType: Text.NativeRendering
             width: 85
@@ -657,7 +657,7 @@ Item {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.next
             renderType: Text.NativeRendering
             width: 85
@@ -693,7 +693,7 @@ Item {
             width: 8
             height: 8
             radius: height/2
-            color: Style.colorText
+            color: Style.color.text
             opacity: index == mediaPlayers.currentIndex ? 1 : 0.3
         }
     }

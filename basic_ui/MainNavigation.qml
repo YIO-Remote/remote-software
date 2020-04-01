@@ -34,7 +34,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Style.colorBackground
+        color: Style.color.background
     }
 
     MouseArea {
@@ -206,7 +206,7 @@ Item {
 
                 width: buttonText.implicitWidth+30
                 height: 50
-                color: Style.colorBackgroundTransparent
+                color: Style.color.backgroundTransparent
                 opacity: selected ? 1 : 0.3
 
                 states: State {
@@ -226,7 +226,7 @@ Item {
                 Rectangle {
                     width: parent.width
                     height: parent.height
-                    color: dragArea.held ? Style.colorHighlight1 : ( selected ? Style.colorHighlight2 : Style.colorBackgroundTransparent )
+                    color: dragArea.held ? Style.color.highlight1 : ( selected ? Style.color.highlight2 : Style.color.backgroundTransparent )
                     radius: width / 2
 
                     Behavior on color {
@@ -235,7 +235,7 @@ Item {
 
                     Text {
                         id: buttonText
-                        color: Style.colorText
+                        color: Style.color.text
                         text: qsTr(friendly_name) + translateHandler.emptyString
                         horizontalAlignment: Text.AlignHCenter
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -263,7 +263,7 @@ Item {
 
 //    Rectangle {
 //        width: mainNavigationListView.currentItem.width; height: 50
-//        color: Style.colorHighlight1
+//        color: Style.color.highlight1
 //        radius: width / 2
 //        x: mapFromItem(mainNavigationListView.currentItem, x, y).x
 //    }

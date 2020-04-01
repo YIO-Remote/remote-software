@@ -34,12 +34,12 @@ Item {
         width: 110
         height: 60
         radius: height/2
-        color: Style.colorRed
+        color: Style.color.red
         anchors.top: parent.top
         anchors.left: parent.left
 
         Text {
-            color: Style.colorLine
+            color: Style.color.line
             text: Style.icons.power_on
             renderType: Text.NativeRendering
             width: 70

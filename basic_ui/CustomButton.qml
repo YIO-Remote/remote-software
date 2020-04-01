@@ -35,17 +35,17 @@ Rectangle {
     id: button
     width: buttonText.implicitWidth+60
     height: 60
-    color: Style.colorBackgroundTransparent
+    color: Style.color.backgroundTransparent
     radius: 40
-    border.color: Style.colorLine
+    border.color: Style.color.line
 
     states: State {
         name: "pressed"
         when: mouseArea.pressed == true
         PropertyChanges {
             target: button
-            color: Style.colorLine
-            border.color: Style.colorBackgroundTransparent
+            color: Style.color.line
+            border.color: Style.color.backgroundTransparent
         }
     }
 
@@ -58,7 +58,7 @@ Rectangle {
 
     Text {
         id: buttonText
-        color: Style.colorText
+        color: Style.color.text
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter

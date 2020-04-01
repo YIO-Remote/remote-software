@@ -81,7 +81,7 @@ Item {
         id: bg
         width: 300
         height: 80
-        color: Style.colorLight
+        color: Style.color.light
         radius: height/2
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -99,7 +99,7 @@ Item {
             id: volumeBar
             height: parent.height
             width: bg.width * volumePosition/100
-            color: Style.colorLine
+            color: Style.color.line
             anchors.left: parent.left
         }
 

@@ -28,11 +28,11 @@ Rectangle {
     width: parent.width
     height: childrenRect.height+20
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     Text {
         id: title
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Thank you!") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
         font: Style.fonts.button
@@ -40,7 +40,7 @@ Rectangle {
 
     Text {
         id: smallText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("
 YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:\n

@@ -32,7 +32,7 @@ Item {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Connected") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter
         anchors { top: parent.top; topMargin: 280; horizontalCenter: parent.horizontalCenter }
@@ -42,7 +42,7 @@ Item {
 
     Text {
         id: smalltext
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("YIO Remote has successfully connected to your Wi-Fi network.") + translateHandler.emptyString
         wrapMode: Text.WordWrap

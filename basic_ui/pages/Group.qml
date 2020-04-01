@@ -65,7 +65,7 @@ Item {
         height: 80
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr(config.groups[groupID].name) + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20

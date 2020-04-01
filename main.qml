@@ -50,7 +50,7 @@ ApplicationWindow {
     visible: true
     width: Style.screen.width
     height: Style.screen.height
-    color: Style.colorBackground
+    color: Style.color.background
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -293,7 +293,7 @@ ApplicationWindow {
             width: parent.width
             height: parent.height - 40
             y: 40
-            color: Style.colorBackground
+            color: Style.color.background
             opacity: notificationsDrawer.position
         }
 

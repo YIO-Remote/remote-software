@@ -32,7 +32,7 @@ Rectangle {
     id: container
     width: parent.width; height: childrenRect.height + 20
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     Component {
         id: integrationComponent
@@ -48,7 +48,7 @@ Rectangle {
                 width: parent.width - 100
                 text: obj.state === 0 ? title : title + qsTr(" - Disconnected") + translateHandler.emptyString
                 elide: Text.ElideRight
-                color: Style.colorText
+                color: Style.color.text
                 anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
                 font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
             }
@@ -56,34 +56,34 @@ Rectangle {
             Rectangle {
                 width: parent.width
                 height: 2
-                color: Style.colorBackground
+                color: Style.color.background
                 anchors.bottom: parent.bottom
             }
 
             Rectangle {
                 id: circleButton
                 width: 36; height: 36
-                color: Style.colorLine
+                color: Style.color.line
                 radius: width/2
                 anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: 20 }
 
                 Rectangle {
                     width: 4; height: 4
-                    color: Style.colorBackground
+                    color: Style.color.background
                     radius: width/2
                     anchors { left: parent.left; leftMargin: 8; verticalCenter: parent.verticalCenter }
                 }
 
                 Rectangle {
                     width: 4; height: 4
-                    color: Style.colorBackground
+                    color: Style.color.background
                     radius: width/2
                     anchors.centerIn: parent
                 }
 
                 Rectangle {
                     width: 4; height: 4
-                    color: Style.colorBackground
+                    color: Style.color.background
                     radius: width/2
                     anchors { right: parent.right; rightMargin: 8; verticalCenter: parent.verticalCenter }
                 }
@@ -121,7 +121,7 @@ Rectangle {
 
                 background: Rectangle {
                     anchors.fill: parent
-                    color: Style.colorLine
+                    color: Style.color.line
                     radius: Style.cornerRadius
                 }
 
@@ -131,7 +131,7 @@ Rectangle {
 
                     Text {
                         text: qsTr("Connect") + translateHandler.emptyString
-                        color: Style.colorBackground
+                        color: Style.color.background
                         opacity: obj.state === 0 ? 0.5 : 1
                         anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
                         font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
@@ -152,7 +152,7 @@ Rectangle {
 
                 Rectangle {
                     width: parent.width; height: 2
-                    color: Style.colorBackground
+                    color: Style.color.background
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -163,7 +163,7 @@ Rectangle {
 
                     Text {
                         text: qsTr("Disconnect") + translateHandler.emptyString
-                        color: Style.colorBackground
+                        color: Style.color.background
                         anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
                         font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 27 }
                     }

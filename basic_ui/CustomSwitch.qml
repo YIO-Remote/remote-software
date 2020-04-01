@@ -46,7 +46,7 @@ Item {
             width: 26
             height: 26
             radius: Style.cornerRadius
-            color: button.checked ? Style.colorText : Style.colorLight
+            color: button.checked ? Style.color.text : Style.color.light
 
             Behavior on x {
                 enabled: !button.pressed
@@ -56,9 +56,9 @@ Item {
 
         background: Rectangle {
             radius: Style.cornerRadius+2
-            color: button.checked ? Style.colorHighlight1 : Style.colorDark
+            color: button.checked ? Style.color.highlight1 : Style.color.dark
             border.width: 2
-            border.color: button.checked ? Style.colorHighlight1 : Style.colorLight
+            border.color: button.checked ? Style.color.highlight1 : Style.color.light
         }
     }
 

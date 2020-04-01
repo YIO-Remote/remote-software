@@ -31,7 +31,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: cardHome
     width: parent.width; height: parent.height
-    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
+    color: mediaplayerUtils.pixelColor === "#000000" ? Style.color.dark : mediaplayerUtils.pixelColor
     radius: Style.cornerRadius
 
     Behavior on color {
@@ -136,7 +136,7 @@ Rectangle {
 
         Text {
             id: title
-            color: Style.colorText
+            color: Style.color.text
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
@@ -148,7 +148,7 @@ Rectangle {
 
         Text {
             id: info
-            color: Style.colorText
+            color: Style.color.text
             opacity: 0.5
             text: obj.source
             elide: Text.ElideRight
@@ -160,7 +160,7 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: icon.text
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -178,7 +178,7 @@ Rectangle {
 
     Text {
         id: songTitle
-        color: Style.colorText
+        color: Style.color.text
         text: obj.mediaTitle
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
@@ -191,7 +191,7 @@ Rectangle {
 
     Text {
         id: artist
-        color: Style.colorText
+        color: Style.color.text
         text: obj.mediaArtist
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
@@ -210,7 +210,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width*(obj.mediaProgress/obj.mediaDuration); height: parent.height
-            color: Style.colorLine
+            color: Style.color.line
 
             Behavior on width {
                 NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
@@ -225,7 +225,7 @@ Rectangle {
         anchors { right: playButton.left; rightMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.prev
             renderType: Text.NativeRendering
             width: 85; height: 85
@@ -251,7 +251,7 @@ Rectangle {
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 80 }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.pause
             renderType: Text.NativeRendering
             width: 85; height: 85
@@ -266,7 +266,7 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.play
             renderType: Text.NativeRendering
             width: 85; height: 85
@@ -301,7 +301,7 @@ Rectangle {
         anchors { left: playButton.right; leftMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: Style.icons.next
             renderType: Text.NativeRendering
             width: 85; height: 85

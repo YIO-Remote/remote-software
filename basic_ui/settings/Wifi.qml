@@ -35,17 +35,17 @@ Item {
         id: containerBluetooth
         width: parent.width; height: childrenRect.height
         radius: Style.cornerRadius
-        color: Style.colorDark
+        color: Style.color.dark
 
         Rectangle {
             id: bluetoothSection
             width: parent.width; height: childrenRect.height + 40
             radius: Style.cornerRadius
-            color: Style.colorDark
+            color: Style.color.dark
 
             Text {
                 id: bluetoothText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Area detection") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                 font: Style.fonts.button
@@ -75,7 +75,7 @@ Item {
 
             Text {
                 id: smallText
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
@@ -92,7 +92,7 @@ Item {
         width: parent.width; height: childrenRect.height
         anchors { top: containerBluetooth.bottom; topMargin: 20 }
         radius: Style.cornerRadius
-        color: Style.colorDark
+        color: Style.color.dark
 
         Flow {
             id: wifiFlow
@@ -105,7 +105,7 @@ Item {
 
                 Text {
                     id: wifiOnOffText
-                    color: Style.colorText
+                    color: Style.color.text
                     text: qsTr("WiFi") + translateHandler.emptyString
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                     font: Style.fonts.button
@@ -129,7 +129,7 @@ Item {
 
             Rectangle {
                 width: parent.width; height: 2
-                color: Style.colorBackground
+                color: Style.color.background
             }
 
             // CURRENT WIFI NETWORK
@@ -138,14 +138,14 @@ Item {
 
                 Text {
                     id: currentWifiSSID
-                    color: Style.colorText
+                    color: Style.color.text
                     text: wifi.wifiStatus.name
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                     font: Style.fonts.button
                 }
 
                 Text {
-                    color: Style.colorText
+                    color: Style.color.text
                     opacity: 0.3
                     text: Style.icons.wifi_3
                     renderType: Text.NativeRendering
@@ -156,7 +156,7 @@ Item {
                 }
 
                 Text {
-                    color: Style.colorText
+                    color: Style.color.text
                     text: {
                         if (wifi.wifiStatus.signalStrength == SignalStrengthEnum.WEAK || wifi.wifiStatus.signalStrength == SignalStrengthEnum.NONE)
                             return Style.icons.wifi_1
@@ -176,7 +176,7 @@ Item {
 
             Rectangle {
                 width: parent.width; height: 2
-                color: Style.colorBackground
+                color: Style.color.background
             }
 
             // OTHER NETWORKS
@@ -185,7 +185,7 @@ Item {
 
                 Text {
                     id: otherNetworksText
-                    color: Style.colorHighlight1
+                    color: Style.color.highlight1
                     text: qsTr("Other networks") + translateHandler.emptyString
                     wrapMode: Text.WordWrap
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
@@ -217,14 +217,14 @@ Item {
 
                         Text {
                             id: delegateSSID
-                            color: Style.colorText
+                            color: Style.color.text
                             text: wifi.networkScanResult[index].name
                             anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                             font: Style.fonts.button
                         }
 
                         Text {
-                            color: Style.colorText
+                            color: Style.color.text
                             opacity: 0.3
                             text: Style.icons.wifi_3
                             renderType: Text.NativeRendering
@@ -235,7 +235,7 @@ Item {
                         }
 
                         Text {
-                            color: Style.colorText
+                            color: Style.color.text
                             text: {
                                 if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
                                     return Style.icons.wifi_1

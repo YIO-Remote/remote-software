@@ -30,7 +30,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: container
     width: parent.width; height: 400 //childrenRect.height + 40
-    color: Style.colorBackground
+    color: Style.color.background
 
     MouseArea {
         anchors.fill: parent
@@ -89,7 +89,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         width: parent.width - 100
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
@@ -103,7 +103,7 @@ Rectangle {
         id: searchContainer
         width: parent.width - 40; height: 80
         anchors { top: closeButton.bottom; topMargin: 20; horizontalCenter: parent.horizontalCenter }
-        color: Style.colorText
+        color: Style.color.text
         radius: Style.cornerRadius
 
         TextField {
@@ -114,12 +114,12 @@ Rectangle {
             placeholderText: qsTr("Password") + translateHandler.emptyString
             echoMode: TextInput.Password
             passwordCharacter: "*"
-            color: Style.colorBackground
+            color: Style.color.background
             font { family: "Open Sans Regular"; pixelSize: 27 }
             focus: true
 
             background: Rectangle {
-                color: Style.colorBackgroundTransparent
+                color: Style.color.backgroundTransparent
                 border.width: 0
             }
 
@@ -147,7 +147,7 @@ Rectangle {
 
     Text {
         id: closeButton
-        color: Style.colorText
+        color: Style.color.text
         text: Style.icons.close
         renderType: Text.NativeRendering
         width: 70; height: 70

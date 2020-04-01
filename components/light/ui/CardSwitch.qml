@@ -30,7 +30,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: card
     width: parent.width; height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
 
@@ -99,7 +99,7 @@ Rectangle {
 
     Rectangle {
         id: percentageBG
-        color: obj.state ? Style.colorHighlight1 : Style.colorBackgroundTransparent
+        color: obj.state ? Style.color.highlight1 : Style.color.backgroundTransparent
         width: parent.width; height: parent.height
         radius: Style.cornerRadius
         anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
@@ -111,7 +111,7 @@ Rectangle {
 
     Text {
         id: icon
-        color: Style.colorText
+        color: Style.color.text
         text: Style.icons.light
         renderType: Text.NativeRendering
         width: 85; height: 85
@@ -122,7 +122,7 @@ Rectangle {
 
     Text {
         id: percentage
-        color: Style.colorText
+        color: Style.color.text
         text: obj.state ? "On" : "Off"
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: -20; left: parent.left; leftMargin: 30 }
@@ -131,7 +131,7 @@ Rectangle {
 
     Text {
         id: title
-        color: Style.colorText
+        color: Style.color.text
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
@@ -142,7 +142,7 @@ Rectangle {
 
     Text {
         id: areaText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
@@ -155,8 +155,8 @@ Rectangle {
     BasicUI.CustomButton {
         id: buttonTurnOn
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
-        buttonTextColor: Style.colorBackground
+        color: Style.color.text
+        buttonTextColor: Style.color.background
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {

@@ -79,7 +79,7 @@ Flickable {
 
         Text {
             id: titleText
-            color: Style.colorText
+            color: Style.color.text
             text: title
             anchors.centerIn: parent
             font.family: "Open Sans Regular"

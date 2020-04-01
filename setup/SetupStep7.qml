@@ -52,7 +52,7 @@ Item {
 
     Text {
         id: smalltext
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("Connect the YIO Dock to\na power source and wait until it starts blinking.\n\n To share the Wi-Fi network credentials with the dock, tap next.") + translateHandler.emptyString
         wrapMode: Text.WordWrap

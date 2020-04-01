@@ -30,7 +30,7 @@ Rectangle {
     id: profiles
     width: 480
     height: 0
-    color: Style.colorHighlight2
+    color: Style.color.highlight2
     radius: Style.cornerRadius
     anchors.bottom: parent.bottom
 
@@ -93,7 +93,7 @@ Rectangle {
 
     Text {
         id: title
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Profiles") + translateHandler.emptyString
         anchors { top: parent.top; topMargin: 30; left: parent.left; leftMargin: 30 }
         font {family: "Open Sans Regular"; pixelSize: 60 }
@@ -135,7 +135,7 @@ Rectangle {
             Rectangle {
                 width: parent.width
                 height: 2
-                color: Style.colorLight
+                color: Style.color.light
                 visible: id == config.profile ? true : false
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -146,13 +146,13 @@ Rectangle {
                 width: 70
                 height: 70
                 radius: width/2
-                color: id == config.profile ? Style.colorText : Style.colorHighlight1
+                color: id == config.profile ? Style.color.text : Style.color.highlight1
                 anchors.top: parent.top
                 anchors.left: parent.left
 
                 Text {
                     anchors.centerIn: parent
-                    color: id == config.profile ? Style.colorBackground : Style.colorText
+                    color: id == config.profile ? Style.color.background : Style.color.text
                     text: name.substring(0,1);
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -161,7 +161,7 @@ Rectangle {
             }
 
             Text {
-                color: id == config.profile ? Style.colorText : Style.colorHighlight1
+                color: id == config.profile ? Style.color.text : Style.color.highlight1
                 text: name
                 anchors { verticalCenter: img.verticalCenter; left: img.right; leftMargin: 20 }
                 font {family: "Open Sans Regular"; pixelSize: 27 }
@@ -182,7 +182,7 @@ Rectangle {
 
     Text {
         id: smallText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("To edit your profiles, use the web configurator tool in settings.") + translateHandler.emptyString
         wrapMode: Text.WordWrap
@@ -199,7 +199,7 @@ Rectangle {
 
     Text {
         id: closeButton
-        color: Style.colorText
+        color: Style.color.text
         text: Style.icons.close
         renderType: Text.NativeRendering
         width: 70; height: 70

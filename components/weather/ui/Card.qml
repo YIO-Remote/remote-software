@@ -33,7 +33,7 @@ Rectangle {
     id: weatherList
     width: parent.width
     height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
 
     /////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS (with long press detection)
@@ -65,7 +65,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.topMargin: 10
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
@@ -91,7 +91,7 @@ Rectangle {
                 width: parent.width
                 height: parent.height
                 visible: true
-                color: Style.colorMedium
+                color: Style.color.medium
                 radius: Style.cornerRadius
 
                 Text {
@@ -99,7 +99,7 @@ Rectangle {
                     width: 30
                     anchors { left: parent.left; top:parent.top; leftMargin: 10; verticalCenter: parent.verticalCenter }
                     verticalAlignment: Text.AlignVCenter
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.date
                     font.family: "Open Sans Regular"
                     font.weight: Font.Normal
@@ -117,7 +117,7 @@ Rectangle {
                 Text {
                     id: desc
                     anchors { left: image.right; top:parent.top; topMargin: 20 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.description
                     font.family: "Open Sans Regular"
                     font.weight: Font.Normal
@@ -126,7 +126,7 @@ Rectangle {
                 Text {
                     id: temp
                     anchors { right: parent.right; top:parent.top; topMargin: 20; rightMargin: 10 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.temp
                     font.family: "Open Sans Regular"
                     font.weight: Font.Normal
@@ -145,7 +145,7 @@ Rectangle {
                 Text {
                     id: rain
                     anchors { left: imgRain.right; leftMargin:10; bottom: parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.rain
                     font.family: "Open Sans Regular"
                     font.weight: Font.Normal
@@ -163,7 +163,7 @@ Rectangle {
                 Text {
                     id: snow
                     anchors { left: imgSnow.right; leftMargin:10; bottom:parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.snow
                     visible: model.snow
                     font.family: "Open Sans Regular"
@@ -182,7 +182,7 @@ Rectangle {
                 Text {
                     id: wind
                     anchors { left: imgWind.right; leftMargin:10; bottom :parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.wind
                     font.family: "Open Sans Regular"
                     font.weight: Font.Normal
@@ -191,7 +191,7 @@ Rectangle {
                 Text {
                     id: humidity
                     anchors { right: parent.right; rightMargin: 10; bottom : parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.humidity
                     font.family: "Open Sans Regular"
                     font.weight: Font.Normal
@@ -237,7 +237,7 @@ Rectangle {
             visible: !Style.darkMode
             anchors.fill: parent
             source: parent
-            color: Style.colorText
+            color: Style.color.text
             antialiasing: true
         }
 
