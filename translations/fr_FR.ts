@@ -117,17 +117,17 @@ www.yio-remote.com
   <context>
     <name>Bluetooth</name>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="41"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
       <source>Bluetooth</source>
       <translation>Bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
       <source>Area detection</source>
       <translation>Zone de détection</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Analyse automatiquement des balises bluetooth associées aux zones, trouve les périphériques les plus proches et les affichent dans cette zone.</translation>
     </message>
@@ -152,12 +152,12 @@ www.yio-remote.com
   <context>
     <name>ButtonBase</name>
     <message>
-      <location filename="../components/ButtonBase.qml" line="374"/>
+      <location filename="../components/ButtonBase.qml" line="372"/>
       <source>Remove from favorites</source>
       <translation>Retirer des favoris</translation>
     </message>
     <message>
-      <location filename="../components/ButtonBase.qml" line="374"/>
+      <location filename="../components/ButtonBase.qml" line="372"/>
       <source>Add to favorites</source>
       <translation>Ajouter aux favoris</translation>
     </message>
@@ -267,7 +267,7 @@ www.yio-remote.com
   <context>
     <name>CardPlaylists</name>
     <message>
-      <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
+      <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
       <source>My playlists</source>
       <translation>Mes listes de lecture</translation>
     </message>
@@ -292,25 +292,25 @@ www.yio-remote.com
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="409"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="410"/>
       <source>Albums</source>
       <translation>Albums</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
       <translation>Morceaux</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
       <translation>Artistes</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
       <source>Playlists</source>
       <translation>Listes de lecture</translation>
     </message>
@@ -331,9 +331,42 @@ www.yio-remote.com
   <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="162"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
       <source>% Charged</source>
       <translation>Chargé</translation>
+    </message>
+  </context>
+  <context>
+    <name>CommandLineHandler</name>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="40"/>
+      <source>Use configuration profile.</source>
+      <translation>Utiliser le profil de configuration.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="43"/>
+      <source>Use configuration file.</source>
+      <translation>Utiliser le fichier de configuration.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="44"/>
+      <source>Use configuration schema file.</source>
+      <translation>Utiliser le fichier schéma de configuration.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="45"/>
+      <source>Use hardware configuration file.</source>
+      <translation>Utiliser le fichier de configuration matériel.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="46"/>
+      <source>Use hardware configuration schema file.</source>
+      <translation>Utiliser le fichier schéma de configuration matériel.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="50"/>
+      <source>Validate json configuration files and exit.</source>
+      <translation>Valider les fichiers de configuration json et quitter.</translation>
     </message>
   </context>
   <context>
@@ -391,32 +424,32 @@ www.yio-remote.com
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="109"/>
       <source>Lights</source>
       <translation>Lumières</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="109"/>
       <source>Blinds</source>
       <translation>Volets</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="109"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="111"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
       <translation>Télécommande</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="111"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
       <translation>Thermostat</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="111"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
       <translation>Changer</translation>
     </message>
@@ -428,6 +461,19 @@ www.yio-remote.com
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
       <translation>Favoris</translation>
+    </message>
+  </context>
+  <context>
+    <name>FileDownload</name>
+    <message>
+      <location filename="../sources/filedownload.cpp" line="114"/>
+      <source>Not enough free space (%1 MB).</source>
+      <translation>Espace libre insuffisant (%1 MB).</translation>
+    </message>
+    <message>
+      <location filename="../sources/filedownload.cpp" line="121"/>
+      <source>Destination file already exists</source>
+      <translation>Le fichier de destination existe déjà</translation>
     </message>
   </context>
   <context>
@@ -485,28 +531,28 @@ www.yio-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="65"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Favoris</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="65"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Settings</source>
       <translation>Réglages</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Lights</source>
       <translation>Lumières</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Blinds</source>
       <translation>Volets</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
@@ -613,119 +659,407 @@ www.yio-remote.com
   <context>
     <name>RemoteConfig</name>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="42"/>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="41"/>
       <source>Remote configuration</source>
       <translation>Paramétrage de la télécommande</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="77"/>
-      <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
-
-</source>
-      <translation>Utilisez votre navigateur pour configurer votre télécommande YIO ou téléchargez des sauvegardes. Accédez à la page :
-
-</translation>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
+      <source>Use your browser to configure your YIO remote or download and upload backups.
+Navigate your internet browser to: http://</source>
+      <translation>Utilisez votre navigateur pour configurer votre télécommande YIO ou téléchargez les sauvegardes. Naviguez vers la page :
+http://</translation>
     </message>
   </context>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="68"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="81"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="139"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="69"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="82"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="140"/>
       <source>Settings</source>
       <translation>Paramètres</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="150"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="151"/>
       <source>Your software is up to date.</source>
       <translation>Votre système est à jour.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="167"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="151"/>
+      <source>New software is available.</source>
+      <translation>Nouvelle version disponible.</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/pages/Settings.qml" line="168"/>
       <source>Display</source>
       <translation>Écran</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="174"/>
       <source>Language</source>
       <translation>Langue</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="185"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="187"/>
       <source>Integrations</source>
       <translation>Intégrations</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="191"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="194"/>
       <source>Battery &amp; power</source>
       <translation>Batterie &amp; Alimentation</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="198"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="201"/>
       <source>m remaining</source>
       <translation>m restant</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="204"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="208"/>
       <source>WiFi &amp; bluetooth</source>
       <translation>WiFi &amp; bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="209"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="214"/>
       <source>System</source>
       <translation>Système</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="214"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="220"/>
       <source>About</source>
       <translation>À propos</translation>
     </message>
   </context>
   <context>
+    <name>SetupStep1</name>
+    <message>
+      <location filename="../setup/SetupStep1.qml" line="34"/>
+      <source>Hello</source>
+      <translation>Bonjour</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep1.qml" line="45"/>
+      <source>Tap the screen to begin</source>
+      <translation>Appuyez sur l'écran pour commencer</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep3</name>
+    <message>
+      <location filename="../setup/SetupStep3.qml" line="61"/>
+      <source>Wi-Fi setup</source>
+      <translation>Configuration du Wi-Fi</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep3.qml" line="72"/>
+      <source>Select a Wi-Fi network.</source>
+      <translation>Sélectionner un réseau Wi-Fi.</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep4</name>
+    <message>
+      <location filename="../setup/SetupStep4.qml" line="96"/>
+      <source>Enter password for
+&quot;%1&quot;</source>
+      <translation>Entrez le mot de passe pour
+&quot;%1&quot;</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4.qml" line="114"/>
+      <source>Password</source>
+      <translation>Mot de passe</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4.qml" line="140"/>
+      <source>Join</source>
+      <translation>Rejoindre</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep5</name>
+    <message>
+      <location filename="../setup/SetupStep5.qml" line="70"/>
+      <source>Connecting</source>
+      <translation>En cours de connexion</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep6Failure</name>
+    <message>
+      <location filename="../setup/SetupStep6Failure.qml" line="36"/>
+      <source>Failed to connect</source>
+      <translation>Échec de la connexion</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Failure.qml" line="49"/>
+      <source>YIO Remote could not connect to your Wi-Fi network.</source>
+      <translation>La télécommande YIO ne peut pas se connecter à votre réseau WiFi.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Failure.qml" line="60"/>
+      <source>Try again</source>
+      <translation>Réessayez</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep6Success</name>
+    <message>
+      <location filename="../setup/SetupStep6Success.qml" line="36"/>
+      <source>Connected</source>
+      <translation>Connecté</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Success.qml" line="47"/>
+      <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
+      <translation>La Télécommande YIO s'est connectée avec succès à votre réseau Wi-Fi.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Success.qml" line="58"/>
+      <source>Next</source>
+      <translation>Suivant</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep7</name>
+    <message>
+      <location filename="../setup/SetupStep7.qml" line="57"/>
+      <source>Connect the YIO Dock to
+a power source and wait until it starts blinking.
+
+ To share the Wi-Fi network credentials with the dock, tap next.</source>
+      <translation>Branchez la station d'accueil YIO et attendez qu'elle commence à clignoter.
+
+Pour partager les informations d'identification du réseau Wi-Fi avec le dock, appuyez sur Suivant.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep7.qml" line="72"/>
+      <source>Next</source>
+      <translation>Suivant</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep7.qml" line="83"/>
+      <source>Skip</source>
+      <translation>Ignorer</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep8</name>
+    <message>
+      <location filename="../setup/SetupStep8.qml" line="115"/>
+      <source>Setting up your YIO Dock</source>
+      <translation>Configuration votre dock YIO</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep9Failure</name>
+    <message>
+      <location filename="../setup/SetupStep9Failure.qml" line="36"/>
+      <source>Failed to connect</source>
+      <translation>Échec de connexion</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Failure.qml" line="49"/>
+      <source>YIO Dock could not connect to your Wi-Fi network.</source>
+      <translation>Le dock YIO ne peut pas se connecter à votre réseau WiFi.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Failure.qml" line="60"/>
+      <source>Try again</source>
+      <translation>Réessayez</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep9Skip</name>
+    <message>
+      <location filename="../setup/SetupStep9Skip.qml" line="39"/>
+      <source>Done</source>
+      <translation>Terminé</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Skip.qml" line="50"/>
+      <source>You can setup your YIO Dock later from the web configurator.
+
+To use the web configurator,
+go to Settings and turn on
+Remote configuration after restarting the remote.</source>
+      <translation>Vous pouvez configurer votre Dock YIO plus tard à partir du configurateur web.
+
+Pour utiliser le configurateur web,
+allez dans Paramètres et activez
+la configuration à distance après le redémarrage de la télécommande.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Skip.qml" line="61"/>
+      <source>Reboot</source>
+      <translation>Redémarrer</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep9Success</name>
+    <message>
+      <location filename="../setup/SetupStep9Success.qml" line="39"/>
+      <source>Connected</source>
+      <translation>Connecté</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Success.qml" line="50"/>
+      <source>YIO Dock has successfully connected to your Wi-Fi network.
+
+To use the web configurator,
+go to Settings and turn on
+Remote configuration after restarting the remote.</source>
+      <translation>Le Dock YIO s'est connecté avec succès à votre réseau Wi-Fi.
+
+Pour utiliser le configurateur web,
+allez dans Paramètres et activez
+la configuration à distance après le redémarrage de la télécommande.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Success.qml" line="61"/>
+      <source>Reboot</source>
+      <translation>Redémarrer</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStepCountry</name>
+    <message>
+      <location filename="../setup/SetupStepCountry.qml" line="65"/>
+      <source>Select your country or region</source>
+      <translation>Sélectionnez votre pays ou votre région</translation>
+    </message>
+  </context>
+  <context>
+    <name>SoftwareUpdate</name>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="196"/>
+      <source>Invalid request.</source>
+      <translation>Requête non valide.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="199"/>
+      <source>Unsupported device.</source>
+      <translation>Appareil non supporté.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="202"/>
+      <source>Service currently not available.</source>
+      <translation>Service actuellement indisponible.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="205"/>
+      <source>Request error %1</source>
+      <translation>Erreur de requête %1</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="209"/>
+      <source>Software update:</source>
+      <translation>Mise à jour du logiciel:</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <source>New software is available</source>
+      <translation>Nouvelle version disponible</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <source>Download</source>
+      <translation>Télécharger</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="297"/>
+      <source>Download failed: %1</source>
+      <translation>Échec du téléchargement à : %1</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="320"/>
+      <source>Failed to start app update script!</source>
+      <translation>Impossible de démarrer le script de mise à jour !</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="165"/>
+      <source>Cannot connect to the update server.</source>
+      <translation>Impossible de se connecter au serveur de mise à jour.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="243"/>
+      <source>The remote needs to be at least 50% battery to perform updates.</source>
+      <translation>La télécommande doit être chargée à au moins 50 % pour effectuer des mises à jour.</translation>
+    </message>
+  </context>
+  <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="41"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
       <source>Auto update</source>
       <translation>Mise à jour automatique</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation>Recherche automatique des mises à jour. Les mises à jour disponibles seront installées entre 03:00 et 05:00 du matin.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="98"/>
-      <source>New software is available.
-YIO remote </source>
-      <translation>Nouveau logiciel disponible.
-Télécommande YIO </translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="98"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>Your software is up to date.</source>
       <translation>Votre système est à jour.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="115"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <source>New software is available.
+YIO remote %1</source>
+      <translation>Un nouveau logiciel est disponible.
+Télécommande YIO %1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>Installed version: YIO Remote </source>
       <translation>Version installée : télécommande YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="115"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>YIO Remote </source>
       <translation>Télécommande YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <source>Download</source>
+      <translation>Télécharger</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Update</source>
       <translation>Mise à jour</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="159"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
       <source>Check for update</source>
       <translation>Vérifier les mises à jour</translation>
+    </message>
+  </context>
+  <context>
+    <name>SoftwareupdateDownloading</name>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
+      <source>Download completed</source>
+      <translation>Téléchargement terminé</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+      <source>Downloading</source>
+      <translation>En cours de téléchargement</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+      <source>Update</source>
+      <translation>Mise à jour</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+      <source>Cancel</source>
+      <translation>Annuler</translation>
     </message>
   </context>
   <context>
@@ -769,7 +1103,7 @@ Télécommande YIO </translation>
       <translation>WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="185"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="189"/>
       <source>Other networks</source>
       <translation>Autres réseaux</translation>
     </message>
@@ -792,87 +1126,6 @@ Télécommande YIO </translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
       <translation>Rejoindre</translation>
-    </message>
-  </context>
-  <context>
-    <name>wifiSetup</name>
-    <message>
-      <location filename="../wifiSetup.qml" line="55"/>
-      <source>Wi-Fi setup</source>
-      <translation>Configuration du Wi-Fi</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="73"/>
-      <source>Connect to the Wi-Fi network
-</source>
-      <translation>Se connecter au réseau Wi-Fi
-</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="91"/>
-      <source>Open a web browser
-and navigate to
-yio.remote</source>
-      <translation>Ouvrez le naviguateur de votre choix et accédez à la page yio.remote</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="106"/>
-      <source>Shutdown</source>
-      <translation>Éteindre</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="133"/>
-      <source>Connected</source>
-      <translation>Connecté</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="150"/>
-      <source>YIO Remote has successfully
-connected to your Wi-Fi network.</source>
-      <translation>La télécommande YIO est connectée à votre réseau sans-fil.</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="164"/>
-      <location filename="../wifiSetup.qml" line="304"/>
-      <source>Next</source>
-      <translation>Suivant</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="183"/>
-      <source>Not connected</source>
-      <translation>Non Connecté</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="200"/>
-      <source>YIO Remote could not
-connect to your Wi-Fi network.</source>
-      <translation>La télécommande YIO ne peut pas se connecter à votre réseau sans-fil.</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="217"/>
-      <source>Please try again</source>
-      <translation>Veuillez réessayer</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="231"/>
-      <source>Try again</source>
-      <translation>Réessayez</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="286"/>
-      <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Connectez la station d'accueil YIO à une source d'alimentation et attendez qu'il commence à clignoter. Pour partager les identifiants du réseau sans fil avec la station d'accueil, appuyez sur le bouton suivant.</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="336"/>
-      <source>Wi-Fi setup completed</source>
-      <translation>Configuration du Wi-Fi terminée</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="316"/>
-      <location filename="../wifiSetup.qml" line="371"/>
-      <source>Reboot</source>
-      <translation>Redémarrer</translation>
     </message>
   </context>
 </TS>

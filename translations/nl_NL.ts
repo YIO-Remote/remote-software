@@ -6,7 +6,7 @@
     <message>
       <location filename="../basic_ui/settings/About.qml" line="36"/>
       <source>Thank you!</source>
-      <translation>Dank u wel!</translation>
+      <translation>Bedankt!</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="45"/>
@@ -21,15 +21,15 @@ Niels de Klerk
 To learn more about the project, visit
 www.yio-remote.com
 </source>
-      <translation type="unfinished">
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>
+YIO is een open source project en heeft baat bij alle bijdragen. Hartelijk dank aan een ieder die tot nu toe heeft bijgedragen aan het project:
 
 Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
 
-To learn more about the project, visit
+voor meer informatie over het project, bezoek
 www.yio-remote.com
 </translation>
     </message>
@@ -117,19 +117,19 @@ www.yio-remote.com
   <context>
     <name>Bluetooth</name>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="41"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
       <source>Bluetooth</source>
       <translation>Bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="62"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
       <source>Area detection</source>
-      <translation>Gebied detectie</translation>
+      <translation>Locatie detectie</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="101"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Scant automatisch voor bluetooth beacons geassocieerd met gebieden en weergeeft dan de dichtstbijzijnde apparaten.</translation>
+      <translation>Scant automatisch voor bluetooth beacons welke zijn geassocieerd met gebieden en geeft dan de dichtstbijzijnde apparaten weer.</translation>
     </message>
   </context>
   <context>
@@ -152,12 +152,12 @@ www.yio-remote.com
   <context>
     <name>ButtonBase</name>
     <message>
-      <location filename="../components/ButtonBase.qml" line="374"/>
+      <location filename="../components/ButtonBase.qml" line="372"/>
       <source>Remove from favorites</source>
       <translation>Verwijder uit favorieten</translation>
     </message>
     <message>
-      <location filename="../components/ButtonBase.qml" line="374"/>
+      <location filename="../components/ButtonBase.qml" line="372"/>
       <source>Add to favorites</source>
       <translation>Toevoegen aan favorieten</translation>
     </message>
@@ -202,12 +202,12 @@ www.yio-remote.com
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
       <source>Heat</source>
-      <translation>Warm</translation>
+      <translation>Verwarmen</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
-      <translation>Koud</translation>
+      <translation>Koelen</translation>
     </message>
   </context>
   <context>
@@ -267,7 +267,7 @@ www.yio-remote.com
   <context>
     <name>CardPlaylists</name>
     <message>
-      <location filename="../components/media_player/ui/CardPlaylists.qml" line="125"/>
+      <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
       <source>My playlists</source>
       <translation>Mijn afspeellijsten</translation>
     </message>
@@ -292,25 +292,25 @@ www.yio-remote.com
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="409"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="410"/>
       <source>Albums</source>
       <translation>Albums</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="411"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
       <translation>Nummers</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="413"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
       <translation>Artiesten</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
-      <location filename="../components/media_player/ui/CardSearch.qml" line="415"/>
+      <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
       <source>Playlists</source>
       <translation>Afspeellijsten</translation>
     </message>
@@ -331,9 +331,42 @@ www.yio-remote.com
   <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="162"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
       <source>% Charged</source>
       <translation>% Opgeladen</translation>
+    </message>
+  </context>
+  <context>
+    <name>CommandLineHandler</name>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="40"/>
+      <source>Use configuration profile.</source>
+      <translation>Gebruik configuratieprofiel.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="43"/>
+      <source>Use configuration file.</source>
+      <translation>Gebruik configuratiebestand.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="44"/>
+      <source>Use configuration schema file.</source>
+      <translation>Gebruik configuratieschema bestand.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="45"/>
+      <source>Use hardware configuration file.</source>
+      <translation>Gebruik hardware configuratiebestand.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="46"/>
+      <source>Use hardware configuration schema file.</source>
+      <translation>Gebruik hardware configuratieschema bestand.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="50"/>
+      <source>Validate json configuration files and exit.</source>
+      <translation>Controleer json configuratiebestanden en sluit af.</translation>
     </message>
   </context>
   <context>
@@ -370,7 +403,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>De gevoeligheid van de bewegings sensor om uw hand te detecteren.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
@@ -391,32 +424,32 @@ www.yio-remote.com
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="109"/>
       <source>Lights</source>
       <translation>Verlichting</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="109"/>
       <source>Blinds</source>
       <translation>Jaloezieën</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="109"/>
       <source>Media</source>
       <translation>Media</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="111"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Remote</source>
       <translation>Afstandsbediening</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="111"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Climate</source>
       <translation>Klimaat</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="111"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Switch</source>
       <translation>Wissel</translation>
     </message>
@@ -428,6 +461,19 @@ www.yio-remote.com
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
       <translation>Favorieten</translation>
+    </message>
+  </context>
+  <context>
+    <name>FileDownload</name>
+    <message>
+      <location filename="../sources/filedownload.cpp" line="114"/>
+      <source>Not enough free space (%1 MB).</source>
+      <translation>Niet genoeg vrije ruimte (%1 MB).</translation>
+    </message>
+    <message>
+      <location filename="../sources/filedownload.cpp" line="121"/>
+      <source>Destination file already exists</source>
+      <translation>Doelbestand bestaat al</translation>
     </message>
   </context>
   <context>
@@ -485,28 +531,28 @@ www.yio-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="65"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Favorieten</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="65"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
       <source>Settings</source>
       <translation>Instellingen</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Lights</source>
       <translation>Verlichting</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Blinds</source>
       <translation>Jaloezieën</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
       <source>Media</source>
       <translation>Media</translation>
     </message>
@@ -581,152 +627,441 @@ www.yio-remote.com
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation>WiFi-apparaat is niet gevonden.</translation>
+      <translation>Geen WiFi-apparaat gevonden.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Kan de batterij sensor niet initialiseren. Herstart de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Er is een fout opgetreden met de communicatie van de batterij, Herstart de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>De haptische motor kan niet worden geïnitialiseerd. Herstart de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
+      <translation>Kan de "interrupt handler" niet initialiseren, Herstart de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Kan de nabijheidssensor niet initialiseren. Herstart de afstandsbediening.</translation>
     </message>
   </context>
   <context>
     <name>RemoteConfig</name>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="42"/>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="41"/>
       <source>Remote configuration</source>
-      <translation>Afstandsbediening configuratie</translation>
+      <translation>Web configuratie</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="77"/>
-      <source>Use your browser to configure your YIO remote or download and upload backups. Navigate your internet browser to:
-
-</source>
-      <translation>Gebruik uw browser om uw YIO-afstandsbediening te configureren of back-ups te downloaden en te uploaden. Navigeer in uw internetbrowser naar:
-
-</translation>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
+      <source>Use your browser to configure your YIO remote or download and upload backups.
+Navigate your internet browser to: http://</source>
+      <translation>Gebruik uw internetbrowser om uw YIO-afstandsbediening te configureren of om back-ups te downloaden en uploaden.
+Navigeer hiervoor naar: http://</translation>
     </message>
   </context>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="68"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="81"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="139"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="69"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="82"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="140"/>
       <source>Settings</source>
       <translation>Instellingen</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="150"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="151"/>
       <source>Your software is up to date.</source>
       <translation>Uw systeem is up-to-date.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="167"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="151"/>
+      <source>New software is available.</source>
+      <translation>Er is nieuwe software beschikbaar.</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/pages/Settings.qml" line="168"/>
       <source>Display</source>
       <translation>Scherm</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="174"/>
       <source>Language</source>
       <translation>Taal</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="185"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="187"/>
       <source>Integrations</source>
       <translation>Integraties</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="191"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="194"/>
       <source>Battery &amp; power</source>
       <translation>Batterij &amp; vermogen</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="198"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="201"/>
       <source>m remaining</source>
       <translation>m resterend</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="204"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="208"/>
       <source>WiFi &amp; bluetooth</source>
       <translation>WiFi &amp; bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="209"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="214"/>
       <source>System</source>
       <translation>Systeem</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="214"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="220"/>
       <source>About</source>
       <translation>Over</translation>
     </message>
   </context>
   <context>
+    <name>SetupStep1</name>
+    <message>
+      <location filename="../setup/SetupStep1.qml" line="34"/>
+      <source>Hello</source>
+      <translation>Hallo</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep1.qml" line="45"/>
+      <source>Tap the screen to begin</source>
+      <translation>Tik op het scherm om te beginnen</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep3</name>
+    <message>
+      <location filename="../setup/SetupStep3.qml" line="61"/>
+      <source>Wi-Fi setup</source>
+      <translation>Wi-Fi setup</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep3.qml" line="72"/>
+      <source>Select a Wi-Fi network.</source>
+      <translation>Selecteer een Wi-Fi netwerk.</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep4</name>
+    <message>
+      <location filename="../setup/SetupStep4.qml" line="96"/>
+      <source>Enter password for
+&quot;%1&quot;</source>
+      <translation>Voer wachtwoord in voor
+&quot;%1&quot;</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4.qml" line="114"/>
+      <source>Password</source>
+      <translation>Wachtwoord</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4.qml" line="140"/>
+      <source>Join</source>
+      <translation>Deelnemen</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep5</name>
+    <message>
+      <location filename="../setup/SetupStep5.qml" line="70"/>
+      <source>Connecting</source>
+      <translation>Bezig met verbinden</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep6Failure</name>
+    <message>
+      <location filename="../setup/SetupStep6Failure.qml" line="36"/>
+      <source>Failed to connect</source>
+      <translation>Verbinden mislukt</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Failure.qml" line="49"/>
+      <source>YIO Remote could not connect to your Wi-Fi network.</source>
+      <translation>YIO Afstandsbediening kon geen verbinding maken met uw Wi-Fi netwerk.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Failure.qml" line="60"/>
+      <source>Try again</source>
+      <translation>Probeer opnieuw</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep6Success</name>
+    <message>
+      <location filename="../setup/SetupStep6Success.qml" line="36"/>
+      <source>Connected</source>
+      <translation>Verbonden</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Success.qml" line="47"/>
+      <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
+      <translation>YIO Afstandsbediening is met succes verbonden met uw Wi-Fi netwerk.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep6Success.qml" line="58"/>
+      <source>Next</source>
+      <translation>Volgende</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep7</name>
+    <message>
+      <location filename="../setup/SetupStep7.qml" line="57"/>
+      <source>Connect the YIO Dock to
+a power source and wait until it starts blinking.
+
+ To share the Wi-Fi network credentials with the dock, tap next.</source>
+      <translation>Verbind de YIO Dock met
+een stroombron en wacht tot het begint te knipperen.
+
+ Tik op volgende om de Wi-Fi-netwerkgegevens te delen met de dock.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep7.qml" line="72"/>
+      <source>Next</source>
+      <translation>Volgende</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep7.qml" line="83"/>
+      <source>Skip</source>
+      <translation>Overslaan</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep8</name>
+    <message>
+      <location filename="../setup/SetupStep8.qml" line="115"/>
+      <source>Setting up your YIO Dock</source>
+      <translation>De YIO Dock instellen</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep9Failure</name>
+    <message>
+      <location filename="../setup/SetupStep9Failure.qml" line="36"/>
+      <source>Failed to connect</source>
+      <translation>Verbinden mislukt</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Failure.qml" line="49"/>
+      <source>YIO Dock could not connect to your Wi-Fi network.</source>
+      <translation>YIO Dock kon geen verbinding maken met uw Wi-Fi netwerk.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Failure.qml" line="60"/>
+      <source>Try again</source>
+      <translation>Probeer opnieuw</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep9Skip</name>
+    <message>
+      <location filename="../setup/SetupStep9Skip.qml" line="39"/>
+      <source>Done</source>
+      <translation>Voltooid</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Skip.qml" line="50"/>
+      <source>You can setup your YIO Dock later from the web configurator.
+
+To use the web configurator,
+go to Settings and turn on
+Remote configuration after restarting the remote.</source>
+      <translation>U kunt uw YIO Dock later instellen via de webconfigurator.
+
+Om de webconfigurator te gebruiken,
+ga naar Instellingen en schakel
+Externe configuratie in na het herstarten van de afstandsbediening.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Skip.qml" line="61"/>
+      <source>Reboot</source>
+      <translation>Herstart</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep9Success</name>
+    <message>
+      <location filename="../setup/SetupStep9Success.qml" line="39"/>
+      <source>Connected</source>
+      <translation>Verbonden</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Success.qml" line="50"/>
+      <source>YIO Dock has successfully connected to your Wi-Fi network.
+
+To use the web configurator,
+go to Settings and turn on
+Remote configuration after restarting the remote.</source>
+      <translation>YIO Dock is succesvol verbonden met uw Wi-Fi netwerk.
+
+Om de webconfigurator te gebruiken,
+ga naar Instellingen en schakel
+Externe configuratie in na het herstarten van de afstandsbediening.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep9Success.qml" line="61"/>
+      <source>Reboot</source>
+      <translation>Herstart</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStepCountry</name>
+    <message>
+      <location filename="../setup/SetupStepCountry.qml" line="65"/>
+      <source>Select your country or region</source>
+      <translation>Selecteer uw land of regio</translation>
+    </message>
+  </context>
+  <context>
+    <name>SoftwareUpdate</name>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="196"/>
+      <source>Invalid request.</source>
+      <translation>Ongeldig verzoek.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="199"/>
+      <source>Unsupported device.</source>
+      <translation>Niet-ondersteund apparaat.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="202"/>
+      <source>Service currently not available.</source>
+      <translation>Service momenteel niet beschikbaar.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="205"/>
+      <source>Request error %1</source>
+      <translation>Aanvraag fout %1</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="209"/>
+      <source>Software update:</source>
+      <translation>Software bijwerken:</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <source>New software is available</source>
+      <translation>Nieuwe software is beschikbaar</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <source>Download</source>
+      <translation>Downloaden</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="297"/>
+      <source>Download failed: %1</source>
+      <translation>Download mislukt: %1</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="320"/>
+      <source>Failed to start app update script!</source>
+      <translation>Starten van app update script is mislukt!</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="165"/>
+      <source>Cannot connect to the update server.</source>
+      <translation>Kan geen verbinding maken met de update server.</translation>
+    </message>
+    <message>
+      <location filename="../sources/softwareupdate.cpp" line="243"/>
+      <source>The remote needs to be at least 50% battery to perform updates.</source>
+      <translation>De afstandsbediening moet ten minste 50% opgeladen zijn om updates uit te voeren.</translation>
+    </message>
+  </context>
+  <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="41"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
       <source>Auto update</source>
       <translation>Automatisch bijwerken</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation>Automatisch zoeken naar updates en bijwerken wanneer een nieuwe software versie beschikbaar is.
 Updates worden geïnstalleerd tussen 03.00 en 05.00 uur.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="98"/>
-      <source>New software is available.
-YIO remote </source>
-      <translation>Nieuwe softwareversie is beschikbaar.
-YIO Remote </translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="98"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>Your software is up to date.</source>
       <translation>Uw systeem is bijgewerkt.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="115"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <source>New software is available.
+YIO remote %1</source>
+      <translation>Nieuwe software is beschikbaar.
+YIO remote %1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>Installed version: YIO Remote </source>
       <translation>Geïnstalleerde versie: YIO Remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="115"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>YIO Remote </source>
       <translation>YIO Remote </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <source>Download</source>
+      <translation>Downloaden</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Update</source>
       <translation>Bijwerken</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="159"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
       <source>Check for update</source>
       <translation>Op updates controleren</translation>
+    </message>
+  </context>
+  <context>
+    <name>SoftwareupdateDownloading</name>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
+      <source>Download completed</source>
+      <translation>Download voltooid</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+      <source>Downloading</source>
+      <translation>Wordt gedownload</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+      <source>Update</source>
+      <translation>Bijwerken</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+      <source>Cancel</source>
+      <translation>Annuleren</translation>
     </message>
   </context>
   <context>
@@ -762,7 +1097,7 @@ YIO Remote </translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="80"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Scant automatisch voor bluetooth beacons welke zijn geassocieerd met locatie(s) en geeft dan de dichtstbijzijnde apparaten weer.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="109"/>
@@ -770,7 +1105,7 @@ YIO Remote </translation>
       <translation>WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="185"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="189"/>
       <source>Other networks</source>
       <translation>Andere netwerken</translation>
     </message>
@@ -792,92 +1127,7 @@ YIO Remote </translation>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation>Deelnemen</translation>
-    </message>
-  </context>
-  <context>
-    <name>wifiSetup</name>
-    <message>
-      <location filename="../wifiSetup.qml" line="55"/>
-      <source>Wi-Fi setup</source>
-      <translation>Wi-Fi-instellingen</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="73"/>
-      <source>Connect to the Wi-Fi network
-</source>
-      <translation>Verbind met een Wi-Fi-netwerk
-</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="91"/>
-      <source>Open a web browser
-and navigate to
-yio.remote</source>
-      <translation>Open een webbrowser
-en navigeer naar
-yio.remote</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="106"/>
-      <source>Shutdown</source>
-      <translation>Uitschakelen</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="133"/>
-      <source>Connected</source>
-      <translation>Verbonden</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="150"/>
-      <source>YIO Remote has successfully
-connected to your Wi-Fi network.</source>
-      <translation>YIO Afstandsbediening is succesvol
-verbonden met uw Wi-Fi netwerk.</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="164"/>
-      <location filename="../wifiSetup.qml" line="304"/>
-      <source>Next</source>
-      <translation>Volgende</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="183"/>
-      <source>Not connected</source>
-      <translation>Niet verbonden</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="200"/>
-      <source>YIO Remote could not
-connect to your Wi-Fi network.</source>
-      <translation>YIO Afstandsbediening kon niet
-verbinden met uw Wi-Fi netwerk.</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="217"/>
-      <source>Please try again</source>
-      <translation>Probeer het opnieuw</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="231"/>
-      <source>Try again</source>
-      <translation>Probeer opnieuw</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="286"/>
-      <source>Connect the YIO Dock to a power source and wait until it starts blinking. To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Sluit uw YIO dock aan op een stroombron en wacht totdat het lampje begint met knipperen. Tik vervolgens op 'Volgende' om de inloggegevens van uw Wi-Fi netwerk te delen met de dock.</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="336"/>
-      <source>Wi-Fi setup completed</source>
-      <translation>Wi-Fi-instellingen voltooid</translation>
-    </message>
-    <message>
-      <location filename="../wifiSetup.qml" line="316"/>
-      <location filename="../wifiSetup.qml" line="371"/>
-      <source>Reboot</source>
-      <translation>Herstarten</translation>
+      <translation>Verbinden</translation>
     </message>
   </context>
 </TS>
