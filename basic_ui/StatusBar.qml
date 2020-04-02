@@ -28,8 +28,7 @@ import Haptic 1.0
 
 Item {
     id: statusBar
-    width: parent.width
-    height: 40
+    width: parent.width; height: 40
     clip: true
 
     property alias bg: bg

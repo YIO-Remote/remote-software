@@ -36,8 +36,7 @@ import MediaPlayerUtils 1.0
 
 Item {
     id: miniMediaPlayer
-    width: 480
-    height: 90
+    width: Style.screen.width; height: 90
     anchors.bottom: parent.bottom
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +82,6 @@ Item {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     layer.enabled: true
     layer.effect: OpacityMask {
         maskSource:
@@ -102,7 +100,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     Connections {
         target: ButtonHandler
         enabled: miniMediaPlayer.state == "open" && (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM)
@@ -360,24 +357,16 @@ Item {
 
                     CustomImageLoader {
                         id: bgImage
-                        width: 280
-                        height: 280
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: parent.top
-                        anchors.topMargin: 86
+                        width: 280; height: 280
+                        anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 86 }
                         url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
                 CustomImageLoader {
                     id: image
-                    width: 90
-                    height: width
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        left: parent.left
-                        leftMargin: 0
-                    }
+                    width: 90; height: 90
+                    anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: 0 }
                     url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
@@ -385,9 +374,7 @@ Item {
                     id: textContainer
                     height: childrenRect.height
 
-                    anchors.left: image.right
-                    anchors.leftMargin: 20
-                    anchors.verticalCenter: image.verticalCenter
+                    anchors { left: image.right; leftMargin: 20; verticalCenter: image.verticalCenter }
 
                     Text {
                         id: title
@@ -397,27 +384,22 @@ Item {
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
                         width: 304
-                        font.family: "Open Sans Regular"
-                        font.weight: Font.Normal
-                        font.pixelSize: 25
+                        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 25 }
                         lineHeight: 1
                     }
 
                     Text {
                         id: artist
                         color: Style.color.text
+                        opacity: 0.6
                         text: obj ? obj.mediaTitle : ""
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
                         width: 304
-                        font.family: "Open Sans Regular"
-                        font.weight: Font.Normal
-                        font.pixelSize: 20
+                        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 20 }
                         lineHeight: 1
-                        anchors.top: title.bottom
-                        anchors.topMargin: -2
-                        opacity: 0.6
+                        anchors { top: title.bottom; topMargin: -2 }
                     }
                 }
 
@@ -439,15 +421,8 @@ Item {
                     text: obj ? obj.source : ""
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
-                    font.family: "Open Sans Regular"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
-                    anchors {
-                        top: parent.top
-                        topMargin: 20
-                        left: parent.left
-                        leftMargin: 20
-                    }
+                    font: Style.fonts.button
+                    anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
                 }
 
 
@@ -455,15 +430,11 @@ Item {
                     id: titleOpen
                     color: Style.color.text
                     text: obj ? obj.mediaTitle : ""
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     width: parent.width-80
-                    font.family: "Open Sans Regular"
-                    font.weight: Font.Bold
-                    font.styleName: "Bold"
-                    font.pixelSize: 30
+                    font { family: "Open Sans Regular"; weight: Font.Bold; pixelSize: 30 }
                     lineHeight: 1
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -472,54 +443,39 @@ Item {
                     id: artistOpen
                     color: Style.color.text
                     text: obj ? obj.mediaArtist : ""
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     width: parent.width-80
-                    font.family: "Open Sans Regular"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
-                    lineHeight: 1
-                    anchors.top: titleOpen.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    font: Style.fonts.button
+                    anchors { top: titleOpen.bottom; horizontalCenter: parent.horizontalCenter }
                 }
 
                 Item {
                     id: speaker
                     width: childrenRect.width
-                    anchors {
-                        bottom: parent.bottom
-                        bottomMargin: 80
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors { bottom: parent.bottom; bottomMargin: 80; horizontalCenter: parent.horizontalCenter }
 
                     Text {
                         id: speakerIcon
                         color: Style.color.text
                         text: Style.icons.speaker
                         renderType: Text.NativeRendering
-                        width: 60
-                        height: 60
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        font {family: "icons"; pixelSize: 80 }
+                        width: 60; height: 60
+                        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                        font { family: "icons"; pixelSize: 80 }
                     }
 
                     Text {
                         color: Style.color.text
                         text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
-                        font.family: "Open Sans Regular"
-                        font.weight: Font.Normal
-                        font.pixelSize: 27
-                        lineHeight: 1
+                        font: Style.fonts.button
                         anchors { left: speakerIcon.right; verticalCenter: speakerIcon.verticalCenter }
                     }
                 }
             }
         }
-
     }
 
     Text {
@@ -527,19 +483,13 @@ Item {
         color: Style.color.text
         text: Style.icons.down_arrow
         renderType: Text.NativeRendering
-        width: 70
-        height: 70
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 80 }
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 10
+        width: 70; height: 70
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 80 }
+        anchors { right: parent.right; rightMargin: 10; top: parent.top; topMargin: 10 }
 
         MouseArea {
-            width: parent.width + 20
-            height: parent.height + 20
+            width: parent.width + 20; height: parent.height + 20
             anchors.centerIn: parent
             enabled: miniMediaPlayer.state == "open"
 
@@ -552,24 +502,17 @@ Item {
 
     Item {
         id: prevButton
-        width: 120
-        height: 120
+        width: 120; height: 120
 
-        anchors {
-            right: playButton.left
-            rightMargin: 30
-            verticalCenter: playButton.verticalCenter
-        }
+        anchors { right: playButton.left; rightMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
             color: Style.color.text
             text: Style.icons.prev
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 
@@ -586,26 +529,19 @@ Item {
 
     Item {
         id: playButton
-        width: 120
-        height: 120
+        width: 120; height: 120
 
         property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ? true : false
 
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 80
-        }
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 80 }
 
         Text {
             color: Style.color.text
             text: Style.icons.pause
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: playButton.isPlaying ? 1 : 0
 
@@ -618,11 +554,9 @@ Item {
             color: Style.color.text
             text: Style.icons.play
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: playButton.isPlaying ? 0 : 1
 
@@ -648,24 +582,17 @@ Item {
 
     Item {
         id: nextButton
-        width: 120
-        height: 120
+        width: 120; height: 120
 
-        anchors {
-            left: playButton.right
-            leftMargin: 30
-            verticalCenter: playButton.verticalCenter
-        }
+        anchors { left: playButton.right; leftMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
             color: Style.color.text
             text: Style.icons.next
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 
@@ -682,17 +609,12 @@ Item {
 
     PageIndicator {
         id: indicator
-
         count: mediaPlayers.count
         currentIndex: mediaPlayers.currentIndex
-
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors { bottom: parent.bottom; bottomMargin: 10; horizontalCenter: parent.horizontalCenter }
 
         delegate: Rectangle {
-            width: 8
-            height: 8
+            width: 8; height: 8
             radius: height/2
             color: Style.color.text
             opacity: index == mediaPlayers.currentIndex ? 1 : 0.3

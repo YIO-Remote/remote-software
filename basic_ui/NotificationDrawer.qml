@@ -22,36 +22,26 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
 import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
 Item {
     id: notificationDrawerContent
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
 
     // TITLE
-
     Text {
         id: title
         text: qsTr("Notifications") + translateHandler.emptyString
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 40
-
         color: Style.color.text
         verticalAlignment: Text.AlignVCenter
-        font.family: "Open Sans Regular"
-        font.weight: Font.Normal
-        font.pixelSize: 60
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 60 }
         lineHeight: 1
+        anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 40 }
     }
 
     // HERE COMES THE NOTIFICATIONS
-
     Component {
         id: notificationDelegate
 
@@ -69,13 +59,10 @@ Item {
 
     ListView {
         id: notificationsListView
-        width: parent.width
-        height: parent.height - title.height - 70
-        anchors.top: title.bottom
-        anchors.topMargin: 30
+        width: parent.width; height: parent.height - title.height - 70
+        anchors { top: title.bottom; topMargin: 30 }
         maximumFlickVelocity: 4000
         flickDeceleration: 2000
-//        clip: true
         flickableDirection: Flickable.VerticalFlick
         contentHeight: count * notificationDelegate.height
         spacing: 10

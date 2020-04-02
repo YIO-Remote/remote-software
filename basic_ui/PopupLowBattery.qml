@@ -30,10 +30,8 @@ import "qrc:/basic_ui" as BasicUI
 
 Popup {
     id: lowBatteryNotification
-    x: 40
-    y: 40
-    width: parent.width-80
-    height: parent.height-80
+    x: 40; y: 40
+    width: parent.width-80; height: parent.height-80
     modal: true
     focus: true
     clip: true
@@ -57,27 +55,19 @@ Popup {
 
     onOpened: {
         lowBatteryNotificationTimer.start()
-//        if (standbyControl.mode != "on") {
-//            standbyControl.touchDetected = true;
-//        }
     }
 
     BasicUI.ProgressCircle {
         id: lowBatteryNotificationProgressCircle
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 10
-
         size: 40
         colorCircle: Style.color.line
         colorCircleGrad: Style.color.line
         colorBackground: Style.color.dark
         showBackground: false
-        arcBegin: 0
-        arcEnd: 0
+        arcBegin: 0; arcEnd: 0
         animationDuration: 300
         lineWidth: 4
+        anchors { right: parent.right; rightMargin: 10; top: parent.top; topMargin: 10 }
     }
 
     Timer {
@@ -99,15 +89,12 @@ Popup {
     }
 
     Image {
-        asynchronous: true
         id: lowbatteryIcon
-        width: 170
-        height: 170
+        asynchronous: true
+        width: 170; height: 170
         fillMode: Image.PreserveAspectFit
         source: "qrc:/images/popuplowbattery/icon-lowbattery.png"
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 175
+        anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 175 }
 
         ColorOverlay {
             visible: !Style.darkMode
@@ -123,13 +110,8 @@ Popup {
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
-        anchors.top: lowbatteryIcon.bottom
-        anchors.topMargin: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Open Sans Regular"
-        font.weight: Font.Bold
-        font.styleName: "Bold"
-        font.pixelSize: 27
+        anchors { top: lowbatteryIcon.bottom; topMargin: 0; horizontalCenter: parent.horizontalCenter }
+        font { family: "Open Sans Regular"; weight: Font.Bold;  pixelSize: 27 }
     }
 
     Text {
@@ -138,12 +120,8 @@ Popup {
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 60
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Open Sans Regular"
-        font.weight: Font.Normal
-        font.pixelSize: 25
+        anchors { bottom: parent.bottom; bottomMargin: 60; horizontalCenter: parent.horizontalCenter }
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 25 }
     }
 
     MouseArea {
@@ -155,5 +133,4 @@ Popup {
             lowBatteryNotificationProgressCircle.arcEnd = 0
         }
     }
-
 }

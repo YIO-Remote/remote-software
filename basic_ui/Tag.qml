@@ -24,12 +24,10 @@ import Style 1.0
 
 Rectangle {
     id: main
-    width: title.implicitWidth + 40
-    height: 40
+    width: title.implicitWidth + 40; height: 40
     color: selected ? Style.color.line : Style.color.backgroundTransparent
     radius: height/2
-    border.color: Style.color.line
-    border.width: 2
+    border { color: Style.color.line; width: 2 }
     opacity: selected ? 1 : 0.5
 
     Behavior on opacity {
@@ -47,10 +45,8 @@ Rectangle {
         color: selected ? Style.color.background : Style.color.text
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.family: "Open Sans Regular"
-        font.pixelSize: 20
-        lineHeight: 1
         anchors.centerIn: parent
+        font { family: "Open Sans Regular"; pixelSize: 20 }
+        lineHeight: 1
     }
-
 }

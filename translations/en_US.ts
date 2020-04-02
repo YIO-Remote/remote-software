@@ -309,13 +309,13 @@ www.yio-remote.com
     <name>CardSwitch</name>
     <message>
         <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
-        <location filename="../components/switch/ui/CardSwitch.qml" line="160"/>
+        <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
         <source>Turn off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
-        <location filename="../components/switch/ui/CardSwitch.qml" line="160"/>
+        <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
         <source>Turn on</source>
         <translation type="unfinished"></translation>
     </message>

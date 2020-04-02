@@ -22,7 +22,6 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
 import Haptic 1.0
 import StandbyControl 1.0
 import ButtonHandler 1.0
@@ -31,16 +30,14 @@ import "qrc:/basic_ui" as BasicUI
 
 Item {
     id: main_container
-    width: Style.screen.width
-    height: Style.screen.height
+    width: parent.width; height: parent.height
     clip: true
     enabled: loader_main.state === "visible" ? true : false
     layer.enabled: true
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECT TO ALL INTEGRATIONS ONCE THE UI IS LOADED
+    // CONNECT INTEGRATIONS ONCE THE UI IS LOADED
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     Component.onCompleted: {
         for (var i=0; i<integrations.list.length; i++) {
             integrations.list[i].connect();
@@ -104,9 +101,9 @@ Item {
         onCurrentAreaChanged: {
             var p = config.pages //config.ui_config.profiles[config.profile].pages;
 
-            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name != bluetoothArea.currentArea) {
+            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name !== bluetoothArea.currentArea) {
                 for (var i=0; i<p.length; i++) {
-                    if (p[i].name == bluetoothArea.currentArea) {
+                    if (p[i].name === bluetoothArea.currentArea) {
                         mainNavigationSwipeview.currentIndex = i;
                     }
                 }
@@ -117,19 +114,15 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN CONTAINER CONTENT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     property alias mainNavigationSwipeview: mainNavigationSwipeview
     property int itemsLoaded: 0
     property bool startUp: false
 
     SwipeView {
         id: mainNavigationSwipeview
-        width: parent.width
-        height: parent.height-miniMediaPlayer.height
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        currentIndex: 0 //mainNavigation.menuConfig.count-1
+        width: parent.width; height: parent.height-miniMediaPlayer.height
+        anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
+        currentIndex: 0
 
         Repeater {
             id: mainNavigationRepeater
@@ -140,7 +133,6 @@ Item {
                 asynchronous: true
 
                 property bool _isCurrentItem: SwipeView.isCurrentItem
-
                 property alias mainNavigationLoader: mainNavigationLoader
 
                 function determinePageToLoad(type) {
@@ -251,8 +243,7 @@ Item {
 
     BasicUI.MainNavigation {
         id: mainNavigation
-        anchors.bottom: miniMediaPlayer.top
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors { bottom: miniMediaPlayer.top; horizontalCenter: parent.horizontalCenter }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,8 +251,5 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias statusBar: statusBar
 
-    BasicUI.StatusBar {
-        id: statusBar
-    }
-
+    BasicUI.StatusBar { id: statusBar }
 }

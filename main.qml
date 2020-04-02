@@ -36,7 +36,6 @@ import StandbyControl 1.0
 
 import Entity.Remote 1.0
 
-// TODO: Softwareupdate needs to be moved to c++
 import "qrc:/basic_ui" as BasicUI // TODO: can this be done in a singleton?
 
 ApplicationWindow {
@@ -143,18 +142,15 @@ ApplicationWindow {
     Loader {
         id: loader_main
         asynchronous: true
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
         active: false
         state: "visible"
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
 
         transform: Scale {
             id: scale
-            origin.x: loader_main.width/2
-            origin.y: loader_main.height/2
+            origin.x: loader_main.width/2; origin.y: loader_main.height/2
         }
 
         states: [
@@ -198,10 +194,7 @@ ApplicationWindow {
     BasicUI.Volume {
         id: volume
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-        }
+        anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,10 +205,8 @@ ApplicationWindow {
     property alias chargingScreen: chargingScreen
     Loader {
         id: chargingScreen
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
         asynchronous: true
         source: "qrc:/basic_ui/ChargingScreen.qml"
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
@@ -242,10 +233,8 @@ ApplicationWindow {
     Loader {
         id: lowBatteryNotification
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
         asynchronous: true
         source: "qrc:/basic_ui/PopupLowBattery.qml"
     }
@@ -272,26 +261,19 @@ ApplicationWindow {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATION DRAWER
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
     Drawer {
         id: notificationsDrawer
-        width: parent.width
-        height: notifications.list.length > 5 ? 100 + 5 * 104 : 100 + (notifications.list.length + 1) * 104
+        width: parent.width; height: notifications.list.length > 5 ? 100 + 5 * 104 : 100 + (notifications.list.length + 1) * 104
         edge: Qt.TopEdge
         dragMargin: 20
         interactive: loader_main.state == "visible" ? true : false
         dim: false
         opacity: position
 
-        background: Item {
-            x: parent.width - 1
-            width: parent.width
-            height: parent.height
-        }
+        background: Item { x: parent.width - 1; width: parent.width; height: parent.height }
 
         Rectangle {
-            width: parent.width
-            height: parent.height - 40
+            width: parent.width; height: parent.height - 40
             y: 40
             color: Style.color.background
             opacity: notificationsDrawer.position
@@ -308,8 +290,7 @@ ApplicationWindow {
         }
 
         Loader {
-            width: parent.width
-            height: parent.height
+            width: parent.width; height: parent.height
 
             asynchronous: true
             active: notificationsDrawer.position > 0 ? true : false
@@ -333,8 +314,7 @@ ApplicationWindow {
         id: loadingScreen
         objectName: "loadingScreen"
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
-        width: parent.width
-        height: parent.height
+        width: parent.width; height: parent.height
 
         asynchronous: true
         active: true
@@ -370,7 +350,6 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // KEYBOARD
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     InputPanel {
         id: inputPanel
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
@@ -387,8 +366,7 @@ ApplicationWindow {
         }
         transitions: Transition {
             id: inputPanelTransition
-            from: ""
-            to: "visible"
+            from: ""; to: "visible"
             reversible: true
             ParallelAnimation {
                 NumberAnimation {
