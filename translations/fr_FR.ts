@@ -59,7 +59,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="206"/>
       <source>Battery level</source>
-      <translation>Niveau de la batterie</translation>
+      <translation>Niveau de batterie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="253"/>
@@ -70,7 +70,7 @@ www.yio-remote.com
       <location filename="../basic_ui/settings/Battery.qml" line="313"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation>Aucune donnée disponible pour le moment</translation>
+      <translation>Pas de données disponibles</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
@@ -129,7 +129,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Analyse automatiquement des balises bluetooth associées aux zones, trouve les périphériques les plus proches et les affichent dans cette zone.</translation>
+      <translation>Analyse automatiquement des balises bluetooth associées aux zones, trouver et afficher les périphériques les plus proches dans cette zone.</translation>
     </message>
   </context>
   <context>
@@ -167,7 +167,7 @@ www.yio-remote.com
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation>Silence</translation>
+      <translation>Couper le son</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
@@ -230,7 +230,7 @@ www.yio-remote.com
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation>Tutoriel</translation>
+      <translation>Guide</translation>
     </message>
   </context>
   <context>
@@ -300,7 +300,7 @@ www.yio-remote.com
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
-      <translation>Morceaux</translation>
+      <translation>Chansons</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
@@ -383,7 +383,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation>Luminosité automatique</translation>
+      <translation>Adaptation automatique de la luminosité</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
@@ -393,7 +393,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation>Éloigné</translation>
+      <translation>Loin</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
@@ -403,12 +403,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation>À quelle distance le capteur de proximité doit-il detecter lorsqu'il est dans votre main.</translation>
+      <translation>À quelle distance le capteur de proximité doit-il détecter votre main.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation>Mode sombre</translation>
+      <translation>Mode nuit</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
@@ -619,7 +619,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation>Pour modifier vos profils, utilisez l'outil de configuration web dans les paramètres.</translation>
+      <translation>Pour modifier vos profils, utilisez l'outil dans les paramètres du configuration web .</translation>
     </message>
   </context>
   <context>
