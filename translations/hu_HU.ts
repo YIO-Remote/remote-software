@@ -515,17 +515,17 @@ www.yio-remote.com
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>cannot open file &apos;%1&apos; for writing: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>cannot open file &apos;%1&apos; for reading: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>invalid JSON file &apos;%1&apos; at offset %2</translation>
     </message>
   </context>
   <context>
@@ -763,7 +763,7 @@ Navigate your internet browser to: http://</translation>
       <location filename="../setup/SetupStep4.qml" line="96"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation type="unfinished">Enter password for
+      <translation>Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>

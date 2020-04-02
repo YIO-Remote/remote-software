@@ -763,7 +763,7 @@ Navigate your internet browser to: http://</translation>
       <location filename="../setup/SetupStep4.qml" line="96"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation type="unfinished">Enter password for
+      <translation>Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>
