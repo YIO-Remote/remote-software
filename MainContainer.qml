@@ -99,7 +99,7 @@ Item {
         enabled: config.settings.bluetootharea
 
         onCurrentAreaChanged: {
-            var p = config.pages //config.ui_config.profiles[config.profile].pages;
+            var p = config.pages
 
             if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name !== bluetoothArea.currentArea) {
                 for (var i=0; i<p.length; i++) {

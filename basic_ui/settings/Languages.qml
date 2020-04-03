@@ -75,7 +75,6 @@ Rectangle {
                     var tmp = config.settings;
                     tmp.language = translations[index].id;
                     config.settings = tmp;
-                    config.writeConfig();
                 }
             }
         }

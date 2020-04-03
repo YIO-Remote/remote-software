@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
  *
  * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
@@ -51,65 +51,80 @@ class Config : public QObject, public ConfigInterface {
 
     Q_PROPERTY(bool valid READ isValid CONSTANT)
     Q_PROPERTY(QString error READ getError CONSTANT)
-    Q_PROPERTY(QVariantMap config READ config WRITE setConfig NOTIFY configChanged)
-    Q_PROPERTY(QString profile READ profile WRITE setProfile NOTIFY profileChanged)
+    Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(QString profileId READ getProfileId WRITE setProfileId NOTIFY profileIdChanged)
     Q_PROPERTY(QStringList profileFavorites READ profileFavorites NOTIFY profileFavoritesChanged)
     Q_PROPERTY(QVariantMap settings READ getSettings WRITE setSettings NOTIFY settingsChanged)
-    Q_PROPERTY(QVariantMap integrations READ getIntegrations CONSTANT)
-    Q_PROPERTY(QVariantMap entities READ getAllEntities CONSTANT)
     Q_PROPERTY(QVariantMap profiles READ getProfiles NOTIFY profilesChanged)
     Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
 
-    bool             readConfig(const QString& filePath);
-    Q_INVOKABLE bool writeConfig();
+    // valid
+    bool isValid() const { return m_error.isEmpty(); }
+
+    // error
+    QString getError() const { return m_error; }
+
+    // config
+    QVariantMap getConfig() { return m_config; }
+    void        setConfig(const QVariantMap& getConfig);
+
+    // profile Id
+    QString getProfileId() { return m_cacheProfileId; }
+    void    setProfileId(QString id);
+
+    // profile favorites
+    QStringList profileFavorites() { return m_cacheUIProfile.value("favorites").toStringList(); }
+
+    // settings
+    QVariantMap getSettings() { return m_cacheSettings; }
+    void        setSettings(const QVariantMap& getConfig);
+
+    // profiles
+    QVariantMap getProfiles() { return m_cacheUIProfiles; }
+
+    // ui_config
+    QVariantMap getUIConfig() { return m_cacheUIConfig; }
+    void        setUIConfig(const QVariantMap& getConfig);
+
+    // pages
+    QVariantMap getPages() { return m_cacheUIPages; }
+
+    // groups
+    QVariantMap getGroups() { return m_cacheUIGroups; }
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
-    QVariantMap              getIntegrations() { return m_config["integrations"].toMap(); }
-    Q_INVOKABLE QVariantMap  getIntegration(const QString& type) { return getIntegrations().value(type).toMap(); }
-    QVariantMap              getAllEntities() { return m_config["entities"].toMap(); }
-    Q_INVOKABLE QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
-
-    // Assuming that the following config items are accessed quite often they are cached
-    QVariantMap getSettings() { return m_cacheSettings; }
-
-    void setSettings(const QVariantMap& config);
-
-    QVariantMap getUIConfig() { return m_cacheUIConfig; }
-    void        setUIConfig(const QVariantMap& config);
-
-    QVariantMap             getProfiles() { return m_cacheUIProfiles; }
     Q_INVOKABLE QVariantMap getProfile(const QString& profile) { return m_cacheUIProfiles.value(profile).toMap(); }
-    QVariantMap             getPages() { return m_cacheUIPages; }
     Q_INVOKABLE QVariantMap getPage(const QString& pageId) { return m_cacheUIPages.value(pageId).toMap(); }
-    QVariantMap             getGroups() { return m_cacheUIGroups; }
-    Q_INVOKABLE QVariantMap getGroup(const QString& groupId) { return m_cacheUIGroups.value(groupId).toMap(); }
+    Q_INVOKABLE QVariantMap getGroup(const QString& groupId) {
+        return m_cacheUIGroups.value(groupId).toMap();
+    }  // not used anywhere
 
     // The selected, cached profile
     Q_INVOKABLE QVariantMap getProfile() { return m_cacheUIProfile; }
-    Q_INVOKABLE QStringList profileFavorites() { return m_cacheUIProfile.value("favorites").toStringList(); }
     Q_INVOKABLE QStringList getProfilePages() { return m_cacheUIProfile.value("pages").toStringList(); }
 
-    // Removed from entities
-    Q_INVOKABLE void setFavorite(const QString& entityId, bool value);
+    // set favorite entity
+    void setFavorite(const QString& entityId, bool value);
 
-    bool    isValid() const { return m_error.isEmpty(); }
-    QString getError() const { return m_error; }
+    //    QVariant getContextProperty(const QString& name);  // not sure this is needed, it's used nowhere
 
-    QVariantMap config() { return m_config; }
-    void        setConfig(const QVariantMap& config);
-
-    QVariant getContextProperty(const QString& name);
+    // read and write configuration to file
+    bool readConfig(const QString& filePath);
+    bool writeConfig();
 
     // get a QML object, you need to have objectName property of the QML object set to be able to use this
     QObject* getQMLObject(QList<QObject*> nodes, const QString& name);
     QObject* getQMLObject(const QString& name);
 
-    // profile
-    QString profile() { return m_cacheProfile; }
-    void    setProfile(QString id);
+    // get all integrations and entities
+    QVariantMap getAllIntegrations() { return m_config["integrations"].toMap(); }
+    QVariantMap getIntegration(const QString& type) { return getAllIntegrations().value(type).toMap(); }
+
+    QVariantMap  getAllEntities() { return m_config["entities"].toMap(); }
+    QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
 
  public:
     explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath);
@@ -119,7 +134,7 @@ class Config : public QObject, public ConfigInterface {
 
  signals:
     void configChanged();
-    void profileChanged();
+    void profileIdChanged();
     void profileFavoritesChanged();
     void settingsChanged();
     void profilesChanged();
@@ -141,7 +156,7 @@ class Config : public QObject, public ConfigInterface {
     QString   m_error;
 
     // Caches to improve performance
-    QString     m_cacheProfile;
+    QString     m_cacheProfileId;
     QVariantMap m_cacheSettings;
     QVariantMap m_cacheUIConfig;
     QVariantMap m_cacheUIProfile;  // of selected Profile

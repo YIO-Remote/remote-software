@@ -44,7 +44,7 @@ Rectangle {
         }
 
         for (var i=0; i<profileModel.count; i++) {
-            if (profileModel.get(i).id === config.profile) {
+            if (profileModel.get(i).id === config.profileId) {
                 profileModel.move(i, 0, 1);
             }
         }
@@ -122,12 +122,12 @@ Rectangle {
         id: profileDelegate
 
         Item {
-            width: 380; height: id == config.profile ? 100 : 70
+            width: 380; height: id == config.profileId ? 100 : 70
 
             Rectangle {
                 width: parent.width; height: 2
                 color: Style.color.light
-                visible: id == config.profile ? true : false
+                visible: id == config.profileId ? true : false
                 anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
             }
 
@@ -135,12 +135,12 @@ Rectangle {
                 id: img
                 width: 70; height: 70
                 radius: width/2
-                color: id == config.profile ? Style.color.text : Style.color.highlight1
+                color: id == config.profileId ? Style.color.text : Style.color.highlight1
                 anchors { top: parent.top; left: parent.left }
 
                 Text {
                     anchors.centerIn: parent
-                    color: id == config.profile ? Style.color.background : Style.color.text
+                    color: id == config.profileId ? Style.color.background : Style.color.text
                     text: name.substring(0,1);
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -149,7 +149,7 @@ Rectangle {
             }
 
             Text {
-                color: id == config.profile ? Style.color.text : Style.color.highlight1
+                color: id == config.profileId ? Style.color.text : Style.color.highlight1
                 text: name
                 anchors { verticalCenter: img.verticalCenter; left: img.right; leftMargin: 20 }
                 font { family: "Open Sans Regular"; pixelSize: 27 }
@@ -161,7 +161,7 @@ Rectangle {
 
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-                    config.profile = id;
+                    config.profileId = id;
                     profileModel.move(index, 0, 1);
                 }
             }

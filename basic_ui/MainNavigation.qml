@@ -51,7 +51,8 @@ Item {
     Connections {
         target: config
 
-        onProfileChanged: {
+        onProfileIdChanged: {
+            console.debug("Profile Id changed. Reload UI.");
             loadmenuConfig();
         }
     }
@@ -93,23 +94,22 @@ Item {
         for (var i = 0; i < menuConfig.count; i++) {
             var found = false;
 
-            for (var j = 0; j < tmp.ui_config.profiles[config.profile].pages.length && !found; j++) {
-                if (tmp.ui_config.profiles[config.profile].pages[j] === menuConfig.get(i).page) {
-                    newConfig.push(tmp.ui_config.profiles[config.profile].pages[j]);
-                    tmp.ui_config.profiles[config.profile].pages.splice(j,1);
+            for (var j = 0; j < tmp.ui_config.profiles[config.profileId].pages.length && !found; j++) {
+                if (tmp.ui_config.profiles[config.profileId].pages[j] === menuConfig.get(i).page) {
+                    newConfig.push(tmp.ui_config.profiles[config.profileId].pages[j]);
+                    tmp.ui_config.profiles[config.profileId].pages.splice(j,1);
                     found = true;
                 }
             }
         }
 
         // clear the config
-        tmp.ui_config.profiles[config.profile].pages  = [];
+        tmp.ui_config.profiles[config.profileId].pages  = [];
 
         // update the config
-        tmp.ui_config.profiles[config.profile].pages = newConfig;
+        tmp.ui_config.profiles[config.profileId].pages = newConfig;
 
         config.config = tmp;
-        config.writeConfig();
     }
 
     Component.onCompleted: {

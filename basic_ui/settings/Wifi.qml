@@ -68,7 +68,6 @@ Item {
                     var tmp = config.config
                     tmp.settings.bluetootharea = !tmp.settings.bluetootharea
                     config.config = tmp;
-                    config.writeConfig();
                 }
             }
 

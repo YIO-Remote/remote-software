@@ -55,7 +55,7 @@ void Integrations::load() {
     Launcher* l = new Launcher();
 
     // read the config
-    QVariantMap c = config->getIntegrations();
+    QVariantMap c = config->getAllIntegrations();
 
     int integrationCount = 0;
 

@@ -263,11 +263,20 @@ Item {
         anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: 10 }
 
         Text {
+            id: profileText
             color: Style.color.text
-            text: config.getProfile().name.substring(0,1);
+            text: config.getProfile().name.substring(0,1)
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             anchors.centerIn: parent
             font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 14 }
+
+            Connections {
+                target: config
+                ignoreUnknownSignals: true
+                onProfileIdChanged: {
+                    profileText.text = config.getProfile().name.substring(0,1);
+                }
+            }
         }
     }
 
