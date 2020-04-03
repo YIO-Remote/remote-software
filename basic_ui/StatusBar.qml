@@ -45,7 +45,7 @@ Item {
     }
 
     Connections {
-        target: loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item
+        target: loader_main.item.mainNavigationSwipeview.currentItem ? loader_main.item.mainNavigationSwipeview.currentItem.mainNavigationLoader.item : null
         ignoreUnknownSignals: true
 
         onScrollupBegin: {

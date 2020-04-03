@@ -257,10 +257,10 @@ Item {
 
     Rectangle {
         id: background
-        width: mainNavigationListView.currentItem.width-30; height: 50
+        width: mainNavigationListView.currentItem ? mainNavigationListView.currentItem.width-30 : 0; height: 50
         color: Style.color.highlight2
         radius: 25
-        y: mainNavigationListView.currentItem.y + 10
+        y: mainNavigationListView.currentItem ? mainNavigationListView.currentItem.y + 10 : 10
 
         Behavior on x {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
