@@ -237,7 +237,7 @@ Item {
                         text: qsTr(friendly_name) + translateHandler.emptyString
                         horizontalAlignment: Text.AlignHCenter
                         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter; verticalCenterOffset: -5 }
-                        font: Style.fonts.button
+                        font: Style.font.button
                         lineHeight: 0.8
                     }
                 }

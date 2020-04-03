@@ -29,6 +29,6 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: blindButton
-    icon: Style.icons.blind
+    icon: Style.icon.blind
     cardLoader.source: "qrc:/components/blind/ui/Card.qml"
 }

@@ -204,7 +204,7 @@ Rectangle {
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
             anchors { left: parent.left; leftMargin: 126; verticalCenter: parent.verticalCenter}
-            font: Style.fonts.button
+            font: Style.font.button
         }
 
         Text {
@@ -346,7 +346,7 @@ Rectangle {
 
             Text {
                 color: Style.color.text
-                text: obj && obj.favorite ? Style.icons.fav_remove : Style.icons.fav_add
+                text: obj && obj.favorite ? Style.icon.fav_remove : Style.icon.fav_add
                 renderType: Text.NativeRendering
                 width: 80; height: 80
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -373,7 +373,7 @@ Rectangle {
             text: obj && obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
             wrapMode: Text.WordWrap
             anchors { left: addToFavButtonCircle.right; leftMargin: 26; verticalCenter: addToFavButtonCircle.verticalCenter }
-            font: Style.fonts.button
+            font: Style.font.button
         }
     }
 
@@ -417,7 +417,7 @@ Rectangle {
         id: closeButton
         color: Style.color.text
         visible: buttonContainer.state == "open"
-        text: Style.icons.close
+        text: Style.icon.close
         renderType: Text.NativeRendering
         width: 70; height: 70
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

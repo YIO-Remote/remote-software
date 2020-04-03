@@ -143,7 +143,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors { left: parent.left; leftMargin: 106; verticalCenter: parent.verticalCenter; verticalCenterOffset: obj.source === "" ? 0 : -15 }
-            font: Style.fonts.button
+            font: Style.font.button
         }
 
         Text {
@@ -197,7 +197,7 @@ Rectangle {
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-80
-        font: Style.fonts.button
+        font: Style.font.button
         anchors { top: songTitle.bottom; horizontalCenter: parent.horizontalCenter }
     }
 
@@ -226,7 +226,7 @@ Rectangle {
 
         Text {
             color: Style.color.text
-            text: Style.icons.prev
+            text: Style.icon.prev
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -252,7 +252,7 @@ Rectangle {
 
         Text {
             color: Style.color.text
-            text: Style.icons.pause
+            text: Style.icon.pause
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -267,7 +267,7 @@ Rectangle {
 
         Text {
             color: Style.color.text
-            text: Style.icons.play
+            text: Style.icon.play
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -302,7 +302,7 @@ Rectangle {
 
         Text {
             color: Style.color.text
-            text: Style.icons.next
+            text: Style.icon.next
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

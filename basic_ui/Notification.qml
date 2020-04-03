@@ -211,7 +211,7 @@ Rectangle {
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
-        font: Style.fonts.button
+        font: Style.font.button
         lineHeight: 1
         anchors { left: parent.left; leftMargin: 108; top: parent.top; topMargin: 10 }
     }

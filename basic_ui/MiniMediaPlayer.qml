@@ -421,7 +421,7 @@ Item {
                     text: obj ? obj.source : ""
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
-                    font: Style.fonts.button
+                    font: Style.font.button
                     anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
                 }
 
@@ -447,7 +447,7 @@ Item {
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     width: parent.width-80
-                    font: Style.fonts.button
+                    font: Style.font.button
                     anchors { top: titleOpen.bottom; horizontalCenter: parent.horizontalCenter }
                 }
 
@@ -459,7 +459,7 @@ Item {
                     Text {
                         id: speakerIcon
                         color: Style.color.text
-                        text: Style.icons.speaker
+                        text: Style.icon.speaker
                         renderType: Text.NativeRendering
                         width: 60; height: 60
                         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -470,7 +470,7 @@ Item {
                         color: Style.color.text
                         text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
-                        font: Style.fonts.button
+                        font: Style.font.button
                         anchors { left: speakerIcon.right; verticalCenter: speakerIcon.verticalCenter }
                     }
                 }
@@ -481,7 +481,7 @@ Item {
     Text {
         id: closeButton
         color: Style.color.text
-        text: Style.icons.down_arrow
+        text: Style.icon.down_arrow
         renderType: Text.NativeRendering
         width: 70; height: 70
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -508,7 +508,7 @@ Item {
 
         Text {
             color: Style.color.text
-            text: Style.icons.prev
+            text: Style.icon.prev
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -537,7 +537,7 @@ Item {
 
         Text {
             color: Style.color.text
-            text: Style.icons.pause
+            text: Style.icon.pause
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -552,7 +552,7 @@ Item {
 
         Text {
             color: Style.color.text
-            text: Style.icons.play
+            text: Style.icon.play
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -588,7 +588,7 @@ Item {
 
         Text {
             color: Style.color.text
-            text: Style.icons.next
+            text: Style.icon.next
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

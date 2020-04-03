@@ -30,7 +30,7 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: switchButton
-    icon: Style.icons.power_on
+    icon: Style.icon.power_on
 
     cardLoader.source: "qrc:/components/switch/ui/CardSwitch.qml"
 

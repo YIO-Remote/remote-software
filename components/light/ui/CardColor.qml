@@ -211,7 +211,7 @@ Rectangle {
             Text {
                 id: icon
                 color: Style.color.text
-                text: Style.icons.light
+                text: Style.icon.light
                 renderType: Text.NativeRendering
                 width: 85; height: 85
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -380,7 +380,7 @@ Rectangle {
             Text {
                 id: icon_b
                 color: Style.color.text
-                text: Style.icons.light
+                text: Style.icon.light
                 renderType: Text.NativeRendering
                 width: 85; height: 85
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

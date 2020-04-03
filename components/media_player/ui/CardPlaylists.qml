@@ -219,7 +219,7 @@ Rectangle {
             Text {
                 id: backButton
                 color: Style.color.text
-                text: Style.icons.left_arrow
+                text: Style.icon.left_arrow
                 renderType: Text.NativeRendering
                 width: 70; height: 70
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

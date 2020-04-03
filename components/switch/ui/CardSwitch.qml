@@ -111,7 +111,7 @@ Rectangle {
     Text {
         id: icon
         color: Style.color.text
-        text: Style.icons.power_on
+        text: Style.icon.power_on
         renderType: Text.NativeRendering
         width: 85; height: 85
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

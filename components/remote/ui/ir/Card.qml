@@ -127,7 +127,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors { left: parent.left; leftMargin: 106; verticalCenter: parent.verticalCenter }
-            font: Style.fonts.button
+            font: Style.font.button
             lineHeight: 1
         }
 
@@ -198,7 +198,7 @@ Rectangle {
 
             Text {
                 color: Style.color.text
-                text: Style.icons.circle
+                text: Style.icon.circle
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font { family: "icons"; pixelSize: 60 }
@@ -223,7 +223,7 @@ Rectangle {
 
             Text {
                 color: Style.color.text
-                text: Style.icons.square
+                text: Style.icon.square
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font {family: "icons"; pixelSize: 60 }
@@ -248,7 +248,7 @@ Rectangle {
 
             Text {
                 color: Style.color.text
-                text: Style.icons.square_full
+                text: Style.icon.square_full
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font { family: "icons"; pixelSize: 60 }

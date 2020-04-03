@@ -86,11 +86,11 @@ Rectangle {
                     color: Style.color.text
                     text: {
                         if (list[index]["original"] === "Off")
-                            return Style.icons.power_on
+                            return Style.icon.power_on
                         else if (list[index]["original"] === "Heat")
-                            return Style.icons.heat
+                            return Style.icon.heat
                         else if (list[index]["original"] === "Cool")
-                            return Style.icons.cool
+                            return Style.icon.cool
                     }
                     renderType: Text.NativeRendering
                     width: 70

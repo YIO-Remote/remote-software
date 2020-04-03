@@ -91,7 +91,7 @@ Rectangle {
 
         Text {
             color: Style.color.text
-            text: Style.icons.play
+            text: Style.icon.play
             renderType: Text.NativeRendering
             width: 70; height: 70
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -129,7 +129,7 @@ Rectangle {
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
             width: parent.width-80
-            font: Style.fonts.button
+            font: Style.font.button
             anchors { top: title.bottom; horizontalCenter: parent.horizontalCenter }
         }
 

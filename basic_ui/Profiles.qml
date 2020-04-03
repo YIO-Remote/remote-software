@@ -183,7 +183,7 @@ Rectangle {
     Text {
         id: closeButton
         color: Style.color.text
-        text: Style.icons.close
+        text: Style.icon.close
         renderType: Text.NativeRendering
         width: 70; height: 70
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

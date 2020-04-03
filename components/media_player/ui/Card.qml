@@ -248,7 +248,7 @@ Rectangle {
         Text {
             color: Style.color.text
             opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
-            text: Style.icons.home
+            text: Style.icon.home
             renderType: Text.NativeRendering
             width: 60; height: 60
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -271,7 +271,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
             color: Style.color.text
             opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
-            text: Style.icons.search
+            text: Style.icon.search
             renderType: Text.NativeRendering
             width: 60; height: 60
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -293,7 +293,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
             color: Style.color.text
             opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
-            text: Style.icons.playlist
+            text: Style.icon.playlist
             renderType: Text.NativeRendering
             width: 60; height: 60
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -315,7 +315,7 @@ Rectangle {
             visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
             color: Style.color.text
             opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
-            text: Style.icons.speaker
+            text: Style.icon.speaker
             renderType: Text.NativeRendering
             width: 60; height: 60
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

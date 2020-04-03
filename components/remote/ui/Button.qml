@@ -27,7 +27,7 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: remoteButton
-    icon: Style.icons.remote
+    icon: Style.icon.remote
     cardLoader.source: "qrc:/components/remote/ui/ir/Card.qml"
 }
 

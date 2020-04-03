@@ -51,7 +51,7 @@ Rectangle {
         color: Style.color.text
         text: title
         anchors { left: buttonIcon.right; leftMargin: 15; verticalCenter: parent.verticalCenter; verticalCenterOffset: subtitle == "" ? 0 : -16 }
-        font: Style.fonts.button
+        font: Style.font.button
         lineHeight: 1
     }
 
@@ -69,7 +69,7 @@ Rectangle {
     Text {
         id: forwardIcon
         color: Style.color.text
-        text: Style.icons.right_arrow
+        text: Style.icon.right_arrow
         renderType: Text.NativeRendering
         width: 70; height: 70
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

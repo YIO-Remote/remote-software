@@ -103,13 +103,13 @@ Item {
                     color: Style.color.text
                     text: wifi.networkScanResult[index].name
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                    font: Style.fonts.button
+                    font: Style.font.button
                 }
 
                 Text {
                     color: Style.color.text
                     opacity: 0.3
-                    text: Style.icons.wifi_3
+                    text: Style.icon.wifi_3
                     renderType: Text.NativeRendering
                     width: 70; height: 70
                     verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -121,11 +121,11 @@ Item {
                     color: Style.color.text
                     text: {
                         if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
-                            return Style.icons.wifi_1
+                            return Style.icon.wifi_1
                         else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.OK)
-                            return Style.icons.wifi_2
+                            return Style.icon.wifi_2
                         else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.GOOD || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.EXCELLENT)
-                            return Style.icons.wifi_3
+                            return Style.icon.wifi_3
                         else return ""
                     }
                     renderType: Text.NativeRendering

@@ -216,7 +216,7 @@ Rectangle {
     Text {
         id: icon
         color: Style.color.text
-        text: Style.icons.blind
+        text: Style.icon.blind
         renderType: Text.NativeRendering
         width: 85; height: 85
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -278,7 +278,7 @@ Rectangle {
 
         Text {
             color: Style.color.background
-            text: Style.icons.down_arrow_bold
+            text: Style.icon.down_arrow_bold
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 100 }
@@ -299,7 +299,7 @@ Rectangle {
 
         Text {
             color: Style.color.background
-            text: Style.icons.square
+            text: Style.icon.square
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 100 }
@@ -321,7 +321,7 @@ Rectangle {
 
         Text {
             color: Style.color.background
-            text: Style.icons.up_arrow_bold
+            text: Style.icon.up_arrow_bold
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 100 }

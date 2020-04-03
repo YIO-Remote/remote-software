@@ -50,7 +50,7 @@ Rectangle {
                 color: Style.color.text
                 text: qsTr("Auto brightness") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.fonts.button
+                font: Style.font.button
             }
 
             BasicUI.CustomSwitch {
@@ -161,7 +161,7 @@ Rectangle {
                 color: Style.color.text
                 text: qsTr("Proximity detection") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.fonts.button
+                font: Style.font.button
             }
 
             Slider {

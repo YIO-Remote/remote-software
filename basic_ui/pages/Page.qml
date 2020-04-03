@@ -76,8 +76,7 @@ Flickable {
         }
     }
 
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
     contentHeight: groupContainer.height + titleContainer.height + mainNavigation.height + 20
@@ -97,8 +96,7 @@ Flickable {
 
     Item {
         id: topImage
-        width: parent.width
-        height: 320
+        width: parent.width; height: 320
         anchors.top: parent.top
 
         Rectangle {
@@ -116,8 +114,7 @@ Flickable {
 
             Rectangle {
                 id: gradient
-                width: parent.width
-                height: 80
+                width: parent.width; height: 80
                 anchors.bottom: parent.bottom
 
                 LinearGradient {
@@ -164,17 +161,14 @@ Flickable {
 
     Item {
         id: titleContainer
-        width: parent.width
-        height: 240
+        width: parent.width; height: 240
 
         Text {
             id: titleText
             color: Style.color.text
             text: title
             anchors.centerIn: parent
-            font.family: "Open Sans Regular"
-            font.weight: Font.Normal
-            font.pixelSize: 60
+            font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 60 }
             lineHeight: 1
         }
     }
@@ -182,8 +176,7 @@ Flickable {
     Column {
         id: groupContainer
         width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: titleContainer.bottom
+        anchors { horizontalCenter: parent.horizontalCenter; top: titleContainer.bottom }
         spacing: 60
 
         Repeater {

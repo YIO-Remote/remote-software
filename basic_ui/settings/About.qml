@@ -25,8 +25,7 @@ import Style 1.0
 
 Rectangle {
     id: container
-    width: parent.width
-    height: childrenRect.height+20
+    width: parent.width; height: childrenRect.height+20
     radius: Style.cornerRadius
     color: Style.color.dark
 
@@ -35,7 +34,7 @@ Rectangle {
         color: Style.color.text
         text: qsTr("Thank you!") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-        font: Style.fonts.button
+        font: Style.font.button
     }
 
     Text {
@@ -48,6 +47,7 @@ Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
+Marton Borzak
 
 To learn more about the project, visit
 www.yio-remote.com

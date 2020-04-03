@@ -95,7 +95,7 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         text: qsTr("Enter password for\n\"%1\"").arg(obj.name) + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; verticalCenter: closeButton.verticalCenter }
-        font: Style.fonts.button
+        font: Style.font.button
         lineHeight: 1.2
     }
 
@@ -148,7 +148,7 @@ Rectangle {
     Text {
         id: closeButton
         color: Style.color.text
-        text: Style.icons.close
+        text: Style.icon.close
         renderType: Text.NativeRendering
         width: 70; height: 70
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

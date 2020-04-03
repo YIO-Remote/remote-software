@@ -114,6 +114,6 @@ Item {
         color: Style.color.text
         text: qsTr("Setting up your YIO Dock") + translateHandler.emptyString
         anchors { top: yio_O.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
-        font: Style.fonts.button
+        font: Style.font.button
     }
 }

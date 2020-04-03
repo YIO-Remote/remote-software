@@ -142,7 +142,7 @@ Rectangle {
                     Text {
                         id: searchIcon
                         color: Style.color.background
-                        text: Style.icons.search
+                        text: Style.icon.search
                         renderType: Text.NativeRendering
                         width: 70; height: 70
                         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -225,7 +225,7 @@ Rectangle {
                         color: Style.color.text
                         text: qsTr("Recent searches") + translateHandler.emptyString
                         anchors { left: parent.left; top: parent.top }
-                        font: Style.fonts.button
+                        font: Style.font.button
                     }
 
                     Text {
@@ -233,7 +233,7 @@ Rectangle {
                         opacity: 0.5
                         text: qsTr("Clear") + translateHandler.emptyString
                         anchors { right: parent.right; top: parent.top }
-                        font: Style.fonts.button
+                        font: Style.font.button
 
                         visible: obj.recentSearches.count > 0 ? true : false
                         enabled: visible
@@ -611,7 +611,7 @@ Rectangle {
             Text {
                 id: backButton
                 color: Style.color.text
-                text: Style.icons.left_arrow
+                text: Style.icon.left_arrow
                 renderType: Text.NativeRendering
                 width: 70; height: 70
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
