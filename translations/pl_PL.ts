@@ -152,12 +152,12 @@ www.yio-remote.com
   <context>
     <name>ButtonBase</name>
     <message>
-      <location filename="../components/ButtonBase.qml" line="372"/>
+      <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Remove from favorites</source>
       <translation>Usuń z ulubionych</translation>
     </message>
     <message>
-      <location filename="../components/ButtonBase.qml" line="372"/>
+      <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Add to favorites</source>
       <translation>Dodaj do ulubionych</translation>
     </message>
@@ -319,11 +319,13 @@ www.yio-remote.com
     <name>CardSwitch</name>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
+      <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
       <translation>Wyłącz</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
+      <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn on</source>
       <translation>Włącz</translation>
     </message>
@@ -674,59 +676,59 @@ Navigate your internet browser to: http://</translation>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="69"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="82"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="140"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="94"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="107"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="165"/>
       <source>Settings</source>
       <translation>Ustawienia</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="151"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
       <source>Your software is up to date.</source>
       <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="151"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
       <source>New software is available.</source>
       <translation type="unfinished">New software is available.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="168"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="193"/>
       <source>Display</source>
       <translation type="unfinished">Display</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="174"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="199"/>
       <source>Language</source>
       <translation type="unfinished">Language</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="187"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="212"/>
       <source>Integrations</source>
       <translation type="unfinished">Integrations</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="194"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="219"/>
       <source>Battery &amp; power</source>
       <translation type="unfinished">Battery &amp; power</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="201"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="226"/>
       <source>m remaining</source>
       <translation type="unfinished">m remaining</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="208"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="233"/>
       <source>WiFi &amp; bluetooth</source>
       <translation type="unfinished">WiFi &amp; bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="214"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="239"/>
       <source>System</source>
       <translation type="unfinished">System</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="220"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="245"/>
       <source>About</source>
       <translation type="unfinished">About</translation>
     </message>
@@ -969,12 +971,12 @@ Remote configuration after restarting the remote.</translation>
       <translation type="unfinished">Download</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="297"/>
+      <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
       <translation type="unfinished">Download failed: %1</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="320"/>
+      <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
       <translation type="unfinished">Failed to start app update script!</translation>
     </message>
