@@ -47,10 +47,10 @@ Item {
                 width: 80; height: 80
                 anchors.centerIn: parent
                 radius: Style.cornerRadius
-                color: Style.colorMedium
+                color: Style.color.medium
 
                 Text {
-                    color: Style.colorText
+                    color: Style.color.text
                     text: number
                     verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                     anchors.centerIn: parent

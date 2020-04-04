@@ -21,13 +21,36 @@
  *****************************************************************************/
 
 import QtQuick 2.11
+
+import ButtonHandler 1.0
 import Style 1.0
+import Entity.Switch 1.0
 
 import "qrc:/components" as Comp
 
 Comp.ButtonBase {
-    id: remoteButton
-    icon: Style.icon.remote
-    cardLoader.source: "qrc:/components/remote/ui/ir/Card.qml"
-}
+    id: switchButton
+    icon: Style.icon.power_on
 
+    cardLoader.source: "qrc:/components/switch/ui/CardSwitch.qml"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: ButtonHandler
+        enabled: state == "open" ? true : false
+
+        onButtonPressed: {
+            var tmp;
+
+            switch (button) {
+            case ButtonHandler.DPAD_MIDDLE:
+                if (obj.supportsOn) {
+                    obj.toggle();
+                }
+                break;
+            }
+        }
+    }
+}

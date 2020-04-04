@@ -32,7 +32,7 @@ Item {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Failed to connect") + translateHandler.emptyString
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
@@ -44,7 +44,7 @@ Item {
 
     Text {
         id: smalltext
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("YIO Remote could not connect to your Wi-Fi network.") + translateHandler.emptyString
         wrapMode: Text.WordWrap

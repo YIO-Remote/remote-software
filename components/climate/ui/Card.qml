@@ -34,7 +34,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: card
     width: parent.width; height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -213,11 +213,11 @@ Rectangle {
             width: Math.max(64, Math.min(temperatureDial.width, temperatureDial.height)); height: width
             color: {
                 if ((obj.state === Climate.HEAT && targetTemperature > obj.temperature) || (targetTemperature > obj.temperature)) {
-                    return Style.colorOrange
+                    return Style.color.orange
                 } else if ((obj.state === Climate.COOL && targetTemperature < obj.temperature) || targetTemperature < obj.temperature) {
-                    return Style.colorBlue
+                    return Style.color.blue
                 } else {
-                    return Style.colorHighlight2
+                    return Style.color.highlight2
                 }
             }
             radius: width / 2
@@ -265,7 +265,7 @@ Rectangle {
 
                         Text {
                             id: temperatureTextDial
-                            color: Style.colorText
+                            color: Style.color.text
                             text: {
                                 var s = temp.toString().split(".")
                                 return s[0]
@@ -276,7 +276,7 @@ Rectangle {
                         }
 
                         Text {
-                            color: Style.colorText
+                            color: Style.color.text
                             text: {
                                 var s = temp.toString().split(".")
                                 if (s[1]) {
@@ -298,7 +298,7 @@ Rectangle {
             x: temperatureDial.background.x + temperatureDial.background.width / 2 - width / 2
             y: temperatureDial.background.y + temperatureDial.background.height / 2 - height / 2
             width: 60; height: 60
-            color: Style.colorBackground
+            color: Style.color.background
             opacity: 0.5
             radius: 30
             antialiasing: true
@@ -335,8 +335,8 @@ Rectangle {
 
     Text {
         id: icon
-        color: Style.colorText
-        text: Style.icons.climate
+        color: Style.color.text
+        text: Style.icon.climate
         renderType: Text.NativeRendering
         width: 85; height: 85
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -346,7 +346,7 @@ Rectangle {
 
     Text {
         id: temperatureText
-        color: Style.colorText
+        color: Style.color.text
         text: {
             var s = targetTemperature.toString().split(".")
             return s[0]
@@ -357,7 +357,7 @@ Rectangle {
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
         opacity: temperatureText.opacity
         text: {
             var s = targetTemperature.toString().split(".")
@@ -373,7 +373,7 @@ Rectangle {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
@@ -384,7 +384,7 @@ Rectangle {
 
     Text {
         id: areaText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
@@ -398,8 +398,8 @@ Rectangle {
         id: turnOnButton
         visible: obj.isSupported(Climate.F_OFF) && obj.isSupported(Climate.F_ON)
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
-        buttonTextColor: Style.colorBackground
+        color: Style.color.text
+        buttonTextColor: Style.color.background
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
@@ -411,8 +411,8 @@ Rectangle {
     BasicUI.CustomButton {
         id: modeButton
         anchors { left: (obj.isSupported(Climate.F_OFF) && obj.isSupported(Climate.F_ON)) ? turnOnButton.right : parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
-        buttonTextColor: Style.colorBackground
+        color: Style.color.text
+        buttonTextColor: Style.color.background
         buttonText: qsTr("Mode") + translateHandler.emptyString
         visible: obj.isSupported(Climate.F_HVAC_MODES)
 

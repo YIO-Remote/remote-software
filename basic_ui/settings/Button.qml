@@ -28,7 +28,7 @@ Rectangle {
     id: button
     width: parent.width; height: 120
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     property string title
     property string subtitle: ""
@@ -37,7 +37,7 @@ Rectangle {
 
     Text {
         id: buttonIcon
-        color: Style.colorText
+        color: Style.color.text
         text: icon
         renderType: Text.NativeRendering
         width: 70; height: 70
@@ -48,17 +48,17 @@ Rectangle {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: title
         anchors { left: buttonIcon.right; leftMargin: 15; verticalCenter: parent.verticalCenter; verticalCenterOffset: subtitle == "" ? 0 : -16 }
-        font: Style.fonts.button
+        font: Style.font.button
         lineHeight: 1
     }
 
     Text {
         id: subTitleText
         visible: subtitle != ""
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: subtitle
         anchors { left: titleText.left; top: titleText.bottom; topMargin: 10 }
@@ -68,8 +68,8 @@ Rectangle {
 
     Text {
         id: forwardIcon
-        color: Style.colorText
-        text: Style.icons.right_arrow
+        color: Style.color.text
+        text: Style.icon.right_arrow
         renderType: Text.NativeRendering
         width: 70; height: 70
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

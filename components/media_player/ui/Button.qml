@@ -31,7 +31,7 @@ import MediaPlayerUtils 1.0
 
 Comp.ButtonBase {
     id: mediaplayerButton
-    icon: Style.icons.music
+    icon: Style.icon.music
     cardLoader.source: "qrc:/components/media_player/ui/Card.qml"
 
     // override default settings
@@ -40,6 +40,7 @@ Comp.ButtonBase {
     // include mediaplayer utils
     MediaPlayerUtils {
         id: mediaplayerUtils
+        enabled: _isCurrentItem
     }
 
     ListModel {
@@ -53,7 +54,7 @@ Comp.ButtonBase {
     // additional UI elements
     Text {
         id: info
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: obj.source
         elide: Text.ElideRight

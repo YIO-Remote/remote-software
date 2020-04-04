@@ -29,7 +29,7 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: climateButton
-    icon: Style.icons.climate
+    icon: Style.icon.climate
     cardLoader.source: "qrc:/components/climate/ui/Card.qml"
 
     // override default settings
@@ -38,7 +38,7 @@ Comp.ButtonBase {
     // additional UI elements
     Text {
         id: info
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: {
             if (obj.isSupported(Climate.F_TEMPERATURE))

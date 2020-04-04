@@ -30,7 +30,7 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: lightButton
-    icon: Style.icons.light
+    icon: Style.icon.light
 
     cardLoader.source: {
         if (obj.isSupported(Light.F_COLOR)) {

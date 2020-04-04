@@ -24,6 +24,9 @@
 #include "config.h"
 
 #include <QJsonDocument>
+#include <QLoggingCategory>
+
+static Q_LOGGING_CATEGORY(CLASS_LC, "config");
 
 const QString Config::KEY_ID                 = CFG_KEY_ID;
 const QString Config::KEY_FRIENDLYNAME       = CFG_KEY_FRIENDLYNAME;
@@ -82,7 +85,7 @@ void Config::setConfig(const QVariantMap &config) {
     writeConfig();
 }
 
-QVariant Config::getContextProperty(const QString &name) { return m_engine->rootContext()->contextProperty(name); }
+// QVariant Config::getContextProperty(const QString &name) { return m_engine->rootContext()->contextProperty(name); }
 
 bool Config::readConfig(const QString &filePath) {
     // load the config.json file from the filesystem
@@ -99,6 +102,7 @@ bool Config::writeConfig() {
     syncCacheToConfig();
     bool result = m_jsf->write(m_config);
     m_error     = m_jsf->error();
+    qCCritical(CLASS_LC()) << "Write to config file success:" << result;
     return result;
 }
 
@@ -136,34 +140,32 @@ QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {
 
 QObject *Config::getQMLObject(const QString &name) { return getQMLObject(m_engine->rootObjects(), name); }
 
-void Config::setProfile(QString id) {
-    QVariantMap p = getUIConfig();
-    p.insert("selected_profile", id);
-    m_config.insert("ui_config", p);
+void Config::setProfileId(QString id) {
+    qCDebug(CLASS_LC()) << "Profile id changing to:" << id << "from:" << m_cacheProfileId;
+    m_cacheProfileId = id;
+    m_cacheUIProfile = m_cacheUIProfiles[m_cacheProfileId].toMap();
 
     if (!writeConfig()) {
         // this is a Q_PROPERTY write method: can't return false!
         emit configWriteError(m_error);
     }
-    emit profileChanged();
+    emit profileIdChanged();
 }
 
 void Config::syncConfigToCache() {
     m_cacheSettings = m_config["settings"].toMap();
     m_cacheUIConfig = m_config["ui_config"].toMap();
 
-    m_cacheProfile    = m_cacheUIConfig["selected_profile"].toString();
+    m_cacheProfileId  = m_cacheUIConfig["selected_profile"].toString();
     m_cacheUIProfiles = m_cacheUIConfig["profiles"].toMap();
     m_cacheUIPages    = m_cacheUIConfig["pages"].toMap();
     m_cacheUIGroups   = m_cacheUIConfig["groups"].toMap();
 
-    m_cacheUIProfile = m_cacheUIProfiles[m_cacheProfile].toMap();
+    m_cacheUIProfile = m_cacheUIProfiles[m_cacheProfileId].toMap();
 }
 
 void Config::syncCacheToConfig() {
-    m_cacheUIProfiles.insert(m_cacheProfile, m_cacheUIProfile);
-
-    m_cacheUIConfig.insert("selected_profile", m_cacheProfile);
+    m_cacheUIConfig.insert("selected_profile", m_cacheProfileId);
     m_cacheUIConfig.insert("profiles", m_cacheUIProfiles);
     m_cacheUIConfig.insert("pages", m_cacheUIPages);
     m_cacheUIConfig.insert("groups", m_cacheUIGroups);

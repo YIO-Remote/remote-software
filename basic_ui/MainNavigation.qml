@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtGraphicalEffects 1.0
 import QtQml.Models 2.3
 import Style 1.0
 
@@ -29,12 +28,11 @@ import Haptic 1.0
 
 Item {
     id: mainNavigation
-    width: parent.width
-    height: 70
+    width: parent.width; height: 70
 
     Rectangle {
         anchors.fill: parent
-        color: Style.colorBackground
+        color: Style.color.background
     }
 
     MouseArea {
@@ -44,7 +42,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MENU CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     property alias menuConfig: menuConfig
 
     ListModel {
@@ -54,7 +51,8 @@ Item {
     Connections {
         target: config
 
-        onProfileChanged: {
+        onProfileIdChanged: {
+            console.debug("Profile Id changed. Reload UI.");
             loadmenuConfig();
         }
     }
@@ -96,27 +94,27 @@ Item {
         for (var i = 0; i < menuConfig.count; i++) {
             var found = false;
 
-            for (var j = 0; j < tmp.ui_config.profiles[config.profile].pages.length && !found; j++) {
-                if (tmp.ui_config.profiles[config.profile].pages[j] == menuConfig.get(i).page) {
-                    newConfig.push(tmp.ui_config.profiles[config.profile].pages[j]);
-                    tmp.ui_config.profiles[config.profile].pages.splice(j,1);
+            for (var j = 0; j < tmp.ui_config.profiles[config.profileId].pages.length && !found; j++) {
+                if (tmp.ui_config.profiles[config.profileId].pages[j] === menuConfig.get(i).page) {
+                    newConfig.push(tmp.ui_config.profiles[config.profileId].pages[j]);
+                    tmp.ui_config.profiles[config.profileId].pages.splice(j,1);
                     found = true;
                 }
             }
         }
 
         // clear the config
-        tmp.ui_config.profiles[config.profile].pages  = [];
+        tmp.ui_config.profiles[config.profileId].pages  = [];
 
         // update the config
-        tmp.ui_config.profiles[config.profile].pages = newConfig;
+        tmp.ui_config.profiles[config.profileId].pages = newConfig;
 
         config.config = tmp;
-        config.writeConfig();
     }
 
     Component.onCompleted: {
         loadmenuConfig()
+        alignBackground()
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,12 +126,11 @@ Item {
         MouseArea {
             id: dragArea
 
+            property alias dragArea: dragArea
             property bool selected: ListView.isCurrentItem
-
             property bool held: false
 
-            width: content.width + 20
-            height: content.height + 20
+            width: content.width + 20; height: content.height + 20
 
             drag.target: held ? content : undefined
             drag.axis: Drag.XAxis
@@ -141,6 +138,7 @@ Item {
             onPressAndHold: {
                 held = true;
                 Haptic.playEffect(Haptic.Click);
+                background.opacity = 0;
             }
             onReleased: {
                 if (held) {
@@ -151,6 +149,9 @@ Item {
                 held = false
                 mainNavigationListView.currentIndex = index
                 mainNavigationSwipeview.currentIndex = index
+
+                alignBackground()
+                backgroundOpacityChanger.start()
             }
 
             property ListView _listView: ListView.view
@@ -198,16 +199,14 @@ Item {
 
             Rectangle {
                 id: content
+                width: buttonText.implicitWidth+30; height: 50
+                color: Style.color.backgroundTransparent
+                opacity: selected ? 1 : 0.3
 
                 Drag.active: dragArea.held
                 Drag.source: dragArea
                 Drag.hotSpot.x: width / 2
                 Drag.hotSpot.y: height / 2
-
-                width: buttonText.implicitWidth+30
-                height: 50
-                color: Style.colorBackgroundTransparent
-                opacity: selected ? 1 : 0.3
 
                 states: State {
                     when: dragArea.held
@@ -224,9 +223,8 @@ Item {
                 }
 
                 Rectangle {
-                    width: parent.width
-                    height: parent.height
-                    color: dragArea.held ? Style.colorHighlight1 : ( selected ? Style.colorHighlight2 : Style.colorBackgroundTransparent )
+                    width: parent.width; height: parent.height
+                    color: dragArea.held ? Style.color.highlight1 : ( selected ? Style.color.highlight2 : Style.color.backgroundTransparent )
                     radius: width / 2
 
                     Behavior on color {
@@ -235,15 +233,11 @@ Item {
 
                     Text {
                         id: buttonText
-                        color: Style.colorText
+                        color: Style.color.text
                         text: qsTr(friendly_name) + translateHandler.emptyString
                         horizontalAlignment: Text.AlignHCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.verticalCenterOffset: -5
-                        font.family: "Open Sans Regular"
-                        font.weight: Font.Normal
-                        font.pixelSize: 27
+                        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter; verticalCenterOffset: -5 }
+                        font: Style.font.button
                         lineHeight: 0.8
                     }
                 }
@@ -261,12 +255,33 @@ Item {
         }
     }
 
-//    Rectangle {
-//        width: mainNavigationListView.currentItem.width; height: 50
-//        color: Style.colorHighlight1
-//        radius: width / 2
-//        x: mapFromItem(mainNavigationListView.currentItem, x, y).x
-//    }
+    Rectangle {
+        id: background
+        width: mainNavigationListView.currentItem ? mainNavigationListView.currentItem.width-30 : 0; height: 50
+        color: Style.color.highlight2
+        radius: 25
+        y: mainNavigationListView.currentItem ? mainNavigationListView.currentItem.y + 10 : 10
+
+        Behavior on x {
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        }
+    }
+
+    function alignBackground() {
+        var newX = mapFromItem(mainNavigationListView.currentItem, 0, 0);
+        background.x = newX.x
+    }
+
+    Timer {
+        id: backgroundOpacityChanger
+        interval: 300
+        running: false
+        repeat: false
+
+        onTriggered: {
+            background.opacity = 1;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN NAVIGATION
@@ -275,9 +290,7 @@ Item {
 
     ListView {
         id: mainNavigationListView
-
-        width: parent.width-20
-        height: 50
+        width: parent.width-20; height: 50
         anchors.centerIn: parent
         clip: true
         boundsBehavior: Flickable.DragAndOvershootBounds
@@ -286,18 +299,25 @@ Item {
         interactive: true
         focus: true
         highlightMoveDuration: 200
-
         currentIndex: 0
-
         spacing: 4
 
         model: visualModel
-        delegate: dragDelegate
+
+        onCurrentItemChanged: alignBackground()
+        onContentXChanged: alignBackground()
+        onFlickStarted: {
+            background.opacity = 0;
+            alignBackground()
+        }
+        onFlickEnded: {
+            alignBackground()
+            backgroundOpacityChanger.start()
+        }
     }
 
     DelegateModel {
         id: visualModel
-
         model: menuConfig
         delegate: dragDelegate
     }

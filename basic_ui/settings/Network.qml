@@ -60,7 +60,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Text {
         id: header
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Network") + translateHandler.emptyString
         anchors.left: parent.left
         font.family: "Open Sans Regular"
@@ -74,7 +74,7 @@ Item {
         width: parent.width
         height: childrenRect.height + 40
         radius: Style.cornerRadius
-        color: Style.colorDark
+        color: Style.color.dark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
@@ -88,7 +88,7 @@ Item {
 
             Text {
                 id: wifiSSIDText
-                color: Style.colorText
+                color: Style.color.text
                 text: wifi.wifiStatus.name
                 anchors.left: parent.left
                 anchors.leftMargin: 20
@@ -150,7 +150,7 @@ Item {
 
             background: Rectangle {
                 anchors.fill: parent
-                color: Style.colorLine
+                color: Style.color.line
                 radius: Style.cornerRadius
             }
 
@@ -192,7 +192,7 @@ Item {
                     id: page2
 
                     Text {
-                        color: Style.colorBackground
+                        color: Style.color.background
                         text: wifiNetworkSelected
                         anchors.left: parent.left
                         anchors.leftMargin: 20
@@ -223,7 +223,7 @@ Item {
                             background: Rectangle {
                                 implicitWidth: parent.width-40
                                 implicitHeight: 60
-                                color: Style.colorHighlight1
+                                color: Style.color.highlight1
                             }
                         }
                 }
@@ -235,14 +235,14 @@ Item {
             id: line0
             width: parent.width
             height: 2
-            color: Style.colorBackground
+            color: Style.color.background
             anchors.top: wifiSSID.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: wifiSignalText
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr("Wi-Fi signal strength") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -256,7 +256,7 @@ Item {
 
         Text {
             id: wifiSignalValue
-            color: Style.colorText
+            color: Style.color.text
             text: wifi.wifiStatus.rssi
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
@@ -272,14 +272,14 @@ Item {
             id: line6
             width: parent.width
             height: 2
-            color: Style.colorBackground
+            color: Style.color.background
             anchors.top: wifiSignalText.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: ipaddressText
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr("IP address") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -292,7 +292,7 @@ Item {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: wifi.wifiStatus.ipAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right
@@ -308,14 +308,14 @@ Item {
             id: line7
             width: parent.width
             height: 2
-            color: Style.colorBackground
+            color: Style.color.background
             anchors.top: ipaddressText.bottom
             anchors.topMargin: 20
         }
 
         Text {
             id: macaddressText
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr("MAC address") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -328,7 +328,7 @@ Item {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: wifi.wifiStatus.macAddress
             horizontalAlignment: Text.AlignRight
             anchors.right: parent.right

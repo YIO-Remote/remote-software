@@ -33,7 +33,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: cardRemote
     width: parent.width; height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,19 +120,19 @@ Rectangle {
 
         Text {
             id: title
-            color: Style.colorText
+            color: Style.color.text
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors { left: parent.left; leftMargin: 106; verticalCenter: parent.verticalCenter }
-            font: Style.fonts.button
+            font: Style.font.button
             lineHeight: 1
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: icon.text
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -181,7 +181,7 @@ Rectangle {
         delegate: Rectangle {
             width: 8; height: 8
             radius: height/2
-            color: Style.colorText
+            color: Style.color.text
             opacity: index == pagesSwipeView.currentIndex ? 1 : 0.3
         }
     }
@@ -197,8 +197,8 @@ Rectangle {
             anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
 
             Text {
-                color: Style.colorText
-                text: Style.icons.circle
+                color: Style.color.text
+                text: Style.icon.circle
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font { family: "icons"; pixelSize: 60 }
@@ -206,7 +206,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Mute") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
@@ -222,8 +222,8 @@ Rectangle {
             anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
             Text {
-                color: Style.colorText
-                text: Style.icons.square
+                color: Style.color.text
+                text: Style.icon.square
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font {family: "icons"; pixelSize: 60 }
@@ -231,7 +231,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Back") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter
@@ -247,8 +247,8 @@ Rectangle {
             anchors { right: parent.right; rightMargin: 40; verticalCenter: parent.verticalCenter }
 
             Text {
-                color: Style.colorText
-                text: Style.icons.square_full
+                color: Style.color.text
+                text: Style.icon.square_full
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font { family: "icons"; pixelSize: 60 }
@@ -256,7 +256,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Menu") + translateHandler.emptyString
                 verticalAlignment: Text.AlignVCenter

@@ -31,7 +31,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: cardHome
     width: parent.width; height: parent.height
-    color: mediaplayerUtils.pixelColor === "#000000" ? Style.colorDark : mediaplayerUtils.pixelColor
+    color: mediaplayerUtils.pixelColor === "#000000" ? Style.color.dark : mediaplayerUtils.pixelColor
     radius: Style.cornerRadius
 
     Behavior on color {
@@ -136,19 +136,19 @@ Rectangle {
 
         Text {
             id: title
-            color: Style.colorText
+            color: Style.color.text
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
             width: parent.width-232
             anchors { left: parent.left; leftMargin: 106; verticalCenter: parent.verticalCenter; verticalCenterOffset: obj.source === "" ? 0 : -15 }
-            font: Style.fonts.button
+            font: Style.font.button
         }
 
         Text {
             id: info
-            color: Style.colorText
+            color: Style.color.text
             opacity: 0.5
             text: obj.source
             elide: Text.ElideRight
@@ -160,7 +160,7 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: icon.text
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -178,7 +178,7 @@ Rectangle {
 
     Text {
         id: songTitle
-        color: Style.colorText
+        color: Style.color.text
         text: obj.mediaTitle
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
@@ -191,13 +191,13 @@ Rectangle {
 
     Text {
         id: artist
-        color: Style.colorText
+        color: Style.color.text
         text: obj.mediaArtist
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-80
-        font: Style.fonts.button
+        font: Style.font.button
         anchors { top: songTitle.bottom; horizontalCenter: parent.horizontalCenter }
     }
 
@@ -210,7 +210,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width*(obj.mediaProgress/obj.mediaDuration); height: parent.height
-            color: Style.colorLine
+            color: Style.color.line
 
             Behavior on width {
                 NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
@@ -225,8 +225,8 @@ Rectangle {
         anchors { right: playButton.left; rightMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.prev
+            color: Style.color.text
+            text: Style.icon.prev
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -251,8 +251,8 @@ Rectangle {
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 80 }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.pause
+            color: Style.color.text
+            text: Style.icon.pause
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -266,8 +266,8 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.play
+            color: Style.color.text
+            text: Style.icon.play
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -301,8 +301,8 @@ Rectangle {
         anchors { left: playButton.right; leftMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.next
+            color: Style.color.text
+            text: Style.icon.next
             renderType: Text.NativeRendering
             width: 85; height: 85
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

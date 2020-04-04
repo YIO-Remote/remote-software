@@ -29,7 +29,7 @@ Rectangle {
     width: parent.width
     height: 100+(80*list.length)
     radius: Style.cornerRadius
-    color: Style.colorBackground
+    color: Style.color.background
 
     property var list: []
     property var climateObj
@@ -83,14 +83,14 @@ Rectangle {
 
                 Text {
                     id: icon
-                    color: Style.colorText
+                    color: Style.color.text
                     text: {
                         if (list[index]["original"] === "Off")
-                            return Style.icons.power_on
+                            return Style.icon.power_on
                         else if (list[index]["original"] === "Heat")
-                            return Style.icons.heat
+                            return Style.icon.heat
                         else if (list[index]["original"] === "Cool")
-                            return Style.icons.cool
+                            return Style.icon.cool
                     }
                     renderType: Text.NativeRendering
                     width: 70
@@ -105,7 +105,7 @@ Rectangle {
 
                 Text {
                     text: list[index]["translated"]
-                    color: Style.colorText
+                    color: Style.color.text
                     anchors.left: icon.right
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
@@ -136,7 +136,7 @@ Rectangle {
 
             Text {
                 text: qsTr("Cancel") + translateHandler.emptyString
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 anchors.centerIn: parent
                 font.family: "Open Sans Regular"

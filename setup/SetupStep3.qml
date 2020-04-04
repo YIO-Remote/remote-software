@@ -57,7 +57,7 @@ Item {
 
         Text {
             id: titleText
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr("Wi-Fi setup") + translateHandler.emptyString
             horizontalAlignment: Text.AlignHCenter
             anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
@@ -67,7 +67,7 @@ Item {
 
         Text {
             id: smalltext
-            color: Style.colorText
+            color: Style.color.text
             opacity: 0.5
             text: qsTr("Select a Wi-Fi network.") + translateHandler.emptyString
             horizontalAlignment: Text.AlignHCenter
@@ -100,16 +100,16 @@ Item {
 
                 Text {
                     id: delegateSSID
-                    color: Style.colorText
+                    color: Style.color.text
                     text: wifi.networkScanResult[index].name
                     anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                    font: Style.fonts.button
+                    font: Style.font.button
                 }
 
                 Text {
-                    color: Style.colorText
+                    color: Style.color.text
                     opacity: 0.3
-                    text: Style.icons.wifi_3
+                    text: Style.icon.wifi_3
                     renderType: Text.NativeRendering
                     width: 70; height: 70
                     verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -118,14 +118,14 @@ Item {
                 }
 
                 Text {
-                    color: Style.colorText
+                    color: Style.color.text
                     text: {
                         if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
-                            return Style.icons.wifi_1
+                            return Style.icon.wifi_1
                         else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.OK)
-                            return Style.icons.wifi_2
+                            return Style.icon.wifi_2
                         else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.GOOD || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.EXCELLENT)
-                            return Style.icons.wifi_3
+                            return Style.icon.wifi_3
                         else return ""
                     }
                     renderType: Text.NativeRendering

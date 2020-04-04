@@ -34,8 +34,7 @@ import "qrc:/basic_ui/settings" as Settings
 
 SwipeView {
     id: settingsSwipeView
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     interactive: false
     clip: true
     anchors.horizontalCenter: parent.horizontalCenter
@@ -129,8 +128,7 @@ SwipeView {
             id: settingsFirstPageFlickable
             onContentYChanged: evaluateHeader()
 
-            width: parent.width
-            height: parent.height
+            width: parent.width; height: parent.height
             maximumFlickVelocity: 6000
             flickDeceleration: 1000
             contentHeight: settingsFlow.height + 80
@@ -155,13 +153,12 @@ SwipeView {
                 spacing: 10
 
                 Rectangle {
-                    width: parent.width
-                    height: 200
-                    color: Style.colorBackground
+                    width: parent.width; height: 200
+                    color: Style.color.background
 
                     Text {
                         id: titleText
-                        color: Style.colorText
+                        color: Style.color.text
                         text: qsTr("Settings") + translateHandler.emptyString
                         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter; verticalCenterOffset: 20 }
                         font { family: "Open Sans Regular"; pixelSize: 60 }
@@ -172,10 +169,10 @@ SwipeView {
                 Item {
                     width: parent.width; height: 80
                     Text {
-                        color: Style.colorText
+                        color: Style.color.text
                         text: SoftwareUpdate.updateAvailable ? qsTr("New software is available.") + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
                         anchors { top:parent.top; horizontalCenter: parent.horizontalCenter }
-                        font: Style.fonts.button
+                        font: Style.font.button
                         lineHeight: 1
                     }
 
@@ -191,7 +188,7 @@ SwipeView {
 
                 Settings.Button {
                     title: qsTr("Display") + translateHandler.emptyString //: Settings page title for the display settings (LCD display)
-                    icon: Style.icons.tv
+                    icon: Style.icon.tv
                     url: "qrc:/basic_ui/settings/Display.qml"
                 }
 
@@ -204,14 +201,14 @@ SwipeView {
                             }
                         }
                     }
-                    icon: Style.icons.language
+                    icon: Style.icon.language
                     url: "qrc:/basic_ui/settings/Languages.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("Integrations") + translateHandler.emptyString //: Settings page title for integration settings
                     subtitle: integrations.list.length > 1 ? (integrations.list.length + " integrations loaded" + translateHandler.emptyString) : (integrations.list.length + " integration loaded" + translateHandler.emptyString)
-                    icon: Style.icons.integration
+                    icon: Style.icon.integration
                     url: "qrc:/basic_ui/settings/Integrations.qml"
                 }
 
@@ -225,25 +222,25 @@ SwipeView {
 
                         return rhours + "h " + rminutes + qsTr("m remaining") + translateHandler.emptyString
                     }
-                    icon: Style.icons.battery
+                    icon: Style.icon.battery
                     url: "qrc:/basic_ui/settings/Battery.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("WiFi & bluetooth") + translateHandler.emptyString //: Settings page title for wifi and bluetooth settings
-                    icon: Style.icons.wifi_bluetooth
+                    icon: Style.icon.wifi_bluetooth
                     url: "qrc:/basic_ui/settings/Wifi.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("System") + translateHandler.emptyString //: Settings page title for system settings
-                    icon: Style.icons.system
+                    icon: Style.icon.system
                     url: "qrc:/basic_ui/settings/System.qml"
                 }
 
                 Settings.Button {
                     title: qsTr("About") + translateHandler.emptyString //: Settings page title for about
-                    icon: Style.icons.about
+                    icon: Style.icon.about
                     url: "qrc:/basic_ui/settings/About.qml"
                 }
             }
@@ -259,18 +256,18 @@ SwipeView {
 
             Text {
                 id: backButtonIcon
-                color: Style.colorText
-                text: Style.icons.left_arrow
+                color: Style.color.text
+                text: Style.icon.left_arrow
                 renderType: Text.NativeRendering
                 width: 70; height: 70
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 80 }
+                font { family: "icons"; pixelSize: 80 }
                 anchors { left: parent.left; leftMargin: -15; verticalCenter: parent.verticalCenter }
             }
 
             Text {
                 id: backButtonText
-                color: Style.colorText
+                color: Style.color.text
                 anchors { left: backButtonIcon.right; verticalCenter: parent.verticalCenter }
                 font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 27 }
                 lineHeight: 1

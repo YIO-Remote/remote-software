@@ -70,7 +70,7 @@ class SoftwareUpdate : public QObject {
     bool    updateAvailable() { return m_updateAvailable; }
     bool    installAvailable();
     QString channel() { return m_channel; }
-    void    setChannel(const QString &channel);
+    void    setChannel(const QString& channel);
 
     static SoftwareUpdate* getInstance() { return s_instance; }
     static QObject*        getQMLInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
@@ -91,7 +91,7 @@ class SoftwareUpdate : public QObject {
  private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onCheckForUpdateFinished(QNetworkReply* reply);
     void onDownloadProgress(int id, qint64 bytesReceived, qint64 bytesTotal, const QString& speed);
-    void onDownloadComplete(int id, const QString &filePath);
+    void onDownloadComplete(int id, const QString& filePath);
     void onDownloadFailed(int id, QString errorMsg);
     void onCheckForUpdateTimerTimeout();
 
@@ -103,13 +103,13 @@ class SoftwareUpdate : public QObject {
     static SoftwareUpdate* s_instance;
 
     BatteryFuelGauge*     m_batteryFuelGauge;
-    QString               m_newVersion = "";
+    QString               m_newVersion      = "";
     bool                  m_updateAvailable = false;
     bool                  m_autoUpdate;
     int                   m_initialCheckDelay;
     QTimer                m_checkForUpdateTimer;
     qint64                m_bytesReceived = 0;
-    qint64                m_bytesTotal = 0;
+    qint64                m_bytesTotal    = 0;
     QString               m_downloadSpeed;
     QUrl                  m_appUpdateUrl;
     QUrl                  m_downloadUrl;

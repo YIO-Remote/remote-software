@@ -64,24 +64,16 @@ Rectangle {
 
     Rectangle {
         id: left
-        width: 0
-        height: 800
+        width: 0; height: 800
         color: "#000000"
-
-        anchors {
-            left: parent.left
-        }
+        anchors.left: parent.left
     }
 
     Rectangle {
         id: right
-        width: 0
-        height: 800
+        width: 0; height: 800
         color: "#000000"
-
-        anchors {
-            right: parent.right
-        }
+        anchors.right: parent.right
     }
 
     MouseArea {

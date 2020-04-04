@@ -27,6 +27,6 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: weatherButton
-    icon: Style.icons.weather
+    icon: Style.icon.weather
     cardLoader.source: "qrc:/components/weather/ui/Card.qml"
 }

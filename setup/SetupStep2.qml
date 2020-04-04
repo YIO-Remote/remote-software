@@ -73,7 +73,7 @@ Item {
             width: parent.width-40; height: 100
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: calculateOpacity(index)
                 text: translations[index].name
                 horizontalAlignment: Text.AlignHCenter
@@ -92,12 +92,11 @@ Item {
                     var tmp = config.settings;
                     tmp.language = translations[index].id;
                     config.settings = tmp;
-                    config.writeConfig();
                     container.parent.parent.incrementCurrentIndex();
                 }
             }
         }
 
-        highlight: Rectangle { x: 20; color: Style.colorHighlight1; radius: Style.cornerRadius }
+        highlight: Rectangle { x: 20; color: Style.color.highlight1; radius: Style.cornerRadius }
     }
 }

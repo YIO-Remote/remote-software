@@ -22,16 +22,16 @@
 pragma Singleton
 
 import QtQuick 2.11
-import QtQuick.Window 2.12
+import DisplayControl 1.0
 
 QtObject {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SCREEN SIZE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     readonly property QtObject screen: QtObject {
-        property int width: Screen.width
-        property int height: Screen.height
-        property real pixelDensity: Screen.pixelDensity
+        property int width: DisplayControl.width()
+        property int height: DisplayControl.height()
+        property real pixelDensity: DisplayControl.pixelDensity()
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,28 +41,30 @@ QtObject {
 
     property bool darkMode: config.ui_config.darkmode
 
-    property color colorGreen: "#19D37B"
-    property color colorRed: "#EA003C"
-    property color colorOrange: "#FF7241"
-    property color colorBlue: "#19435E"
+    readonly property  QtObject color: QtObject {
+        property color green: "#19D37B"
+        property color red: "#EA003C"
+        property color orange: "#FF7241"
+        property color blue: "#19435E"
 
-    property color colorBackground: darkMode ? "#000000" : "#ffffff"
-    property color colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
+        property color background: darkMode ? "#000000" : "#ffffff"
+        property color backgroundTransparent: darkMode ? "#00000000" :  "#00000000"
 
-    property color colorText: darkMode ? "#ffffff" : "#000000"
-    property color colorLine: darkMode ? "#ffffff" : "#000000"
+        property color text: darkMode ? "#ffffff" : "#000000"
+        property color line: darkMode ? "#ffffff" : "#000000"
 
-    property color colorHighlight1: "#918682"
-    property color colorHighlight2: "#313247"
+        property color highlight1: "#918682"
+        property color highlight2: "#313247"
 
-    property color colorLight: darkMode ? "#484848" : "#CBCBCB"
-    property color colorMedium: darkMode ? "#282828" : "#D4D4D4"
-    property color colorDark: darkMode ? "#1C1C1C" : "#ffffff"
+        property color light: darkMode ? "#484848" : "#CBCBCB"
+        property color medium: darkMode ? "#282828" : "#D4D4D4"
+        property color dark: darkMode ? "#1C1C1C" : "#ffffff"
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ICONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    readonly property QtObject icons: QtObject {
+    readonly property QtObject icon: QtObject {
         readonly property string cool: "\uE91E"
         readonly property string heat: "\uE91F"
 
@@ -120,7 +122,7 @@ QtObject {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FONT STYLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    readonly property QtObject fonts: QtObject {
+    readonly property QtObject font: QtObject {
         property font button: Qt.font({
                                               family: "Open Sans Regular",
                                               weight: Font.Normal,

@@ -54,7 +54,7 @@ KeyboardStyle {
     keyboardRelativeBottomMargin: 13 / keyboardDesignHeight
 
     keyboardBackground: Rectangle {
-        color: Style.colorBackground
+        color: Style.color.background
     }
 
     keyPanel: KeyPanel {
@@ -62,14 +62,14 @@ KeyboardStyle {
         Rectangle {
             id: keyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: keyPanel
             anchors.margins: keyBackgroundMargin
             Text {
                 id: keySmallText
                 text: control.smallText
                 visible: control.smallTextVisible
-                color: Style.colorText
+                color: Style.color.text
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.margins: keyContentMargin / 3
@@ -83,7 +83,7 @@ KeyboardStyle {
             Text {
                 id: keyText
                 text: control.displayText
-                color: Style.colorText
+                color: Style.color.text
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.fill: parent
@@ -132,7 +132,7 @@ KeyboardStyle {
         Rectangle {
             id: backspaceKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: backspaceKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -177,7 +177,7 @@ KeyboardStyle {
         Rectangle {
             id: languageKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: languageKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -222,7 +222,7 @@ KeyboardStyle {
         Rectangle {
             id: enterKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: enterKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -319,7 +319,7 @@ KeyboardStyle {
         Rectangle {
             id: hideKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: hideKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -364,7 +364,7 @@ KeyboardStyle {
         Rectangle {
             id: shiftKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: shiftKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -381,7 +381,7 @@ KeyboardStyle {
                     when: InputContext.capsLock
                     PropertyChanges {
                         target: shiftKeyBackground
-                        color: Style.colorHighlight1
+                        color: Style.color.highlight1
                     }
                     PropertyChanges {
                         target: shiftKeyIcon
@@ -472,13 +472,13 @@ KeyboardStyle {
         Rectangle {
             id: symbolKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: symbolKeyPanel
             anchors.margins: keyBackgroundMargin
             Text {
                 id: symbolKeyText
                 text: control.displayText
-                color: Style.colorText
+                color: Style.color.text
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.fill: parent
@@ -638,7 +638,7 @@ KeyboardStyle {
             id: characterPreviewBackground
             width: parent.width+20
             height: parent.height+20
-            color: Style.colorHighlight1
+            color: Style.color.highlight1
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             radius: 5
@@ -941,22 +941,21 @@ KeyboardStyle {
 
     languageListDelegate: SelectionListItem {
         id: languageListItem
-        width: languageNameTextMetrics.width * 17
-        height: languageNameTextMetrics.height + languageListLabel.anchors.topMargin + languageListLabel.anchors.bottomMargin
+        width: Style.screen.width
+        height: 80
+        x: Style.screen.width
+
         Text {
             id: languageListLabel
             anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: languageNameTextMetrics.height / 2
-            anchors.rightMargin: anchors.leftMargin
-            anchors.topMargin: languageNameTextMetrics.height / 3
-            anchors.bottomMargin: anchors.topMargin
+            anchors.verticalCenter: parent.verticalCenter
             text: languageNameFormatter.elidedText
-            color: Style.colorText //"#5CAA15"
+            color: Style.color.text //"#5CAA15"
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 16 //44 * scaleHint
+                pixelSize: 20 //44 * scaleHint
+                capitalization: Font.Capitalize
             }
         }
         TextMetrics {
@@ -964,7 +963,7 @@ KeyboardStyle {
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 16 //44 * scaleHint
+                pixelSize: 20 //44 * scaleHint
             }
             text: "X"
         }
@@ -973,7 +972,7 @@ KeyboardStyle {
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 16 //44 * scaleHint
+                pixelSize: 20 //44 * scaleHint
             }
             elide: Text.ElideRight
             elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
@@ -984,13 +983,14 @@ KeyboardStyle {
             when: languageListItem.ListView.isCurrentItem
             PropertyChanges {
                 target: languageListLabel
-                color: "black"
+                color: Style.color.highlight1
             }
         }
     }
 
     languageListBackground: Rectangle {
-        color: Style.colorDark
+        color: Style.color.background
+
     }
 
     languageListAdd: Transition {

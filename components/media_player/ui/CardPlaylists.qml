@@ -30,7 +30,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: main
     width: parent.width; height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +122,7 @@ Rectangle {
 
                         Text {
                             id: title
-                            color: Style.colorText
+                            color: Style.color.text
                             text: qsTr("My playlists") + translateHandler.emptyString
                             font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                             lineHeight: 1
@@ -167,7 +167,7 @@ Rectangle {
                         elide: Text.ElideRight
                         width: itemFlickable.width-60-albumImage.width-20-80
                         wrapMode: Text.NoWrap
-                        color: Style.colorText
+                        color: Style.color.text
                         anchors { left: albumImage.right; leftMargin: 20; top: albumImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
                         font { family: "Open Sans Regular"; pixelSize: 25 }
                         lineHeight: 1
@@ -180,7 +180,7 @@ Rectangle {
                         visible: item_subtitle == "" ? false : true
                         width: albumTitleText.width
                         wrapMode: Text.NoWrap
-                        color: Style.colorText
+                        color: Style.color.text
                         opacity: 0.6
                         anchors { left: albumTitleText.left; top: albumTitleText.bottom; topMargin: 5 }
                         font { family: "Open Sans Regular"; pixelSize: 20 }
@@ -218,8 +218,8 @@ Rectangle {
 
             Text {
                 id: backButton
-                color: Style.colorText
-                text: Style.icons.left_arrow
+                color: Style.color.text
+                text: Style.icon.left_arrow
                 renderType: Text.NativeRendering
                 width: 70; height: 70
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter

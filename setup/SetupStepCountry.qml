@@ -60,7 +60,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Text {
         id: smalltext
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("Select your country or region") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter
@@ -91,7 +91,7 @@ Item {
             width: parent.width-40; height: 100
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: calculateOpacity(index)
                 text: countries[index].Name
                 width: parent.width
@@ -115,6 +115,6 @@ Item {
             }
         }
 
-        highlight: Rectangle { x: 20; color: Style.colorHighlight1; radius: Style.cornerRadius }
+        highlight: Rectangle { x: 20; color: Style.color.highlight1; radius: Style.cornerRadius }
     }
 }

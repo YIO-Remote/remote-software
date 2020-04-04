@@ -33,11 +33,11 @@ Rectangle {
     width: parent.width
     height: childrenRect.height + 40 //remoteConfigText.height + smallText.height + 60
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     Text {
         id: remoteConfigText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Remote configuration") + translateHandler.emptyString
         anchors.left: parent.left
         anchors.leftMargin: 20
@@ -71,7 +71,7 @@ Rectangle {
 
     Text {
         id: smallText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("Use your browser to configure your YIO remote or download and upload backups.\nNavigate your internet browser to: http://") + wifi.wifiStatus.ipAddress + translateHandler.emptyString
         wrapMode: Text.WordWrap

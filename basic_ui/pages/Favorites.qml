@@ -34,6 +34,9 @@ Flickable {
     property alias _contentHeight: itemFlickable.contentHeight
     property alias _height: itemFlickable.height
 
+    // property to know if this is the current page, so we know it's visible
+    property bool _isCurrentItem: parent._isCurrentItem
+
     signal scrolledUp()
     signal scrolledDown()
     signal scrollupBegin()
@@ -53,8 +56,7 @@ Flickable {
         }
     }
 
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
     contentHeight: listView.height + titleContainer.height + mainNavigation.height + 20
@@ -74,17 +76,14 @@ Flickable {
 
     Item {
         id: titleContainer
-        width: parent.width
-        height: 240
+        width: parent.width; height: 240
 
         Text {
             id: titleText
-            color: Style.colorText
+            color: Style.color.text
             text: title
             anchors.centerIn: parent
-            font.family: "Open Sans Regular"
-            font.weight: Font.Normal
-            font.pixelSize: 60
+            font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 60 }
             lineHeight: 1
         }
     }
@@ -92,8 +91,7 @@ Flickable {
     // ENTITIES
     ListView {
         id: listView
-        width: parent.width
-        height: contentHeight
+        width: parent.width; height: contentHeight
         anchors.top: titleContainer.bottom
         interactive: false
         spacing: 10
@@ -108,9 +106,10 @@ Flickable {
 
         Loader {
             id: entityLoader
-            width: 460
-            height: 125
+            width: 460; height: 125
             anchors.horizontalCenter: parent.horizontalCenter
+
+            property bool __isCurrentItem: _isCurrentItem
 
             Component.onCompleted: {
                 var e = entities.get(config.profileFavorites[index]);

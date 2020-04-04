@@ -26,10 +26,9 @@ import Style 1.0
 
 Rectangle {
     id: main
-    width: parent.width
-    height: 100+(80*list.length)
+    width: parent.width; height: 100+(80*list.length)
     radius: Style.cornerRadius
-    color: Style.colorBackground
+    color: Style.color.background
 
     property var list: []
     property string id
@@ -70,71 +69,59 @@ Rectangle {
         anchors.fill: parent
         spacing: 0
 
-        Item {
-            width: main.width
-            height: 20
-        }
+        Item { width: main.width; height: 20 }
 
         Repeater {
             model: list
 
             Item {
-                width: main.width
-                height: 80
+                width: main.width; height: 80
 
                 Text {
                     id: icon
-                    color: Style.colorText
+                    color: Style.color.text
                     text: {
-                        if (list[index] == "PLAY")
-                            return Style.icons.music
-                        else if (list[index] == "QUEUE")
-                            return Style.icons.playlist
-                        else if (list[index] == "SONGRADIO")
-                            return Style.icons.radio
+                        if (list[index] === "PLAY")
+                            return Style.icon.music
+                        else if (list[index] === "QUEUE")
+                            return Style.icon.playlist
+                        else if (list[index] === "SONGRADIO")
+                            return Style.icon.radio
                         else
                             return ""
                     }
                     renderType: Text.NativeRendering
-                    width: 70
-                    height: 70
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
+                    width: 70; height: 70
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                     font { family: "icons"; pixelSize: 80 }
-                    anchors.left: parent.left
-                    anchors.leftMargin: 20
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
                 }
 
                 Text {
                     text: {
-                        if (list[index] == "PLAY")
+                        if (list[index] === "PLAY")
                             return "Play"
-                        else if (list[index] == "QUEUE")
+                        else if (list[index] === "QUEUE")
                             return "Add to queue"
-                        else if (list[index] == "SONGRADIO")
+                        else if (list[index] === "SONGRADIO")
                             return "Go to song radio"
                         else
                             return "Not supported"
                     }
-                    color: Style.colorText
-                    anchors.left: icon.right
-                    anchors.leftMargin: 20
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.family: "Open Sans Regular"
-                    font.pixelSize: 27
-                    lineHeight: 1
+                    color: Style.color.text
+                    anchors { left: icon.right; leftMargin: 20; verticalCenter: parent.verticalCenter }
+                    font: Style.font.button
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         Haptic.playEffect(Haptic.Click);
-                        if (list[index] == "PLAY")
+                        if (list[index] === "PLAY")
                             obj.playMedia(id, type);
-                        else if (list[index] == "QUEUE")
+                        else if (list[index] === "QUEUE")
                             obj.addToQueue(id, type);
-                        else if (list[index] == "SONGRADIO")
+                        else if (list[index] === "SONGRADIO")
                             obj.songRadio(id, type);
                         else
                             return "Not supported"
@@ -146,19 +133,16 @@ Rectangle {
         }
 
         Item {
-            width: main.width
-            height: 80
+            width: main.width; height: 80
 
             Text {
                 text: qsTr("Cancel") + translateHandler.emptyString
-                color: Style.colorText
+                horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
+                color: Style.color.text
                 opacity: 0.5
-                anchors.centerIn: parent
-                font.family: "Open Sans Regular"
-                font.pixelSize: 25
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
+                font { family: "Open Sans Regular"; pixelSize: 25 }
                 lineHeight: 1
+                anchors.centerIn: parent
             }
 
             MouseArea {

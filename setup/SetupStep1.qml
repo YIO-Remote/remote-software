@@ -30,7 +30,7 @@ Item {
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Hello") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter
         anchors { top: parent.top; topMargin: 340; horizontalCenter: parent.horizontalCenter }
@@ -40,7 +40,7 @@ Item {
 
     Text {
         id: smalltext
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("Tap the screen to begin") + translateHandler.emptyString
         horizontalAlignment: Text.AlignHCenter

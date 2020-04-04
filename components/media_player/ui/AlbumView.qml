@@ -90,8 +90,8 @@ Rectangle {
         }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.play
+            color: Style.color.text
+            text: Style.icon.play
             renderType: Text.NativeRendering
             width: 70; height: 70
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -110,7 +110,7 @@ Rectangle {
 
         Text {
             id: title
-            color: Style.colorText
+            color: Style.color.text
             text: albumModel.title
             horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
@@ -123,13 +123,13 @@ Rectangle {
 
         Text {
             id: artist
-            color: Style.colorText
+            color: Style.color.text
             text: albumModel.subtitle
             horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
             width: parent.width-80
-            font: Style.fonts.button
+            font: Style.font.button
             anchors { top: title.bottom; horizontalCenter: parent.horizontalCenter }
         }
 
@@ -153,7 +153,7 @@ Rectangle {
                 Text {
                     id: trackNumber
                     text: index+1
-                    color: Style.colorText
+                    color: Style.color.text
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter }
                     font { family: "Open Sans Regular"; pixelSize: 25 }
                     lineHeight: 1
@@ -165,7 +165,7 @@ Rectangle {
                     elide: Text.ElideRight
                     width: parent.width-100
                     wrapMode: Text.NoWrap
-                    color: Style.colorText
+                    color: Style.color.text
                     anchors { left: parent.left; leftMargin: 45; top: parent.top }
                     font { family: "Open Sans Regular"; pixelSize: 25 }
                     lineHeight: 1
@@ -177,7 +177,7 @@ Rectangle {
                     elide: Text.ElideRight
                     width: albumTitleText.width
                     wrapMode: Text.NoWrap
-                    color: Style.colorText
+                    color: Style.color.text
                     opacity: 0.6
                     anchors { left: albumTitleText.left; top: albumTitleText.bottom; topMargin: 5 }
                     font { family: "Open Sans Regular"; pixelSize: 20 }

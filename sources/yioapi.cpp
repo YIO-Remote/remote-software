@@ -94,7 +94,7 @@ void YioAPI::sendMessage(QString message) {
     }
 }
 
-QVariantMap YioAPI::getConfig() { return Config::getInstance()->config(); }
+QVariantMap YioAPI::getConfig() { return Config::getInstance()->getConfig(); }
 
 bool YioAPI::setConfig(QVariantMap config) {
     Config *cfg = Config::getInstance();

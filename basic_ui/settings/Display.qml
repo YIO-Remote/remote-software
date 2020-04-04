@@ -33,7 +33,7 @@ Rectangle {
     id: container
     width: parent.width; height: childrenRect.height
     radius: Style.cornerRadius
-    color: Style.colorDark
+    color: Style.color.dark
 
     Flow {
         id: settingsFlow
@@ -47,10 +47,10 @@ Rectangle {
 
             Text {
                 id: autobrightnessText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Auto brightness") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.fonts.button
+                font: Style.font.button
             }
 
             BasicUI.CustomSwitch {
@@ -87,7 +87,7 @@ Rectangle {
                     implicitWidth: 200; implicitHeight: brightnessSlider.pressed ? 28 : 4
                     width: brightnessSlider.availableWidth; height: implicitHeight
                     radius: brightnessSlider.pressed ? 14 : 2
-                    color: Style.colorBackground
+                    color: Style.color.background
 
                     layer.enabled: true
                     layer.effect: OpacityMask {
@@ -113,7 +113,7 @@ Rectangle {
                     Rectangle {
                         width: brightnessSlider.visualPosition * parent.width; height: brightnessSlider.pressed ? 28 : 4
                         radius: 2
-                        color: Style.colorHighlight1
+                        color: Style.color.highlight1
 
                         Behavior on height {
                             PropertyAnimation {
@@ -129,7 +129,7 @@ Rectangle {
                     y: brightnessSlider.topPadding + brightnessSlider.availableHeight / 2 - height / 2
                     implicitWidth: 28; implicitHeight: 28
                     radius: Style.cornerRadius
-                    color: Style.colorLine
+                    color: Style.color.line
                 }
 
                 onValueChanged: {
@@ -149,7 +149,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // PROXIMITY
@@ -158,10 +158,10 @@ Rectangle {
 
             Text {
                 id: proximityText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Proximity detection") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-                font: Style.fonts.button
+                font: Style.font.button
             }
 
             Slider {
@@ -186,7 +186,7 @@ Rectangle {
                     width: proximitySlider.availableWidth
                     height: implicitHeight
                     radius: proximitySlider.setbyUser ? 14 : 2
-                    color: Style.colorBackground
+                    color: Style.color.background
 
                     layer.enabled: true
                     layer.effect: OpacityMask {
@@ -213,7 +213,7 @@ Rectangle {
                         width: proximitySlider.visualPosition * parent.width
                         height: proximitySlider.setbyUser ? 28 : 4
                         radius: 2
-                        color: Style.colorHighlight1
+                        color: Style.color.highlight1
 
                         Behavior on height {
                             PropertyAnimation {
@@ -230,7 +230,7 @@ Rectangle {
                     implicitWidth: 28
                     implicitHeight: 28
                     radius: Style.cornerRadius
-                    color: Style.colorLine
+                    color: Style.color.line
                 }
 
                 onValueChanged: {
@@ -248,7 +248,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Far") + translateHandler.emptyString //: Proximi detection is set to far
                 anchors { left: parent.left; leftMargin: 20; top: proximitySlider.bottom }
@@ -257,7 +257,7 @@ Rectangle {
             }
 
             Text {
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Close") + translateHandler.emptyString //: Proximi detection is set to close
                 anchors { right: parent.right; rightMargin: 20; top: proximitySlider.bottom }
@@ -267,7 +267,7 @@ Rectangle {
 
             Text {
                 id: smallText
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("How far the proximity sensor should look when detecting your hand.") + translateHandler.emptyString
                 wrapMode: Text.WordWrap
@@ -280,7 +280,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // DARK MODE
@@ -289,7 +289,7 @@ Rectangle {
 
             Text {
                 id: darkModeText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Dark mode") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                 font { family: "Open Sans Regular"; pixelSize: 27 }
@@ -312,7 +312,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 2
-            color: Style.colorBackground
+            color: Style.color.background
         }
 
         // CLEANING MODE
@@ -321,7 +321,7 @@ Rectangle {
 
             Text {
                 id: cleaningText
-                color: Style.colorText
+                color: Style.color.text
                 text: qsTr("Cleaning mode") + translateHandler.emptyString
                 anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
                 font { family: "Open Sans Regular"; pixelSize: 27 }
@@ -330,7 +330,7 @@ Rectangle {
 
             Text {
                 id: cleaningsmallText
-                color: Style.colorText
+                color: Style.color.text
                 opacity: 0.5
                 text: qsTr("Touch the display for 10 seconds to turn cleaning mode off.") + translateHandler.emptyString
                 wrapMode: Text.WordWrap

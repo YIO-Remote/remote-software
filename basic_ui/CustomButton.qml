@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
 import Style 1.0
 
 import Haptic 1.0
@@ -33,19 +32,18 @@ Rectangle {
     property alias buttonTextColor: buttonText.color
 
     id: button
-    width: buttonText.implicitWidth+60
-    height: 60
-    color: Style.colorBackgroundTransparent
+    width: buttonText.implicitWidth+60; height: 60
+    color: Style.color.backgroundTransparent
     radius: 40
-    border.color: Style.colorLine
+    border.color: Style.color.line
 
     states: State {
         name: "pressed"
-        when: mouseArea.pressed == true
+        when: mouseArea.pressed
         PropertyChanges {
             target: button
-            color: Style.colorLine
-            border.color: Style.colorBackgroundTransparent
+            color: Style.color.line
+            border.color: Style.color.backgroundTransparent
         }
     }
 
@@ -58,11 +56,9 @@ Rectangle {
 
     Text {
         id: buttonText
-        color: Style.colorText
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
+        color: Style.color.text
+        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
         font { family: "Open Sans Regular"; pixelSize: 27 }
         lineHeight: 0.8
     }

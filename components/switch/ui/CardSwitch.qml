@@ -42,16 +42,16 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges { target: percentage; anchors.topMargin: 80; opacity: 0 }
+            PropertyChanges { target: stateText; anchors.topMargin: 80; opacity: 0 }
             PropertyChanges { target: title; opacity: 0 }
-            PropertyChanges { target: percentageBG; opacity: 0 }
+            PropertyChanges { target: switchBG; opacity: 0 }
             PropertyChanges { target: buttonTurnOn; anchors.bottomMargin: -100; opacity: 0 }
         },
         State {
             name: "open"
-            PropertyChanges { target: percentage; anchors.topMargin: -20; opacity: 1 }
+            PropertyChanges { target: stateText; anchors.topMargin: -20; opacity: 1 }
             PropertyChanges { target: title; opacity: 1 }
-            PropertyChanges { target: percentageBG; opacity: 1 }
+            PropertyChanges { target: switchBG; opacity: 1 }
             PropertyChanges { target: buttonTurnOn; anchors.bottomMargin: 70; opacity: 1 }
         }
     ]
@@ -60,17 +60,17 @@ Rectangle {
         Transition {
             to: "closed"
             ParallelAnimation {
-                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: stateText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: switchBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
             }
         },
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: percentageBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                PropertyAnimation { target: switchBG; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: stateText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                 PropertyAnimation { target: buttonTurnOn; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
                 SequentialAnimation {
                     PauseAnimation { duration: 100 }
@@ -89,7 +89,6 @@ Rectangle {
     // UI ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     MouseArea {
-        id: dragger
         anchors.fill: parent
         onClicked: {
             Haptic.playEffect(Haptic.Click);
@@ -98,7 +97,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: percentageBG
+        id: switchBG
         color: obj.state ? Style.color.highlight1 : Style.color.backgroundTransparent
         width: parent.width; height: parent.height
         radius: Style.cornerRadius
@@ -112,7 +111,7 @@ Rectangle {
     Text {
         id: icon
         color: Style.color.text
-        text: Style.icon.light
+        text: Style.icon.power_on
         renderType: Text.NativeRendering
         width: 85; height: 85
         verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -121,7 +120,7 @@ Rectangle {
     }
 
     Text {
-        id: percentage
+        id: stateText
         color: Style.color.text
         text: obj.state ? "On" : "Off"
         horizontalAlignment: Text.AlignLeft
@@ -135,7 +134,7 @@ Rectangle {
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
-        anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
+        anchors { top: stateText.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
         font { family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
