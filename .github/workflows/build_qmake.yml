@@ -62,9 +62,7 @@ jobs:
     - name: Checkout integrations.library
       uses: actions/checkout@v2
       with:
-        # try anonymous access
-        repository: https://github.com/YIO-Remote/integrations.library.git
-        token: ''
+        repository: YIO-Remote/integrations.library
         # FIXME check for master branch build!
         ref: develop
         path: integrations.library
