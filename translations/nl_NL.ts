@@ -621,7 +621,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/Profiles.qml" line="187"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation>Gebruik de web configuratie tool onder settings om uw profielen te bewerken.</translation>
+      <translation>Gebruik de web configuratie tool onder instellingen om uw profielen te bewerken.</translation>
     </message>
   </context>
   <context>
@@ -640,7 +640,7 @@ www.yio-remote.com
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation>Er is een fout opgetreden met de communicatie van de batterij, Herstart de afstandsbediening.</translation>
+      <translation>Er is een fout opgetreden met de communicatie van de batterij. Herstart de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
@@ -650,7 +650,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation>Kan de "interrupt handler" niet initialiseren, Herstart de afstandsbediening.</translation>
+      <translation>Kan de "interrupt handler" niet initialiseren. Herstart de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
@@ -669,8 +669,7 @@ www.yio-remote.com
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation>Gebruik uw internetbrowser om uw YIO-afstandsbediening te configureren of om back-ups te downloaden en uploaden.
-Navigeer hiervoor naar: http://</translation>
+      <translation>Gebruik uw internetbrowser om uw YIO-afstandsbediening te configureren of om back-ups te downloaden en uploaden. Navigeer hiervoor naar: http://</translation>
     </message>
   </context>
   <context>
@@ -690,7 +689,7 @@ Navigeer hiervoor naar: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="176"/>
       <source>New software is available.</source>
-      <translation>Er is nieuwe software beschikbaar.</translation>
+      <translation>Nieuwe software is beschikbaar.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="193"/>
@@ -776,7 +775,7 @@ Navigeer hiervoor naar: http://</translation>
     <message>
       <location filename="../setup/SetupStep4.qml" line="140"/>
       <source>Join</source>
-      <translation>Deelnemen</translation>
+      <translation>Verbinden</translation>
     </message>
   </context>
   <context>
@@ -792,12 +791,12 @@ Navigeer hiervoor naar: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation>Verbinden mislukt</translation>
+      <translation>Verbinden is mislukt</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation>YIO Afstandsbediening kon geen verbinding maken met uw Wi-Fi netwerk.</translation>
+      <translation>YIO Remote kon geen verbinding maken met uw Wi-Fi netwerk.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
@@ -815,7 +814,7 @@ Navigeer hiervoor naar: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation>YIO Afstandsbediening is met succes verbonden met uw Wi-Fi netwerk.</translation>
+      <translation>YIO Remote is succesvol verbonden met uw Wi-Fi netwerk.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
@@ -834,7 +833,7 @@ a power source and wait until it starts blinking.
       <translation>Verbind de YIO Dock met
 een stroombron en wacht tot het begint te knipperen.
 
- Tik op volgende om de Wi-Fi-netwerkgegevens te delen met de dock.</translation>
+ Tik op "volgende" om de Wi-Fi-netwerkgegevens te delen met de dock.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="72"/>
@@ -891,7 +890,7 @@ Remote configuration after restarting the remote.</source>
 
 Om de webconfigurator te gebruiken,
 ga naar Instellingen en schakel
-Externe configuratie in na het herstarten van de afstandsbediening.</translation>
+externe configuratie in na het herstarten van de afstandsbediening.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
@@ -948,7 +947,7 @@ Externe configuratie in na het herstarten van de afstandsbediening.</translation
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation>Service momenteel niet beschikbaar.</translation>
+      <translation>Dienst is momenteel niet beschikbaar.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
@@ -978,7 +977,7 @@ Externe configuratie in na het herstarten van de afstandsbediening.</translation
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation>Starten van app update script is mislukt!</translation>
+      <translation>Starten van update app script is mislukt!</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
