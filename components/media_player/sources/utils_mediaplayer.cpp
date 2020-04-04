@@ -84,7 +84,12 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
             /// GET DOMINANT COLOR
             ////////////////////////////////////////////////////////////////////
             qCDebug(CLASS_LC()) << "Getting dominant color";
-            QColor m_pixelColor = dominantColor(image);
+            //            QColor m_pixelColor = dominantColor(image);
+
+            // test, shrink down image to 1x1 pixel and measure the color
+            QImage onePixel = image;
+            onePixel.scaled(1, 1, Qt::IgnoreAspectRatio);
+            QColor m_pixelColor = onePixel.pixel(1, 1);
 
             // change the brightness of the color if it's too bright
             if (m_pixelColor.lightness() > 150) {
