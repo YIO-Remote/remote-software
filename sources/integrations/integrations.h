@@ -73,6 +73,9 @@ class Integrations : public QObject, IntegrationsInterface {
     // get the type of integration by id
     Q_INVOKABLE QString getType(const QString& id);
 
+    // get a list of supported integrations
+    QStringList supported_integrations() { return m_supported_integrations; }
+
     explicit Integrations(const QString& pluginPath);
 
     // get all plugins
@@ -88,6 +91,10 @@ class Integrations : public QObject, IntegrationsInterface {
     void onCreateDone(QMap<QObject*, QVariant> map);
 
  private:
+    /// ADD NEW INTEGRATION TYPE HERE
+    QStringList m_supported_integrations = {"dock",    "homeassistant", "homey", "spotify",
+                                            "openhab", "openweather",   "roon"};
+
     QMap<QString, QObject*> m_plugins;
     QMap<QString, QObject*> m_integrations;
     QMap<QString, QString>  m_integrations_friendly_names;
@@ -97,5 +104,5 @@ class Integrations : public QObject, IntegrationsInterface {
     int                     m_integrationsToLoad = 0;
     int                     m_integrationsLoaded = 0;
 
-    static Integrations*   s_instance;
+    static Integrations* s_instance;
 };

@@ -28,8 +28,8 @@
 #include <QObject>
 #include <QQmlComponent>
 #include <QString>
-#include <QVariant>
 #include <QTimer>
+#include <QVariant>
 
 #include "entity.h"
 #include "yio-interface/entities/entitiesinterface.h"
@@ -86,11 +86,12 @@ class Entities : public QObject, public EntitiesInterface {
     QStringList supported_entities_translation() { return m_supported_entities_translation; }
     QStringList loaded_entities() { return m_loaded_entities; }
 
+    // active media player handling for mini media player
     QList<QObject*> mediaplayersPlaying();
     void            addMediaplayersPlaying(const QString& entity_id);
     void            removeMediaplayersPlaying(const QString& entity_id);
 
-    Q_INVOKABLE void addLoadedEntity(const QString& entity);
+    Q_INVOKABLE void    addLoadedEntity(const QString& entity);
     Q_INVOKABLE QString getSupportedEntityTranslation(const QString& type);
 
     explicit Entities(QObject* parent = nullptr);

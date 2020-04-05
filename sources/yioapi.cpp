@@ -31,16 +31,13 @@
 #include <QtDebug>
 
 #include "entities/entities.h"
-#include "logger.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "api");
 
 YioAPI *YioAPI::s_instance = nullptr;
 
-YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_log("yioapi"), m_engine(engine) {
-    s_instance = this;
-    Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
-
+YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_engine(engine) {
+    s_instance     = this;
     m_integrations = Integrations::getInstance();
 }
 
@@ -68,12 +65,12 @@ void YioAPI::start() {
     macAddr.replace(":", "");
     m_hostname = "";
     m_hostname.append("YIO-Remote-").append(macAddr);
-    qCDebug(m_log) << "NAME" << m_hostname;
+    qCDebug(CLASS_LC) << "NAME" << m_hostname;
     emit hostnameChanged();
 
     m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
 
-    qCDebug(m_log) << "YIO api started";
+    qCDebug(CLASS_LC) << "YIO api started";
 }
 
 void YioAPI::stop() {
@@ -252,14 +249,12 @@ void YioAPI::onNewConnection() {
     QString       message = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
     socket->sendTextMessage(message);
-
     m_clients.insert(socket, false);
 }
 
 void YioAPI::processMessage(QString message) {
-    QVariantMap r_map;
-
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
+
     if (client) {
         // qDebug(CLASS_LC) << message;
 
@@ -270,50 +265,12 @@ void YioAPI::processMessage(QString message) {
             qDebug(CLASS_LC) << "JSON error : " << parseerror.errorString();
             return;
         }
-        QVariantMap map = doc.toVariant().toMap();
-
-        QString type = map.value("type").toString();
+        QVariantMap map  = doc.toVariant().toMap();
+        QString     type = map.value("type").toString();
 
         if (type == "auth") {
-            // AUTHENTICATION
-            qCDebug(m_log) << m_clients[client];
-
-            if (map.contains("token")) {
-                qCDebug(m_log) << "Has token";
-
-                // QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(),
-                //                                            QCryptographicHash::Sha512);
-
-                if (map.value("token").toString() == m_token) {
-                    qDebug(CLASS_LC) << "Token OK";
-                    r_map.insert("type", "auth_ok");
-                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
-                    QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
-
-                    client->sendTextMessage(r_message);
-
-                    m_clients[client] = true;
-
-                    qCDebug(m_log) << m_clients[client];
-
-                } else {
-                    qCDebug(m_log) << "Token NOT OK";
-                    r_map.insert("type", "auth_error");
-                    r_map.insert("message", "Invalid token");
-                    QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
-                    QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
-
-                    client->sendTextMessage(r_message);
-                }
-            } else {
-                qCDebug(m_log) << "No token";
-                r_map.insert("type", "auth_error");
-                r_map.insert("message", "Token needed");
-                QJsonDocument r_doc     = QJsonDocument::fromVariant(r_map);
-                QString       r_message = r_doc.toJson(QJsonDocument::JsonFormat::Compact);
-
-                client->sendTextMessage(r_message);
-            }
+            /// Authentication
+            apiAuth(client, map);
         } else if (type == "getconfig" && m_clients[client]) {
             /// Get config
             apiGetConfig(client);
@@ -350,8 +307,47 @@ void YioAPI::onClientDisconnected() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// API CALLS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Client authenticating:" << m_clients[client];
+
+    QVariantMap response;
+
+    if (map.contains("token")) {
+        qCDebug(CLASS_LC) << "Has token";
+
+        // QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(),
+        //                                            QCryptographicHash::Sha512);
+
+        if (map.value("token").toString() == m_token) {
+            qDebug(CLASS_LC) << "Token OK";
+            response.insert("type", "auth_ok");
+            QJsonDocument json = QJsonDocument::fromVariant(response);
+            client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+
+            m_clients[client] = true;
+
+            qCDebug(CLASS_LC) << "Client connected:" << m_clients[client];
+
+        } else {
+            qCDebug(CLASS_LC) << "Token NOT OK";
+            response.insert("type", "auth_error");
+            response.insert("message", "Invalid token");
+            QJsonDocument json = QJsonDocument::fromVariant(response);
+            client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+            client->disconnect();
+        }
+    } else {
+        qCDebug(CLASS_LC) << "No token";
+        response.insert("type", "auth_error");
+        response.insert("message", "Token needed");
+        QJsonDocument json = QJsonDocument::fromVariant(response);
+        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+        client->disconnect();
+    }
+}
+
 void YioAPI::apiGetConfig(QWebSocket *client) {
-    qCDebug(m_log) << "Request for get config";
+    qCDebug(CLASS_LC) << "Request for get config" << client;
 
     QVariantMap response;
 
@@ -364,7 +360,7 @@ void YioAPI::apiGetConfig(QWebSocket *client) {
 }
 
 void YioAPI::apiSetConfig(QWebSocket *client, const QVariantMap &map) {
-    qCDebug(m_log) << "Request for set config";
+    qCDebug(CLASS_LC) << "Request for set config" << client;
 
     QVariantMap response;
 
@@ -382,80 +378,80 @@ void YioAPI::apiSetConfig(QWebSocket *client, const QVariantMap &map) {
 }
 
 void YioAPI::apiLogHandle(QWebSocket *client, const QVariantMap &map) {
-    Logger *logger    = Logger::getInstance();
-    QString logAction = map["action"].toString();
-    QString logTarget = map["target"].toString();
-    qCDebug(m_log) << "LOGGER : " << logAction;
-    if (logAction == "start") {
-        // enable logger target, default is queue
-        if (logTarget == "file") {
-            logger->setFileEnabled(true);
-        } else if (logTarget == "console") {
-            logger->setConsoleEnabled(true);
-        } else {
-            logger->setQueueEnabled(true);
-        }
-    } else if (logAction == "stop") {
-        // edisable logger queue target, default is queue
-        if (logTarget == "file") {
-            logger->setFileEnabled(false);
-        } else if (logTarget == "console") {
-            logger->setConsoleEnabled(false);
-        } else {
-            logger->setQueueEnabled(false);
-        }
-    } else if (logAction == "showsource") {
-        logger->setShowSourcePos(true);
-    } else if (logAction == "hidesource") {
-        logger->setShowSourcePos(false);
-    } else if (logAction == "purge") {
-        int hours = 24;
-        if (map.contains("hours")) {
-            hours = map["hours"].toInt();
-        }
-        logger->purgeFiles(hours);
-    } else if (logAction == "setloglevel") {
-        // set log level
-        int     level = QtMsgType::QtDebugMsg;
-        QString category;
-        if (map.contains("level")) {
-            level = logger->toMsgType(map["level"].toString());
-        }
-        if (map.contains("category")) {
-            category = map["category"].toString();
-            logger->setCategoryLogLevel(category, level);
-        } else {
-            logger->setLogLevel(level);
-        }
-    } else if (logAction == "getmessages") {
-        // get log messages
-        int         count = 50;
-        int         level = QtMsgType::QtDebugMsg;
-        QStringList categories;
-        if (map.contains("count")) {
-            count = map["count"].toInt();
-        }
-        if (map.contains("level")) {
-            level = logger->toMsgType(map["level"].toString());
-        }
-        if (map.contains("categories")) {
-            categories = map["categories"].toStringList();
-        }
-        QJsonArray  messages = logger->getQueuedMessages(count, level, categories);
-        QJsonObject jsonObj;
-        jsonObj.insert("type", "log");
-        jsonObj.insert("messages", messages);
-        QJsonDocument json = QJsonDocument(jsonObj);
-        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
-    } else if (logAction == "getinfo") {
-        // get log info
-        QJsonObject info = logger->getInformation();
-        QJsonObject jsonObj;
-        jsonObj.insert("type", "log");
-        jsonObj.insert("info", info);
-        QJsonDocument json = QJsonDocument(jsonObj);
-        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
-    }
+    //    Logger *logger    = Logger::getInstance();
+    //    QString logAction = map["action"].toString();
+    //    QString logTarget = map["target"].toString();
+    //    qCDebug(CLASS_LC) << "LOGGER : " << logAction;
+    //    if (logAction == "start") {
+    //        // enable logger target, default is queue
+    //        if (logTarget == "file") {
+    //            logger->setFileEnabled(true);
+    //        } else if (logTarget == "console") {
+    //            logger->setConsoleEnabled(true);
+    //        } else {
+    //            logger->setQueueEnabled(true);
+    //        }
+    //    } else if (logAction == "stop") {
+    //        // edisable logger queue target, default is queue
+    //        if (logTarget == "file") {
+    //            logger->setFileEnabled(false);
+    //        } else if (logTarget == "console") {
+    //            logger->setConsoleEnabled(false);
+    //        } else {
+    //            logger->setQueueEnabled(false);
+    //        }
+    //    } else if (logAction == "showsource") {
+    //        logger->setShowSourcePos(true);
+    //    } else if (logAction == "hidesource") {
+    //        logger->setShowSourcePos(false);
+    //    } else if (logAction == "purge") {
+    //        int hours = 24;
+    //        if (map.contains("hours")) {
+    //            hours = map["hours"].toInt();
+    //        }
+    //        logger->purgeFiles(hours);
+    //    } else if (logAction == "setloglevel") {
+    //        // set log level
+    //        int     level = QtMsgType::QtDebugMsg;
+    //        QString category;
+    //        if (map.contains("level")) {
+    //            level = logger->toMsgType(map["level"].toString());
+    //        }
+    //        if (map.contains("category")) {
+    //            category = map["category"].toString();
+    //            logger->setCategoryLogLevel(category, level);
+    //        } else {
+    //            logger->setLogLevel(level);
+    //        }
+    //    } else if (logAction == "getmessages") {
+    //        // get log messages
+    //        int         count = 50;
+    //        int         level = QtMsgType::QtDebugMsg;
+    //        QStringList categories;
+    //        if (map.contains("count")) {
+    //            count = map["count"].toInt();
+    //        }
+    //        if (map.contains("level")) {
+    //            level = logger->toMsgType(map["level"].toString());
+    //        }
+    //        if (map.contains("categories")) {
+    //            categories = map["categories"].toStringList();
+    //        }
+    //        QJsonArray  messages = logger->getQueuedMessages(count, level, categories);
+    //        QJsonObject jsonObj;
+    //        jsonObj.insert("type", "log");
+    //        jsonObj.insert("messages", messages);
+    //        QJsonDocument json = QJsonDocument(jsonObj);
+    //        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    //    } else if (logAction == "getinfo") {
+    //        // get log info
+    //        QJsonObject info = logger->getInformation();
+    //        QJsonObject jsonObj;
+    //        jsonObj.insert("type", "log");
+    //        jsonObj.insert("info", info);
+    //        QJsonDocument json = QJsonDocument(jsonObj);
+    //        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    //    }
 }
 
 void YioAPI::apiButtonHandle(const QVariantMap &map) {
@@ -475,7 +471,7 @@ void YioAPI::apiGetEntities(QWebSocket *client, const QVariantMap &map) {
 
     if (map.contains("integrationId")) {
         QString integrationId = map["integrationId"].toString();
-        qCDebug(m_log) << "Request for getEntities" << integrationId;
+        qCDebug(CLASS_LC) << "Request for getEntities" << integrationId << client;
 
         QObject *object = m_integrations->get(integrationId);
 
@@ -509,7 +505,7 @@ void YioAPI::apiGetEntities(QWebSocket *client, const QVariantMap &map) {
 void YioAPI::apiGetIntegrations(QWebSocket *client) {
     QVariantMap response;
 
-    qCDebug(m_log) << "Request for getIntegrations";
+    qCDebug(CLASS_LC) << "Request for getIntegrations" << client;
     QStringList integrations = m_integrations->listIds();
 
     if (integrations.length() > 1) {
