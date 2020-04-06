@@ -21,16 +21,16 @@ Niels de Klerk
 To learn more about the project, visit
 www.yio-remote.com
 </source>
-      <translation type="unfinished">
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>
+YIO är ett open source-projekt som drar nytta av alla bidragsgivare. Stort tack till alla som har bidragit till projektet hittills:
 
 Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
 
-To learn more about the project, visit
-www.yio-remote.com
+Lär dig mer om projektet, besök
+www. io-remote.com
 </translation>
     </message>
   </context>
@@ -44,7 +44,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
       <source>Remaining time</source>
-      <translation type="unfinished">Remaining time</translation>
+      <translation>Återstående tid</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
@@ -80,38 +80,38 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Stäng aldrig av Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Stäng av Wi-Fi efter %1 minuters inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
       <location filename="../basic_ui/settings/Battery.qml" line="549"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Aldrig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="442"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minuter</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Stäng aldrig av fjärrkontrollen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Stäng av fjärrkontrollen efter %1 timmars inaktivitet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 timmar</translation>
     </message>
   </context>
   <context>
@@ -343,12 +343,12 @@ www.yio-remote.com
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="40"/>
       <source>Use configuration profile.</source>
-      <translation type="unfinished">Use configuration profile.</translation>
+      <translation>Använd konfigurationsprofil.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="43"/>
       <source>Use configuration file.</source>
-      <translation type="unfinished">Use configuration file.</translation>
+      <translation>Använd konfigurationsfil.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="44"/>
@@ -395,12 +395,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Långt bort</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Nära</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
@@ -738,12 +738,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep1.qml" line="34"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Hej</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep1.qml" line="45"/>
       <source>Tap the screen to begin</source>
-      <translation type="unfinished">Tap the screen to begin</translation>
+      <translation>Tryck på skärmen för att börja</translation>
     </message>
   </context>
   <context>
@@ -751,12 +751,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep3.qml" line="61"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Wi-Fi konfiguration</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep3.qml" line="72"/>
       <source>Select a Wi-Fi network.</source>
-      <translation type="unfinished">Select a Wi-Fi network.</translation>
+      <translation>Välj ett Wi-Fi nätverk.</translation>
     </message>
   </context>
   <context>
@@ -771,12 +771,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep4.qml" line="114"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Lösenord</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="140"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Gå med</translation>
     </message>
   </context>
   <context>
@@ -784,7 +784,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep5.qml" line="70"/>
       <source>Connecting</source>
-      <translation type="unfinished">Connecting</translation>
+      <translation>Ansluter</translation>
     </message>
   </context>
   <context>
@@ -792,17 +792,17 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Anslutningen misslyckades</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not connect to your Wi-Fi network.</translation>
+      <translation>YIO Fjärrkontrollen kunde inte ansluta till ditt Wi-Fi nätverk.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Försök igen</translation>
     </message>
   </context>
   <context>
@@ -973,7 +973,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation type="unfinished">Download failed: %1</translation>
+      <translation>Nedladdning misslyckades: %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
