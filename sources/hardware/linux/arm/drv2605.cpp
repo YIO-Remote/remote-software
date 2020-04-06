@@ -105,11 +105,11 @@ void Drv2605::close() {
 
 void Drv2605::playEffect(Effect effect) {
     if (effect == Click) {
-        setWaveform(0, 1);
+        setWaveform(0, 2);
         go();
     }
     if (effect == Bump) {
-        setWaveform(0, 24);
+        setWaveform(0, 25);
         go();
     }
     if (effect == Press) {
@@ -117,7 +117,7 @@ void Drv2605::playEffect(Effect effect) {
         go();
     }
     if (effect == Buzz) {
-        setWaveform(0, 47);
+        setWaveform(0, 48);
         go();
     }
 }
