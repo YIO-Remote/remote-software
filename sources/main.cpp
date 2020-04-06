@@ -28,6 +28,7 @@
 #include <QLoggingCategory>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickWindow>
 #include <QtDebug>
 
 #include "bluetootharea.h"
@@ -236,6 +237,9 @@ int main(int argc, char* argv[]) {
 
     // LOAD ICONS
     QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
+
+    // set rending of text
+    QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
 
     engine.addImportPath("qrc:/");
 
