@@ -368,7 +368,7 @@ www. io-remote.com
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
       <source>Validate json configuration files and exit.</source>
-      <translation type="unfinished">Validate json configuration files and exit.</translation>
+      <translation>Validera json konfigurationsfiler och avsluta.</translation>
     </message>
   </context>
   <context>
@@ -470,7 +470,7 @@ www. io-remote.com
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation type="unfinished">Not enough free space (%1 MB).</translation>
+      <translation>Inte tillräckligt med ledigt utrymme (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
@@ -629,18 +629,18 @@ www. io-remote.com
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>WiFi-enheten kunde inte hittas.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Kan inte starta närhetssensorn. Starta om fjärrkontrollen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Fel vid kommunikation med batterisensor. Starta om fjärrkontrollen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
@@ -978,7 +978,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation type="unfinished">Failed to start app update script!</translation>
+      <translation>Misslyckades med att starta appuppdateringsskript!</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
