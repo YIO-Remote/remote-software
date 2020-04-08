@@ -57,10 +57,10 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INVOKABLE QObject* get(const QString& id);
 
     // add an integration
-    Q_INVOKABLE void add(const QVariantMap& config, QObject* obj, const QString& type) override;
+    void add(const QVariantMap& config, QObject* obj, const QString& type) override;
 
     // remove an integraiton
-    Q_INVOKABLE void remove(const QString& id);
+    void remove(const QString& id);
 
     // get friendly name
     Q_INVOKABLE QString getFriendlyName(const QString& id);
