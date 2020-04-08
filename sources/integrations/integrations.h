@@ -74,7 +74,7 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INVOKABLE QString getType(const QString& id);
 
     // get a list of supported integrations
-    QStringList supported_integrations() { return m_supported_integrations; }
+    QStringList supportedIntegrations() { return m_supported_integrations; }
 
     explicit Integrations(const QString& pluginPath);
 

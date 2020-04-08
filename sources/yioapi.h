@@ -51,10 +51,10 @@ class YioAPI : public YioAPIInterface {
     Q_INVOKABLE void sendMessage(QString message) override;
 
     // CONFIG MANIPULATION METHODS
-    Q_INVOKABLE QVariantMap getConfig() override;
-    Q_INVOKABLE bool        setConfig(QVariantMap config);
+    QVariantMap getConfig() override;
+    bool        setConfig(QVariantMap config);
 
-    Q_INVOKABLE bool addEntityToConfig(QVariantMap entity) override;
+    bool addEntityToConfig(QVariantMap entity) override;
 
     // NETWORK SERVICES DISCOVERY
     Q_PROPERTY(QVariantList discoveredServices READ discoveredServices NOTIFY discoveredServicesChanged)
@@ -107,13 +107,23 @@ class YioAPI : public YioAPIInterface {
     QMap<QString, QVariantMap> m_discoveredServices;
 
     Integrations* m_integrations;
+    Config*       m_config;
 
     // API CALLS
+    void apiSendResponse(QWebSocket* client, const int& id, const bool& success, QVariantMap& response);
+
     void apiAuth(QWebSocket* client, const QVariantMap& map);
-    void apiGetConfig(QWebSocket* client);
-    void apiSetConfig(QWebSocket* client, const QVariantMap& map);
-    void apiLogHandle(QWebSocket* client, const QVariantMap& map);
-    void apiButtonHandle(const QVariantMap& map);
-    void apiGetEntities(QWebSocket* client, const QVariantMap& map);
-    void apiGetIntegrations(QWebSocket* client);
+    void apiSystemButton(const int& id, const QVariantMap& map);
+    void apiSystemReboot(QWebSocket* client, const int& id);
+    void apiSystemShutdown(QWebSocket* client, const int& id);
+    void apiIntegrationsGetSupported(QWebSocket* client, const int& id);
+    void apiIntegrationsGetLoaded(QWebSocket* client, const int& id);
+    void apiIntegrationGetData(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiIntegrationAdd(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiIntegrationUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiIntegrationRemove(QWebSocket* client, const int& id, const QVariantMap& map);
+
+    void apiGetConfig(QWebSocket* client, const int& id);
+    void apiSetConfig(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiGetEntities(QWebSocket* client, const int& id, const QVariantMap& map);
 };
