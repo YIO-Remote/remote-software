@@ -492,6 +492,14 @@ void YioAPI::apiIntegrationRemove(QWebSocket *client, const int &id, const QVari
         // remove entity from config and database
     }
 
+    // remove integration from database
+    if (integration) {
+        m_integrations->remove(integrationId);
+        success = true;
+    } else {
+        success = false;
+    }
+
     // remove integration from config file
     QVariantMap  config                     = getConfig();
     QVariantMap  configIntegrations         = config.value("integrations").toMap();
@@ -513,14 +521,6 @@ void YioAPI::apiIntegrationRemove(QWebSocket *client, const int &id, const QVari
     config.insert("integrations", configIntegrations);
 
     if (setConfig(config)) {
-        success = true;
-    } else {
-        success = false;
-    }
-
-    // remove integration from database
-    if (integration) {
-        m_integrations->remove(integrationId);
         success = true;
     } else {
         success = false;

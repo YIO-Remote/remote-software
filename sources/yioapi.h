@@ -55,6 +55,13 @@ class YioAPI : public YioAPIInterface {
     bool        setConfig(QVariantMap config);
 
     bool addEntityToConfig(QVariantMap entity) override;
+    //    bool addEntity(QVariantMap entity);
+    //    bool updatEntity(QVariantMap entity);
+    //    bool removeEntity(QString entityId);
+
+    //    bool addIntegration(QVariantMap integration);
+    //    bool updateIntegration(QVariantMap integration);
+    //    bool removeIntegration(QString integrationId);
 
     // NETWORK SERVICES DISCOVERY
     Q_PROPERTY(QVariantList discoveredServices READ discoveredServices NOTIFY discoveredServicesChanged)
