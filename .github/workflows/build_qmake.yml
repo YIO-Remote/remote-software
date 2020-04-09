@@ -63,8 +63,8 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: YIO-Remote/integrations.library
-        # FIXME check for master branch build!
-        ref: develop
+        # FIXME use dependencies.cfg for correct branch!
+        ref: master
         path: integrations.library
 
     - name: Install system libs
