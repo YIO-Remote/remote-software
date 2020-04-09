@@ -22,8 +22,9 @@
 
 #include "integrations.h"
 
-#include <QtDebug>
 #include <QLoggingCategory>
+#include <QPluginLoader>
+#include <QtDebug>
 
 #include "../config.h"
 #include "../entities/entities.h"
@@ -37,12 +38,17 @@ Integrations* Integrations::s_instance = nullptr;
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 
-Integrations::Integrations(const QString& pluginPath)
-    : m_pluginPath(pluginPath) {
-    s_instance = this;
-}
+Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath) { s_instance = this; }
 
 QList<QObject*> Integrations::getAllPlugins() { return m_plugins.values(); }
+
+QJsonObject Integrations::getPluginMetaData(const QString& pluginName) {
+    Launcher* launcher   = new Launcher();
+    QString   pluginPath = launcher->getPluginPath(m_pluginPath, pluginName);
+    qCDebug(CLASS_LC()) << "Getting metadata for:" << pluginPath;
+    QPluginLoader pluginLoader(pluginPath);
+    return pluginLoader.metaData()["MetaData"].toObject();
+}
 
 // Integrations::~Integrations() { s_instance = nullptr; }
 

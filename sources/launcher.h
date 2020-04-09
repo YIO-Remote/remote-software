@@ -31,6 +31,7 @@ class Launcher : public QObject {
     Q_INVOKABLE QString launch(const QString &program);
 
     QObject *loadPlugin(const QString &path, const QString &pluginName);
+    QString  getPluginPath(const QString &path, const QString &pluginName);
 
  private:
     QProcess *m_process;

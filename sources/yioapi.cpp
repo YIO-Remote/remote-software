@@ -151,8 +151,6 @@ bool YioAPI::addEntityToConfig(QVariantMap entity) {
 }
 
 bool YioAPI::removeIntegration(QString integrationId) {
-    bool success = false;
-
     QObject *integration     = m_integrations->get(integrationId);
     QString  integrationType = m_integrations->getType(integrationId);
 
@@ -171,9 +169,8 @@ bool YioAPI::removeIntegration(QString integrationId) {
     // remove integration from database
     if (integration) {
         m_integrations->remove(integrationId);
-        success = true;
     } else {
-        success = false;
+        return false;
     }
 
     // remove integration from config file
@@ -195,12 +192,11 @@ bool YioAPI::removeIntegration(QString integrationId) {
     configIntegrations.insert(integrationType, configIntegrationsType);
     config.insert("integrations", configIntegrations);
 
-    if (setConfig(config) && success) {
-        success = true;
-    } else {
-        success = false;
+    if (!setConfig(config)) {
+        return false;
     }
-    return success;
+
+    return true;
 }
 
 void YioAPI::discoverNetworkServices() {
@@ -507,7 +503,7 @@ void YioAPI::apiIntegrationGetData(QWebSocket *client, const int &id, const QVar
         success = true;
 
         // get data from integration
-        QVariantMap data;
+        QVariantMap data = m_integrations->getPluginMetaData(integration).toVariantMap().value("setup_data").toMap();
         response.insert("data", data);
     } else {
         success = false;

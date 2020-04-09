@@ -81,6 +81,9 @@ class Integrations : public QObject, IntegrationsInterface {
     // get all plugins
     QList<QObject*> getAllPlugins();
 
+    // get plugin metadata
+    QJsonObject getPluginMetaData(const QString& pluginName);
+
     static Integrations* getInstance() { return s_instance; }
 
  signals:
