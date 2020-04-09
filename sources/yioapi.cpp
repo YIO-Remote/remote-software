@@ -150,6 +150,59 @@ bool YioAPI::addEntityToConfig(QVariantMap entity) {
     return m_config->writeConfig();
 }
 
+bool YioAPI::removeIntegration(QString integrationId) {
+    bool success = false;
+
+    QObject *integration     = m_integrations->get(integrationId);
+    QString  integrationType = m_integrations->getType(integrationId);
+
+    QVariantMap config = getConfig();
+
+    // unload all entities connected to the integration
+    QList<EntityInterface *> entities = Entities::getInstance()->getByIntegration(integrationType);
+    for (int i = 0; i < entities.length(); i++) {
+        // remove entity from config and database
+        Entities::getInstance()->remove(entities[i]->entity_id());
+    }
+
+    // remove all entities connected to the integration from the config
+    QVariantMap configEntities = config.value("entities").toMap();
+
+    // remove integration from database
+    if (integration) {
+        m_integrations->remove(integrationId);
+        success = true;
+    } else {
+        success = false;
+    }
+
+    // remove integration from config file
+    QVariantMap  configIntegrations         = config.value("integrations").toMap();
+    QVariantMap  configIntegrationsType     = configIntegrations.value(integrationType).toMap();
+    QVariantList configIntegrationsTypeData = configIntegrationsType.value("data").toList();
+
+    // iterate through the data and remove the integration config
+    for (int i = 0; i < configIntegrationsTypeData.length(); i++) {
+        QVariantMap item = configIntegrationsTypeData[i].toMap();
+        if (item.value("id").toString() == integrationId) {
+            configIntegrationsTypeData.removeAt(i);
+            break;
+        }
+    }
+
+    // write the config
+    configIntegrationsType.insert("data", configIntegrationsTypeData);
+    configIntegrations.insert(integrationType, configIntegrationsType);
+    config.insert("integrations", configIntegrations);
+
+    if (setConfig(config) && success) {
+        success = true;
+    } else {
+        success = false;
+    }
+    return success;
+}
+
 void YioAPI::discoverNetworkServices() {
     // FIXME this is not multi threading safe!
     // m_discoveredServices gets cleared if one of the discoverNetworkServices is called.
@@ -480,54 +533,13 @@ void YioAPI::apiIntegrationRemove(QWebSocket *client, const int &id, const QVari
     QString integrationId = map.value("integration_id").toString();
     qCDebug(CLASS_LC) << "Request for remove integration" << integrationId << client;
 
-    bool success = false;
-
-    QObject *integration     = m_integrations->get(integrationId);
-    QString  integrationType = m_integrations->getType(integrationId);
-    qCDebug(CLASS_LC()) << "Integration type:" << integrationType;
-
-    // unload all entities connected to the integration
-    QList<EntityInterface *> entities = Entities::getInstance()->getByIntegration(integrationType);
-    for (int i = 0; i < entities.length(); i++) {
-        // remove entity from config and database
-    }
-
-    // remove integration from database
-    if (integration) {
-        m_integrations->remove(integrationId);
-        success = true;
-    } else {
-        success = false;
-    }
-
-    // remove integration from config file
-    QVariantMap  config                     = getConfig();
-    QVariantMap  configIntegrations         = config.value("integrations").toMap();
-    QVariantMap  configIntegrationsType     = configIntegrations.value(integrationType).toMap();
-    QVariantList configIntegrationsTypeData = configIntegrationsType.value("data").toList();
-
-    // iterate through the data and remove the integration config
-    for (int i = 0; i < configIntegrationsTypeData.length(); i++) {
-        QVariantMap item = configIntegrationsTypeData[i].toMap();
-        if (item.value("id").toString() == integrationId) {
-            configIntegrationsTypeData.removeAt(i);
-            break;
-        }
-    }
-
-    // write the config
-    configIntegrationsType.insert("data", configIntegrationsTypeData);
-    configIntegrations.insert(integrationType, configIntegrationsType);
-    config.insert("integrations", configIntegrations);
-
-    if (setConfig(config)) {
-        success = true;
-    } else {
-        success = false;
-    }
-
     QVariantMap response;
-    apiSendResponse(client, id, success, response);
+
+    if (removeIntegration(integrationId)) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
 }
 
 void YioAPI::apiGetConfig(QWebSocket *client, const int &id) {

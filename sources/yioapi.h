@@ -61,7 +61,7 @@ class YioAPI : public YioAPIInterface {
 
     //    bool addIntegration(QVariantMap integration);
     //    bool updateIntegration(QVariantMap integration);
-    //    bool removeIntegration(QString integrationId);
+    bool removeIntegration(QString integrationId);
 
     // NETWORK SERVICES DISCOVERY
     Q_PROPERTY(QVariantList discoveredServices READ discoveredServices NOTIFY discoveredServicesChanged)

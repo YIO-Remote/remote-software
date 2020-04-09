@@ -23,8 +23,8 @@
 #include "entities.h"
 
 #include <QJsonArray>
-#include <QTimer>
 #include <QLoggingCategory>
+#include <QTimer>
 #include <QtDebug>
 
 #include "../config.h"
@@ -169,6 +169,8 @@ void Entities::add(const QString &type, const QVariantMap &config, IntegrationIn
         m_entities.insert(entity->entity_id(), entity);
     }
 }
+
+void Entities::remove(const QString &entity_id) { m_entities.remove(entity_id); }
 
 void Entities::update(const QString &entity_id, const QVariantMap &attributes) {
     Entity *e = static_cast<Entity *>(m_entities.value(entity_id));

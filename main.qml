@@ -272,21 +272,22 @@ ApplicationWindow {
 
         background: Item { x: parent.width - 1; width: parent.width; height: parent.height }
 
+        onOpacityChanged: {
+            loader_main.item.opacity = 1 - opacity + 0.3
+        }
+
         Rectangle {
             width: parent.width; height: parent.height - 40
             y: 40
             color: Style.color.background
-            opacity: notificationsDrawer.position
         }
 
         onOpened: {
-            loader_main.item.mainNavigation.opacity = 0.3
-            loader_main.item.mainNavigationSwipeview.opacity = 0.3
+            loader_main.item.opacity = 0.3
         }
 
         onClosed: {
-            loader_main.item.mainNavigation.opacity = 1
-            loader_main.item.mainNavigationSwipeview.opacity = 1
+            loader_main.item.opacity = 1
         }
 
         Loader {

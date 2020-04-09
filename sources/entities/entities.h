@@ -64,6 +64,9 @@ class Entities : public QObject, public EntitiesInterface {
     // add an entity
     void add(const QString& type, const QVariantMap& config, IntegrationInterface* integrationObj);
 
+    // remove an entity
+    void remove(const QString& entity_id);
+
     // get entites by type
     QList<EntityInterface*> getByType(const QString& type);
 
