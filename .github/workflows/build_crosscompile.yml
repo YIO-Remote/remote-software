@@ -1,6 +1,5 @@
 # GitHub Action to cross compile a YIO Remote Qt project for the YIO remote-os.
 # Uses the pre-built Buildroot SDK from remote-os.
-#
 
 name: Cross Compile
 
@@ -19,14 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout remote-software
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 500
-          path: ${{ env.PROJECT_NAME}}
-      - name: Fetch all tags to determine version
+        # Note: GITHUB_REF doesn't work for pull requests! See GITHUB_HEAD_REF & _BASE_REF
+        # Using git clone instead of actions/checkout@v2 to get all information required for `git describe`.
+        # History of 500 should be more than enough to calculate commit count since last release tag.
         run: |
-          cd ${{ env.PROJECT_NAME}}
-          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          GIT_REPOSITORY=https://github.com/${GITHUB_REPOSITORY}.git
+          echo "Checking out $GIT_REPOSITORY with branch: $BRANCH_NAME"
+          git clone --depth 500 $GIT_REPOSITORY -b $BRANCH_NAME
 
       - name: Set build timestamp
         run: echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"

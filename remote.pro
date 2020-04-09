@@ -467,6 +467,7 @@ win32 {
 DISTFILES += \
     config.json \
     config-schema.json \
+    dependencies.cfg \
     hardware.json \
     hardware-schema.json \
     license-template.txt \

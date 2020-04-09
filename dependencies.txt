@@ -1,4 +1,0 @@
-# Required dependencies of this project
-# <dependency name> : <git branch or tag>
-# separator: white space + colon + white space
-integrations.library : develop
