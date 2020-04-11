@@ -4,8 +4,6 @@
 # Enhanced by Markus Zehnder
 #
 # TODO:
-# - debug / release build: either both or a switch which one to create
-# - Version tag / branch for integrations.library
 # - Create a re-usable GitHub Action
 
 name: QMake Build Matrix
@@ -35,15 +33,18 @@ jobs:
       matrix:
         config:
         - {
-            name: "Linux Latest x64", artifact: "Linux-x64",
+            name: "Linux Latest x64", artifact: "Linux-x64", build: "release",
+            qmake-args: "CONFIG+=release",
             os: ubuntu-latest
           }
         - {
-            name: "macOS Latest x64", artifact: "macOS-x64",
+            name: "macOS Latest x64", artifact: "macOS-x64", build: "release",
+            qmake-args: "CONFIG+=release",
             os: macos-latest
           }
         - {
-            name: "Windows Latest x64", artifact: "Windows-x64",
+            name: "Windows Latest x64", artifact: "Windows-x64", build: "release",
+            qmake-args: "CONFIG+=release",
             os: windows-latest,
             environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
           }
@@ -54,17 +55,24 @@ jobs:
       with:
         # history required to determine number of commits since last release tag
         fetch-depth: 0
-        path: ${{ env.PROJECT_NAME}}
+        path: ${{ env.PROJECT_NAME }}
     - name: Fetch all tags to determine version
       run: |
-        cd ${{ env.PROJECT_NAME}}
-        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        cd ${{ env.PROJECT_NAME }}
+        git fetch origin +refs/tags/*:refs/tags/*
+
+    - name: Determine integrations.library version
+      shell: bash
+      run: |
+        YIO_INTG_LIB_VERSION=$(cat "${GITHUB_WORKSPACE}/${{ env.PROJECT_NAME }}/dependencies.cfg" | awk '/^integrations.library:/{print $2}')
+        echo "Required integrations.library: $YIO_INTG_LIB_VERSION"
+        echo "::set-env name=YIO_INTG_LIB_VERSION::$YIO_INTG_LIB_VERSION"
+
     - name: Checkout integrations.library
       uses: actions/checkout@v2
       with:
         repository: YIO-Remote/integrations.library
-        # FIXME use dependencies.cfg for correct branch!
-        ref: master
+        ref: ${{ env.YIO_INTG_LIB_VERSION }}
         path: integrations.library
 
     - name: Install system libs
@@ -320,7 +328,7 @@ jobs:
         execute_process(
           COMMAND ${{ steps.qt.outputs.qt_dir }}/bin/qmake
             $ENV{APP_PRO}
-            CONFIG+=release
+            ${{ matrix.config.qmake-args }}
             QTC_SOURCE="${qtcreator_dir}"
             QTC_BUILD="${qtcreator_dir}"
           WORKING_DIRECTORY $ENV{GITHUB_WORKSPACE}/$ENV{PROJECT_NAME}
@@ -360,11 +368,18 @@ jobs:
           COMMAND cp $ENV{GITHUB_WORKSPACE}/$ENV{PROJECT_NAME}/version.txt $ENV{YIO_BIN}
         )
 
+    - name: Set build artifact name
+      shell: bash
+      run: |
+        APP_VERSION=$(cat ${{ env.YIO_BIN }}/version.txt | awk '{print $1}')
+        echo "App version: $APP_VERSION"
+        echo "::set-env name=ARTIFACT_NAME::${{ env.APP_NAME }}-$APP_VERSION-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-${{ matrix.config.build }}"
+
     - uses: actions/upload-artifact@v1
       id: upload_artifact
       with:
-        path: ${{ env.YIO_BIN}}
-        name: ${{ env.APP_NAME}}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release
+        path: ${{ env.YIO_BIN }}
+        name: ${{ env.ARTIFACT_NAME }}
 
   release:
     if: contains(github.ref, 'tags/v')
@@ -418,7 +433,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v1
       with:
-        name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release
+        name: ${{ env.ARTIFACT_NAME }}
         path: ./
 
     - run: ls -la
@@ -443,6 +458,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.set_upload_url.outputs.upload_url }}
-        asset_path: ./${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release.zip
-        asset_name: ${{ env.APP_NAME }}-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-release.zip
+        asset_path: ./${{ env.ARTIFACT_NAME }}.zip
+        asset_name: ${{ env.ARTIFACT_NAME }}.zip
         asset_content_type: application/zip
