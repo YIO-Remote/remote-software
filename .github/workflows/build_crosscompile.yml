@@ -8,61 +8,49 @@ on: [push]
 env:
   APP_NAME: app
   PROJECT_NAME: remote-software
-  QMAKE_DEBUG_ARGS: "CONFIG+=debug CONFIG+=qml_debug"
-  QMAKE_RELEASE_ARGS: "CONFIG+=release"
-  YIO_BIN: "${GITHUB_WORKSPACE}/binaries/app"
 
 jobs:
-  cross_compile:
-    name: RPi0 YIO remote-os
+  build:
+    name: ${{ matrix.config.name }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+        - {
+            name: "RPi0 Release Build", artifact: "remote-release",
+            qmake-args: "CONFIG+=release"
+          }
+        - {
+            name: "RPi0 Debug Build", artifact: "remote-debug",
+            qmake-args: "CONFIG+=debug CONFIG+=qml_debug"
+          }
+
     steps:
-      - name: Checkout remote-software
-        # Note: GITHUB_REF doesn't work for pull requests! See GITHUB_HEAD_REF & _BASE_REF
-        # Using git clone instead of actions/checkout@v2 to get all information required for `git describe`.
-        # History of 500 should be more than enough to calculate commit count since last release tag.
+      - name: Checkout ${{ env.PROJECT_NAME}}
+        uses: actions/checkout@v2
+        with:
+          # History of 500 should be more than enough to calculate commit count since last release tag.
+          fetch-depth: 500
+          path: ${{ env.PROJECT_NAME}}
+      - name: Fetch all tags to determine version
         run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          GIT_REPOSITORY=https://github.com/${GITHUB_REPOSITORY}.git
-          echo "Checking out $GIT_REPOSITORY with branch: $BRANCH_NAME"
-          git clone --depth 500 $GIT_REPOSITORY -b $BRANCH_NAME
+          cd ${{ env.PROJECT_NAME}}
+          git fetch origin +refs/tags/*:refs/tags/*
+          git describe --match "v[0-9]*" --tags HEAD --always
 
       - name: Set build timestamp
         run: echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"
 
-      - name: Cross compile debug
-        id: build-debug
+      - name: Cross compile
+        id: cross-compile
         uses: zehnm/yio-crosscompile-action@master
         with:
           project-name: ${{ env.PROJECT_NAME }}
-          output-path: ${{ env.YIO_BIN }}
-          qmake-args: ${{ env.QMAKE_DEBUG_ARGS }}
+          output-path: ${GITHUB_WORKSPACE}/binaries/app
+          qmake-args: ${{ matrix.config.qmake-args }}
 
-      - name: Get app version from build
-        run: |
-          echo "App version: ${{ steps.build-debug.outputs.project-version }}"
-          echo "::set-env name=APP_VERSION::${{ steps.build-debug.outputs.project-version }}"
-
-      - name: Upload debug build artefacts
+      - name: Upload build artefacts
         uses: actions/upload-artifact@v1
-        id: upload_artifact_debug
         with:
-          # Dear GitHub: dealing with env resolution is a PITA! ${{ env.YIO_BIN }} leads to a wrong path!!!
           path: binaries
-          name: ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-remote-debug
-
-      - name: Cross compile release
-        id: build-release
-        uses: zehnm/yio-crosscompile-action@master
-        with:
-          project-name: ${{ env.PROJECT_NAME }}
-          output-path: ${{ env.YIO_BIN }}
-          qmake-args: ${{ env.QMAKE_RELEASE_ARGS }}
-
-      - name: Upload release build artefacts
-        uses: actions/upload-artifact@v1
-        id: upload_artifact_release
-        with:
-          # Dear GitHub: dealing with env resolution is a PITA! ${{ env.YIO_BIN }} leads to a wrong path!!!
-          path: binaries
-          name: ${{ env.APP_NAME}}-${{ env.APP_VERSION}}-${{ env.TIMESTAMP}}-remote-release
+          name: ${{ env.APP_NAME }}-${{ steps.cross-compile.outputs.project-version }}-${{ env.TIMESTAMP }}-${{ matrix.config.artifact }}
