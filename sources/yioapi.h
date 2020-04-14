@@ -29,6 +29,7 @@
 
 #include "../qtzeroconf/qzeroconf.h"
 #include "config.h"
+#include "entities/entities.h"
 #include "integrations/integrations.h"
 #include "yio-interface/yioapiinterface.h"
 
@@ -114,6 +115,7 @@ class YioAPI : public YioAPIInterface {
     // name as string, <ip address as string, mdns name as string>  "192.169.100.1", 496
     QMap<QString, QVariantMap> m_discoveredServices;
 
+    Entities*     m_entities;
     Integrations* m_integrations;
     Config*       m_config;
 
