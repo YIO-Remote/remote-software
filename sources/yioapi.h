@@ -54,13 +54,14 @@ class YioAPI : public YioAPIInterface {
     QVariantMap getConfig() override;
     bool        setConfig(QVariantMap config);
 
-    bool addEntityToConfig(QVariantMap entity) override;
-    //    bool addEntity(QVariantMap entity);
-    //    bool updatEntity(QVariantMap entity);
-    //    bool removeEntity(QString entityId);
+    bool addEntityToConfig(QVariantMap entity) override { return false; }  // remove
 
-    //    bool addIntegration(QVariantMap integration);
-    //    bool updateIntegration(QVariantMap integration);
+    bool addEntity(QVariantMap entity);
+    bool updatEntity(QVariantMap entity);
+    bool removeEntity(QString entityId);
+
+    bool addIntegration(QVariantMap integration);
+    bool updateIntegration(QVariantMap integration);
     bool removeIntegration(QString integrationId);
 
     // NETWORK SERVICES DISCOVERY
@@ -120,9 +121,14 @@ class YioAPI : public YioAPIInterface {
     void apiSendResponse(QWebSocket* client, const int& id, const bool& success, QVariantMap& response);
 
     void apiAuth(QWebSocket* client, const QVariantMap& map);
+
     void apiSystemButton(const int& id, const QVariantMap& map);
     void apiSystemReboot(QWebSocket* client, const int& id);
     void apiSystemShutdown(QWebSocket* client, const int& id);
+
+    void apiGetConfig(QWebSocket* client, const int& id);
+    void apiSetConfig(QWebSocket* client, const int& id, const QVariantMap& map);
+
     void apiIntegrationsGetSupported(QWebSocket* client, const int& id);
     void apiIntegrationsGetLoaded(QWebSocket* client, const int& id);
     void apiIntegrationGetData(QWebSocket* client, const int& id, const QVariantMap& map);
@@ -130,7 +136,10 @@ class YioAPI : public YioAPIInterface {
     void apiIntegrationUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
     void apiIntegrationRemove(QWebSocket* client, const int& id, const QVariantMap& map);
 
-    void apiGetConfig(QWebSocket* client, const int& id);
-    void apiSetConfig(QWebSocket* client, const int& id, const QVariantMap& map);
-    void apiGetEntities(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiEntitiesGetSupported(QWebSocket* client, const int& id);
+    void apiEntitiesGetLoaded(QWebSocket* client, const int& id);
+    void apiEntitiesGetAvailable(QWebSocket* client, const int& id);
+    void apiEntitiesAdd(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiEntitiesUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiEntitiesRemove(QWebSocket* client, const int& id, const QVariantMap& map);
 };

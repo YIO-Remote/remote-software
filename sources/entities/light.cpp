@@ -41,21 +41,21 @@ bool Light::updateAttrByIndex(int attrIndex, const QVariant& value) {
         case LightDef::BRIGHTNESS:
             if (m_brightness != value.toInt()) {
                 m_brightness = value.toInt();
-                chg = true;
+                chg          = true;
                 emit brightnessChanged();
             }
             break;
         case LightDef::COLOR:
             if (m_color != value) {
                 m_color = QColor(value.toString());
-                chg = true;
+                chg     = true;
                 emit colorChanged();
             }
             break;
         case LightDef::COLORTEMP:
             if (m_colorTemp != value) {
                 m_colorTemp = value.toInt();
-                chg = true;
+                chg         = true;
                 emit colorTempChanged();
             }
             break;
@@ -86,20 +86,20 @@ Light::Light(const QVariantMap& config, IntegrationInterface* integrationObj, QO
     static QMetaEnum metaEnumCommands;
     static QMetaEnum metaEnumState;
     if (!metaEnumAttr.isValid()) {
-        int index = LightDef::staticMetaObject.indexOfEnumerator("Attributes");
-        metaEnumAttr = LightDef::staticMetaObject.enumerator(index);
-        index = LightDef::staticMetaObject.indexOfEnumerator("States");
-        metaEnumState = LightDef::staticMetaObject.enumerator(index);
-        index = LightDef::staticMetaObject.indexOfEnumerator("Features");
+        int index        = LightDef::staticMetaObject.indexOfEnumerator("Attributes");
+        metaEnumAttr     = LightDef::staticMetaObject.enumerator(index);
+        index            = LightDef::staticMetaObject.indexOfEnumerator("States");
+        metaEnumState    = LightDef::staticMetaObject.enumerator(index);
+        index            = LightDef::staticMetaObject.indexOfEnumerator("Features");
         metaEnumFeatures = LightDef::staticMetaObject.enumerator(index);
-        index = LightDef::staticMetaObject.indexOfEnumerator("Commands");
+        index            = LightDef::staticMetaObject.indexOfEnumerator("Commands");
         metaEnumCommands = LightDef::staticMetaObject.enumerator(index);
         qmlRegisterUncreatableType<LightDef>("Entity.Light", 1, 0, "Light", "Not creatable as it is an enum type.");
     }
-    m_enumAttr = &metaEnumAttr;
-    m_enumFeatures = &metaEnumFeatures;
-    m_enumCommands = &metaEnumCommands;
-    m_enumState = &metaEnumState;
+    m_enumAttr          = &metaEnumAttr;
+    m_enumFeatures      = &metaEnumFeatures;
+    m_enumCommands      = &metaEnumCommands;
+    m_enumState         = &metaEnumState;
     m_specificInterface = qobject_cast<LightInterface*>(this);
     initializeSupportedFeatures(config);
 }

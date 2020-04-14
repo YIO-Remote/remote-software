@@ -104,7 +104,21 @@ bool YioAPI::setConfig(QVariantMap config) {
     return m_config->writeConfig();
 }
 
-bool YioAPI::addEntityToConfig(QVariantMap entity) {
+bool YioAPI::addEntity(QVariantMap entity) {
+    // get the type of the new entity
+    QString entityType = entity.value("type").toString();
+    qCDebug(CLASS_LC) << "Adding entity type:" << entityType;
+
+    // remove the key that is not needed
+    entity.remove("type");
+
+    // check if the type is supported
+    if (!Entities::getInstance()->supported_entities().contains(entityType)) {
+        return false;
+    }
+
+    qCDebug(CLASS_LC) << "Integration type is supported";
+
     // check the input if it's OK
     if (!entity.contains(Config::KEY_AREA) && !entity.contains(Config::KEY_ENTITY_ID) &&
         !entity.contains(Config::KEY_FRIENDLYNAME) && !entity.contains(Config::KEY_INTEGRATION) &&
@@ -112,34 +126,156 @@ bool YioAPI::addEntityToConfig(QVariantMap entity) {
         return false;
     }
 
+    qCDebug(CLASS_LC) << "Input data is OK.";
+
+    // check if entity alread loaded. If so, it exist in config.json and the database
+    QObject *eObj = Entities::getInstance()->get(entity.value("entity_id").toString());
+    if (eObj) {
+        return false;
+    }
+
     // get the config
-    QVariantMap  c = getConfig();
-    QVariantList e = c.value("entities").toJsonArray().toVariantList();
+    QVariantMap  c            = getConfig();
+    QVariantMap  entities     = c.value("entities").toMap();
+    QVariantList entitiesType = entities.value(entityType).toList();
 
-    // check what is the type of the new entity
-    QString entityType = entity.value("type").toString();
+    // add the entity to the lsit
+    entitiesType.append(entity);
 
-    // find the entities key and insert the new entity
-    for (int i = 0; i < e.length(); i++) {
-        if (e[i].toMap().value("type").toString() == entityType) {
-            // get the data key array
-            QVariantMap  r  = e[i].toMap();
-            QVariantList rl = r.value("data").toJsonArray().toVariantList();
+    // put entities back to config
+    entities.insert(entityType, entitiesType);
+    c.insert("entities", entities);
 
-            // add the entity
-            rl.append(entity);
+    // write the config back
+    m_config->setConfig(c);
+    if (!m_config->isValid()) {
+        return false;
+    }
 
-            r.insert("data", rl);
+    bool success = m_config->writeConfig();
 
-            e[i] = r;
+    // if the config write is successful, load the entity to the database
+    if (success) {
+        // get the integration object
+        QObject *             obj         = m_integrations->get(entity.value("integration").toString());
+        IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
 
-            // put the entity back to the config
-            c.insert("entities", e);
+        // add it to the entity registry
+        Entities::getInstance()->add(entityType, entity, integration);
 
-            // add it to the entity registry
-            //            Entities::getInstance()->add(entity, );
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool YioAPI::updatEntity(QVariantMap entity) {}
+
+bool YioAPI::removeEntity(QString entityId) {}
+
+bool YioAPI::addIntegration(QVariantMap integration) {
+    // get the type of the new integration
+    QString integrationType = integration.value("type").toString();
+    qCDebug(CLASS_LC) << "Adding integration type:" << integrationType;
+
+    // remove the key that is not needed
+    integration.remove("type");
+
+    // check if the type is supported
+    if (!m_integrations->supportedIntegrations().contains(integrationType)) {
+        return false;
+    }
+
+    qCDebug(CLASS_LC) << "Integration type is supported";
+
+    // check if the input is OK
+    if (!integration.contains(Config::KEY_TYPE) && !integration.contains(Config::KEY_ID) &&
+        !integration.contains(Config::KEY_FRIENDLYNAME) && !integration.contains(Config::OBJ_DATA)) {
+        return false;
+    }
+
+    qCDebug(CLASS_LC) << "Input data is OK.";
+
+    // check if the integration already exists
+    QObject *iObj = m_integrations->get(integration.value("id").toString());
+    if (iObj) {
+        return false;
+    }
+
+    // get the config
+    QVariantMap  c                = getConfig();
+    QVariantMap  integrations     = c.value("integrations").toMap();
+    QVariantMap  integrationsType = integrations.value(integrationType).toMap();
+    QVariantList integrationsData = integrationsType.value("data").toList();
+
+    // add the new integration to the list
+    integrationsData.append(integration);
+
+    // put integrations back to config
+    integrationsType.insert("data", integrationsData);
+    integrations.insert(integrationType, integrationsType);
+    c.insert("integrations", integrations);
+
+    // write the config back
+    m_config->setConfig(c);
+
+    if (!m_config->isValid()) {
+        return false;
+    }
+
+    return m_config->writeConfig();
+}
+
+bool YioAPI::updateIntegration(QVariantMap integration) {
+    // get the integration of the new integration
+    QString integrationType = integration.value("type").toString();
+
+    // remove the key that is not needed
+    integration.remove("type");
+
+    // check if the type is supported
+    if (!m_integrations->supportedIntegrations().contains(integrationType)) {
+        return false;
+    }
+
+    // check if the input is OK
+    if (!integration.contains(Config::KEY_TYPE) && !integration.contains(Config::KEY_ID) &&
+        !integration.contains(Config::KEY_FRIENDLYNAME) && !integration.contains(Config::OBJ_DATA)) {
+        return false;
+    }
+
+    // check if the integration already exists
+    QObject *iObj = m_integrations->get(integration.value("id").toString());
+    if (!iObj) {
+        return false;
+    }
+
+    // get the config
+    QVariantMap  c                = getConfig();
+    QVariantMap  integrations     = c.value("integrations").toMap();
+    QVariantMap  integrationsType = integrations.value(integrationType).toMap();
+    QVariantList integrationsData = integrationsType.value("data").toList();
+
+    bool success = false;
+
+    for (int i = 0; i < integrationsData.length(); i++) {
+        if (integrationsData[i].toMap().value("id").toString() == integration.value("id").toString()) {
+            QVariantMap ii = integrationsData[i].toMap();
+            ii.insert("friendly_name", integration.value("friendly_name").toString());
+            ii.insert("data", integration.value("data").toMap());
+            integrationsData[i] = ii;
+            success             = true;
         }
     }
+
+    if (!success) {
+        return false;
+    }
+
+    // put integrations back to config
+    integrationsType.insert("data", integrationsData);
+    integrations.insert(integrationType, integrationsType);
+    c.insert("integrations", integrations);
 
     // write the config back
     m_config->setConfig(c);
@@ -361,15 +497,26 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "remove_integration") {
                 /// Remove an integration
                 apiIntegrationRemove(client, id, map);
+            } else if (type == "get_supported_entities") {
+                /// Get supported entities
+                apiEntitiesGetSupported(client, id);
+            } else if (type == "get_loaded_entities") {
+                /// Get loaded entities
+                apiEntitiesGetLoaded(client, id);
+            } else if (type == "get_available_entities") {
+                /// Get available entities from integrations
+                apiEntitiesGetAvailable(client, id);
+            } else if (type == "add_entity") {
+                /// Get available entities from integrations
+                apiEntitiesAdd(client, id, map);
+            } else if (type == "update_entity") {
+                /// Get available entities from integrations
+                apiEntitiesUpdate(client, id, map);
+            } else if (type == "remove_entity") {
+                /// Get available entities from integrations
+                apiEntitiesRemove(client, id, map);
             }
 
-            else if (type == "getEntities") {
-                /// Get all available entities of an integration
-                apiGetEntities(client, id, map);
-            } else if (type == "getIntegrations") {
-                /// Get all loaded integrations
-                //                apiGetIntegrations(client, id);
-            }
         } else {
             QVariantMap response;
             qCWarning(CLASS_LC) << "Client not authenticated";
@@ -400,7 +547,7 @@ void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &succ
 
     QJsonDocument json = QJsonDocument::fromVariant(response);
     client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
-    qCDebug(CLASS_LC()) << "Response sent to client:" << client << "id:" << id << "response:" << response;
+    qCDebug(CLASS_LC) << "Response sent to client:" << client << "id:" << id << "response:" << response;
 }
 
 void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {
@@ -498,8 +645,7 @@ void YioAPI::apiIntegrationGetData(QWebSocket *client, const int &id, const QVar
     bool        success = false;
 
     // check if the integration type is valid
-    QStringList supportedIntegrations = m_integrations->supportedIntegrations();
-    if (supportedIntegrations.contains(integration)) {
+    if (m_integrations->supportedIntegrations().contains(integration)) {
         success = true;
 
         // get data from integration
@@ -517,12 +663,26 @@ void YioAPI::apiIntegrationAdd(QWebSocket *client, const int &id, const QVariant
     qCDebug(CLASS_LC) << "Request for add integration" << client;
 
     QVariantMap response;
+
+    if (addIntegration(map.value("config").toMap())) {
+        response.insert("message", "Restart the remote to load the integration.");
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
 }
 
 void YioAPI::apiIntegrationUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
     qCDebug(CLASS_LC) << "Request for update integration" << client;
 
     QVariantMap response;
+
+    if (updateIntegration(map.value("config").toMap())) {
+        response.insert("message", "Restart the remote to update the integration.");
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
 }
 
 void YioAPI::apiIntegrationRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
@@ -532,6 +692,61 @@ void YioAPI::apiIntegrationRemove(QWebSocket *client, const int &id, const QVari
     QVariantMap response;
 
     if (removeIntegration(integrationId)) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiEntitiesGetSupported(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for get supported entities" << client;
+
+    QVariantMap response;
+    QStringList supportedEntities = Entities::getInstance()->supported_entities();
+    if (supportedEntities.length() > 1) {
+        response.insert("supported_entities", supportedEntities);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {
+    Q_UNUSED(client);
+    Q_UNUSED(id);
+}
+
+void YioAPI::apiEntitiesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for add entity" << client;
+
+    QVariantMap response;
+
+    if (addEntity(map.value("config").toMap())) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiEntitiesUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for update entity" << client;
+
+    QVariantMap response;
+
+    if (updatEntity(map.value("config").toMap())) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiEntitiesRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
+    QString entityId = map.value("entity_id").toString();
+    qCDebug(CLASS_LC) << "Request for remove entity" << entityId << client;
+
+    QVariantMap response;
+
+    if (removeEntity(entityId)) {
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
@@ -578,57 +793,38 @@ void YioAPI::apiSystemButton(const int &id, const QVariantMap &map) {
     }
 }
 
-void YioAPI::apiGetEntities(QWebSocket *client, const int &id, const QVariantMap &map) {
-    QVariantMap response;
+void YioAPI::apiEntitiesGetLoaded(QWebSocket *client, const int &id) {
+    //    QVariantMap response;
 
-    if (map.contains("integrationId")) {
-        QString integrationId = map["integrationId"].toString();
-        qCDebug(CLASS_LC) << "Request for getEntities" << integrationId << client;
+    //    if (map.contains("integrationId")) {
+    //        QString integrationId = map["integrationId"].toString();
+    //        qCDebug(CLASS_LC) << "Request for getEntities" << integrationId << client;
 
-        QObject *object = m_integrations->get(integrationId);
+    //        QObject *object = m_integrations->get(integrationId);
 
-        if (object) {
-            IntegrationInterface *integrationInterface = qobject_cast<IntegrationInterface *>(object);
-            if (integrationInterface) {
-                QStringList entitiesList = integrationInterface->getAllAvailableEntities();
+    //        if (object) {
+    //            IntegrationInterface *integrationInterface = qobject_cast<IntegrationInterface *>(object);
+    //            if (integrationInterface) {
+    //                QStringList entitiesList = integrationInterface->getAllAvailableEntities();
 
-                if (entitiesList.length() > 1) {
-                    response.insert("success", true);
-                    response.insert("type", "entities");
-                    response.insert("entities", entitiesList);
-                } else {
-                    response.insert("success", false);
-                    response.insert("type", "entities");
-                }
-            }
-        } else {
-            response.insert("success", false);
-            response.insert("type", "entities");
-        }
-    } else {
-        response.insert("success", false);
-        response.insert("type", "entities");
-    }
+    //                if (entitiesList.length() > 1) {
+    //                    response.insert("success", true);
+    //                    response.insert("type", "entities");
+    //                    response.insert("entities", entitiesList);
+    //                } else {
+    //                    response.insert("success", false);
+    //                    response.insert("type", "entities");
+    //                }
+    //            }
+    //        } else {
+    //            response.insert("success", false);
+    //            response.insert("type", "entities");
+    //        }
+    //    } else {
+    //        response.insert("success", false);
+    //        response.insert("type", "entities");
+    //    }
 
-    QJsonDocument json = QJsonDocument::fromVariant(response);
-    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    //    QJsonDocument json = QJsonDocument::fromVariant(response);
+    //    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
 }
-
-// void YioAPI::apiGetIntegrations(QWebSocket *client, const int &id) {
-//    QVariantMap response;
-
-//    qCDebug(CLASS_LC) << "Request for getIntegrations" << client;
-//    QStringList integrations = m_integrations->listIds();
-
-//    if (integrations.length() > 1) {
-//        response.insert("success", true);
-//        response.insert("type", "integrations");
-//        response.insert("integrations", integrations);
-//    } else {
-//        response.insert("success", false);
-//        response.insert("type", "integrations");
-//    }
-
-//    QJsonDocument json = QJsonDocument::fromVariant(response);
-//    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
-//}

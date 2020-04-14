@@ -224,10 +224,10 @@ Rectangle {
         enabled: obj ? obj.supportsOn : false
         visible: enabled
 
-        checked: obj ? obj.state : false
+        checked: obj ? obj.isOn : false
         mouseArea.enabled: buttonContainer.state == "open" ? false: true
         mouseArea.onClicked: {
-            if (obj.state) {
+            if (obj.isOn) {
                 obj.turnOff();
             } else {
                 obj.turnOn();
