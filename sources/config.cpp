@@ -115,6 +115,14 @@ void Config::setSettings(const QVariantMap &config) {
     }
 }
 
+void Config::setProfiles(const QVariantMap &config) {
+    m_cacheUIProfiles = config;
+    emit profilesChanged();
+    if (writeConfig()) {
+        emit configWriteError(m_error);
+    }
+}
+
 void Config::setUIConfig(const QVariantMap &config) {
     m_cacheUIConfig = config;
     emit uiConfigChanged();

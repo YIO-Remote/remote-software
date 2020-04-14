@@ -68,7 +68,7 @@ class Config : public QObject, public ConfigInterface {
 
     // config
     QVariantMap getConfig() { return m_config; }
-    void        setConfig(const QVariantMap& getConfig);
+    void        setConfig(const QVariantMap& config);
 
     // profile Id
     QString getProfileId() { return m_cacheProfileId; }
@@ -79,14 +79,15 @@ class Config : public QObject, public ConfigInterface {
 
     // settings
     QVariantMap getSettings() { return m_cacheSettings; }
-    void        setSettings(const QVariantMap& getConfig);
+    void        setSettings(const QVariantMap& config);
 
     // profiles
     QVariantMap getProfiles() { return m_cacheUIProfiles; }
+    void        setProfiles(const QVariantMap& config);
 
     // ui_config
     QVariantMap getUIConfig() { return m_cacheUIConfig; }
-    void        setUIConfig(const QVariantMap& getConfig);
+    void        setUIConfig(const QVariantMap& config);
 
     // pages
     QVariantMap getPages() { return m_cacheUIPages; }

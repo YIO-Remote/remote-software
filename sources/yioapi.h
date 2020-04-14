@@ -144,4 +144,10 @@ class YioAPI : public YioAPIInterface {
     void apiEntitiesAdd(QWebSocket* client, const int& id, const QVariantMap& map);
     void apiEntitiesUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
     void apiEntitiesRemove(QWebSocket* client, const int& id, const QVariantMap& map);
+
+    void apiProfilesGetAll(QWebSocket* client, const int& id);
+    void apiProfilesSet(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiProfilesAdd(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiProfilesUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiProfilesRemove(QWebSocket* client, const int& id, const QVariantMap& map);
 };

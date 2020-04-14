@@ -550,6 +550,21 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "remove_entity") {
                 /// Get available entities from integrations
                 apiEntitiesRemove(client, id, map);
+            } else if (type == "get_all_profiles") {
+                /// Get all profiles
+                apiProfilesGetAll(client, id);
+            } else if (type == "set_profile") {
+                /// Set current profile
+                apiProfilesSet(client, id, map);
+            } else if (type == "add_profile") {
+                /// Add new profile
+                apiProfilesAdd(client, id, map);
+            } else if (type == "update_profile") {
+                /// Update a profile
+                apiProfilesUpdate(client, id, map);
+            } else if (type == "remove_profile") {
+                /// Remove a profile
+                apiProfilesRemove(client, id, map);
             }
 
         } else {
@@ -796,6 +811,88 @@ void YioAPI::apiEntitiesRemove(QWebSocket *client, const int &id, const QVariant
     QVariantMap response;
 
     if (removeEntity(entityId)) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiProfilesGetAll(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for get all profiles" << client;
+
+    QVariantMap response;
+    QVariantMap profiles = m_config->getProfiles();
+
+    if (!profiles.isEmpty()) {
+        response.insert("profiles", profiles);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiProfilesSet(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for set profile" << client;
+
+    QVariantMap response;
+    QString     newProfileId = map.value("profile").toString();
+
+    if (!newProfileId.isEmpty()) {
+        m_config->setProfileId(newProfileId);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiProfilesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for add profile" << client;
+
+    QVariantMap response;
+    QVariantMap profiles = m_config->getProfiles();
+
+    QVariantMap newProfile = map.value("profile").toMap();
+    for (QVariantMap::const_iterator iter = newProfile.begin(); iter != newProfile.end(); ++iter) {
+        profiles.insert(iter.key(), iter.value().toMap());
+    }
+
+    m_config->setProfiles(profiles);
+
+    apiSendResponse(client, id, true, response);
+}
+
+void YioAPI::apiProfilesUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for update profile" << client;
+
+    QVariantMap response;
+    if (!map.value("data").toMap().isEmpty()) {
+        QVariantMap profiles = m_config->getProfiles();
+        profiles.insert(map.value("uuid").toString(), map.value("data").toMap());
+        m_config->setProfiles(profiles);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for update profile" << client;
+
+    bool success = false;
+
+    QVariantMap response;
+    QVariantMap profiles = m_config->getProfiles();
+
+    for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+        if (iter.key() == map.value("id").toString()) {
+            profiles.remove(iter.key());
+            m_config->setProfiles(profiles);
+            success = true;
+            break;
+        }
+    }
+
+    if (success) {
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
