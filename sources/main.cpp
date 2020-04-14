@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
         qFatal("App configuration file not found: %s", cmdLineHandler.configFile().toLatin1().constData());
         return 1;
     }
-    Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile());
+    Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), appPath);
     if (!config->isValid()) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
         // TODO(marton) show error screen with shutdon / reboot / web-configurator option

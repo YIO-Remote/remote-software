@@ -91,9 +91,14 @@ class Config : public QObject, public ConfigInterface {
 
     // pages
     QVariantMap getPages() { return m_cacheUIPages; }
+    void        setPages(const QVariantMap& config);
 
     // groups
     QVariantMap getGroups() { return m_cacheUIGroups; }
+    void        setGroups(const QVariantMap& config);
+
+    // languages
+    QVariantList getLanguages() { return m_languages; }
 
     // Shortcuts to get the config items, and to decouple a bit from Json structure
     // Please avoid old access via read property
@@ -128,7 +133,7 @@ class Config : public QObject, public ConfigInterface {
     QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
 
  public:
-    explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath);
+    explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath, QString appPath);
     virtual ~Config();
 
     static Config* getInstance() { return s_instance; }
@@ -151,10 +156,13 @@ class Config : public QObject, public ConfigInterface {
     static Config*         s_instance;
     QQmlApplicationEngine* m_engine;
 
-    QVariantMap m_config;
+    QVariantMap  m_config;
+    QVariantList m_languages;
 
     JsonFile* m_jsf;
     QString   m_error;
+
+    JsonFile* m_tf;
 
     // Caches to improve performance
     QString     m_cacheProfileId;

@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
@@ -150,4 +150,17 @@ class YioAPI : public YioAPIInterface {
     void apiProfilesAdd(QWebSocket* client, const int& id, const QVariantMap& map);
     void apiProfilesUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
     void apiProfilesRemove(QWebSocket* client, const int& id, const QVariantMap& map);
+
+    void apiPagesGetAll(QWebSocket* client, const int& id);
+    void apiPagesAdd(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiPagesUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiPagesRemove(QWebSocket* client, const int& id, const QVariantMap& map);
+
+    void apiGroupsGetAll(QWebSocket* client, const int& id);
+    void apiGroupsAdd(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiGroupsUpdate(QWebSocket* client, const int& id, const QVariantMap& map);
+    void apiGroupsRemove(QWebSocket* client, const int& id, const QVariantMap& map);
+
+    void apiSettingsGetAllLanguages(QWebSocket* client, const int& id);
+    void apiSettingsSetLanguage(QWebSocket* client, const int& id, const QVariantMap& map);
 };

@@ -293,7 +293,7 @@ bool YioAPI::updateIntegration(QVariantMap integration) {
         return false;
     }
 
-    delete iObj;
+    // delete iObj;
 
     // get the config
     QVariantMap  c                = getConfig();
@@ -565,6 +565,36 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "remove_profile") {
                 /// Remove a profile
                 apiProfilesRemove(client, id, map);
+            } else if (type == "get_all_pages") {
+                /// Get all pages
+                apiPagesGetAll(client, id);
+            } else if (type == "add_page") {
+                /// Add a page
+                apiPagesAdd(client, id, map);
+            } else if (type == "update_page") {
+                /// Update a page
+                apiPagesUpdate(client, id, map);
+            } else if (type == "remove_page") {
+                /// Remove a page
+                apiPagesRemove(client, id, map);
+            } else if (type == "get_all_groups") {
+                /// Get all groups
+                apiGroupsGetAll(client, id);
+            } else if (type == "add_group") {
+                /// Add a group
+                apiGroupsAdd(client, id, map);
+            } else if (type == "update_group") {
+                /// Update a group
+                apiGroupsUpdate(client, id, map);
+            } else if (type == "remove_group") {
+                /// Remove a group
+                apiGroupsRemove(client, id, map);
+            } else if (type == "get_languages") {
+                /// Get all languages
+                apiSettingsGetAllLanguages(client, id);
+            } else if (type == "set_language") {
+                /// Set a languages
+                apiSettingsSetLanguage(client, id, map);
             }
 
         } else {
@@ -852,13 +882,17 @@ void YioAPI::apiProfilesAdd(QWebSocket *client, const int &id, const QVariantMap
     QVariantMap profiles = m_config->getProfiles();
 
     QVariantMap newProfile = map.value("profile").toMap();
-    for (QVariantMap::const_iterator iter = newProfile.begin(); iter != newProfile.end(); ++iter) {
-        profiles.insert(iter.key(), iter.value().toMap());
+    if (!newProfile.isEmpty()) {
+        for (QVariantMap::const_iterator iter = newProfile.begin(); iter != newProfile.end(); ++iter) {
+            profiles.insert(iter.key(), iter.value().toMap());
+        }
+
+        m_config->setProfiles(profiles);
+
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
     }
-
-    m_config->setProfiles(profiles);
-
-    apiSendResponse(client, id, true, response);
 }
 
 void YioAPI::apiProfilesUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
@@ -876,7 +910,7 @@ void YioAPI::apiProfilesUpdate(QWebSocket *client, const int &id, const QVariant
 }
 
 void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for update profile" << client;
+    qCDebug(CLASS_LC) << "Request for remove profile" << client;
 
     bool success = false;
 
@@ -893,6 +927,174 @@ void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariant
     }
 
     if (success) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiPagesGetAll(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for get all pages" << client;
+
+    QVariantMap response;
+    QVariantMap pages = m_config->getPages();
+    if (!pages.isEmpty()) {
+        response.insert("pages", pages);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiPagesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for add a page" << client;
+
+    QVariantMap response;
+    QVariantMap pages   = m_config->getPages();
+    QVariantMap newPage = map.value("page").toMap();
+
+    if (!newPage.isEmpty()) {
+        for (QVariantMap::const_iterator iter = newPage.begin(); iter != newPage.end(); ++iter) {
+            pages.insert(iter.key(), iter.value().toMap());
+            m_config->setPages(pages);
+            apiSendResponse(client, id, false, response);
+        }
+
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiPagesUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for update page" << client;
+
+    QVariantMap response;
+    if (!map.value("data").toMap().isEmpty()) {
+        QVariantMap pages = m_config->getPages();
+        pages.insert(map.value("uuid").toString(), map.value("data").toMap());
+        m_config->setPages(pages);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for remove page" << client;
+
+    bool success = false;
+
+    QVariantMap response;
+    QVariantMap pages = m_config->getPages();
+
+    for (QVariantMap::const_iterator iter = pages.begin(); iter != pages.end(); ++iter) {
+        if (iter.key() == map.value("id").toString()) {
+            pages.remove(iter.key());
+            m_config->setPages(pages);
+            success = true;
+            break;
+        }
+    }
+
+    if (success) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiGroupsGetAll(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for get all groups" << client;
+
+    QVariantMap response;
+    QVariantMap groups = m_config->getGroups();
+    if (!groups.isEmpty()) {
+        response.insert("groups", groups);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiGroupsAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for add a group" << client;
+
+    QVariantMap response;
+    QVariantMap groups   = m_config->getGroups();
+    QVariantMap newGroup = map.value("group").toMap();
+
+    if (!newGroup.isEmpty()) {
+        for (QVariantMap::const_iterator iter = newGroup.begin(); iter != newGroup.end(); ++iter) {
+            groups.insert(iter.key(), iter.value().toMap());
+            m_config->setGroups(groups);
+            apiSendResponse(client, id, false, response);
+        }
+
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiGroupsUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for update group" << client;
+
+    QVariantMap response;
+    if (!map.value("data").toMap().isEmpty()) {
+        QVariantMap groups = m_config->getGroups();
+        groups.insert(map.value("uuid").toString(), map.value("data").toMap());
+        m_config->setGroups(groups);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiGroupsRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for remove group" << client;
+
+    bool success = false;
+
+    QVariantMap response;
+    QVariantMap groups = m_config->getGroups();
+
+    for (QVariantMap::const_iterator iter = groups.begin(); iter != groups.end(); ++iter) {
+        if (iter.key() == map.value("id").toString()) {
+            groups.remove(iter.key());
+            m_config->setGroups(groups);
+            success = true;
+            break;
+        }
+    }
+
+    if (success) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiSettingsGetAllLanguages(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for get all languages" << client;
+
+    QVariantMap  response;
+    QVariantList languages = m_config->getLanguages();
+    if (!languages.isEmpty()) {
+        response.insert("languages", languages);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiSettingsSetLanguage(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for set a language" << client;
+
+    QVariantMap response;
+    if (!map.value("language").toString().isEmpty()) {
+        // need to check if the data is valid
+        QVariantMap settings = m_config->getSettings();
+        settings.insert("language", map.value("language").toString());
+        m_config->setSettings(settings);
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
