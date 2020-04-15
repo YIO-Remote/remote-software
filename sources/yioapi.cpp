@@ -595,6 +595,12 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "set_language") {
                 /// Set a languages
                 apiSettingsSetLanguage(client, id, map);
+            } else if (type == "set_auto_brightness") {
+                /// Set auto brightness
+                apiSettingsSetAutoBrightness(client, id, map);
+            } else if (type == "set_dark_mode") {
+                /// Set dark mode
+                apiSettingsSetDarkMode(client, id, map);
             }
 
         } else {
@@ -805,10 +811,7 @@ void YioAPI::apiEntitiesGetLoaded(QWebSocket *client, const int &id) {
     }
 }
 
-void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {
-    Q_UNUSED(client);
-    Q_UNUSED(id);
-}
+void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {}
 
 void YioAPI::apiEntitiesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
     qCDebug(CLASS_LC) << "Request for add entity" << client;
@@ -1095,6 +1098,34 @@ void YioAPI::apiSettingsSetLanguage(QWebSocket *client, const int &id, const QVa
         QVariantMap settings = m_config->getSettings();
         settings.insert("language", map.value("language").toString());
         m_config->setSettings(settings);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiSettingsSetAutoBrightness(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for set auto brightness" << client;
+
+    QVariantMap response;
+    QVariantMap settings = m_config->getSettings();
+    if (map.value("value").toBool() || !map.value("value").toBool()) {
+        settings.insert("autobrightness", map.value("value").toBool());
+        m_config->setSettings(settings);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiSettingsSetDarkMode(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for set dark mode" << client;
+
+    QVariantMap response;
+    QVariantMap uiConfig = m_config->getUIConfig();
+    if (map.value("value").toBool() || !map.value("value").toBool()) {
+        uiConfig.insert("darkmode", map.value("value").toBool());
+        m_config->setUIConfig(uiConfig);
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
