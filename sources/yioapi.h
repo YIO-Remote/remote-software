@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
@@ -93,6 +93,10 @@ class YioAPI : public YioAPIInterface {
     QWebSocketServer*       m_server;
     QMap<QWebSocket*, bool> m_clients;  // websocket client, true if authentication was successful
 
+    QList<QWebSocket*> m_subscribed_clients;
+    QObject*           m_context;
+    void               subscribeOnSignalEvent(const QString& event);
+
     bool m_running = false;
 
     static YioAPI*         s_instance;
@@ -125,6 +129,8 @@ class YioAPI : public YioAPIInterface {
     void apiSystemButton(const int& id, const QVariantMap& map);
     void apiSystemReboot(QWebSocket* client, const int& id);
     void apiSystemShutdown(QWebSocket* client, const int& id);
+    void apiSystemSubscribeToEvents(QWebSocket* client, const int& id);
+    void apiSystemUnsubscribeFromEvents(QWebSocket* client, const int& id);
 
     void apiGetConfig(QWebSocket* client, const int& id);
     void apiSetConfig(QWebSocket* client, const int& id, const QVariantMap& map);

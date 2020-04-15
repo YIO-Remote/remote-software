@@ -53,7 +53,6 @@ Item {
     Connections {
         id: apiConnection
         target: api
-        enabled: false
         onServiceDiscovered: {
             // stop timeout timer
             mdnsDiscoveryTimeout.stop();

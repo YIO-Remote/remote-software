@@ -508,6 +508,12 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "shutdown") {
                 /// Shutdown
                 apiSystemShutdown(client, id);
+            } else if (type == "subscribe_events") {
+                /// Subscribe to events
+                apiSystemSubscribeToEvents(client, id);
+            } else if (type == "unsubscribe_events") {
+                /// Unsubscribe from events
+                apiSystemUnsubscribeFromEvents(client, id);
             } else if (type == "get_config") {
                 /// Get config
                 apiGetConfig(client, id);
@@ -623,6 +629,17 @@ void YioAPI::onClientDisconnected() {
     }
 }
 
+void YioAPI::subscribeOnSignalEvent(const QString &event) {
+    qCDebug(CLASS_LC) << "Sending message to all subscribed clients";
+
+    for (int i = 0; i < m_subscribed_clients.length(); i++) {
+        QVariantMap response;
+        response.insert("event", event);
+        QJsonDocument json = QJsonDocument::fromVariant(response);
+        m_subscribed_clients[i]->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    }
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// API CALLS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -675,6 +692,19 @@ void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {
     }
 }
 
+void YioAPI::apiSystemButton(const int &id, const QVariantMap &map) {
+    Q_UNUSED(id);
+    QString buttonName   = map["name"].toString();
+    QString buttonAction = map["action"].toString();
+    qDebug(CLASS_LC) << "Button simulation:" << buttonName << "," << buttonAction;
+
+    if (buttonAction == "pressed") {
+        emit buttonPressed(buttonName);
+    } else {
+        emit buttonReleased(buttonName);
+    }
+}
+
 void YioAPI::apiSystemReboot(QWebSocket *client, const int &id) {
     Q_UNUSED(id);
     qCDebug(CLASS_LC) << "Request for reboot" << client;
@@ -686,6 +716,88 @@ void YioAPI::apiSystemShutdown(QWebSocket *client, const int &id) {
     Q_UNUSED(id);
     qCDebug(CLASS_LC) << "Request for shutdown" << client;
     StandbyControl::getInstance()->shutdown();
+}
+
+void YioAPI::apiSystemSubscribeToEvents(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for subscribe to events" << client;
+    QVariantMap response;
+
+    if (m_subscribed_clients.contains(client)) {
+        apiSendResponse(client, id, false, response);
+        return;
+    }
+
+    // add client to the subscribed client list
+    m_subscribed_clients.append(client);
+
+    // connect to signals
+    m_context = new QObject(this);
+
+    QObject::connect(m_config, &Config::configChanged, m_context, [=]() { subscribeOnSignalEvent("config_changed"); });
+    QObject::connect(m_config, &Config::settingsChanged, m_context,
+                     [=]() { subscribeOnSignalEvent("settings_changed"); });
+    QObject::connect(m_config, &Config::profileIdChanged, m_context,
+                     [=]() { subscribeOnSignalEvent("profileId_changed"); });
+    QObject::connect(m_config, &Config::profileFavoritesChanged, m_context,
+                     [=]() { subscribeOnSignalEvent("profileFavorites_changed"); });
+    QObject::connect(m_config, &Config::profilesChanged, m_context,
+                     [=]() { subscribeOnSignalEvent("profiles_changed"); });
+    QObject::connect(m_config, &Config::uiConfigChanged, m_context,
+                     [=]() { subscribeOnSignalEvent("uiConfig_changed"); });
+    QObject::connect(m_config, &Config::pagesChanged, m_context, [=]() { subscribeOnSignalEvent("pages_changed"); });
+    QObject::connect(m_config, &Config::groupsChanged, m_context, [=]() { subscribeOnSignalEvent("groups_changed"); });
+
+    apiSendResponse(client, id, true, response);
+}
+
+void YioAPI::apiSystemUnsubscribeFromEvents(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for unsubscribe from events" << client;
+    QVariantMap response;
+
+    if (!m_subscribed_clients.contains(client)) {
+        apiSendResponse(client, id, false, response);
+        return;
+    }
+
+    QObject::disconnect(m_context);
+    m_context->deleteLater();
+
+    for (int i = 0; i < m_subscribed_clients.length(); i++) {
+        if (m_subscribed_clients[i] == client) {
+            m_subscribed_clients.removeAt(i);
+            apiSendResponse(client, id, true, response);
+            return;
+        }
+    }
+
+    apiSendResponse(client, id, false, response);
+}
+
+void YioAPI::apiGetConfig(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for get config" << client;
+
+    QVariantMap response;
+    QVariantMap config = getConfig();
+
+    if (!config.isEmpty()) {
+        response.insert("config", config);
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiSetConfig(QWebSocket *client, const int &id, const QVariantMap &map) {
+    qCDebug(CLASS_LC) << "Request for set config" << client;
+
+    QVariantMap response;
+    QVariantMap config = map.value("config").toMap();
+
+    if (setConfig(config)) {
+        apiSendResponse(client, id, true, response);
+    } else {
+        apiSendResponse(client, id, false, response);
+    }
 }
 
 void YioAPI::apiIntegrationsGetSupported(QWebSocket *client, const int &id) {
@@ -1147,45 +1259,5 @@ void YioAPI::apiSettingsSetDarkMode(QWebSocket *client, const int &id, const QVa
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
-    }
-}
-
-void YioAPI::apiGetConfig(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get config" << client;
-
-    QVariantMap response;
-    QVariantMap config = getConfig();
-
-    if (!config.isEmpty()) {
-        response.insert("config", config);
-        apiSendResponse(client, id, true, response);
-    } else {
-        apiSendResponse(client, id, false, response);
-    }
-}
-
-void YioAPI::apiSetConfig(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for set config" << client;
-
-    QVariantMap response;
-    QVariantMap config = map.value("config").toMap();
-
-    if (setConfig(config)) {
-        apiSendResponse(client, id, true, response);
-    } else {
-        apiSendResponse(client, id, false, response);
-    }
-}
-
-void YioAPI::apiSystemButton(const int &id, const QVariantMap &map) {
-    Q_UNUSED(id);
-    QString buttonName   = map["name"].toString();
-    QString buttonAction = map["action"].toString();
-    qDebug(CLASS_LC) << "Button simulation:" << buttonName << "," << buttonAction;
-
-    if (buttonAction == "pressed") {
-        emit buttonPressed(buttonName);
-    } else {
-        emit buttonReleased(buttonName);
     }
 }
