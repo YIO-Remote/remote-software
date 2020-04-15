@@ -43,16 +43,24 @@ Config *Config::s_instance = nullptr;
 
 ConfigInterface::~ConfigInterface() {}
 
-Config::Config(QQmlApplicationEngine *engine, QString configFilePath, QString schemaFilePath)
+Config::Config(QQmlApplicationEngine *engine, QString configFilePath, QString schemaFilePath, QString appPath)
     : m_engine(engine), m_error("") {
     Q_ASSERT(engine);
 
     m_jsf = new JsonFile();
     m_jsf->setSchemaPath(schemaFilePath);
+
+    m_tf = new JsonFile();
+
     s_instance = this;
 
     // load the config file
     readConfig(configFilePath);
+
+    // load translations file
+    QString translationsPath = appPath.append(QString("/translations.json"));
+    m_tf->setName(translationsPath);
+    m_languages = m_tf->read().toList();
 }
 
 Config::~Config() { s_instance = nullptr; }
@@ -115,11 +123,35 @@ void Config::setSettings(const QVariantMap &config) {
     }
 }
 
+void Config::setProfiles(const QVariantMap &config) {
+    m_cacheUIProfiles = config;
+    emit profilesChanged();
+    if (writeConfig()) {
+        emit configWriteError(m_error);
+    }
+}
+
 void Config::setUIConfig(const QVariantMap &config) {
     m_cacheUIConfig = config;
     emit uiConfigChanged();
     if (writeConfig()) {
         // this is a Q_PROPERTY write method: can't return false!
+        emit configWriteError(m_error);
+    }
+}
+
+void Config::setPages(const QVariantMap &config) {
+    m_cacheUIPages = config;
+    emit pagesChanged();
+    if (writeConfig()) {
+        emit configWriteError(m_error);
+    }
+}
+
+void Config::setGroups(const QVariantMap &config) {
+    m_cacheUIGroups = config;
+    emit groupsChanged();
+    if (writeConfig()) {
         emit configWriteError(m_error);
     }
 }

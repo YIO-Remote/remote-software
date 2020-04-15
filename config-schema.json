@@ -567,8 +567,7 @@
                       "access_token",
                       "client_id",
                       "client_secret",
-                      "entity_id",
-                      "refresh_token"
+                      "entity_id"
                     ],
                     "properties": {
                       "access_token": {

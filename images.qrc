@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/chargingscreen/icon-battery-lightning.png</file>
-        <file>images/popuplowbattery/icon-lowbattery.png</file>
         <file>images/statusbar/statusbar-loader.png</file>
         <file>images/notification/icon-notification-dismiss.png</file>
         <file>images/notification/icon-notification-error.png</file>

@@ -57,10 +57,10 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INVOKABLE QObject* get(const QString& id);
 
     // add an integration
-    Q_INVOKABLE void add(const QVariantMap& config, QObject* obj, const QString& type) override;
+    void add(const QVariantMap& config, QObject* obj, const QString& type) override;
 
     // remove an integraiton
-    Q_INVOKABLE void remove(const QString& id);
+    void remove(const QString& id);
 
     // get friendly name
     Q_INVOKABLE QString getFriendlyName(const QString& id);
@@ -73,10 +73,16 @@ class Integrations : public QObject, IntegrationsInterface {
     // get the type of integration by id
     Q_INVOKABLE QString getType(const QString& id);
 
+    // get a list of supported integrations
+    QStringList supportedIntegrations() { return m_supported_integrations; }
+
     explicit Integrations(const QString& pluginPath);
 
     // get all plugins
     QList<QObject*> getAllPlugins();
+
+    // get plugin metadata
+    QJsonObject getPluginMetaData(const QString& pluginName);
 
     static Integrations* getInstance() { return s_instance; }
 
@@ -88,6 +94,10 @@ class Integrations : public QObject, IntegrationsInterface {
     void onCreateDone(QMap<QObject*, QVariant> map);
 
  private:
+    /// ADD NEW INTEGRATION TYPE HERE
+    QStringList m_supported_integrations = {"dock",    "homeassistant", "homey", "spotify",
+                                            "openhab", "openweather",   "roon"};
+
     QMap<QString, QObject*> m_plugins;
     QMap<QString, QObject*> m_integrations;
     QMap<QString, QString>  m_integrations_friendly_names;
@@ -97,5 +107,5 @@ class Integrations : public QObject, IntegrationsInterface {
     int                     m_integrationsToLoad = 0;
     int                     m_integrationsLoaded = 0;
 
-    static Integrations*   s_instance;
+    static Integrations* s_instance;
 };

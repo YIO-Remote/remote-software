@@ -98,6 +98,7 @@ Flickable {
         id: topImage
         width: parent.width; height: 320
         anchors.top: parent.top
+        opacity: bgImage.status == Image.Error ? 0 : 1
 
         Rectangle {
             id: comp

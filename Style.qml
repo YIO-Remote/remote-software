@@ -117,6 +117,12 @@ QtObject {
         readonly property string wifi_bluetooth: "\uE92C"
         readonly property string system: "\uE92B"
         readonly property string about: "\uE928"
+
+        readonly property string low_battery: "\uE92E"
+        readonly property string charging: "\uE92D"
+
+        readonly property string bell: "\uE92F"
+        readonly property string warning: "\uE930"
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

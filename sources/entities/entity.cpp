@@ -23,7 +23,6 @@
 #include "entity.h"
 
 #include <QTimer>
-#include <QtDebug>
 
 #include "../config.h"
 
@@ -50,19 +49,21 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
     setObjectName(entityId);
 
     QStringList f = Config::getInstance()->profileFavorites();
-    m_favorite = f.contains(entityId);
+    m_favorite    = f.contains(entityId);
 }
 
 Entity::~Entity() {}
 
 void Entity::command(int command, const QVariant& param) {
-    if (m_integrationObj) m_integrationObj->sendCommand(m_type, entity_id(), command, param);
+    if (m_integrationObj)
+        m_integrationObj->sendCommand(m_type, entity_id(), command, param);
 }
 
 bool Entity::update(const QVariantMap& attributes) {
     bool chg = false;
     for (QVariantMap::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
-        if (updateAttrByName(iter.key(), iter.value())) chg = true;
+        if (updateAttrByName(iter.key(), iter.value()))
+            chg = true;
     }
     return chg;
 }
@@ -115,7 +116,7 @@ QStringList Entity::allCommands() {
 }
 bool Entity::isSupported(int feature) {
     int byte = feature / 8;
-    int bit = feature % 8;
+    int bit  = feature % 8;
     Q_ASSERT(byte < static_cast<int>(sizeof(m_supported_features)));
     return !!(m_supported_features[byte] & (1 << bit));
 }
@@ -123,7 +124,8 @@ bool Entity::isSupported(int feature) {
 QStringList Entity::supported_features() {
     QStringList list;
     for (int i = 0; i < MAX_FEATURES; i++) {
-        if (isSupported(i)) list.append(getFeatureName(i));
+        if (isSupported(i))
+            list.append(getFeatureName(i));
     }
     return list;
 }
@@ -200,7 +202,7 @@ void Entity::initializeSupportedFeatures(const QVariantMap& config) {
             continue;
         }
         int byte = feature / 8;
-        int bit = feature % 8;
+        int bit  = feature % 8;
         Q_ASSERT(byte < static_cast<int>(sizeof(m_supported_features)));
         m_supported_features[byte] |= (1 << bit);
     }
