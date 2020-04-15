@@ -323,13 +323,13 @@ www.yio-remote.com
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Απενεργοποίηση</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Ενεργοποίηση</translation>
     </message>
   </context>
   <context>
@@ -337,7 +337,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="136"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>% Φορτίστηκε</translation>
     </message>
   </context>
   <context>
@@ -379,7 +379,7 @@ www.yio-remote.com
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Απόρριψη</translation>
     </message>
   </context>
   <context>
@@ -387,22 +387,22 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Αυτόματη φωτεινότητα</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>Ειδοποιήσεις εγγύτητας</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Μακριά</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Κοντά</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
@@ -412,7 +412,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Σκοτεινή λειτουργία</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
@@ -430,32 +430,32 @@ www.yio-remote.com
     <message>
       <location filename="../sources/entities/entities.h" line="113"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Φώτα</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="113"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Ρολοκουρτίνες</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="113"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Πολυμέσα</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Απομακρυσμένo</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Κλίμα</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Διακόπτης</translation>
     </message>
   </context>
   <context>
@@ -464,7 +464,7 @@ www.yio-remote.com
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Αγαπημένα</translation>
     </message>
   </context>
   <context>
@@ -472,12 +472,12 @@ www.yio-remote.com
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation type="unfinished">Not enough free space (%1 MB).</translation>
+      <translation>Δεν υπάρχει αρκετός διαθέσιμος χώρος (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation type="unfinished">Destination file already exists</translation>
+      <translation>Το αρχείο προορισμού υπάρχει ήδη</translation>
     </message>
   </context>
   <context>
@@ -485,22 +485,22 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> -Αποσυνδέθηκε</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Σύνδεση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Αποσύνδεση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Προσθήκη νέου</translation>
     </message>
   </context>
   <context>
@@ -509,12 +509,12 @@ www.yio-remote.com
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>κενό όνομα</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>δεν υπάρχουν δεδομένα</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
@@ -538,27 +538,27 @@ www.yio-remote.com
       <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Αγαπημένα</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Ρυθμίσεις</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Φώτα</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Ρολοκουρτίνες</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Πολυμέσα</translation>
     </message>
   </context>
   <context>
@@ -566,22 +566,22 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="64"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Δίκτυο</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="246"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Ισχύς σήματος Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>Διεύθυνση IP</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>Διεύθυνση MAC</translation>
     </message>
   </context>
   <context>
@@ -589,7 +589,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Παράβλεψη</translation>
     </message>
   </context>
   <context>
@@ -597,7 +597,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Ειδοποιήσεις</translation>
     </message>
   </context>
   <context>
@@ -605,12 +605,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Χαμηλή μπαταρία</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Παρακαλώ φορτίστε το τηλεχειριστήριο σύντομα</translation>
     </message>
   </context>
   <context>
@@ -618,7 +618,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Προφίλ</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="175"/>
@@ -958,22 +958,22 @@ Remote configuration after restarting the remote.</source>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>Ενημέρωση λογισμικού:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>New software is available</source>
-      <translation type="unfinished">New software is available</translation>
+      <translation>Νέα έκδοση λογισμικού διαθέσιμη</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Λήψη</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation type="unfinished">Download failed: %1</translation>
+      <translation>Η λήψη απέτυχε: %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
@@ -996,7 +996,7 @@ Remote configuration after restarting the remote.</source>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>Αυτόματη ενημέρωση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
@@ -1008,7 +1008,7 @@ Updates are installed between 03.00 am and 05.00 am.</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Το λογισμικό σας είναι ενημερωμένο.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
@@ -1025,22 +1025,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>Τηλεχειριστήριο YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Λήψη</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Ενημέρωση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Έλεγχος για ενημερώσεις</translation>
     </message>
   </context>
   <context>
@@ -1048,22 +1048,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Η λήψη ολοκληρώθηκε</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>Μεταφόρτωση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Ενημέρωση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Απόρριψη</translation>
     </message>
   </context>
   <context>
@@ -1071,22 +1071,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="62"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Χρόνος σε λειτουργία</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="87"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Θερμοκρασία επεξεργαστή</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="111"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Επανεκκίνηση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="125"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Τερματισμός λειτουργίας</translation>
     </message>
   </context>
   <context>
@@ -1094,22 +1094,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Εύρεση συσκευών</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Αυτόματη εύρεση και απεικόνιση συσκευών bluetooth στην ευρύτερη περιοχή.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>WiFi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>Άλλα δίκτυα</translation>
     </message>
   </context>
   <context>
@@ -1124,12 +1124,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Συνθηματικό</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Σύνδεση</translation>
     </message>
   </context>
 </TS>
