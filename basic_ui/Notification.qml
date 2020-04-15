@@ -22,7 +22,6 @@
 
 import QtQuick 2.11
 import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
 import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
@@ -176,23 +175,16 @@ Rectangle {
             notifications.remove(idN);
         }
 
-        Image {
-            id: closeIcon
-            asynchronous: true
-            width: 60; height: 60
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/images/notification/icon-notification-dismiss.png"
+        Text {
+            id: closeButton
+            color: Style.color.text
+            opacity: notification.x == 100 ? 1 : 0
+            text: Style.icon.close
+            width: 70; height: 70
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
 
-            opacity: notification.x == 100 ? 1 : 0
-
-            ColorOverlay {
-                visible: !Style.darkMode
-                anchors.fill: parent
-                source: parent
-                color: Style.color.text
-                antialiasing: true
-            }
 
             Behavior on opacity {
                 NumberAnimation {
@@ -268,21 +260,14 @@ Rectangle {
 
     }
 
-    Image {
+    Text {
         id: icon
-        asynchronous: true
-        width: 60; height: 60
-        fillMode: Image.PreserveAspectFit
-        source: type ? "qrc:/images/notification/icon-notification-error.png" : "qrc:/images/notification/icon-notification-normal.png"
-        anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 20 }
-
-        ColorOverlay {
-            visible: !Style.darkMode
-            anchors.fill: parent
-            source: parent
-            color: Style.color.text
-            antialiasing: true
-        }
+        color: Style.color.text
+        text: type ? Style.icon.warning : Style.icon.bell
+        width: 70; height: 70
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 80 }
+        anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
     }
 
 

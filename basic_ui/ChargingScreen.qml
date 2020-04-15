@@ -118,12 +118,13 @@ Rectangle {
                 anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 23 }
             }
 
-            Image {
+            Text {
                 id: icon
-                width: 44; height: 94
-                fillMode: Image.PreserveAspectFit
-                asynchronous: true
-                source: "qrc:/images/chargingscreen/icon-battery-lightning.png"
+                color: Style.color.text
+                text: Style.icon.charging
+                width: 80; height: 80
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 120 }
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
         }

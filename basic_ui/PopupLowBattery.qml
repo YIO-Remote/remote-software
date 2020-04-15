@@ -22,7 +22,6 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
 import StandbyControl 1.0
 import Style 1.0
 
@@ -88,20 +87,14 @@ Popup {
         }
     }
 
-    Image {
+    Text {
         id: lowbatteryIcon
-        asynchronous: true
+        color: Style.color.text
+        text: Style.icon.low_battery
         width: 170; height: 170
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/popuplowbattery/icon-lowbattery.png"
-        anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 175 }
-
-        ColorOverlay {
-            visible: !Style.darkMode
-            anchors.fill: parent
-            source: parent
-            color: Style.color.text
-        }
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 240 }
+        anchors { horizontalCenter: parent.horizontalCenter; horizontalCenterOffset: 14; top: parent.top; topMargin: 175 }
     }
 
     Text {
@@ -110,7 +103,7 @@ Popup {
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
-        anchors { top: lowbatteryIcon.bottom; topMargin: 0; horizontalCenter: parent.horizontalCenter }
+        anchors { top: lowbatteryIcon.bottom; topMargin: -20; horizontalCenter: parent.horizontalCenter }
         font { family: "Open Sans Regular"; weight: Font.Bold;  pixelSize: 27 }
     }
 
