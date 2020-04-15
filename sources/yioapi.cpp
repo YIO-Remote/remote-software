@@ -811,7 +811,25 @@ void YioAPI::apiEntitiesGetLoaded(QWebSocket *client, const int &id) {
     }
 }
 
-void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {}
+void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for get all available entities" << client;
+
+    QVariantMap      response;
+    QVariantList     availableEntities;
+    QList<QObject *> integrations = m_integrations->list();
+
+    for (int i = 0; i < integrations.length(); i++) {
+        IntegrationInterface *ii = qobject_cast<IntegrationInterface *>(integrations[i]);
+        availableEntities.append(ii->getAllAvailableEntities());
+    }
+
+    if (availableEntities.isEmpty()) {
+        apiSendResponse(client, id, false, response);
+    }
+
+    response.insert("available_entities", availableEntities);
+    apiSendResponse(client, id, true, response);
+}
 
 void YioAPI::apiEntitiesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
     qCDebug(CLASS_LC) << "Request for add entity" << client;
