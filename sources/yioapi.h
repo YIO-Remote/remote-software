@@ -55,8 +55,6 @@ class YioAPI : public YioAPIInterface {
     QVariantMap getConfig() override;
     bool        setConfig(QVariantMap config);
 
-    bool addEntityToConfig(QVariantMap entity) override { return false; }  // remove
-
     bool addEntity(QVariantMap entity);
     bool updatEntity(QVariantMap entity);
     bool removeEntity(QString entityId);
