@@ -4,12 +4,12 @@
   <context>
     <name>About</name>
     <message>
-      <location filename="../basic_ui/settings/About.qml" line="36"/>
+      <location filename="../basic_ui/settings/About.qml" line="35"/>
       <source>Thank you!</source>
       <translation>Grazie!</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/About.qml" line="45"/>
+      <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>
 YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 
@@ -17,20 +17,22 @@ Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
+Marton Borzak
 
 To learn more about the project, visit
 www.yio-remote.com
 </source>
-      <translation>
-Essendo YIO un progetto open source, beneficia di ogni contributore. Un grande ringraziamento a coloro che, finora, hanno aggiunto qualcosa al progetto:
+      <translation type="unfinished">
+YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 
 Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
+Marton Borzak
 
-Per saperne di più sul progetto, visita
-www. io-remote.com
+To learn more about the project, visit
+www.yio-remote.com
 </translation>
     </message>
   </context>
@@ -127,7 +129,7 @@ www. io-remote.com
       <translation>Rilevamento area</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Scansiona automaticamente i beacon Bluetooth associati alle aree, trova i dispositivi più vicini e visualizza quelli in quella zona.</translation>
     </message>
@@ -333,7 +335,7 @@ www. io-remote.com
   <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="136"/>
       <source>% Charged</source>
       <translation>% di carica</translation>
     </message>
@@ -374,7 +376,7 @@ www. io-remote.com
   <context>
     <name>ContextMenu</name>
     <message>
-      <location filename="../basic_ui/ContextMenu.qml" line="153"/>
+      <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
       <translation>Annulla</translation>
@@ -426,32 +428,32 @@ www. io-remote.com
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Lights</source>
       <translation>Luci</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Blinds</source>
       <translation>Tende</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Media</source>
       <translation>Media</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Remote</source>
       <translation>Remoto</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Climate</source>
       <translation>Clima</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Switch</source>
       <translation>Interruttore</translation>
     </message>
@@ -533,28 +535,28 @@ www. io-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Preferiti</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Settings</source>
       <translation>Impostazioni</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Lights</source>
       <translation>Luci</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Blinds</source>
       <translation>Tende</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Media</source>
       <translation>Media</translation>
     </message>
@@ -585,7 +587,7 @@ www. io-remote.com
   <context>
     <name>Notification</name>
     <message>
-      <location filename="../basic_ui/Notification.qml" line="267"/>
+      <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
       <translation>Rifiuta</translation>
     </message>
@@ -593,7 +595,7 @@ www. io-remote.com
   <context>
     <name>NotificationDrawer</name>
     <message>
-      <location filename="../basic_ui/NotificationDrawer.qml" line="39"/>
+      <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
       <translation>Notifiche</translation>
     </message>
@@ -601,12 +603,12 @@ www. io-remote.com
   <context>
     <name>PopupLowBattery</name>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="122"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
       <translation>Batteria bassa</translation>
     </message>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="137"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
       <translation>Si prega di caricare il telecomando il prima possibile</translation>
     </message>
@@ -614,12 +616,12 @@ www. io-remote.com
   <context>
     <name>Profiles</name>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="97"/>
+      <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
       <translation>Profili</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="187"/>
+      <location filename="../basic_ui/Profiles.qml" line="175"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>Per modificare i tuoi profili, utilizza lo strumento del configuratore web nelle impostazioni.</translation>
     </message>
@@ -676,59 +678,59 @@ Navigate your internet browser to: http://</translation>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="94"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="107"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="165"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="93"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="106"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="162"/>
       <source>Settings</source>
       <translation>Impostazioni</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
       <translation>Hai installato l'ultima versione disponibile.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
       <translation type="unfinished">New software is available.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="193"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="190"/>
       <source>Display</source>
       <translation>Schermo</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="199"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
       <translation>Lingua</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="212"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
       <translation>Integrazioni</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="219"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="216"/>
       <source>Battery &amp; power</source>
       <translation>Batteria e alimentazione</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="226"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
       <translation>m rimanenti</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="233"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
       <translation>Wi-Fi e bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="239"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
       <translation>Sistema</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="245"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="242"/>
       <source>About</source>
       <translation>Informazioni</translation>
     </message>
@@ -1097,17 +1099,17 @@ YIO remote %1</translation>
       <translation>Rilevamento area</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="80"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Scansiona automaticamente i beacon Bluetooth associati alle aree, trova i dispositivi più vicini e visualizza quelli in quella zona.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="109"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
       <source>WiFi</source>
       <translation>Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="189"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
       <source>Other networks</source>
       <translation>Altre reti</translation>
     </message>

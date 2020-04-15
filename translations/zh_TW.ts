@@ -4,12 +4,12 @@
   <context>
     <name>About</name>
     <message>
-      <location filename="../basic_ui/settings/About.qml" line="36"/>
+      <location filename="../basic_ui/settings/About.qml" line="35"/>
       <source>Thank you!</source>
-      <translation>感謝您！</translation>
+      <translation>謝謝你！</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/About.qml" line="45"/>
+      <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>
 YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 
@@ -17,6 +17,7 @@ Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
+Marton Borzak
 
 To learn more about the project, visit
 www.yio-remote.com
@@ -28,6 +29,7 @@ Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
+Marton Borzak
 
 如需了解該計畫的更多資訊，請訪問
 www.yio-remote.com
@@ -44,7 +46,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
       <source>Remaining time</source>
-      <translation type="unfinished">Remaining time</translation>
+      <translation>剩餘時間</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
@@ -75,7 +77,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>省電模式</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
@@ -85,7 +87,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>閑置 %1 分鐘後關閉 Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
@@ -96,7 +98,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="442"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 分鐘</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
@@ -106,12 +108,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>閑置 %1 小時後關閉遙控器</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 小時</translation>
     </message>
   </context>
   <context>
@@ -127,7 +129,7 @@ www.yio-remote.com
       <translation>區域偵測</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>自動掃描與區域相關的藍牙信標，尋找最近的區域並顯示該區域中的設備。</translation>
     </message>
@@ -146,7 +148,7 @@ www.yio-remote.com
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>温度： </translation>
     </message>
   </context>
   <context>
@@ -154,12 +156,12 @@ www.yio-remote.com
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>從收藏中移除</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>添加到收藏</translation>
     </message>
   </context>
   <context>
@@ -167,32 +169,32 @@ www.yio-remote.com
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>靜音</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>返回</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>選單</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>關閉</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>開啟</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="416"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>模式</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
@@ -215,22 +217,22 @@ www.yio-remote.com
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>來源</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>資訊</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>選單</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>指南</translation>
     </message>
   </context>
   <context>
@@ -238,17 +240,17 @@ www.yio-remote.com
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>關閉</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>開啟</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="280"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>顏色</translation>
     </message>
   </context>
   <context>
@@ -256,12 +258,12 @@ www.yio-remote.com
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>關閉</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>開啟</translation>
     </message>
   </context>
   <context>
@@ -269,7 +271,7 @@ www.yio-remote.com
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>我的播放清單</translation>
     </message>
   </context>
   <context>
@@ -278,41 +280,41 @@ www.yio-remote.com
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>搜尋</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>最近的搜尋</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>清空</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="410"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>專輯</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>曲目</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>演唱者</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>播放清單</translation>
     </message>
   </context>
   <context>
@@ -321,19 +323,19 @@ www.yio-remote.com
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>關閉</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>開啟</translation>
     </message>
   </context>
   <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="136"/>
       <source>% Charged</source>
       <translation>%充電</translation>
     </message>
@@ -374,10 +376,10 @@ www.yio-remote.com
   <context>
     <name>ContextMenu</name>
     <message>
-      <location filename="../basic_ui/ContextMenu.qml" line="153"/>
+      <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>取消</translation>
     </message>
   </context>
   <context>
@@ -390,22 +392,22 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>接近感知</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>遠</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>近</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>在檢測你的手部時接近傳感器應檢測的距離</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
@@ -426,34 +428,34 @@ www.yio-remote.com
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Lights</source>
       <translation>燈</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Blinds</source>
       <translation>百葉窗</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Media</source>
       <translation>多媒體</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>遙控</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>天氣</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>切換</translation>
     </message>
   </context>
   <context>
@@ -462,7 +464,7 @@ www.yio-remote.com
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>收藏</translation>
     </message>
   </context>
   <context>
@@ -470,12 +472,12 @@ www.yio-remote.com
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation type="unfinished">Not enough free space (%1 MB).</translation>
+      <translation>沒有足夠的儲存空間 (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation type="unfinished">Destination file already exists</translation>
+      <translation>目的地檔案已存在</translation>
     </message>
   </context>
   <context>
@@ -483,22 +485,22 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - 連線已中斷</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>連線</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>中斷連線</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>新增</translation>
     </message>
   </context>
   <context>
@@ -507,12 +509,12 @@ www.yio-remote.com
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>空的名稱</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>沒有數據</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
@@ -533,30 +535,30 @@ www.yio-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>收藏</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Settings</source>
       <translation>設定</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Lights</source>
       <translation>燈</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Blinds</source>
       <translation>百葉窗</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>多媒體</translation>
     </message>
   </context>
   <context>
@@ -585,7 +587,7 @@ www.yio-remote.com
   <context>
     <name>Notification</name>
     <message>
-      <location filename="../basic_ui/Notification.qml" line="267"/>
+      <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
       <translation>略過</translation>
     </message>
@@ -593,7 +595,7 @@ www.yio-remote.com
   <context>
     <name>NotificationDrawer</name>
     <message>
-      <location filename="../basic_ui/NotificationDrawer.qml" line="39"/>
+      <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
       <translation>提示信息</translation>
     </message>
@@ -601,12 +603,12 @@ www.yio-remote.com
   <context>
     <name>PopupLowBattery</name>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="122"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
       <translation>電量不足</translation>
     </message>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="137"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
       <translation>請盡快充電</translation>
     </message>
@@ -614,14 +616,14 @@ www.yio-remote.com
   <context>
     <name>Profiles</name>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="97"/>
+      <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>設定檔</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="187"/>
+      <location filename="../basic_ui/Profiles.qml" line="175"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>請使用網頁設定工具修改你的設定檔</translation>
     </message>
   </context>
   <context>
@@ -629,7 +631,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>找不到Wi-Fi裝置。</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
@@ -669,68 +671,67 @@ www.yio-remote.com
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups.
-Navigate your internet browser to: http://</translation>
+      <translation>使用瀏覽器設定你的YIO遙控器或用作下載和上傳備份。 請在瀏覽器中輸入：http://</translation>
     </message>
   </context>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="94"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="107"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="165"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="93"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="106"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="162"/>
       <source>Settings</source>
       <translation>設定</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>您的系統已是最新狀態</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
-      <translation type="unfinished">New software is available.</translation>
+      <translation>有新版本可用</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="193"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="190"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>顯示</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="199"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>語言</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="212"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>整合</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="219"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="216"/>
       <source>Battery &amp; power</source>
-      <translation type="unfinished">Battery &amp; power</translation>
+      <translation>電池與電源</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="226"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
-      <translation type="unfinished">m remaining</translation>
+      <translation>m 剩餘</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="233"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>Wi-Fi 與藍牙</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="239"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>系統</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="245"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="242"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>關於</translation>
     </message>
   </context>
   <context>
@@ -738,12 +739,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep1.qml" line="34"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>您好</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep1.qml" line="45"/>
       <source>Tap the screen to begin</source>
-      <translation type="unfinished">Tap the screen to begin</translation>
+      <translation>點擊屏幕開始</translation>
     </message>
   </context>
   <context>
@@ -751,12 +752,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep3.qml" line="61"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Wi-Fi 設定</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep3.qml" line="72"/>
       <source>Select a Wi-Fi network.</source>
-      <translation type="unfinished">Select a Wi-Fi network.</translation>
+      <translation>選擇一個Wi-Fi網絡</translation>
     </message>
   </context>
   <context>
@@ -771,12 +772,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep4.qml" line="114"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>密碼</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="140"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>加入</translation>
     </message>
   </context>
   <context>
@@ -784,7 +785,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep5.qml" line="70"/>
       <source>Connecting</source>
-      <translation type="unfinished">Connecting</translation>
+      <translation>正在連接</translation>
     </message>
   </context>
   <context>
@@ -792,17 +793,17 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>連線失敗</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not connect to your Wi-Fi network.</translation>
+      <translation>YIO 遙控器未能連接到您的Wi-Fi網絡。</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>再試一次</translation>
     </message>
   </context>
   <context>
@@ -810,17 +811,17 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="36"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>已連接</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully connected to your Wi-Fi network.</translation>
+      <translation>YIO 遙控器已成功連接到您的Wi-Fi網絡。</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>繼續</translation>
     </message>
   </context>
   <context>
@@ -831,20 +832,19 @@ Navigate your internet browser to: http://</translation>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to
-a power source and wait until it starts blinking.
+      <translation>請將YIO DOCK接上電源，並等待狀態顯示燈開始閃動。 
 
- To share the Wi-Fi network credentials with the dock, tap next.</translation>
+要與YIO DOCK共享Wi-Fi網絡憑據，請點擊下一步</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="72"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>繼續</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="83"/>
       <source>Skip</source>
-      <translation type="unfinished">Skip</translation>
+      <translation>略過</translation>
     </message>
   </context>
   <context>
@@ -852,7 +852,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep8.qml" line="115"/>
       <source>Setting up your YIO Dock</source>
-      <translation type="unfinished">Setting up your YIO Dock</translation>
+      <translation>設定你的 YIO DOCK</translation>
     </message>
   </context>
   <context>
@@ -860,17 +860,17 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>連線失敗</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="49"/>
       <source>YIO Dock could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Dock could not connect to your Wi-Fi network.</translation>
+      <translation>YIO DOCK未能連接到您的Wi-Fi網絡。</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>再試一次</translation>
     </message>
   </context>
   <context>
@@ -878,7 +878,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="39"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>完成</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="50"/>
@@ -973,22 +973,22 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation type="unfinished">Download failed: %1</translation>
+      <translation>下載失敗：%1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation type="unfinished">Failed to start app update script!</translation>
+      <translation>無法啟動應用程式更新碼！</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
       <source>Cannot connect to the update server.</source>
-      <translation type="unfinished">Cannot connect to the update server.</translation>
+      <translation>無法連接到更新伺服器</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
+      <translation>遙控器需要至少50％的電量才能執行更新。</translation>
     </message>
   </context>
   <context>
@@ -1014,8 +1014,8 @@ Updates are installed between 03.00 am and 05.00 am.</source>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
-YIO remote %1</translation>
+      <translation>有新的軟件版本可用。
+YIO遙控器 %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
@@ -1030,7 +1030,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>下載</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
@@ -1048,22 +1048,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>下載完成</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>正在下載</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>更新</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>取消</translation>
     </message>
   </context>
   <context>
@@ -1094,22 +1094,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>區域偵測</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="80"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>自動掃描與區域相關的藍牙信標，尋找最近的區域並顯示該區域中的設備。</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="109"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="189"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>其他網絡</translation>
     </message>
   </context>
   <context>
@@ -1124,12 +1124,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>密碼</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>加入</translation>
     </message>
   </context>
 </TS>
