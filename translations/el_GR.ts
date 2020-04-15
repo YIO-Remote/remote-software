@@ -417,12 +417,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Λειτουργία καθαρισμού</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Πατήστε την οθόνη για 10 δευτερόλεπτα για να τερματίσετε τη λειρουργία καθαρισμού.</translation>
     </message>
   </context>
   <context>
@@ -948,12 +948,12 @@ Remote configuration after restarting the remote.</source>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation type="unfinished">Service currently not available.</translation>
+      <translation>Η υπηρεσία δεν είναι διαθέσιμη.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
       <source>Request error %1</source>
-      <translation type="unfinished">Request error %1</translation>
+      <translation>Σφάλμα αιτήματος %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
@@ -978,17 +978,17 @@ Remote configuration after restarting the remote.</source>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation type="unfinished">Failed to start app update script!</translation>
+      <translation>Η εκκίνηση της εφαρμογής ενημερώσεων απέτυχε!</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
       <source>Cannot connect to the update server.</source>
-      <translation type="unfinished">Cannot connect to the update server.</translation>
+      <translation>Αδυναμία σύνδεσης με το διακομιστή ενημέρωσης.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
+      <translation>Το τηλεχειριστήριο απαιτεί τουλάχιστον 50% μπαταρία για να πραγματοποιήσει την ενημέρωση.</translation>
     </message>
   </context>
   <context>
@@ -1002,8 +1002,8 @@ Remote configuration after restarting the remote.</source>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Αυτόματη αναζήτηση ενημερώσεων και εφαρμογή ενημέρωσης όταν υπάρχει νέα έκδοση.
+Οι ενημερώσεις θα εγκατασταθούν μεταξύ 03.00 π. μ. και 05.00 π. μ.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
@@ -1014,13 +1014,13 @@ Updates are installed between 03.00 am and 05.00 am.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
+      <translation>Νέα έκδοση διαθέσιμη.
 YIO remote %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Εγκατεστημένη έκδοση: YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
