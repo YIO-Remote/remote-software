@@ -4,12 +4,12 @@
   <context>
     <name>About</name>
     <message>
-      <location filename="../basic_ui/settings/About.qml" line="36"/>
+      <location filename="../basic_ui/settings/About.qml" line="35"/>
       <source>Thank you!</source>
       <translation type="unfinished">Thank you!</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/About.qml" line="45"/>
+      <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>
 YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 
@@ -17,6 +17,7 @@ Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
+Marton Borzak
 
 To learn more about the project, visit
 www.yio-remote.com
@@ -28,6 +29,7 @@ Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
+Marton Borzak
 
 To learn more about the project, visit
 www.yio-remote.com
@@ -127,7 +129,7 @@ www.yio-remote.com
       <translation>Detekce prostoru</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Bluetooth.qml" line="100"/>
+      <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Automaticky vyhledá bluetooth majáky přiřazené k zónám, najde nejbližší a zobrazí zařízení v dané zóně.</translation>
     </message>
@@ -333,7 +335,7 @@ www.yio-remote.com
   <context>
     <name>ChargingScreen</name>
     <message>
-      <location filename="../basic_ui/ChargingScreen.qml" line="160"/>
+      <location filename="../basic_ui/ChargingScreen.qml" line="136"/>
       <source>% Charged</source>
       <translation>% Nabito</translation>
     </message>
@@ -374,7 +376,7 @@ www.yio-remote.com
   <context>
     <name>ContextMenu</name>
     <message>
-      <location filename="../basic_ui/ContextMenu.qml" line="153"/>
+      <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
       <translation>Zrušit</translation>
@@ -426,32 +428,32 @@ www.yio-remote.com
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Lights</source>
       <translation>Světla</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Blinds</source>
       <translation>Žaluzie</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="109"/>
+      <location filename="../sources/entities/entities.h" line="113"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Remote</source>
       <translation>Vzdálený</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Climate</source>
       <translation>Podnebí</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="110"/>
+      <location filename="../sources/entities/entities.h" line="114"/>
       <source>Switch</source>
       <translation type="unfinished">Switch</translation>
     </message>
@@ -533,28 +535,28 @@ www.yio-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Oblíbené</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="63"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Settings</source>
       <translation>Nastavení</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Lights</source>
       <translation>Světla</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Blinds</source>
       <translation>Žaluzie</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="64"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
@@ -585,7 +587,7 @@ www.yio-remote.com
   <context>
     <name>Notification</name>
     <message>
-      <location filename="../basic_ui/Notification.qml" line="267"/>
+      <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
       <translation>Zrušit</translation>
     </message>
@@ -593,7 +595,7 @@ www.yio-remote.com
   <context>
     <name>NotificationDrawer</name>
     <message>
-      <location filename="../basic_ui/NotificationDrawer.qml" line="39"/>
+      <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
       <translation>Oznámení</translation>
     </message>
@@ -601,12 +603,12 @@ www.yio-remote.com
   <context>
     <name>PopupLowBattery</name>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="122"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
       <translation>Slabá baterie</translation>
     </message>
     <message>
-      <location filename="../basic_ui/PopupLowBattery.qml" line="137"/>
+      <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
       <translation>Brzy dobijte ovladač prosím</translation>
     </message>
@@ -614,12 +616,12 @@ www.yio-remote.com
   <context>
     <name>Profiles</name>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="97"/>
+      <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
       <translation>Profily</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="187"/>
+      <location filename="../basic_ui/Profiles.qml" line="175"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>Pro úpravu profilů použijte nástroj webového konfigurátoru v nastavení.</translation>
     </message>
@@ -676,59 +678,59 @@ Navigate your internet browser to: http://</translation>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="94"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="107"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="165"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="93"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="106"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="162"/>
       <source>Settings</source>
       <translation>Nastavení</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
       <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="176"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
       <translation type="unfinished">New software is available.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="193"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="190"/>
       <source>Display</source>
       <translation type="unfinished">Display</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="199"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
       <translation type="unfinished">Language</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="212"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
       <translation type="unfinished">Integrations</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="219"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="216"/>
       <source>Battery &amp; power</source>
       <translation type="unfinished">Battery &amp; power</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="226"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
       <translation type="unfinished">m remaining</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="233"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
       <translation type="unfinished">WiFi &amp; bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="239"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
       <translation type="unfinished">System</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="245"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="242"/>
       <source>About</source>
       <translation type="unfinished">About</translation>
     </message>
@@ -1097,17 +1099,17 @@ YIO remote %1</translation>
       <translation type="unfinished">Area detection</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="80"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="109"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
       <source>WiFi</source>
       <translation type="unfinished">WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="189"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
       <source>Other networks</source>
       <translation type="unfinished">Other networks</translation>
     </message>
