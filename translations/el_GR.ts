@@ -22,8 +22,8 @@ Marton Borzak
 To learn more about the project, visit
 www.yio-remote.com
 </source>
-      <translation type="unfinished">
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>
+Το YIO είναι ένα εγχείρημα ανοιχτού κώδικα που βασίζεται σε όλους τους συνεισφέροντες. Ένα μεγάλο ευχαριστώ σε αυτούς που έχουν βοηθήσει μέχρι τώρα:
 
 Christian Riedl
 Markus Mahr
@@ -31,7 +31,7 @@ Markus Zehnder
 Niels de Klerk
 Marton Borzak
 
-To learn more about the project, visit
+Για να μάθετε περισσότερα σχετικά με το εγχείρημα, επισκεφθείτε το
 www.yio-remote.com
 </translation>
     </message>
@@ -345,32 +345,32 @@ www.yio-remote.com
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="40"/>
       <source>Use configuration profile.</source>
-      <translation type="unfinished">Use configuration profile.</translation>
+      <translation>Χρησιμοποιήστε το προφίλ διαμόρφωσης.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="43"/>
       <source>Use configuration file.</source>
-      <translation type="unfinished">Use configuration file.</translation>
+      <translation>Χρησιμοποιήστε το αρχείο διαμόρφωσης.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="44"/>
       <source>Use configuration schema file.</source>
-      <translation type="unfinished">Use configuration schema file.</translation>
+      <translation>Χρησιμοποιήστε το αρχείο διαμόρφωσης schema.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use hardware configuration file.</source>
-      <translation type="unfinished">Use hardware configuration file.</translation>
+      <translation>Χρησιμοποιήστε το αρχείο διαμόρφωσης του υλικού.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use hardware configuration schema file.</source>
-      <translation type="unfinished">Use hardware configuration schema file.</translation>
+      <translation>Χρησιμοποιήστε το αρχείο διαμόρφωσης schema του υλικού.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
       <source>Validate json configuration files and exit.</source>
-      <translation type="unfinished">Validate json configuration files and exit.</translation>
+      <translation>Επικυρώστε το αρχείο διαμόρφωσης json και εξέλθετε.</translation>
     </message>
   </context>
   <context>
