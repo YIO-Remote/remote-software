@@ -271,7 +271,7 @@ www.yio-remote.com
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Мои списъци за изпълнение</translation>
     </message>
   </context>
   <context>
@@ -314,7 +314,7 @@ www.yio-remote.com
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Списъци за изпълнение</translation>
     </message>
   </context>
   <context>
@@ -495,7 +495,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Прекъсване на връзката</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
