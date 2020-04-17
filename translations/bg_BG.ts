@@ -323,13 +323,13 @@ www.yio-remote.com
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Изключване</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Включване</translation>
     </message>
   </context>
   <context>
@@ -379,7 +379,7 @@ www.yio-remote.com
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Отказ</translation>
     </message>
   </context>
   <context>
@@ -387,7 +387,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Автоматична яркост</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
@@ -402,7 +402,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Затваряне</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
@@ -412,12 +412,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Тъмен режим</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Изчистен режим</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
@@ -430,17 +430,17 @@ www.yio-remote.com
     <message>
       <location filename="../sources/entities/entities.h" line="113"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Светлини</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="113"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Жалузи</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="113"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Медия</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
@@ -450,12 +450,12 @@ www.yio-remote.com
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Климат</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Превключвател</translation>
     </message>
   </context>
   <context>
@@ -464,7 +464,7 @@ www.yio-remote.com
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Любими</translation>
     </message>
   </context>
   <context>
@@ -472,7 +472,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation type="unfinished">Not enough free space (%1 MB).</translation>
+      <translation>Няма достатъчно свободно място (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
@@ -490,7 +490,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Свързване</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
@@ -509,12 +509,12 @@ www.yio-remote.com
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>празно име</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>празни данни</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
@@ -538,27 +538,27 @@ www.yio-remote.com
       <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Любими</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="61"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Настройки</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Светлини</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Жалузи</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="62"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Медия</translation>
     </message>
   </context>
   <context>
@@ -753,7 +753,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep3.qml" line="61"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Настройки на Wi-Fi</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep3.qml" line="72"/>
@@ -880,7 +880,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="39"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Готово</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="50"/>
@@ -898,7 +898,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Рестартиране</translation>
     </message>
   </context>
   <context>
@@ -906,7 +906,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="39"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Свързани</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="50"/>
@@ -924,7 +924,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Рестартиране</translation>
     </message>
   </context>
   <context>
@@ -932,7 +932,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStepCountry.qml" line="65"/>
       <source>Select your country or region</source>
-      <translation type="unfinished">Select your country or region</translation>
+      <translation>Изберете своята държава или регион</translation>
     </message>
   </context>
   <context>
@@ -940,17 +940,17 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
-      <translation type="unfinished">Invalid request.</translation>
+      <translation>Недействителна заявка.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="199"/>
       <source>Unsupported device.</source>
-      <translation type="unfinished">Unsupported device.</translation>
+      <translation>Неподдържано устройство.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation type="unfinished">Service currently not available.</translation>
+      <translation>В момента услугата не е на разположение.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
@@ -960,22 +960,22 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>Обновяване на софтуера:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>New software is available</source>
-      <translation type="unfinished">New software is available</translation>
+      <translation>Има нов софтуер</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Изтегляне</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation type="unfinished">Download failed: %1</translation>
+      <translation>Неуспешно изтегляне: %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
@@ -998,7 +998,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>Самообновяване</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
@@ -1010,7 +1010,7 @@ Updates are installed between 03.00 am and 05.00 am.</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Вашият софтуер е осъвременен.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
@@ -1032,7 +1032,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Изтегляне</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
@@ -1042,7 +1042,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Проверка за нова версия</translation>
     </message>
   </context>
   <context>
@@ -1050,12 +1050,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Изтеглянето приключи</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>Изтегля се</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
@@ -1065,7 +1065,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Отказ</translation>
     </message>
   </context>
   <context>
@@ -1073,22 +1073,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="62"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Време на работа</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="87"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>Температура на ЦП</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="111"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Рестартиране</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="125"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Изключване</translation>
     </message>
   </context>
   <context>
@@ -1106,12 +1106,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>WiFi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>Други мрежи</translation>
     </message>
   </context>
   <context>
@@ -1126,12 +1126,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Парола</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Присъединяване</translation>
     </message>
   </context>
 </TS>
