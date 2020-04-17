@@ -87,7 +87,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Изключване на Wi-Fi след %1 минути на неактивност</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
@@ -199,17 +199,17 @@ www.yio-remote.com
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
       <source>Off</source>
-      <translation type="unfinished">Off</translation>
+      <translation>Изкл.</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
       <source>Heat</source>
-      <translation type="unfinished">Heat</translation>
+      <translation>Топлина</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Хладно</translation>
     </message>
   </context>
   <context>
@@ -308,7 +308,7 @@ www.yio-remote.com
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Изпълнители</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
@@ -566,7 +566,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="64"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Мрежа</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="246"/>
@@ -576,12 +576,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP адрес</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC адрес</translation>
     </message>
   </context>
   <context>
@@ -597,7 +597,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Известия</translation>
     </message>
   </context>
   <context>
@@ -618,7 +618,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/Profiles.qml" line="94"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Профили</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="175"/>
@@ -682,7 +682,7 @@ Navigate your internet browser to: http://</translation>
       <location filename="../basic_ui/pages/Settings.qml" line="106"/>
       <location filename="../basic_ui/pages/Settings.qml" line="162"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Настройки</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
@@ -692,7 +692,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
-      <translation type="unfinished">New software is available.</translation>
+      <translation>Има нов софтуер.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
@@ -702,12 +702,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Език</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Интегрирания</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="216"/>
@@ -722,17 +722,17 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>WiFi и блутут</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Система</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="242"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>Относно</translation>
     </message>
   </context>
   <context>
@@ -740,7 +740,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep1.qml" line="34"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Здравейте</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep1.qml" line="45"/>
@@ -758,7 +758,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep3.qml" line="72"/>
       <source>Select a Wi-Fi network.</source>
-      <translation type="unfinished">Select a Wi-Fi network.</translation>
+      <translation>Изберете Wi‑Fi мрежа.</translation>
     </message>
   </context>
   <context>
@@ -773,12 +773,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep4.qml" line="114"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Парола</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="140"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Присъединяване</translation>
     </message>
   </context>
   <context>
@@ -786,7 +786,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep5.qml" line="70"/>
       <source>Connecting</source>
-      <translation type="unfinished">Connecting</translation>
+      <translation>Свързване</translation>
     </message>
   </context>
   <context>
@@ -794,7 +794,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Неуспешно свързване</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
@@ -804,7 +804,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Опитайте пак</translation>
     </message>
   </context>
   <context>
@@ -812,7 +812,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="36"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Свързани</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
@@ -846,7 +846,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep7.qml" line="83"/>
       <source>Skip</source>
-      <translation type="unfinished">Skip</translation>
+      <translation>Прескок</translation>
     </message>
   </context>
   <context>
@@ -862,7 +862,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Неуспешно свързване</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="49"/>
@@ -872,7 +872,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Опитайте пак</translation>
     </message>
   </context>
   <context>
