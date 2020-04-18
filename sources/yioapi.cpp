@@ -334,8 +334,10 @@ bool YioAPI::removeIntegration(QString integrationId) {
     QList<EntityInterface *> entities = m_entities->getByIntegration(integrationType);
     for (int i = 0; i < entities.length(); i++) {
         // remove entity from config and database
-        if (!removeEntity(entities[i]->entity_id())) {
-            return false;
+        if (entities[i]->integration() == integrationId) {
+            if (!removeEntity(entities[i]->entity_id())) {
+                return false;
+            }
         }
     }
 
