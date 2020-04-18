@@ -500,7 +500,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Добавяне на нов</translation>
     </message>
   </context>
   <context>
