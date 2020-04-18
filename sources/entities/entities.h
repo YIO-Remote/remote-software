@@ -42,9 +42,9 @@ class Entities : public QObject, public EntitiesInterface {
 
     // list of all entities
     Q_PROPERTY(QList<QObject*> list READ list CONSTANT)
-    Q_PROPERTY(QStringList supported_entities READ supported_entities CONSTANT)
-    Q_PROPERTY(QStringList supported_entities_translation READ supported_entities_translation CONSTANT)
-    Q_PROPERTY(QStringList loaded_entities READ loaded_entities CONSTANT)
+    Q_PROPERTY(QStringList supportedEntities READ supportedEntities CONSTANT)
+    Q_PROPERTY(QStringList supportedEntitiesTranslation READ supportedEntitiesTranslation CONSTANT)
+    //    Q_PROPERTY(QStringList loadedEntities READ loadedEntities CONSTANT)
 
     Q_PROPERTY(QList<QObject*> mediaplayersPlaying READ mediaplayersPlaying NOTIFY mediaplayersPlayingChanged)
 
@@ -85,16 +85,16 @@ class Entities : public QObject, public EntitiesInterface {
     // set connected
     void setConnected(const QString& integrationId, bool connected);
 
-    QStringList supported_entities() { return m_supported_entities; }
-    QStringList supported_entities_translation() { return m_supported_entities_translation; }
-    QStringList loaded_entities() { return m_loaded_entities; }
+    QStringList supportedEntities() { return m_supportedEntities; }
+    QStringList supportedEntitiesTranslation() { return m_supportedEntitiesTranslation; }
+    //    QStringList loadedEntities() { return m_loaded_entities; }
 
     // active media player handling for mini media player
     QList<QObject*> mediaplayersPlaying();
     void            addMediaplayersPlaying(const QString& entity_id);
     void            removeMediaplayersPlaying(const QString& entity_id);
 
-    Q_INVOKABLE void    addLoadedEntity(const QString& entity);
+    //    Q_INVOKABLE void    addLoadedEntity(const QString& entity);
     Q_INVOKABLE QString getSupportedEntityTranslation(const QString& type);
 
     explicit Entities(QObject* parent = nullptr);
@@ -109,10 +109,10 @@ class Entities : public QObject, public EntitiesInterface {
  private:
     QMap<QString, Entity*> m_entities;
     /// ADD NEW ENTITY TYPE HERE
-    QStringList m_supported_entities = {"light", "blind", "media_player", "remote", "weather", "climate", "switch"};
-    QStringList m_supported_entities_translation = {tr("Lights"), tr("Blinds"),  tr("Media"),
-                                                    tr("Remote"), tr("Climate"), tr("Switch")};
-    QStringList m_loaded_entities;
+    QStringList m_supportedEntities = {"light", "blind", "media_player", "remote", "weather", "climate", "switch"};
+    QStringList m_supportedEntitiesTranslation = {tr("Lights"), tr("Blinds"),  tr("Media"),
+                                                  tr("Remote"), tr("Climate"), tr("Switch")};
+    //    QStringList m_loaded_entities;
 
     QMap<QString, QObject*> m_mediaplayersPlaying;
     QMap<QString, QTimer*>  m_mediaplayersTimers;

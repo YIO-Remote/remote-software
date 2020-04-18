@@ -68,16 +68,16 @@ QList<QObject *> Entities::list() {
 void Entities::load() {
     QVariantMap entities = Config::getInstance()->getAllEntities();
 
-    for (int i = 0; i < m_supported_entities.length(); i++) {
-        if (entities.contains(m_supported_entities[i])) {
-            QVariantList type = entities.value(m_supported_entities[i]).toJsonArray().toVariantList();
+    for (int i = 0; i < m_supportedEntities.length(); i++) {
+        if (entities.contains(m_supportedEntities[i])) {
+            QVariantList type = entities.value(m_supportedEntities[i]).toJsonArray().toVariantList();
 
             for (int k = 0; k < type.length(); k++) {
                 QVariantMap           map = type[k].toMap();
                 QObject *             obj = Integrations::getInstance()->get(map.value("integration").toString());
                 IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
-                add(m_supported_entities[i], map, integration);
-                addLoadedEntity(m_supported_entities[i]);
+                add(m_supportedEntities[i], map, integration);
+                //                addLoadedEntity(m_supportedEntities[i]);
             }
         }
     }
@@ -254,14 +254,14 @@ void Entities::removeMediaplayersPlaying(const QString &entity_id) {
     }
 }
 
-void Entities::addLoadedEntity(const QString &entity) { m_loaded_entities.append(entity); }
+// void Entities::addLoadedEntity(const QString &entity) { m_loaded_entities.append(entity); }
 
 QString Entities::getSupportedEntityTranslation(const QString &type) {
     QString translation;
 
-    for (int i = 0; i < m_supported_entities.length(); i++) {
-        if (supported_entities().value(i) == type) {
-            translation = supported_entities_translation().value(i);
+    for (int i = 0; i < m_supportedEntities.length(); i++) {
+        if (supportedEntities().value(i) == type) {
+            translation = supportedEntitiesTranslation().value(i);
         }
     }
 

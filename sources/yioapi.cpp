@@ -113,7 +113,7 @@ bool YioAPI::addEntity(QVariantMap entity) {
     entity.remove("type");
 
     // check if the type is supported
-    if (!m_entities->supported_entities().contains(entityType)) {
+    if (!m_entities->supportedEntities().contains(entityType)) {
         return false;
     }
 
@@ -900,7 +900,7 @@ void YioAPI::apiEntitiesGetSupported(QWebSocket *client, const int &id) {
     qCDebug(CLASS_LC) << "Request for get supported entities" << client;
 
     QVariantMap response;
-    QStringList supportedEntities = m_entities->supported_entities();
+    QStringList supportedEntities = m_entities->supportedEntities();
     if (supportedEntities.length() > 1) {
         response.insert("supported_entities", supportedEntities);
         apiSendResponse(client, id, true, response);
