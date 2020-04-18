@@ -89,8 +89,7 @@ class Entities : public QObject, public EntitiesInterface {
 
     QStringList supportedEntities() { return m_supportedEntities; }
     QStringList supportedEntitiesTranslation() { return m_supportedEntitiesTranslation; }
-    //    QStringList loadedEntities() { return m_loaded_entities; }
-    bool isSupportedEntityType(const QString& type);
+    bool        isSupportedEntityType(const QString& type);
 
     // active media player handling for mini media player
     QList<QObject*> mediaplayersPlaying();
