@@ -46,11 +46,22 @@ EntitiesInterface::~EntitiesInterface() {}
 
 Entities *Entities::s_instance = nullptr;
 
-Entities::Entities(QObject *parent) : QObject(parent) {
+Entities::Entities(QObject *parent) : QObject(parent), m_enumSupportedEntityTypes(nullptr) {
     s_instance = this;
 
     // Remote is special. Register class before entity creation (for use in Main.qml)
     Remote::staticInitialize();
+
+    const QMetaObject &metaObject             = Entities::staticMetaObject;
+    int                index                  = metaObject.indexOfEnumerator("SupportedEntityTypes");
+    QMetaEnum          metaEnumSupportedTypes = metaObject.enumerator(index);
+    m_enumSupportedEntityTypes                = &metaEnumSupportedTypes;
+
+    for (int i = 0; i < m_enumSupportedEntityTypes->keyCount(); i++) {
+        QString name(m_enumSupportedEntityTypes->key(i));
+        qCDebug(CLASS_LC()) << "Adding supported entity type:" << name.toLower();
+        m_supportedEntities.append(name.toLower());
+    }
 }
 
 Entities::~Entities() { s_instance = nullptr; }
@@ -77,7 +88,6 @@ void Entities::load() {
                 QObject *             obj = Integrations::getInstance()->get(map.value("integration").toString());
                 IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
                 add(m_supportedEntities[i], map, integration);
-                //                addLoadedEntity(m_supportedEntities[i]);
             }
         }
     }
@@ -129,6 +139,14 @@ void Entities::setConnected(const QString &integrationId, bool connected) {
         if (i.value()->integration() == integrationId) {
             i.value()->setConnected(connected);
         }
+    }
+}
+
+bool Entities::isSupportedEntityType(const QString &type) {
+    if (m_enumSupportedEntityTypes->keyToValue(type.toUpper().toUtf8()) > -1) {
+        return true;
+    } else {
+        return false;
     }
 }
 
