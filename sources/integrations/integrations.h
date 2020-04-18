@@ -34,6 +34,10 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INTERFACES(IntegrationsInterface)
 
  public:
+    /// ADD NEW ENTITY TYPE HERE
+    enum SupportedIntegrationTypes { DOCK, HOMEASSISTANT, HOMEY, SPOTIFY, OPENHAB, OPENWEATHER, ROON };
+    Q_ENUM(SupportedIntegrationTypes)
+
     enum States {
         CONNECTED    = IntegrationInterface::CONNECTED,
         CONNECTING   = IntegrationInterface::CONNECTING,
@@ -74,7 +78,7 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INVOKABLE QString getType(const QString& id);
 
     // get a list of supported integrations
-    QStringList supportedIntegrations() { return m_supported_integrations; }
+    QStringList supportedIntegrations() { return m_supportedIntegrations; }
 
     explicit Integrations(const QString& pluginPath);
 
@@ -94,18 +98,19 @@ class Integrations : public QObject, IntegrationsInterface {
     void onCreateDone(QMap<QObject*, QVariant> map);
 
  private:
-    /// ADD NEW INTEGRATION TYPE HERE
-    QStringList m_supported_integrations = {"dock",    "homeassistant", "homey", "spotify",
-                                            "openhab", "openweather",   "roon"};
+    QStringList m_supportedIntegrations;
 
     QMap<QString, QObject*> m_plugins;
     QMap<QString, QObject*> m_integrations;
-    QMap<QString, QString>  m_integrations_friendly_names;
-    QMap<QString, QString>  m_integrations_mdns;
-    QMap<QString, QString>  m_integrations_types;
+    QMap<QString, QString>  m_integrationsFriendlyNames;
+    QMap<QString, QString>  m_integrationsMdns;
+    QMap<QString, QString>  m_integrationsTypes;
     QString                 m_pluginPath;
     int                     m_integrationsToLoad = 0;
     int                     m_integrationsLoaded = 0;
 
     static Integrations* s_instance;
+
+ protected:
+    QMetaEnum* m_enumSupportedIntegrationTypes;
 };

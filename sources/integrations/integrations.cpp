@@ -38,7 +38,20 @@ Integrations* Integrations::s_instance = nullptr;
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 
-Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath) { s_instance = this; }
+Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath) {
+    s_instance = this;
+
+    const QMetaObject& metaObject             = Integrations::staticMetaObject;
+    int                index                  = metaObject.indexOfEnumerator("SupportedIntegrationTypes");
+    QMetaEnum          metaEnumSupportedTypes = metaObject.enumerator(index);
+    m_enumSupportedIntegrationTypes           = &metaEnumSupportedTypes;
+
+    for (int i = 0; i < m_enumSupportedIntegrationTypes->keyCount(); i++) {
+        QString name(m_enumSupportedIntegrationTypes->key(i));
+        qCDebug(CLASS_LC()) << "Adding supported integration type:" << name.toLower();
+        m_supportedIntegrations.append(name.toLower());
+    }
+}
 
 QList<QObject*> Integrations::getAllPlugins() { return m_plugins.values(); }
 
@@ -150,27 +163,27 @@ QObject* Integrations::get(const QString& id) { return m_integrations.value(id);
 void Integrations::add(const QVariantMap& config, QObject* obj, const QString& type) {
     const QString id = config.value(Config::KEY_ID).toString();
     m_integrations.insert(id, obj);
-    m_integrations_friendly_names.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
-    m_integrations_mdns.insert(id, config.value(Config::KEY_MDNS).toString());
-    m_integrations_types.insert(id, type);
+    m_integrationsFriendlyNames.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
+    m_integrationsMdns.insert(id, config.value(Config::KEY_MDNS).toString());
+    m_integrationsTypes.insert(id, type);
     emit listChanged();
 }
 
 void Integrations::remove(const QString& id) {
     m_integrations.remove(id);
-    m_integrations_friendly_names.remove(id);
+    m_integrationsFriendlyNames.remove(id);
     emit listChanged();
 }
 
-QString Integrations::getFriendlyName(const QString& id) { return m_integrations_friendly_names.value(id); }
+QString Integrations::getFriendlyName(const QString& id) { return m_integrationsFriendlyNames.value(id); }
 
 QString Integrations::getFriendlyName(QObject* obj) {
     QString name = m_integrations.key(obj);
-    return m_integrations_friendly_names.value(name);
+    return m_integrationsFriendlyNames.value(name);
 }
 
-QString Integrations::getMDNS(const QString& id) { return m_integrations_mdns.value(id); }
+QString Integrations::getMDNS(const QString& id) { return m_integrationsMdns.value(id); }
 
-QStringList Integrations::getMDNSList() { return m_integrations_mdns.values(); }
+QStringList Integrations::getMDNSList() { return m_integrationsMdns.values(); }
 
-QString Integrations::getType(const QString& id) { return m_integrations_types.value(id); }
+QString Integrations::getType(const QString& id) { return m_integrationsTypes.value(id); }
