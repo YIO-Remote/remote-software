@@ -22,16 +22,15 @@ Marton Borzak
 To learn more about the project, visit
 www.yio-remote.com
 </source>
-      <translation type="unfinished">
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>
+YIO es un proyecto de código abierto, se beneficia de todos los colaboradores. Muchas gracias a todos los que han añadido algo al proyecto hasta ahora:
 
 Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
-Marton Borzak
 
-To learn more about the project, visit
+Para conocer más sobre el proyecto, visit
 www.yio-remote.com
 </translation>
     </message>
@@ -1101,7 +1100,7 @@ YIO remoto %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Escanea automáticamente las balizas Bluetooth asociadas al área, encuentra la más próxima y muestra los dispositivos Bluetooth en esta área.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
