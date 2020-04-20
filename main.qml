@@ -34,8 +34,6 @@ import DisplayControl 1.0
 import Proximity 1.0
 import StandbyControl 1.0
 
-import Entity.Remote 1.0
-
 import "qrc:/basic_ui" as BasicUI // TODO: can this be done in a singleton?
 
 ApplicationWindow {
@@ -227,7 +225,7 @@ ApplicationWindow {
 
             // signal with the dock that it is low battery
             var obj = integrations.get(config.settings.paired_dock);
-            obj.sendCommand("dock", "", Remote.C_REMOTE_LOWBATTERY, "");
+            obj.onLowBattery();
         }
     }
 
