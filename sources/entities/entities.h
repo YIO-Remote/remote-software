@@ -61,7 +61,7 @@ class Entities : public QObject, public EntitiesInterface {
     Q_INVOKABLE QObject* get(const QString& entity_id);
 
     // update an entity
-    Q_INVOKABLE void update(const QString& entity_id, const QVariantMap& attributes);
+    Q_INVOKABLE void update(const QString& entity_id, const QVariantMap& attributes) override;
 
     // add an entity
     void add(const QString& type, const QVariantMap& config, IntegrationInterface* integrationObj);
@@ -70,26 +70,26 @@ class Entities : public QObject, public EntitiesInterface {
     void remove(const QString& entity_id);
 
     // get entites by type
-    QList<EntityInterface*> getByType(const QString& type);
+    QList<EntityInterface*> getByType(const QString& type) override;
 
     // get entites by area
-    QList<EntityInterface*> getByArea(const QString& area);
+    QList<EntityInterface*> getByArea(const QString& area) override;
 
     // get entites by area and type
     QList<EntityInterface*> getByAreaType(const QString& area, const QString& type);
 
     // get entities by integration
-    QList<EntityInterface*> getByIntegration(const QString& integration);
+    QList<EntityInterface*> getByIntegration(const QString& integration) override;
 
     // get entity interface
-    EntityInterface* getEntityInterface(const QString& entity_id);
+    EntityInterface* getEntityInterface(const QString& entity_id) override;
 
     // set connected
-    void setConnected(const QString& integrationId, bool connected);
+    void setConnected(const QString& integrationId, bool connected) override;
 
-    QStringList supportedEntities() { return m_supportedEntities; }
+    QStringList supportedEntities() override { return m_supportedEntities; }
     QStringList supportedEntitiesTranslation() { return m_supportedEntitiesTranslation; }
-    bool        isSupportedEntityType(const QString& type);
+    bool        isSupportedEntityType(const QString& type) override;
 
     // active media player handling for mini media player
     QList<QObject*> mediaplayersPlaying();
@@ -99,7 +99,7 @@ class Entities : public QObject, public EntitiesInterface {
     Q_INVOKABLE QString getSupportedEntityTranslation(const QString& type);
 
     explicit Entities(QObject* parent = nullptr);
-    virtual ~Entities();
+    virtual ~Entities() override;
 
     static Entities* getInstance() { return s_instance; }
 

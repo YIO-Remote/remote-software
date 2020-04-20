@@ -143,11 +143,16 @@ void Entities::setConnected(const QString &integrationId, bool connected) {
 }
 
 bool Entities::isSupportedEntityType(const QString &type) {
-    if (m_enumSupportedEntityTypes->keyToValue(type.toUpper().toUtf8()) > -1) {
+    if (m_supportedEntities.contains(type)) {
         return true;
     } else {
         return false;
     }
+    //    if (m_enumSupportedEntityTypes->keyToValue(type.toUpper().toUtf8()) > -1) {
+    //        return true;
+    //    } else {
+    //        return false;
+    //    }
 }
 
 QObject *        Entities::get(const QString &entity_id) { return m_entities.value(entity_id); }
