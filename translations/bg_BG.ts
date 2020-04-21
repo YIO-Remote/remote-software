@@ -22,16 +22,16 @@ Marton Borzak
 To learn more about the project, visit
 www.yio-remote.com
 </source>
-      <translation type="unfinished">
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>
+YIO съществува като проект с отворен код, подпомаган от всички сътрудници. Големи благодарности на всички, добавили нещо към проекта досега:
 
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
+Кристиян Рийдъл (Christian Riedl)
+Маркус Мар (Markus Mahr)
+Маркус Зендер (Markus Zehnder)
+Нилс де Клерк (Niels de Klerk)
+Мартон Борзак (Marton Borzak)
 
-To learn more about the project, visit
+За да научите повече относно проекта, посетете
 www.yio-remote.com
 </translation>
     </message>
