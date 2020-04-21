@@ -370,7 +370,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
       <source>Validate json configuration files and exit.</source>
-      <translation type="unfinished">Validate json configuration files and exit.</translation>
+      <translation>Валидиране на конфигурационните файлове json и излизане.</translation>
     </message>
   </context>
   <context>
