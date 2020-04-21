@@ -519,17 +519,17 @@ www.yio-remote.com
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation>cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>не може да се отвори файлът &apos;%1&apos; за записване: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation>cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>не може да се отвори файлът &apos;%1&apos; за четене: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation>invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>недействителен файл JSON &apos;%1&apos; на позиция %2</translation>
     </message>
   </context>
   <context>
@@ -1120,7 +1120,7 @@ YIO remote %1</translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation>Въведете парола за
 &quot;%1&quot;</translation>
     </message>
     <message>
