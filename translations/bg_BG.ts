@@ -41,7 +41,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="99"/>
       <source>Battery health</source>
-      <translation type="unfinished">Battery health</translation>
+      <translation>Здраве на батерията</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
@@ -126,7 +126,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Засичане на област</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
@@ -623,7 +623,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/Profiles.qml" line="175"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>За да редактирате профилите си, ползвайте уебконфугуратора в настройки.</translation>
     </message>
   </context>
   <context>
@@ -980,7 +980,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation type="unfinished">Failed to start app update script!</translation>
+      <translation>Неуспешно започване на скрипта за обновяване на приложението!</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
@@ -1096,7 +1096,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Засичане на област</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
