@@ -477,7 +477,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation type="unfinished">Destination file already exists</translation>
+      <translation>Избрания файл вече съществува</translation>
     </message>
   </context>
   <context>
