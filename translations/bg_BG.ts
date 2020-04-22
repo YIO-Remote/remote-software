@@ -103,12 +103,12 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Никога да не се изключва дистанционното</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Изключване на дистанционното след %1 часа на неактивност</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
@@ -445,7 +445,7 @@ www.yio-remote.com
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Дистанционно</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
@@ -610,7 +610,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Заредете скоро дистанционното</translation>
     </message>
   </context>
   <context>
@@ -665,7 +665,7 @@ www.yio-remote.com
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="41"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>Настройване на дистанционното</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
@@ -799,7 +799,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not connect to your Wi-Fi network.</translation>
+      <translation>Дистанционно YIO не успя да се свърже с вашата мрежа Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
@@ -817,7 +817,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully connected to your Wi-Fi network.</translation>
+      <translation>Дистанционно YIO успешно се свърза с вашата мрежа Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
@@ -990,7 +990,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
+      <translation>На дистанционното трябва батерията да е заредена поне 50%, за да извършва обновяване.</translation>
     </message>
   </context>
   <context>
@@ -1004,8 +1004,8 @@ Remote configuration after restarting the remote.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Автоматично гледа за обновяване и обновява при наличие на нов софтуер.
+Обновяванията се инсталират между 3 и 5 сутринта.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
@@ -1016,18 +1016,18 @@ Updates are installed between 03.00 am and 05.00 am.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
-YIO remote %1</translation>
+      <translation>Има нов софтуер.
+Дистанционно YIO %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Инсталирана версия: Дистанционно YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>Дистанционно YIO </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
