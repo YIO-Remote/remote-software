@@ -161,7 +161,7 @@ www.yio-remote.com
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Add to favorites</source>
-      <translation>Добавяне към любимите</translation>
+      <translation>Добавяне към любими</translation>
     </message>
   </context>
   <context>
