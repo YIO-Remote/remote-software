@@ -302,7 +302,7 @@ www.yio-remote.com
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Писти</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
@@ -642,7 +642,7 @@ www.yio-remote.com
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Грешка на комуникацията със сензора на батерията. Рестартирайте дистанционното.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
