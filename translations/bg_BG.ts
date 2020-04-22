@@ -671,8 +671,7 @@ www.yio-remote.com
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups.
-Navigate your internet browser to: http://</translation>
+      <translation>Използвайте браузъра си за настройване на своето дистанционно YIO или изтеглете и обновете от резервни копия. Навигирайте браузъра си до: http://</translation>
     </message>
   </context>
   <context>
