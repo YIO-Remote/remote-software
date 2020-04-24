@@ -125,10 +125,11 @@ void Config::setSettings(const QVariantMap &config) {
 
 void Config::setProfiles(const QVariantMap &config) {
     m_cacheUIProfiles = config;
-    emit profilesChanged();
+    m_cacheUIProfile  = m_cacheUIProfiles[m_cacheProfileId].toMap();
     if (writeConfig()) {
         emit configWriteError(m_error);
     }
+    emit profilesChanged();
 }
 
 void Config::setUIConfig(const QVariantMap &config) {

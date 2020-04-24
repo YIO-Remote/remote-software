@@ -55,6 +55,11 @@ Item {
             console.debug("Profile Id changed. Reload UI.");
             loadmenuConfig();
         }
+
+        onProfilesChanged: {
+            console.debug("Profiles updated. Reload UI.");
+            loadmenuConfig();
+        }
     }
 
     //: menu items that are in the bottom menu
