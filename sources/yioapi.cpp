@@ -189,6 +189,38 @@ bool YioAPI::removeEntity(QString entityId) {
         return false;
     }
 
+    // remove entity from groups
+    QVariantMap groups = m_config->getGroups();
+    for (QVariantMap::const_iterator iter = groups.begin(); iter != groups.end(); ++iter) {
+        QVariantMap  item          = iter.value().toMap();
+        QVariantList groupEntities = item.value("entities").toList();
+        for (int i = 0; i < groupEntities.length(); i++) {
+            if (groupEntities[i].toString() == entityId) {
+                groupEntities.removeAt(i);
+                break;
+            }
+        }
+        item.insert("entities", groupEntities);
+        groups.insert(iter.key(), item);
+    }
+    m_config->setGroups(groups);
+
+    // remove entity from favorites
+    QVariantMap profiles = m_config->getProfiles();
+    for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+        QVariantMap  item            = iter.value().toMap();
+        QVariantList profileEntities = item.value("favorites").toList();
+        for (int i = 0; i < profileEntities.length(); i++) {
+            if (profileEntities[i].toString() == entityId) {
+                profileEntities.removeAt(i);
+                break;
+            }
+        }
+        item.insert("favorites", profileEntities);
+        profiles.insert(iter.key(), item);
+    }
+    m_config->setProfiles(profiles);
+
     // remove from config
     // get the config
     QVariantMap  c            = getConfig();
@@ -206,22 +238,6 @@ bool YioAPI::removeEntity(QString entityId) {
     // put entities back to config
     entities.insert(eIface->type(), entitiesType);
     c.insert("entities", entities);
-
-    // remove entity from groups
-    QVariantMap groups = m_config->getGroups();
-    for (QVariantMap::const_iterator iter = groups.begin(); iter != groups.end(); ++iter) {
-        QVariantMap  item     = iter.value().toMap();
-        QVariantList entities = item.value("entitites").toList();
-        for (int i = 0; i < entities.length(); i++) {
-            if (entities[i].toString() == entityId) {
-                entities.removeAt(i);
-                break;
-            }
-        }
-        item.insert("entitites", entities);
-        groups.insert(iter.key(), item);
-    }
-    m_config->setGroups(groups);
 
     delete eIface;
 

@@ -115,7 +115,6 @@ Item {
         anchors.top: header.bottom
         interactive: false
         spacing: 10
-
         model: config.groups[groupID].entities
         delegate: entityDelegate
     }
