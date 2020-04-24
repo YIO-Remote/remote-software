@@ -645,7 +645,7 @@ void YioAPI::subscribeOnSignalEvent(const QString &event) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// API CALLS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &success, QVariantMap &response) {
+void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &success, QVariantMap response) {
     response.insert("id", id);
     response.insert("success", success);
     response.insert("type", "result");

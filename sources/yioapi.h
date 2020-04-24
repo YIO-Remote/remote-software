@@ -122,7 +122,7 @@ class YioAPI : public YioAPIInterface {
     Config*       m_config;
 
     // API CALLS
-    void apiSendResponse(QWebSocket* client, const int& id, const bool& success, QVariantMap& response);
+    void apiSendResponse(QWebSocket* client, const int& id, const bool& success, QVariantMap response);
 
     void apiAuth(QWebSocket* client, const QVariantMap& map);
 
