@@ -99,7 +99,7 @@ class Entities : public QObject, public EntitiesInterface {
     Q_INVOKABLE QString getSupportedEntityTranslation(const QString& type);
 
     explicit Entities(QObject* parent = nullptr);
-    virtual ~Entities() override;
+    ~Entities() override;
 
     static Entities* getInstance() { return s_instance; }
 
