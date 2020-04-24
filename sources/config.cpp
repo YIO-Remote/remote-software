@@ -116,11 +116,11 @@ bool Config::writeConfig() {
 
 void Config::setSettings(const QVariantMap &config) {
     m_cacheSettings = config;
-    emit settingsChanged();
     if (!writeConfig()) {
         // this is a Q_PROPERTY write method: can't return false!
         emit configWriteError(m_error);
     }
+    emit settingsChanged();
 }
 
 void Config::setProfiles(const QVariantMap &config) {
@@ -134,27 +134,27 @@ void Config::setProfiles(const QVariantMap &config) {
 
 void Config::setUIConfig(const QVariantMap &config) {
     m_cacheUIConfig = config;
-    emit uiConfigChanged();
     if (writeConfig()) {
         // this is a Q_PROPERTY write method: can't return false!
         emit configWriteError(m_error);
     }
+    emit uiConfigChanged();
 }
 
 void Config::setPages(const QVariantMap &config) {
     m_cacheUIPages = config;
-    emit pagesChanged();
     if (writeConfig()) {
         emit configWriteError(m_error);
     }
+    emit pagesChanged();
 }
 
 void Config::setGroups(const QVariantMap &config) {
     m_cacheUIGroups = config;
-    emit groupsChanged();
     if (writeConfig()) {
         emit configWriteError(m_error);
     }
+    emit groupsChanged();
 }
 
 QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {

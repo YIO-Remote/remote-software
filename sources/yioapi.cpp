@@ -1058,7 +1058,7 @@ void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariant
     QVariantMap profiles = m_config->getProfiles();
 
     for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
-        if (iter.key() == map.value("id").toString()) {
+        if (iter.key() == map.value("profile_id").toString()) {
             profiles.remove(iter.key());
             m_config->setProfiles(profiles);
             success = true;
@@ -1128,7 +1128,7 @@ void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap
     QVariantMap pages = m_config->getPages();
 
     for (QVariantMap::const_iterator iter = pages.begin(); iter != pages.end(); ++iter) {
-        if (iter.key() == map.value("id").toString()) {
+        if (iter.key() == map.value("page_id").toString()) {
             pages.remove(iter.key());
             m_config->setPages(pages);
             success = true;
@@ -1198,7 +1198,7 @@ void YioAPI::apiGroupsRemove(QWebSocket *client, const int &id, const QVariantMa
     QVariantMap groups = m_config->getGroups();
 
     for (QVariantMap::const_iterator iter = groups.begin(); iter != groups.end(); ++iter) {
-        if (iter.key() == map.value("id").toString()) {
+        if (iter.key() == map.value("group_id").toString()) {
             groups.remove(iter.key());
             m_config->setGroups(groups);
             success = true;
