@@ -115,8 +115,6 @@ class Config : public QObject, public ConfigInterface {
     // set favorite entity
     void setFavorite(const QString& entityId, bool value);
 
-    //    QVariant getContextProperty(const QString& name);  // not sure this is needed, it's used nowhere
-
     // read and write configuration to file
     bool readConfig(const QString& filePath);
     bool writeConfig();
