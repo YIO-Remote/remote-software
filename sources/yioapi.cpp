@@ -212,6 +212,9 @@ bool YioAPI::removeEntity(QString entityId) {
     // write the config back
     bool success = setConfig(c);
     if (success) {
+        // if it is a media player and playing, remove from mini media player
+        m_entities->removeMediaplayersPlaying(entityId, true);
+
         // remove from database
         m_entities->remove(entityId);
         return true;

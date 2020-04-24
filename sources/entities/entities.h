@@ -94,7 +94,7 @@ class Entities : public QObject, public EntitiesInterface {
     // active media player handling for mini media player
     QList<QObject*> mediaplayersPlaying();
     void            addMediaplayersPlaying(const QString& entity_id);
-    void            removeMediaplayersPlaying(const QString& entity_id);
+    void            removeMediaplayersPlaying(const QString& entity_id, const bool& now = false);
 
     Q_INVOKABLE QString getSupportedEntityTranslation(const QString& type);
 

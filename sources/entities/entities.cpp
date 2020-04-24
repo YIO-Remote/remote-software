@@ -234,45 +234,59 @@ void Entities::addMediaplayersPlaying(const QString &entity_id) {
     }
 }
 
-void Entities::removeMediaplayersPlaying(const QString &entity_id) {
+void Entities::removeMediaplayersPlaying(const QString &entity_id, const bool &now) {
     QMutexLocker locker(&m_mutex);
 
     if (m_mediaplayersPlaying.contains(entity_id)) {
         qCDebug(CLASS_LC) << "There is an object playing list" << entity_id;
-        // use a timer to remove the entity with a delay
-        if (!m_mediaplayersTimers.contains(entity_id)) {
-            qCDebug(CLASS_LC) << "No timer found for object" << entity_id;
-            QTimer *timer = new QTimer();
-            timer->setSingleShot(true);
+        if (now) {
+            qCDebug(CLASS_LC) << "Removing object" << entity_id;
+            m_mediaplayersPlaying.remove(entity_id);
 
-            QObject *context = new QObject();
+            if (m_mediaplayersTimers.contains(entity_id)) {
+                qCDebug(CLASS_LC) << "Removing timer" << entity_id;
+                m_mediaplayersTimers.remove(entity_id);
+            }
 
-            qCDebug(CLASS_LC) << "Connecting signals" << entity_id;
-            connect(timer, &QTimer::timeout, context, [=]() {
-                qCDebug(CLASS_LC) << "Timer timeout" << entity_id;
-                if (m_mediaplayersPlaying.contains(entity_id)) {
-                    qCDebug(CLASS_LC) << "Removing object" << entity_id;
-                    m_mediaplayersPlaying.remove(entity_id);
-                }
+            qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
+            emit mediaplayersPlayingChanged();
 
-                if (m_mediaplayersTimers.contains(entity_id)) {
-                    qCDebug(CLASS_LC) << "Removing timer" << entity_id;
-                    m_mediaplayersTimers.remove(entity_id);
-                }
+        } else {
+            // use a timer to remove the entity with a delay
+            if (!m_mediaplayersTimers.contains(entity_id)) {
+                qCDebug(CLASS_LC) << "No timer found for object" << entity_id;
+                QTimer *timer = new QTimer();
+                timer->setSingleShot(true);
 
-                qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
-                emit mediaplayersPlayingChanged();
-                qCDebug(CLASS_LC) << "Context deleteLater";
-                context->deleteLater();
-                qCDebug(CLASS_LC) << "Timer deleteLater";
-                timer->deleteLater();
-            });
+                QObject *context = new QObject();
 
-            qCDebug(CLASS_LC) << "Starting timer" << entity_id;
-            timer->start(120000);
+                qCDebug(CLASS_LC) << "Connecting signals" << entity_id;
+                connect(timer, &QTimer::timeout, context, [=]() {
+                    qCDebug(CLASS_LC) << "Timer timeout" << entity_id;
+                    if (m_mediaplayersPlaying.contains(entity_id)) {
+                        qCDebug(CLASS_LC) << "Removing object" << entity_id;
+                        m_mediaplayersPlaying.remove(entity_id);
+                    }
 
-            qCDebug(CLASS_LC) << "Inserting timer to the list" << entity_id;
-            m_mediaplayersTimers.insert(entity_id, timer);
+                    if (m_mediaplayersTimers.contains(entity_id)) {
+                        qCDebug(CLASS_LC) << "Removing timer" << entity_id;
+                        m_mediaplayersTimers.remove(entity_id);
+                    }
+
+                    qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
+                    emit mediaplayersPlayingChanged();
+                    qCDebug(CLASS_LC) << "Context deleteLater";
+                    context->deleteLater();
+                    qCDebug(CLASS_LC) << "Timer deleteLater";
+                    timer->deleteLater();
+                });
+
+                qCDebug(CLASS_LC) << "Starting timer" << entity_id;
+                timer->start(120000);
+
+                qCDebug(CLASS_LC) << "Inserting timer to the list" << entity_id;
+                m_mediaplayersTimers.insert(entity_id, timer);
+            }
         }
     }
 }
