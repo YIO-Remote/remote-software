@@ -79,5 +79,6 @@
         <file>setup/SetupStepCountry.qml</file>
         <file>components/switch/ui/Button.qml</file>
         <file>components/switch/ui/CardSwitch.qml</file>
+        <file>basic_ui/ProfileLoading.qml</file>
     </qresource>
 </RCC>

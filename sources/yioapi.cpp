@@ -655,7 +655,7 @@ void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &succ
 
     QJsonDocument json = QJsonDocument::fromVariant(response);
     client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
-    qCDebug(CLASS_LC) << "Response sent to client:" << client << "id:" << id << "response:" << response;
+    //    qCDebug(CLASS_LC) << "Response sent to client:" << client << "id:" << id << "response:" << response;
 }
 
 void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {

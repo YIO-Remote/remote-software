@@ -80,7 +80,7 @@ Item {
             case ButtonHandler.DPAD_DOWN:
                 newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY + 200;
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height)) {
-                     Haptic.playEffect(Haptic.Buzz);
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height)) {
                     newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height;
@@ -117,6 +117,7 @@ Item {
     property alias mainNavigationSwipeview: mainNavigationSwipeview
     property int itemsLoaded: 0
     property bool startUp: false
+    property bool firstInit: true
 
     SwipeView {
         id: mainNavigationSwipeview
@@ -152,11 +153,17 @@ Item {
                 onStatusChanged: {
                     if (mainNavigationLoader.status == Loader.Ready) {
                         itemsLoaded += 1;
-                        console.debug("PAGE LOADED: " + itemsLoaded);
-                        if (itemsLoaded === mainNavigation.menuConfig.count) {
-                            console.debug("EVERY PAGE LOADED.");
-                            loadingScreen.item.state = "loaded";
-                            StandbyControl.init();
+                        console.debug("PAGE LOADED: " + itemsLoaded + "/" + mainNavigation.menuConfig.count);
+                        if (itemsLoaded == mainNavigation.menuConfig.count) {
+                            console.debug("EVERY PAGE LOADED. " + itemsLoaded);
+                            itemsLoaded = 0;
+                            if (firstInit) {
+                                firstInit = false;
+                                loadingScreen.item.state = "loaded";
+                                StandbyControl.init();
+                            } else {
+                                profileLoadingScreen.hide();
+                            }
                         }
                     }
                 }

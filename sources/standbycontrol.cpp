@@ -358,8 +358,8 @@ void StandbyControl::onSecondsTimerTimeout() {
     if (m_elapsedTime == m_shutDownTime && m_shutDownTime != 0 && (m_mode == STANDBY || m_mode == WIFI_OFF) &&
         m_batteryFuelGauge->getAveragePower() < 0 && !m_batteryFuelGauge->getIsCharging()) {
         qCInfo(CLASS_LC) << "TIMER SHUTDOWN"
-                      << "Average power:" << m_batteryFuelGauge->getAveragePower()
-                      << "Is charging:" << m_batteryFuelGauge->getIsCharging();
+                         << "Average power:" << m_batteryFuelGauge->getAveragePower()
+                         << "Is charging:" << m_batteryFuelGauge->getIsCharging();
 
         // show closing screen
         QObject *loadingScreen = m_config->getQMLObject("loadingScreen");

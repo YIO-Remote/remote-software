@@ -322,6 +322,47 @@ ApplicationWindow {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // PROFILE LOADING SCREEN
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias profileLoadingScreen: profileLoadingScreen
+    Loader {
+        id: profileLoadingScreen
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
+        width: parent.width; height: parent.height
+
+        asynchronous: true
+        active: false
+
+        Behavior on opacity {
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        }
+
+        function show() {
+            profileLoadingScreen.setSource("qrc:/basic_ui/ProfileLoading.qml");
+            profileLoadingScreen.active = true;
+            profileLoadingScreen.opacity = 1;
+        }
+
+        function hide() {
+            profileLoadingScreen.opacity = 0;
+            profileLoadingScreenTimer.start();
+        }
+
+        Timer {
+            id: profileLoadingScreenTimer
+            repeat: false
+            interval: 300
+            running: false
+
+            onTriggered: {
+                profileLoadingScreen.setSource("");
+                profileLoadingScreen.active = false;
+            }
+        }
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STANDBY MODE TOUCHEVENT OVERLAY
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // captures all touch events when in standby mode. Avoids clicking on random buttons when waking up the display

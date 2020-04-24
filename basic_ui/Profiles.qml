@@ -24,6 +24,8 @@ import QtQuick 2.11
 import Style 1.0
 
 import Haptic 1.0
+import ButtonHandler 1.0
+import StandbyControl 1.0
 
 Rectangle {
     id: profiles
@@ -46,6 +48,22 @@ Rectangle {
         for (var i=0; i<profileModel.count; i++) {
             if (profileModel.get(i).id === config.profileId) {
                 profileModel.move(i, 0, 1);
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: ButtonHandler
+        enabled: profiles.state == "open" ? true : false
+
+        onButtonPressed: {
+            if (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM) {
+                if (button === ButtonHandler.TOP_RIGHT) {
+                    profiles.state = "closed";
+                }
             }
         }
     }
@@ -163,6 +181,8 @@ Rectangle {
                     Haptic.playEffect(Haptic.Click);
                     config.profileId = id;
                     profileModel.move(index, 0, 1);
+                    profiles.state = "closed";
+                    profileLoadingScreen.show();
                 }
             }
         }
@@ -197,7 +217,7 @@ Rectangle {
 
             onClicked: {
                 Haptic.playEffect(Haptic.Click);
-                profiles.state = "closed"
+                profiles.state = "closed";
             }
         }
     }
