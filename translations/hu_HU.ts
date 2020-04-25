@@ -21,9 +21,9 @@
 
 To learn more about the project, visit
 %1</source>
-      <translation type="unfinished">
+      <translation>
 
-To learn more about the project, visit
+Tudj meg többet a projektről:
 %1</translation>
     </message>
   </context>
