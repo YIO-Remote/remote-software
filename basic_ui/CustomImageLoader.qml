@@ -99,7 +99,7 @@ Item {
 
             RotationAnimator on rotation {
                 id: loadingIconAnim
-                running: parent.visible
+                running: loader.visible
                 loops: Animation.Infinite
                 from: 0; to: 360
                 duration: 2000
