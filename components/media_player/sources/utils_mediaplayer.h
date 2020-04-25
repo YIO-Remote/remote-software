@@ -67,26 +67,14 @@ class MediaPlayerUtils : public QObject {
     QString smallImage() { return m_smallImage; }
     QColor  pixelColor() { return m_pixelColor; }
 
-    void setImageURL(QString url) {
-        m_imageURL = url;
-        if (m_enabled) {
-            generateImages(url);
-        }
-    }
-
-    void setEnabled(bool value) {
-        m_enabled = value;
-        emit enabledChanged();
-
-        if (m_enabled) {
-            generateImages(m_imageURL);
-        }
-    }
+    void setImageURL(QString url);
+    void setEnabled(bool value);
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onProcessingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
 
  signals:
+    void processingStarted();
     void enabledChanged();
     void imageChanged();
     void smallImageChanged();

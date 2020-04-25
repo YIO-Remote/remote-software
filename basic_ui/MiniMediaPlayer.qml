@@ -211,6 +211,16 @@ Item {
                 MediaPlayerUtils {
                     id: mediaplayerUtils
                     enabled: mediaPlayers.currentItem == player
+
+                    onProcessingStarted: {
+                        bgImage.startLoader();
+                        image.startLoader();
+                    }
+
+                    onImageChanged: {
+                        bgImage.stopLoader();
+                        image.stopLoader();
+                    }
                 }
 
                 property alias player: player

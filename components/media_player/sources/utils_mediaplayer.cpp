@@ -58,6 +58,24 @@ MediaPlayerUtils::~MediaPlayerUtils() {
     qCDebug(CLASS_LC()) << "QNetworkAccessManager deleted";
 }
 
+void MediaPlayerUtils::setImageURL(QString url) {
+    m_imageURL = url;
+    if (m_enabled && !m_imageURL.isEmpty()) {
+        emit processingStarted();
+        generateImages(url);
+    }
+}
+
+void MediaPlayerUtils::setEnabled(bool value) {
+    m_enabled = value;
+    emit enabledChanged();
+
+    if (m_enabled && !m_imageURL.isEmpty()) {
+        emit processingStarted();
+        generateImages(m_imageURL);
+    }
+}
+
 void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString &smallImage,
                                         const QString &largeImage) {
     m_pixelColor = pixelColor;

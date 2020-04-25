@@ -126,6 +126,17 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: mediaplayerUtils
+
+        onProcessingStarted: {
+            albumArt.startLoader();
+        }
+
+        onImageChanged: {
+            albumArt.stopLoader();
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS

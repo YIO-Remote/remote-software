@@ -27,6 +27,14 @@ Item {
     property string url: ""
     property string prevUrl: ""
 
+    function startLoader() {
+            loader.opacity = 1;
+    }
+
+    function stopLoader() {
+        loader.opacity = 0;
+    }
+
     onUrlChanged: {
         if (url != prevUrl) {
             image2.opacity = 0;
@@ -73,9 +81,10 @@ Item {
     }
 
     Item {
+        id: loader
         anchors.fill: parent
-        visible: url != "" ? true : false
-        opacity: image2.status == Image.Ready ? 0 : 1
+        opacity: 0
+        visible: opacity != 0 ? true : false
 
         Behavior on opacity {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo }

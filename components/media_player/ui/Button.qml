@@ -41,6 +41,14 @@ Comp.ButtonBase {
     MediaPlayerUtils {
         id: mediaplayerUtils
         enabled: _isCurrentItem
+
+        onProcessingStarted: {
+            image.startLoader();
+        }
+
+        onImageChanged: {
+            image.stopLoader();
+        }
     }
 
     ListModel {
