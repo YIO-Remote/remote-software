@@ -83,7 +83,7 @@ class MediaPlayerUtils : public QObject {
         }
     }
 
- public slots:
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onProcessingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
 
  signals:
