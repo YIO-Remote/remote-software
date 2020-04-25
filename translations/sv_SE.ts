@@ -68,7 +68,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Energibesparing</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
@@ -346,17 +346,17 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="44"/>
       <source>Use configuration schema file.</source>
-      <translation type="unfinished">Use configuration schema file.</translation>
+      <translation>Använd konfigurationsschemafil.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use hardware configuration file.</source>
-      <translation type="unfinished">Use hardware configuration file.</translation>
+      <translation>Använd hårdvarukonfigurationsfil.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use hardware configuration schema file.</source>
-      <translation type="unfinished">Use hardware configuration schema file.</translation>
+      <translation>Använd hårdvarukonfigurationsschemafil.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
@@ -383,7 +383,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>Närhetsdetektering</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
@@ -398,7 +398,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>Hur långt närhetssensorn ska se när den detekterar din hand.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
@@ -468,7 +468,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation type="unfinished">Destination file already exists</translation>
+      <translation>Målfilen finns redan</translation>
     </message>
   </context>
   <context>
@@ -638,17 +638,17 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
+      <translation>Kan inte initiera den haptiska motorn. Starta om fjärrkontrollen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
+      <translation>Kan inte initiera avbrottshanteraren. Starta om fjärrkontrollen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
+      <translation>Kan inte initiera närhetssensorn. Starta om fjärrkontrollen.</translation>
     </message>
   </context>
   <context>
@@ -662,8 +662,8 @@ För att lära dig mer om projektet, besök
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups.
-Navigate your internet browser to: http://</translation>
+      <translation>Använd din webbläsare för att konfigurera din YIO-fjärrkontroll eller ladda ner och ladda upp säkerhetskopior.
+Navigera din webbläsare till: http://</translation>
     </message>
   </context>
   <context>
@@ -678,52 +678,52 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
-      <translation type="unfinished">New software is available.</translation>
+      <translation>Ny version är tillgänglig.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Din version är den senaste.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Skärm</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Språk</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integrationer</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="216"/>
       <source>Battery &amp; power</source>
-      <translation type="unfinished">Battery &amp; power</translation>
+      <translation>Batteri och ström</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
-      <translation type="unfinished">m remaining</translation>
+      <translation>m återstående</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>WiFi &amp; bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="242"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>Om</translation>
     </message>
   </context>
   <context>
@@ -803,17 +803,17 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="36"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Ansluten</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully connected to your Wi-Fi network.</translation>
+      <translation>YIO Remote har anslutit till ditt Wi-Fi-nätverk.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Nästa</translation>
     </message>
   </context>
   <context>
@@ -824,20 +824,20 @@ Navigate your internet browser to: http://</translation>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to
-a power source and wait until it starts blinking.
+      <translation>Anslut YIO Dockan till
+en strömkälla och vänta tills den börjar blinka.
 
- To share the Wi-Fi network credentials with the dock, tap next.</translation>
+ Tryck på nästa för att dela inloggningsuppgifter för Wi-Fi-nätverk med bryggan.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="72"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Nästa</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="83"/>
       <source>Skip</source>
-      <translation type="unfinished">Skip</translation>
+      <translation>Hoppa över</translation>
     </message>
   </context>
   <context>
@@ -845,7 +845,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep8.qml" line="114"/>
       <source>Setting up your YIO Dock</source>
-      <translation type="unfinished">Setting up your YIO Dock</translation>
+      <translation>Färdigställer in din YIO Docka</translation>
     </message>
   </context>
   <context>
@@ -853,17 +853,17 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Anslutningen misslyckades</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="49"/>
       <source>YIO Dock could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Dock could not connect to your Wi-Fi network.</translation>
+      <translation>YIO Dockan kunde inte ansluta till ditt Wi-Fi-nätverk.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Försök igen</translation>
     </message>
   </context>
   <context>
@@ -871,7 +871,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="39"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Färdig</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="50"/>
@@ -880,16 +880,16 @@ a power source and wait until it starts blinking.
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">You can setup your YIO Dock later from the web configurator.
+      <translation>Du kan ställa in din YIO Docka senare från webbkonfiguratorn.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+För att använda webbkonfiguratorn,
+gå till Inställningar och aktivera
+Fjärrkonfiguration efter omstart av fjärrkontrollen.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Starta om</translation>
     </message>
   </context>
   <context>
@@ -897,7 +897,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="39"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Ansluten</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="50"/>
@@ -906,16 +906,16 @@ Remote configuration after restarting the remote.</translation>
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">YIO Dock has successfully connected to your Wi-Fi network.
+      <translation>YIO Dockan har anslutit sig till ditt Wi-Fi-nätverk.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+För att använda webbkonfiguratorn,
+gå till Inställningar och aktivera
+Fjärrkonfiguration efter omstart av fjärrkontrollen.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Starta om</translation>
     </message>
   </context>
   <context>
@@ -923,7 +923,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStepCountry.qml" line="65"/>
       <source>Select your country or region</source>
-      <translation type="unfinished">Select your country or region</translation>
+      <translation>Välj ditt land eller region</translation>
     </message>
   </context>
   <context>
@@ -931,47 +931,47 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
       <source>Cannot connect to the update server.</source>
-      <translation type="unfinished">Cannot connect to the update server.</translation>
+      <translation>Kan inte ansluta till uppdateringsservern.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
-      <translation type="unfinished">Invalid request.</translation>
+      <translation>Förfrågan var ogiltig.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="199"/>
       <source>Unsupported device.</source>
-      <translation type="unfinished">Unsupported device.</translation>
+      <translation>Enheten stöds ej.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation type="unfinished">Service currently not available.</translation>
+      <translation>Tjänsten är för närvarande inte tillgänglig.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
       <source>Request error %1</source>
-      <translation type="unfinished">Request error %1</translation>
+      <translation>Fel vid begäran %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>Programvaruuppdatering:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>New software is available</source>
-      <translation type="unfinished">New software is available</translation>
+      <translation>Ny version är tillgänglig</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Ladda ned</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
+      <translation>Fjärrkontrollen måste ha minst 50% batteri för att utföra uppdateringar.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
@@ -1002,8 +1002,8 @@ Uppdateringar installeras mellan 03:00 och 05:00.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
-YIO remote %1</translation>
+      <translation>Ny version finns tillgänglig.
+YIO fjärrkontroll %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
@@ -1028,7 +1028,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Ladda ned</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
@@ -1041,7 +1041,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Nedladdningen är slutförd</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
