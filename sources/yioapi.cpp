@@ -32,6 +32,7 @@
 
 #include "launcher.h"
 #include "standbycontrol.h"
+#include "translation.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "api");
 
@@ -1272,6 +1273,7 @@ void YioAPI::apiSettingsSetLanguage(QWebSocket *client, const int &id, const QVa
         QVariantMap settings = m_config->getSettings();
         settings.insert("language", map.value("language").toString());
         m_config->setSettings(settings);
+        TranslationHandler::getInstance()->selectLanguage(map.value("language").toString());
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);

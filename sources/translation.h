@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -28,49 +28,27 @@
 #include <QTranslator>
 
 #include "integrations/integrations.h"
-#include "logger.h"
 #include "yio-interface/plugininterface.h"
-
-static Q_LOGGING_CATEGORY(m_log, "translation");
 
 class TranslationHandler : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString emptyString READ getEmptyString NOTIFY languageChanged)
 
  public:
-    explicit TranslationHandler(QQmlEngine *engine) {
-        m_translator = new QTranslator(this);
-        m_engine     = engine;
-    }
+    explicit TranslationHandler(QQmlEngine *engine);
+    virtual ~TranslationHandler();
 
-    QString getEmptyString() { return ""; }
+    QString          getEmptyString() { return ""; }
+    Q_INVOKABLE void selectLanguage(QString language);
 
-    Q_INVOKABLE void selectLanguage(QString language) {
-        qCDebug(m_log) << "Language selected:" << language;
-
-        qGuiApp->removeTranslator(m_translator);
-        m_translator->load(":/translations/" + language);
-        qGuiApp->installTranslator(m_translator);
-        qCDebug(m_log) << "Installed transslation for main app" << language;
-
-        // install plugin translations
-        QList<QObject *> plugins = Integrations::getInstance()->getAllPlugins();
-        for (QList<QObject *>::const_iterator iter = plugins.begin(); iter != plugins.end(); ++iter) {
-            PluginInterface *pInterface = qobject_cast<PluginInterface *>(*iter);
-            if (pInterface) {
-                qGuiApp->removeTranslator(pInterface->pluginTranslator());
-                qGuiApp->installTranslator(pInterface->installTranslator(language));
-                qCDebug(m_log) << "Installed transslation for plugin" << language << pInterface;
-            }
-        }
-
-        emit languageChanged();
-    }
+    static TranslationHandler *getInstance() { return s_instance; }
 
  signals:
     void languageChanged();
 
  private:
+    static TranslationHandler *s_instance;
+
     QTranslator *m_translator;
     QQmlEngine * m_engine;
 };

@@ -28,6 +28,7 @@ import "qrc:/basic_ui" as BasicUI
 
 import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
+import StandbyControl 1.0
 
 Comp.ButtonBase {
     id: mediaplayerButton
@@ -40,7 +41,7 @@ Comp.ButtonBase {
     // include mediaplayer utils
     MediaPlayerUtils {
         id: mediaplayerUtils
-        enabled: _isCurrentItem
+        enabled: _isCurrentItem && (StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM)
 
         onProcessingStarted: {
             image.startLoader();

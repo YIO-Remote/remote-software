@@ -25,7 +25,7 @@ import Style 1.0
 
 Rectangle {
     id: container
-    width: parent.width; height: childrenRect.height+20
+    width: parent.width; height: childrenRect.height+40
     radius: Style.cornerRadius
     color: Style.color.dark
 
@@ -41,17 +41,12 @@ Rectangle {
         id: smallText
         color: Style.color.text
         opacity: 0.5
-        text: qsTr("
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:\n
+        text: qsTr("YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:\n%1").arg("
 Christian Riedl
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
-Marton Borzak
-
-To learn more about the project, visit
-www.yio-remote.com
-") + translateHandler.emptyString
+Marton Borzak") + qsTr("\n\nTo learn more about the project, visit\n%1").arg("www.yio-remote.com") + translateHandler.emptyString
         wrapMode: Text.WordWrap
         width: parent.width - 40
         anchors { left: parent.left; leftMargin: 20; top: title.bottom; topMargin: 10 }

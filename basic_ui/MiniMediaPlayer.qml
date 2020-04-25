@@ -210,7 +210,7 @@ Item {
                 // include mediaplayer utils
                 MediaPlayerUtils {
                     id: mediaplayerUtils
-                    enabled: mediaPlayers.currentItem == player
+                    enabled: mediaPlayers.currentItem == player && (StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM)
 
                     onProcessingStarted: {
                         bgImage.startLoader();

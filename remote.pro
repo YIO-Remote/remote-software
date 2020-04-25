@@ -188,6 +188,7 @@ SOURCES += \
     sources/bluetootharea.cpp \
     sources/softwareupdate.cpp \
     sources/standbycontrol.cpp \
+    sources/translation.cpp \
     sources/utils.cpp \
     sources/yioapi.cpp
 

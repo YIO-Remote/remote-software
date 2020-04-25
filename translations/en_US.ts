@@ -10,18 +10,16 @@
     </message>
     <message>
         <location filename="../basic_ui/settings/About.qml" line="44"/>
+        <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/About.qml" line="50"/>
         <source>
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
-
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
 
 To learn more about the project, visit
-www.yio-remote.com
-</source>
+%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -156,21 +154,6 @@ www.yio-remote.com
 <context>
     <name>Card</name>
     <message>
-        <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
-        <source>Mute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
-        <source>Menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../components/climate/ui/Card.qml" line="403"/>
         <source>Turn off</source>
         <translation type="unfinished"></translation>
@@ -198,6 +181,21 @@ www.yio-remote.com
     <message>
         <location filename="../components/climate/ui/Card.qml" line="438"/>
         <source>Cool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
+        <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -524,28 +522,28 @@ www.yio-remote.com
 <context>
     <name>MainNavigation</name>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="66"/>
         <source>Favorites</source>
         <extracomment>menu items that are in the bottom menu</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="66"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="67"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="67"/>
         <source>Blinds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+        <location filename="../basic_ui/MainNavigation.qml" line="67"/>
         <source>Media</source>
         <translation type="unfinished"></translation>
     </message>
@@ -605,12 +603,12 @@ www.yio-remote.com
 <context>
     <name>Profiles</name>
     <message>
-        <location filename="../basic_ui/Profiles.qml" line="94"/>
+        <location filename="../basic_ui/Profiles.qml" line="112"/>
         <source>Profiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/Profiles.qml" line="175"/>
+        <location filename="../basic_ui/Profiles.qml" line="195"/>
         <source>To edit your profiles, use the web configurator tool in settings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -674,12 +672,12 @@ Navigate your internet browser to: http://</source>
     </message>
     <message>
         <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-        <source>Your software is up to date.</source>
+        <source>New software is available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-        <source>New software is available.</source>
+        <source>Your software is up to date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -836,7 +834,7 @@ a power source and wait until it starts blinking.
 <context>
     <name>SetupStep8</name>
     <message>
-        <location filename="../setup/SetupStep8.qml" line="115"/>
+        <location filename="../setup/SetupStep8.qml" line="114"/>
         <source>Setting up your YIO Dock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -914,6 +912,11 @@ Remote configuration after restarting the remote.</source>
 <context>
     <name>SoftwareUpdate</name>
     <message>
+        <location filename="../sources/softwareupdate.cpp" line="165"/>
+        <source>Cannot connect to the update server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../sources/softwareupdate.cpp" line="196"/>
         <source>Invalid request.</source>
         <translation type="unfinished"></translation>
@@ -949,6 +952,11 @@ Remote configuration after restarting the remote.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../sources/softwareupdate.cpp" line="243"/>
+        <source>The remote needs to be at least 50% battery to perform updates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../sources/softwareupdate.cpp" line="303"/>
         <source>Download failed: %1</source>
         <translation type="unfinished"></translation>
@@ -956,16 +964,6 @@ Remote configuration after restarting the remote.</source>
     <message>
         <location filename="../sources/softwareupdate.cpp" line="322"/>
         <source>Failed to start app update script!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sources/softwareupdate.cpp" line="165"/>
-        <source>Cannot connect to the update server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../sources/softwareupdate.cpp" line="243"/>
-        <source>The remote needs to be at least 50% battery to perform updates.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -984,13 +982,13 @@ Updates are installed between 03.00 am and 05.00 am.</source>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
-        <source>Your software is up to date.</source>
+        <source>New software is available.
+YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
-        <source>New software is available.
-YIO remote %1</source>
+        <source>Your software is up to date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1005,12 +1003,12 @@ YIO remote %1</source>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-        <source>Download</source>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-        <source>Update</source>
+        <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
