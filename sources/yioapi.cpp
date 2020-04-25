@@ -1043,7 +1043,9 @@ void YioAPI::apiProfilesSet(QWebSocket *client, const int &id, const QVariantMap
     QString     newProfileId = map.value("profile").toString();
 
     if (!newProfileId.isEmpty()) {
-        m_config->setProfileId(newProfileId);
+        if (m_config->getProfileId() != newProfileId) {
+            m_config->setProfileId(newProfileId);
+        }
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
