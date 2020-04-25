@@ -10,30 +10,21 @@
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="44"/>
+      <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</source>
+      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/About.qml" line="50"/>
       <source>
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
-
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
 
 To learn more about the project, visit
-www.yio-remote.com
-</source>
-      <translation>
-YIO és un projecte open source, es beneficia de totes les contribucions. Moltes gràcies a tothom qui ha contribuit. Especialment a: 
+%1</source>
+      <translation type="unfinished">
 
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
-
-Per coneixer més del projecte, visita
-www.yio-remote.com
-</translation>
+To learn more about the project, visit
+%1</translation>
     </message>
   </context>
   <context>
@@ -167,21 +158,6 @@ www.yio-remote.com
   <context>
     <name>Card</name>
     <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
-      <source>Mute</source>
-      <translation>Silenci</translation>
-    </message>
-    <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
-      <source>Back</source>
-      <translation>Enrere</translation>
-    </message>
-    <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
-      <source>Menu</source>
-      <translation>Menú</translation>
-    </message>
-    <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn off</source>
       <translation>Apaga</translation>
@@ -210,6 +186,21 @@ www.yio-remote.com
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
       <translation>Fred</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
+      <source>Mute</source>
+      <translation>Silenci</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
+      <source>Back</source>
+      <translation>Enrere</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
+      <source>Menu</source>
+      <translation>Menú</translation>
     </message>
   </context>
   <context>
@@ -535,28 +526,28 @@ www.yio-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Favorits</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Settings</source>
       <translation>Configuració</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Lights</source>
       <translation>Llums</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Blinds</source>
       <translation>Persianes</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Media</source>
       <translation>Media</translation>
     </message>
@@ -616,12 +607,12 @@ www.yio-remote.com
   <context>
     <name>Profiles</name>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="94"/>
+      <location filename="../basic_ui/Profiles.qml" line="112"/>
       <source>Profiles</source>
       <translation>Perfils</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="175"/>
+      <location filename="../basic_ui/Profiles.qml" line="195"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>Per editar els perfils, usa les eines de configuració web del menú de configuració.</translation>
     </message>
@@ -686,13 +677,13 @@ Ves amb el navegador a: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-      <source>Your software is up to date.</source>
-      <translation>El programa està actualitzat.</translation>
+      <source>New software is available.</source>
+      <translation>Una nova versió està disponible.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-      <source>New software is available.</source>
-      <translation>Una nova versió està disponible.</translation>
+      <source>Your software is up to date.</source>
+      <translation>El programa està actualitzat.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
@@ -852,7 +843,7 @@ Per compartir les credencials Wi-Fi amb la Base, marca següent.</translation>
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="115"/>
+      <location filename="../setup/SetupStep8.qml" line="114"/>
       <source>Setting up your YIO Dock</source>
       <translation>Configurant la base YIO</translation>
     </message>
@@ -938,6 +929,11 @@ configuració remota despres de reinciar el comandament.</translation>
   <context>
     <name>SoftwareUpdate</name>
     <message>
+      <location filename="../sources/softwareupdate.cpp" line="165"/>
+      <source>Cannot connect to the update server.</source>
+      <translation>No es pot connectar al servidor d'actualitzacions.</translation>
+    </message>
+    <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
       <translation>Petició invàlida.</translation>
@@ -973,6 +969,11 @@ configuració remota despres de reinciar el comandament.</translation>
       <translation>Descàrrega</translation>
     </message>
     <message>
+      <location filename="../sources/softwareupdate.cpp" line="243"/>
+      <source>The remote needs to be at least 50% battery to perform updates.</source>
+      <translation>El comandament necesita estar almenys al 50% de batería per fer actualitzacions.</translation>
+    </message>
+    <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
       <translation>Descàrrega fallida: %1</translation>
@@ -981,16 +982,6 @@ configuració remota despres de reinciar el comandament.</translation>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
       <translation>Error en engegar l'script d'actualització!</translation>
-    </message>
-    <message>
-      <location filename="../sources/softwareupdate.cpp" line="165"/>
-      <source>Cannot connect to the update server.</source>
-      <translation>No es pot connectar al servidor d'actualitzacions.</translation>
-    </message>
-    <message>
-      <location filename="../sources/softwareupdate.cpp" line="243"/>
-      <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation>El comandament necesita estar almenys al 50% de batería per fer actualitzacions.</translation>
     </message>
   </context>
   <context>
@@ -1008,15 +999,15 @@ Updates are installed between 03.00 am and 05.00 am.</source>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
-      <source>Your software is up to date.</source>
-      <translation>El programa està actualitzat.</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>Actualització disponible.
 comandament YIO %1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <source>Your software is up to date.</source>
+      <translation>El programa està actualitzat.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
@@ -1030,13 +1021,13 @@ comandament YIO %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-      <source>Download</source>
-      <translation>Descarrega</translation>
+      <source>Update</source>
+      <translation>Actualització</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-      <source>Update</source>
-      <translation>Actualització</translation>
+      <source>Download</source>
+      <translation>Descarrega</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>

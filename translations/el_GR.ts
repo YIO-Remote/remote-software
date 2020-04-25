@@ -10,30 +10,21 @@
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="44"/>
+      <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</source>
+      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/About.qml" line="50"/>
       <source>
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
-
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
 
 To learn more about the project, visit
-www.yio-remote.com
-</source>
-      <translation>
-Το YIO είναι ένα εγχείρημα ανοιχτού κώδικα που βασίζεται σε όλους τους συνεισφέροντες. Ένα μεγάλο ευχαριστώ σε αυτούς που έχουν βοηθήσει μέχρι τώρα:
+%1</source>
+      <translation type="unfinished">
 
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
-
-Για να μάθετε περισσότερα σχετικά με το εγχείρημα, επισκεφθείτε το
-www.yio-remote.com
-</translation>
+To learn more about the project, visit
+%1</translation>
     </message>
   </context>
   <context>
@@ -167,21 +158,6 @@ www.yio-remote.com
   <context>
     <name>Card</name>
     <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
-      <source>Mute</source>
-      <translation>Σίγαση</translation>
-    </message>
-    <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
-      <source>Back</source>
-      <translation>Επιστροφή</translation>
-    </message>
-    <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
-      <source>Menu</source>
-      <translation>Μενού</translation>
-    </message>
-    <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn off</source>
       <translation>Απενεργοποίηση</translation>
@@ -210,6 +186,21 @@ www.yio-remote.com
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
       <translation>Ψύξη</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
+      <source>Mute</source>
+      <translation>Σίγαση</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
+      <source>Back</source>
+      <translation>Επιστροφή</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
+      <source>Menu</source>
+      <translation>Μενού</translation>
     </message>
   </context>
   <context>
@@ -535,28 +526,28 @@ www.yio-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Αγαπημένα</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Settings</source>
       <translation>Ρυθμίσεις</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Lights</source>
       <translation>Φώτα</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Blinds</source>
       <translation>Ρολοκουρτίνες</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Media</source>
       <translation>Πολυμέσα</translation>
     </message>
@@ -616,12 +607,12 @@ www.yio-remote.com
   <context>
     <name>Profiles</name>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="94"/>
+      <location filename="../basic_ui/Profiles.qml" line="112"/>
       <source>Profiles</source>
       <translation>Προφίλ</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="175"/>
+      <location filename="../basic_ui/Profiles.qml" line="195"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>Για να επεξεργαστείτε τα προφίλ σας, χρησιμοποιήστε το εργαλείο διαμόρφωσης ιστού στις ρυθμίσεις.</translation>
     </message>
@@ -685,13 +676,13 @@ Navigate your internet browser to: http://</source>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-      <source>Your software is up to date.</source>
-      <translation>Το λογισμικό σας είναι ενημερωμένο.</translation>
+      <source>New software is available.</source>
+      <translation>Νέα έκδοση λογισμικού διαθέσιμη.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-      <source>New software is available.</source>
-      <translation>Νέα έκδοση λογισμικού διαθέσιμη.</translation>
+      <source>Your software is up to date.</source>
+      <translation>Το λογισμικό σας είναι ενημερωμένο.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
@@ -850,7 +841,7 @@ a power source and wait until it starts blinking.
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="115"/>
+      <location filename="../setup/SetupStep8.qml" line="114"/>
       <source>Setting up your YIO Dock</source>
       <translation>Ρύθμιση της βάσης YIO</translation>
     </message>
@@ -936,6 +927,11 @@ Remote configuration after restarting the remote.</source>
   <context>
     <name>SoftwareUpdate</name>
     <message>
+      <location filename="../sources/softwareupdate.cpp" line="165"/>
+      <source>Cannot connect to the update server.</source>
+      <translation>Αδυναμία σύνδεσης με το διακομιστή ενημέρωσης.</translation>
+    </message>
+    <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
       <translation>Μη έγκυρο αίτημα.</translation>
@@ -971,6 +967,11 @@ Remote configuration after restarting the remote.</source>
       <translation>Λήψη</translation>
     </message>
     <message>
+      <location filename="../sources/softwareupdate.cpp" line="243"/>
+      <source>The remote needs to be at least 50% battery to perform updates.</source>
+      <translation>Το τηλεχειριστήριο απαιτεί τουλάχιστον 50% μπαταρία για να πραγματοποιήσει την ενημέρωση.</translation>
+    </message>
+    <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
       <translation>Η λήψη απέτυχε: %1</translation>
@@ -979,16 +980,6 @@ Remote configuration after restarting the remote.</source>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
       <translation>Η εκκίνηση της εφαρμογής ενημερώσεων απέτυχε!</translation>
-    </message>
-    <message>
-      <location filename="../sources/softwareupdate.cpp" line="165"/>
-      <source>Cannot connect to the update server.</source>
-      <translation>Αδυναμία σύνδεσης με το διακομιστή ενημέρωσης.</translation>
-    </message>
-    <message>
-      <location filename="../sources/softwareupdate.cpp" line="243"/>
-      <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation>Το τηλεχειριστήριο απαιτεί τουλάχιστον 50% μπαταρία για να πραγματοποιήσει την ενημέρωση.</translation>
     </message>
   </context>
   <context>
@@ -1007,15 +998,15 @@ Updates are installed between 03.00 am and 05.00 am.</source>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
-      <source>Your software is up to date.</source>
-      <translation>Το λογισμικό σας είναι ενημερωμένο.</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>Νέα έκδοση διαθέσιμη.
 YIO remote %1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <source>Your software is up to date.</source>
+      <translation>Το λογισμικό σας είναι ενημερωμένο.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
@@ -1029,13 +1020,13 @@ YIO remote %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-      <source>Download</source>
-      <translation>Λήψη</translation>
+      <source>Update</source>
+      <translation>Ενημέρωση</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-      <source>Update</source>
-      <translation>Ενημέρωση</translation>
+      <source>Download</source>
+      <translation>Λήψη</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>

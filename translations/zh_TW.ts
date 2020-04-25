@@ -10,30 +10,21 @@
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="44"/>
+      <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</source>
+      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/About.qml" line="50"/>
       <source>
-YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
-
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
 
 To learn more about the project, visit
-www.yio-remote.com
-</source>
-      <translation>
-YIO作為一個開源計畫，受益於所有的貢獻者。十分感謝至今為此項目提供貢獻的每個人：
+%1</source>
+      <translation type="unfinished">
 
-Christian Riedl
-Markus Mahr
-Markus Zehnder
-Niels de Klerk
-Marton Borzak
-
-如需了解該計畫的更多資訊，請訪問
-www.yio-remote.com
-</translation>
+To learn more about the project, visit
+%1</translation>
     </message>
   </context>
   <context>
@@ -167,21 +158,6 @@ www.yio-remote.com
   <context>
     <name>Card</name>
     <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
-      <source>Mute</source>
-      <translation>靜音</translation>
-    </message>
-    <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
-      <source>Back</source>
-      <translation>返回</translation>
-    </message>
-    <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
-      <source>Menu</source>
-      <translation>選單</translation>
-    </message>
-    <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn off</source>
       <translation>關閉</translation>
@@ -210,6 +186,21 @@ www.yio-remote.com
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
       <translation>冷氣</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
+      <source>Mute</source>
+      <translation>靜音</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
+      <source>Back</source>
+      <translation>返回</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
+      <source>Menu</source>
+      <translation>選單</translation>
     </message>
   </context>
   <context>
@@ -535,28 +526,28 @@ www.yio-remote.com
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>收藏</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="61"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
       <source>Settings</source>
       <translation>設定</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Lights</source>
       <translation>燈</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Blinds</source>
       <translation>百葉窗</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="62"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
       <source>Media</source>
       <translation>多媒體</translation>
     </message>
@@ -616,12 +607,12 @@ www.yio-remote.com
   <context>
     <name>Profiles</name>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="94"/>
+      <location filename="../basic_ui/Profiles.qml" line="112"/>
       <source>Profiles</source>
       <translation>設定檔</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="175"/>
+      <location filename="../basic_ui/Profiles.qml" line="195"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>請使用網頁設定工具修改你的設定檔</translation>
     </message>
@@ -685,13 +676,13 @@ Navigate your internet browser to: http://</source>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-      <source>Your software is up to date.</source>
-      <translation>您的系統已是最新狀態</translation>
+      <source>New software is available.</source>
+      <translation>有新版本可用</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
-      <source>New software is available.</source>
-      <translation>有新版本可用</translation>
+      <source>Your software is up to date.</source>
+      <translation>您的系統已是最新狀態</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
@@ -850,7 +841,7 @@ a power source and wait until it starts blinking.
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="115"/>
+      <location filename="../setup/SetupStep8.qml" line="114"/>
       <source>Setting up your YIO Dock</source>
       <translation>設定你的 YIO DOCK</translation>
     </message>
@@ -936,6 +927,11 @@ Remote configuration after restarting the remote.</translation>
   <context>
     <name>SoftwareUpdate</name>
     <message>
+      <location filename="../sources/softwareupdate.cpp" line="165"/>
+      <source>Cannot connect to the update server.</source>
+      <translation>無法連接到更新伺服器</translation>
+    </message>
+    <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
       <translation type="unfinished">Invalid request.</translation>
@@ -971,6 +967,11 @@ Remote configuration after restarting the remote.</translation>
       <translation type="unfinished">Download</translation>
     </message>
     <message>
+      <location filename="../sources/softwareupdate.cpp" line="243"/>
+      <source>The remote needs to be at least 50% battery to perform updates.</source>
+      <translation>遙控器需要至少50％的電量才能執行更新。</translation>
+    </message>
+    <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
       <translation>下載失敗：%1</translation>
@@ -979,16 +980,6 @@ Remote configuration after restarting the remote.</translation>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
       <translation>無法啟動應用程式更新碼！</translation>
-    </message>
-    <message>
-      <location filename="../sources/softwareupdate.cpp" line="165"/>
-      <source>Cannot connect to the update server.</source>
-      <translation>無法連接到更新伺服器</translation>
-    </message>
-    <message>
-      <location filename="../sources/softwareupdate.cpp" line="243"/>
-      <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation>遙控器需要至少50％的電量才能執行更新。</translation>
     </message>
   </context>
   <context>
@@ -1007,15 +998,15 @@ Updates are installed between 03.00 am and 05.00 am.</source>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
-      <source>Your software is up to date.</source>
-      <translation>您的系統已是最新狀態</translation>
-    </message>
-    <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>有新的軟件版本可用。
 YIO遙控器 %1</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <source>Your software is up to date.</source>
+      <translation>您的系統已是最新狀態</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
@@ -1029,13 +1020,13 @@ YIO遙控器 %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-      <source>Download</source>
-      <translation>下載</translation>
+      <source>Update</source>
+      <translation>更新</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
-      <source>Update</source>
-      <translation>更新</translation>
+      <source>Download</source>
+      <translation>下載</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
