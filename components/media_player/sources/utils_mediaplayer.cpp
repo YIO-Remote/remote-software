@@ -174,6 +174,7 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
         }
     } else {
         qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << reply->errorString();
+        emit processingDone(QColor("black"), "", "");
     }
 }
 
