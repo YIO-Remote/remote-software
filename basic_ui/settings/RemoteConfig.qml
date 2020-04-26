@@ -56,7 +56,7 @@ Rectangle {
 
         checked: remoteConfigEnabled
         mouseArea.onClicked: {
-            if (remoteConfigEnabled) {
+            if (!remoteConfigEnabled) {
                 webserver.startService();
                 remoteConfigEnabled = true;
             } else {
