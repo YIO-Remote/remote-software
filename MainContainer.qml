@@ -91,20 +91,6 @@ Item {
         }
     }
 
-    // when loading for the first time, pressing the top left button will turn on remote configuration
-    Connections {
-        target: ButtonHandler
-        enabled: firstInit
-
-        onButtonPressed: {
-            if (button == ButtonHandler.TOP_LEFT) {
-                webserver.startService();
-                Haptic.playEffect(Haptic.Buzz);
-                notifications.add(false, "Remote configratuion is turned on.");
-            }
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // AUTO ROOM SELECTION BASED ON BLUETOOTH TAGS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
