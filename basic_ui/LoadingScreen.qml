@@ -171,9 +171,15 @@ Rectangle {
         target: ButtonHandler
         enabled: loadingScreenComp.state == "start"
 
+        property bool firstPressed: false
+
         onButtonPressed: {
             if (button == ButtonHandler.TOP_LEFT) {
+                firstPressed = true;
+            }
+            if (firstPressed && button == ButtonHandler.TOP_RIGHT) {
                 webserver.startService();
+                remoteConfigEnabled = true;
                 Haptic.playEffect(Haptic.Buzz);
                 notifications.add(false, "Remote configratuion is turned on.");
             }

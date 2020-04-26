@@ -54,14 +54,14 @@ Rectangle {
         anchors.rightMargin: 20
         anchors.verticalCenter: remoteConfigText.verticalCenter
 
-        checked: false
+        checked: remoteConfigEnabled
         mouseArea.onClicked: {
-            if (remoteConfigButton.checked) {
+            if (remoteConfigEnabled) {
                 webserver.startService();
-                remoteConfigButton.checked = true;
+                remoteConfigEnabled = true;
             } else {
                 webserver.stopService();
-                remoteConfigButton.checked = false;
+                remoteConfigEnabled = false;
             }
         }
     }
