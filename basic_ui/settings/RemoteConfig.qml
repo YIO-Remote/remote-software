@@ -21,10 +21,8 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
 import WifiControl 1.0
 import Style 1.0
-import Launcher 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
