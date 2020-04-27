@@ -12,7 +12,7 @@
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>YIO es un proyecto de código abierto, se beneficia de todos los colaboradores. Gran gracias a todos los que han añadido algo al proyecto hasta ahora:
 %1</translation>
     </message>
     <message>
@@ -21,9 +21,9 @@
 
 To learn more about the project, visit
 %1</source>
-      <translation type="unfinished">
+      <translation>
 
-To learn more about the project, visit
+Para obtener más información sobre el proyecto, visite
 %1</translation>
     </message>
   </context>
