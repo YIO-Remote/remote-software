@@ -119,15 +119,41 @@ Item {
     property bool startUp: false
     property bool firstInit: true
 
+    function doneLoading() {
+        itemsLoaded = 0;
+        if (firstInit) {
+            firstInit = false;
+            loadingScreen.item.state = "loaded";
+            StandbyControl.init();
+        } else {
+            profileLoadingScreen.hide();
+        }
+    }
+
     SwipeView {
         id: mainNavigationSwipeview
         width: parent.width; height: parent.height-miniMediaPlayer.height
         anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
         currentIndex: 0
 
+        Connections {
+            target: mainNavigation.menuConfig
+            onCountChanged: {
+                if (!mainNavigation.menuConfig.count) {
+                    doneLoading();
+                }
+            }
+        }
+
         Repeater {
             id: mainNavigationRepeater
             model: mainNavigation.menuConfig
+
+            Component.onCompleted: {
+                if (!mainNavigation.menuConfig.count) {
+                    doneLoading();
+                }
+            }
 
             Loader {
                 id: mainNavigationLoader
@@ -147,7 +173,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    determinePageToLoad(page);
+                        determinePageToLoad(page);
                 }
 
                 onStatusChanged: {
@@ -156,14 +182,7 @@ Item {
                         console.debug("PAGE LOADED: " + itemsLoaded + "/" + mainNavigation.menuConfig.count);
                         if (itemsLoaded == mainNavigation.menuConfig.count) {
                             console.debug("EVERY PAGE LOADED. " + itemsLoaded);
-                            itemsLoaded = 0;
-                            if (firstInit) {
-                                firstInit = false;
-                                loadingScreen.item.state = "loaded";
-                                StandbyControl.init();
-                            } else {
-                                profileLoadingScreen.hide();
-                            }
+                            doneLoading();
                         }
                     }
                 }

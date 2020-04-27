@@ -179,10 +179,10 @@ Rectangle {
 
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-                    config.profileId = id;
                     profileModel.move(index, 0, 1);
                     profiles.state = "closed";
                     profileLoadingScreen.show();
+                    config.profileId = id;
                 }
             }
         }

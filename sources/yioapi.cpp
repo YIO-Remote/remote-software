@@ -1095,16 +1095,31 @@ void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariant
     QVariantMap response;
     QVariantMap profiles = m_config->getProfiles();
 
+    if (profiles.count() == 1) {
+        success = false;
+        response.insert("message", "There is only one profile. Cannot be removed.");
+        apiSendResponse(client, id, false, response);
+        return;
+    }
+
+    int     i = 0;
+    QString defaultProfie;
+
     for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+        if (i == 0) {
+            i++;
+            defaultProfie = iter.key();
+        }
         if (iter.key() == map.value("profile_id").toString()) {
             profiles.remove(iter.key());
-            m_config->setProfiles(profiles);
             success = true;
             break;
         }
     }
 
     if (success) {
+        m_config->setProfileId(defaultProfie);
+        m_config->setProfiles(profiles);
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
