@@ -472,6 +472,21 @@ Per saperne di più sul progetto, visita
     </message>
   </context>
   <context>
+    <name>InitialSetup</name>
+    <message>
+      <location filename="../basic_ui/InitialSetup.qml" line="33"/>
+      <source>Use the web configurator
+to set up YIO remote</source>
+      <translation type="unfinished">Use the web configurator
+to set up YIO remote</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/InitialSetup.qml" line="44"/>
+      <source>Navigate your internet browser to: http://</source>
+      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+    </message>
+  </context>
+  <context>
     <name>Integrations</name>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
@@ -654,12 +669,12 @@ Per saperne di più sul progetto, visita
   <context>
     <name>RemoteConfig</name>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="41"/>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="39"/>
       <source>Remote configuration</source>
       <translation>Configurazione telecomando</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
+      <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
       <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups.
