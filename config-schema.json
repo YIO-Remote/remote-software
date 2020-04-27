@@ -956,9 +956,6 @@
           "$id": "#/properties/ui_config/properties/pages",
           "type": "object",
           "title": "The Pages Schema",
-          "required": [
-            "0"
-          ],
           "properties": {
             "0": {
               "$id": "#/properties/ui_config/properties/pages/properties/0",
@@ -1021,14 +1018,11 @@
           "$id": "#/properties/ui_config/properties/profiles",
           "type": "object",
           "title": "The Profiles Schema",
-          "required": [
-            "0"
-          ],
           "properties": {
             "0": {
               "$id": "#/properties/ui_config/properties/profiles/properties/0",
               "type": "object",
-              "title": "The 0 Schema",
+              "title": "The uuid Schema",
               "required": [
                 "favorites",
                 "name",

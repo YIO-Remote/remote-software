@@ -1102,14 +1102,7 @@ void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariant
         return;
     }
 
-    int     i = 0;
-    QString defaultProfie;
-
     for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
-        if (i == 0) {
-            i++;
-            defaultProfie = iter.key();
-        }
         if (iter.key() == map.value("profile_id").toString()) {
             profiles.remove(iter.key());
             success = true;
@@ -1118,7 +1111,7 @@ void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariant
     }
 
     if (success) {
-        m_config->setProfileId(defaultProfie);
+        m_config->setProfileId(profiles.lastKey());
         m_config->setProfiles(profiles);
         apiSendResponse(client, id, true, response);
     } else {
