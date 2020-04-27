@@ -468,6 +468,20 @@ To learn more about the project, visit
     </message>
 </context>
 <context>
+    <name>InitialSetup</name>
+    <message>
+        <location filename="../basic_ui/InitialSetup.qml" line="33"/>
+        <source>Use the web configurator
+to set up YIO remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/InitialSetup.qml" line="44"/>
+        <source>Navigate your internet browser to: http://</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Integrations</name>
     <message>
         <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
@@ -650,12 +664,12 @@ To learn more about the project, visit
 <context>
     <name>RemoteConfig</name>
     <message>
-        <location filename="../basic_ui/settings/RemoteConfig.qml" line="41"/>
+        <location filename="../basic_ui/settings/RemoteConfig.qml" line="39"/>
         <source>Remote configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/RemoteConfig.qml" line="76"/>
+        <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
         <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
         <translation type="unfinished"></translation>

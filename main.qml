@@ -54,6 +54,7 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     property bool remoteConfigEnabled: false
+    property bool initialSetup: true
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
@@ -131,7 +132,32 @@ ApplicationWindow {
 
             // when everything is loaded, load the main UI
             loader_main.setSource("qrc:/MainContainer.qml");
+
+            // if it's the default profile and no pages, load setings screeen
+            if (config.getProfile(config.profileId).name === "Default" && config.getProfilePages().length === 0) {
+                loader_second.setSource("qrc:/basic_ui/InitialSetup.qml");
+                loader_second.active = true;
+
+                // turn on the webconfigurator
+                webserver.startService();
+                remoteConfigEnabled = true;
+            }
         }
+    }
+
+    Connections {
+        target: config
+        enabled: initialSetup
+
+        function turnOffWelcomeScreen() {
+            if (initialSetup) {
+                initialSetup = false;
+                loader_second.setSource("");
+                loader_second.active = false;
+            }
+        }
+
+        onProfilesChanged: { turnOffWelcomeScreen() }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
