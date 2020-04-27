@@ -1135,7 +1135,7 @@ void YioAPI::apiPagesAdd(QWebSocket *client, const int &id, const QVariantMap &m
         for (QVariantMap::const_iterator iter = newPage.begin(); iter != newPage.end(); ++iter) {
             pages.insert(iter.key(), iter.value().toMap());
             m_config->setPages(pages);
-            apiSendResponse(client, id, false, response);
+            apiSendResponse(client, id, true, response);
         }
 
     } else {
@@ -1205,7 +1205,7 @@ void YioAPI::apiGroupsAdd(QWebSocket *client, const int &id, const QVariantMap &
         for (QVariantMap::const_iterator iter = newGroup.begin(); iter != newGroup.end(); ++iter) {
             groups.insert(iter.key(), iter.value().toMap());
             m_config->setGroups(groups);
-            apiSendResponse(client, id, false, response);
+            apiSendResponse(client, id, true, response);
         }
 
     } else {
