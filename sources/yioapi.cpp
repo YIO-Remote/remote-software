@@ -299,7 +299,8 @@ bool YioAPI::addIntegration(QVariantMap integration) {
 
     // put integrations back to config
     integrationsType.insert("data", integrationsData);
-    integrationsType.insert("mdns", "");
+    integrationsType.insert("mdns",
+                            m_integrations->getPluginMetaData(integrationType).toVariantMap().value("mdns").toString());
     integrations.insert(integrationType, integrationsType);
     c.insert("integrations", integrations);
 
