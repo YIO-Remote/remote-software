@@ -38,8 +38,6 @@
                 ],
                 "name": "Default",
                 "pages": [
-                    "favorites",
-                    "settings"
                 ]
             }
         },
