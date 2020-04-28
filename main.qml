@@ -368,6 +368,14 @@ ApplicationWindow {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
         }
 
+        Connections {
+            target: config
+
+            onProfileIdChanged: {
+                profileLoadingScreen.show();
+            }
+        }
+
         function show() {
             profileLoadingScreen.setSource("qrc:/basic_ui/ProfileLoading.qml");
             profileLoadingScreen.active = true;
@@ -382,10 +390,10 @@ ApplicationWindow {
         Timer {
             id: profileLoadingScreenTimer
             repeat: false
-            interval: 300
+            interval: 400
             running: false
 
-            onTriggered: {
+            onTriggered: {                
                 profileLoadingScreen.setSource("");
                 profileLoadingScreen.active = false;
             }

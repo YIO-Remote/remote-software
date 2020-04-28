@@ -181,7 +181,6 @@ Rectangle {
                     Haptic.playEffect(Haptic.Click);
                     profileModel.move(index, 0, 1);
                     profiles.state = "closed";
-                    profileLoadingScreen.show();
                     config.profileId = id;
                 }
             }
