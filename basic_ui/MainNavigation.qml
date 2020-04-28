@@ -53,14 +53,26 @@ Item {
 
         onProfileIdChanged: {
             console.debug("Profile Id changed. Reload UI.");
-            loadmenuConfig();
+            profileLoadingScreen.show();
+            waitforLoadingScreen.start();
         }
 
         onProfilesChanged: {
             console.debug("Profiles updated. Reload UI.");
-            loadmenuConfig();
+            profileLoadingScreen.show();
+            waitforLoadingScreen.start();
         }
     }
+
+    Timer {
+        id: waitforLoadingScreen
+        repeat: false
+        interval: 350
+        running: false
+
+        onTriggered: loadmenuConfig()
+    }
+
 
     //: menu items that are in the bottom menu
     property var menuTranslations: [qsTr("Favorites") + translateHandler.emptyString, qsTr("Settings") + translateHandler.emptyString,

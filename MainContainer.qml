@@ -127,14 +127,14 @@ Item {
         anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
         currentIndex: 0
 
-        Connections {
-            target: mainNavigation.menuConfig
-            onCountChanged: {
-                if (!mainNavigation.menuConfig.count) {
-                    doneLoading();
-                }
-            }
-        }
+//        Connections {
+//            target: mainNavigation.menuConfig
+//            onCountChanged: {
+//                if (!mainNavigation.menuConfig.count) {
+//                    doneLoading();
+//                }
+//            }
+//        }
 
         Repeater {
             id: mainNavigationRepeater
