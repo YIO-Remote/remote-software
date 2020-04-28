@@ -102,6 +102,7 @@ bool YioAPI::setConfig(QVariantMap config) {
     if (!m_config->isValid()) {
         return false;
     }
+
     return m_config->writeConfig();
 }
 
@@ -298,6 +299,7 @@ bool YioAPI::addIntegration(QVariantMap integration) {
 
     // put integrations back to config
     integrationsType.insert("data", integrationsData);
+    integrationsType.insert("mdns", "");
     integrations.insert(integrationType, integrationsType);
     c.insert("integrations", integrations);
 
