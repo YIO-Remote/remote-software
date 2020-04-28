@@ -164,7 +164,7 @@ void Integrations::add(const QVariantMap& config, QObject* obj, const QString& t
     const QString id = config.value(Config::KEY_ID).toString();
     m_integrations.insert(id, obj);
     m_integrationsFriendlyNames.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
-    m_integrationsMdns.insert(id, config.value(Config::KEY_MDNS).toString());
+    m_integrationsMdns.insert(id, getPluginMetaData(type).toVariantMap().value("mdns").toString());
     m_integrationsTypes.insert(id, type);
     emit listChanged();
 }
