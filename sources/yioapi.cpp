@@ -305,7 +305,15 @@ bool YioAPI::addIntegration(QVariantMap integration) {
     c.insert("integrations", integrations);
 
     // write the config back
-    return setConfig(c);
+    bool success = setConfig(c);
+
+    if (success) {
+        // load the integrations
+        m_integrations->load();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool YioAPI::updateIntegration(QVariantMap integration) {

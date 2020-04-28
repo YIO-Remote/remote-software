@@ -53,7 +53,45 @@ Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath)
     }
 }
 
+QObject* Integrations::loadPlugin(const QString& type) {
+    Launcher* l   = new Launcher();
+    QObject*  obj = l->loadPlugin(m_pluginPath, type);
+
+    // store the plugin objects
+    m_plugins.insert(type, obj);
+
+    // cleanup
+    l->deleteLater();
+
+    return obj;
+}
+
+QObject* Integrations::getPlugin(const QString& type) { return m_plugins.value(type); }
+
 QList<QObject*> Integrations::getAllPlugins() { return m_plugins.values(); }
+
+bool Integrations::isPluginLoaded(const QString& type) {
+    if (m_plugins.contains(type)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void Integrations::createInstance(QObject* pluginObj, QVariantMap& map) {
+    Entities*      entities      = Entities::getInstance();
+    Notifications* notifications = Notifications::getInstance();
+    YioAPI*        api           = YioAPI::getInstance();
+    Config*        config        = Config::getInstance();
+
+    PluginInterface* interface = qobject_cast<PluginInterface*>(pluginObj);
+    if (interface) {
+        connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
+
+        interface->create(map, entities, notifications, api, config);
+        m_integrationCount++;
+    }
+}
 
 QJsonObject Integrations::getPluginMetaData(const QString& pluginName) {
     Launcher* launcher   = new Launcher();
@@ -66,68 +104,49 @@ QJsonObject Integrations::getPluginMetaData(const QString& pluginName) {
 // Integrations::~Integrations() { s_instance = nullptr; }
 
 void Integrations::load() {
-    Entities*      entities      = Entities::getInstance();
-    Notifications* notifications = Notifications::getInstance();
-    YioAPI*        api           = YioAPI::getInstance();
-    Config*        config        = Config::getInstance();
-
-    Launcher* l = new Launcher();
+    Config* config = Config::getInstance();
 
     // read the config
     QVariantMap c = config->getAllIntegrations();
 
-    int integrationCount = 0;
+    m_integrationCount = 0;
 
     qCDebug(CLASS_LC) << "Plugin path:" << m_pluginPath;
 
     // let's load the plugins first
     for (QVariantMap::const_iterator iter = c.begin(); iter != c.end(); ++iter) {
-        QObject* obj = l->loadPlugin(m_pluginPath, iter.key());
-
-        // store the plugin objects
-        m_plugins.insert(iter.key(), obj);
+        QObject* obj;
+        if (!isPluginLoaded(iter.key())) {
+            // load the plugin
+            obj = loadPlugin(iter.key());
+        } else {
+            obj = getPlugin(iter.key());
+        }
 
         // push the config to the integration
         QVariantMap map = iter.value().toMap();
         map.insert(Config::KEY_TYPE, iter.key());
 
-        QString type = iter.key();
-
-        // create instances of the integration based on how many are defined in the config
-        PluginInterface* interface = qobject_cast<PluginInterface*>(obj);
-        if (interface) {
-            connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
-
-            interface->create(map, entities, notifications, api, config);
-            integrationCount++;
-        }
+        // create instance of the integration
+        createInstance(obj, map);
     }
 
     // load plugins that are not defined in config.json aka default plugins
     QStringList defaultIntegrations = {"dock"};
 
     for (int k = 0; k < defaultIntegrations.length(); k++) {
-        QObject* obj = l->loadPlugin(m_pluginPath, defaultIntegrations[k]);
-
-        // store the plugin objects
-        m_plugins.insert(defaultIntegrations[k], obj);
-
-        QString type = defaultIntegrations[k];
-
-        // create instances of the integration, no config needed for built in integrations
-        PluginInterface* interface = qobject_cast<PluginInterface*>(obj);
-        if (interface) {
-            connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
+        if (!isPluginLoaded(defaultIntegrations[k])) {
+            QObject* obj = loadPlugin(defaultIntegrations[k]);
 
             QVariantMap map;
             map.insert(Config::KEY_TYPE, defaultIntegrations[k]);
 
-            interface->create(map, entities, notifications, api, config);
-            integrationCount++;
+            // create instances of the integration, no config needed for built in integrations
+            createInstance(obj, map);
         }
     }
 
-    m_integrationsToLoad = integrationCount;
+    m_integrationsToLoad = m_integrationCount;
 
     if (m_integrationsToLoad == 0) {
         emit loadComplete();
@@ -161,11 +180,14 @@ QStringList Integrations::listIds() {
 QObject* Integrations::get(const QString& id) { return m_integrations.value(id); }
 
 void Integrations::add(const QVariantMap& config, QObject* obj, const QString& type) {
+    qCDebug(CLASS_LC()) << "Adding integration:" << type;
     const QString id = config.value(Config::KEY_ID).toString();
     m_integrations.insert(id, obj);
     m_integrationsFriendlyNames.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
     m_integrationsMdns.insert(id, getPluginMetaData(type).toVariantMap().value("mdns").toString());
     m_integrationsTypes.insert(id, type);
+    IntegrationInterface* ii = qobject_cast<IntegrationInterface*>(obj);
+    ii->connect();
     emit listChanged();
 }
 

@@ -83,7 +83,13 @@ class Integrations : public QObject, IntegrationsInterface {
     explicit Integrations(const QString& pluginPath);
 
     // get all plugins
+    QObject*        loadPlugin(const QString& type);
+    QObject*        getPlugin(const QString& type);
     QList<QObject*> getAllPlugins();
+    bool            isPluginLoaded(const QString& type);
+
+    // create integration instance
+    void createInstance(QObject* pluginObj, QVariantMap& map);
 
     // get plugin metadata
     QJsonObject getPluginMetaData(const QString& pluginName);
@@ -108,6 +114,7 @@ class Integrations : public QObject, IntegrationsInterface {
     QString                 m_pluginPath;
     int                     m_integrationsToLoad = 0;
     int                     m_integrationsLoaded = 0;
+    int                     m_integrationCount   = 0;
 
     static Integrations* s_instance;
 
