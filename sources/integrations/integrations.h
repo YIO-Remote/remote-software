@@ -89,7 +89,7 @@ class Integrations : public QObject, IntegrationsInterface {
     bool            isPluginLoaded(const QString& type);
 
     // create integration instance
-    void createInstance(QObject* pluginObj, QVariantMap& map);
+    void createInstance(QObject* pluginObj, QVariantMap map);
 
     // get plugin metadata
     QJsonObject getPluginMetaData(const QString& pluginName);

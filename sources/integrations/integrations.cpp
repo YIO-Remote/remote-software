@@ -78,7 +78,7 @@ bool Integrations::isPluginLoaded(const QString& type) {
     }
 }
 
-void Integrations::createInstance(QObject* pluginObj, QVariantMap& map) {
+void Integrations::createInstance(QObject* pluginObj, QVariantMap map) {
     Entities*      entities      = Entities::getInstance();
     Notifications* notifications = Notifications::getInstance();
     YioAPI*        api           = YioAPI::getInstance();
