@@ -796,6 +796,7 @@
           "default": 21600
         },
         "softwareupdate": {
+          "$id": "#/properties/settings/properties/softwareupdate",
           "type": "object",
           "title": "Software Update",
           "required": [
