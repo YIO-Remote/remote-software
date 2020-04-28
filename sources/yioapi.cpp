@@ -912,7 +912,6 @@ void YioAPI::apiIntegrationAdd(QWebSocket *client, const int &id, const QVariant
     QVariantMap response;
 
     if (addIntegration(map.value("config").toMap())) {
-        response.insert("message", "Restart the remote to load the integration.");
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
