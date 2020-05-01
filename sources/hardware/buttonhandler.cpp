@@ -59,6 +59,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (DPAD_UP): {
             if (m_buttonPressed != DPAD_UP) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = DPAD_UP;
                 emit buttonPressed(DPAD_UP);
@@ -74,6 +75,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (DPAD_DOWN): {
             if (m_buttonPressed != DPAD_DOWN) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = DPAD_DOWN;
                 emit buttonPressed(DPAD_DOWN);
@@ -89,6 +91,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (DPAD_LEFT): {
             if (m_buttonPressed != DPAD_LEFT) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = DPAD_LEFT;
                 emit buttonPressed(DPAD_LEFT);
@@ -104,6 +107,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (DPAD_RIGHT): {
             if (m_buttonPressed != DPAD_RIGHT) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = DPAD_RIGHT;
                 emit buttonPressed(DPAD_RIGHT);
@@ -119,6 +123,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (DPAD_MIDDLE): {
             if (m_buttonPressed != DPAD_MIDDLE) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = DPAD_MIDDLE;
                 emit buttonPressed(DPAD_MIDDLE);
@@ -134,6 +139,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (TOP_LEFT): {
             if (m_buttonPressed != TOP_LEFT) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = TOP_LEFT;
                 emit buttonPressed(TOP_LEFT);
@@ -149,6 +155,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (TOP_RIGHT): {
             if (m_buttonPressed != TOP_RIGHT) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = TOP_RIGHT;
                 emit buttonPressed(TOP_RIGHT);
@@ -164,6 +171,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (BOTTOM_LEFT): {
             if (m_buttonPressed != BOTTOM_LEFT) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = BOTTOM_LEFT;
                 emit buttonPressed(BOTTOM_LEFT);
@@ -179,6 +187,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (BOTTOM_RIGHT): {
             if (m_buttonPressed != BOTTOM_RIGHT) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = BOTTOM_RIGHT;
                 emit buttonPressed(BOTTOM_RIGHT);
@@ -194,6 +203,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (VOLUME_UP): {
             if (m_buttonPressed != VOLUME_UP) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = VOLUME_UP;
                 emit buttonPressed(VOLUME_UP);
@@ -209,6 +219,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (VOLUME_DOWN): {
             if (m_buttonPressed != VOLUME_DOWN) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = VOLUME_DOWN;
                 emit buttonPressed(VOLUME_DOWN);
@@ -224,6 +235,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (CHANNEL_UP): {
             if (m_buttonPressed != CHANNEL_UP) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = CHANNEL_UP;
                 emit buttonPressed(CHANNEL_UP);
@@ -239,6 +251,7 @@ void ButtonHandler::onInterrupt(int event) {
         case (CHANNEL_DOWN): {
             if (m_buttonPressed != CHANNEL_DOWN) {
                 m_buttonReleased = -1;
+                emit buttonReleased(-1);
 
                 m_buttonPressed = CHANNEL_DOWN;
                 emit buttonPressed(CHANNEL_DOWN);
