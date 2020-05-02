@@ -6,9 +6,9 @@
 # TODO:
 # - Create a re-usable GitHub Action
 
-name: QMake Build Matrix
+name: Build Desktop Libraries
 
-on: [push]
+on: [push, pull_request]
 
 env:
   # Attention: Qt version and Qt Creator version should correspond (check releases).

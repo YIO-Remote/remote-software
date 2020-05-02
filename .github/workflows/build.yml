@@ -21,11 +21,11 @@
         matrix:
           config:
           - {
-              name: "RPi0 Release Build", artifact: "remote-release",
+              name: "RPi0 Release Build", artifact: "RPi0-release",
               qmake-args: "CONFIG+=release"
             }
           - {
-              name: "RPi0 Debug Build", artifact: "remote-debug",
+              name: "RPi0 Debug Build", artifact: "RPi0-debug",
               qmake-args: "CONFIG+=debug CONFIG+=qml_debug"
             }
   
@@ -77,12 +77,12 @@
         - name: Download release artifact
           uses: actions/download-artifact@v1
           with:
-            name: ${{ env.APP_NAME }}-remote-release
+            name: ${{ env.APP_NAME }}-RPi0-release
             path: ./release
         - name: Download debug artifact
           uses: actions/download-artifact@v1
           with:
-            name: ${{ env.APP_NAME }}-remote-debug
+            name: ${{ env.APP_NAME }}-RPi0-debug
             path: ./debug
         - name: Get artifact version
           run: |
@@ -92,8 +92,8 @@
 
         - name: Create GitHub release archives
           run: |
-            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-remote-debug.tar -C debug .
-            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-remote-release.tar -C release .
+            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-RPi0-debug.tar -C debug .
+            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-RPi0-release.tar -C release .
 
         - name: Create Pre-Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
