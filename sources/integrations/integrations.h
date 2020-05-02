@@ -76,6 +76,7 @@ class Integrations : public QObject, IntegrationsInterface {
 
     // get the type of integration by id
     Q_INVOKABLE QString getType(const QString& id);
+    QString             getTypeByMdns(const QString& mdns);
 
     // get a list of supported integrations
     QStringList supportedIntegrations() { return m_supportedIntegrations; }

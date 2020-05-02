@@ -428,47 +428,22 @@ void YioAPI::discoverNetworkServices() {
     // Possible solution: use an identifier for discoverNetworkServices(), discoverNetworkServices(mdns) and
     // discoveredServices(), e.g. the mdns name itself: map with mdns -> QZeroConf
     // Possible solution 2: use a worker thread with signal / slot queuing
-    m_discoveredServices.clear();
 
-    // retrieve all configured mdns records from the integration plugins
+    // retrieve all supported mdns records from the integration plugins
     m_discoverableServices = Integrations::getInstance()->getMDNSList();
 
     for (int i = 0; i < m_discoverableServices.length(); i++) {
-        // FIXME memory leak
-        m_zeroConfBrowser = new QZeroConf;
-        connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
-            QVariantMap txt;
-
-            QMap<QByteArray, QByteArray> txtInfo = item->txt();
-
-            QMap<QByteArray, QByteArray>::iterator qi;
-            for (qi = txtInfo.begin(); qi != txtInfo.end(); ++qi) {
-                txt.insert(qi.key(), qi.value());
-            }
-
-            QVariantMap map;
-            map.insert(QString("name"), item->name());
-            map.insert(QString("ip"), item->ip().toString());
-            map.insert(QString("port"), item->port());
-            map.insert(QString("mdns"), m_discoverableServices[i]);
-            map.insert(QString("txt"), txt);
-            m_discoveredServices.insert(item->name(), map);
-
-            emit serviceDiscovered(m_discoveredServices);
-            emit discoveredServicesChanged();
-        });
-        m_zeroConfBrowser->startBrowser(m_discoverableServices[i]);
+        qCDebug(CLASS_LC) << "Starting mdns discovery" << m_discoverableServices[i];
+        discoverNetworkServices(m_discoverableServices[i]);
     }
 }
 
 void YioAPI::discoverNetworkServices(QString mdns) {
-    // FIXME this is not multi threading safe! See discoverNetworkServices()
-    m_discoveredServices.clear();
-
-    // FIXME memory leak
     m_zeroConfBrowser = new QZeroConf;
+    QObject *context  = new QObject();
 
-    connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, this, [=](QZeroConfService item) {
+    connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, context, [=](QZeroConfService item) {
+        qCDebug(CLASS_LC) << "Zeroconf found" << item;
         QVariantMap txt;
 
         QMap<QByteArray, QByteArray> txtInfo = item->txt();
@@ -484,26 +459,16 @@ void YioAPI::discoverNetworkServices(QString mdns) {
         map.insert(QString("port"), item->port());
         map.insert(QString("mdns"), mdns);
         map.insert(QString("txt"), txt);
-        m_discoveredServices.insert(item->name(), map);
 
-        emit serviceDiscovered(m_discoveredServices);
-        emit discoveredServicesChanged();
+        QMap<QString, QVariantMap> discoveredServices;
+        discoveredServices.insert(item->name(), map);
+
+        emit serviceDiscovered(discoveredServices);
+        context->deleteLater();
+        m_zeroConfBrowser->deleteLater();
     });
 
     m_zeroConfBrowser->startBrowser(mdns);
-}
-
-QVariantList YioAPI::discoveredServices() {
-    // FIXME this is not multi threading safe! See discoverNetworkServices()
-    QVariantList list;
-
-    QMap<QString, QVariantMap>::iterator i;
-    for (i = m_discoveredServices.begin(); i != m_discoveredServices.end(); i++) {
-        QVariantMap map = i.value();
-        list.append(map);
-    }
-
-    return list;
 }
 
 void YioAPI::onNewConnection() {
@@ -569,6 +534,9 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "set_config") {
                 /// Set config
                 apiSetConfig(client, id, map);
+            } else if (type == "discover_integrations") {
+                /// Discover integrations
+                apiIntegrationsDiscover(client, id);
             } else if (type == "get_supported_integrations") {
                 /// Get supported integrations
                 apiIntegrationsGetSupported(client, id);
@@ -847,6 +815,48 @@ void YioAPI::apiSetConfig(QWebSocket *client, const int &id, const QVariantMap &
     } else {
         apiSendResponse(client, id, false, response);
     }
+}
+
+void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
+    qCDebug(CLASS_LC) << "Request for discover integrations" << client;
+
+    QTimer * timeOutTimer = new QTimer();
+    QObject *context      = new QObject(this);
+
+    QObject::connect(this, &YioAPI::serviceDiscovered, context, [=](QMap<QString, QVariantMap> services) {
+        QVariantMap response;
+        QVariantMap map;
+
+        // let's go through the returned list of discovered integrations
+        QMap<QString, QVariantMap>::iterator i;
+        for (i = services.begin(); i != services.end(); i++) {
+            QString friendlyName = i.value().value("txt").toMap().value("FriendlyName").toString();
+            if (friendlyName.isEmpty()) {
+                friendlyName = i.value().value("name").toString();
+            }
+            map.insert("friendly_name", friendlyName);
+            map.insert("ip", i.value().value("ip").toString());
+            map.insert("type", m_integrations->getTypeByMdns(i.value().value("mdns").toString()));
+        }
+
+        response.insert("discovered_integration", map);
+        apiSendResponse(client, id, true, response);
+    });
+
+    discoverNetworkServices();
+
+    // start a timeout timer if nothing is discovered
+    timeOutTimer->setSingleShot(true);
+
+    connect(timeOutTimer, &QTimer::timeout, this, [=]() {
+        QVariantMap response;
+        response.insert("message", "discovery_done");
+        apiSendResponse(client, id, true, response);
+
+        context->deleteLater();
+        timeOutTimer->deleteLater();
+    });
+    timeOutTimer->start(10000);
 }
 
 void YioAPI::apiIntegrationsGetSupported(QWebSocket *client, const int &id) {

@@ -64,11 +64,8 @@ class YioAPI : public YioAPIInterface {
     bool removeIntegration(QString integrationId);
 
     // NETWORK SERVICES DISCOVERY
-    Q_PROPERTY(QVariantList discoveredServices READ discoveredServices NOTIFY discoveredServicesChanged)
-    Q_INVOKABLE void discoverNetworkServices() override;
-    Q_INVOKABLE void discoverNetworkServices(QString mdns) override;
-
-    QVariantList discoveredServices();
+    void discoverNetworkServices() override;
+    void discoverNetworkServices(QString mdns) override;
 
     explicit YioAPI(QQmlApplicationEngine* engine = nullptr);
     ~YioAPI() override;
@@ -80,7 +77,6 @@ class YioAPI : public YioAPIInterface {
     void messageReceived(QVariantMap message);
     void runningChanged();
     void hostnameChanged();
-    void discoveredServicesChanged();
     void buttonPressed(QString button);
     void buttonReleased(QString button);
 
@@ -114,8 +110,6 @@ class YioAPI : public YioAPIInterface {
     QZeroConf* m_zeroConfBrowser;
 
     QStringList m_discoverableServices;
-    // name as string, <ip address as string, mdns name as string>  "192.169.100.1", 496
-    QMap<QString, QVariantMap> m_discoveredServices;
 
     Entities*     m_entities;
     Integrations* m_integrations;
@@ -135,6 +129,7 @@ class YioAPI : public YioAPIInterface {
     void apiGetConfig(QWebSocket* client, const int& id);
     void apiSetConfig(QWebSocket* client, const int& id, const QVariantMap& map);
 
+    void apiIntegrationsDiscover(QWebSocket* client, const int& id);
     void apiIntegrationsGetSupported(QWebSocket* client, const int& id);
     void apiIntegrationsGetLoaded(QWebSocket* client, const int& id);
     void apiIntegrationGetData(QWebSocket* client, const int& id, const QVariantMap& map);

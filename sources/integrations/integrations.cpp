@@ -184,7 +184,6 @@ void Integrations::add(const QVariantMap& config, QObject* obj, const QString& t
     const QString id = config.value(Config::KEY_ID).toString();
     m_integrations.insert(id, obj);
     m_integrationsFriendlyNames.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
-    m_integrationsMdns.insert(id, getPluginMetaData(type).toVariantMap().value("mdns").toString());
     m_integrationsTypes.insert(id, type);
     IntegrationInterface* ii = qobject_cast<IntegrationInterface*>(obj);
     ii->connect();
@@ -206,6 +205,23 @@ QString Integrations::getFriendlyName(QObject* obj) {
 
 QString Integrations::getMDNS(const QString& id) { return m_integrationsMdns.value(id); }
 
-QStringList Integrations::getMDNSList() { return m_integrationsMdns.values(); }
+QStringList Integrations::getMDNSList() {
+    QStringList mdnsList;
+    for (int i = 0; i < m_supportedIntegrations.length(); i++) {
+        mdnsList.append(getPluginMetaData(m_supportedIntegrations[i]).toVariantMap().value("mdns").toString());
+    }
+
+    return mdnsList;
+}
 
 QString Integrations::getType(const QString& id) { return m_integrationsTypes.value(id); }
+
+QString Integrations::getTypeByMdns(const QString& mdns) {
+    for (int i = 0; i < m_supportedIntegrations.length(); i++) {
+        if (getPluginMetaData(m_supportedIntegrations[i]).toVariantMap().value("mdns").toString() == mdns) {
+            return m_supportedIntegrations[i];
+        }
+    }
+
+    return "";
+}
