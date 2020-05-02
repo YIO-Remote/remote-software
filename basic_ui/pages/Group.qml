@@ -27,8 +27,10 @@ import Style 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Item {
-    width: parent.width
-    height: childrenRect.height
+    width: parent.width; height: childrenRect.height
+
+    // property to know if this is the current page, so we know it's visible
+    property bool _isCurrentItem
 
     property string groupID
 
@@ -61,18 +63,13 @@ Item {
     // HEADER
     Item {
         id: header
-        width: parent.width
-        height: 80
+        width: parent.width; height: 80
 
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr(config.groups[groupID].name) + translateHandler.emptyString
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.verticalCenter: parent.verticalCenter
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 32
+            anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
+            font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 32 }
             lineHeight: 1
         }
 
@@ -81,9 +78,7 @@ Item {
         BasicUI.CustomSwitch {
             id: customSwitch
             visible: config.groups[groupID].switch
-            anchors.right: parent.right
-            anchors.rightMargin: 20
-            anchors.verticalCenter: parent.verticalCenter
+            anchors { right: parent.right; rightMargin: 20; verticalCenter: parent.verticalCenter }
 
             checked: false
             mouseArea.onClicked: {
@@ -100,10 +95,10 @@ Item {
                     }
                 } else {
                     // turn on
-                    var eArr = config.groups[groupID].entities;
+                    eArr = config.groups[groupID].entities;
 
-                    for (var i=0; i<eArr.length; i++) {
-                        var eid = entities.get(eArr[i]);
+                    for (i=0; i<eArr.length; i++) {
+                         eid = entities.get(eArr[i]);
 
                         if (eid) {
                             eid.turnOn();
@@ -116,12 +111,10 @@ Item {
 
     // ENTITIES
     ListView {
-        width: parent.width
-        height: contentHeight
+        width: parent.width; height: contentHeight
         anchors.top: header.bottom
         interactive: false
         spacing: 10
-
         model: config.groups[groupID].entities
         delegate: entityDelegate
     }
@@ -132,9 +125,10 @@ Item {
 
         Loader {
             id: entityLoader
-            width: 460
-            height: 125
+            width: 460; height: 125
             anchors.horizontalCenter: parent.horizontalCenter
+
+            property bool __isCurrentItem: _isCurrentItem
 
             Component.onCompleted: {
                 var e = entities.get(config.groups[groupID].entities[index]);

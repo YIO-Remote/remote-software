@@ -24,21 +24,23 @@
 
 #include <QMap>
 #include <QObject>
-#include <QQmlApplicationEngine>
-#include <QtDebug>
 
-#include "integrationinterface.h"
 #include "integrationsinterface.h"
-#include "plugininterface.h"
+#include "yio-interface/integrationinterface.h"
+#include "yio-interface/plugininterface.h"
 
 class Integrations : public QObject, IntegrationsInterface {
     Q_OBJECT
     Q_INTERFACES(IntegrationsInterface)
 
  public:
+    /// ADD NEW ENTITY TYPE HERE
+    enum SupportedIntegrationTypes { DOCK, HOMEASSISTANT, HOMEY, SPOTIFY, OPENHAB, OPENWEATHER, ROON };
+    Q_ENUM(SupportedIntegrationTypes)
+
     enum States {
-        CONNECTED = IntegrationInterface::CONNECTED,
-        CONNECTING = IntegrationInterface::CONNECTING,
+        CONNECTED    = IntegrationInterface::CONNECTED,
+        CONNECTING   = IntegrationInterface::CONNECTING,
         DISCONNECTED = IntegrationInterface::DISCONNECTED
     };
     Q_ENUM(States)
@@ -52,14 +54,17 @@ class Integrations : public QObject, IntegrationsInterface {
     // get all integrations
     QList<QObject*> list();
 
+    // get all integration ids
+    QStringList listIds();
+
     // get an integration object by id
     Q_INVOKABLE QObject* get(const QString& id);
 
     // add an integration
-    Q_INVOKABLE void add(const QVariantMap& config, QObject* obj, const QString& type);
+    void add(const QVariantMap& config, QObject* obj, const QString& type) override;
 
     // remove an integraiton
-    Q_INVOKABLE void remove(const QString& id);
+    void remove(const QString& id);
 
     // get friendly name
     Q_INVOKABLE QString getFriendlyName(const QString& id);
@@ -71,9 +76,24 @@ class Integrations : public QObject, IntegrationsInterface {
 
     // get the type of integration by id
     Q_INVOKABLE QString getType(const QString& id);
+    QString             getTypeByMdns(const QString& mdns);
 
-    explicit Integrations(QQmlApplicationEngine* engine = nullptr, const QString& appPath = "");
-    virtual ~Integrations();
+    // get a list of supported integrations
+    QStringList supportedIntegrations() { return m_supportedIntegrations; }
+
+    explicit Integrations(const QString& pluginPath);
+
+    // get all plugins
+    QObject*        loadPlugin(const QString& type);
+    QObject*        getPlugin(const QString& type);
+    QList<QObject*> getAllPlugins();
+    bool            isPluginLoaded(const QString& type);
+
+    // create integration instance
+    void createInstance(QObject* pluginObj, QVariantMap map);
+
+    // get plugin metadata
+    QJsonObject getPluginMetaData(const QString& pluginName);
 
     static Integrations* getInstance() { return s_instance; }
 
@@ -81,19 +101,24 @@ class Integrations : public QObject, IntegrationsInterface {
     void listChanged();
     void loadComplete();
 
- public slots:
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onCreateDone(QMap<QObject*, QVariant> map);
 
  private:
+    QStringList m_supportedIntegrations;
+
     QMap<QString, QObject*> m_plugins;
     QMap<QString, QObject*> m_integrations;
-    QMap<QString, QString>  m_integrations_friendly_names;
-    QMap<QString, QString>  m_integrations_mdns;
-    QMap<QString, QString>  m_integrations_types;
-    QString                 m_appPath;
+    QMap<QString, QString>  m_integrationsFriendlyNames;
+    QMap<QString, QString>  m_integrationsMdns;
+    QMap<QString, QString>  m_integrationsTypes;
+    QString                 m_pluginPath;
     int                     m_integrationsToLoad = 0;
     int                     m_integrationsLoaded = 0;
+    int                     m_integrationCount   = 0;
 
-    static Integrations*   s_instance;
-    QQmlApplicationEngine* m_engine;
+    static Integrations* s_instance;
+
+ protected:
+    QMetaEnum* m_enumSupportedIntegrationTypes;
 };

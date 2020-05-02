@@ -1,5 +1,6 @@
 /******************************************************************************
  *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
@@ -27,26 +28,26 @@
 #include <QLoggingCategory>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickWindow>
 #include <QtDebug>
 
 #include "bluetootharea.h"
+#include "commandlinehandler.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
 #include "entities/entities.h"
+#include "environment.h"
 #include "fileio.h"
-#include "hardware/bq27441.h"
-#include "hardware/display_control.h"
-#include "hardware/drv2605.h"
+#include "hardware/buttonhandler.h"
 #include "hardware/hardwarefactory.h"
-#include "hardware/interrupt_handler.h"
-#include "hardware/proximity_gesture_control.h"
 #include "hardware/touchdetect.h"
-#include "hardware/wifi_control.h"
 #include "integrations/integrations.h"
 #include "jsonfile.h"
 #include "launcher.h"
 #include "logger.h"
 #include "notifications.h"
+#include "softwareupdate.h"
+#include "standbycontrol.h"
 #include "translation.h"
 #include "yioapi.h"
 
@@ -57,7 +58,15 @@ int main(int argc, char* argv[]) {
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
 
-    //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // must be set before creating QCoreApplication, therefore not possible to set in CommandLineHelper
+    // QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+    QString version(APP_VERSION);
+    if (version.startsWith('v')) {
+        version.remove(0, 1);
+    }
+    QGuiApplication::setApplicationVersion(version);
 
     QGuiApplication       app(argc, argv);
     QQmlApplicationEngine engine;
@@ -66,7 +75,7 @@ int main(int argc, char* argv[]) {
 
     // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
     QString appPath = app.applicationDirPath();
-    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + QString("/Contents/Resources");
+    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + "/Contents/Resources";
 
     // In case the translation file does not exist at root level (which is copied via the .pro file)
     // we are probably running on a mac, which gives a different result for the applicationDirPath
@@ -76,28 +85,25 @@ int main(int argc, char* argv[]) {
     }
     engine.rootContext()->setContextProperty("appPath", appPath);
 
-    // Determine configuration path
-    QString configPath = appPath;
-    if (QFile::exists("/boot/config.json")) {
-        configPath = "/boot";
-    }
-    engine.rootContext()->setContextProperty("configPath", configPath);
+    // Process command line arguments
+    CommandLineHandler cmdLineHandler;
+    // Attention: app might terminate within process depending on cmd line arguments!
+    cmdLineHandler.process(app, appPath);
 
     // LOAD CONFIG
-    QString schemaPath = appPath + "/config-schema.json";
-    if (!QFile::exists(schemaPath)) {
-        qCWarning(CLASS_LC) << "Configuration schema not found, configuration file will not be validated! Missing file:"
-                            << schemaPath;
+    if (!QFile::exists(cmdLineHandler.configFile())) {
+        qFatal("App configuration file not found: %s", cmdLineHandler.configFile().toLatin1().constData());
+        return 1;
     }
-    Config config(&engine, configPath, schemaPath);
-    if (!config.isValid()) {
-        qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config.getError();
+    Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), appPath);
+    if (!config->isValid()) {
+        qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
         // TODO(marton) show error screen with shutdon / reboot / web-configurator option
     }
-    engine.rootContext()->setContextProperty("config", &config);
+    engine.rootContext()->setContextProperty("config", config);
 
     // LOGGER
-    QVariantMap logCfg = config.getSettings().value("logging").toMap();
+    QVariantMap logCfg = config->getSettings().value("logging").toMap();
     // "path" cfg logic:
     //   - key not set or "." => <application_path>/log
     //   - "" (empty)         => no log file
@@ -110,29 +116,16 @@ int main(int argc, char* argv[]) {
                   logCfg.value("showSource", true).toBool(), logCfg.value("queueSize", 100).toInt(),
                   logCfg.value("purgeHours", 72).toInt());
     engine.rootContext()->setContextProperty("logger", &logger);
-    Logger::getInstance()->write("Logging started");
-
-    // LOAD FONTS
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
-
-    // LOAD STYLES
-    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/Style.qml")), "Style", 1, 0, "Style");
-
-    // LOAD ICONS
-    QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
+    Logger::getInstance()->write(QString("YIO App %1").arg(version));
 
     // LOADING CUSTOM COMPONENTS
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
-    qmlRegisterType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl");
-    qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
-    qmlRegisterType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler");
-    qmlRegisterType<drv2605>("Haptic", 1, 0, "Haptic");
-    qmlRegisterType<BQ27441>("Battery", 1, 0, "Battery");
-    qmlRegisterType<ProximityGestureControl>("Proximity", 1, 0, "Proximity");
+
+    //    qmlRegisterType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter");
+    TouchEventFilter* touchEventFilter = new TouchEventFilter();
+    qmlRegisterSingletonType<TouchEventFilter>("TouchEventFilter", 1, 0, "TouchEventFilter",
+                                               &TouchEventFilter::getInstance);
 
     qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceNameEnum",
                                                       "Not creatable as it is an enum type");
@@ -150,16 +143,27 @@ int main(int argc, char* argv[]) {
     qRegisterMetaType<WifiStatus>("WifiStatus");
 
     // DRIVERS
-    QString hwConfigPath = appPath;
-    if (QFile::exists("/boot/hardware.json")) {
-        hwConfigPath = "/boot";
-    }
-    HardwareFactory* hwFactory =
-        HardwareFactory::build(hwConfigPath + "/hardware.json", hwConfigPath + "/hardware-schema.json");
+    HardwareFactory* hwFactory = HardwareFactory::build(
+        cmdLineHandler.hardwareConfigFile(), cmdLineHandler.hardwareConfigSchemaFile(), cmdLineHandler.getProfile());
     WifiControl* wifiControl = hwFactory->getWifiControl();
     engine.rootContext()->setContextProperty("wifi", wifiControl);
     WebServerControl* webServerControl = hwFactory->getWebServerControl();
     engine.rootContext()->setContextProperty("webserver", webServerControl);
+
+    DisplayControl* displayControl = hwFactory->getDisplayControl();
+    engine.rootContext()->setContextProperty("displayControl", displayControl);
+
+    qmlRegisterSingletonType<BatteryCharger>("BatteryCharger", 1, 0, "BatteryCharger",
+                                             &HardwareFactory::batteryChargerProvider);
+    qmlRegisterSingletonType<BatteryFuelGauge>("Battery", 1, 0, "Battery", &HardwareFactory::batteryFuelGaugeProvider);
+    qmlRegisterSingletonType<DisplayControl>("DisplayControl", 1, 0, "DisplayControl",
+                                             &HardwareFactory::displayControlProvider);
+    qmlRegisterSingletonType<InterruptHandler>("InterruptHandler", 1, 0, "InterruptHandler",
+                                               &HardwareFactory::interruptHandlerProvider);
+    qmlRegisterSingletonType<HapticMotor>("Haptic", 1, 0, "Haptic", &HardwareFactory::hapticMotorProvider);
+    qmlRegisterSingletonType<ProximitySensor>("Proximity", 1, 0, "Proximity",
+                                              &HardwareFactory::proximitySensorProvider);
+    qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor", &HardwareFactory::lightSensorProvider);
 
     // BLUETOOTH AREA
     BluetoothArea bluetoothArea;
@@ -170,11 +174,12 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("translateHandler", &transHndl);
 
     // INTEGRATIONS
-    Integrations integrations(&engine, appPath);
+    Integrations* integrations =
+        new Integrations(qEnvironmentVariable(Environment::ENV_YIO_PLUGIN_DIR, appPath + "/plugins"));
     // Make integration state available in QML
     qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations",
                                              "Not creatable, only used for enum.");
-    engine.rootContext()->setContextProperty("integrations", &integrations);
+    engine.rootContext()->setContextProperty("integrations", integrations);
 
     // ENTITIES
     Entities entities;
@@ -184,21 +189,57 @@ int main(int argc, char* argv[]) {
     Notifications notifications(&engine);
     engine.rootContext()->setContextProperty("notifications", &notifications);
 
-    // TODO(zehnm) put initialization into factory
-    if (!wifiControl->init()) {
-        notifications.add(true, QObject::tr("WiFi device was not found."));
-    }
+    // Ready for device startup!
+    hwFactory->initialize();
 
     // FILE IO
     FileIO fileIO;
     engine.rootContext()->setContextProperty("fileio", &fileIO);
 
     // YIO API
-    YioAPI yioapi(&engine);
-    engine.rootContext()->setContextProperty("api", &yioapi);
+    YioAPI* yioapi = new YioAPI(&engine);
+    engine.rootContext()->setContextProperty("api", yioapi);
+
+    // BUTTON HANDLER
+    ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
+    qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
+
+    // STANDBY CONTROL
+    StandbyControl* standbyControl =
+        new StandbyControl(displayControl, hwFactory->getProximitySensor(), hwFactory->getLightSensor(),
+                           touchEventFilter, hwFactory->getInterruptHandler(), buttonHandler, wifiControl,
+                           hwFactory->getBatteryFuelGauge(), config, yioapi, integrations);
+    Q_UNUSED(standbyControl);
+    qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
+
+    // SOFTWARE UPDATE
+    QVariantMap     appUpdCfg      = config->getSettings().value("softwareupdate").toMap();
+    SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
+    qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
+
+    // FIXME move initialization code to a device driver factory
+    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
+    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
 
     // UTILS
     qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
+
+    // LOAD FONTS
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
+    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
+
+    // LOAD STYLES
+    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/Style.qml")), "Style", 1, 0, "Style");
+
+    // LOAD ICONS
+    QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
+
+    // set rending of text
+    QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
 
     engine.addImportPath("qrc:/");
 
@@ -207,17 +248,10 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    // FIXME move initialization code to a device driver factory
-    QObject* standbyControl = config.getQMLObject("standbyControl");
-    if (standbyControl == nullptr) {
-        qCritical() << "Error looking up QML object:"
-                    << "standbyControl";
-    } else {
-        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
-        QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
-        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
-        QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
-    }
+    softwareUpdate->start();
+
+    QObject* mainApplicationWindow = config->getQMLObject("applicationWindow");
+    touchEventFilter->setSource(mainApplicationWindow);
 
     return app.exec();
 }

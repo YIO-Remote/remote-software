@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,21 +20,33 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <assert.h>
+#include "hardwarefactory.h"
 
 #include <QLoggingCategory>
 #include <QtDebug>
 
+#include "../config.h"
+#include "../environment.h"
 #include "../jsonfile.h"
-#include "hardwarefactory.h"
+#include "../notifications.h"
 
-#if defined(Q_OS_LINUX)
-#include "hardwarefactory_rpi0.h"
+#if defined(Q_OS_ANDROID)
+#include "android/hw_factory_android.h"
+#elif defined(Q_OS_LINUX)
+#if defined(Q_PROCESSOR_ARM)
+#include "linux/arm/hw_factory_yio.h"
 #else
-#include "hardwarefactory_mock.h"
+#include "linux/hw_factory_linux.h"
+#endif
+#elif defined(Q_OS_WIN)
+#include "windows/hw_factory_win.h"
+#elif defined(Q_OS_MACOS)
+#include "macos/hw_factory_mac.h"
+#else
+#include "hardwarefactory_default.h"
 #endif
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "HwFactory");
+static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory");
 
 HardwareFactory *HardwareFactory::s_instance = nullptr;
 
@@ -42,7 +54,14 @@ HardwareFactory::HardwareFactory(QObject *parent) : QObject(parent) {}
 
 HardwareFactory::~HardwareFactory() { s_instance = nullptr; }
 
-HardwareFactory *HardwareFactory::build(const QString &configFileName, const QString &schemaFileName) {
+void HardwareFactory::onError(Device::DeviceError deviceError, const QString &message) {
+    if (deviceError == Device::InitializationError || deviceError == Device::CommunicationError) {
+        Notifications::getInstance()->add(true, message);
+    }
+}
+
+HardwareFactory *HardwareFactory::build(const QString &configFileName, const QString &schemaFileName,
+                                        const QString &profile) {
     JsonFile hwCfg(configFileName, schemaFileName);
 
     QVariantMap config = hwCfg.read().toMap();
@@ -55,28 +74,120 @@ HardwareFactory *HardwareFactory::build(const QString &configFileName, const QSt
                                        << hwCfg.error();
         config.clear();
     }
-    return build(config);
+    return build(config, profile);
 }
 
-HardwareFactory *HardwareFactory::build(const QVariantMap &config) {
+HardwareFactory *HardwareFactory::build(const QVariantMap &config, const QString &profile) {
     if (s_instance != nullptr) {
-        qCCritical(CLASS_LC) << "BUG ALERT: Invalid program flow!"
-                             << "HardwareFactory already initialized, ignoring build() call.";
+        qCCritical(CLASS_LC)
+            << "BUG ALERT: Invalid program flow! HardwareFactory already initialized, ignoring build() call.";
         return s_instance;
     }
 
     // KISS: sufficient for now, custom logic possible with config interface when needed.
-#if defined(Q_OS_LINUX)
-    s_instance = new HardwareFactoryRPi0(config);
-#else  // anyone wants to write Android, macOS or Windows factories?
-    s_instance = new HardwareFactoryMock(config);
+#if defined(Q_OS_ANDROID)
+    Q_UNUSED(profile)
+    s_instance = new HardwareFactoryAndroid(config);
+#elif defined(Q_OS_LINUX)
+#if defined(Q_PROCESSOR_ARM)
+    Environment env;
+    if (env.isYioRemote()) {
+        s_instance = new HardwareFactoryYio(config, profile);
+    } else {
+        s_instance = new HardwareFactoryLinux(config, profile);
+    }
+#else
+    s_instance = new HardwareFactoryLinux(config, profile);
+#endif
+#elif defined(Q_OS_WIN)
+    Q_UNUSED(profile)
+    s_instance = new HardwareFactoryWindows(config);
+#elif defined(Q_OS_MACOS)
+    Q_UNUSED(profile)
+    s_instance = new HardwareFactoryMacOS(config);
+#else
+    Q_UNUSED(profile)
+    s_instance = new HardwareFactoryDefault();
 #endif
 
+    s_instance->buildDevices(config);
     return s_instance;
 }
 
 HardwareFactory *HardwareFactory::instance() {
-    assert(s_instance);
+    Q_ASSERT(s_instance);
 
     return s_instance;
+}
+
+QObject *HardwareFactory::batteryChargerProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getBatteryCharger();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::batteryFuelGaugeProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getBatteryFuelGauge();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::displayControlProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getDisplayControl();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::interruptHandlerProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getInterruptHandler();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::hapticMotorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getHapticMotor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::gestureSensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getGestureSensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::lightSensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getLightSensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}
+
+QObject *HardwareFactory::proximitySensorProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getProximitySensor();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
 }

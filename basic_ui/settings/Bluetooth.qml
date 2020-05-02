@@ -24,7 +24,6 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import Style 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
 import "qrc:/basic_ui" as BasicUI
 
 Item {
@@ -37,10 +36,10 @@ Item {
 
     Text {
         id: header
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Bluetooth") + translateHandler.emptyString
         anchors.left: parent.left
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 27
         lineHeight: 1
@@ -51,20 +50,20 @@ Item {
         width: parent.width
         height: childrenRect.height + 40 //bluetoothText.height + smallText.height + 60
         radius: Style.cornerRadius
-        color: Style.colorDark
+        color: Style.color.dark
 
         anchors.top: header.bottom
         anchors.topMargin: 20
 
         Text {
             id: bluetoothText
-            color: Style.colorText
+            color: Style.color.text
             text: qsTr("Area detection") + translateHandler.emptyString
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top
             anchors.topMargin: 20
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 27
             lineHeight: 1
@@ -89,14 +88,13 @@ Item {
                 var tmp = config.config
                 tmp.settings.bluetootharea = !tmp.settings.bluetootharea
                 config.config = tmp;
-                config.writeConfig();
             }
         }
 
 
         Text {
             id: smallText
-            color: Style.colorText
+            color: Style.color.text
             opacity: 0.5
             text: qsTr("Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.") + translateHandler.emptyString
             wrapMode: Text.WordWrap
@@ -105,7 +103,7 @@ Item {
             anchors.leftMargin: 20
             anchors.top: bluetoothButton.bottom
             anchors.topMargin: 10
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Normal
             font.pixelSize: 20
             lineHeight: 1

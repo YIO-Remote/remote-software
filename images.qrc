@@ -1,10 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/chargingscreen/icon-battery-lightning.png</file>
-        <file>images/popuplowbattery/icon-lowbattery.png</file>
-        <file>images/components/fav-minus.png</file>
-        <file>images/components/fav-plus.png</file>
-        <file>images/components/close_button.png</file>
         <file>images/statusbar/statusbar-loader.png</file>
         <file>images/notification/icon-notification-dismiss.png</file>
         <file>images/notification/icon-notification-error.png</file>
@@ -23,10 +18,6 @@
         <file>images/mini-music-player/no_image.png</file>
         <file>images/volume/icon-speaker.png</file>
         <file>images/mini-music-player/noise.png</file>
-        <file>images/mini-music-player/icon-close.png</file>
-        <file>images/mini-music-player/icon-speaker.png</file>
-        <file>images/mini-music-player/icon-next.png</file>
-        <file>images/mini-music-player/icon-prev.png</file>
         <file>images/settings/setup-dock.png</file>
         <file>images/settings/setup-dock-led.png</file>
     </qresource>

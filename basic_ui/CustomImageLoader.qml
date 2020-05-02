@@ -20,12 +20,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.11
 
 Item {
     id: imageLoader
-    property string url
-    property string prevUrl
+    property string url: ""
+    property string prevUrl: ""
+
+    function startLoader() {
+            loader.opacity = 1;
+    }
+
+    function stopLoader() {
+        loader.opacity = 0;
+    }
 
     onUrlChanged: {
         if (url != prevUrl) {
@@ -68,6 +76,33 @@ Item {
         onOpacityChanged: {
             if (image2.opacity == 1) {
                 image1.source = url;
+            }
+        }
+    }
+
+    Item {
+        id: loader
+        anchors.fill: parent
+        opacity: 0
+        visible: opacity != 0 ? true : false
+
+        Behavior on opacity {
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        }
+
+        Image {
+            asynchronous: true
+            width: 26; height: 26
+            anchors.centerIn: parent
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/images/statusbar/statusbar-loader.png"
+
+            RotationAnimator on rotation {
+                id: loadingIconAnim
+                running: loader.visible
+                loops: Animation.Infinite
+                from: 0; to: 360
+                duration: 2000
             }
         }
     }

@@ -34,6 +34,13 @@ Flickable {
     //: Name of the settings page
     property string title: qsTr(config.pages[page].name) + translateHandler.emptyString
 
+    property alias _contentY: itemFlickable.contentY
+    property alias _contentHeight: itemFlickable.contentHeight
+    property alias _height: itemFlickable.height
+
+    // property to know if this is the current page, so we know it's visible
+    property bool _isCurrentItem: parent._isCurrentItem
+
     // image background handling
     property string img_url
 
@@ -69,8 +76,7 @@ Flickable {
         }
     }
 
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     maximumFlickVelocity: 6000
     flickDeceleration: 1000
     contentHeight: groupContainer.height + titleContainer.height + mainNavigation.height + 20
@@ -90,14 +96,14 @@ Flickable {
 
     Item {
         id: topImage
-        width: parent.width
-        height: 320
+        width: parent.width; height: 320
         anchors.top: parent.top
+        opacity: bgImage.status == Image.Error ? 0 : 1
 
         Rectangle {
             id: comp
             anchors.fill: parent
-            color: Style.colorBackground
+            color: Style.color.background
 
             Image {
                 id: bgImage
@@ -109,8 +115,7 @@ Flickable {
 
             Rectangle {
                 id: gradient
-                width: parent.width
-                height: 80
+                width: parent.width; height: 80
                 anchors.bottom: parent.bottom
 
                 LinearGradient {
@@ -118,8 +123,8 @@ Flickable {
                         start: Qt.point(0, 0)
                         end: Qt.point(0, 80)
                         gradient: Gradient {
-                            GradientStop { position: 0.2; color: Style.colorBackgroundTransparent }
-                            GradientStop { position: 1.0; color: Style.colorBackground }
+                            GradientStop { position: 0.2; color: Style.color.backgroundTransparent }
+                            GradientStop { position: 1.0; color: Style.color.background }
                         }
                     }
             }
@@ -150,24 +155,21 @@ Flickable {
         Rectangle {
             id: overlay
             anchors.fill: noise
-            color: Style.colorBackground
+            color: Style.color.background
             opacity: 0.5
         }
     }
 
     Item {
         id: titleContainer
-        width: parent.width
-        height: 240
+        width: parent.width; height: 240
 
         Text {
             id: titleText
-            color: Style.colorText
+            color: Style.color.text
             text: title
             anchors.centerIn: parent
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 60
+            font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 60 }
             lineHeight: 1
         }
     }
@@ -175,8 +177,7 @@ Flickable {
     Column {
         id: groupContainer
         width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: titleContainer.bottom
+        anchors { horizontalCenter: parent.horizontalCenter; top: titleContainer.bottom }
         spacing: 60
 
         Repeater {
@@ -185,6 +186,7 @@ Flickable {
 
             Group {
                 groupID: config.pages[page].groups[index]
+                _isCurrentItem: itemFlickable._isCurrentItem
             }
         }
     }

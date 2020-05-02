@@ -30,7 +30,7 @@
 
 RemoteInterface::~RemoteInterface() {}
 
-QString Remote::Type = "remote";
+QString   Remote::Type = "remote";
 QMetaEnum Remote::s_metaEnumCommands;
 QMetaEnum Remote::s_metaEnumAttr;
 QMetaEnum Remote::s_metaEnumFeatures;
@@ -38,13 +38,13 @@ QMetaEnum Remote::s_metaEnumState;
 
 void Remote::staticInitialize() {
     if (!s_metaEnumAttr.isValid()) {
-        int index = RemoteDef::staticMetaObject.indexOfEnumerator("Attributes");
-        s_metaEnumAttr = RemoteDef::staticMetaObject.enumerator(index);
-        index = RemoteDef::staticMetaObject.indexOfEnumerator("States");
-        s_metaEnumState = RemoteDef::staticMetaObject.enumerator(index);
-        index = RemoteDef::staticMetaObject.indexOfEnumerator("Features");
+        int index          = RemoteDef::staticMetaObject.indexOfEnumerator("Attributes");
+        s_metaEnumAttr     = RemoteDef::staticMetaObject.enumerator(index);
+        index              = RemoteDef::staticMetaObject.indexOfEnumerator("States");
+        s_metaEnumState    = RemoteDef::staticMetaObject.enumerator(index);
+        index              = RemoteDef::staticMetaObject.indexOfEnumerator("Features");
         s_metaEnumFeatures = RemoteDef::staticMetaObject.enumerator(index);
-        index = RemoteDef::staticMetaObject.indexOfEnumerator("Commands");
+        index              = RemoteDef::staticMetaObject.indexOfEnumerator("Commands");
         s_metaEnumCommands = RemoteDef::staticMetaObject.enumerator(index);
         qmlRegisterUncreatableType<RemoteDef>("Entity.Remote", 1, 0, "Remote", "Not creatable as it is an enum type.");
     }
@@ -192,16 +192,26 @@ void Remote::volumeDown() {
 
 void Remote::muteToggle() { command(RemoteDef::C_MUTE_TOGGLE, ""); }
 
+bool Remote::supportsOn() {
+    if (isSupported(RemoteDef::F_POWER_ON) && isSupported(RemoteDef::F_POWER_OFF)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Remote::isOn() { return m_state == RemoteDef::ONLINE; }
+
 Remote::Remote(QObject* parent) : Entity(Type, QVariantMap(), nullptr, parent), m_log("REMOTE ENTITY") {}
 
 Remote::Remote(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent)
     : Entity(Type, config, integrationObj, parent), m_log("REMOTE ENTITY") {
     staticInitialize();
 
-    m_enumAttr = &s_metaEnumAttr;
+    m_enumAttr     = &s_metaEnumAttr;
     m_enumFeatures = &s_metaEnumFeatures;
     m_enumCommands = &s_metaEnumCommands;
-    m_enumState = &s_metaEnumState;
+    m_enumState    = &s_metaEnumState;
 
     m_specificInterface = qobject_cast<RemoteInterface*>(this);
     initializeSupportedFeatures(config);

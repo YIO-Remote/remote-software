@@ -1,9 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>scripts/softwareupdate.js</file>
         <file>basic_ui/ChargingScreen.qml</file>
-        <file>scripts/helper.js</file>
         <file>basic_ui/PopupLowBattery.qml</file>
         <file>basic_ui/LoadingScreen.qml</file>
         <file>basic_ui/ClosingScreen.qml</file>
@@ -13,16 +11,12 @@
         <file>basic_ui/StatusBar.qml</file>
         <file>basic_ui/MainNavigation.qml</file>
         <file>components/light/ui/Button.qml</file>
-        <file>StandbyControl.qml</file>
-        <file>basic_ui/Settings.qml</file>
         <file>basic_ui/settings/Display.qml</file>
-        <file>basic_ui/settings/PowerSaving.qml</file>
         <file>basic_ui/settings/Languages.qml</file>
         <file>basic_ui/settings/Battery.qml</file>
         <file>basic_ui/settings/Network.qml</file>
         <file>basic_ui/settings/System.qml</file>
         <file>basic_ui/settings/Integrations.qml</file>
-        <file>basic_ui/settings/Devices.qml</file>
         <file>basic_ui/pages/Favorites.qml</file>
         <file>basic_ui/pages/Settings.qml</file>
         <file>basic_ui/pages/Page.qml</file>
@@ -31,7 +25,6 @@
         <file>components/light/ui/CardSwitch.qml</file>
         <file>basic_ui/settings/Softwareupdate.qml</file>
         <file>basic_ui/CustomButtonState.qml</file>
-        <file>ButtonHandler.qml</file>
         <file>basic_ui/Notification.qml</file>
         <file>basic_ui/NotificationDrawer.qml</file>
         <file>components/blind/ui/Button.qml</file>
@@ -42,168 +35,6 @@
         <file>basic_ui/Volume.qml</file>
         <file>components/media_player/ui/Button.qml</file>
         <file>basic_ui/settings/Bluetooth.qml</file>
-        <file>basic_ui/settings/RemoteConfig.qml</file>
-        <file>basic_ui/settings/WifiNetworkListElement.qml</file>
-        <file>wifiSetup.qml</file>
-        <file>qtzeroconf/avahi-common/address.c</file>
-        <file>qtzeroconf/avahi-common/address.h</file>
-        <file>qtzeroconf/avahi-common/alternative.c</file>
-        <file>qtzeroconf/avahi-common/alternative.h</file>
-        <file>qtzeroconf/avahi-common/cdecl.h</file>
-        <file>qtzeroconf/avahi-common/defs.h</file>
-        <file>qtzeroconf/avahi-common/domain.c</file>
-        <file>qtzeroconf/avahi-common/domain.h</file>
-        <file>qtzeroconf/avahi-common/error.c</file>
-        <file>qtzeroconf/avahi-common/error.h</file>
-        <file>qtzeroconf/avahi-common/gccmacro.h</file>
-        <file>qtzeroconf/avahi-common/i18n.c</file>
-        <file>qtzeroconf/avahi-common/i18n.h</file>
-        <file>qtzeroconf/avahi-common/llist.h</file>
-        <file>qtzeroconf/avahi-common/malloc.c</file>
-        <file>qtzeroconf/avahi-common/malloc.h</file>
-        <file>qtzeroconf/avahi-common/rlist.c</file>
-        <file>qtzeroconf/avahi-common/rlist.h</file>
-        <file>qtzeroconf/avahi-common/simple-watch.c</file>
-        <file>qtzeroconf/avahi-common/simple-watch.h</file>
-        <file>qtzeroconf/avahi-common/strlst.c</file>
-        <file>qtzeroconf/avahi-common/strlst.h</file>
-        <file>qtzeroconf/avahi-common/thread-watch.c</file>
-        <file>qtzeroconf/avahi-common/thread-watch.h</file>
-        <file>qtzeroconf/avahi-common/timeval.c</file>
-        <file>qtzeroconf/avahi-common/timeval.h</file>
-        <file>qtzeroconf/avahi-common/utf8.c</file>
-        <file>qtzeroconf/avahi-common/utf8.h</file>
-        <file>qtzeroconf/avahi-common/watch.h</file>
-        <file>qtzeroconf/avahi-core/addr-util.c</file>
-        <file>qtzeroconf/avahi-core/addr-util.h</file>
-        <file>qtzeroconf/avahi-core/announce.c</file>
-        <file>qtzeroconf/avahi-core/announce.h</file>
-        <file>qtzeroconf/avahi-core/browse-dns-server.c</file>
-        <file>qtzeroconf/avahi-core/browse-domain.c</file>
-        <file>qtzeroconf/avahi-core/browse-service-type.c</file>
-        <file>qtzeroconf/avahi-core/browse-service.c</file>
-        <file>qtzeroconf/avahi-core/browse.c</file>
-        <file>qtzeroconf/avahi-core/browse.h</file>
-        <file>qtzeroconf/avahi-core/cache.c</file>
-        <file>qtzeroconf/avahi-core/cache.h</file>
-        <file>qtzeroconf/avahi-core/core.h</file>
-        <file>qtzeroconf/avahi-core/dns-srv-rr.h</file>
-        <file>qtzeroconf/avahi-core/dns.c</file>
-        <file>qtzeroconf/avahi-core/dns.h</file>
-        <file>qtzeroconf/avahi-core/domain-util.c</file>
-        <file>qtzeroconf/avahi-core/domain-util.h</file>
-        <file>qtzeroconf/avahi-core/entry.c</file>
-        <file>qtzeroconf/avahi-core/fdutil.c</file>
-        <file>qtzeroconf/avahi-core/fdutil.h</file>
-        <file>qtzeroconf/avahi-core/hashmap.c</file>
-        <file>qtzeroconf/avahi-core/hashmap.h</file>
-        <file>qtzeroconf/avahi-core/iface-linux.c</file>
-        <file>qtzeroconf/avahi-core/iface-linux.h</file>
-        <file>qtzeroconf/avahi-core/iface-pfroute.h</file>
-        <file>qtzeroconf/avahi-core/iface.c</file>
-        <file>qtzeroconf/avahi-core/iface.h</file>
-        <file>qtzeroconf/avahi-core/internal.h</file>
-        <file>qtzeroconf/avahi-core/log.c</file>
-        <file>qtzeroconf/avahi-core/log.h</file>
-        <file>qtzeroconf/avahi-core/lookup.h</file>
-        <file>qtzeroconf/avahi-core/multicast-lookup.c</file>
-        <file>qtzeroconf/avahi-core/multicast-lookup.h</file>
-        <file>qtzeroconf/avahi-core/netlink.c</file>
-        <file>qtzeroconf/avahi-core/netlink.h</file>
-        <file>qtzeroconf/avahi-core/prioq.c</file>
-        <file>qtzeroconf/avahi-core/prioq.h</file>
-        <file>qtzeroconf/avahi-core/probe-sched.c</file>
-        <file>qtzeroconf/avahi-core/probe-sched.h</file>
-        <file>qtzeroconf/avahi-core/publish.h</file>
-        <file>qtzeroconf/avahi-core/querier.c</file>
-        <file>qtzeroconf/avahi-core/querier.h</file>
-        <file>qtzeroconf/avahi-core/query-sched.c</file>
-        <file>qtzeroconf/avahi-core/query-sched.h</file>
-        <file>qtzeroconf/avahi-core/resolve-address.c</file>
-        <file>qtzeroconf/avahi-core/resolve-host-name.c</file>
-        <file>qtzeroconf/avahi-core/resolve-service.c</file>
-        <file>qtzeroconf/avahi-core/response-sched.c</file>
-        <file>qtzeroconf/avahi-core/response-sched.h</file>
-        <file>qtzeroconf/avahi-core/rr-util.h</file>
-        <file>qtzeroconf/avahi-core/rr.c</file>
-        <file>qtzeroconf/avahi-core/rr.h</file>
-        <file>qtzeroconf/avahi-core/rrlist.c</file>
-        <file>qtzeroconf/avahi-core/rrlist.h</file>
-        <file>qtzeroconf/avahi-core/server.c</file>
-        <file>qtzeroconf/avahi-core/socket.c</file>
-        <file>qtzeroconf/avahi-core/socket.h</file>
-        <file>qtzeroconf/avahi-core/timeeventq.c</file>
-        <file>qtzeroconf/avahi-core/timeeventq.h</file>
-        <file>qtzeroconf/avahi-core/util.c</file>
-        <file>qtzeroconf/avahi-core/util.h</file>
-        <file>qtzeroconf/avahi-core/wide-area.c</file>
-        <file>qtzeroconf/avahi-core/wide-area.h</file>
-        <file>qtzeroconf/avahi-qt/qt-watch.cpp</file>
-        <file>qtzeroconf/avahi-qt/qt-watch.h</file>
-        <file>qtzeroconf/avahi-qt/qt-watch_p.h</file>
-        <file>qtzeroconf/bonjour-sdk/CommonServices.h</file>
-        <file>qtzeroconf/bonjour-sdk/DebugServices.h</file>
-        <file>qtzeroconf/bonjour-sdk/dns_sd.h</file>
-        <file>qtzeroconf/bonjour-sdk/dnssd_clientlib.c</file>
-        <file>qtzeroconf/bonjour-sdk/dnssd_clientstub.c</file>
-        <file>qtzeroconf/bonjour-sdk/dnssd_ipc.c</file>
-        <file>qtzeroconf/bonjour-sdk/dnssd_ipc.h</file>
-        <file>qtzeroconf/example/main.cpp</file>
-        <file>qtzeroconf/example/window.cpp</file>
-        <file>qtzeroconf/example/window.h</file>
-        <file>qtzeroconf/avahiclient.cpp</file>
-        <file>qtzeroconf/avahicore.cpp</file>
-        <file>qtzeroconf/bonjour.cpp</file>
-        <file>qtzeroconf/bonjour_p.h</file>
-        <file>qtzeroconf/qzeroconf.h</file>
-        <file>qtzeroconf/qzeroconfglobal.h</file>
-        <file>qtzeroconf/qzeroconfservice.cpp</file>
-        <file>qtzeroconf/qzeroconfservice.h</file>
-        <file>sources/entities/blind.cpp</file>
-        <file>sources/entities/blind.h</file>
-        <file>sources/entities/entities.cpp</file>
-        <file>sources/entities/entities.h</file>
-        <file>sources/entities/entitiesinterface.h</file>
-        <file>sources/entities/entity.cpp</file>
-        <file>sources/entities/entity.h</file>
-        <file>sources/entities/light.cpp</file>
-        <file>sources/entities/light.h</file>
-        <file>sources/entities/mediaplayer.cpp</file>
-        <file>sources/entities/mediaplayer.h</file>
-        <file>sources/hardware/apds9960.cpp</file>
-        <file>sources/hardware/apds9960.h</file>
-        <file>sources/hardware/bq27441.cpp</file>
-        <file>sources/hardware/bq27441.h</file>
-        <file>sources/hardware/display_control.cpp</file>
-        <file>sources/hardware/display_control.h</file>
-        <file>sources/hardware/drv2605.cpp</file>
-        <file>sources/hardware/drv2605.h</file>
-        <file>sources/hardware/interrupt_handler.h</file>
-        <file>sources/hardware/mcp23017.h</file>
-        <file>sources/hardware/proximity_gesture_control.h</file>
-        <file>sources/hardware/touchdetect.h</file>
-        <file>sources/integrations/integration.h</file>
-        <file>sources/integrations/plugininterface.h</file>
-        <file>sources/integrations/integrations.cpp</file>
-        <file>sources/integrations/integrations.h</file>
-        <file>sources/bluetootharea.cpp</file>
-        <file>sources/bluetootharea.h</file>
-        <file>sources/config.cpp</file>
-        <file>sources/config.h</file>
-        <file>sources/configinterface.h</file>
-        <file>sources/fileio.h</file>
-        <file>sources/jsonfile.cpp</file>
-        <file>sources/jsonfile.h</file>
-        <file>sources/launcher.cpp</file>
-        <file>sources/launcher.h</file>
-        <file>sources/main.cpp</file>
-        <file>sources/notifications.cpp</file>
-        <file>sources/notifications.h</file>
-        <file>sources/notificationsinterface.h</file>
-        <file>sources/translation.h</file>
-        <file>sources/yioapi.cpp</file>
-        <file>sources/yioapi.h</file>
-        <file>sources/yioapiinterface.h</file>
         <file>basic_ui/pages/Group.qml</file>
         <file>components/remote/ui/Button.qml</file>
         <file>basic_ui/Profiles.qml</file>
@@ -226,5 +57,29 @@
         <file>components/climate/ui/Card.qml</file>
         <file>components/climate/ui/ContextMenu.qml</file>
         <file>Style.qml</file>
+        <file>basic_ui/settings/Button.qml</file>
+        <file>basic_ui/settings/About.qml</file>
+        <file>basic_ui/settings/RemoteConfig.qml</file>
+        <file>basic_ui/settings/Wifi.qml</file>
+        <file>basic_ui/settings/WifiConnect.qml</file>
+        <file>setup/Setup.qml</file>
+        <file>setup/SetupStep1.qml</file>
+        <file>setup/SetupStep2.qml</file>
+        <file>setup/SetupStep3.qml</file>
+        <file>setup/SetupStep4.qml</file>
+        <file>setup/SetupStep5.qml</file>
+        <file>basic_ui/settings/SoftwareupdateDownloading.qml</file>
+        <file>setup/SetupStep6Success.qml</file>
+        <file>setup/SetupStep6Failure.qml</file>
+        <file>setup/SetupStep7.qml</file>
+        <file>setup/SetupStep8.qml</file>
+        <file>setup/SetupStep9Success.qml</file>
+        <file>setup/SetupStep9Failure.qml</file>
+        <file>setup/SetupStep9Skip.qml</file>
+        <file>setup/SetupStepCountry.qml</file>
+        <file>components/switch/ui/Button.qml</file>
+        <file>components/switch/ui/CardSwitch.qml</file>
+        <file>basic_ui/ProfileLoading.qml</file>
+        <file>basic_ui/InitialSetup.qml</file>
     </qresource>
 </RCC>

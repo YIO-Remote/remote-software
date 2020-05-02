@@ -1,24 +1,25 @@
 /******************************************************************************
- *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
- *
- * This file is part of the YIO-Remote software project.
- *
- * YIO-Remote software is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * YIO-Remote software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
- *
- * SPDX-License-Identifier: GPL-3.0-or-later
- *****************************************************************************/
+*
+* Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
+* Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+*
+* This file is part of the YIO-Remote software project.
+*
+* YIO-Remote software is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* YIO-Remote software is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+*
+* SPDX-License-Identifier: GPL-3.0-or-later
+*****************************************************************************/
 #pragma once
 
 #include <QJsonArray>
@@ -27,91 +28,124 @@
 #include <QQmlContext>
 #include <QtDebug>
 
-#include "configinterface.h"
 #include "jsonfile.h"
+#include "yio-interface/configinterface.h"
 
-class Config : public QObject, ConfigInterface {
+class Config : public QObject, public ConfigInterface {
     Q_OBJECT
     Q_INTERFACES(ConfigInterface)
 
  public:
+    // Common configuration keys. Initialized in config.cpp
+    // HELP: anyone knows how to properly define "static const QString" constants across Qt plugin boundaries?
+    static const QString KEY_ID;
+    static const QString KEY_FRIENDLYNAME;
+    static const QString KEY_ENTITY_ID;
+    static const QString KEY_AREA;
+    static const QString KEY_INTEGRATION;
+    static const QString KEY_SUPPORTED_FEATURES;
+    static const QString KEY_TYPE;
+    static const QString KEY_MDNS;
+    static const QString KEY_WORKERTHREAD;
+    static const QString OBJ_DATA;
+
     Q_PROPERTY(bool valid READ isValid CONSTANT)
     Q_PROPERTY(QString error READ getError CONSTANT)
-    Q_PROPERTY(QVariantMap config READ config WRITE setConfig NOTIFY configChanged)
-    Q_PROPERTY(QString profile READ profile WRITE setProfile NOTIFY profileChanged)
+    Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(QString profileId READ getProfileId WRITE setProfileId NOTIFY profileIdChanged)
     Q_PROPERTY(QStringList profileFavorites READ profileFavorites NOTIFY profileFavoritesChanged)
     Q_PROPERTY(QVariantMap settings READ getSettings WRITE setSettings NOTIFY settingsChanged)
-    Q_PROPERTY(QVariantMap integrations READ getIntegrations CONSTANT)
-    Q_PROPERTY(QVariantMap entities READ getAllEntities CONSTANT)
     Q_PROPERTY(QVariantMap profiles READ getProfiles NOTIFY profilesChanged)
     Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
 
-    Q_INVOKABLE bool readConfig(const QString& path);
-    Q_INVOKABLE bool writeConfig();
+    // valid
+    bool isValid() const { return m_error.isEmpty(); }
 
-    // Shortcuts to get the config items, and to decouple a bit from Json structure
-    // Please avoid old access via read property
-    QVariantMap              getIntegrations() { return m_config["integrations"].toMap(); }
-    Q_INVOKABLE QVariantMap  getIntegration(const QString& type) { return getIntegrations().value(type).toMap(); }
-    QVariantMap              getAllEntities() { return m_config["entities"].toMap(); }
-    Q_INVOKABLE QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
+    // error
+    QString getError() const { return m_error; }
 
-    // Assuming that the following config items are accessed quite often they are cached
+    // config
+    QVariantMap getConfig() { return m_config; }
+    void        setConfig(const QVariantMap& config);
+
+    // profile Id
+    QString getProfileId() { return m_cacheProfileId; }
+    void    setProfileId(QString id);
+
+    // profile favorites
+    QStringList profileFavorites() { return m_cacheUIProfile.value("favorites").toStringList(); }
+
+    // settings
     QVariantMap getSettings() { return m_cacheSettings; }
+    void        setSettings(const QVariantMap& config);
 
-    void setSettings(const QVariantMap& config);
+    // profiles
+    QVariantMap getProfiles() { return m_cacheUIProfiles; }
+    void        setProfiles(const QVariantMap& config);
 
+    // ui_config
     QVariantMap getUIConfig() { return m_cacheUIConfig; }
     void        setUIConfig(const QVariantMap& config);
 
-    QVariantMap             getProfiles() { return m_cacheUIProfiles; }
+    // pages
+    QVariantMap getPages() { return m_cacheUIPages; }
+    void        setPages(const QVariantMap& config);
+
+    // groups
+    QVariantMap getGroups() { return m_cacheUIGroups; }
+    void        setGroups(const QVariantMap& config);
+
+    // languages
+    QVariantList getLanguages() { return m_languages; }
+
+    // Shortcuts to get the config items, and to decouple a bit from Json structure
+    // Please avoid old access via read property
     Q_INVOKABLE QVariantMap getProfile(const QString& profile) { return m_cacheUIProfiles.value(profile).toMap(); }
-    QVariantMap             getPages() { return m_cacheUIPages; }
     Q_INVOKABLE QVariantMap getPage(const QString& pageId) { return m_cacheUIPages.value(pageId).toMap(); }
-    QVariantMap             getGroups() { return m_cacheUIGroups; }
-    Q_INVOKABLE QVariantMap getGroup(const QString& groupId) { return m_cacheUIGroups.value(groupId).toMap(); }
+    Q_INVOKABLE QVariantMap getGroup(const QString& groupId) {
+        return m_cacheUIGroups.value(groupId).toMap();
+    }  // not used anywhere
 
     // The selected, cached profile
     Q_INVOKABLE QVariantMap getProfile() { return m_cacheUIProfile; }
-    Q_INVOKABLE QStringList profileFavorites() { return m_cacheUIProfile.value("favorites").toStringList(); }
     Q_INVOKABLE QStringList getProfilePages() { return m_cacheUIProfile.value("pages").toStringList(); }
 
-    // Removed from entities
-    Q_INVOKABLE void setFavorite(const QString& entityId, bool value);
+    // set favorite entity
+    void setFavorite(const QString& entityId, bool value);
 
-    bool    isValid() const { return m_error.isEmpty(); }
-    QString getError() const { return m_error; }
-
-    QVariantMap config() { return m_config; }
-    void        setConfig(const QVariantMap& config);
-
-    QVariant getContextProperty(const QString& name);
+    // read and write configuration to file
+    bool readConfig(const QString& filePath);
+    bool writeConfig();
 
     // get a QML object, you need to have objectName property of the QML object set to be able to use this
     QObject* getQMLObject(QList<QObject*> nodes, const QString& name);
     QObject* getQMLObject(const QString& name);
 
-    // profile
-    QString profile() { return m_cacheProfile; }
-    void    setProfile(QString id);
+    // get all integrations and entities
+    QVariantMap getAllIntegrations() { return m_config["integrations"].toMap(); }
+    QVariantMap getIntegration(const QString& type) { return getAllIntegrations().value(type).toMap(); }
+
+    QVariantMap  getAllEntities() { return m_config["entities"].toMap(); }
+    QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
 
  public:
-    explicit Config(QQmlApplicationEngine* engine = nullptr, QString path = "", QString schemaPath = "");
+    explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath, QString appPath);
     virtual ~Config();
 
     static Config* getInstance() { return s_instance; }
 
  signals:
     void configChanged();
-    void profileChanged();
+    void profileIdChanged();
     void profileFavoritesChanged();
     void settingsChanged();
     void profilesChanged();
     void uiConfigChanged();
     void pagesChanged();
     void groupsChanged();
+    void configWriteError(const QString& error);
 
  private:
     void syncConfigToCache();
@@ -120,13 +154,16 @@ class Config : public QObject, ConfigInterface {
     static Config*         s_instance;
     QQmlApplicationEngine* m_engine;
 
-    QVariantMap m_config;
+    QVariantMap  m_config;
+    QVariantList m_languages;
 
     JsonFile* m_jsf;
     QString   m_error;
 
+    JsonFile* m_tf;
+
     // Caches to improve performance
-    QString     m_cacheProfile;
+    QString     m_cacheProfileId;
     QVariantMap m_cacheSettings;
     QVariantMap m_cacheUIConfig;
     QVariantMap m_cacheUIProfile;  // of selected Profile

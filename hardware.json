@@ -1,5 +1,73 @@
 {
+    "display": {
+        "control": {
+            "enabled": true,
+            "backlight": {
+                "gpio": {
+                    "pin": 26
+                }
+            },
+            "spi-over-gpio": {
+                "clk":  107,
+                "mosi": 106,
+                "cs":   105
+            }
+        }
+    },
+    "gesture": {
+        "enabled": true
+    },
+    "light": {
+        "enabled": true
+    },
+    "proximity": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 57
+        }
+    },
+    "batteryCharger": {
+        "enabled": true,
+        "gpio": {
+            "pin": 108
+        }
+    },
+    "batteryFuelGauge": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 85
+        }
+    },
+    "buttonInterruptHandler": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 32
+        },
+        "interrupt": {
+            "gpio": {
+                "pin": 18
+            }
+        }
+    },
+    "wiringPi": {
+        "enabled": true,
+        "ioExpander": {
+            "pinBase": 100,
+            "i2cId": 33
+        }
+    },
+    "hapticMotor": {
+        "enabled": true,
+        "i2c": {
+            "device": "/dev/i2c-3",
+            "id": 90
+        }
+    },
     "systemservice": {
+        "enabled": true,
         "systemd": {
             "sudo" : false,
             "timeout" : 30000,
@@ -9,14 +77,13 @@
                 "webserver": "lighttpd.service",
                 "ntp": "systemd-timesyncd.service",
                 "dhcp": "dhcpcd.service",
-                "shutdown": "shutdown.service",
-                "yio-update": "update.service",
                 "zeroconf": "avahi-daemon",
                 "networking": "systemd-networkd"
             }
         }
     },
     "wifi": {
+        "enabled": true,
         "maxScanResults": 20,
         "joinRetryCount": 5,
         "joinRetryDelay": 3000,
@@ -45,6 +112,7 @@
         }
     },
     "webserver" : {
+        "enabled": true,
         "lighttpd" : {
             "configFile": "/etc/lighttpd/lighttpd.conf",
             "wifiSetupConfig": "/etc/lighttpd/lighttpd-wifisetup.conf",

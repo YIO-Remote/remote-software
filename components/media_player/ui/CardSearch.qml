@@ -23,13 +23,32 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
 
+import Haptic 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    width: parent.width
-    height: parent.height
-    color: Style.colorDark
+    width: parent.width; height: parent.height
+    color: Style.color.dark
+    radius: Style.cornerRadius
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property bool isCurrentItem: parent._currentItem
+
+    onIsCurrentItemChanged: {
+        if (!isCurrentItem) {
+            searchResults.visible = false;
+            itemFlickable.contentY = 0;
+            if (obj.searchModel)
+                obj.searchModel.clear();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUNCTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onSearch() {
         obj.search(searchTextField.text);
         searchResultsTitle.text = searchTextField.text;
@@ -61,34 +80,24 @@ Rectangle {
         obj.browseModelChanged.disconnect(onBrowseModelChanged);
     }
 
-    property bool isCurrentItem: parent._currentItem
 
-    onIsCurrentItemChanged: {
-        if (!isCurrentItem) {
-            searchResults.visible = false;
-            itemFlickable.contentY = 0;
-            if (obj.searchModel)
-                obj.searchModel.clear();
-        }
-    }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI ELEMENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias albumLoader: albumLoader
     property alias swipeView: swipeView
 
     SwipeView {
         id: swipeView
-        width: parent.width
-        height: parent.height
+        width: parent.width; height: parent.height
         currentIndex: 0
         interactive: false
         clip: true
 
         Item {
-
             Flickable {
                 id: itemFlickable
-                width: parent.width
-                height: parent.height-100
+                width: parent.width; height: parent.height-100
                 maximumFlickVelocity: 6000
                 flickDeceleration: 1000
                 contentHeight: 260 + searchContainer.height + recentSearches.height + searchResults.height
@@ -109,7 +118,6 @@ Rectangle {
 
                 Connections {
                     target: card
-
                     onLooseFocus: {
                         searchTextField.focus = false;
                     }
@@ -117,46 +125,34 @@ Rectangle {
 
                 Text {
                     id: title
-                    color: Style.colorText
+                    color: Style.color.text
                     text: qsTr("Search") + translateHandler.emptyString
-                    anchors.left: parent.left
-                    anchors.leftMargin: 30
-                    anchors.top: parent.top
-                    anchors.topMargin: 30
-                    font.family: "Open Sans Bold"
-                    font.pixelSize: 40
+                    anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
+                    font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                     lineHeight: 1
                 }
 
                 Rectangle {
                     id: searchContainer
-                    width: parent.width - 60
-                    height: 80
-                    anchors.top: parent.top
-                    anchors.topMargin: 100
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: Style.colorText
+                    width: parent.width - 60; height: 80
+                    anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
+                    color: Style.color.text
                     radius: Style.cornerRadius
 
                     Text {
                         id: searchIcon
-                        color: Style.colorBackground
-                        text: Style.icons.search
+                        color: Style.color.background
+                        text: Style.icon.search
                         renderType: Text.NativeRendering
-                        width: 70
-                        height: 70
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
+                        width: 70; height: 70
+                        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                         font {family: "icons"; pixelSize: 80 }
-                        anchors.left: parent.left
-                        anchors.leftMargin: 10
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
 
                         MouseArea {
                             anchors.fill: parent
-
                             onClicked: {
-                                haptic.playEffect("click");
+                                Haptic.playEffect(Haptic.Click);
                                 onSearch();
                             }
                         }
@@ -165,19 +161,14 @@ Rectangle {
                     TextField {
                         id: searchTextField
                         cursorVisible: false
-                        width: parent.width-90
-                        height: parent.height
-                        anchors.left: searchIcon.right
-                        anchors.leftMargin: 10
-                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width-90; height: parent.height
+                        anchors { left: searchIcon.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
                         placeholderText: qsTr("Search") + translateHandler.emptyString
-                        color: Style.colorBackground
-                        font.family: "Open Sans"
-                        font.weight: Font.Normal
-                        font.pixelSize: 27
+                        color: Style.color.background
+                        font { family: "Open Sans Regular"; pixelSize: 27 }
 
                         background: Rectangle {
-                            color: Style.colorBackgroundTransparent
+                            color: Style.color.backgroundTransparent
                             border.width: 0
                         }
 
@@ -197,11 +188,8 @@ Rectangle {
 
                 Item {
                     id: recentSearches
-                    width: parent.width - 60
-                    height: childrenRect.height
-                    anchors.top: searchContainer.bottom
-                    anchors.topMargin: 40
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width - 60; height: childrenRect.height
+                    anchors { top: searchContainer.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
                     state: obj.recentSearches.count === 0 ? "hidden" : "visible"
 
                     states:[
@@ -234,34 +222,27 @@ Rectangle {
 
                     Text {
                         id: recentSearchesTitle
-                        color: Style.colorText
+                        color: Style.color.text
                         text: qsTr("Recent searches") + translateHandler.emptyString
-                        anchors.left: parent.left
-                        anchors.top: parent.top
-                        font.family: "Open Sans "
-                        font.pixelSize: 27
-                        lineHeight: 1
+                        anchors { left: parent.left; top: parent.top }
+                        font: Style.font.button
                     }
 
                     Text {
-                        color: Style.colorText
+                        color: Style.color.text
                         opacity: 0.5
                         text: qsTr("Clear") + translateHandler.emptyString
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        font.family: "Open Sans"
-                        font.pixelSize: 27
-                        lineHeight: 1
+                        anchors { right: parent.right; top: parent.top }
+                        font: Style.font.button
 
                         visible: obj.recentSearches.count > 0 ? true : false
                         enabled: visible
 
                         MouseArea {
-                            width: parent.width+20
-                            height: parent.height+20
+                            width: parent.width+20; height: parent.height+20
 
                             onClicked: {
-                                haptic.playEffect("click");
+                                Haptic.playEffect(Haptic.Click);
                                 obj.recentSearches.clear();
                             }
                         }
@@ -269,27 +250,24 @@ Rectangle {
 
                     ListView {
                         model: obj.recentSearches
-                        anchors.top: recentSearchesTitle.bottom
-                        anchors.topMargin: 40
+                        anchors { top: recentSearchesTitle.bottom; topMargin: 40 }
                         height: childrenRect.height
                         interactive: false
 
                         delegate: Item {
-                            width: recentSearches.width
-                            height: 60
+                            width: recentSearches.width; height: 60
 
                             Text {
-                                color: Style.colorText
+                                color: Style.color.text
                                 text: searchString
-                                font.family: "Open Sans"
-                                font.pixelSize: 25
+                                font { family: "Open Sans Regular"; pixelSize: 25 }
                                 lineHeight: 1
                             }
 
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    haptic.playEffect("click");
+                                    Haptic.playEffect(Haptic.Click);
                                     obj.search(searchString);
                                     searchResultsTitle.text = searchString;
                                     itemFlickable.contentY = 230 + recentSearches.height;
@@ -312,27 +290,21 @@ Rectangle {
                 Item {
                     id: searchResults
                     visible: false
-                    width: parent.width-60
-                    height: childrenRect.height
-                    anchors.top: recentSearches.bottom
-                    anchors.topMargin: 40
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width-60; height: childrenRect.height
+                    anchors { top: recentSearches.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
 
                     Text {
                         id: searchResultsTitle
-                        color: Style.colorText
-                        anchors.left: parent.left
-                        anchors.top: parent.top
-                        font.family: "Open Sans Bold"
-                        font.pixelSize: 30
+                        color: Style.color.text
+                        anchors { left: parent.left; top: parent.top }
+                        font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 30 }
                         lineHeight: 1
                     }
 
                     Flow {
                         id: tags
                         width: parent.width
-                        anchors.top: searchResultsTitle.bottom
-                        anchors.topMargin: 30
+                        anchors { top: searchResultsTitle.bottom; topMargin: 30 }
                         visible: searchResultsList.count != 0 ? true : false
                         spacing: 20
 
@@ -418,19 +390,17 @@ Rectangle {
 
                     ListView {
                         id: searchResultsList
-                        width: parent.width
-                        height: childrenRect.height
-                        anchors.top: tags.bottom
-                        anchors.topMargin: 40
+                        width: parent.width; height: childrenRect.height
+                        anchors { top: tags.bottom; topMargin: 40 }
                         interactive: false
                         spacing: 40
+                        cacheBuffer: 2000
 
                         model: obj.searchModel
 
                         delegate:
                             Item {
-                            width: parent.width
-                            height: childrenRect.height
+                            width: parent.width; height: childrenRect.height
 
                             // Title
                             Text {
@@ -445,20 +415,16 @@ Rectangle {
                                     else if (title === "playlists")
                                         return qsTr("Playlists") + translateHandler.emptyString
                                 }
-                                color: Style.colorText
-                                anchors.left: parent.left
-                                anchors.top: parent.top
-                                font.family: "Open Sans"
-                                font.pixelSize: 40
+                                color: Style.color.text
+                                anchors { left: parent.left; top: parent.top }
+                                font { family: "Open Sans Regular"; pixelSize: 40 }
                                 lineHeight: 1
                             }
 
                             // Listview
                             Loader {
                                 id: listViewLoader
-                                anchors.top: searchResultsListHeader.bottom
-                                anchors.topMargin: 40
-                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors { top: searchResultsListHeader.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
                                 sourceComponent: {
                                     if (title === "albums")
                                         return albumList
@@ -483,11 +449,11 @@ Rectangle {
 
                     ListView {
                         id: albumListView
-                        width: itemFlickable.width-60
-                        height: 260
+                        width: itemFlickable.width-60; height: 260
                         orientation: ListView.Horizontal
                         spacing: 30
                         clip: true
+                        cacheBuffer: 3000
 
                         delegate: albumThumbnail
 
@@ -506,14 +472,12 @@ Rectangle {
                     id: albumThumbnail
 
                     Item {
-                        width: childrenRect.width
-                        height: childrenRect.height
+                        width: childrenRect.width; height: childrenRect.height
 
                         Rectangle {
                             id: albumImage
-                            width: 160
-                            height: 160
-                            color: Style.colorBackground
+                            width: 160; height: 160
+                            color: Style.color.background
 
                             Image {
                                 source: item_image
@@ -529,12 +493,9 @@ Rectangle {
                             elide: Text.ElideRight
                             width: albumImage.width
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
-                            anchors.left: parent.left
-                            anchors.top: albumImage.bottom
-                            anchors.topMargin: 20
-                            font.family: "Open Sans"
-                            font.pixelSize: 25
+                            color: Style.color.text
+                            anchors { left: parent.left; top: albumImage.bottom; topMargin: 20 }
+                            font { family: "Open Sans Regular"; pixelSize: 25 }
                             lineHeight: 1
                         }
 
@@ -544,21 +505,17 @@ Rectangle {
                             elide: Text.ElideRight
                             width: albumImage.width
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
+                            color: Style.color.text
                             opacity: 0.6
-                            anchors.left: parent.left
-                            anchors.top: albumTitleText.bottom
-                            anchors.topMargin: 5
-                            font.family: "Open Sans"
-                            font.pixelSize: 20
+                            anchors { left: parent.left; top: albumTitleText.bottom; topMargin: 5 }
+                            font { family: "Open Sans Regular"; pixelSize: 20 }
                             lineHeight: 1
                         }
 
                         MouseArea {
                             anchors.fill: parent
-
                             onClicked: {
-                                haptic.playEffect("click");
+                                Haptic.playEffect(Haptic.Click);
                                 load(item_key, item_type);
                             }
                         }
@@ -570,11 +527,9 @@ Rectangle {
 
                     ListView {
                         id: trackListView
-                        width: itemFlickable.width-60
-                        height: childrenRect.height
+                        width: itemFlickable.width-60; height: childrenRect.height
                         spacing: 20
                         interactive: false
-
                         delegate: trackThumbnail
                     }
                 }
@@ -584,13 +539,11 @@ Rectangle {
 
                     Item {
                         id: trackThumbnailItem
-                        width: parent.width
-                        height: 80 //childrenRect.height
+                        width: parent.width; height: 80
 
                         Rectangle {
                             id: albumImage
-                            width: 80
-                            height: 80
+                            width: 80; height: 80
 
                             Image {
                                 source: item_image
@@ -606,13 +559,9 @@ Rectangle {
                             elide: Text.ElideRight
                             width: itemFlickable.width-60-albumImage.width-20-60
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
-                            anchors.left: albumImage.right
-                            anchors.leftMargin: 20
-                            anchors.top: albumImage.top
-                            anchors.topMargin: item_subtitle == "" ? 26 : 12
-                            font.family: "Open Sans"
-                            font.pixelSize: 25
+                            color: Style.color.text
+                            anchors { left: albumImage.right; leftMargin: 20; top: albumImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
+                            font { family: "Open Sans Regular"; pixelSize: 25 }
                             lineHeight: 1
                         }
 
@@ -623,31 +572,26 @@ Rectangle {
                             visible: item_subtitle == "" ? false : true
                             width: albumTitleText.width
                             wrapMode: Text.NoWrap
-                            color: Style.colorText
+                            color: Style.color.text
                             opacity: 0.6
-                            anchors.left: albumTitleText.left
-                            anchors.top: albumTitleText.bottom
-                            anchors.topMargin: 5
-                            font.family: "Open Sans"
-                            font.pixelSize: 20
+                            anchors { left: albumTitleText.left; top: albumTitleText.bottom; topMargin: 5 }
+                            font { family: "Open Sans Regular"; pixelSize: 20 }
                             lineHeight: 1
                         }
 
                         MouseArea {
                             anchors.fill: parent
-
                             onClicked: {
-                                haptic.playEffect("click");
+                                Haptic.playEffect(Haptic.Click);
                                 obj.playMedia(item_key, item_type);
                             }
                         }
 
                         BasicUI.ContextMenuIcon {
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
 
                             mouseArea.onClicked: {
-                                haptic.playEffect("click");
+                                Haptic.playEffect(Haptic.Click);
                                 contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
                             }
                         }
@@ -666,32 +610,24 @@ Rectangle {
 
             Text {
                 id: backButton
-                color: Style.colorText
-                text: Style.icons.left_arrow
+                color: Style.color.text
+                text: Style.icon.left_arrow
                 renderType: Text.NativeRendering
-                width: 70
-                height: 70
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
+                width: 70; height: 70
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                 font {family: "icons"; pixelSize: 80 }
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.top: parent.top
-                anchors.topMargin: 20
+                anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 20 }
 
                 MouseArea {
                     id: backButtonMouseArea
-                    width: parent.width + 20
-                    height: parent.height + 20
+                    width: parent.width + 20; height: parent.height + 20
                     anchors.centerIn: parent
-
                     onClicked: {
-                        haptic.playEffect("click");
+                        Haptic.playEffect(Haptic.Click);
                         swipeView.currentIndex = 0;
                     }
                 }
             }
-
         }
     }
 }

@@ -29,22 +29,22 @@ Rectangle {
     width: 110
     height: 60
     radius: height/2
-    border.color: Style.colorLight
+    border.color: Style.color.light
     border.width: 2
-    color: Style.colorBackgroundTransparent
+    color: Style.color.backgroundTransparent
 
     property alias title: title.text
     property alias mouseArea: mouseArea
 
     Text {
         id: title
-        color: Style.colorText
+        color: Style.color.text
         width: parent.width-20
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         anchors.centerIn: parent
-        font.family: "Open Sans"
+        font.family: "Open Sans Regular"
         font.weight: Font.Normal
         font.pixelSize: 24
         lineHeight: 1
@@ -54,7 +54,7 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         onClicked: {
-            haptic.playEffect("click");
+            haptic.playEffect(Haptic.Click);
         }
     }
 } // Rectangle end

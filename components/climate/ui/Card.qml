@@ -24,51 +24,37 @@ import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+import ButtonHandler 1.0
+
 import Entity.Climate 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
-Item {
-    id: climateCard
+Rectangle {
+    id: card
+    width: parent.width; height: parent.height
+    color: Style.color.dark
+    radius: Style.cornerRadius
 
-    property double targetTemperature: obj.targetTemperature
-
-    Component.onCompleted: {
-        var tempBase = temperatureDial.from;
-        for (var i=temperatureDial.from; i<(temperatureDial.to*2)-3; i++) {
-            var item = {};
-            item["temp"] = tempBase;
-            dialListModel.append(item);
-            tempBase = tempBase + 0.5;
-        }
-        dialListView.currentIndex = findNumber(targetTemperature);
-    }
-
-    function findNumber(temp) {
-        for (var i=0; i<dialListModel.count; i++) {
-            if (dialListModel.get(i).temp == temp) {
-                return i;
-            }
-        }
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad up":
+            case ButtonHandler.DPAD_UP:
                 if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
                     var t = targetTemperature+0.5
                     targetTemperature = t;
                     obj.setTargetTemperature(targetTemperature);
                 }
                 break;
-            case "dpad down":
+            case ButtonHandler.DPAD_DOWN:
                 if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
-                    var t = targetTemperature-0.5
+                    t = targetTemperature-0.5
                     targetTemperature = t;
                     obj.setTargetTemperature(targetTemperature);
                 }
@@ -82,7 +68,7 @@ Item {
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    state: "notmoving"
+    state: "closed"
 
     states: [
         State {
@@ -101,6 +87,24 @@ Item {
             PropertyChanges {target: areaText; opacity: 1}
             PropertyChanges {target: turnOnButton; opacity: 1}
             PropertyChanges {target: modeButton; opacity: 1}
+            PropertyChanges {target: dialListView; opacity: 0}
+        },
+        State {
+            name: "closed"
+            PropertyChanges { target: temperatureText; anchors.topMargin: 100; opacity: 0 }
+            PropertyChanges { target: titleText; opacity: 0 }
+            PropertyChanges { target: temperatureDial; opacity: 0 }
+            PropertyChanges { target: modeButton; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges { target: turnOnButton; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges {target: dialListView; opacity: 0}
+        },
+        State {
+            name: "open"
+            PropertyChanges { target: temperatureText; anchors.topMargin: 0; opacity: 1 }
+            PropertyChanges { target: titleText; opacity: 1 }
+            PropertyChanges { target: temperatureDial; opacity: 1 }
+            PropertyChanges { target: modeButton; anchors.bottomMargin: 70; opacity: 1 }
+            PropertyChanges { target: turnOnButton; anchors.bottomMargin: 70; opacity: 1 }
             PropertyChanges {target: dialListView; opacity: 0}
         }
     ]
@@ -124,42 +128,96 @@ Item {
             PropertyAnimation { target: turnOnButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: modeButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
             PropertyAnimation { target: dialListView; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+        },
+        Transition {
+            to: "closed"
+            ParallelAnimation {
+                PropertyAnimation { target: temperatureText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: temperatureDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: modeButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: turnOnButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            }
+        },
+        Transition {
+            to: "open"
+            ParallelAnimation {
+                PropertyAnimation { target: temperatureDial; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: temperatureText; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    ParallelAnimation {
+                        PropertyAnimation { target: turnOnButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                        SequentialAnimation {
+                            PauseAnimation { duration: 50 }
+                            PropertyAnimation { target: modeButton; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                        }
+                    }
+                }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: titleText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                }
+            }
         }
     ]
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    property double targetTemperature: obj.targetTemperature
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUNCTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function findNumber(temp) {
+        for (var i=0; i<dialListModel.count; i++) {
+            if (dialListModel.get(i).temp === temp) {
+                return i;
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        card.state = "open";
+
+        var tempBase = temperatureDial.from;
+        for (var i=temperatureDial.from; i<(temperatureDial.to*2)-3; i++) {
+            var item = {};
+            item["temp"] = tempBase;
+            dialListModel.append(item);
+            tempBase = tempBase + 0.5;
+        }
+        dialListView.currentIndex = findNumber(targetTemperature);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        anchors.fill: parent
-        color: Style.colorDark
-    }
-
     Dial {
         id: temperatureDial
-        width: parent.width-100
-        height: width
+        width: parent.width-100; height: width
         anchors { top: parent.top; topMargin: 140; horizontalCenter: parent.horizontalCenter }
-        from: obj.temperatureMin
-        to: obj.temperatureMax
+        from: obj.temperatureMin; to: obj.temperatureMax
         stepSize: 0.5
         snapMode: Dial.SnapAlways
-        value: targetTemperature
+        value: card.state == "moving" ? targetTemperature : obj.targetTemperature
 
         background: Rectangle {
             id: dialBg
-            x: temperatureDial.width / 2 - width / 2
-            y: temperatureDial.height / 2 - height / 2
-            width: Math.max(64, Math.min(temperatureDial.width, temperatureDial.height))
-            height: width
+            x: temperatureDial.width / 2 - width / 2; y: temperatureDial.height / 2 - height / 2
+            width: Math.max(64, Math.min(temperatureDial.width, temperatureDial.height)); height: width
             color: {
                 if ((obj.state === Climate.HEAT && targetTemperature > obj.temperature) || (targetTemperature > obj.temperature)) {
-                    return Style.colorOrange
+                    return Style.color.orange
                 } else if ((obj.state === Climate.COOL && targetTemperature < obj.temperature) || targetTemperature < obj.temperature) {
-                    return Style.colorBlue
+                    return Style.color.blue
                 } else {
-                    return Style.colorHighlight2
+                    return Style.color.highlight2
                 }
             }
             radius: width / 2
@@ -167,8 +225,7 @@ Item {
             layer.enabled: true
             layer.effect: OpacityMask {
                 maskSource: Item {
-                    width: dialBg.width
-                    height: dialBg.height
+                    width: dialBg.width; height: dialBg.height
                     Rectangle {
                         anchors.fill: parent
                         radius: dialBg.radius
@@ -182,14 +239,12 @@ Item {
 
             ListView {
                 id: dialListView
-                width: parent.width
-                height: parent.height
+                width: parent.width; height: parent.height
                 spacing: 10
                 interactive: false
                 highlightMoveDuration: 200
                 highlightRangeMode: ListView.StrictlyEnforceRange
-                preferredHighlightBegin: height / 2 - 80
-                preferredHighlightEnd: height / 2 + 80
+                preferredHighlightBegin: height / 2 - 80; preferredHighlightEnd: height / 2 + 80
 
                 model: dialListModel
 
@@ -210,7 +265,7 @@ Item {
 
                         Text {
                             id: temperatureTextDial
-                            color: Style.colorText
+                            color: Style.color.text
                             text: {
                                 var s = temp.toString().split(".")
                                 return s[0]
@@ -221,7 +276,7 @@ Item {
                         }
 
                         Text {
-                            color: Style.colorText
+                            color: Style.color.text
                             text: {
                                 var s = temp.toString().split(".")
                                 if (s[1]) {
@@ -242,9 +297,8 @@ Item {
             id: handleItem
             x: temperatureDial.background.x + temperatureDial.background.width / 2 - width / 2
             y: temperatureDial.background.y + temperatureDial.background.height / 2 - height / 2
-            width: 60
-            height: 60
-            color: Style.colorBackground
+            width: 60; height: 60
+            color: Style.color.background
             opacity: 0.5
             radius: 30
             antialiasing: true
@@ -261,6 +315,7 @@ Item {
         }
 
         onValueChanged: {
+            Haptic.playEffect(Haptic.Bump);
             targetTemperature = value;
             var i = findNumber(targetTemperature);
             if (i)
@@ -269,42 +324,40 @@ Item {
 
         onPressedChanged: {
             if (pressed) {
-                climateCard.state = "moving"
+                card.state = "moving"
             }
             else {
-                climateCard.state = "notmoving"
                 obj.setTargetTemperature(targetTemperature);
+                card.state = "notmoving"
             }
         }
     }
 
     Text {
         id: icon
-        color: Style.colorText
-        text: Style.icons.climate
+        color: Style.color.text
+        text: Style.icon.climate
         renderType: Text.NativeRendering
-        width: 85
-        height: 85
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 100 }
-        anchors {top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20}
+        width: 85; height: 85
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 100 }
+        anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
     }
 
     Text {
         id: temperatureText
-        color: Style.colorText
+        color: Style.color.text
         text: {
             var s = targetTemperature.toString().split(".")
             return s[0]
         }
         horizontalAlignment: Text.AlignLeft
         anchors { top: icon.bottom; topMargin: 0; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 140 }
+        font { family: "Open Sans Light"; pixelSize: 140 }
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
         opacity: temperatureText.opacity
         text: {
             var s = targetTemperature.toString().split(".")
@@ -315,55 +368,56 @@ Item {
             }
         }
         anchors { top: temperatureText.top; topMargin: 16; left: temperatureText.right; leftMargin: 0 }
-        font {family: "Open Sans Regular"; pixelSize: 80 }
+        font { family: "Open Sans Regular"; pixelSize: 80 }
     }
 
     Text {
         id: titleText
-        color: Style.colorText
+        color: Style.color.text
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: temperatureText.bottom; topMargin: 0; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 60 }
+        font { family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
     Text {
         id: areaText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-60
         anchors { top: titleText.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 24 }
+        font { family: "Open Sans Regular"; pixelSize: 24 }
     }
 
     BasicUI.CustomButton {
         id: turnOnButton
+        visible: obj.isSupported(Climate.F_OFF) && obj.isSupported(Climate.F_ON)
         anchors { left:parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
-        buttonTextColor: Style.colorBackground
+        color: Style.color.text
+        buttonTextColor: Style.color.background
         buttonText: obj.state ? qsTr("Turn off") + translateHandler.emptyString : qsTr("Turn on") + translateHandler.emptyString
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.toggle();
         }
     }
 
     BasicUI.CustomButton {
         id: modeButton
-        anchors { left:turnOnButton.right; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
-        buttonTextColor: Style.colorBackground
+        anchors { left: (obj.isSupported(Climate.F_OFF) && obj.isSupported(Climate.F_ON)) ? turnOnButton.right : parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
+        color: Style.color.text
+        buttonTextColor: Style.color.background
         buttonText: qsTr("Mode") + translateHandler.emptyString
         visible: obj.isSupported(Climate.F_HVAC_MODES)
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             var list = [];
 
             if (obj.isSupported(Climate.OFF)) {
@@ -384,14 +438,13 @@ Item {
                 item["translated"] = qsTr("Cool")+translateHandler.emptyString;
                 list.push(item);
             }
-            contextMenuLoader.setSource("qrc:/components/climate/ui/ContextMenu.qml", { "width": climateCard.width, "climateObj": obj, "list": list })
+            contextMenuLoader.setSource("qrc:/components/climate/ui/ContextMenu.qml", { "width": card.width, "climateObj": obj, "list": list })
         }
     }
 
     Loader {
         id: contextMenuLoader
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom }
         visible: modeButton.visible
 
         onStatusChanged: {
@@ -399,5 +452,4 @@ Item {
                 contextMenuLoader.item.state = "open"
         }
     }
-
 }

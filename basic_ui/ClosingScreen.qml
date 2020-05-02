@@ -24,6 +24,8 @@ import QtQuick 2.11
 import Launcher 1.0
 import Style 1.0
 
+import StandbyControl 1.0
+
 Rectangle {
     id: closingScreen
     anchors.fill: parent
@@ -53,8 +55,8 @@ Rectangle {
         if (startAnimFinished) {
             console.debug("NOW SHUTDOWN");
             // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
-            launcher.launch("fbv -d 1 /bye.png")
-            buttonHandler.interruptHandler.shutdown();
+            launcher.launch("fbv -d 1 $YIO_MEDIA_DIR/splash/bye.png")
+            StandbyControl.shutdown();
             // TODO create a device class for system shutdown instead of launching hard coded shell scripts from QML
             launcher.launch("halt");
         }
@@ -62,24 +64,16 @@ Rectangle {
 
     Rectangle {
         id: left
-        width: 0
-        height: 800
+        width: 0; height: 800
         color: "#000000"
-
-        anchors {
-            left: parent.left
-        }
+        anchors.left: parent.left
     }
 
     Rectangle {
         id: right
-        width: 0
-        height: 800
+        width: 0; height: 800
         color: "#000000"
-
-        anchors {
-            right: parent.right
-        }
+        anchors.right: parent.right
     }
 
     MouseArea {

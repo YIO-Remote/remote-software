@@ -23,6 +23,7 @@
 #include "entities.h"
 
 #include <QJsonArray>
+#include <QLoggingCategory>
 #include <QTimer>
 #include <QtDebug>
 
@@ -39,17 +40,28 @@
 #include "switch.h"
 #include "weather.h"
 
+static Q_LOGGING_CATEGORY(CLASS_LC, "entities");
+
 EntitiesInterface::~EntitiesInterface() {}
 
 Entities *Entities::s_instance = nullptr;
 
-Entities::Entities(QObject *parent) : QObject(parent), m_log("entities class") {
+Entities::Entities(QObject *parent) : QObject(parent), m_enumSupportedEntityTypes(nullptr) {
     s_instance = this;
 
     // Remote is special. Register class before entity creation (for use in Main.qml)
     Remote::staticInitialize();
 
-    Logger::getInstance()->defineLogCategory(m_log.categoryName(), QtMsgType::QtDebugMsg, &m_log);
+    const QMetaObject &metaObject             = Entities::staticMetaObject;
+    int                index                  = metaObject.indexOfEnumerator("SupportedEntityTypes");
+    QMetaEnum          metaEnumSupportedTypes = metaObject.enumerator(index);
+    m_enumSupportedEntityTypes                = &metaEnumSupportedTypes;
+
+    for (int i = 0; i < m_enumSupportedEntityTypes->keyCount(); i++) {
+        QString name(m_enumSupportedEntityTypes->key(i));
+        qCDebug(CLASS_LC()) << "Adding supported entity type:" << name.toLower();
+        m_supportedEntities.append(name.toLower());
+    }
 }
 
 Entities::~Entities() { s_instance = nullptr; }
@@ -67,16 +79,15 @@ QList<QObject *> Entities::list() {
 void Entities::load() {
     QVariantMap entities = Config::getInstance()->getAllEntities();
 
-    for (int i = 0; i < m_supported_entities.length(); i++) {
-        if (entities.contains(m_supported_entities[i])) {
-            QVariantList type = entities.value(m_supported_entities[i]).toJsonArray().toVariantList();
+    for (int i = 0; i < m_supportedEntities.length(); i++) {
+        if (entities.contains(m_supportedEntities[i])) {
+            QVariantList type = entities.value(m_supportedEntities[i]).toJsonArray().toVariantList();
 
             for (int k = 0; k < type.length(); k++) {
                 QVariantMap           map = type[k].toMap();
                 QObject *             obj = Integrations::getInstance()->get(map.value("integration").toString());
                 IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
-                add(m_supported_entities[i], map, integration);
-                addLoadedEntity(m_supported_entities[i]);
+                add(m_supportedEntities[i], map, integration);
             }
         }
     }
@@ -85,7 +96,7 @@ void Entities::load() {
 
 QList<EntityInterface *> Entities::getByType(const QString &type) {
     QList<EntityInterface *> e;
-    foreach (QObject *value, m_entities) {
+    for (QObject *value : m_entities) {
         if (value->property("type") == type) {
             e.append(qobject_cast<EntityInterface *>(m_entities.value(value->property("entity_id").toString())));
         }
@@ -93,7 +104,7 @@ QList<EntityInterface *> Entities::getByType(const QString &type) {
     return e;
 }
 
-// TODO this function might be removed
+// TODO(marton) this function might be removed
 QList<EntityInterface *> Entities::getByArea(const QString &area) {
     QList<EntityInterface *> e;
     for (QMap<QString, Entity *>::iterator i = m_entities.begin(); i != m_entities.end(); ++i) {
@@ -131,6 +142,19 @@ void Entities::setConnected(const QString &integrationId, bool connected) {
     }
 }
 
+bool Entities::isSupportedEntityType(const QString &type) {
+    if (m_supportedEntities.contains(type)) {
+        return true;
+    } else {
+        return false;
+    }
+    //    if (m_enumSupportedEntityTypes->keyToValue(type.toUpper().toUtf8()) > -1) {
+    //        return true;
+    //    } else {
+    //        return false;
+    //    }
+}
+
 QObject *        Entities::get(const QString &entity_id) { return m_entities.value(entity_id); }
 EntityInterface *Entities::getEntityInterface(const QString &entity_id) {
     return qobject_cast<EntityInterface *>(m_entities.value(entity_id));
@@ -142,42 +166,39 @@ void Entities::add(const QString &type, const QVariantMap &config, IntegrationIn
     // Light entity
     if (type == "light") {
         entity = new Light(config, integrationObj, this);
-    }
-    // Blind entity
-    else if (type == "blind") {
+    } else if (type == "blind") {
+        // Blind entity
         entity = new Blind(config, integrationObj, this);
-    }
-    // Media player entity
-    else if (type == "media_player") {
+    } else if (type == "media_player") {
+        // Media player entity
         entity = new MediaPlayer(config, integrationObj, this);
-    }
-    // Remote entity
-    else if (type == "remote") {
+    } else if (type == "remote") {
+        // Remote entity
         entity = new Remote(config, integrationObj, this);
-    }
-    // Weather entity
-    else if (type == "weather") {
+    } else if (type == "weather") {
+        // Weather entity
         entity = new Weather(config, integrationObj, this);
-    }
-    // Climate entity
-    else if (type == "climate") {
+    } else if (type == "climate") {
+        // Climate entity
         entity = new Climate(config, integrationObj, this);
-    }
-    // Switch entity
-    else if (type == "switch") {
+    } else if (type == "switch") {
+        // Switch entity
         entity = new Switch(config, integrationObj, this);
     }
 
-    if (entity == nullptr)
-        qCDebug(m_log) << "Illegal entity type : " << type;
-    else
+    if (entity == nullptr) {
+        qCDebug(CLASS_LC) << "Illegal entity type : " << type;
+    } else {
         m_entities.insert(entity->entity_id(), entity);
+    }
 }
+
+void Entities::remove(const QString &entity_id) { m_entities.remove(entity_id); }
 
 void Entities::update(const QString &entity_id, const QVariantMap &attributes) {
     Entity *e = static_cast<Entity *>(m_entities.value(entity_id));
     if (e == nullptr)
-        qCDebug(m_log) << "Entity not found : " << entity_id;
+        qCDebug(CLASS_LC) << "Entity not found : " << entity_id;
     else
         e->update(attributes);
 }
@@ -185,56 +206,99 @@ void Entities::update(const QString &entity_id, const QVariantMap &attributes) {
 QList<QObject *> Entities::mediaplayersPlaying() { return m_mediaplayersPlaying.values(); }
 
 void Entities::addMediaplayersPlaying(const QString &entity_id) {
+    QMutexLocker locker(&m_mutex);
+
     // check if there is a timer active to remove the media player
     if (m_mediaplayersTimers.contains(entity_id)) {
+        qCDebug(CLASS_LC) << "There is a timer for:" << entity_id;
         QTimer *timer = m_mediaplayersTimers.value(entity_id);
         if (timer) {
             timer->stop();
-            timer->deleteLater();
+            timer->blockSignals(true);
             m_mediaplayersTimers.remove(entity_id);
+            timer->deleteLater();
         }
+        qCDebug(CLASS_LC) << "Removing timer";
     }
 
-    QObject *o = get(entity_id);
+    if (!m_mediaplayersPlaying.contains(entity_id)) {
+        qCDebug(CLASS_LC) << "Getting entity object" << entity_id;
+        QObject *o = get(entity_id);
+        qCDebug(CLASS_LC) << "Object parent:" << o->parent();
+        //        o->setParent(this);
 
-    if (!m_mediaplayersPlaying.contains(entity_id) && o) {
+        qCDebug(CLASS_LC) << "Object is not in the list, adding to list" << entity_id;
         m_mediaplayersPlaying.insert(entity_id, o);
+        qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
         emit mediaplayersPlayingChanged();
     }
 }
 
-void Entities::removeMediaplayersPlaying(const QString &entity_id) {
+void Entities::removeMediaplayersPlaying(const QString &entity_id, const bool &now) {
+    QMutexLocker locker(&m_mutex);
+
     if (m_mediaplayersPlaying.contains(entity_id)) {
-        // use a timer to remove the entity with a delay
-        QTimer *timer = new QTimer();
-        timer->setSingleShot(true);
+        qCDebug(CLASS_LC) << "There is an object playing list" << entity_id;
+        if (now) {
+            qCDebug(CLASS_LC) << "Removing object" << entity_id;
+            m_mediaplayersPlaying.remove(entity_id);
 
-        QObject *context = new QObject(this);
+            if (m_mediaplayersTimers.contains(entity_id)) {
+                qCDebug(CLASS_LC) << "Removing timer" << entity_id;
+                m_mediaplayersTimers.remove(entity_id);
+            }
 
-        connect(timer, &QTimer::timeout, context, [=]() {
-            if (m_mediaplayersPlaying.contains(entity_id)) m_mediaplayersPlaying.remove(entity_id);
-
-            if (m_mediaplayersTimers.contains(entity_id)) m_mediaplayersTimers.remove(entity_id);
-
-            timer->deleteLater();
-            context->deleteLater();
+            qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
             emit mediaplayersPlayingChanged();
-        });
 
-        timer->start(120000);
+        } else {
+            // use a timer to remove the entity with a delay
+            if (!m_mediaplayersTimers.contains(entity_id)) {
+                qCDebug(CLASS_LC) << "No timer found for object" << entity_id;
+                QTimer *timer = new QTimer();
+                timer->setSingleShot(true);
 
-        if (!m_mediaplayersTimers.contains(entity_id)) m_mediaplayersTimers.insert(entity_id, timer);
+                QObject *context = new QObject();
+
+                qCDebug(CLASS_LC) << "Connecting signals" << entity_id;
+                connect(timer, &QTimer::timeout, context, [=]() {
+                    qCDebug(CLASS_LC) << "Timer timeout" << entity_id;
+                    if (m_mediaplayersPlaying.contains(entity_id)) {
+                        qCDebug(CLASS_LC) << "Removing object" << entity_id;
+                        m_mediaplayersPlaying.remove(entity_id);
+                    }
+
+                    if (m_mediaplayersTimers.contains(entity_id)) {
+                        qCDebug(CLASS_LC) << "Removing timer" << entity_id;
+                        m_mediaplayersTimers.remove(entity_id);
+                    }
+
+                    qCDebug(CLASS_LC) << "Emitting mediaplayersPlayingChanged";
+                    emit mediaplayersPlayingChanged();
+                    qCDebug(CLASS_LC) << "Context deleteLater";
+                    context->deleteLater();
+                    qCDebug(CLASS_LC) << "Timer deleteLater";
+                    timer->deleteLater();
+                });
+
+                qCDebug(CLASS_LC) << "Starting timer" << entity_id;
+                timer->start(120000);
+
+                qCDebug(CLASS_LC) << "Inserting timer to the list" << entity_id;
+                m_mediaplayersTimers.insert(entity_id, timer);
+            }
+        }
     }
 }
 
-void Entities::addLoadedEntity(const QString &entity) { m_loaded_entities.append(entity); }
+// void Entities::addLoadedEntity(const QString &entity) { m_loaded_entities.append(entity); }
 
 QString Entities::getSupportedEntityTranslation(const QString &type) {
     QString translation;
 
-    for (int i = 0; i < m_supported_entities.length(); i++) {
-        if (supported_entities().value(i) == type) {
-            translation = supported_entities_translation().value(i);
+    for (int i = 0; i < m_supportedEntities.length(); i++) {
+        if (supportedEntities().value(i) == type) {
+            translation = supportedEntitiesTranslation().value(i);
         }
     }
 

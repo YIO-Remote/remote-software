@@ -26,7 +26,7 @@
 #include <QVariant>
 
 #include "entity.h"
-#include "switchinterface.h"
+#include "yio-interface/entities/switchinterface.h"
 
 class Switch : public Entity, SwitchInterface {
     Q_OBJECT

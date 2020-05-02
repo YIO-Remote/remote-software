@@ -22,74 +22,61 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
+import Haptic 1.0
+import StandbyControl 1.0
+import ButtonHandler 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
 Item {
     id: main_container
-    width: parent.width
-    height: parent.height
+    width: parent.width; height: parent.height
     clip: true
     enabled: loader_main.state === "visible" ? true : false
     layer.enabled: true
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONNECT TO ALL INTEGRATIONS ONCE THE UI IS LOADED
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    Component.onCompleted: {
-        for (var i=0; i<integrations.list.length; i++) {
-            integrations.list[i].connect();
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
-        enabled: loader_main.state === "visible" && standbyControl.mode === "on" ? true : false
+        target: ButtonHandler
+        enabled: loader_main.state === "visible" && StandbyControl.mode === StandbyControl.ON ? true : false
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad right":
+            case ButtonHandler.DPAD_RIGHT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex < loader_main.item.mainNavigationSwipeview.count-1) {
-//                    loader_main.item.mainNavigationSwipeview.currentIndex += 1;
                     loader_main.item.mainNavigationSwipeview.incrementCurrentIndex();
-                    //                    mainNavigation.mainNavigationListView.currentIndex += 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad left":
+            case ButtonHandler.DPAD_LEFT:
                 if (loader_main.item.mainNavigationSwipeview.currentIndex > 0) {
-//                    loader_main.item.mainNavigationSwipeview.currentIndex -= 1;
                     loader_main.item.mainNavigationSwipeview.decrementCurrentIndex();
-                    //                    mainNavigation.mainNavigationListView.currentIndex -= 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad up":
-                var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY - 200;
-                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == 0) {
-                    haptic.playEffect("buzz");
+            case ButtonHandler.DPAD_UP:
+                var newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY - 200;
+                if (newpos <=0 && mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY === 0) {
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 if (newpos <= 0) {
                     newpos = 0;
                 }
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY = newpos;
                 break;
-            case "dpad down":
-                newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY + 200;
-                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
-                     haptic.playEffect("buzz");
+            case ButtonHandler.DPAD_DOWN:
+                newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY + 200;
+                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height) && mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY == (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height)) {
+                    Haptic.playEffect(Haptic.Buzz);
                 }
-                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height)) {
-                    newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item.height;
+                if (newpos >= (mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height)) {
+                    newpos = mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentHeight - mainNavigationSwipeview.currentItem.mainNavigationLoader.item._height;
                 }
-                mainNavigationSwipeview.currentItem.mainNavigationLoader.item.contentY = newpos;
+                mainNavigationSwipeview.currentItem.mainNavigationLoader.item._contentY = newpos;
                 break;
             }
         }
@@ -103,11 +90,11 @@ Item {
         enabled: config.settings.bluetootharea
 
         onCurrentAreaChanged: {
-            var p = config.pages //config.ui_config.profiles[config.profile].pages;
+            var p = config.pages
 
-            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name != bluetoothArea.currentArea) {
+            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name !== bluetoothArea.currentArea) {
                 for (var i=0; i<p.length; i++) {
-                    if (p[i].name == bluetoothArea.currentArea) {
+                    if (p[i].name === bluetoothArea.currentArea) {
                         mainNavigationSwipeview.currentIndex = i;
                     }
                 }
@@ -118,21 +105,33 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN CONTAINER CONTENT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     property alias mainNavigationSwipeview: mainNavigationSwipeview
     property int itemsLoaded: 0
     property bool startUp: false
+    property bool firstInit: true
 
-    signal loadedItems()
+    function doneLoading() {
+        itemsLoaded = 0;
+        if (firstInit) {
+            firstInit = false;
+            loadingScreen.item.state = "loaded";
+            StandbyControl.init();
+        } else {
+            profileLoadingScreen.hide();
+        }
+    }
 
     SwipeView {
         id: mainNavigationSwipeview
-        width: parent.width
-        height: parent.height-miniMediaPlayer.height
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width; height: parent.height-miniMediaPlayer.height
+        anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
+        currentIndex: 0
 
-        currentIndex: 0 //mainNavigation.menuConfig.count-1
+        Component.onCompleted: {
+            if (mainNavigation.menuConfig.count == 0) {
+                doneLoading();
+            }
+        }
 
         Repeater {
             id: mainNavigationRepeater
@@ -142,30 +141,30 @@ Item {
                 id: mainNavigationLoader
                 asynchronous: true
 
+                property bool _isCurrentItem: SwipeView.isCurrentItem
                 property alias mainNavigationLoader: mainNavigationLoader
 
                 function determinePageToLoad(type) {
                     if (type === "favorites") {
                         mainNavigationLoader.source = "qrc:/basic_ui/pages/Favorites.qml";
                     } else if (type === "settings") {
-                        mainNavigationLoader.source = "qrc:/basic_ui/pages/Settings.qml";
+                        mainNavigationLoader.setSource("qrc:/basic_ui/pages/Settings.qml");
                     } else {
                         mainNavigationLoader.setSource("qrc:/basic_ui/pages/Page.qml", { "page": page });
                     }
                 }
 
                 Component.onCompleted: {
-                    determinePageToLoad(page);
+                        determinePageToLoad(page);
                 }
 
                 onStatusChanged: {
                     if (mainNavigationLoader.status == Loader.Ready) {
                         itemsLoaded += 1;
-                        console.debug("PAGE LOADED: " + itemsLoaded);
-
-                        if (itemsLoaded === mainNavigation.menuConfig.count) {
-                            console.debug("ALL PAGES LOADED. SENDING SIGNAL.");
-                            main_container.loadedItems();
+                        console.debug("PAGE LOADED: " + itemsLoaded + "/" + mainNavigation.menuConfig.count);
+                        if (itemsLoaded == mainNavigation.menuConfig.count) {
+                            console.debug("EVERY PAGE LOADED. " + itemsLoaded);
+                            doneLoading();
                         }
                     }
                 }
@@ -212,8 +211,7 @@ Item {
     property alias miniMediaPlayer: miniMediaPlayer
     Item {
         id: miniMediaPlayer
-        width: parent.width
-        height: 0
+        width: parent.width; height: 0
         anchors.bottom: parent.bottom
 
         property alias miniMediaPlayerLoader: miniMediaPlayerLoader
@@ -232,9 +230,7 @@ Item {
                     miniMediaPlayer.height = 90;
                     miniMediaPlayerLoader.setSource("qrc:/basic_ui/MiniMediaPlayer.qml")
                     miniMediaPlayerLoader.active = true;
-                }
-
-                if (entities.mediaplayersPlaying.length === 0 && miniMediaPlayer.miniMediaPlayerLoader.active) {
+                } else if (miniMediaPlayerLoader.active && entities.mediaplayersPlaying.length === 0) {
                     loader_main.state = "visible";
                     miniMediaPlayer.height = 0;
                     miniMediaPlayer.miniMediaPlayerLoader.active = false;
@@ -255,8 +251,7 @@ Item {
 
     BasicUI.MainNavigation {
         id: mainNavigation
-        anchors.bottom: miniMediaPlayer.top
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors { bottom: miniMediaPlayer.top; horizontalCenter: parent.horizontalCenter }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,8 +259,5 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property alias statusBar: statusBar
 
-    BasicUI.StatusBar {
-        id: statusBar
-    }
-
+    BasicUI.StatusBar { id: statusBar }
 }

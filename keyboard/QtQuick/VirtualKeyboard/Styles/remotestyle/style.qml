@@ -1,31 +1,24 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the Qt Virtual Keyboard module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:GPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3 or (at your option) any later version
-** approved by the KDE Free Qt Foundation. The licenses are as published by
-** the Free Software Foundation and appearing in the file LICENSE.GPL3
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-3.0.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+/******************************************************************************
+ *
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
 
 import QtQuick 2.7
 import QtQuick.VirtualKeyboard 2.1
@@ -36,7 +29,7 @@ import Style 1.0
 KeyboardStyle {
     id: currentStyle
     readonly property bool compactSelectionList: [InputEngine.Pinyin, InputEngine.Cangjie, InputEngine.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
-    readonly property string fontFamily: "Neuzeit Grotesk"
+    readonly property string fontFamily: "Open Sans"
     readonly property real keyBackgroundMargin: Math.round(13 * scaleHint)
     readonly property real keyContentMargin: Math.round(45 * scaleHint)
     readonly property real keyIconScale: scaleHint * 1
@@ -54,14 +47,14 @@ KeyboardStyle {
     }
 
     keyboardDesignWidth: 2560
-    keyboardDesignHeight: 2560
+    keyboardDesignHeight: 2000
     keyboardRelativeLeftMargin: 13 / keyboardDesignWidth
     keyboardRelativeRightMargin: 13 / keyboardDesignWidth
     keyboardRelativeTopMargin: 13 / keyboardDesignHeight
     keyboardRelativeBottomMargin: 13 / keyboardDesignHeight
 
     keyboardBackground: Rectangle {
-        color: Style.colorBackground
+        color: Style.color.background
     }
 
     keyPanel: KeyPanel {
@@ -69,14 +62,14 @@ KeyboardStyle {
         Rectangle {
             id: keyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: keyPanel
             anchors.margins: keyBackgroundMargin
             Text {
                 id: keySmallText
                 text: control.smallText
                 visible: control.smallTextVisible
-                color: Style.colorText
+                color: Style.color.text
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.margins: keyContentMargin / 3
@@ -90,7 +83,7 @@ KeyboardStyle {
             Text {
                 id: keyText
                 text: control.displayText
-                color: Style.colorText
+                color: Style.color.text
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.fill: parent
@@ -139,7 +132,7 @@ KeyboardStyle {
         Rectangle {
             id: backspaceKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: backspaceKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -184,7 +177,7 @@ KeyboardStyle {
         Rectangle {
             id: languageKeyBackground
             radius: 5
-            color: "#35322f"
+            color: Style.color.medium
             anchors.fill: languageKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -229,7 +222,7 @@ KeyboardStyle {
         Rectangle {
             id: enterKeyBackground
             radius: 5
-            color: "#1e1b18"
+            color: Style.color.medium
             anchors.fill: enterKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -326,7 +319,7 @@ KeyboardStyle {
         Rectangle {
             id: hideKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: hideKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -371,7 +364,7 @@ KeyboardStyle {
         Rectangle {
             id: shiftKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: shiftKeyPanel
             anchors.margins: keyBackgroundMargin
             Image {
@@ -388,7 +381,7 @@ KeyboardStyle {
                     when: InputContext.capsLock
                     PropertyChanges {
                         target: shiftKeyBackground
-                        color: Style.colorHighlight1
+                        color: Style.color.highlight1
                     }
                     PropertyChanges {
                         target: shiftKeyIcon
@@ -479,13 +472,13 @@ KeyboardStyle {
         Rectangle {
             id: symbolKeyBackground
             radius: 5
-            color: Style.colorMedium
+            color: Style.color.medium
             anchors.fill: symbolKeyPanel
             anchors.margins: keyBackgroundMargin
             Text {
                 id: symbolKeyText
                 text: control.displayText
-                color: Style.colorText
+                color: Style.color.text
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.fill: parent
@@ -645,7 +638,7 @@ KeyboardStyle {
             id: characterPreviewBackground
             width: parent.width+20
             height: parent.height+20
-            color: Style.colorHighlight1
+            color: Style.color.highlight1
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             radius: 5
@@ -667,8 +660,8 @@ KeyboardStyle {
         }
     }
 
-    alternateKeysListItemWidth: 99 * scaleHint
-    alternateKeysListItemHeight: 150 * scaleHint
+    alternateKeysListItemWidth: 299 * scaleHint //99 * scaleHint
+    alternateKeysListItemHeight: 350 * scaleHint //150 * scaleHint
     alternateKeysListDelegate: Item {
         id: alternateKeysListItem
         width: alternateKeysListItemWidth
@@ -680,7 +673,7 @@ KeyboardStyle {
             font {
                 family: fontFamily
                 weight: Font.Normal
-                pixelSize: 52 * scaleHint
+                pixelSize: 100 * scaleHint
             }
             anchors.centerIn: parent
         }
@@ -944,73 +937,69 @@ KeyboardStyle {
         NumberAnimation { property: "opacity"; to: 0; duration: 200 }
     }
 
-//    languagePopupListEnabled: true
+    languagePopupListEnabled: true
 
-//    languageListDelegate: SelectionListItem {
-//        id: languageListItem
-//        width: languageNameTextMetrics.width * 17
-//        height: languageNameTextMetrics.height + languageListLabel.anchors.topMargin + languageListLabel.anchors.bottomMargin
-//        Text {
-//            id: languageListLabel
-//            anchors.left: parent.left
-//            anchors.top: parent.top
-//            anchors.leftMargin: languageNameTextMetrics.height / 2
-//            anchors.rightMargin: anchors.leftMargin
-//            anchors.topMargin: languageNameTextMetrics.height / 3
-//            anchors.bottomMargin: anchors.topMargin
-//            text: languageNameFormatter.elidedText
-//            color: "#5CAA15"
-//            font {
-//                family: fontFamily
-//                weight: Font.Normal
-//                pixelSize: 44 * scaleHint
-//            }
-//        }
-//        TextMetrics {
-//            id: languageNameTextMetrics
-//            font {
-//                family: fontFamily
-//                weight: Font.Normal
-//                pixelSize: 44 * scaleHint
-//            }
-//            text: "X"
-//        }
-//        TextMetrics {
-//            id: languageNameFormatter
-//            font {
-//                family: fontFamily
-//                weight: Font.Normal
-//                pixelSize: 44 * scaleHint
-//            }
-//            elide: Text.ElideRight
-//            elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
-//            text: displayName
-//        }
-//        states: State {
-//            name: "current"
-//            when: languageListItem.ListView.isCurrentItem
-//            PropertyChanges {
-//                target: languageListLabel
-//                color: "black"
-//            }
-//        }
-//    }
+    languageListDelegate: SelectionListItem {
+        id: languageListItem
+        width: Style.screen.width
+        height: 80
+        x: Style.screen.width
 
-//    languageListBackground: Rectangle {
-//        color: "white"
-//        border {
-//            width: 1
-//            color: "#929495"
-//        }
-//    }
+        Text {
+            id: languageListLabel
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            text: languageNameFormatter.elidedText
+            color: Style.color.text //"#5CAA15"
+            font {
+                family: fontFamily
+                weight: Font.Normal
+                pixelSize: 20 //44 * scaleHint
+                capitalization: Font.Capitalize
+            }
+        }
+        TextMetrics {
+            id: languageNameTextMetrics
+            font {
+                family: fontFamily
+                weight: Font.Normal
+                pixelSize: 20 //44 * scaleHint
+            }
+            text: "X"
+        }
+        TextMetrics {
+            id: languageNameFormatter
+            font {
+                family: fontFamily
+                weight: Font.Normal
+                pixelSize: 20 //44 * scaleHint
+            }
+            elide: Text.ElideRight
+            elideWidth: languageListItem.width - languageListLabel.anchors.leftMargin - languageListLabel.anchors.rightMargin
+            text: displayName
+        }
+        states: State {
+            name: "current"
+            when: languageListItem.ListView.isCurrentItem
+            PropertyChanges {
+                target: languageListLabel
+                color: Style.color.highlight1
+            }
+        }
+    }
 
-//    languageListAdd: Transition {
-//        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
-//    }
+    languageListBackground: Rectangle {
+        color: Style.color.background
 
-//    languageListRemove: Transition {
-//        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
-//    }
+    }
+
+    languageListAdd: Transition {
+        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
+    }
+
+    languageListRemove: Transition {
+        NumberAnimation { property: "opacity"; to: 0; duration: 200 }
+    }
 
 //    selectionHandle: Image {
 //        sourceSize.width: 20

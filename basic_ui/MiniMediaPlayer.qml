@@ -24,16 +24,19 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
+import StandbyControl 1.0
 
 import "qrc:/basic_ui" as BasicUI
+
+import Haptic 1.0
+import ButtonHandler 1.0
 
 import Entity.MediaPlayer 1.0
 import MediaPlayerUtils 1.0
 
 Item {
     id: miniMediaPlayer
-    width: 480
-    height: 90
+    width: Style.screen.width; height: 90
     anchors.bottom: parent.bottom
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +82,6 @@ Item {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     layer.enabled: true
     layer.effect: OpacityMask {
         maskSource:
@@ -98,31 +100,34 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     Connections {
-        target: buttonHandler
-        enabled: miniMediaPlayer.state == "open" && (standbyControl.mode == "on" || standbyControl.mode == "dim")
+        target: ButtonHandler
+        enabled: miniMediaPlayer.state == "open" && (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM)
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "dpad middle":
-                entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+            case ButtonHandler.DPAD_MIDDLE:
+                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ) {
+                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
+                } else {
+                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+                }
                 break;
-            case "dpad right":
+            case ButtonHandler.DPAD_RIGHT:
                 if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
                     mediaPlayers.currentIndex += 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "dpad left":
+            case ButtonHandler.DPAD_LEFT:
                 if (mediaPlayers.currentIndex > 0) {
                     mediaPlayers.currentIndex -= 1;
                 } else {
-                    haptic.playEffect("buzz");
+                    Haptic.playEffect(Haptic.Buzz);
                 }
                 break;
-            case "top right":
+            case ButtonHandler.TOP_RIGHT:
                 miniMediaPlayer.state = "closed";
                 break;
             }
@@ -130,17 +135,17 @@ Item {
     }
 
     Connections {
-        target: buttonHandler
-        enabled: loader_main.state == "visible" || miniMediaPlayer.state == "open" ? true : false
+        target: ButtonHandler
+        enabled: loader_main.state === "visible" || miniMediaPlayer.state == "open" ? true : false
 
-        onButtonPress: {
+        onButtonPressed: {
             switch (button) {
-            case "volume up":
+            case ButtonHandler.VOLUME_UP:
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = true;
                 buttonTimeout.start();
                 break;
-            case "volume down":
+            case ButtonHandler.VOLUME_DOWN:
                 buttonTimeout.stop();
                 buttonTimeout.volumeUp = false;
                 buttonTimeout.start();
@@ -148,7 +153,7 @@ Item {
             }
         }
 
-        onButtonRelease: {
+        onButtonReleased: {
             buttonTimeout.stop();
         }
     }
@@ -164,7 +169,7 @@ Item {
 
         onTriggered: {
             if (volumeUp) {
-                if (volume.state != "visible") {
+                if (volume.state !== "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
@@ -173,7 +178,7 @@ Item {
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             } else {
-                if (volume.state != "visible") {
+                if (volume.state !== "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
@@ -187,7 +192,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Style.colorBackground
+        color: Style.color.background
     }
 
     SwipeView {
@@ -205,6 +210,17 @@ Item {
                 // include mediaplayer utils
                 MediaPlayerUtils {
                     id: mediaplayerUtils
+                    enabled: mediaPlayers.currentItem == player && (StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM)
+
+                    onProcessingStarted: {
+                        bgImage.startLoader();
+                        image.startLoader();
+                    }
+
+                    onImageChanged: {
+                        bgImage.stopLoader();
+                        image.stopLoader();
+                    }
                 }
 
                 property alias player: player
@@ -213,20 +229,21 @@ Item {
 
                 state: "closed"
 
-                states: [State {
+                states: [
+                    State {
                         name: "open"
                         when: miniMediaPlayer.state == "open"
                         PropertyChanges {target: title; opacity: 0 }
                         PropertyChanges {target: artist; opacity: 0 }
-                        PropertyChanges {target: closeButton; opacity: 1 }
-                        PropertyChanges {target: titleOpen; y: 380; opacity: 1 }
-                        PropertyChanges {target: artistOpen; opacity: 0.8 }
-                        PropertyChanges {target: indicator; opacity: 1 }
-                        PropertyChanges {target: speaker; opacity: 1 }
-                        PropertyChanges {target: playButton; opacity: 1; anchors.bottomMargin: 80 }
-                        PropertyChanges {target: prevButton; opacity: 1 }
-                        PropertyChanges {target: nextButton; opacity: 1 }
-                        PropertyChanges {target: sourceText; opacity: 1 }
+                        PropertyChanges {target: closeButton; opacity: 1; visible: true }
+                        PropertyChanges {target: titleOpen; y: 380; opacity: 1; visible: true }
+                        PropertyChanges {target: artistOpen; opacity: 0.8; visible: true }
+                        PropertyChanges {target: indicator; opacity: 1; visible: true }
+                        PropertyChanges {target: speaker; opacity: 1; visible: true }
+                        PropertyChanges {target: playButton; opacity: 1; anchors.bottomMargin: 80; visible: true }
+                        PropertyChanges {target: prevButton; opacity: 1; visible: true }
+                        PropertyChanges {target: nextButton; opacity: 1; visible: true }
+                        PropertyChanges {target: sourceText; opacity: 1; visible: true }
                         PropertyChanges {target: bgImage; opacity: 1; visible: true; anchors.topMargin: 86; scale: 1 }
                         PropertyChanges {target: image; opacity: 0 }
                     },
@@ -235,15 +252,15 @@ Item {
                         when: miniMediaPlayer.state == "closed"
                         PropertyChanges {target: title; opacity: 1 }
                         PropertyChanges {target: artist; opacity: 1 }
-                        PropertyChanges {target: closeButton; opacity: 0 }
-                        PropertyChanges {target: titleOpen; y: 420; opacity: 0 }
-                        PropertyChanges {target: artistOpen; opacity: 0 }
-                        PropertyChanges {target: indicator; opacity: 0 }
-                        PropertyChanges {target: speaker; opacity: 0 }
-                        PropertyChanges {target: playButton; opacity: 0; anchors.bottomMargin: 40 }
-                        PropertyChanges {target: prevButton; opacity: 0 }
-                        PropertyChanges {target: nextButton; opacity: 0 }
-                        PropertyChanges {target: sourceText; opacity: 0 }
+                        PropertyChanges {target: closeButton; opacity: 0; visible: false }
+                        PropertyChanges {target: titleOpen; y: 420; opacity: 0; visible: false }
+                        PropertyChanges {target: artistOpen; opacity: 0; visible: false }
+                        PropertyChanges {target: indicator; opacity: 0; visible: false }
+                        PropertyChanges {target: speaker; opacity: 0; visible: false }
+                        PropertyChanges {target: playButton; opacity: 0; anchors.bottomMargin: 40; visible: false }
+                        PropertyChanges {target: prevButton; opacity: 0; visible: false }
+                        PropertyChanges {target: nextButton; opacity: 0; visible: false }
+                        PropertyChanges {target: sourceText; opacity: 0; visible: false }
                         PropertyChanges {target: bgImage; opacity: 0; visible: false; anchors.topMargin: 126; scale: 0.8 }
                         PropertyChanges {target: image; opacity: 1 }
                     }]
@@ -252,6 +269,17 @@ Item {
                     Transition {
                         to: "open"
                         SequentialAnimation {
+                            ParallelAnimation {
+                                PropertyAnimation { target: closeButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: titleOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: artistOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: indicator; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: speaker; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: playButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: prevButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: nextButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: sourceText; properties: "visible"; duration: 1 }
+                            }
                             ParallelAnimation {
                                 PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
@@ -305,6 +333,17 @@ Item {
                                 PropertyAnimation { target: sourceText; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                                 PropertyAnimation { target: image; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                             }
+                            ParallelAnimation {
+                                PropertyAnimation { target: closeButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: titleOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: artistOpen; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: indicator; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: speaker; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: playButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: prevButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: nextButton; properties: "visible"; duration: 1 }
+                                PropertyAnimation { target: sourceText; properties: "visible"; duration: 1 }
+                            }
                         }
                     }
                 ]
@@ -318,72 +357,59 @@ Item {
                         ColorAnimation { duration: 300 }
                     }
 
-                    property var m_image: entities.mediaplayersPlaying[index].mediaImage
+                    property var m_image: obj ? obj.mediaImage : ""
 
                     onM_imageChanged: {
-                        mediaplayerUtils.imageURL = entities.mediaplayersPlaying[index].mediaImage
+                        if (obj) {
+                            mediaplayerUtils.imageURL = obj.mediaImage
+                        }
                     }
 
                     CustomImageLoader {
                         id: bgImage
-                        width: 280
-                        height: 280
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: parent.top
-                        anchors.topMargin: 86
-                        url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
+                        width: 280; height: 280
+                        anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 86 }
+                        url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
                 CustomImageLoader {
                     id: image
-                    width: 90
-                    height: width
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        left: parent.left
-                        leftMargin: 0
-                    }
-                    url: entities.mediaplayersPlaying[index].mediaImage == "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
+                    width: 90; height: 90
+                    anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: 0 }
+                    url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
                 Item {
                     id: textContainer
                     height: childrenRect.height
 
-                    anchors.left: image.right
-                    anchors.leftMargin: 20
-                    anchors.verticalCenter: image.verticalCenter
+                    anchors { left: image.right; leftMargin: 20; verticalCenter: image.verticalCenter }
 
                     Text {
                         id: title
-                        color: Style.colorText
-                        text: entities.mediaplayersPlaying[index].friendly_name
+                        color: Style.color.text
+                        text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
                         width: 304
-                        font.family: "Open Sans"
-                        font.weight: Font.Normal
-                        font.pixelSize: 25
+                        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 25 }
                         lineHeight: 1
                     }
 
                     Text {
                         id: artist
-                        color: Style.colorText
-                        text: entities.mediaplayersPlaying[index].mediaTitle
+                        color: Style.color.text
+                        opacity: 0.6
+                        text: obj ? obj.mediaTitle : ""
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
                         wrapMode: Text.NoWrap
                         width: 304
-                        font.family: "Open Sans"
-                        font.weight: Font.Normal
-                        font.pixelSize: 20
+                        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 20 }
                         lineHeight: 1
-                        anchors.top: title.bottom
-                        anchors.topMargin: -2
-                        opacity: 0.6
+                        anchors { top: title.bottom; topMargin: -2 }
                     }
                 }
 
@@ -401,114 +427,84 @@ Item {
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 Text {
                     id: sourceText
-                    color: Style.colorText
-                    text: entities.mediaplayersPlaying[index].source
+                    color: Style.color.text
+                    text: obj ? obj.source : ""
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.WordWrap
-                    font.family: "Open Sans"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
-                    anchors {
-                        top: parent.top
-                        topMargin: 20
-                        left: parent.left
-                        leftMargin: 20
-                    }
+                    font: Style.font.button
+                    anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
                 }
 
 
                 Text {
                     id: titleOpen
-                    color: Style.colorText
-                    text: entities.mediaplayersPlaying[index].mediaTitle
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    color: Style.color.text
+                    text: obj ? obj.mediaTitle : ""
+                    horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     width: parent.width-80
-                    font.family: "Open Sans"
-                    font.weight: Font.Bold
-                    font.styleName: "Bold"
-                    font.pixelSize: 30
+                    font { family: "Open Sans Regular"; weight: Font.Bold; pixelSize: 30 }
                     lineHeight: 1
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Text {
                     id: artistOpen
-                    color: Style.colorText
-                    text: entities.mediaplayersPlaying[index].mediaArtist
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    color: Style.color.text
+                    text: obj ? obj.mediaArtist : ""
+                    horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     width: parent.width-80
-                    font.family: "Open Sans"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
-                    lineHeight: 1
-                    anchors.top: titleOpen.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    font: Style.font.button
+                    anchors { top: titleOpen.bottom; horizontalCenter: parent.horizontalCenter }
                 }
 
                 Item {
                     id: speaker
                     width: childrenRect.width
-                    anchors {
-                        bottom: parent.bottom
-                        bottomMargin: 80
-                        horizontalCenter: parent.horizontalCenter
-                    }
+                    anchors { bottom: parent.bottom; bottomMargin: 80; horizontalCenter: parent.horizontalCenter }
 
-                    Image {
+                    Text {
                         id: speakerIcon
-                        asynchronous: true
-                        source: "qrc:/images/mini-music-player/icon-speaker.png"
+                        color: Style.color.text
+                        text: Style.icon.speaker
+                        renderType: Text.NativeRendering
+                        width: 60; height: 60
+                        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                        font { family: "icons"; pixelSize: 80 }
                     }
 
                     Text {
-                        color: Style.colorText
-                        text: entities.mediaplayersPlaying[index].friendly_name
+                        color: Style.color.text
+                        text: obj ? obj.friendly_name : ""
                         verticalAlignment: Text.AlignVCenter
-                        font.family: "Open Sans"
-                        font.weight: Font.Normal
-                        font.pixelSize: 27
-                        lineHeight: 1
-                        anchors {
-                            left: speakerIcon.right
-                            leftMargin: 20
-                            verticalCenter: speakerIcon.verticalCenter
-                        }
+                        font: Style.font.button
+                        anchors { left: speakerIcon.right; verticalCenter: speakerIcon.verticalCenter }
                     }
                 }
             }
         }
-
     }
 
     Text {
         id: closeButton
-        color: Style.colorText
-        text: Style.icons.down_arrow
+        color: Style.color.text
+        text: Style.icon.down_arrow
         renderType: Text.NativeRendering
-        width: 70
-        height: 70
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 80 }
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 10
+        width: 70; height: 70
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 80 }
+        anchors { right: parent.right; rightMargin: 10; top: parent.top; topMargin: 10 }
 
         MouseArea {
-            width: parent.width + 20
-            height: parent.height + 20
+            width: parent.width + 20; height: parent.height + 20
             anchors.centerIn: parent
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 miniMediaPlayer.state = "closed"
             }
         }
@@ -516,24 +512,17 @@ Item {
 
     Item {
         id: prevButton
-        width: 120
-        height: 120
+        width: 120; height: 120
 
-        anchors {
-            right: playButton.left
-            rightMargin: 30
-            verticalCenter: playButton.verticalCenter
-        }
+        anchors { right: playButton.left; rightMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.prev
+            color: Style.color.text
+            text: Style.icon.prev
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 
@@ -542,7 +531,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].previous();
             }
         }
@@ -550,26 +539,19 @@ Item {
 
     Item {
         id: playButton
-        width: 120
-        height: 120
+        width: 120; height: 120
 
-        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ? true : false
+        property bool isPlaying: entities.mediaplayersPlaying[mediaPlayers.currentIndex] && entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ? true : false
 
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 80
-        }
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 80 }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.pause
+            color: Style.color.text
+            text: Style.icon.pause
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: playButton.isPlaying ? 1 : 0
 
@@ -579,14 +561,12 @@ Item {
         }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.play
+            color: Style.color.text
+            text: Style.icon.play
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
             opacity: playButton.isPlaying ? 0 : 1
 
@@ -600,8 +580,8 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
-                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state == MediaPlayer.PLAYING ) {
+                Haptic.playEffect(Haptic.Click);
+                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ) {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
                 } else {
                     entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
@@ -612,24 +592,17 @@ Item {
 
     Item {
         id: nextButton
-        width: 120
-        height: 120
+        width: 120; height: 120
 
-        anchors {
-            left: playButton.right
-            leftMargin: 30
-            verticalCenter: playButton.verticalCenter
-        }
+        anchors { left: playButton.right; leftMargin: 30; verticalCenter: playButton.verticalCenter }
 
         Text {
-            color: Style.colorText
-            text: Style.icons.next
+            color: Style.color.text
+            text: Style.icon.next
             renderType: Text.NativeRendering
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font { family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
         }
 
@@ -638,7 +611,7 @@ Item {
             enabled: miniMediaPlayer.state == "open"
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 entities.mediaplayersPlaying[mediaPlayers.currentIndex].next();
             }
         }
@@ -646,19 +619,14 @@ Item {
 
     PageIndicator {
         id: indicator
-
         count: mediaPlayers.count
         currentIndex: mediaPlayers.currentIndex
-
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors { bottom: parent.bottom; bottomMargin: 10; horizontalCenter: parent.horizontalCenter }
 
         delegate: Rectangle {
-            width: 8
-            height: 8
+            width: 8; height: 8
             radius: height/2
-            color: Style.colorText
+            color: Style.color.text
             opacity: index == mediaPlayers.currentIndex ? 1 : 0.3
         }
     }

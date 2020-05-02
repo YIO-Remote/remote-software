@@ -1,7 +1,15 @@
 # GitHub Action that performs a JSON schema validation on the configuration files
 
 name: Config Schema Validation
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - config*.json
+      - hardware*.json
+  pull_request:
+    paths:
+      - config*.json
+      - hardware*.json
 jobs:
   validate_json:
     runs-on: ubuntu-latest

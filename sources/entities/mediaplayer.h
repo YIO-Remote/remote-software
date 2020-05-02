@@ -28,11 +28,12 @@
 #include <QVariant>
 
 #include "entity.h"
-#include "mediaplayerinterface.h"
+#include "yio-interface/entities/mediaplayerinterface.h"
 
 class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_OBJECT
     Q_INTERFACES(MediaPlayerInterface)
+
  public:
     // properties
     Q_PROPERTY(int volume READ volume NOTIFY volumeChanged)
@@ -76,6 +77,7 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_INVOKABLE void volumeDown();
 
     bool isOn() override { return m_state == MediaPlayerDef::ON || m_state == MediaPlayerDef::PLAYING; }
+    bool supportsOn() override;
     bool updateAttrByIndex(int attrIndex, const QVariant& value) override;
     void turnOn() override;
     void turnOff() override;

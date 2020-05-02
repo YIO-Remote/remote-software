@@ -28,7 +28,7 @@
 #include <QVariant>
 
 #include "entity.h"
-#include "lightinterface.h"
+#include "yio-interface/entities/lightinterface.h"
 
 class Light : public Entity, LightInterface {
     Q_OBJECT

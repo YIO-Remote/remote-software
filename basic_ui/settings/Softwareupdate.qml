@@ -21,171 +21,130 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
 import Style 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
-import "qrc:/scripts/softwareupdate.js" as JSUpdate
+import SoftwareUpdate 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
-Item {
-    width: parent.width
-    height: header.height + section.height + 20
+Rectangle {
+    id: container
+    width: parent.width; height: childrenRect.height
+    radius: Style.cornerRadius
+    color: Style.color.dark
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // DISPLAY
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    Text {
-        id: header
-        color: Style.colorText
-        text: qsTr("Software update") + translateHandler.emptyString
-        anchors.left: parent.left
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 27
-        lineHeight: 1
-    }
-
-    Rectangle {
-        id: section
+    Flow {
+        id: flow
         width: parent.width
-        height: childrenRect.height + 50 //softwareUpdateText.height + smallText.height + 60
-        radius: Style.cornerRadius
-        color: Style.colorDark
+        spacing: 0
 
-        anchors.top: header.bottom
-        anchors.topMargin: 20
+        // AUTO UPDATE
+        Item {
+            width: parent.width; height: childrenRect.height + 40
 
-        Text {
-            id: softwareUpdateText
-            color: Style.colorText
-            text: qsTr("Auto update") + translateHandler.emptyString
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.top: parent.top
-            anchors.topMargin: 20
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 27
-            lineHeight: 1
-        }
-
-        BasicUI.CustomSwitch {
-            id: softwareUpdateButton
-
-            anchors.right: parent.right
-            anchors.rightMargin: 20
-            anchors.verticalCenter: softwareUpdateText.verticalCenter
-
-            checked: config.settings.softwareupdate
-            mouseArea.onClicked: {
-                var tmp = config.config
-                tmp.settings.softwareupdate = !tmp.settings.softwareupdate
-                config.config = tmp
-                config.writeConfig();
+            Text {
+                id: softwareUpdateText
+                color: Style.color.text
+                text: qsTr("Auto update") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
             }
-        }
 
+            BasicUI.CustomSwitch {
+                id: softwareUpdateButton
 
-        Text {
-            id: smallText
-            color: Style.colorText
-            opacity: 0.5
-            text: qsTr("Automatically look for updates and update when a new software version is available.\nUpdates are installed between 03.00 am and 05.00 am.") + translateHandler.emptyString
-            wrapMode: Text.WordWrap
-            width: parent.width - 40 - softwareUpdateButton.width
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.top: softwareUpdateButton.bottom
-            anchors.topMargin: 10
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 20
-            lineHeight: 1
-        }
+                anchors { right: parent.right; rightMargin: 20; verticalCenter: softwareUpdateText.verticalCenter }
 
-        Rectangle {
-            id: line
-            width: parent.width
-            height: 2
-            color: Style.colorBackground
-            anchors.top: smallText.bottom
-            anchors.topMargin: 20
-        }
-
-        Text {
-            id: uptodateText
-            color: Style.colorText
-            text: updateAvailable ? qsTr("New software is available.\nYIO remote ") + _new_version + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
-            wrapMode: Text.WordWrap
-            width: parent.width-40
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.top: line.bottom
-            anchors.topMargin: 20
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 27
-            lineHeight: 1
-        }
-
-        Text {
-            id: uptodateTextsmall
-            color: Style.colorText
-            opacity: 0.5
-            text: updateAvailable? qsTr("Installed version: YIO Remote ") + _current_version + translateHandler.emptyString : qsTr("YIO Remote ") + _current_version
-            wrapMode: Text.WordWrap
-            width: parent.width - 40
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.top: uptodateText.bottom
-            anchors.topMargin: 10
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 20
-            lineHeight: 1
-        }
-
-        BasicUI.CustomButton {
-            id: updateButton
-            buttonText: qsTr("Update") + translateHandler.emptyString
-            anchors.top: uptodateTextsmall.bottom
-            anchors.topMargin: 30
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            visible: updateAvailable
-
-            mouseArea.onClicked: {
-                if (updateAvailable) {
-                    console.debug("Updating the app")
-                    // TODO create a update servcie class instead of launching hard coded shell scripts from QML
-                    fileio.write("/usr/bin/updateURL", updateURL);
-                    mainLauncher.launch("systemctl restart update.service");
+                checked: config.settings.softwareupdate.autoUpdate
+                mouseArea.onClicked: {
+                    var tmp = config.config
+                    tmp.settings.softwareupdate.autoUpdate = !tmp.settings.softwareupdate.autoUpdate
+                    config.config = tmp
+                    SoftwareUpdate.autoUpdate = !SoftwareUpdate.autoUpdate
                 }
-                Qt.quit();
+            }
+
+            Text {
+                id: smallText
+                color: Style.color.text
+                opacity: 0.5
+                text: qsTr("Automatically look for updates and update when a new software version is available.\nUpdates are installed between 03.00 am and 05.00 am.") + translateHandler.emptyString
+                wrapMode: Text.WordWrap
+                width: parent.width - 40 - softwareUpdateButton.width
+                anchors { left: parent.left; leftMargin: 20; top: softwareUpdateButton.bottom; topMargin: 10 }
+                font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 20 }
+                lineHeight: 1
+            }
+        }
+
+
+        Rectangle {
+            width: parent.width; height: 2
+            color: Style.color.background
+        }
+
+        Item {
+            width: parent.width; height: SoftwareUpdate.updateAvailable ? (childrenRect.height + 40) : (childrenRect.height + 20 - updateButton.height)
+            Text {
+                id: uptodateText
+                color: Style.color.text
+                text: SoftwareUpdate.updateAvailable ? qsTr("New software is available.\nYIO remote %1").arg(SoftwareUpdate.newVersion) + translateHandler.emptyString : qsTr("Your software is up to date.") + translateHandler.emptyString
+                wrapMode: Text.WordWrap
+                width: parent.width-40
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
+            }
+
+            Text {
+                id: uptodateTextsmall
+                color: Style.color.text
+                opacity: 0.5
+                text: SoftwareUpdate.updateAvailable ? qsTr("Installed version: YIO Remote ") + SoftwareUpdate.currentVersion + translateHandler.emptyString : qsTr("YIO Remote ") + SoftwareUpdate.currentVersion
+                wrapMode: Text.WordWrap
+                width: parent.width - 40
+                anchors { left: parent.left; leftMargin: 20; top: uptodateText.bottom; topMargin: 10 }
+                font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 20 }
+                lineHeight: 1
+            }
+
+            BasicUI.CustomButton {
+                id: updateButton
+                buttonText: SoftwareUpdate.installAvailable ? qsTr("Update") + translateHandler.emptyString : qsTr("Download") + translateHandler.emptyString
+                anchors { top: uptodateTextsmall.bottom; topMargin: 30; left: parent.left; leftMargin: 20 }
+                visible: SoftwareUpdate.updateAvailable
+
+                mouseArea.onClicked: {
+                    if (SoftwareUpdate.updateAvailable) {
+                        // TODO(marton) error handling: coordinate with zehnm which error conditions must be handled manually and which ones are already forwarded to the NotificationHandler
+                        if (SoftwareUpdate.installAvailable) {
+                            SoftwareUpdate.performAppUpdate();
+                        } else {
+                            // TODO(marton) handle downloadFailed signal to abort download screen in case of error
+                            // TODO(marton) the installAvailable signal after the downloadComplete() signal makes the "Update" button appear, but it doesn't work or switches the functionality!
+                            //              I think this needs two dedicated buttons. Switching the text only leads to trouble...
+                            SoftwareUpdate.startDownload();
+                        }
+                    }
+                }
             }
         }
 
         Rectangle {
-            id: line2
-            width: parent.width
-            height: 2
-            color: Style.colorBackground
-            anchors.top: updateAvailable ? updateButton.bottom : uptodateTextsmall.bottom
-            anchors.topMargin: 30
+            width: parent.width; height: 2
+            color: Style.color.background
         }
 
-        BasicUI.CustomButton {
-            id: checkforUpdateButton
-            buttonText: qsTr("Check for update") + translateHandler.emptyString
-            anchors.top: line2.bottom
-            anchors.topMargin: 30
-            anchors.left: parent.left
-            anchors.leftMargin: 20
+        Item {
+            width: parent.width; height: checkforUpdateButton.height + 40
 
-            mouseArea.onClicked: {
-                JSUpdate.checkForUpdate();
+            BasicUI.CustomButton {
+                id: checkforUpdateButton
+                buttonText: qsTr("Check for update") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
+
+                mouseArea.onClicked: {
+                    SoftwareUpdate.checkForUpdate();
+                }
             }
         }
     }

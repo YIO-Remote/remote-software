@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -20,9 +20,27 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#ifndef HW_CONFIG_H
-#define HW_CONFIG_H
+#pragma once
 
+/**
+ * Common hardware configuration keys.
+ * Platform specific keys should be defined either in the specific factory or in a dedicated header file.
+ */
+
+#define HW_CFG_PATH_I2C_DEV       "i2c/device"
+#define HW_CFG_PATH_I2C_ID        "i2c/id"
+
+#define HW_CFG_PATH_GPIO_PIN      "gpio/pin"
+#define HW_CFG_PATH_INTR_GPIO_PIN "interrupt/gpio/pin"
+
+#define HW_CFG_DISPLAY_CONTROL    "display/control"
+#define HW_CFG_BTN_INTR_HANDLER   "buttonInterruptHandler"
+#define HW_CFG_BATTERY_CHARGER    "batteryCharger"
+#define HW_CFG_BATTERY_FUEL_GAUGE "batteryFuelGauge"
+#define HW_CFG_HAPTIC_MOTOR       "hapticMotor"
+#define HW_CFG_GESTURE            "gesture"
+#define HW_CFG_LIGHT              "light"
+#define HW_CFG_PROXIMITY          "proximity"
 
 #define HW_CFG_SYSTEMSERVICE      "systemservice"
 
@@ -45,10 +63,6 @@
 #define HW_DEF_SERVICE_NTP        "systemd-timesyncd.service"
 #define HW_CFG_SERVICE_DHCP       "dhcp"
 #define HW_DEF_SERVICE_DHCP       "dhcpcd.service"
-#define HW_CFG_SERVICE_SHUTDOWN   "shutdown"
-#define HW_DEF_SERVICE_SHUTDOWN   "shutdown.service"
-#define HW_CFG_SERVICE_YIO_UPDATE "yio-update"
-#define HW_DEF_SERVICE_YIO_UPDATE "update.service"
 #define HW_CFG_SERVICE_ZEROCONF   "zeroconf"
 #define HW_DEF_SERVICE_ZEROCONF   "avahi-daemon"
 #define HW_CFG_SERVICE_NETWORKING "networking"
@@ -112,5 +126,3 @@
 #define HW_DEF_LIGHTTPD_WIFI_CFG   "/etc/lighttpd/lighttpd-wifisetup.conf"
 #define HW_CFG_LIGHTTPD_WEB_CFG    "webConfiguratorConfig"
 #define HW_DEF_LIGHTTPD_WEB_CFG    "/etc/lighttpd/lighttpd-config.conf"
-
-#endif // HW_CONFIG_H

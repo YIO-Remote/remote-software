@@ -25,60 +25,32 @@
 
 #pragma once
 
+#include <QQmlApplicationEngine>
 #include <QQuickItem>
 
-class TouchEventFilter : public QQuickItem
-{
+class TouchEventFilter : public QQuickItem {
     Q_OBJECT
-public:
-    Q_PROPERTY(QObject*     source          READ getSource      WRITE setSource)
-    Q_PROPERTY(bool         detected        READ detected       NOTIFY detectedChanged)
+ public:
+    Q_PROPERTY(QObject *source READ getSource WRITE setSource)
+    Q_PROPERTY(bool detected READ detected NOTIFY detectedChanged)
 
-public:
-    TouchEventFilter()
-    {
-        m_source = nullptr;
-    }
+    TouchEventFilter();
+    ~TouchEventFilter();
 
-    ~TouchEventFilter()
-    {
-        if (m_source != nullptr)
-            m_source->removeEventFilter(this);
-    }
+    void     setSource(QObject *source);
+    QObject *getSource() { return m_source; }
+    bool     detected() { return true; }
 
-    void setSource(QObject *source)
-    {
-        source->installEventFilter(this);
-        m_source = source;
-    }
+    static TouchEventFilter *getInstance() { return s_instance; }
+    static QObject *         getInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
 
-    QObject * getSource() { return m_source; }
-
-    bool detected() { return true; }
-
-
-private:
-    bool eventFilter(QObject *obj, QEvent *event)
-    {
-        Q_UNUSED(obj)
-
-        switch (event->type()) {
-        case QEvent::TouchBegin:
-        case QEvent::MouseButtonPress:
-            emit detectedChanged();
-            break;
-        default:  // do nothing
-            break;
-        }
-        return QQuickItem::eventFilter(this, event);
-    }
-
-signals:
+ signals:
     void detectedChanged();
 
-private:
-    QObject *m_source;
-
+ private:
+    static TouchEventFilter *s_instance;
+    bool                     eventFilter(QObject *obj, QEvent *event);
+    QObject *                m_source;
 };
 
-#endif // TOUCHDETECT_H
+#endif  // TOUCHDETECT_H

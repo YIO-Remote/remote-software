@@ -19,41 +19,150 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
-import QtQuick 2.11
-import QtQuick.Controls 2.5
+import QtQuick 2.12
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import Haptic 1.0
+import ButtonHandler 1.0
 import Entity.Blind 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: blindAdjust
-    width: parent.width
-    height: parent.height
-    color: Style.colorDark
+    id: card
+    width: parent.width; height: parent.height
+    color: Style.color.dark
+    radius: Style.cornerRadius
 
-    // blind graphics draggable element
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECT TO BUTTONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: ButtonHandler
 
+        onButtonPressed: {
+            switch (button) {
+            case ButtonHandler.DPAD_UP:
+                if (obj.isSupported(Blind.F_OPEN)) {
+                    obj.open()
+                }
+                break;
+            case ButtonHandler.DPAD_DOWN:
+                if (obj.isSupported(Blind.F_CLOSE)) {
+                    obj.close()
+                }
+                break;
+            case ButtonHandler.DPAD_MIDDLE:
+                if (obj.isSupported(Blind.F_STOP)) {
+                    obj.stop()
+                }
+                break;
+            }
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LAYER MASK FOR ROUNDED CORNERS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    layer.enabled: true
+    layer.effect: OpacityMask {
+        maskSource:
+            Rectangle {
+            id: opacityMask
+            width: card.width; height: card.height
+            radius: card.state === "closed" ? 0 : Style.cornerRadius
+
+            Behavior on radius {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STATES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    state: "closed"
+
+    states: [
+        State {
+            name: "closed"
+            PropertyChanges { target: percentage; anchors.topMargin: 200; opacity: 0 }
+            PropertyChanges { target: title; opacity: 0 }
+            PropertyChanges { target: bgGraphics; opacity: 0 }
+            PropertyChanges { target: buttonStop; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges { target: buttonDown; anchors.bottomMargin: -100; opacity: 0 }
+            PropertyChanges { target: buttonUp; anchors.bottomMargin: -100; opacity: 0 }
+        },
+        State {
+            name: "open"
+            PropertyChanges { target: percentage; anchors.topMargin: 100; opacity: 1 }
+            PropertyChanges { target: title; opacity: 1 }
+            PropertyChanges { target: bgGraphics; opacity: 1 }
+            PropertyChanges { target: buttonStop; anchors.bottomMargin: 70; opacity: 1 }
+            PropertyChanges { target: buttonDown; anchors.bottomMargin: 70; opacity: 1 }
+            PropertyChanges { target: buttonUp; anchors.bottomMargin: 70; opacity: 1 }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: "closed"
+            ParallelAnimation {
+                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutExpo; duration: 300 }
+            }
+        },
+        Transition {
+            to: "open"
+            ParallelAnimation {
+                PropertyAnimation { target: bgGraphics; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: percentage; properties: "anchors.topMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                PropertyAnimation { target: buttonDown; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                SequentialAnimation {
+                    PauseAnimation { duration: 50 }
+                    PropertyAnimation { target: buttonStop; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: buttonUp; properties: "anchors.bottomMargin, opacity"; easing.type: Easing.OutBack; easing.overshoot: 1; duration: 400 }
+                }
+                SequentialAnimation {
+                    PauseAnimation { duration: 100 }
+                    PropertyAnimation { target: title; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                }
+            }
+        }
+    ]
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // GRAPHICS FOR DRAGGABLE ELEMENT
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property int position: obj.position
-
     property var percent
     property bool userMove: false
 
     Component.onCompleted: {
-        percent = obj.position
+        percent = obj.position;
+        card.state = "open";
     }
 
     Item {
-        width: parent.width
-        height: parent.height
+        id: bgGraphics
+        width: parent.width; height: parent.height
         anchors.centerIn: parent
+        visible: obj.isSupported(Blind.F_POSITION)
 
         Column {
             anchors.top: parent.top
-
             spacing: 10
 
             Repeater {
@@ -61,31 +170,26 @@ Rectangle {
                 model: userMove ? Math.round(percent*36/100) : Math.round(obj.position*36/100)
 
                 delegate: Rectangle {
-                    width: blindAdjust.width
-                    height: 10
-                    color: Style.colorHighlight2
+                    width: card.width; height: 10
+                    color: Style.color.highlight2
                 }
             }
         }
 
         Rectangle {
             id: dragger_target
-            width: parent.width
-            height: parent.height
-            color: Style.colorBackgroundTransparent
+            width: parent.width; height: parent.height
+            color: Style.color.backgroundTransparent
             y: userMove ? Math.round(height*percent/100) : Math.round(obj.position/100)
         }
 
         MouseArea {
             id: dragger
             anchors.fill: parent
-            drag.target: dragger_target
-            drag.axis: Drag.YAxis
-            drag.minimumY: 0
-            drag.maximumY: dragger_target.height
+            drag { target: dragger_target; axis: Drag.YAxis; minimumY: 0; maximumY: dragger_target.height }
 
             onPositionChanged: {
-                haptic.playEffect("bump");
+                Haptic.playEffect(Haptic.Bump);
                 percent = Math.round(mouse.y/parent.height*100)
                 if (percent < 0) percent = 0
                 if (percent > 100) percent = 100
@@ -102,7 +206,7 @@ Rectangle {
     }
 
     onPositionChanged: {
-        if (userMove && position == percent) {
+        if (userMove && position === percent) {
             userMove = false;
         } else {
             percent = position;
@@ -111,132 +215,117 @@ Rectangle {
 
     Text {
         id: icon
-        color: Style.colorText
-        text: Style.icons.blind
+        color: Style.color.text
+        text: Style.icon.blind
         renderType: Text.NativeRendering
-        width: 85
-        height: 85
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 100 }
-        anchors {top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20}
+        width: 85; height: 85
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 100 }
+        anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
     }
 
     Text {
         id: percentage
-        color: Style.colorText
+        color: Style.color.text
         text: userMove ? percent : obj.position
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 180 }
+        font { family: "Open Sans Light"; pixelSize: 180 }
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
+        opacity: percentage.opacity
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
-        font {family: "Open Sans Light"; pixelSize: 100 }
+        font { family: "Open Sans Light"; pixelSize: 100 }
     }
 
     Text {
         id: title
-        color: Style.colorText
+        color: Style.color.text
         text: obj.friendly_name
         wrapMode: Text.WordWrap
         width: parent.width-60
         anchors { top: percentage.bottom; topMargin: -40; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 60 }
+        font { family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
     Text {
         id: areaText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: obj.area
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
         width: parent.width-60
         anchors { top: title.bottom; topMargin: 20; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 24 }
+        font { family: "Open Sans Regular"; pixelSize: 24 }
     }
 
     BasicUI.CustomButton {
+        id: buttonDown
         anchors { left: parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
+        color: Style.color.text
         buttonText: "   "
         visible: obj.isSupported(Blind.F_CLOSE)
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.close()
         }
 
-        Image {
-            asynchronous: true
+        Text {
+            color: Style.color.background
+            text: Style.icon.down_arrow_bold
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            source: "qrc:/components/blind/images/down-arrow.png"
         }
     }
 
     BasicUI.CustomButton {
+        id: buttonStop
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
+        color: Style.color.text
         buttonText: "   "
         visible: obj.isSupported(Blind.F_STOP)
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.stop()
         }
 
-        Image {
-            asynchronous: true
+        Text {
+            color: Style.color.background
+            text: Style.icon.square
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            source: "qrc:/components/blind/images/stop.png"
         }
     }
 
     BasicUI.CustomButton {
+        id: buttonUp
         anchors { right: parent.right; rightMargin: 30; bottom: parent.bottom; bottomMargin: 70 }
-        color: Style.colorText
+        color: Style.color.text
         buttonText: "   "
         visible: obj.isSupported(Blind.F_OPEN)
 
         mouseArea.onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             obj.open()
         }
 
-        Image {
-            asynchronous: true
+        Text {
+            color: Style.color.background
+            text: Style.icon.up_arrow_bold
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 100 }
             anchors.centerIn: parent
-            source: "qrc:/components/blind/images/up-arrow.png"
-        }
-    }
-
-    Text {
-        color: Style.colorText
-        text: Style.icons.close
-        renderType: Text.NativeRendering
-        width: 70
-        height: 70
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {family: "icons"; pixelSize: 80 }
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 20
-
-        MouseArea {
-            width: parent.width + 20
-            height: parent.height + 20
-            anchors.centerIn: parent
-
-            onClicked: {
-                haptic.playEffect("click");
-                blindButton.state = "closed"
-            }
         }
     }
 }

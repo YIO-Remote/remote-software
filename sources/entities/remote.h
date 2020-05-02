@@ -27,11 +27,12 @@
 
 #include "../logger.h"
 #include "entity.h"
-#include "remoteinterface.h"
+#include "yio-interface/entities/remoteinterface.h"
 
 class Remote : public Entity, RemoteInterface {
     Q_OBJECT
     Q_INTERFACES(RemoteInterface)
+
  public:
     Q_PROPERTY(QVariantList commands READ commands NOTIFY commandsChanged)
     Q_PROPERTY(QVariantList channels READ channels NOTIFY channelsChanged)
@@ -88,6 +89,8 @@ class Remote : public Entity, RemoteInterface {
 
     void turnOn() override { powerOn(); }
     void turnOff() override { powerOff(); }
+    bool supportsOn() override;
+    bool isOn() override;
 
     explicit Remote(QObject* parent = nullptr);
     Remote(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent = nullptr);

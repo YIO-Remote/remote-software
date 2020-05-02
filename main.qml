@@ -29,147 +29,32 @@ import Style 1.0
 
 import Launcher 1.0
 import JsonFile 1.0
-import Haptic 1.0
 import Battery 1.0
+import DisplayControl 1.0
+import Proximity 1.0
+import StandbyControl 1.0
 
-import Entity.Remote 1.0
-
-import "qrc:/scripts/softwareupdate.js" as JSUpdate
-import "qrc:/basic_ui" as BasicUI
+import "qrc:/basic_ui" as BasicUI // TODO: can this be done in a singleton?
 
 ApplicationWindow {
     id: applicationWindow
     objectName : "applicationWindow"
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
-    //
-    // CURRENT SOFTWARE VERSION
-    property real _current_version: 0.2 // change this when bumping the software version
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // BATTERY
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property real battery_voltage: 5
-    property real battery_level: 1
-    property real battery_health: 100
-    property real battery_time: (new Date()).getTime()
-    property int  battery_design_capacity: 0
-    property int  battery_remaining_capacity: 0
-    property int  battery_averagepower: 0
-    property int  battery_averagecurrent: 0
-    property bool wasBatteryWarning: false
-
-    property var battery_data: []
-
-    signal batteryDataUpdated()
-
-    Battery {
-        id: battery
-        capacity: 2500
-
-        Component.onCompleted: {
-            battery.begin();
-        }
-
-        function checkBattery() {
-            // read battery data
-            battery_voltage = battery.getVoltage() / 1000
-            battery_level = battery.getStateOfCharge() / 100
-            battery_health = battery.getStateOfHealth()
-            battery_design_capacity = battery.getDesignCapacity()
-            battery_remaining_capacity = battery.getRemainingCapacity()
-            battery_averagepower = battery.getAveragePower()
-            battery_averagecurrent = battery.getAverageCurrent()
-
-            if (battery_level != -1) {
-
-                // if the designcapacity is off correct it
-                if (battery_design_capacity != battery.capacity) {
-                    console.debug("Design capacity doesn't match. Recalibrating battery.");
-                    battery.changeCapacity(battery.capacity);
-                }
-
-                // if voltage is too low and we are sourcing power, turn off the remote after timeout
-                if (0 < battery_voltage && battery_voltage <= 3.4 && battery_averagepower < 0) {
-                    shutdownDelayTimer.start();
-                }
-
-                // hide and show the charging screen
-                if (battery_averagepower >= 0 && chargingScreen.item) {
-                    console.debug("Charging screen visible");
-                    chargingScreen.item.state = "visible";
-                    // cancel shutdown when started charging
-                    if (shutdownDelayTimer.running) {
-                        shutdownDelayTimer.stop();
-                    }
-                } else if (chargingScreen.item) {
-                    chargingScreen.item.state = "hidden";
-                }
-
-                // charging is done
-                if (battery_averagepower == 0 && battery_level == 1) {
-                    // signal with the dock that the remote is fully charged
-                    var obj = integrations.get(config.settings.paired_dock);
-                    obj.sendCommand("dock", "", Remote.C_REMOTE_CHARGED, "");
-                }
-
-                console.debug("Average power:" + battery_averagepower + "mW");
-                console.debug("Average current:" + battery_averagecurrent + "mA");
-            }
-        }
-    }
-
-    Timer {
-        id: shutdownDelayTimer
-        running: false
-        repeat: false
-        interval: 20000
-
-        onTriggered: {
-            loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
-            loadingScreen.active = true;
-        }
-    }
-
-    // battery data logger
-    Timer {
-        running: true
-        repeat: true
-        interval: 600000
-
-        onTriggered: {
-            if (battery_data.length > 35) {
-                battery_data.splice(0, 1);
-            }
-
-            var tmpA = battery_data;
-
-            var tmp = {};
-            tmp.timestamp = new Date();
-            tmp.level = battery_level;
-            tmp.power = battery.getAveragePower();
-            tmp.voltage = battery_voltage;
-
-            tmpA.push(tmp);
-            battery_data = tmpA;
-
-            applicationWindow.batteryDataUpdated();
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN WINDOW PROPERTIES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     visible: true
-    width: 480
-    height: 800
-    color: Style.colorBackground
+    width: Style.screen.width
+    height: Style.screen.height
+    color: Style.color.background
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI VARIABLES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    property bool remoteConfigEnabled: false
+    property bool initialSetup: true
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TRANSLATIONS
@@ -181,73 +66,30 @@ ApplicationWindow {
         name: appPath + "/translations.json"
     }
 
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // SOFTWARE UPDATE
+    // LOCALE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property var countries: countriesJson.read()
 
-    property bool updateAvailable: false
-    property real _new_version
-    property string updateURL
-
-    Timer {
-        repeat: true
-        running: true
-        interval: 3600000
-        triggeredOnStart: true
-
-        onTriggered: {
-            if (config.settings.softwareupdate) {
-                JSUpdate.checkForUpdate();
-
-                if (updateAvailable) {
-                    var hour = new Date().getHours();
-                    if (hour >= 3 && hour <= 5) {
-                        // TODO create a update service class instead of launching hard coded shell scripts from QML
-                        fileio.write("/usr/bin/updateURL", updateURL);
-                        mainLauncher.launch("systemctl restart update.service");
-                        Qt.quit();
-                    }
-                }
-            }
-        }
+    JsonFile {
+        id: countriesJson
+        name: appPath + "/locale.json"
     }
 
-    Launcher { id: mainLauncher }
-
-    onUpdateAvailableChanged: {
-        if (updateAvailable) {
-            //: Notification text when new software update is available
-            notifications.add(qsTr("New software version is available!") + translateHandler.emptyString);
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
-        if (config.config == undefined) {
-            console.debug("Cannot load configuration file");
-            // create a temporary standard config
-
-            // notify user
-            notifications.add(true, "Cannot load configuration");
-        }
-
-        // change dark mode to the configured value
-        Style.darkMode = Qt.binding(function () { return config.ui_config.darkMode });
-        standbyControl.display_autobrightness = Qt.binding(function() { return config.settings.autobrightness })
-        standbyControl.proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
-
-        // load the integrations
-        //        if (integrations.load()) {
-        //            // if success, load the entities
-        //            entities.load();
-        //        }
-        integrations.load();
-
-
-        // set the language
-        translateHandler.selectLanguage(config.settings.language);
+        console.debug("UI loading");
+        console.debug("Resolution: " + Style.screen.width + "x" + Style.screen.height);
+        console.debug("Pixel density: " + Style.screen.pixelDensity);
+        // TODO(mze) Does the initialization need to be here? Better located in hardware factory.
+        //           Or is there some magic sauce calling the setter if config.settings.proximity changed?
+        //           This can be done by connecting to a signal of the config in the hardware factory
+        Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
+        VirtualKeyboardSettings.locale = Qt.binding(function() { return config.settings.language })
 
         // load bluetooth
         bluetoothArea.init(config.config);
@@ -258,7 +100,15 @@ ApplicationWindow {
         // Start websocket API
         api.start();
 
-        battery.checkBattery();
+        // load the integrations if it's not the first time setup
+        if (fileio.exists("/firstrun")) {
+            console.debug("Starting first time setup");
+            loader_main.setSource("qrc:/setup/Setup.qml");
+            translateHandler.selectLanguage(config.settings.language);
+        } else {
+            integrations.load();
+        }
+
     }
 
     // load the entities when the integrations are loaded
@@ -268,6 +118,9 @@ ApplicationWindow {
         onLoadComplete: {
             console.debug("Integrations are loaded.");
             entities.load();
+
+            // set the language
+            translateHandler.selectLanguage(config.settings.language);
         }
     }
 
@@ -278,54 +131,33 @@ ApplicationWindow {
             console.debug("Entities are loaded.");
 
             // when everything is loaded, load the main UI
-            if (fileio.exists("/wifisetup")) {
-                console.debug("Starting WiFi setup");
-                loader_main.setSource("qrc:/wifiSetup.qml");
-            } else {
-                loader_main.setSource("qrc:/MainContainer.qml");
+            loader_main.setSource("qrc:/MainContainer.qml");
+
+            // if it's the default profile and no pages, load setings screeen
+            if (config.getProfile(config.profileId).name === "Default" && config.getProfilePages().length === 0) {
+                loader_second.setSource("qrc:/basic_ui/InitialSetup.qml");
+                loader_second.active = true;
+
+                // turn on the webconfigurator
+                webserver.startService();
+                remoteConfigEnabled = true;
             }
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // SYSTEM VARIABLES
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property bool firstRun: true // tells if the application is running for the first time
+    Connections {
+        target: config
+        enabled: initialSetup
 
-    property bool connecting: false // turns on or off the little loader in the status bar
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // STANDBY CONTROL
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property alias standbyControl: standbyControl
-
-    StandbyControl {
-        id: standbyControl
-        objectName: "standbyControl"
-
-        Component.onCompleted: {
-            standbyControl.wifiOffTime = Qt.binding(function () { return config.settings.wifitime});
-            standbyControl.shutdownTime = Qt.binding(function () { return config.settings.shutdowntime});
+        function turnOffWelcomeScreen() {
+            if (initialSetup) {
+                initialSetup = false;
+                loader_second.setSource("");
+                loader_second.active = false;
+            }
         }
-    }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // BUTTON HANDLER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ButtonHandler{
-        id: buttonHandler
-    }
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // HAPTIC FEEDBACK HANDLER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property alias haptic: haptic
-
-    Haptic {
-        id: haptic
-        // play haptic effects with: haptic.playEffect("click");
-        // available effects: click, bump
+        onProfilesChanged: { turnOffWelcomeScreen() }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -340,17 +172,15 @@ ApplicationWindow {
     Loader {
         id: loader_main
         asynchronous: true
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
         active: false
         state: "visible"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
 
         transform: Scale {
             id: scale
-            origin.x: loader_main.width/2
-            origin.y: loader_main.height/2
+            origin.x: loader_main.width/2; origin.y: loader_main.height/2
         }
 
         states: [
@@ -361,17 +191,6 @@ ApplicationWindow {
             Transition {to: "hidden"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 800 }},
             Transition {to: "visible"; PropertyAnimation { target: loader_main; properties: "y, scale, opacity"; easing.type: Easing.OutExpo; duration: 500 }}
         ]
-
-        Connections {
-            target: loader_main.item
-            enabled: loader_main.status == Loader.Ready
-            ignoreUnknownSignals: true
-
-            onLoadedItems: {
-                console.debug("Setting loading screen to loaded");
-                loadingScreen.item.state = "loaded";
-            }
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,26 +200,20 @@ ApplicationWindow {
 
     Loader {
         id: loader_second
+        objectName : "loader_second"
+        width: 480; height: 800
+        x: 0; y: 0
         asynchronous: true
-        //        visible: false
-        //        width: 480
-        //        height: 800
-        //        x: 0
-        //        y: 0
-
-        //        onStatusChanged: if (loader_second.status == Loader.Ready) {
-        //                             loader_second.visible = true;
-        //                         }
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
     property alias contentWrapper: contentWrapper
 
     Item {
         id: contentWrapper
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -410,10 +223,8 @@ ApplicationWindow {
 
     BasicUI.Volume {
         id: volume
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-        }
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
+        anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -424,12 +235,11 @@ ApplicationWindow {
     property alias chargingScreen: chargingScreen
     Loader {
         id: chargingScreen
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        width: 480; height: 800
+        x: 0; y: 0
         asynchronous: true
         source: "qrc:/basic_ui/ChargingScreen.qml"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
     }
 
 
@@ -437,29 +247,24 @@ ApplicationWindow {
     // LOW BATTERY POPUP NOTIFICAITON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Pops up when battery level is under 20%
-    onBattery_levelChanged: {
-        if (battery_level < 0.1 && !wasBatteryWarning) {
+    Connections {
+        target: Battery
+
+        onLowBattery: {
+            StandbyControl.wakeup();
             lowBatteryNotification.item.open();
-            wasBatteryWarning = true;
-            standbyControl.touchDetected = true;
 
             // signal with the dock that it is low battery
             var obj = integrations.get(config.settings.paired_dock);
-            obj.sendCommand("dock", "", Remote.C_REMOTE_LOWBATTERY, "");
-        }
-        if (battery_level > 0.2) {
-            wasBatteryWarning = false;
+            obj.onLowBattery();
         }
     }
 
-    property alias lowBatteryNotification: lowBatteryNotification
-
     Loader {
         id: lowBatteryNotification
-        width: 480
-        height: 800
-        x: 0
-        y: 0
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
+        width: 480; height: 800
+        x: 0; y: 0
         asynchronous: true
         source: "qrc:/basic_ui/PopupLowBattery.qml"
     }
@@ -468,6 +273,7 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TODO: can this be done in c++?
     function showNotification(data) {
         var comp = Qt.createComponent("qrc:/basic_ui/Notification.qml");
         var obj = comp.createObject(notificationsRow, {type: data.error, text: data.text, actionlabel: data.actionlabel, action: data.action, timestamp: data.timestamp, idN: data.id, _state: "visible"});
@@ -476,6 +282,7 @@ ApplicationWindow {
     Column {
         objectName: "notificationsRow"
         id: notificationsRow
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         anchors.fill: parent
         spacing: 10
         topPadding: 20
@@ -484,55 +291,47 @@ ApplicationWindow {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // NOTIFICATION DRAWER
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
     Drawer {
         id: notificationsDrawer
-        width: parent.width
-        height: notifications.list.length > 5 ? 100 + 5 * 104 : 100 + (notifications.list.length + 1) * 104
+        width: parent.width; height: notifications.list.length > 5 ? 100 + 5 * 104 : 100 + (notifications.list.length + 1) * 104
         edge: Qt.TopEdge
         dragMargin: 20
         interactive: loader_main.state == "visible" ? true : false
         dim: false
         opacity: position
 
-        background: Rectangle {
-            x: parent.width - 1
-            width: parent.width
-            height: parent.height
-            color: Style.colorBackgroundTransparent
+        background: Item { x: parent.width - 1; width: parent.width; height: parent.height }
+
+        onOpacityChanged: {
+            loader_main.item.opacity = 1 - opacity + 0.3
         }
 
         Rectangle {
-            width: parent.width
-            height: parent.height - 40
+            width: parent.width; height: parent.height - 40
             y: 40
-            color: Style.colorBackground
-            opacity: notificationsDrawer.position
+            color: Style.color.background
         }
 
         onOpened: {
-            loader_main.item.mainNavigation.opacity = 0.3
-            loader_main.item.mainNavigationSwipeview.opacity = 0.3
+            loader_main.item.opacity = 0.3
         }
 
         onClosed: {
-            loader_main.item.mainNavigation.opacity = 1
-            loader_main.item.mainNavigationSwipeview.opacity = 1
+            loader_main.item.opacity = 1
         }
 
         Loader {
-            width: parent.width
-            height: parent.height
+            width: parent.width; height: parent.height
 
             asynchronous: true
             active: notificationsDrawer.position > 0 ? true : false
             source: notificationsDrawer.position > 0 ? "qrc:/basic_ui/NotificationDrawer.qml" : ""
         }
 
-        property int n: notifications.list.length
+        Connections {
+            target: notifications
 
-        onNChanged: {
-            if (n==0) {
+            onListIsEmpty: {
                 notificationsDrawer.close();
             }
         }
@@ -544,19 +343,54 @@ ApplicationWindow {
     property alias loadingScreen: loadingScreen
     Loader {
         id: loadingScreen
-        width: parent.width
-        height: parent.height
+        objectName: "loadingScreen"
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
+        width: parent.width; height: parent.height
 
         asynchronous: true
         active: true
         source: "qrc:/basic_ui/LoadingScreen.qml"
+    }
 
-        onSourceChanged: {
-            if (source == "") {
-                console.debug("Now load the rest off stuff");
-                //battery.checkBattery();
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // PROFILE LOADING SCREEN
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    property alias profileLoadingScreen: profileLoadingScreen
+    Loader {
+        id: profileLoadingScreen
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
+        width: parent.width; height: parent.height
+
+        asynchronous: true
+        active: false
+
+        Behavior on opacity {
+            NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        }
+
+        function show() {
+            profileLoadingScreen.setSource("qrc:/basic_ui/ProfileLoading.qml");
+            profileLoadingScreen.active = true;
+            profileLoadingScreen.opacity = 1;
+        }
+
+        function hide() {
+            profileLoadingScreenTimer.start();
+        }
+
+        Timer {
+            id: profileLoadingScreenTimer
+            repeat: false
+            interval: 400
+            running: false
+
+            onTriggered: {
+                profileLoadingScreen.opacity = 0;
+                profileLoadingScreen.setSource("");
+                profileLoadingScreen.active = false;
             }
         }
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -567,33 +401,20 @@ ApplicationWindow {
 
     MouseArea {
         id: touchEventCatcher
+        objectName: "touchEventCatcher"
         anchors.fill: parent
-        enabled: true
+        enabled: false
         pressAndHoldInterval: 5000
 
         onPressAndHold: {
             console.debug("Disabling touch even catcher");
+
             touchEventCatcher.enabled = false;
-            standbyControl.displayControl.setmode("standbyoff");
-            if (standbyControl.display_autobrightness) {
-                standbyControl.setBrightness(standbyControl.display_brightness_ambient);
+            DisplayControl.setMode(DisplayControl.StandbyOff);
+            if (config.settings.autobrightness) {
+                DisplayControl.setBrightness(DisplayControl.ambientBrightness());
             } else {
-                standbyControl.setBrightness(standbyControl.display_brightness_set);
-            }
-        }
-    }
-
-    Timer {
-        running: standbyControl.mode == "standby" || standbyControl.mode == "on" ? true : false
-        repeat: false
-        interval: 200
-
-        onTriggered: {
-            if (standbyControl.mode == "on") {
-                touchEventCatcher.enabled = false;
-            }
-            if (standbyControl.mode == "standby") {
-                touchEventCatcher.enabled = true;
+                DisplayControl.setBrightness(DisplayControl.userBrightness());
             }
         }
     }
@@ -601,9 +422,9 @@ ApplicationWindow {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // KEYBOARD
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     InputPanel {
         id: inputPanel
+        visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         width: parent.width
         y: applicationWindow.height
 
@@ -617,8 +438,7 @@ ApplicationWindow {
         }
         transitions: Transition {
             id: inputPanelTransition
-            from: ""
-            to: "visible"
+            from: ""; to: "visible"
             reversible: true
             ParallelAnimation {
                 NumberAnimation {

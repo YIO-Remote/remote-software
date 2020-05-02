@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -28,45 +28,39 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "WifiCtrl");
 
 WifiControl::WifiControl(QObject* parent)
-    : QObject(parent)
-    , m_wifiStatus(WifiStatus())
-    , m_scanStatus(Idle)
-    , m_scanResults(QList<WifiNetwork>())
-    , m_signalStrengthScanning(false)
-    , m_wifiStatusScanning(false)
-    , m_maxScanResults(HW_DEF_WIFI_SCAN_RESULTS)
-    , m_pollInterval(HW_DEF_WIFI_POLL_INTERVAL)
-    , m_timerId(0)
-    , m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY)
-    , m_networkJoinRetryDelay(HW_DEF_WIFI_JOIN_DELAY)
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    : QObject(parent),
+      m_wifiStatus(WifiStatus()),
+      m_scanStatus(Idle),
+      m_scanResults(QList<WifiNetwork>()),
+      m_signalStrengthScanning(false),
+      m_wifiStatusScanning(false),
+      m_connected(false),
+      m_maxScanResults(HW_DEF_WIFI_SCAN_RESULTS),
+      m_pollInterval(HW_DEF_WIFI_POLL_INTERVAL),
+      m_timerId(0),
+      m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY),
+      m_networkJoinRetryDelay(HW_DEF_WIFI_JOIN_DELAY) {
 }
 
-WifiControl::~WifiControl()
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+WifiControl::~WifiControl() {
     stopScanTimer();
 }
 
-bool WifiControl::validateAuthentication(WifiSecurity security, const QString &preSharedKey)
-{
+bool WifiControl::validateAuthentication(WifiSecurity security, const QString& preSharedKey) {
     switch (security) {
-    case WifiSecurity::IEEE8021X :
-    case WifiSecurity::WPA_EAP :
-    case WifiSecurity::WPA2_EAP :
-        qWarning(CLASS_LC) << "Authentication mode not supported:" << security;
-        return false;
-    default:
-        break;
+        case WifiSecurity::IEEE8021X:
+        case WifiSecurity::WPA_EAP:
+        case WifiSecurity::WPA2_EAP:
+            qWarning(CLASS_LC) << "Authentication mode not supported:" << security;
+            return false;
+        default:
+            break;
     }
 
-    if (security == WifiSecurity::DEFAULT
-            || security == WifiSecurity::WPA_PSK
-            || security == WifiSecurity::WPA2_PSK) {
+    if (security == WifiSecurity::DEFAULT || security == WifiSecurity::WPA_PSK || security == WifiSecurity::WPA2_PSK) {
         if (preSharedKey.length() < 8 || preSharedKey.length() > 64) {
             qWarning(CLASS_LC) << "WPA Pre-Shared Key Error:"
-                << "WPA-PSK requires a passphrase of 8 to 63 characters or 64 hex digit PSK";
+                               << "WPA-PSK requires a passphrase of 8 to 63 characters or 64 hex digit PSK";
             return false;
         }
     }
@@ -77,46 +71,37 @@ bool WifiControl::validateAuthentication(WifiSecurity security, const QString &p
 /**
  * Default implementation
  */
-bool WifiControl::isConnected()
-{
-    return m_connected;
-}
+bool WifiControl::isConnected() { return m_connected; }
 
-void WifiControl::setConnected(bool connected)
-{
-    if (connected == m_connected) {
+void WifiControl::setConnected(bool state) {
+    if (state == m_connected) {
         return;
     }
-    qCDebug(CLASS_LC) << "Connection status changed to:" << connected;
-    m_connected = connected;
-    // TODO emit signal on connection status change?
+
+    qCDebug(CLASS_LC) << "Connection status changed to:" << state;
+    m_connected = state;
+
+    if (state) {
+        emit connected();
+    } else {
+        emit disconnected();
+    }
 }
 
-WifiStatus WifiControl::wifiStatus() const
-{
-    return m_wifiStatus;
-}
+WifiStatus WifiControl::wifiStatus() const { return m_wifiStatus; }
 
-WifiControl::ScanStatus WifiControl::scanStatus() const
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+WifiControl::ScanStatus WifiControl::scanStatus() const {
     return m_scanStatus;
 }
 
-void WifiControl::setScanStatus(ScanStatus stat)
-{
-    qCDebug(CLASS_LC) << Q_FUNC_INFO << stat;
+void WifiControl::setScanStatus(ScanStatus stat) {
     m_scanStatus = stat;
     scanStatusChanged(m_scanStatus);
 }
 
-QList<WifiNetwork>& WifiControl::scanResult()
-{
-    return m_scanResults;
-}
+QList<WifiNetwork>& WifiControl::scanResult() { return m_scanResults; }
 
-QVariantList WifiControl::networkScanResult() const
-{
+QVariantList WifiControl::networkScanResult() const {
     QVariantList list;
     for (WifiNetwork wifiNetwork : m_scanResults) {
         list.append(QVariant::fromValue(wifiNetwork));
@@ -124,90 +109,41 @@ QVariantList WifiControl::networkScanResult() const
     return list;
 }
 
-int WifiControl::pollInterval() const
-{
-    return m_pollInterval;
-}
-
-void WifiControl::setPollInterval(int pollIntervalMs)
-{
-    m_pollInterval = pollIntervalMs;
-}
-
-int WifiControl::maxScanResults() const
-{
-    return m_maxScanResults;
-}
-
-void WifiControl::setMaxScanResults(int number)
-{
-    m_maxScanResults = number;
-}
-
-int WifiControl::getNetworkJoinRetryDelay() const
-{
-    return m_networkJoinRetryDelay;
-}
-
-void WifiControl::setNetworkJoinRetryDelay(int msDelay)
-{
-    m_networkJoinRetryDelay = msDelay;
-}
-
-int WifiControl::getNetworkJoinRetryCount() const
-{
-    return m_networkJoinRetryCount;
-}
-
-void WifiControl::setNetworkJoinRetryCount(int count)
-{
-    m_networkJoinRetryCount = count;
-}
-
-void WifiControl::startSignalStrengthScanning()
-{
+void WifiControl::startSignalStrengthScanning() {
     m_signalStrengthScanning = true;
     startScanTimer();
 }
 
-void WifiControl::stopSignalStrengthScanning()
-{
+void WifiControl::stopSignalStrengthScanning() {
     m_signalStrengthScanning = false;
     if (!m_wifiStatusScanning) {
         stopScanTimer();
     }
 }
 
-void WifiControl::startWifiStatusScanning()
-{
+void WifiControl::startWifiStatusScanning() {
     m_wifiStatusScanning = true;
     startScanTimer();
 }
 
-void WifiControl::stopWifiStatusScanning()
-{
+void WifiControl::stopWifiStatusScanning() {
     m_wifiStatusScanning = false;
     if (!m_signalStrengthScanning) {
         stopScanTimer();
     }
 }
 
-void WifiControl::startScanTimer()
-{
+void WifiControl::startScanTimer() {
     if (m_timerId == 0) {
         qCDebug(CLASS_LC) << "Starting scan timer with interval:" << m_pollInterval;
         m_timerId = startTimer(m_pollInterval);
     }
 }
 
-void WifiControl::stopScanTimer()
-{
+void WifiControl::stopScanTimer() {
     if (m_timerId > 0) {
         qCDebug(CLASS_LC) << "Stopping scan timer";
         killTimer(m_timerId);
         m_timerId = 0;
     }
 }
-
-
-

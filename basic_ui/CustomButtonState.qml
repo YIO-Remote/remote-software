@@ -30,19 +30,18 @@ Rectangle {
     property bool buttonState: false
 
     id: button
-    width: buttonText.implicitWidth+60
-    height: 60
-    color: buttonState ? Style.colorHighlight1 : Style.colorBackgroundTransparent
+    width: buttonText.implicitWidth+60; height: 60
+    color: buttonState ? Style.color.highlight1 : Style.color.backgroundTransparent
     radius: 40
-    border.color: buttonState ? Style.colorHighlight1 : Style.colorLine
+    border.color: buttonState ? Style.color.highlight1 : Style.color.line
 
     states: State {
         name: "pressed"
-        when: mouseArea.pressed === true
+        when: mouseArea.pressed
         PropertyChanges {
             target: button
-            color: buttonState ? Style.colorBackgroundTransparent : Style.colorHighlight1
-            border.color: buttonState ? Style.colorLine : Style.colorBackgroundTransparent
+            color: buttonState ? Style.color.backgroundTransparent : Style.color.highlight1
+            border.color: buttonState ? Style.color.line : Style.color.backgroundTransparent
         }
     }
 
@@ -55,11 +54,9 @@ Rectangle {
 
     Text {
         id: buttonText
-        color: Style.colorText
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
+        color: Style.color.text
+        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
         font { family: "Open Sans Regular"; pixelSize: 27 }
         lineHeight: 0.8
     }

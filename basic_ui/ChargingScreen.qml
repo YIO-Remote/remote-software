@@ -21,21 +21,20 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtGraphicalEffects 1.0
 import Style 1.0
-import "qrc:/scripts/helper.js" as JSHelper
+
+import Battery 1.0
 
 Rectangle {
     id: chargingScreen
-    width: parent.width
-    height: parent.height
-    color: Style.colorBackground
+    width: parent.width; height: parent.height
+    color: Style.color.background
 
     state: "hidden"
 
     states: [
-        State { name: "visible"; PropertyChanges {target: chargingScreen; opacity: 1; visible: true} },
-        State { name: "hidden"; PropertyChanges {target: chargingScreen; opacity: 0; visible: false} }
+        State { name: "visible"; when: Battery.isCharging; PropertyChanges {target: chargingScreen; opacity: 1; visible: true} },
+        State { name: "hidden"; when: !Battery.isCharging; PropertyChanges {target: chargingScreen; opacity: 0; visible: false} }
     ]
     transitions: [
         Transition {to: "hidden"; PropertyAnimation { target: chargingScreen; properties: "opacity, visible"; easing.type: Easing.InExpo; duration: 1000 }},
@@ -59,6 +58,7 @@ Rectangle {
 
     ParallelAnimation {
         id: resetClock
+        objectName: "resetClock"
         running: false
 
         PropertyAnimation { target: batteryIcon; properties: "x"; to: (parent.width-implicitWidth)/2; duration: 1 }
@@ -72,6 +72,7 @@ Rectangle {
 
     SequentialAnimation {
         id: showClock
+        objectName: "showClock"
         running: false
 
         PauseAnimation {duration: 3000}
@@ -89,92 +90,63 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     Item {
         id: batteryIcon
-//        anchors.verticalCenter: parent.verticalCenter
-//        anchors.horizontalCenter: parent.horizontalCenter
-        x: (parent.width-implicitWidth)/2
-        y: (parent.height-implicitHeight)/2
+        x: (parent.width-implicitWidth)/2; y: (parent.height-implicitHeight)/2
 
         // battery notch
         Rectangle {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: batteryFrame.top
-            anchors.bottomMargin: -12
-            width: 83
-            height: 56
+            width: 83; height: 56
             color: "#00000000"
             radius: 16
-            border.width: 6
-            border.color: Style.colorLine
+            border { width: 6; color: Style.color.line }
+            anchors { horizontalCenter: parent.horizontalCenter; bottom: batteryFrame.top; bottomMargin: -12 }
         }
 
         // battery frame
         Rectangle {
             id: batteryFrame
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 151
-            height: 218
-            color: Style.colorBackground
-            border.width: 6
-            border.color: Style.colorLine
+            width: 151; height: 218
+            color: Style.color.background
+            border { width: 6; color: Style.color.line }
             radius: 32
+            anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
 
             // battery fill
             Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 23
-                width: 106
-                height: battery_level*172
-                color: Style.colorGreen
+                width: 106; height: Battery.level/100*172
+                color: Style.color.green
                 radius: 8
+                anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 23 }
             }
 
-            Image {
-                asynchronous: true
+            Text {
                 id: icon
-                width: 44
-                height: 94
-                fillMode: Image.PreserveAspectFit
-                source: "qrc:/images/chargingscreen/icon-battery-lightning.png"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                ColorOverlay {
-                    visible: !Style.darkMode
-                    anchors.fill: parent
-                    source: parent
-                    color: Style.colorText
-                }
+                color: Style.color.text
+                text: Style.icon.charging
+                width: 80; height: 80
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 120 }
+                anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
         }
     }
 
     Text {
         id: chargeText
-        color: Style.colorText
-        text: Math.round(battery_level * 100) + qsTr("% Charged") + translateHandler.emptyString
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 230
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 40
+        color: Style.color.text
+        text: Math.round(Battery.level) + qsTr("% Charged") + translateHandler.emptyString
+        anchors { bottom: parent.bottom; bottomMargin: 230; horizontalCenter: parent.horizontalCenter; topMargin: 40 }
         horizontalAlignment: Text.AlignHCenter
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 32
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 32 }
         lineHeight: 0.8
     }
 
     Text {
         id: timeText
-        color: Style.colorText
+        color: Style.color.text
         text: loader_main.item ? loader_main.item.statusBar.timeText.text : ""
         verticalAlignment: Text.AlignVCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -400
-        font.family: "Open Sans Light"
-        font.pixelSize: 150
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: -400 }
+        font { family: "Open Sans Light"; weight: Font.Light; pixelSize: 150 }
         lineHeight: 1
     }
 }

@@ -21,14 +21,16 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
 import Style 1.0
+
+import Haptic 1.0
+import ButtonHandler 1.0
+import StandbyControl 1.0
 
 Rectangle {
     id: profiles
-    width: 480
-    height: 0
-    color: Style.colorHighlight2
+    width: 480; height: 0
+    color: Style.color.highlight2
     radius: Style.cornerRadius
     anchors.bottom: parent.bottom
 
@@ -44,8 +46,24 @@ Rectangle {
         }
 
         for (var i=0; i<profileModel.count; i++) {
-            if (profileModel.get(i).id === config.profile) {
+            if (profileModel.get(i).id === config.profileId) {
                 profileModel.move(i, 0, 1);
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONNECTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Connections {
+        target: ButtonHandler
+        enabled: profiles.state == "open" ? true : false
+
+        onButtonPressed: {
+            if (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM) {
+                if (button === ButtonHandler.TOP_RIGHT) {
+                    profiles.state = "closed";
+                }
             }
         }
     }
@@ -54,7 +72,6 @@ Rectangle {
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     state: "closed"
-
 
     states: [
         State { name: "closed";
@@ -69,6 +86,7 @@ Rectangle {
             PropertyChanges {target: loader_main; state: "hidden" }
         }
     ]
+
     transitions: [
         Transition {to: "closed";
             SequentialAnimation {
@@ -88,25 +106,20 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     Text {
         id: title
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Profiles") + translateHandler.emptyString
         anchors { top: parent.top; topMargin: 30; left: parent.left; leftMargin: 30 }
-        font {family: "Open Sans Regular"; pixelSize: 60 }
+        font { family: "Open Sans Regular"; pixelSize: 60 }
         lineHeight: 0.9
     }
 
     // PROFILES
     ListView {
         id: profileListView
-        width: parent.width-60
-        height: parent.height
-        anchors.top: title.bottom
-        anchors.topMargin: 70
-        anchors.left: parent.left
-        anchors.leftMargin: 30
+        width: parent.width-60; height: parent.height
+        anchors { top: title.bottom; topMargin: 70; left: parent.left; leftMargin: 30 }
         spacing: 30
 
         model: profileModel
@@ -127,42 +140,37 @@ Rectangle {
         id: profileDelegate
 
         Item {
-            width: 380
-            height: id == config.profile ? 100 : 70
+            width: 380; height: id == config.profileId ? 100 : 70
 
             Rectangle {
-                width: parent.width
-                height: 2
-                color: Style.colorLight
-                visible: id == config.profile ? true : false
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width; height: 2
+                color: Style.color.light
+                visible: id == config.profileId ? true : false
+                anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
             }
 
             Rectangle {
                 id: img
-                width: 70
-                height: 70
+                width: 70; height: 70
                 radius: width/2
-                color: id == config.profile ? Style.colorText : Style.colorHighlight1
-                anchors.top: parent.top
-                anchors.left: parent.left
+                color: id == config.profileId ? Style.color.text : Style.color.highlight1
+                anchors { top: parent.top; left: parent.left }
 
                 Text {
                     anchors.centerIn: parent
-                    color: id == config.profile ? Style.colorBackground : Style.colorText
+                    color: id == config.profileId ? Style.color.background : Style.color.text
                     text: name.substring(0,1);
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font {family: "Open Sans Bold"; pixelSize: 40 }
+                    font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                 }
             }
 
             Text {
-                color: id == config.profile ? Style.colorText : Style.colorHighlight1
+                color: id == config.profileId ? Style.color.text : Style.color.highlight1
                 text: name
                 anchors { verticalCenter: img.verticalCenter; left: img.right; leftMargin: 20 }
-                font {family: "Open Sans Regular"; pixelSize: 27 }
+                font { family: "Open Sans Regular"; pixelSize: 27 }
                 lineHeight: 0.9
             }
 
@@ -170,9 +178,10 @@ Rectangle {
                 anchors.fill: parent
 
                 onClicked: {
-                    haptic.playEffect("click");
-                    config.profile = id;
+                    Haptic.playEffect(Haptic.Click);
                     profileModel.move(index, 0, 1);
+                    profiles.state = "closed";
+                    config.profileId = id;
                 }
             }
         }
@@ -180,43 +189,35 @@ Rectangle {
 
     Text {
         id: smallText
-        color: Style.colorText
+        color: Style.color.text
         opacity: 0.5
         text: qsTr("To edit your profiles, use the web configurator tool in settings.") + translateHandler.emptyString
         wrapMode: Text.WordWrap
         width: parent.width - 60
-        anchors.left: parent.left
-        anchors.leftMargin: 30
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 20
+        anchors { left: parent.left; leftMargin: 30; bottom: parent.bottom; bottomMargin: 30 }
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 20 }
         lineHeight: 1
     }
 
-    Image {
+    Text {
         id: closeButton
-        asynchronous: true
-        width: 30
-        height: 30
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/components/close_button.png"
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-        anchors.top: parent.top
-        anchors.topMargin: 20
+        color: Style.color.text
+        text: Style.icon.close
+        renderType: Text.NativeRendering
+        width: 70; height: 70
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font { family: "icons"; pixelSize: 80 }
+        anchors { top: parent.top; topMargin: 20; right: parent.right; rightMargin: 10 }
 
         MouseArea {
-            width: parent.width + 60
-            height: parent.height + 60
+            id: closeButtonMouseArea
+            width: parent.width + 20; height: parent.height + 20
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
-                profiles.state = "closed"
+                Haptic.playEffect(Haptic.Click);
+                profiles.state = "closed";
             }
         }
     }
-
 }

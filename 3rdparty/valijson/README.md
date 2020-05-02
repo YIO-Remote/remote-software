@@ -1,7 +1,5 @@
-This README has been copied from: <https://github.com/tristanpenman/valijson>
-
-The sources used are from branch <https://github.com/tristanpenman/valijson/tree/v6-and-v7-support>.  
-Copied December 26, 2019.
+This README and sources have been copied from the master branch of <https://github.com/tristanpenman/valijson>.   
+Copied March 13, 2020.
 
 - only the include directory has been copied
 - examples and testsuite were omitted

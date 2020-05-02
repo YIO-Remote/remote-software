@@ -24,56 +24,74 @@
 
 #include <QBuffer>
 #include <QColor>
-#include <QFuture>
 #include <QImage>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
 #include <QPainter>
-#include <QtConcurrent/QtConcurrentRun>
+#include <QThread>
+
+class MediaPlayerUtilsWorker : public QObject {
+    Q_OBJECT
+
+ public:
+    MediaPlayerUtilsWorker() {}
+    virtual ~MediaPlayerUtilsWorker() {}
+
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void generateImagesReply(QNetworkReply* reply);
+
+ signals:
+    void processingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
+
+ private:
+    QColor dominantColor(const QImage& image);
+};
 
 class MediaPlayerUtils : public QObject {
     Q_OBJECT
 
  public:
-    explicit MediaPlayerUtils() {}
-    virtual ~MediaPlayerUtils() {}
+    MediaPlayerUtils();
+    virtual ~MediaPlayerUtils();
 
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
-
-    QString imageURL() { return m_imageURL; }
-
-    void setImageURL(QString url) {
-        m_imageURL = url;
-        generateImages(url);
-    }
-
     Q_PROPERTY(QString image READ image NOTIFY imageChanged)
-
-    QString image() { return m_image; }
-
     Q_PROPERTY(QString smallImage READ smallImage NOTIFY smallImageChanged)
-
-    QString smallImage() { return m_smallImage; }
-
     Q_PROPERTY(QColor pixelColor READ pixelColor NOTIFY pixelColorChanged)
 
-    QColor pixelColor() { return m_pixelColor; }
+    bool    enabled() { return m_enabled; }
+    QString imageURL() { return m_imageURL; }
+    QString image() { return m_image; }
+    QString smallImage() { return m_smallImage; }
+    QColor  pixelColor() { return m_pixelColor; }
+
+    void setImageURL(QString url);
+    void setEnabled(bool value);
+
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void onProcessingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
 
  signals:
+    void processingStarted();
+    void enabledChanged();
     void imageChanged();
     void smallImageChanged();
     void pixelColorChanged();
 
  private:
+    bool m_enabled = true;
+
     QString m_imageURL;
+    QString m_prevImageURL;
     QString m_image;
     QString m_smallImage;
     QColor  m_pixelColor;
 
-    void   generateImages(QString url);
-    QColor dominantColor(const QImage& image);
+    void generateImages(const QString& url);
 
- private slots:
-    void generateImagesReply(QNetworkReply* reply);
+    QNetworkAccessManager*  m_manager;
+    QThread*                m_workerThread;
+    MediaPlayerUtilsWorker* m_worker;
 };

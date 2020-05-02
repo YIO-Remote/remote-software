@@ -22,18 +22,16 @@
 
 import QtQuick 2.11
 import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
 import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: notification
-    width: parent.width-20
-    height: 104 // 244
+    width: parent.width-20; height: 104
     x: 10
     radius: Style.cornerRadius
-    color: type ? Style.colorRed : Style.colorLight
+    color: type ? Style.color.red : Style.color.light
 
     Behavior on opacity {
         NumberAnimation {
@@ -52,7 +50,6 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // MOUSEAREA
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
     property bool dragged: false
     property bool closing: false
 
@@ -61,9 +58,7 @@ Rectangle {
         anchors.fill: parent
 
         drag.target: notification.state != "open" ? notification : null
-        drag.axis: Drag.XAxis
-        drag.minimumX: 10
-        drag.maximumX: 400
+        drag { axis: Drag.XAxis; minimumX: 10; maximumX: 400 }
 
         onClicked: {
             notificationRemoverTimer.stop();
@@ -101,7 +96,6 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // PROPERTIES FOR THE NOTIFICATION
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
     property alias text: notificationText.text
     property bool type
     property var action
@@ -113,7 +107,6 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
     state: "hidden"
 
     Component.onCompleted: {
@@ -171,13 +164,9 @@ Rectangle {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // QML ELEMENTS
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
     MouseArea {
-        width: 100
-        height: width
-        anchors.right: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-
+        width: 100; height: width
+        anchors { right: parent.left; verticalCenter: parent.verticalCenter }
         enabled: notification.x == 100 ? true : false
 
         onClicked: {
@@ -186,24 +175,16 @@ Rectangle {
             notifications.remove(idN);
         }
 
-        Image {
-            id: closeIcon
-            asynchronous: true
-            width: 60
-            height: 60
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/images/notification/icon-notification-dismiss.png"
+        Text {
+            id: closeButton
+            color: Style.color.text
+            opacity: notification.x == 100 ? 1 : 0
+            text: Style.icon.close
+            width: 70; height: 70
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
 
-            opacity: notification.x == 100 ? 1 : 0
-
-            ColorOverlay {
-                visible: !Style.darkMode
-                anchors.fill: parent
-                source: parent
-                color: Style.colorText
-                antialiasing: true
-            }
 
             Behavior on opacity {
                 NumberAnimation {
@@ -217,46 +198,30 @@ Rectangle {
 
     Text {
         id: notificationText
-        width: parent.width-170
-        height: 84
-        anchors.left: parent.left
-        anchors.leftMargin: 108
-        anchors.top: parent.top
-        anchors.topMargin: 10
-
-        color: Style.colorText
+        width: parent.width-170; height: 84
+        color: Style.color.text
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 27
+        font: Style.font.button
         lineHeight: 1
+        anchors { left: parent.left; leftMargin: 108; top: parent.top; topMargin: 10 }
     }
 
     Text {
         id: timestampText
         text: timestamp.toDateString() + "  " +  timestamp.toTimeString()
         width: parent.width-170
-        anchors.left: parent.left
-        anchors.leftMargin: 108
-        anchors.top: notificationText.bottom
-        anchors.topMargin: 10
-
-        color: Style.colorText
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 20
+        color: Style.color.text
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 20 }
         lineHeight: 1
+        anchors { left: parent.left; leftMargin: 108; top: notificationText.bottom; topMargin: 10 }
     }
 
     Item {
         id: buttons
-        width: parent.width
-        height: 60
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width; height: 60
+        anchors { bottom: parent.bottom; bottomMargin: 30; horizontalCenter: parent.horizontalCenter }
 
         RowLayout {
             spacing: 40
@@ -295,25 +260,14 @@ Rectangle {
 
     }
 
-    Image {
+    Text {
         id: icon
-        asynchronous: true
-        width: 60
-        height: 60
-        fillMode: Image.PreserveAspectFit
-        source: type ? "qrc:/images/notification/icon-notification-error.png" : "qrc:/images/notification/icon-notification-normal.png"
-        anchors.left: parent.left
-        anchors.leftMargin: 30
-        anchors.top: parent.top
-        anchors.topMargin: 20
-
-        ColorOverlay {
-            visible: !Style.darkMode
-            anchors.fill: parent
-            source: parent
-            color: Style.colorText
-            antialiasing: true
-        }
+        color: Style.color.text
+        text: type ? Style.icon.warning : Style.icon.bell
+        width: 70; height: 70
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 80 }
+        anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
     }
 
 

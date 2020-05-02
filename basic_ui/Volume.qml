@@ -21,15 +21,13 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 
 import Style 1.0
 
 Item {
     id: volume
-    width:  parent.width
-    height: 160
+    width:  parent.width; height: 160
 
     property int volumePosition
 
@@ -79,9 +77,8 @@ Item {
 
     Rectangle {
         id: bg
-        width: 300
-        height: 80
-        color: Style.colorLight
+        width: 300; height: 80
+        color: Style.color.light
         radius: height/2
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -97,9 +94,8 @@ Item {
 
         Rectangle {
             id: volumeBar
-            height: parent.height
-            width: bg.width * volumePosition/100
-            color: Style.colorLine
+            height: parent.height; width: bg.width * volumePosition/100
+            color: Style.color.line
             anchors.left: parent.left
         }
 
@@ -122,12 +118,4 @@ Item {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
         }
     }
-
-//    DropShadow {
-//        anchors.fill: bg
-//        radius: 5
-//        samples: 9
-//        color: "#80000000"
-//        source: bg
-//    }
 }

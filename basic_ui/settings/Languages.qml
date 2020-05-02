@@ -21,108 +21,64 @@
  *****************************************************************************/
 
 import QtQuick 2.11
-import QtQuick.Controls 2.5
 import Style 1.0
-import "qrc:/scripts/helper.js" as JSHelper
 
-Item {
-    id: languageSection
-    width: parent.width
-    height: header.height + section.height + 20
+Rectangle {
+    id: container
+    width: parent.width; height: languageListView.height
+    radius: Style.cornerRadius
+    color: Style.color.dark
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUNCTIONS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function getLanguage(id) {
         for (var i=0; i<translations.length; i++) {
-            if (translations[i].id == id) {
+            if (translations[i].id === id) {
                 return i;
             }
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // LANGUAGES
+    // UI ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Text {
-        id: header
-        color: Style.colorText
-        text: qsTr("Languages") + translateHandler.emptyString
-        anchors.left: parent.left
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 27
-        lineHeight: 1
-    }
+    ListView {
+        id: languageListView
+        anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
+        width: parent.width; height: childrenRect.height
+        model: translations
+        interactive: false
+        preferredHighlightBegin: height / 2 - 37; preferredHighlightEnd: height / 2 + 37
+        highlightMoveDuration: 300
+        currentIndex: getLanguage(config.settings.language);
+        focus: true
 
-    Rectangle {
-        id: section
-        width: parent.width
-        height: 74
-        radius: Style.cornerRadius
-        color: Style.colorDark
+        delegate:
+            Rectangle {
+            width: parent.width; height: 74
+            color: Style.color.backgroundTransparent
 
-        anchors.top: header.bottom
-        anchors.topMargin: 20
-
-        clip: true
-
-        Behavior on height {
-            PropertyAnimation {easing.type: Easing.OutExpo; duration: 300}
-        }
-
-        ListView {
-            id: languageListView
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width
-            height: 300
-            model: translations
-            preferredHighlightBegin: height / 2 - 37
-            preferredHighlightEnd: height / 2 + 37
-            highlightMoveDuration: 50
-            highlightRangeMode: ListView.StrictlyEnforceRange
-            interactive: section.height == 300 ? true : false
-
-            currentIndex: getLanguage(config.settings.language);
-
-            focus: true
-
-            delegate:
-                Rectangle {
-                width: parent.width
-                height: 74
-                color: Style.colorBackgroundTransparent
-
-                Text {
-                    text: translations[index].name
-                    color: Style.colorText
-                    anchors.left: parent.left
-                    anchors.leftMargin: 20
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.family: "Open Sans"
-                    font.weight: Font.Normal
-                    font.pixelSize: 27
-                    lineHeight: 1
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: {
-                        if (section.height != 300) {
-                            section.height = 300
-                        } else {
-                            languageListView.currentIndex = index
-                            section.height = 74
-                            translateHandler.selectLanguage(translations[index].id)
-                            var tmp = config.settings
-                            tmp.language = translations[index].id
-                            config.settings = tmp;
-                            config.writeConfig();
-                        }
-                    }
-                }
+            Text {
+                text: translations[index].name
+                color: Style.color.text
+                anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
+                font: Style.font.button
             }
 
-            highlight: Rectangle { color: section.height == 300 ? Style.colorHighlight1 : Style.colorBackgroundTransparent ; radius: Style.cornerRadius }
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    languageListView.currentIndex = index;
+                    translateHandler.selectLanguage(translations[index].id);
+                    var tmp = config.settings;
+                    tmp.language = translations[index].id;
+                    config.settings = tmp;
+                }
+            }
         }
+
+        highlight: Rectangle { color: Style.color.highlight1; radius: Style.cornerRadius }
     }
 }

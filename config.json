@@ -1,289 +1,43 @@
 {
-    "entities": {
-        "light": [
-            {
-                "area": "Living room",
-                "entity_id": "light.livingroom_light_level",
-                "friendly_name": "Living room lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS",
-                    "COLOR",
-                    "COLORTEMP"
-                ]
-            },
-            {
-                "area": "Kitchen",
-                "entity_id": "light.kitchentable_light_level",
-                "friendly_name": "Kitchen table lamp",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "BRIGHTNESS"
-                ]
-            }
-        ],
-        "media_player": [
-            {
-                "area": "Living room",
-                "entity_id": "media_player.living_room_speaker",
-                "friendly_name": "Living room speaker",
-                "integration": "homeassistant",
-                "supported_features": [
-                    "SOURCE",
-                    "APP_NAME",
-                    "VOLUME",
-                    "VOLUME_UP",
-                    "VOLUME_DOWN",
-                    "VOLUME_SET",
-                    "MUTE",
-                    "MUTE_SET",
-                    "MEDIA_TYPE",
-                    "MEDIA_TITLE",
-                    "MEDIA_ARTIST",
-                    "MEDIA_ALBUM",
-                    "MEDIA_DURATION",
-                    "MEDIA_POSITION",
-                    "MEDIA_IMAGE",
-                    "PLAY",
-                    "PAUSE",
-                    "STOP",
-                    "PREVIOUS",
-                    "NEXT",
-                    "SEEK",
-                    "SHUFFLE",
-                    "TURN_ON",
-                    "TURN_OFF",
-                    "SEARCH",
-                    "LIST",
-                    "CONTROL"
-                ],
-                "type:": "speaker"
-            }
-        ],
-        "remote": [
-            {
-                "area": "Living room",
-                "settings":
-                {
-                    "delay": 300,
-                    "channel_switching": ["DIGIT_SEPARATOR", "CHANNEL_NUMBER", "CHANNEL_END"]
-                },
-                "channels": [
-                    {
-                        "name": "MTV",
-                        "number": 22,
-                        "image": "/usr/bin/yio-remote/images/mtv.jpg"
-                    }
-                ],
-                "commands": [
-                    {
-                        "button_map": "POWER_TOGGLE",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "CHANNEL_UP",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "CHANNEL_DOWN",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "VOLUME_UP",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "VOLUME_DOWN",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "CURSOR_UP",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "CURSOR_DOWN",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "CURSOR_LEFT",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0016,0016,0016,0016,0041,0016,0041,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0016,0016,0016,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "CURSOR_RIGHT",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "CURSOR_OK",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0016,0016,0041,0016,0041,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0041,0016,0016,0016,0016,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    },
-                    {
-                        "button_map": "MUTE_TOGGLE",
-                        "code": "0000,006C,0000,0022,00AD,00AD,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0016,0041,0016,0041,0016,0041,0016,0041,0016,06FB",
-                        "format":"pronto"
-                    }
-                ],
-                "entity_id": "remote.living_room",
-                "friendly_name": "Living room TV",
-                "integration": "YIO-Dock-3C71BFE33DEC",
-                "supported_features": [
-                    "POWER_TOGGLE",
-                    "CHANNEL_UP",
-                    "CHANNEL_DOWN",
-                    "VOLUME_UP",
-                    "VOLUME_DOWN",
-                    "CURSOR_UP",
-                    "CURSOR_DOWN",
-                    "CURSOR_LEFT",
-                    "CURSOR_RIGHT",
-                    "CURSOR_OK",
-                    "MUTE_TOGGLE"
-                ]
-            }
-        ]
-    },
-    "integrations": {
-        "homeassistant": {
-            "data": [
-                {
-                    "data": {
-                        "ip": "192.168.100.12:8123",
-                        "token": ""
-                    },
-                    "friendly_name": "Home Assistant",
-                    "id": "homeassistant"
-                }
-            ],
-            "log": "debug",
-            "mdns": "_hap._tcp"
-        },
-        "spotify": {
-            "data": [
-                {
-                    "data": {
-                        "access_token": "",
-                        "client_id": "",
-                        "client_secret": "",
-                        "entity_id": "spotify.spotify",
-                        "refresh_token": ""
-                    },
-                    "friendly_name": "Spotify",
-                    "id": "spotify"
-                }
-            ],
-            "log": "debug",
-            "mdns": "_spotify-connect._tcp"
-        }
-    },
+    "entities": {},
+    "integrations": {},
     "settings": {
         "autobrightness": true,
         "bluetootharea": false,
         "language": "en_US",
         "logging": {
-            "path": ".",
-            "level": "INFO",
             "console": true,
-            "showSource": true,
+            "level": "DEBUG",
+            "path": "/var/log/",
+            "purgeHours": 72,
             "queueSize": 100,
-            "purgeHours": 72
+            "showSource": true
         },
-        "paired_dock": "YIO-Dock-3C71BFE33DEC",
+        "paired_dock": "",
         "proximity": 40,
-        "shutdowntime": 21600,
-        "softwareupdate": false,
-        "wifitime": 3600
+        "shutdowntime": 7200,
+        "softwareupdate": {
+            "autoUpdate": false,
+            "updateUrl": "https://update.yio.app/v1/",
+            "updateUrlAppPath": "app/updates",
+            "channel": "release",
+            "checkInterval": 3600,
+            "downloadDir": "/tmp/yio",
+            "appUpdateScript": "/opt/yio/scripts/app-update.sh",
+            "systemUpdateScript": "/opt/yio/scripts/TODO.sh"
+        },
+        "wifitime": 1740
     },
     "ui_config": {
         "darkmode": true,
-        "groups": {
-            "10": {
-                "entities": [
-                    "remote.living_room"
-                ],
-                "name": "Remotes",
-                "switch": false
-            },
-            "12216382-3d36-4b21-8b3f-5a43193a4701": {
-                "entities": [
-                    "light.entrance_light_level"
-                ],
-                "name": "Lights",
-                "switch": false
-            },
-            "15f7f394-4a15-45fc-b590-59f5aa7d89fa": {
-                "entities": [
-                    "media_player.living_room_2_1",
-                    "media_player.nappali_speaker"
-                ],
-                "name": "Speakers",
-                "switch": false
-            },
-            "50b0adf5-50b0-42ed-89f2-2806e59df8d1": {
-                "entities": [
-                    "light.livingroom_light_level"
-                ],
-                "name": "Lights",
-                "switch": false
-            },
-            "9124e857-b2e6-45f6-8210-612337d10602": {
-                "entities": [
-                    "light.kitchen_light_level",
-                    "light.kitchentable_light_level"
-                ],
-                "name": "Lights",
-                "switch": false
-            }
-        },
-        "pages": {
-            "0": {
-                "bluetooth": "aa:bb:cc:dd:ee:ff",
-                "groups": [
-                    "50b0adf5-50b0-42ed-89f2-2806e59df8d1",
-                    "15f7f394-4a15-45fc-b590-59f5aa7d89fa",
-                    "10"
-                ],
-                "image": "/usr/bin/yio-remote/images/livingroom.jpg",
-                "name": "Living room"
-            },
-            "1": {
-                "groups": [
-                    "9124e857-b2e6-45f6-8210-612337d10602"
-                ],
-                "image": "/usr/bin/yio-remote/images/kitchen.jpg",
-                "name": "Kitchen"
-            },
-            "5": {
-                "groups": [
-                    "12216382-3d36-4b21-8b3f-5a43193a4701"
-                ],
-                "name": "Hallway"
-            }
-        },
+        "groups": {},
+        "pages": {},
         "profiles": {
             "0": {
                 "favorites": [
-                    "light.livingroom_light_level",
-                    "light.kitchen_light_level",
-                    "light.kitchentable_light_level",
-                    "media_player.living_room_2_1",
-                    "media_player.nappali_speaker"
                 ],
-                "name": "Marton",
+                "name": "Default",
                 "pages": [
-                    "favorites",
-                    "0",
-                    "5",
-                    "1",
-                    "settings"
                 ]
             }
         },

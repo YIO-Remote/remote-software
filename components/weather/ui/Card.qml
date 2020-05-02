@@ -24,22 +24,25 @@ import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.0
 import Style 1.0
 
+import ButtonHandler 1.0
+import Haptic 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: weatherList
     width: parent.width
     height: parent.height
-    color: Style.colorDark
+    color: Style.color.dark
 
     /////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS (with long press detection)
     /////////////////////////////////////////////////////////////////////////////////////
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: true
 
-        onButtonPress: {
+        onButtonPressed: {
             if (standbyControl.mode === "on" || standbyControl.mode === "dim") {
                 switch (button) {
                 case "top right":
@@ -48,8 +51,6 @@ Rectangle {
                     break;
                 }
             }
-        }
-        onButtonRelease: {
         }
     }
 
@@ -64,13 +65,13 @@ Rectangle {
         anchors.left: parent.left
         anchors.topMargin: 10
         Text {
-            color: Style.colorText
+            color: Style.color.text
             text: obj.friendly_name
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
             anchors { centerIn: parent }
-            font.family: "Open Sans"
+            font.family: "Open Sans Regular"
             font.weight: Font.Bold
             font.pixelSize: 32
             lineHeight: 1
@@ -90,7 +91,7 @@ Rectangle {
                 width: parent.width
                 height: parent.height
                 visible: true
-                color: Style.colorMedium
+                color: Style.color.medium
                 radius: Style.cornerRadius
 
                 Text {
@@ -98,9 +99,9 @@ Rectangle {
                     width: 30
                     anchors { left: parent.left; top:parent.top; leftMargin: 10; verticalCenter: parent.verticalCenter }
                     verticalAlignment: Text.AlignVCenter
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.date
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -116,18 +117,18 @@ Rectangle {
                 Text {
                     id: desc
                     anchors { left: image.right; top:parent.top; topMargin: 20 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.description
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
                 Text {
                     id: temp
                     anchors { right: parent.right; top:parent.top; topMargin: 20; rightMargin: 10 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.temp
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -144,9 +145,9 @@ Rectangle {
                 Text {
                     id: rain
                     anchors { left: imgRain.right; leftMargin:10; bottom: parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.rain
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -162,10 +163,10 @@ Rectangle {
                 Text {
                     id: snow
                     anchors { left: imgSnow.right; leftMargin:10; bottom:parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.snow
                     visible: model.snow
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -181,18 +182,18 @@ Rectangle {
                 Text {
                     id: wind
                     anchors { left: imgWind.right; leftMargin:10; bottom :parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.wind
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
                 Text {
                     id: humidity
                     anchors { right: parent.right; rightMargin: 10; bottom : parent.bottom; bottomMargin: 15 }
-                    color: Style.colorText
+                    color: Style.color.text
                     text: model.humidity
-                    font.family: "Open Sans"
+                    font.family: "Open Sans Regular"
                     font.weight: Font.Normal
                     font.pixelSize: 24
                 }
@@ -236,7 +237,7 @@ Rectangle {
             visible: !Style.darkMode
             anchors.fill: parent
             source: parent
-            color: Style.colorText
+            color: Style.color.text
             antialiasing: true
         }
 
@@ -246,7 +247,7 @@ Rectangle {
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 weatherButton.state = "closed"
             }
         }

@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -27,30 +27,28 @@
 #include <QQmlEngine>
 #include <QTranslator>
 
+#include "integrations/integrations.h"
+#include "yio-interface/plugininterface.h"
+
 class TranslationHandler : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString emptyString READ getEmptyString NOTIFY languageChanged)
 
  public:
-    explicit TranslationHandler(QQmlEngine *engine) {
-        m_translator = new QTranslator(this);
-        m_engine = engine;
-    }
+    explicit TranslationHandler(QQmlEngine *engine);
+    virtual ~TranslationHandler();
 
-    QString getEmptyString() { return ""; }
+    QString          getEmptyString() { return ""; }
+    Q_INVOKABLE void selectLanguage(QString language);
 
-    Q_INVOKABLE void selectLanguage(QString language) {
-        qGuiApp->removeTranslator(m_translator);
-        m_translator->load(":/translations/" + language);
-        qGuiApp->installTranslator(m_translator);
-        //          m_engine->retranslate();
-        emit languageChanged();
-    }
+    static TranslationHandler *getInstance() { return s_instance; }
 
  signals:
     void languageChanged();
 
  private:
+    static TranslationHandler *s_instance;
+
     QTranslator *m_translator;
     QQmlEngine * m_engine;
 };

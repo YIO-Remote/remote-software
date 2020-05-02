@@ -22,18 +22,21 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
+
 import Style 1.0
 
-import "qrc:/scripts/helper.js" as JSHelper
+import Haptic 1.0
+import StandbyControl 1.0
+import ButtonHandler 1.0
+
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: buttonContainer
 
-    property var  obj
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO INTEGRATION
+    // Disable button if the integration is disconnected
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
         target: obj
@@ -46,15 +49,15 @@ Rectangle {
             else {
                 buttonContainer.opacity = 0.3
                 buttonContainer.enabled = false
-                buttonContainer.state = "closed"
-                cardLoader.active = false;
+                buttonContainer.close();
             }
         }
     }
-    
+
     Behavior on opacity {
         PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
     }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BASIC SETTINGS
@@ -63,30 +66,35 @@ Rectangle {
     width: 460
     height: 125
     anchors.horizontalCenter: parent.horizontalCenter
-    color: Style.colorDark
+    color: Style.color.dark
     radius: Style.cornerRadius
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    property var obj
     property var originParent: buttonContainer.parent
+    property bool _isCurrentItem: parent.__isCurrentItem ? parent.__isCurrentItem : false
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // LAYER MASK TO MASK EVERYTHING THAT IS INSIDE THE BUTTON
+    // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//    layer.enabled: true
-//    layer.effect: OpacityMask {
-//        maskSource: Item {
-//            width: buttonContainer.width
-//            height: buttonContainer.height
-//            Rectangle {
-//                anchors.fill: parent
-//                radius: Style.cornerRadius
-//            }
-//        }
-//    }
+    function open() {
+        buttonContainer.originParent = buttonContainer.parent
+        cardLoader.active = true;
+        buttonContainer.state = "open";
+    }
+
+    function close() {
+        buttonContainer.state = "closed"
+        if (cardLoader.item) {
+            cardLoader.item.state = "closed"
+        }
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
@@ -97,34 +105,48 @@ Rectangle {
     states: [
         State {
             name: "closed"
-            PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1}
+            PropertyChanges {target: buttonContainer; width: 460; height: 125; scale: 1 }
             ParentChange { target: buttonContainer; parent: originParent }
             PropertyChanges {target: loader_main; state: "visible" }
+            PropertyChanges {target: cardLoader; opacity: 0}
+            PropertyChanges {target: titleElement; opacity: 1}
         },
         State {
             name: "open"
-            PropertyChanges {target: buttonContainer; width: 480; height: 720}
+            PropertyChanges {target: buttonContainer; width: 480; height: 720; scale: 1 }
             ParentChange { target: buttonContainer; parent: contentWrapper; x: 20; y: 80 }
             PropertyChanges {target: loader_main; state: "hidden" }
+            PropertyChanges {target: cardLoader; opacity: 1 }
+            PropertyChanges {target: titleElement; opacity: 0}
         }
     ]
 
     transitions: [
         Transition {
             to: "closed"
-            ParallelAnimation {
-                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutExpo; duration: 300 }
-                PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
-                ParentAnimation {
-                    NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+            SequentialAnimation {
+                ParallelAnimation {
+                    PropertyAnimation { target: cardLoader; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
+                    ParallelAnimation {
+                        PropertyAnimation { target: buttonContainer; properties: "width, height, scale"; easing.type: Easing.OutExpo; duration: 300 }
+                        ParentAnimation {
+                            NumberAnimation { properties: "x,y"; easing.type: Easing.OutExpo; duration: 300 }
+                        }
+                        SequentialAnimation {
+                            PauseAnimation { duration: 100 }
+                            PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                        }
+                    }
                 }
+                PropertyAction { target: cardLoader; property: "active"; value: false }
             }
         },
         Transition {
             to: "open"
             ParallelAnimation {
-                PropertyAnimation { target: buttonContainer; properties: "width, height"; easing.type: Easing.OutBack; easing.overshoot: 1.2; duration: 300 }
-                PropertyAnimation { target: buttonContainer; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                PropertyAnimation { target: buttonContainer; properties: "width, height, scale"; easing.type: Easing.OutBack; easing.overshoot: 1.5; duration: 400 }
+                PropertyAnimation { target: cardLoader; properties: "opacity"; duration: 1 }
+                PropertyAnimation { target: titleElement; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 ParentAnimation {
                     NumberAnimation { properties: "x,y"; easing.type: Easing.OutBack; easing.overshoot: 0.8; duration: 300 }
                 }
@@ -147,20 +169,18 @@ Rectangle {
         enabled: buttonContainer.state == "open" ? false : true
 
         onPressAndHold: {
-            haptic.playEffect("press");
-
+            Haptic.playEffect(Haptic.Press);
             addToFavButton.state = "open"
         }
 
         onClicked: {
-            haptic.playEffect("click");
-            originParent = buttonContainer.parent
-//            buttonContainer.state = "open"
-            cardLoader.active = true;
+            Haptic.playEffect(Haptic.Click);
+            buttonContainer.open();
         }
     }
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CLOSED STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,59 +189,45 @@ Rectangle {
     property alias icon: icon.text
     property alias button: button
 
-
     Item {
+        id: titleElement
         width: parent.width
         height: 125
         anchors.top: parent.top
 
         Text {
             id: title
-            color: Style.colorText
-            text: obj.friendly_name
+            color: Style.color.text
+            width: parent.width-232
+            text: obj ? obj.friendly_name : ""
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.WordWrap
-            width: parent.width-232
-            anchors.left: parent.left
-            anchors.leftMargin: 126
-            anchors.verticalCenter: parent.verticalCenter
-//            font.family: "Open Sans"
-//            font.weight: Font.Normal
-//            font.pixelSize: 27
-//            lineHeight: 1
-            font: Style.buttonFont
+            anchors { left: parent.left; leftMargin: 126; verticalCenter: parent.verticalCenter}
+            font: Style.font.button
         }
 
         Text {
             id: icon
-            color: Style.colorText
+            color: Style.color.text
             text: ""
-            width: 85
-            height: 85
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 100 }
-            anchors.left: parent.left
-            anchors.leftMargin: 20
-            anchors.verticalCenter: parent.verticalCenter
+            anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
         }
-
     }
 
     BasicUI.CustomSwitch {
         id: button
-
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-        enabled: false
+        anchors { right: parent.right; rightMargin: 20; verticalCenter: parent.verticalCenter }
+        enabled: obj ? obj.supportsOn : false
         visible: enabled
 
-        checked: obj.state
+        checked: obj ? obj.isOn : false
         mouseArea.enabled: buttonContainer.state == "open" ? false: true
         mouseArea.onClicked: {
-            if (obj.state) {
+            if (obj.isOn) {
                 obj.turnOff();
             } else {
                 obj.turnOn();
@@ -233,30 +239,46 @@ Rectangle {
     // ADD TO FAVORITE
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // LAYER MASK FOR ROUNDED CORNERS
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    layer.enabled: false
+    layer.effect: OpacityMask {
+        maskSource:
+            Rectangle {
+            id: opacityMask
+            width: buttonContainer.width; height: buttonContainer.height
+            radius: Style.cornerRadius
+
+            Behavior on radius {
+                NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+            }
+        }
+    }
+
     property alias addToFavButton: addToFavButton
 
     Rectangle {
         id: addToFavButton
-        width: 0
-        height: 0
+        width: 0; height: 0
         z: 1000
         radius: 200
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: Style.colorHighlight1
+        anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter}
+        color: Style.color.highlight1
 
         state: "closed"
 
         states: [
             State {
                 name: "closed"
-                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: Style.colorHighlight1}
+                PropertyChanges {target: addToFavButton; width: 0; height: 0; radius: 200; color: Style.color.highlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 0}
                 PropertyChanges {target: addToFavButtonText; opacity: 0}
             },
             State {
                 name: "open"
-                PropertyChanges {target: addToFavButton; width:500; height: 500; color: Style.colorHighlight1}
+                PropertyChanges {target: addToFavButton; width:500; height: 500; color: Style.color.highlight1}
                 PropertyChanges {target: addToFavButtonCircle; opacity: 1}
                 PropertyChanges {target: addToFavButtonText; opacity: 1}
             }
@@ -266,18 +288,19 @@ Rectangle {
             Transition {
                 to: "closed"
                 SequentialAnimation {
-//                    PauseAnimation { duration: 300 }
                     ParallelAnimation {
                         PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                         PropertyAnimation { target: addToFavButtonText; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
                     }
                     PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.OutExpo; duration: 400 }
                     PropertyAnimation { target: addToFavButton; properties: "color"; duration: 1 }
+                    PropertyAction { target: buttonContainer; property: "layer.enabled"; value: false }
                 }
             },
             Transition {
                 to: "open"
                 SequentialAnimation {
+                    PropertyAction { target: buttonContainer; property: "layer.enabled"; value: true }
                     PropertyAnimation { target: addToFavButton; properties: "width, height, radius"; easing.type: Easing.InExpo; duration: 400 }
                     ParallelAnimation {
                         PropertyAnimation { target: addToFavButtonCircle; properties: "opacity"; easing.type: Easing.InExpo; duration: 400 }
@@ -292,28 +315,25 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
-                haptic.playEffect("click");
+                Haptic.playEffect(Haptic.Click);
                 addToFavButton.state = "closed"
             }
         }
 
         Rectangle {
             id: addToFavButtonCircle
-            width: 80
-            height: width
+            width: 80; height: width
             radius: width/2
-            color: Style.colorDark
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 40
+            color: Style.color.dark
             opacity: 0
+            anchors { left: parent.left; leftMargin: 40; verticalCenter: parent.verticalCenter }
 
             states: State {
                 name: "pressed"
                 when: mouseAreaFav.pressed === true
                 PropertyChanges {
                     target: addToFavButtonCircle
-                    color: Style.colorHighlight1
+                    color: Style.color.highlight1
                 }
             }
 
@@ -324,21 +344,14 @@ Rectangle {
                         properties: "color"; duration: 300 }
                 }]
 
-            Image {
-                asynchronous: true
-                width: 80
-                height: 80
-                fillMode: Image.PreserveAspectFit
-                source: obj.favorite ? "qrc:/images/components/fav-minus.png" : "qrc:/images/components/fav-plus.png"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                ColorOverlay {
-                    visible: !Style.darkMode
-                    anchors.fill: parent
-                    source: parent
-                    color: Style.colorText
-                }
+            Text {
+                color: Style.color.text
+                text: obj && obj.favorite ? Style.icon.fav_remove : Style.icon.fav_add
+                renderType: Text.NativeRendering
+                width: 80; height: 80
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
+                anchors.verticalCenter: parent.verticalCenter; anchors.horizontalCenter: parent.horizontalCenter
             }
 
             MouseArea {
@@ -355,22 +368,17 @@ Rectangle {
 
         Text {
             id: addToFavButtonText
-            color: Style.colorText
-            text: obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
-            wrapMode: Text.WordWrap
-            anchors.verticalCenter: addToFavButtonCircle.verticalCenter
-            anchors.left: addToFavButtonCircle.right
-            anchors.leftMargin: 26
-            font.family: "Open Sans"
-            font.weight: Font.Normal
-            font.pixelSize: 27
-            lineHeight: 1
+            color: Style.color.text
             opacity: 0
+            text: obj && obj.favorite ? qsTr("Remove from favorites") + translateHandler.emptyString : qsTr("Add to favorites") + translateHandler.emptyString
+            wrapMode: Text.WordWrap
+            anchors { left: addToFavButtonCircle.right; leftMargin: 26; verticalCenter: addToFavButtonCircle.verticalCenter }
+            font: Style.font.button
         }
     }
 
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // OPEN STATE ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -379,43 +387,25 @@ Rectangle {
 
     Loader {
         id: cardLoader
-        width: buttonContainer.width
-        height: buttonContainer.height
+        width: buttonContainer.width; height: buttonContainer.height
         asynchronous: true
-        active: false //buttonContainer.state == "open"
+        active: false
         source: "qrc:/components/remote/ui/Card.qml"
-        opacity: cardLoader.status == Loader.Ready ? 1 : 0
-
-        onStatusChanged: {
-            if (cardLoader.status == Loader.Ready) {
-                buttonContainer.state = "open";
-            }
-        }
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutExpo
-            }
-        }
-
     }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CLOSE BUTTON
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Connections {
-        target: buttonHandler
+        target: ButtonHandler
         enabled: state == "open" ? true : false
 
-        onButtonPress: {
-            if (standbyControl.mode == "on" || standbyControl.mode == "dim") {
-                switch (button) {
-                case "top right":
-                    buttonContainer.state = "closed"
-                    cardLoader.active = false;
-                    break;
+        onButtonPressed: {
+            if (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM) {
+                if (button === ButtonHandler.TOP_RIGHT) {
+                    buttonContainer.close();
                 }
             }
         }
@@ -425,32 +415,24 @@ Rectangle {
 
     Text {
         id: closeButton
-        color: Style.colorText
+        color: Style.color.text
         visible: buttonContainer.state == "open"
-        text: Style.icons.close
+        text: Style.icon.close
         renderType: Text.NativeRendering
-        width: 70
-        height: 70
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
+        width: 70; height: 70
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
         font {family: "icons"; pixelSize: 80 }
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 20
+        anchors { top: parent.top; topMargin: 20; right: parent.right; rightMargin: 10 }
 
         MouseArea {
             id: closeButtonMouseArea
-            width: parent.width + 20
-            height: parent.height + 20
+            width: parent.width + 20; height: parent.height + 20
             anchors.centerIn: parent
 
             onClicked: {
-                haptic.playEffect("click");
-                buttonContainer.state = "closed"
-                cardLoader.active = false;
+                Haptic.playEffect(Haptic.Click);
+                buttonContainer.close();
             }
         }
     }
-
 }

@@ -24,9 +24,10 @@ import QtQuick 2.11
 import QtQuick.Controls 2.5
 import Style 1.0
 
+import Haptic 1.0
+
 Item {
-    width: 66
-    height: 36
+    width: 66; height: 36
 
     property alias checked: button.checked
     property alias mouseArea: mouseArea
@@ -34,17 +35,14 @@ Item {
 
     Switch {
         id: button
-        implicitHeight: 36
-        implicitWidth: 66
+        implicitHeight: 36; implicitWidth: 66
         enabled: mouseArea.enabled
 
         indicator: Rectangle {
-            x: 4 + (button.visualPosition * (button.width - width - 8))
-            y: (button.height - height) / 2
-            width: 26
-            height: 26
+            x: 4 + (button.visualPosition * (button.width - width - 8)); y: (button.height - height) / 2
+            width: 26; height: 26
             radius: Style.cornerRadius
-            color: button.checked ? Style.colorText : Style.colorLight
+            color: button.checked ? Style.color.text : Style.color.light
 
             Behavior on x {
                 enabled: !button.pressed
@@ -54,19 +52,17 @@ Item {
 
         background: Rectangle {
             radius: Style.cornerRadius+2
-            color: button.checked ? Style.colorHighlight1 : Style.colorDark
-            border.width: 2
-            border.color: button.checked ? Style.colorHighlight1 : Style.colorLight
+            color: button.checked ? Style.color.highlight1 : Style.color.dark
+            border { width: 2; color: button.checked ? Style.color.highlight1 : Style.color.light }
         }
     }
 
     MouseArea {
         id: mouseArea
-        width: button.width + 60
-        height: button.height + 60
+        width: button.width + 60; height: button.height + 60
 
         onClicked: {
-            haptic.playEffect("click");
+            Haptic.playEffect(Haptic.Click);
             button.toggle();
         }
     }

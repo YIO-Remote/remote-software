@@ -22,18 +22,15 @@
 
 import QtQuick 2.11
 import QtQuick.Controls 2.5
-import QtGraphicalEffects 1.0
-
+import StandbyControl 1.0
 import Style 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
 Popup {
     id: lowBatteryNotification
-    x: 40
-    y: 40
-    width: parent.width-80
-    height: parent.height-80
+    x: 40; y: 40
+    width: parent.width-80; height: parent.height-80
     modal: true
     focus: true
     clip: true
@@ -51,33 +48,25 @@ Popup {
 
     background: Rectangle {
         anchors.fill: parent
-        color: Style.colorHighlight1
+        color: Style.color.highlight1
         radius: 8
     }
 
     onOpened: {
         lowBatteryNotificationTimer.start()
-        if (standbyControl.mode != "on") {
-            standbyControl.touchDetected = true;
-        }
     }
 
     BasicUI.ProgressCircle {
         id: lowBatteryNotificationProgressCircle
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 10
-
         size: 40
-        colorCircle: Style.colorLine
-        colorCircleGrad: Style.colorLine
-        colorBackground: Style.colorDark
+        colorCircle: Style.color.line
+        colorCircleGrad: Style.color.line
+        colorBackground: Style.color.dark
         showBackground: false
-        arcBegin: 0
-        arcEnd: 0
+        arcBegin: 0; arcEnd: 0
         animationDuration: 300
         lineWidth: 4
+        anchors { right: parent.right; rightMargin: 10; top: parent.top; topMargin: 10 }
     }
 
     Timer {
@@ -98,52 +87,34 @@ Popup {
         }
     }
 
-    Image {
-        asynchronous: true
+    Text {
         id: lowbatteryIcon
-        width: 170
-        height: 170
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:/images/popuplowbattery/icon-lowbattery.png"
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 175
-
-        ColorOverlay {
-            visible: !Style.darkMode
-            anchors.fill: parent
-            source: parent
-            color: Style.colorText
-        }
+        color: Style.color.text
+        text: Style.icon.low_battery
+        width: 170; height: 170
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 240 }
+        anchors { horizontalCenter: parent.horizontalCenter; horizontalCenterOffset: 14; top: parent.top; topMargin: 175 }
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Low battery") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
-        anchors.top: lowbatteryIcon.bottom
-        anchors.topMargin: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Open Sans"
-        font.weight: Font.Bold
-        font.styleName: "Bold"
-        font.pixelSize: 27
+        anchors { top: lowbatteryIcon.bottom; topMargin: -20; horizontalCenter: parent.horizontalCenter }
+        font { family: "Open Sans Regular"; weight: Font.Bold;  pixelSize: 27 }
     }
 
     Text {
-        color: Style.colorText
+        color: Style.color.text
         text: qsTr("Please charge the remote soon") + translateHandler.emptyString
         width: 200
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 60
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Open Sans"
-        font.weight: Font.Normal
-        font.pixelSize: 25
+        anchors { bottom: parent.bottom; bottomMargin: 60; horizontalCenter: parent.horizontalCenter }
+        font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 25 }
     }
 
     MouseArea {
@@ -155,5 +126,4 @@ Popup {
             lowBatteryNotificationProgressCircle.arcEnd = 0
         }
     }
-
 }

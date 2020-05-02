@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Before you open an issue, please search on the [issue tracker](../) if a similar issue already exists or has been closed before.
+<!-- Before you open an issue, please search on the [issue tracker](../) if a similar issue already exists or has been closed before. -->
 
 ## Expected Behavior or Design
 <!--- Explain the difference from the current behavior  -->

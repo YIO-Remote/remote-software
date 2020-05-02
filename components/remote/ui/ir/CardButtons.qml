@@ -34,13 +34,13 @@ Item {
         width: 110
         height: 60
         radius: height/2
-        color: Style.colorRed
+        color: Style.color.red
         anchors.top: parent.top
         anchors.left: parent.left
 
         Text {
-            color: Style.colorLine
-            text: Style.icons.power_on
+            color: Style.color.line
+            text: Style.icon.power_on
             renderType: Text.NativeRendering
             width: 70
             height: 70
@@ -54,7 +54,7 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                haptic.playEffect("click");
+                haptic.playEffect(Haptic.Click);
                 if (obj.isSupported(Remote.F_POWER_TOGGLE)) {
                     obj.powerToggle();
                 } else if (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) {

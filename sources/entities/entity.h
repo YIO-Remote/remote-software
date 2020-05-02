@@ -22,14 +22,12 @@
 #pragma once
 
 #include <QObject>
-#include <QSet>
 #include <QString>
 #include <QStringList>
 #include <QVariant>
 
-//#include "../integrations/integrationinterface.h"
-#include "../integrations/integrationinterface.h"
-#include "entityinterface.h"
+#include "yio-interface/entities/entityinterface.h"
+#include "yio-interface/integrationinterface.h"
 
 class Entity : public QObject, EntityInterface {
     Q_OBJECT

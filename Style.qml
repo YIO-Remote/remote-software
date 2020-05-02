@@ -22,38 +22,49 @@
 pragma Singleton
 
 import QtQuick 2.11
+import DisplayControl 1.0
 
 QtObject {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // SCREEN SIZE
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    readonly property QtObject screen: QtObject {
+        property int width: DisplayControl.width()
+        property int height: DisplayControl.height()
+        property real pixelDensity: DisplayControl.pixelDensity()
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COLORS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property int cornerRadius: 18 // radius of the buttons, defined here
 
-    property bool darkMode: true
+    property bool darkMode: config.ui_config.darkmode
 
-    property color colorGreen: "#19D37B"
-    property color colorRed: "#EA003C"
-    property color colorOrange: "#FF7241"
-    property color colorBlue: "#19435E"
+    readonly property  QtObject color: QtObject {
+        property color green: "#19D37B"
+        property color red: "#EA003C"
+        property color orange: "#FF7241"
+        property color blue: "#19435E"
 
-    property color colorBackground: darkMode ? "#000000" : "#ffffff"
-    property color colorBackgroundTransparent: darkMode ? "#00000000" :  "#00000000"
+        property color background: darkMode ? "#000000" : "#ffffff"
+        property color backgroundTransparent: darkMode ? "#00000000" :  "#00000000"
 
-    property color colorText: darkMode ? "#ffffff" : "#000000"
-    property color colorLine: darkMode ? "#ffffff" : "#000000"
+        property color text: darkMode ? "#ffffff" : "#000000"
+        property color line: darkMode ? "#ffffff" : "#000000"
 
-    property color colorHighlight1: "#918682"
-    property color colorHighlight2: "#313247"
+        property color highlight1: "#918682"
+        property color highlight2: "#313247"
 
-    property color colorLight: darkMode ? "#484848" : "#CBCBCB"
-    property color colorMedium: darkMode ? "#282828" : "#D4D4D4"
-    property color colorDark: darkMode ? "#1C1C1C" : "#ffffff"
+        property color light: darkMode ? "#484848" : "#CBCBCB"
+        property color medium: darkMode ? "#282828" : "#D4D4D4"
+        property color dark: darkMode ? "#1C1C1C" : "#ffffff"
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ICONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    readonly property QtObject icons: QtObject {
+    readonly property QtObject icon: QtObject {
         readonly property string cool: "\uE91E"
         readonly property string heat: "\uE91F"
 
@@ -66,6 +77,11 @@ QtObject {
         readonly property string right_arrow: "\uE918"
         readonly property string up_arrow: "\uE919"
         readonly property string down_arrow: "\uE916"
+        readonly property string up_arrow_bold: "\uE923"
+        readonly property string down_arrow_bold: "\uE922"
+
+        readonly property string fav_add: "\uE920"
+        readonly property string fav_remove: "\uE921"
 
         readonly property string close: "\uE915"
         readonly property string home: "\uE900"
@@ -90,16 +106,34 @@ QtObject {
         readonly property string weather: "\uE911"
         readonly property string climate: "\uE913"
         readonly property string blind: "\uE914"
+
+        readonly property string wifi_1: "\uE924"
+        readonly property string wifi_2: "\uE925"
+        readonly property string wifi_3: "\uE926"
+
+        readonly property string language: "\uE927"
+        readonly property string integration: "\uE92A"
+        readonly property string battery: "\uE929"
+        readonly property string wifi_bluetooth: "\uE92C"
+        readonly property string system: "\uE92B"
+        readonly property string about: "\uE928"
+
+        readonly property string low_battery: "\uE92E"
+        readonly property string charging: "\uE92D"
+
+        readonly property string bell: "\uE92F"
+        readonly property string warning: "\uE930"
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FONT STYLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    property font buttonFont: Qt.font({
-                                          family: "Open Sans",
-                                          weight: Font.Normal,
-                                          pixelSize: 27,
-                                          lineHeight: 1
-                                      })
+    readonly property QtObject font: QtObject {
+        property font button: Qt.font({
+                                              family: "Open Sans Regular",
+                                              weight: Font.Normal,
+                                              pixelSize: 27,
+                                              lineHeight: 1
+                                          })
+    }
 }

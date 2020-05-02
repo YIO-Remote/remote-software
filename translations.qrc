@@ -5,5 +5,34 @@
         <file>translations/da_DK.qm</file>
         <file>translations/nl_NL.qm</file>
         <file>translations/de_DE.qm</file>
+        <file>translations/bg_BG.qm</file>
+        <file>translations/ca_ES.qm</file>
+        <file>translations/cs_CZ.qm</file>
+        <file>translations/el_GR.qm</file>
+        <file>translations/es_ES.qm</file>
+        <file>translations/et_EE.qm</file>
+        <file>translations/fi_FI.qm</file>
+        <file>translations/fr_FR.qm</file>
+        <file>translations/ga_IE.qm</file>
+        <file>translations/hr_HR.qm</file>
+        <file>translations/is_IS.qm</file>
+        <file>translations/it_IT.qm</file>
+        <file>translations/lt_LT.qm</file>
+        <file>translations/lv_LV.qm</file>
+        <file>translations/mt_MT.qm</file>
+        <file>translations/no_NO.qm</file>
+        <file>translations/pl_PL.qm</file>
+        <file>translations/pt_BR.qm</file>
+        <file>translations/pt_PT.qm</file>
+        <file>translations/ro_RO.qm</file>
+        <file>translations/ru_BY.qm</file>
+        <file>translations/ru_MD.qm</file>
+        <file>translations/ru_RU.qm</file>
+        <file>translations/ru_UA.qm</file>
+        <file>translations/sk_SK.qm</file>
+        <file>translations/sl_SI.qm</file>
+        <file>translations/sv_SE.qm</file>
+        <file>translations/zh_TW.qm</file>
+        <file>translations/zh_CN.qm</file>
     </qresource>
 </RCC>

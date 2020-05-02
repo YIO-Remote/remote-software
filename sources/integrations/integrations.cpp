@@ -21,101 +21,141 @@
  *****************************************************************************/
 
 #include "integrations.h"
+
+#include <QLoggingCategory>
+#include <QPluginLoader>
+#include <QtDebug>
+
 #include "../config.h"
-#include "../launcher.h"
 #include "../entities/entities.h"
+#include "../launcher.h"
 #include "../notifications.h"
 #include "../yioapi.h"
 
-IntegrationsInterface::~IntegrationsInterface()
-{}
+IntegrationsInterface::~IntegrationsInterface() {}
 
 Integrations* Integrations::s_instance = nullptr;
 
-Integrations::Integrations(QQmlApplicationEngine *engine, const QString& appPath) :
-    m_appPath(appPath),
-    m_engine(engine)
-{
+static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
+
+Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath) {
     s_instance = this;
+
+    const QMetaObject& metaObject             = Integrations::staticMetaObject;
+    int                index                  = metaObject.indexOfEnumerator("SupportedIntegrationTypes");
+    QMetaEnum          metaEnumSupportedTypes = metaObject.enumerator(index);
+    m_enumSupportedIntegrationTypes           = &metaEnumSupportedTypes;
+
+    for (int i = 0; i < m_enumSupportedIntegrationTypes->keyCount(); i++) {
+        QString name(m_enumSupportedIntegrationTypes->key(i));
+        qCDebug(CLASS_LC()) << "Adding supported integration type:" << name.toLower();
+        m_supportedIntegrations.append(name.toLower());
+    }
 }
 
-Integrations::~Integrations()
-{
-    s_instance = nullptr;
+QObject* Integrations::loadPlugin(const QString& type) {
+    Launcher* l   = new Launcher();
+    QObject*  obj = l->loadPlugin(m_pluginPath, type);
+
+    // store the plugin objects
+    m_plugins.insert(type, obj);
+
+    // cleanup
+    l->deleteLater();
+
+    return obj;
 }
 
-void Integrations::load()
-{
-    Entities* entities = Entities::getInstance();
+QObject* Integrations::getPlugin(const QString& type) { return m_plugins.value(type); }
+
+QList<QObject*> Integrations::getAllPlugins() { return m_plugins.values(); }
+
+bool Integrations::isPluginLoaded(const QString& type) {
+    if (m_plugins.contains(type)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void Integrations::createInstance(QObject* pluginObj, QVariantMap map) {
+    Entities*      entities      = Entities::getInstance();
     Notifications* notifications = Notifications::getInstance();
-    YioAPI* api = YioAPI::getInstance();
+    YioAPI*        api           = YioAPI::getInstance();
+    Config*        config        = Config::getInstance();
+
+    PluginInterface* interface = qobject_cast<PluginInterface*>(pluginObj);
+    if (interface) {
+        connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
+
+        interface->create(map, entities, notifications, api, config);
+        m_integrationCount++;
+    }
+}
+
+QJsonObject Integrations::getPluginMetaData(const QString& pluginName) {
+    Launcher* launcher   = new Launcher();
+    QString   pluginPath = launcher->getPluginPath(m_pluginPath, pluginName);
+    qCDebug(CLASS_LC()) << "Getting metadata for:" << pluginPath;
+    QPluginLoader pluginLoader(pluginPath);
+    return pluginLoader.metaData()["MetaData"].toObject();
+}
+
+// Integrations::~Integrations() { s_instance = nullptr; }
+
+void Integrations::load() {
     Config* config = Config::getInstance();
 
-    Launcher* l = new Launcher();
-
     // read the config
-    QVariantMap c = config->getIntegrations(); //config->config().value("integrations").toMap();
+    QVariantMap c = config->getAllIntegrations();
 
-    int i = 0;
+    m_integrationCount = 0;
+
+    qCDebug(CLASS_LC) << "Plugin path:" << m_pluginPath;
 
     // let's load the plugins first
     for (QVariantMap::const_iterator iter = c.begin(); iter != c.end(); ++iter) {
-        QObject* obj = l->loadPlugin(m_appPath, iter.key());
-
-        // store the plugin objects
-        m_plugins.insert(iter.key(), obj);
+        QObject* obj;
+        if (!isPluginLoaded(iter.key())) {
+            // load the plugin
+            obj = loadPlugin(iter.key());
+        } else {
+            obj = getPlugin(iter.key());
+        }
 
         // push the config to the integration
         QVariantMap map = iter.value().toMap();
-        map.insert("type", iter.key());
+        map.insert(Config::KEY_TYPE, iter.key());
 
-        QString type = iter.key();
-
-        // create instances of the integration based on how many are defined in the config
-        PluginInterface *interface = qobject_cast<PluginInterface *>(obj);
-        if (interface) {
-            connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
-
-            interface->create(map, entities, notifications, api, config);
-            i++;
-        }
+        // create instance of the integration
+        createInstance(obj, map);
     }
 
     // load plugins that are not defined in config.json aka default plugins
     QStringList defaultIntegrations = {"dock"};
 
-    for (int k = 0; k<defaultIntegrations.length(); k++)
-    {
-        QObject* obj = l->loadPlugin(m_appPath, defaultIntegrations[k]);
-
-        // store the plugin objects
-        m_plugins.insert(defaultIntegrations[k], obj);
-
-        QString type = defaultIntegrations[k];
-
-        // create instances of the integration, no config needed for built in integrations
-        PluginInterface *interface = qobject_cast<PluginInterface *>(obj);
-        if (interface) {
-            connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
+    for (int k = 0; k < defaultIntegrations.length(); k++) {
+        if (!isPluginLoaded(defaultIntegrations[k])) {
+            QObject* obj = loadPlugin(defaultIntegrations[k]);
 
             QVariantMap map;
-            map.insert("type", defaultIntegrations[k]);
+            map.insert(Config::KEY_TYPE, defaultIntegrations[k]);
 
-            interface->create(map, entities, notifications, api, config);
-            i++;
+            // create instances of the integration, no config needed for built in integrations
+            createInstance(obj, map);
         }
     }
 
-    m_integrationsToLoad = i;
+    m_integrationsToLoad = m_integrationCount;
 
-    if (m_integrationsToLoad == 0)
+    if (m_integrationsToLoad == 0) {
         emit loadComplete();
+    }
 }
 
-void Integrations::onCreateDone(QMap<QObject *, QVariant> map)
-{
+void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
     // add the integrations to the integration database
-    for (QMap<QObject *, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
+    for (QMap<QObject*, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
         add(iter.value().toMap(), iter.key(), iter.value().toMap().value("type").toString());
     }
     m_integrationsLoaded++;
@@ -125,54 +165,63 @@ void Integrations::onCreateDone(QMap<QObject *, QVariant> map)
     }
 }
 
-QList<QObject *> Integrations::list()
-{
-    return m_integrations.values();
+QList<QObject*> Integrations::list() { return m_integrations.values(); }
+
+QStringList Integrations::listIds() {
+    QStringList r_list;
+
+    for (QMap<QString, QObject*>::const_iterator iter = m_integrations.begin(); iter != m_integrations.end(); ++iter) {
+        r_list.append(iter.key());
+    }
+
+    return r_list;
 }
 
-QObject *Integrations::get(const QString& id)
-{
-    return m_integrations.value(id);
-}
+QObject* Integrations::get(const QString& id) { return m_integrations.value(id); }
 
-void Integrations::add(const QVariantMap& config, QObject *obj, const QString& type)
-{   
-    m_integrations.insert(config.value("id").toString(), obj);
-    m_integrations_friendly_names.insert(config.value("id").toString(), config.value("friendly_name").toString());
-    m_integrations_mdns.insert(config.value("id").toString(), config.value("mdns").toString());
-    m_integrations_types.insert(config.value("id").toString(), type);
+void Integrations::add(const QVariantMap& config, QObject* obj, const QString& type) {
+    qCDebug(CLASS_LC()) << "Adding integration:" << type;
+    const QString id = config.value(Config::KEY_ID).toString();
+    m_integrations.insert(id, obj);
+    m_integrationsFriendlyNames.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
+    m_integrationsTypes.insert(id, type);
+    IntegrationInterface* ii = qobject_cast<IntegrationInterface*>(obj);
+    ii->connect();
     emit listChanged();
 }
 
-void Integrations::remove(const QString& id)
-{
+void Integrations::remove(const QString& id) {
     m_integrations.remove(id);
-    m_integrations_friendly_names.remove(id);
+    m_integrationsFriendlyNames.remove(id);
     emit listChanged();
 }
 
-QString Integrations::getFriendlyName(const QString& id)
-{
-    return m_integrations_friendly_names.value(id);
-}
+QString Integrations::getFriendlyName(const QString& id) { return m_integrationsFriendlyNames.value(id); }
 
-QString Integrations::getFriendlyName(QObject *obj)
-{
+QString Integrations::getFriendlyName(QObject* obj) {
     QString name = m_integrations.key(obj);
-    return m_integrations_friendly_names.value(name);
+    return m_integrationsFriendlyNames.value(name);
 }
 
-QString Integrations::getMDNS(const QString &id)
-{
-    return m_integrations_mdns.value(id);
+QString Integrations::getMDNS(const QString& id) { return m_integrationsMdns.value(id); }
+
+QStringList Integrations::getMDNSList() {
+    QStringList mdnsList;
+    for (int i = 0; i < m_supportedIntegrations.length(); i++) {
+        mdnsList.append(getPluginMetaData(m_supportedIntegrations[i]).toVariantMap().value("mdns").toString());
+    }
+
+    return mdnsList;
 }
 
-QStringList Integrations::getMDNSList()
-{
-    return  m_integrations_mdns.values();
-}
+QString Integrations::getType(const QString& id) { return m_integrationsTypes.value(id); }
 
-QString Integrations::getType(const QString &id)
-{
-    return m_integrations_types.value(id);
+QString Integrations::getTypeByMdns(const QString& mdns) {
+    for (int i = 0; i < m_supportedIntegrations.length(); i++) {
+        if (getPluginMetaData(m_supportedIntegrations[i]).toVariantMap().value("mdns").toString() == mdns) {
+            return m_supportedIntegrations[i];
+        }
+    }
+
+    return "";
 }

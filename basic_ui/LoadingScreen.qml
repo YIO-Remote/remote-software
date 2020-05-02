@@ -22,6 +22,10 @@
 
 import QtQuick 2.11
 
+import Style 1.0
+import ButtonHandler 1.0
+import Haptic 1.0
+
 Rectangle {
     id: loadingScreenComp
     anchors.fill: parent
@@ -66,7 +70,6 @@ Rectangle {
         id: endAnim
         running: false
 
-//        PauseAnimation {duration: 3000}
         PropertyAnimation { target: loadingIconAnim; properties: "running";to: false; duration: 0 }
         PropertyAnimation { target: yio_O; properties: "opacity"; to: 0; easing.type: Easing.OutExpo; duration: 400 }
         PauseAnimation {duration: 200}
@@ -161,6 +164,26 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
+    }
+
+    // when loading for the first time, pressing the top left button will turn on remote configuration
+    Connections {
+        target: ButtonHandler
+        enabled: loadingScreenComp.state == "start"
+
+        property bool firstPressed: false
+
+        onButtonPressed: {
+            if (button == ButtonHandler.TOP_LEFT) {
+                firstPressed = true;
+            }
+            if (firstPressed && button == ButtonHandler.TOP_RIGHT) {
+                webserver.startService();
+                remoteConfigEnabled = true;
+                Haptic.playEffect(Haptic.Buzz);
+                notifications.add(false, "Remote configratuion is turned on.");
+            }
+        }
     }
 }
 
