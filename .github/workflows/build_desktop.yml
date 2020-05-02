@@ -6,7 +6,7 @@
 # TODO:
 # - Create a re-usable GitHub Action
 
-name: Build Desktop Libraries
+name: Build Desktop Apps
 
 on: [push, pull_request]
 
