@@ -84,6 +84,7 @@ class MediaPlayerUtils : public QObject {
     bool m_enabled = true;
 
     QString m_imageURL;
+    QString m_prevImageURL;
     QString m_image;
     QString m_smallImage;
     QColor  m_pixelColor;

@@ -20,9 +20,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
+#include "bluetootharea.h"
+
 #include <QLoggingCategory>
 
-#include "bluetootharea.h"
 #include "math.h"
 #include "notifications.h"
 
@@ -93,7 +94,7 @@ void BluetoothArea::deviceDiscovered(const QString &area) {
     emit currentAreaChanged();
 }
 
-void BluetoothArea::foundDock() { emit dockFound(); }
+void BluetoothArea::foundDock(const QString &address) { emit dockFound(address); }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// BLUETOOTHTHREAD CLASS
@@ -201,8 +202,8 @@ void BluetoothThread::deviceDiscovered(const QBluetoothDeviceInfo &device) {
         m_dock_address = device.address();
         m_discoveryAgent->stop();
         m_localDevice.requestPairing(m_dock_address, QBluetoothLocalDevice::Paired);
-        emit foundDock();
-        qCDebug(CLASS_LC) << "YIO Dock found";
+        emit foundDock(m_dock_address.toString());
+        qCDebug(CLASS_LC) << "YIO Dock found" << m_dock_address;
     }
 }
 

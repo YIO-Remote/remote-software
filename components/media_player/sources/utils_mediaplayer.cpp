@@ -60,19 +60,20 @@ MediaPlayerUtils::~MediaPlayerUtils() {
 
 void MediaPlayerUtils::setImageURL(QString url) {
     m_imageURL = url;
-    if (m_enabled && !m_imageURL.isEmpty()) {
-        emit processingStarted();
-        generateImages(url);
+
+    if (m_imageURL != m_prevImageURL && m_enabled && !m_imageURL.isEmpty()) {
+        generateImages(m_imageURL);
     }
 }
 
 void MediaPlayerUtils::setEnabled(bool value) {
-    m_enabled = value;
-    emit enabledChanged();
+    if (m_enabled != value) {
+        m_enabled = value;
+        emit enabledChanged();
 
-    if (m_enabled && !m_imageURL.isEmpty()) {
-        emit processingStarted();
-        generateImages(m_imageURL);
+        if (m_enabled && !m_imageURL.isEmpty()) {
+            generateImages(m_imageURL);
+        }
     }
 }
 
@@ -88,7 +89,13 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
     emit imageChanged();
 }
 
-void MediaPlayerUtils::generateImages(const QString &url) { m_manager->get(QNetworkRequest(QUrl(url))); }
+void MediaPlayerUtils::generateImages(const QString &url) {
+    if (url != m_prevImageURL) {
+        m_prevImageURL = url;
+        emit processingStarted();
+        m_manager->get(QNetworkRequest(QUrl(url)));
+    }
+}
 
 void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
     if (reply->error() == QNetworkReply::NoError) {

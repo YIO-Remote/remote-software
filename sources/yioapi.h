@@ -64,8 +64,8 @@ class YioAPI : public YioAPIInterface {
     bool removeIntegration(QString integrationId);
 
     // NETWORK SERVICES DISCOVERY
-    void discoverNetworkServices() override;
-    void discoverNetworkServices(QString mdns) override;
+    void             discoverNetworkServices() override;
+    Q_INVOKABLE void discoverNetworkServices(QString mdns) override;
 
     explicit YioAPI(QQmlApplicationEngine* engine = nullptr);
     ~YioAPI() override;

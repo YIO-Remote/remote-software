@@ -31,11 +31,14 @@ Item {
 
     property var _swipeView
     property bool _currentItem: false
+    property string macAddress
 
     Connections {
         target: bluetoothArea
         onDockFound: {
-            console.debug("Dock found! Sending credentials...");
+            console.debug("Dock found: %1 Sending credentials...").arg(address);
+            macAddress = address;
+
             // show dock page
             var msg = {};
             msg.ssid = wifi.wifiStatus.name;
@@ -45,7 +48,7 @@ Item {
 
             // mdns discovery of docks
             apiConnection.enabled = true;
-            api.discoveredServices("_yio-dock-api._tcp");
+            api.discoverNetworkServices("_yio-dock-api._tcp");
             mdnsDiscoveryTimeout.start();
         }
     }
@@ -59,11 +62,16 @@ Item {
             bluetoothDiscoveryTimeout.stop();
 
             // TODO: need to check if the same dock was found as in the bluetooth setup
-            console.debug("Dock API discovered: " + api.discoveredServices);
+            console.debug("Dock API discovered: " + services);
 
-            // show success page
-            _swipeView.dockSuccess = true;
-            _swipeView.incrementCurrentIndex();
+            if (macAddress) {
+                // show success page
+                _swipeView.dockSuccess = true;
+                _swipeView.incrementCurrentIndex();
+            } else {
+                _swipeView.dockSuccess = false;
+                _swipeView.incrementCurrentIndex();
+            }
         }
     }
 
