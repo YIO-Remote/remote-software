@@ -107,7 +107,7 @@ class Entities : public QObject, public EntitiesInterface {
  private:
     QMap<QString, Entity*> m_entities;
     QStringList            m_supportedEntities;
-    QStringList            m_supportedEntitiesTranslation = {tr("Lights"), tr("Blinds"),  tr("Media"),
+    QStringList            m_supportedEntitiesTranslation = {tr("Light"),  tr("Blind"),   tr("Media"),
                                                   tr("Remote"), tr("Climate"), tr("Switch")};
 
     QMap<QString, QObject*> m_mediaplayersPlaying;

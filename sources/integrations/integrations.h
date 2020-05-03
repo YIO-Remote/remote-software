@@ -25,6 +25,7 @@
 #include <QMap>
 #include <QObject>
 
+#include "integrations_supported.h"
 #include "integrationsinterface.h"
 #include "yio-interface/integrationinterface.h"
 #include "yio-interface/plugininterface.h"
@@ -34,17 +35,6 @@ class Integrations : public QObject, IntegrationsInterface {
     Q_INTERFACES(IntegrationsInterface)
 
  public:
-    /// ADD NEW ENTITY TYPE HERE
-    enum SupportedIntegrationTypes { DOCK, HOMEASSISTANT, HOMEY, SPOTIFY, OPENHAB, OPENWEATHER, ROON };
-    Q_ENUM(SupportedIntegrationTypes)
-
-    enum States {
-        CONNECTED    = IntegrationInterface::CONNECTED,
-        CONNECTING   = IntegrationInterface::CONNECTING,
-        DISCONNECTED = IntegrationInterface::DISCONNECTED
-    };
-    Q_ENUM(States)
-
     // list of all integrations
     Q_PROPERTY(QList<QObject*> list READ list NOTIFY listChanged)
 

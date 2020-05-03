@@ -41,7 +41,7 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath) {
     s_instance = this;
 
-    const QMetaObject& metaObject             = Integrations::staticMetaObject;
+    const QMetaObject& metaObject             = IntegrationsSupported::staticMetaObject;
     int                index                  = metaObject.indexOfEnumerator("SupportedIntegrationTypes");
     QMetaEnum          metaEnumSupportedTypes = metaObject.enumerator(index);
     m_enumSupportedIntegrationTypes           = &metaEnumSupportedTypes;
