@@ -95,6 +95,7 @@ HEADERS += \
     sources/config.h \
     sources/configutil.h \
     sources/entities/climate.h \
+    sources/entities/entities_supported.h \
     sources/entities/remote.h \
     sources/entities/switch.h \
     sources/entities/weather.h \

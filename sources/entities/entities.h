@@ -31,6 +31,7 @@
 #include <QTimer>
 #include <QVariant>
 
+#include "entities_supported.h"
 #include "entity.h"
 #include "yio-interface/entities/entitiesinterface.h"
 #include "yio-interface/integrationinterface.h"
@@ -47,10 +48,6 @@ class Entities : public QObject, public EntitiesInterface {
     Q_PROPERTY(QList<QObject*> mediaplayersPlaying READ mediaplayersPlaying NOTIFY mediaplayersPlayingChanged)
 
  public:
-    /// ADD NEW ENTITY TYPE HERE
-    enum SupportedEntityTypes { LIGHT, BLIND, MEDIA_PLAYER, REMOTE, WEATHER, CLIMATE, SWITCH };
-    Q_ENUM(SupportedEntityTypes)
-
     // get all entities
     QList<QObject*> list();
 
