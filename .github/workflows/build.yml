@@ -10,7 +10,8 @@
     pull_request:
 
   env:
-    APP_NAME: app
+    APP_NAME: YIO-remote-software
+    APP_ARCHITECTURE: RPi0
     PROJECT_NAME: remote-software
 
   jobs:
@@ -21,11 +22,11 @@
         matrix:
           config:
           - {
-              name: "RPi0 Release Build", artifact: "RPi0-release",
+              name: "RPi0 Release Build", artifact: "${{ env.APP_ARCHITECTURE }}-release",
               qmake-args: "CONFIG+=release"
             }
           - {
-              name: "RPi0 Debug Build", artifact: "RPi0-debug",
+              name: "RPi0 Debug Build", artifact: "${{ env.APP_ARCHITECTURE }}-debug",
               qmake-args: "CONFIG+=debug CONFIG+=qml_debug"
             }
   
@@ -77,23 +78,22 @@
         - name: Download release artifact
           uses: actions/download-artifact@v1
           with:
-            name: ${{ env.APP_NAME }}-RPi0-release
+            name: ${{ env.APP_NAME }}-${{ env.APP_ARCHITECTURE }}-release
             path: ./release
         - name: Download debug artifact
           uses: actions/download-artifact@v1
           with:
-            name: ${{ env.APP_NAME }}-RPi0-debug
+            name: ${{ env.APP_NAME }}-${{ env.APP_ARCHITECTURE }}-debug
             path: ./debug
         - name: Get artifact version
           run: |
             read -r APP_VERSION < release/version.txt
             echo "::set-env name=APP_VERSION::$APP_VERSION"
-            echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"
 
         - name: Create GitHub release archives
           run: |
-            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-RPi0-debug.tar -C debug .
-            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-RPi0-release.tar -C release .
+            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
+            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
 
         - name: Create Pre-Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
