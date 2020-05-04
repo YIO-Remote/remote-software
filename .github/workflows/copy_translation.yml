@@ -2,7 +2,7 @@ name: Copy translation master file
 on:
   push:
     branches:
-      - develop
+      - master
 jobs:
   copycat:
     name: Copycat
@@ -16,7 +16,7 @@ jobs:
         dst_repo_name: translations
         dst_path: remote-software/en_US.ts
         personal_token: ${{ secrets.GH_TOKEN }}
-        src_branch: develop
+        src_branch: master
         src_path: translations/en_US.ts
         username: Workflow
         email: hello@yio-remote.com
