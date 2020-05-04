@@ -22,11 +22,11 @@
         matrix:
           config:
           - {
-              name: "RPi0 Release Build", artifact: "${{ env.APP_ARCHITECTURE }}-release",
+              name: "RPi0 Release Build", artifact: "${APP_ARCHITECTURE}-release",
               qmake-args: "CONFIG+=release"
             }
           - {
-              name: "RPi0 Debug Build", artifact: "${{ env.APP_ARCHITECTURE }}-debug",
+              name: "RPi0 Debug Build", artifact: "${APP_ARCHITECTURE}-debug",
               qmake-args: "CONFIG+=debug CONFIG+=qml_debug"
             }
   
