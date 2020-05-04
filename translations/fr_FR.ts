@@ -477,13 +477,13 @@ Pour en savoir plus sur le projet, visitez
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>Utilisez le configurateur web
+pour configurer votre télécommande YIO</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Naviguez vers la page : http://</translation>
     </message>
   </context>
   <context>

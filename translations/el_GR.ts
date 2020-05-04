@@ -12,7 +12,7 @@
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>Το YIO είναι ένα εγχείρημα ανοιχτού κώδικα, που στηρίζεται σε όλους τους συνεισφέροντες. Ένα μεγάλω ευχαριστώ σε όλους αυτούς που έχουν βοηθήσει το εγχείρημα αυτό μέχρι τώρα:
 %1</translation>
     </message>
     <message>
@@ -21,9 +21,9 @@
 
 To learn more about the project, visit
 %1</source>
-      <translation type="unfinished">
+      <translation>
 
-To learn more about the project, visit
+Για να μάθετε περισσότερα σχετικά με το εγχείρημα, επισκεφθείτε
 %1</translation>
     </message>
   </context>
@@ -477,13 +477,13 @@ To learn more about the project, visit
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>Χρησιμοποιήστε τον διαμορφωτή ιστού
+για να παραμετροποιήσετε το τηλεχειριστήριο YIO</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Κατευθυνθείτε χρησιμοποιώντας το πρόγραμμα περιήγησης σας στο: http://</translation>
     </message>
   </context>
   <context>
