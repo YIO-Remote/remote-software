@@ -89,11 +89,13 @@
           run: |
             read -r APP_VERSION < release/version.txt
             echo "::set-env name=APP_VERSION::$APP_VERSION"
+            echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"
 
-        - name: Create GitHub release archives
+        - name: Create GitHub development build archives
+          if: "!contains(github.ref, 'tags/v')"
           run: |
-            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
-            tar cvf ${{ env.APP_NAME }}-${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
+            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
+            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
 
         - name: Create Pre-Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
@@ -105,6 +107,12 @@
             title: "Development Build ${{ env.APP_VERSION }}"
             files: |
                 *.tar
+
+        - name: Create GitHub release archives
+          if: "contains(github.ref, 'tags/v')"
+          run: |
+            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
+            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
 
         - name: Create Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
