@@ -773,7 +773,7 @@ W przeglądarce wpisz adres: http://</translation>
       <location filename="../setup/SetupStep4.qml" line="96"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation>Wprowadź hasło dla
 &quot;%1&quot;</translation>
     </message>
     <message>
@@ -839,7 +839,8 @@ W przeglądarce wpisz adres: http://</translation>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Podłącz stację dokującą YIO do źródła zasilania i poczekaj, aż zacznie migać.
+      <translation>Podłącz stację dokującą YIO
+do źródła zasilania i poczekaj, aż zacznie migać.
 
 Aby udostępnić hasło Wi-Fi stacji dokującej, naciśnij dalej.</translation>
     </message>
@@ -1125,7 +1126,7 @@ Pilot YIO %1</translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation>Wprowadź hasło dla
 &quot;%1&quot;</translation>
     </message>
     <message>
