@@ -180,12 +180,12 @@ Aby dowiedzieć się więcej o projekcie, odwiedź
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
       <source>Heat</source>
-      <translation>Ciepło</translation>
+      <translation>Grzanie</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
-      <translation>Chłód</translation>
+      <translation>Chłodzenie</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
@@ -208,7 +208,7 @@ Aby dowiedzieć się więcej o projekcie, odwiedź
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
       <source>Source</source>
-      <translation>Źródło</translation>
+      <translation>Źródło</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
@@ -398,7 +398,7 @@ Aby dowiedzieć się więcej o projekcie, odwiedź
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation>Z jak daleka czujnik zbliżeniowy powinien wykrywać rękę.</translation>
+      <translation>Z jak daleka czujnik zbliżeniowy powinien wykrywać Twoją rękę.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
@@ -413,7 +413,7 @@ Aby dowiedzieć się więcej o projekcie, odwiedź
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Dotykaj wyświetlacza przez 10 sekund aby wyłączyć tryb czyszczenia.</translation>
+      <translation>Dotknij wyświetlacza przez 10 sekund, aby wyłączyć tryb czyszczenia.</translation>
     </message>
   </context>
   <context>
@@ -478,7 +478,7 @@ Aby dowiedzieć się więcej o projekcie, odwiedź
       <source>Use the web configurator
 to set up YIO remote</source>
       <translation>Użyj konfiguratora webowego,
-aby skonfigurować YIO Remote</translation>
+aby skonfigurować pilot YIO</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
@@ -491,7 +491,7 @@ aby skonfigurować YIO Remote</translation>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
       <source> - Disconnected</source>
-      <translation> Rozłączony</translation>
+      <translation> - Rozłączony</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
