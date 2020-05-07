@@ -6,13 +6,13 @@
     <message>
       <location filename="../basic_ui/settings/About.qml" line="35"/>
       <source>Thank you!</source>
-      <translation type="unfinished">Thank you!</translation>
+      <translation>Dziękujemy!</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+      <translation>YIO jest projektem open source, korzysta ze wszystkich współtwórców. Wielkie podziękowania dla wszystkich, którzy do tej pory dodali coś do projektu:
 %1</translation>
     </message>
     <message>
@@ -21,9 +21,9 @@
 
 To learn more about the project, visit
 %1</source>
-      <translation type="unfinished">
+      <translation>
 
-To learn more about the project, visit
+Aby dowiedzieć się więcej o projekcie, odwiedź
 %1</translation>
     </message>
   </context>
@@ -37,7 +37,7 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
       <source>Remaining time</source>
-      <translation type="unfinished">Remaining time</translation>
+      <translation>Pozostały czas</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
@@ -68,43 +68,43 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Oszczędzanie energii</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Nigdy nie wyłączaj Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Wyłącz Wi-Fi po %1 min bezczynności</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
       <location filename="../basic_ui/settings/Battery.qml" line="549"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Nigdy</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="442"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 minut</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Nigdy nie wyłączaj pilota</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Wyłącz pilota po %1 h bezczynności</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 godzin</translation>
     </message>
   </context>
   <context>
@@ -299,7 +299,7 @@ To learn more about the project, visit
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
-      <translation>Artyści</translation>
+      <translation>Wykonawcy</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
@@ -336,32 +336,32 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="40"/>
       <source>Use configuration profile.</source>
-      <translation type="unfinished">Use configuration profile.</translation>
+      <translation>Użyj profilu konfiguracji.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="43"/>
       <source>Use configuration file.</source>
-      <translation type="unfinished">Use configuration file.</translation>
+      <translation>Użyj pliku konfiguracji.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="44"/>
       <source>Use configuration schema file.</source>
-      <translation type="unfinished">Use configuration schema file.</translation>
+      <translation>Użyj pliku schematu konfiguracji.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use hardware configuration file.</source>
-      <translation type="unfinished">Use hardware configuration file.</translation>
+      <translation>Użyj pliku konfiguracji sprzętowej.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use hardware configuration schema file.</source>
-      <translation type="unfinished">Use hardware configuration schema file.</translation>
+      <translation>Użyj pliku schematu konfiguracji sprzętowej.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
       <source>Validate json configuration files and exit.</source>
-      <translation type="unfinished">Validate json configuration files and exit.</translation>
+      <translation>Sprawdź poprawność plików konfiguracyjnych json i wyjdź.</translation>
     </message>
   </context>
   <context>
@@ -383,22 +383,22 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>Wykrywanie bliskości</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Daleko</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Blisko</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>Z jak daleka czujnik zbliżeniowy powinien wykrywać rękę.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
@@ -436,7 +436,7 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
       <source>Remote</source>
-      <translation>Zdalny</translation>
+      <translation>Pilot</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="114"/>
@@ -463,12 +463,12 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation type="unfinished">Not enough free space (%1 MB).</translation>
+      <translation>Za mało wolnego miejsca (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation type="unfinished">Destination file already exists</translation>
+      <translation>Plik docelowy już istnieje</translation>
     </message>
   </context>
   <context>
@@ -477,13 +477,13 @@ To learn more about the project, visit
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>Użyj konfiguratora webowego,
+aby skonfigurować YIO Remote</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Przejdź w przeglądarce internetowej pod adres: http://</translation>
     </message>
   </context>
   <context>
@@ -677,8 +677,8 @@ to set up YIO remote</translation>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups.
-Navigate your internet browser to: http://</translation>
+      <translation>Użyj przeglądarki, aby skonfigurować pilot YIO lub pobrać i przesłać kopie zapasowe.
+W przeglądarce wpisz adres: http://</translation>
     </message>
   </context>
   <context>
@@ -693,52 +693,52 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
-      <translation type="unfinished">New software is available.</translation>
+      <translation>Nowe oprogramowanie jest dostępne.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Twoje oprogramowanie jest aktualne.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Wyświetlacz</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Język</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integracje</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="216"/>
       <source>Battery &amp; power</source>
-      <translation type="unfinished">Battery &amp; power</translation>
+      <translation>Bateria i zasilanie</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
-      <translation type="unfinished">m remaining</translation>
+      <translation>m pozostało</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>WiFi i bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>System</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="242"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>O projekcie</translation>
     </message>
   </context>
   <context>
@@ -746,12 +746,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep1.qml" line="34"/>
       <source>Hello</source>
-      <translation type="unfinished">Hello</translation>
+      <translation>Witaj</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep1.qml" line="45"/>
       <source>Tap the screen to begin</source>
-      <translation type="unfinished">Tap the screen to begin</translation>
+      <translation>Dotknij ekranu, aby rozpocząć</translation>
     </message>
   </context>
   <context>
@@ -759,12 +759,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep3.qml" line="61"/>
       <source>Wi-Fi setup</source>
-      <translation type="unfinished">Wi-Fi setup</translation>
+      <translation>Ustawienia Wi-Fi</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep3.qml" line="72"/>
       <source>Select a Wi-Fi network.</source>
-      <translation type="unfinished">Select a Wi-Fi network.</translation>
+      <translation>Wybierz sieć Wi-Fi.</translation>
     </message>
   </context>
   <context>
@@ -779,12 +779,12 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep4.qml" line="114"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Hasło</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="140"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Połącz</translation>
     </message>
   </context>
   <context>
@@ -792,7 +792,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep5.qml" line="70"/>
       <source>Connecting</source>
-      <translation type="unfinished">Connecting</translation>
+      <translation>‎Łączenie</translation>
     </message>
   </context>
   <context>
@@ -800,17 +800,17 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Nie udało się połączyć</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not connect to your Wi-Fi network.</translation>
+      <translation>Pilot YIO nie mógł połączyć się z Twoją siecią Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Spróbuj ponownie</translation>
     </message>
   </context>
   <context>
@@ -818,17 +818,17 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="36"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Połączono</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully connected to your Wi-Fi network.</translation>
+      <translation>Pilot YIO pomyślnie połączył się z Twoją siecią Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Dalej</translation>
     </message>
   </context>
   <context>
@@ -839,20 +839,19 @@ Navigate your internet browser to: http://</translation>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to
-a power source and wait until it starts blinking.
+      <translation>Podłącz stację dokującą YIO do źródła zasilania i poczekaj, aż zacznie migać.
 
- To share the Wi-Fi network credentials with the dock, tap next.</translation>
+Aby udostępnić hasło Wi-Fi stacji dokującej, naciśnij dalej.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="72"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Dalej</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="83"/>
       <source>Skip</source>
-      <translation type="unfinished">Skip</translation>
+      <translation>Pomiń</translation>
     </message>
   </context>
   <context>
@@ -860,7 +859,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep8.qml" line="114"/>
       <source>Setting up your YIO Dock</source>
-      <translation type="unfinished">Setting up your YIO Dock</translation>
+      <translation>Konfigurowanie stacji dokującej YIO</translation>
     </message>
   </context>
   <context>
@@ -868,17 +867,17 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Nie udało się połączyć</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="49"/>
       <source>YIO Dock could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Dock could not connect to your Wi-Fi network.</translation>
+      <translation>Pilot YIO nie mógł połączyć się z Twoją siecią Wi-Fi.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Spróbuj ponownie</translation>
     </message>
   </context>
   <context>
@@ -886,7 +885,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="39"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Gotowe</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="50"/>
@@ -895,16 +894,16 @@ a power source and wait until it starts blinking.
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">You can setup your YIO Dock later from the web configurator.
+      <translation>Możesz skonfigurować stację dokującą YIO później z konfiguratora webowego.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Aby użyć konfiguratora webowego,
+przejdź do ustawień i włącz
+zdalną konfigurację po ponownym uruchomieniu pilota.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Uruchom ponownie</translation>
     </message>
   </context>
   <context>
@@ -912,7 +911,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="39"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Połączono</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="50"/>
@@ -921,16 +920,16 @@ Remote configuration after restarting the remote.</translation>
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">YIO Dock has successfully connected to your Wi-Fi network.
+      <translation>Stacja dokująca YIO pomyślnie połączyła się z Twoją siecią Wi-Fi.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Aby użyć konfiguratora webowego,
+przejdź do ustawień i włącz
+zdalną konfigurację po ponownym uruchomieniu pilota.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Uruchom ponownie</translation>
     </message>
   </context>
   <context>
@@ -938,7 +937,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStepCountry.qml" line="65"/>
       <source>Select your country or region</source>
-      <translation type="unfinished">Select your country or region</translation>
+      <translation>Wybierz swój kraj lub region</translation>
     </message>
   </context>
   <context>
@@ -946,57 +945,57 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
       <source>Cannot connect to the update server.</source>
-      <translation type="unfinished">Cannot connect to the update server.</translation>
+      <translation>Nie można połączyć się z serwerem aktualizacji.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
-      <translation type="unfinished">Invalid request.</translation>
+      <translation>Nieprawidłowe zapytanie.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="199"/>
       <source>Unsupported device.</source>
-      <translation type="unfinished">Unsupported device.</translation>
+      <translation>Nieobsługiwane urządzenie.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation type="unfinished">Service currently not available.</translation>
+      <translation>Usługa jest obecnie niedostępna.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
       <source>Request error %1</source>
-      <translation type="unfinished">Request error %1</translation>
+      <translation>Błąd zapytania %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>Aktualizacja oprogramowania:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>New software is available</source>
-      <translation type="unfinished">New software is available</translation>
+      <translation>Nowe oprogramowanie jest dostępne</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Pobierz</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
+      <translation>Pilot musi mieć co najmniej 50% baterii, aby dokonać aktualizacji.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation type="unfinished">Download failed: %1</translation>
+      <translation>Pobieranie nie powiodło się: %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation type="unfinished">Failed to start app update script!</translation>
+      <translation>Nie udało się uruchomić skryptu aktualizacji aplikacji!</translation>
     </message>
   </context>
   <context>
@@ -1017,8 +1016,8 @@ Aktualizacje będą instalowane między 03.00 a 05.00 rano.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
-YIO remote %1</translation>
+      <translation>Nowe oprogramowanie jest dostępne.
+Pilot YIO %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
@@ -1043,7 +1042,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Pobierz</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
@@ -1056,22 +1055,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Pobieranie ukończone</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>Pobieranie</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Aktualizuj</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Anuluj</translation>
     </message>
   </context>
   <context>
@@ -1102,22 +1101,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Wykrywanie obszaru</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Automatycznie skanuje beacony Bluetooth powiązane z obszarami, znajduje najbliższy i wyświetla urządzenia w tym obszarze.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>WiFi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>Inne sieci</translation>
     </message>
   </context>
   <context>
@@ -1132,12 +1131,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Hasło</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Połącz</translation>
     </message>
   </context>
 </TS>
