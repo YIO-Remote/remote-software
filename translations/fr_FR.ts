@@ -426,12 +426,12 @@ Pour en savoir plus sur le projet, visitez
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Light</source>
-      <translation type="unfinished">Light</translation>
+      <translation>Luminosité</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Blind</source>
-      <translation type="unfinished">Blind</translation>
+      <translation>Volets</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
