@@ -128,7 +128,7 @@ Pour en savoir plus sur le projet, visitez
   <context>
     <name>BluetoothThread</name>
     <message>
-      <location filename="../sources/bluetootharea.cpp" line="121"/>
+      <location filename="../sources/bluetootharea.cpp" line="122"/>
       <source>Bluetooth device was not found.</source>
       <translation>Le périphérique Bluetooth n’a pas été trouvé.</translation>
     </message>
@@ -419,32 +419,32 @@ Pour en savoir plus sur le projet, visitez
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
-      <source>Lights</source>
-      <translation>Lumières</translation>
-    </message>
-    <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
-      <source>Blinds</source>
-      <translation>Volets</translation>
-    </message>
-    <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
+      <source>Light</source>
+      <translation type="unfinished">Light</translation>
+    </message>
+    <message>
+      <location filename="../sources/entities/entities.h" line="110"/>
+      <source>Blind</source>
+      <translation type="unfinished">Blind</translation>
+    </message>
+    <message>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Remote</source>
       <translation>Télécommande</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
       <translation>Thermostat</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
       <translation>Changer</translation>
     </message>
@@ -541,28 +541,28 @@ pour configurer votre télécommande YIO</translation>
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Favoris</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Settings</source>
       <translation>Réglages</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Lights</source>
       <translation>Lumières</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Blinds</source>
       <translation>Volets</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
@@ -627,7 +627,7 @@ pour configurer votre télécommande YIO</translation>
       <translation>Profils</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="195"/>
+      <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>Pour modifier vos profils, utilisez l'outil dans les paramètres du configuration web .</translation>
     </message>
@@ -857,7 +857,7 @@ Pour partager les informations d'identification du réseau Wi-Fi avec le dock, a
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="114"/>
+      <location filename="../setup/SetupStep8.qml" line="122"/>
       <source>Setting up your YIO Dock</source>
       <translation>Configuration votre dock YIO</translation>
     </message>

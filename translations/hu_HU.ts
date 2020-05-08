@@ -128,7 +128,7 @@ Tudj meg többet a projektről:
   <context>
     <name>BluetoothThread</name>
     <message>
-      <location filename="../sources/bluetootharea.cpp" line="121"/>
+      <location filename="../sources/bluetootharea.cpp" line="122"/>
       <source>Bluetooth device was not found.</source>
       <translation>Bluetooth nem található.</translation>
     </message>
@@ -419,32 +419,32 @@ Tudj meg többet a projektről:
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
-      <source>Lights</source>
-      <translation>Világítás</translation>
-    </message>
-    <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
-      <source>Blinds</source>
-      <translation>Árnyékolók</translation>
-    </message>
-    <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
+      <source>Light</source>
+      <translation type="unfinished">Light</translation>
+    </message>
+    <message>
+      <location filename="../sources/entities/entities.h" line="110"/>
+      <source>Blind</source>
+      <translation type="unfinished">Blind</translation>
+    </message>
+    <message>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Remote</source>
       <translation>Távirányító</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
       <translation>Klíma</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
       <translation>Kapcsoló</translation>
     </message>
@@ -541,28 +541,28 @@ to set up YIO remote</translation>
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Kedvencek</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Settings</source>
       <translation>Beállítások</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Lights</source>
       <translation>Világítás</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Blinds</source>
       <translation>Árnyékolók</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Media</source>
       <translation>Média</translation>
     </message>
@@ -627,7 +627,7 @@ to set up YIO remote</translation>
       <translation>Profilok</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="195"/>
+      <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>A profiljaid szerkesztéséhez használd a web konfigurációs eszközt a beállításokban.</translation>
     </message>
@@ -858,7 +858,7 @@ A WiFi beállítás megosztásához érintsd meg a következőt.</translation>
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="114"/>
+      <location filename="../setup/SetupStep8.qml" line="122"/>
       <source>Setting up your YIO Dock</source>
       <translation>A YIO dokkolód beállítása</translation>
     </message>

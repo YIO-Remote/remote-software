@@ -128,7 +128,7 @@ Per saber més del projecte, visita
   <context>
     <name>BluetoothThread</name>
     <message>
-      <location filename="../sources/bluetootharea.cpp" line="121"/>
+      <location filename="../sources/bluetootharea.cpp" line="122"/>
       <source>Bluetooth device was not found.</source>
       <translation>No s'ha trobat el dispositiu bluetooth.</translation>
     </message>
@@ -419,32 +419,32 @@ Per saber més del projecte, visita
   <context>
     <name>Entities</name>
     <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
-      <source>Lights</source>
-      <translation>Llums</translation>
-    </message>
-    <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
-      <source>Blinds</source>
-      <translation>Persianes</translation>
-    </message>
-    <message>
-      <location filename="../sources/entities/entities.h" line="113"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
       <source>Media</source>
       <translation>Media</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="110"/>
+      <source>Light</source>
+      <translation type="unfinished">Light</translation>
+    </message>
+    <message>
+      <location filename="../sources/entities/entities.h" line="110"/>
+      <source>Blind</source>
+      <translation type="unfinished">Blind</translation>
+    </message>
+    <message>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Remote</source>
       <translation>Comandament</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
       <translation>Clima</translation>
     </message>
     <message>
-      <location filename="../sources/entities/entities.h" line="114"/>
+      <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
       <translation>Interruptor</translation>
     </message>
@@ -541,28 +541,28 @@ to set up YIO remote</translation>
   <context>
     <name>MainNavigation</name>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
       <translation>Favorits</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="66"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Settings</source>
       <translation>Configuració</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Lights</source>
       <translation>Llums</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Blinds</source>
       <translation>Persianes</translation>
     </message>
     <message>
-      <location filename="../basic_ui/MainNavigation.qml" line="67"/>
+      <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Media</source>
       <translation>Media</translation>
     </message>
@@ -627,7 +627,7 @@ to set up YIO remote</translation>
       <translation>Perfils</translation>
     </message>
     <message>
-      <location filename="../basic_ui/Profiles.qml" line="195"/>
+      <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>Per editar els perfils, usa les eines de configuració web del menú de configuració.</translation>
     </message>
@@ -858,7 +858,7 @@ Per compartir les credencials Wi-Fi amb la Base, marca següent.</translation>
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="114"/>
+      <location filename="../setup/SetupStep8.qml" line="122"/>
       <source>Setting up your YIO Dock</source>
       <translation>Configurant la base YIO</translation>
     </message>
