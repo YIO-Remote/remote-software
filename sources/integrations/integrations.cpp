@@ -185,11 +185,6 @@ void Integrations::add(const QVariantMap& config, QObject* obj, const QString& t
     m_integrations.insert(id, obj);
     m_integrationsFriendlyNames.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
     m_integrationsTypes.insert(id, type);
-    IntegrationInterface* ii = qobject_cast<IntegrationInterface*>(obj);
-
-    // FIXME: connect to entity loading done signal and then connect
-    QTimer::singleShot(500, this, [=]() { ii->connect(); });
-    //    ii->connect();
     emit listChanged();
 }
 
