@@ -153,7 +153,8 @@ bool Entities::isSupportedEntityType(const QString &type) {
     //    }
 }
 
-QObject *        Entities::get(const QString &entity_id) { return m_entities.value(entity_id); }
+QObject *Entities::get(const QString &entity_id) { return m_entities.value(entity_id); }
+
 EntityInterface *Entities::getEntityInterface(const QString &entity_id) {
     return qobject_cast<EntityInterface *>(m_entities.value(entity_id));
 }

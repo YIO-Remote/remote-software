@@ -34,6 +34,22 @@ Item {
 
     property string groupID
 
+    function checkIfSupported() {
+        var s = true;
+
+        var eArr = config.groups[groupID].entities;
+
+        for (var i=0; i<eArr.length; i++) {
+            var eid = entities.get(eArr[i]);
+
+            if (eid && !eid.supportsOn) {
+                s = false;
+            }
+        }
+
+        return s;
+    }
+
     function checkGroupState() {
         var s = false;
 
@@ -56,6 +72,7 @@ Item {
         interval: 2000
 
         onTriggered: {
+            customSwitch.visible = Qt.binding(function() { return checkIfSupported()})
             customSwitch.checked = Qt.binding(function() { return checkGroupState()})
         }
     }
@@ -77,7 +94,7 @@ Item {
 
         BasicUI.CustomSwitch {
             id: customSwitch
-            visible: config.groups[groupID].switch
+            visible: false
             anchors { right: parent.right; rightMargin: 20; verticalCenter: parent.verticalCenter }
 
             checked: false
