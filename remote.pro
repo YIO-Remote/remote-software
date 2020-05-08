@@ -95,6 +95,7 @@ HEADERS += \
     sources/config.h \
     sources/configutil.h \
     sources/entities/climate.h \
+    sources/entities/entities_supported.h \
     sources/entities/remote.h \
     sources/entities/switch.h \
     sources/entities/weather.h \
@@ -119,6 +120,7 @@ HEADERS += \
     sources/hardware/proximitysensor.h \
     sources/hardware/mock/proximitysensor_mock.h \
     sources/integrations/integrations.h \
+    sources/integrations/integrations_supported.h \
     sources/integrations/integrationsinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \

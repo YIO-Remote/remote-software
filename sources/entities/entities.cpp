@@ -29,16 +29,6 @@
 
 #include "../config.h"
 #include "../integrations/integrations.h"
-#include "../logger.h"
-/// ADD NEW ENTITY TYPE HERE
-#include "blind.h"
-#include "climate.h"
-#include "entity.h"
-#include "light.h"
-#include "mediaplayer.h"
-#include "remote.h"
-#include "switch.h"
-#include "weather.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "entities");
 
@@ -52,7 +42,7 @@ Entities::Entities(QObject *parent) : QObject(parent), m_enumSupportedEntityType
     // Remote is special. Register class before entity creation (for use in Main.qml)
     Remote::staticInitialize();
 
-    const QMetaObject &metaObject             = Entities::staticMetaObject;
+    const QMetaObject &metaObject             = EntitiesSupported::staticMetaObject;
     int                index                  = metaObject.indexOfEnumerator("SupportedEntityTypes");
     QMetaEnum          metaEnumSupportedTypes = metaObject.enumerator(index);
     m_enumSupportedEntityTypes                = &metaEnumSupportedTypes;
@@ -92,6 +82,14 @@ void Entities::load() {
         }
     }
     emit entitiesLoaded();
+
+    // when all entities are loaded, connect the integrations
+    QList<QObject *> integrations = Integrations::getInstance()->list();
+    for (int i = 0; i < integrations.count(); i++) {
+        QObject *             obj = integrations[i];
+        IntegrationInterface *ii  = qobject_cast<IntegrationInterface *>(obj);
+        ii->connect();
+    }
 }
 
 QList<EntityInterface *> Entities::getByType(const QString &type) {
