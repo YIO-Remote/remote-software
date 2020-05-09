@@ -426,12 +426,12 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Light</source>
-      <translation type="unfinished">Light</translation>
+      <translation>Lampe</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Blind</source>
-      <translation type="unfinished">Blind</translation>
+      <translation>Rolladen</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
@@ -477,13 +477,13 @@ To learn more about the project, visit
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>Verwenden Sie den Web-Konfigurator
+um die YIO-Fernbedienung einzurichten</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Öffnen Sie im Browser: http://</translation>
     </message>
   </context>
   <context>
