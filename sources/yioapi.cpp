@@ -1191,6 +1191,28 @@ void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap
     bool success = false;
 
     QVariantMap response;
+
+    // remove the page from the profiles
+    QVariantMap profiles = m_config->getProfiles();
+
+    for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+        QVariantMap profile = iter.value().toMap();
+        QStringList pages   = profile.value("pages").toStringList();
+
+        for (int i = 0; i < pages.length(); i++) {
+            if (pages[i] == map.value("page_id").toString()) {
+                pages.removeAt(i);
+                break;
+            }
+        }
+
+        profile.insert("pages", pages);
+        profiles.insert(iter.key(), profile);
+    }
+
+    m_config->setProfiles(profiles);
+
+    // remove the page from the profiles list
     QVariantMap pages = m_config->getPages();
 
     for (QVariantMap::const_iterator iter = pages.begin(); iter != pages.end(); ++iter) {
