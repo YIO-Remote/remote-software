@@ -108,7 +108,6 @@ ApplicationWindow {
         } else {
             integrations.load();
         }
-
     }
 
     // load the entities when the integrations are loaded

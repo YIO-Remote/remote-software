@@ -105,8 +105,8 @@ Rectangle {
         TextField {
             id: passwordField
             cursorVisible: false
-            width: parent.width; height: parent.height
-            anchors.centerIn: parent
+            width: parent.width-80; height: parent.height
+            anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
             placeholderText: qsTr("Password") + translateHandler.emptyString
             echoMode: TextInput.Password
             passwordCharacter: "*"
@@ -119,6 +119,14 @@ Rectangle {
                 border.width: 0
             }
 
+            Binding {
+                target: passwordField
+                property: "passwordMaskDelay"
+                value: 1000
+                when: passwordField.hasOwnProperty("passwordMaskDelay")
+
+            }
+
             onAccepted: {
                 joinNetwork();
             }
@@ -128,6 +136,31 @@ Rectangle {
                     inputPanel.active = true;
                 } else
                     inputPanel.active = false;
+            }
+
+            Text {
+                color: Style.color.background
+                text: Style.icon.eye
+                renderType: Text.NativeRendering
+                width: 70; height: 70
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
+                anchors { right: parent.right; rightMargin: -60; verticalCenter: parent.verticalCenter }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        if (passwordField.echoMode == TextInput.Password) {
+                            passwordField.echoMode = TextInput.Normal
+                        } else {
+                            passwordField.echoMode = TextInput.Password
+                        }
+                    }
+                }
+            }
+
+            Component.onCompleted: {
+                passwordField.forceActiveFocus();
             }
         }
 
