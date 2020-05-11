@@ -990,6 +990,7 @@ void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {
 
     if (integrations.isEmpty()) {
         apiSendResponse(client, id, false, response);
+        return;
     }
 
     for (int i = 0; i < integrations.length(); i++) {
@@ -1000,6 +1001,7 @@ void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {
     if (availableEntities.isEmpty()) {
         response.insert("available_entities", QVariantList());
         apiSendResponse(client, id, true, response);
+        return;
     }
 
     response.insert("available_entities", availableEntities);
