@@ -36,6 +36,8 @@ Item {
         width: parent.width; height: childrenRect.height
         radius: Style.cornerRadius
         color: Style.color.dark
+        enabled: false
+        opacity: 0.5
 
         Rectangle {
             id: bluetoothSection

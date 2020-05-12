@@ -18,6 +18,11 @@ Rectangle {
             smalltext.text = SoftwareUpdate.bytesTotal + " bytes"
             updateButton.opacity = 1;
         }
+
+        onDownloadFailed: {
+            loader_second.setSource("");
+            loader_second.active = false;
+        }
     }
 
     Rectangle {
@@ -65,10 +70,12 @@ Rectangle {
         BasicUI.CustomButton {
             id: updateButton
             opacity: 0
+            enabled: opacity == 1
             buttonText: qsTr("Update") + translateHandler.emptyString
             mouseArea.onClicked: {
                 Haptic.playEffect(Haptic.Click);
                 // now perform update
+                SoftwareUpdate.performAppUpdate();
             }
 
             Behavior on opacity {
@@ -82,7 +89,8 @@ Rectangle {
             buttonText: qsTr("Cancel") + translateHandler.emptyString
             mouseArea.onClicked: {
                 Haptic.playEffect(Haptic.Click);
-                loader_second.source = "";
+                loader_second.setSource("");
+                loader_second.active = false;
             }
 
             Behavior on opacity {

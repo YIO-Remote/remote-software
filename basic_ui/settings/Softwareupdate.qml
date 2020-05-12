@@ -41,6 +41,8 @@ Rectangle {
         // AUTO UPDATE
         Item {
             width: parent.width; height: childrenRect.height + 40
+            enabled: false
+            opacity: 0.5
 
             Text {
                 id: softwareUpdateText
@@ -109,21 +111,30 @@ Rectangle {
 
             BasicUI.CustomButton {
                 id: updateButton
-                buttonText: SoftwareUpdate.installAvailable ? qsTr("Update") + translateHandler.emptyString : qsTr("Download") + translateHandler.emptyString
+                buttonText: qsTr("Update") + translateHandler.emptyString
                 anchors { top: uptodateTextsmall.bottom; topMargin: 30; left: parent.left; leftMargin: 20 }
                 visible: SoftwareUpdate.updateAvailable
+                enabled: SoftwareUpdate.updateAvailable
 
                 mouseArea.onClicked: {
                     if (SoftwareUpdate.updateAvailable) {
-                        // TODO(marton) error handling: coordinate with zehnm which error conditions must be handled manually and which ones are already forwarded to the NotificationHandler
-                        if (SoftwareUpdate.installAvailable) {
-                            SoftwareUpdate.performAppUpdate();
-                        } else {
-                            // TODO(marton) handle downloadFailed signal to abort download screen in case of error
-                            // TODO(marton) the installAvailable signal after the downloadComplete() signal makes the "Update" button appear, but it doesn't work or switches the functionality!
-                            //              I think this needs two dedicated buttons. Switching the text only leads to trouble...
-                            SoftwareUpdate.startDownload();
-                        }
+                        loader_second.setSource("qrc:/basic_ui/settings/SoftwareUpdateDownloading.qml")
+                        loader_second.active = true;
+                        SoftwareUpdate.startDownload();
+                    }
+                }
+            }
+
+            BasicUI.CustomButton {
+                id: downloadButton
+                buttonText: qsTr("Download") + translateHandler.emptyString
+                anchors { top: uptodateTextsmall.bottom; topMargin: 30; left: parent.left; leftMargin: 20 }
+                visible: SoftwareUpdate.installAvailable
+                enabled: SoftwareUpdate.installAvailable
+
+                mouseArea.onClicked: {
+                    if (SoftwareUpdate.installAvailable) {
+                        SoftwareUpdate.performAppUpdate();
                     }
                 }
             }
