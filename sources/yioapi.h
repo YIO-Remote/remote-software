@@ -73,14 +73,15 @@ class YioAPI : public YioAPIInterface {
     static YioAPI* getInstance() { return s_instance; }
 
  signals:
-    void closed();
-    void messageReceived(QVariantMap message);
+    //    void closed();
+    //    void messageReceived(QVariantMap message);
     void runningChanged();
     void hostnameChanged();
     void buttonPressed(QString button);
     void buttonReleased(QString button);
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void onClosed();
     void onNewConnection();
     void processMessage(QString message);
     void onClientDisconnected();
@@ -110,6 +111,7 @@ class YioAPI : public YioAPIInterface {
     QZeroConf* m_zeroConfBrowser;
 
     QStringList m_discoverableServices;
+    QString     m_prevIp;
 
     Entities*     m_entities;
     Integrations* m_integrations;

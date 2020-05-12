@@ -53,7 +53,8 @@ void YioAPI::start() {
     // start websocket server on port 946(YIO)
     if (m_server->listen(QHostAddress::Any, 946)) {
         connect(m_server, &QWebSocketServer::newConnection, this, &YioAPI::onNewConnection);
-        connect(m_server, &QWebSocketServer::closed, this, &YioAPI::closed);
+        connect(m_server, &QWebSocketServer::closed, this, &YioAPI::onClosed);
+
         m_running = true;
         emit runningChanged();
     }
@@ -441,6 +442,7 @@ void YioAPI::discoverNetworkServices() {
 void YioAPI::discoverNetworkServices(QString mdns) {
     m_zeroConfBrowser = new QZeroConf;
     QObject *context  = new QObject();
+    m_prevIp          = "";
 
     connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, context, [=](QZeroConfService item) {
         qCDebug(CLASS_LC) << "Zeroconf found" << item;
@@ -453,17 +455,21 @@ void YioAPI::discoverNetworkServices(QString mdns) {
             txt.insert(i.key(), i.value());
         }
 
-        QVariantMap map;
-        map.insert(QString("name"), item->name());
-        map.insert(QString("ip"), item->ip().toString());
-        map.insert(QString("port"), item->port());
-        map.insert(QString("mdns"), mdns);
-        map.insert(QString("txt"), txt);
+        if (m_prevIp != item->ip().toString()) {
+            m_prevIp = item->ip().toString();
 
-        QMap<QString, QVariantMap> discoveredServices;
-        discoveredServices.insert(item->name(), map);
+            QVariantMap map;
+            map.insert(QString("name"), item->name());
+            map.insert(QString("ip"), m_prevIp);
+            map.insert(QString("port"), item->port());
+            map.insert(QString("mdns"), mdns);
+            map.insert(QString("txt"), txt);
 
-        emit serviceDiscovered(discoveredServices);
+            QMap<QString, QVariantMap> discoveredServices;
+            discoveredServices.insert(item->name(), map);
+
+            emit serviceDiscovered(discoveredServices);
+        }
         context->deleteLater();
         m_zeroConfBrowser->deleteLater();
     });
@@ -486,6 +492,8 @@ void YioAPI::onNewConnection() {
     socket->sendTextMessage(message);
     m_clients.insert(socket, false);
 }
+
+void YioAPI::onClosed() {}
 
 void YioAPI::processMessage(QString message) {
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
@@ -639,10 +647,12 @@ void YioAPI::processMessage(QString message) {
 }
 
 void YioAPI::onClientDisconnected() {
+    qCDebug(CLASS_LC) << "Client disconnected";
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
         m_clients.remove(client);
         client->deleteLater();
+        qCDebug(CLASS_LC) << "Client removed";
     }
 }
 
@@ -666,7 +676,11 @@ void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &succ
     response.insert("type", "result");
 
     QJsonDocument json = QJsonDocument::fromVariant(response);
-    client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+
+    if (m_clients.contains(client)) {
+        qCDebug(CLASS_LC) << "Sending response to client" << client;
+        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    }
     //    qCDebug(CLASS_LC) << "Response sent to client:" << client << "id:" << id << "response:" << response;
 }
 
@@ -824,6 +838,7 @@ void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
     QObject *context      = new QObject(this);
 
     QObject::connect(this, &YioAPI::serviceDiscovered, context, [=](QMap<QString, QVariantMap> services) {
+        qCDebug(CLASS_LC) << "Service discovered";
         QVariantMap response;
         QVariantMap map;
 
