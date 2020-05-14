@@ -36,9 +36,13 @@ Item {
     Connections {
         target: bluetoothArea
         onDockFound: {
-            console.debug("Dock found: %1 Sending credentials...").arg(address);
-            macAddress = address;
-
+            bluetoothDiscoveryTimeout.stop();
+            macAddress = address.toString();
+            //            macAddress = macAddress.replace(/:/g,"");
+            console.debug("Dock found: " + macAddress);
+        }
+        onDockPairingFinished: {
+            console.debug("Pairing succces, preparing message.");
             // show dock page
             var msg = {};
             msg.ssid = wifi.wifiStatus.name;
@@ -57,20 +61,17 @@ Item {
         id: apiConnection
         target: api
         onServiceDiscovered: {
-            // stop timeout timer
-            mdnsDiscoveryTimeout.stop();
-            bluetoothDiscoveryTimeout.stop();
-
-            // TODO: need to check if the same dock was found as in the bluetooth setup
-            console.debug("Dock API discovered: " + services);
-
-            if (macAddress) {
-                // show success page
-                _swipeView.dockSuccess = true;
-                _swipeView.incrementCurrentIndex();
-            } else {
-                _swipeView.dockSuccess = false;
-                _swipeView.incrementCurrentIndex();
+            for (let key in services) {
+                if (services.hasOwnProperty(key)) {
+                    console.debug("Found dock:" + key);
+                    if (key === macAddress) {
+                        // show success page
+                        // stop timeout timer
+                        mdnsDiscoveryTimeout.stop();
+                        _swipeView.dockSuccess = true;
+                        _swipeView.incrementCurrentIndex();
+                    }
+                }
             }
         }
     }
@@ -78,7 +79,7 @@ Item {
     Timer {
         id: bluetoothDiscoveryTimeout
         running: _currentItem
-        interval: 20000
+        interval: 10000
         repeat: false
 
         onTriggered: {

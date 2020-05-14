@@ -465,7 +465,7 @@ void YioAPI::discoverNetworkServices(QString mdns) {
             map.insert(QString("mdns"), mdns);
             map.insert(QString("txt"), txt);
 
-            QMap<QString, QVariantMap> discoveredServices;
+            QVariantMap discoveredServices;
             discoveredServices.insert(item->name(), map);
 
             emit serviceDiscovered(discoveredServices);
@@ -837,21 +837,21 @@ void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
     QTimer * timeOutTimer = new QTimer();
     QObject *context      = new QObject(this);
 
-    QObject::connect(this, &YioAPI::serviceDiscovered, context, [=](QMap<QString, QVariantMap> services) {
+    QObject::connect(this, &YioAPI::serviceDiscovered, context, [=](QVariantMap services) {
         qCDebug(CLASS_LC) << "Service discovered";
         QVariantMap response;
         QVariantMap map;
 
         // let's go through the returned list of discovered integrations
-        QMap<QString, QVariantMap>::iterator i;
+        QVariantMap::iterator i;
         for (i = services.begin(); i != services.end(); i++) {
-            QString friendlyName = i.value().value("txt").toMap().value("FriendlyName").toString();
+            QString friendlyName = i.value().toMap().value("txt").toMap().value("FriendlyName").toString();
             if (friendlyName.isEmpty()) {
-                friendlyName = i.value().value("name").toString();
+                friendlyName = i.value().toMap().value("name").toString();
             }
             map.insert("friendly_name", friendlyName);
-            map.insert("ip", i.value().value("ip").toString());
-            map.insert("type", m_integrations->getTypeByMdns(i.value().value("mdns").toString()));
+            map.insert("ip", i.value().toMap().value("ip").toString());
+            map.insert("type", m_integrations->getTypeByMdns(i.value().toMap().value("mdns").toString()));
         }
 
         response.insert("discovered_integration", map);
