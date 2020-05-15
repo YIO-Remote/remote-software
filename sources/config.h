@@ -139,7 +139,7 @@ class Config : public QObject, public ConfigInterface {
 
  public:
     explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath, QString appPath);
-    virtual ~Config() override;
+    ~Config() override;
 
     static Config* getInstance() { return s_instance; }
 
