@@ -369,26 +369,26 @@ Pour en savoir plus sur le projet, visitez
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="41"/>
       <source>Invalid configuration file</source>
-      <translation type="unfinished">Invalid configuration file</translation>
+      <translation>Fichier de configuration non valide</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Naviguez vers la page : http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>
  and use the web configurator
 to fix the problem.</source>
-      <translation type="unfinished">
- and use the web configurator
-to fix the problem.</translation>
+      <translation>
+ et utilisez le configurateur web
+pour résoudre le problème.</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Redémarrer</translation>
     </message>
   </context>
   <context>

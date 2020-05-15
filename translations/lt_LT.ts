@@ -827,17 +827,17 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Nepavyko prisijungti</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not connect to your Wi-Fi network.</translation>
+      <translation>YIO distancinis negali prisijungti prie bevielio tinklo.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Bandyk dar kartą</translation>
     </message>
   </context>
   <context>
@@ -845,17 +845,17 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="36"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Prisijungta</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully connected to your Wi-Fi network.</translation>
+      <translation>YIO distancinis sėkmingai prisijungė prie bevielio tinklo.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Sekantis</translation>
     </message>
   </context>
   <context>
@@ -866,20 +866,20 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to
-a power source and wait until it starts blinking.
+      <translation>Įjunkite YIO maitinimo stovelį į 
+elektros tinklą lr ukterkite kol lemputė pradės mirksėti.
 
- To share the Wi-Fi network credentials with the dock, tap next.</translation>
+ Jei norite su YIO maitinimo stoveliu pasidalinti 'Wi-Fi' nustatymais, spauskite tęsti.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="72"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Tęsti</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="83"/>
       <source>Skip</source>
-      <translation type="unfinished">Skip</translation>
+      <translation>Praleisti</translation>
     </message>
   </context>
   <context>
@@ -887,7 +887,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep8.qml" line="122"/>
       <source>Setting up your YIO Dock</source>
-      <translation type="unfinished">Setting up your YIO Dock</translation>
+      <translation>YIO stovelio nustatymai</translation>
     </message>
   </context>
   <context>
@@ -895,17 +895,17 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Nepavyko prisijungti</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="49"/>
       <source>YIO Dock could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Dock could not connect to your Wi-Fi network.</translation>
+      <translation>YIO stovelis negali prisijungti prie bevielio tinklo.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Bandyk dar kartą</translation>
     </message>
   </context>
   <context>
@@ -913,7 +913,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="39"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Baigta</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="50"/>
@@ -922,16 +922,16 @@ a power source and wait until it starts blinking.
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">You can setup your YIO Dock later from the web configurator.
+      <translation>YIO stovelį galite vėliau valdyti per WEB konfigūratorių.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Jei norite naudotis WEB konfigūratoriumi, 
+eikite į Nustatymus ir įjunkite
+Distancinio valdymas po distancinio pulto perkrovimo (?).</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Perkrauti</translation>
     </message>
   </context>
   <context>
@@ -939,7 +939,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="39"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Prisijungta</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="50"/>
