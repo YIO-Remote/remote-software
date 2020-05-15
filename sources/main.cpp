@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
 
     qmlRegisterUncreatableType<Config>("Config", 1, 0, "Config", "Not creatable as it is an enum type");
     qRegisterMetaType<UnitSystem>("UnitSystem");
-  
+
     engine.rootContext()->setContextProperty("config", config);
     engine.rootContext()->setContextProperty("configError", configError);
 
