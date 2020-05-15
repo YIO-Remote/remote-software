@@ -1,25 +1,25 @@
 /******************************************************************************
-*
-* Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
-* Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
-*
-* This file is part of the YIO-Remote software project.
-*
-* YIO-Remote software is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* YIO-Remote software is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
-*
-* SPDX-License-Identifier: GPL-3.0-or-later
-*****************************************************************************/
+ *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
 #pragma once
 
 #include <QJsonArray>
@@ -49,6 +49,9 @@ class Config : public QObject, public ConfigInterface {
     static const QString KEY_WORKERTHREAD;
     static const QString OBJ_DATA;
 
+    enum UnitSystem { METRIC = 0, IMPERIAL = 1 };
+    Q_ENUM(UnitSystem)
+
     Q_PROPERTY(bool valid READ isValid CONSTANT)
     Q_PROPERTY(QString error READ getError CONSTANT)
     Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
@@ -59,6 +62,7 @@ class Config : public QObject, public ConfigInterface {
     Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
+    Q_PROPERTY(UnitSystem unitSystem READ unitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
 
     // valid
     bool isValid() const { return m_error.isEmpty(); }
@@ -96,6 +100,10 @@ class Config : public QObject, public ConfigInterface {
     // groups
     QVariantMap getGroups() { return m_cacheUIGroups; }
     void        setGroups(const QVariantMap& config);
+
+    // unit system
+    UnitSystem unitSystem() { return m_cacheUnitSystem; }
+    void       setUnitSystem(UnitSystem value);
 
     // languages
     QVariantList getLanguages() { return m_languages; }
@@ -145,6 +153,7 @@ class Config : public QObject, public ConfigInterface {
     void uiConfigChanged();
     void pagesChanged();
     void groupsChanged();
+    void unitSystemChanged();
     void configWriteError(const QString& error);
 
  private:
@@ -170,4 +179,5 @@ class Config : public QObject, public ConfigInterface {
     QVariantMap m_cacheUIProfiles;
     QVariantMap m_cacheUIPages;
     QVariantMap m_cacheUIGroups;
+    UnitSystem  m_cacheUnitSystem = METRIC;
 };
