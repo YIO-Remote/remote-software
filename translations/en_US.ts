@@ -361,6 +361,31 @@ To learn more about the project, visit
     </message>
 </context>
 <context>
+    <name>ConfigError</name>
+    <message>
+        <location filename="../basic_ui/ConfigError.qml" line="41"/>
+        <source>Invalid configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/ConfigError.qml" line="53"/>
+        <source>Navigate your internet browser to: http://</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/ConfigError.qml" line="53"/>
+        <source>
+ and use the web configurator
+to fix the problem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/ConfigError.qml" line="90"/>
+        <source>Reboot</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ContextMenu</name>
     <message>
         <location filename="../basic_ui/ContextMenu.qml" line="139"/>
