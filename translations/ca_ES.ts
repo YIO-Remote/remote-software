@@ -365,6 +365,33 @@ Per saber més del projecte, visita
     </message>
   </context>
   <context>
+    <name>ConfigError</name>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="41"/>
+      <source>Invalid configuration file</source>
+      <translation type="unfinished">Invalid configuration file</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>Navigate your internet browser to: http://</source>
+      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>
+ and use the web configurator
+to fix the problem.</source>
+      <translation type="unfinished">
+ and use the web configurator
+to fix the problem.</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="90"/>
+      <source>Reboot</source>
+      <translation type="unfinished">Reboot</translation>
+    </message>
+  </context>
+  <context>
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
@@ -782,7 +809,7 @@ Ves amb el navegador a: http://</translation>
       <translation>Contrasenya</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="140"/>
+      <location filename="../setup/SetupStep4.qml" line="173"/>
       <source>Join</source>
       <translation>Unir-se</translation>
     </message>
@@ -1002,50 +1029,50 @@ configuració remota despres de reinciar el comandament.</translation>
   <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
       <translation>Actualitza automàticament</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation>Busca actualitzacions automàticament e instal·la-les quan estigui disponible una nova versió. Les actualitzacions s'instal·len entre les 03.00 am i les 05.00 am.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>Actualització disponible.
 comandament YIO %1</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
       <translation>El programa està actualitzat.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
       <translation>Versió instal·lada: comandament YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
       <translation>Comandament YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
       <translation>Actualització</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
       <translation>Descarrega</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
       <translation>Busca actualització</translation>
     </message>
@@ -1058,17 +1085,17 @@ comandament YIO %1</translation>
       <translation>Descàrrega completada</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
       <translation>Descarregant</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
       <translation>Actualitzar</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
       <translation>Cancel·la</translation>
     </message>
@@ -1099,22 +1126,22 @@ comandament YIO %1</translation>
   <context>
     <name>Wifi</name>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
       <source>Area detection</source>
       <translation>Detecció d'àrea</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Escaneja automàticament aparells bluetooth associats a l'àrea, troba el més proper i mostra els dispositius d'aquesta àrea.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
       <translation>WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
       <source>Other networks</source>
       <translation>Altres xarxes</translation>
     </message>
@@ -1134,7 +1161,7 @@ comandament YIO %1</translation>
       <translation>Contrasenya</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
+      <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
       <source>Join</source>
       <translation>Unir-se</translation>
     </message>

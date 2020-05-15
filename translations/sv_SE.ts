@@ -365,6 +365,33 @@ För att lära dig mer om projektet, besök
     </message>
   </context>
   <context>
+    <name>ConfigError</name>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="41"/>
+      <source>Invalid configuration file</source>
+      <translation type="unfinished">Invalid configuration file</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>Navigate your internet browser to: http://</source>
+      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>
+ and use the web configurator
+to fix the problem.</source>
+      <translation type="unfinished">
+ and use the web configurator
+to fix the problem.</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="90"/>
+      <source>Reboot</source>
+      <translation type="unfinished">Reboot</translation>
+    </message>
+  </context>
+  <context>
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
@@ -782,7 +809,7 @@ Navigera din webbläsare till: http://</translation>
       <translation>Lösenord</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="140"/>
+      <location filename="../setup/SetupStep4.qml" line="173"/>
       <source>Join</source>
       <translation>Gå med</translation>
     </message>
@@ -1002,51 +1029,51 @@ Fjärrkonfiguration efter omstart av fjärrkontrollen.</translation>
   <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
       <translation>Automatisk uppdatering</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation>Leta automatiskt efter uppdateringar och uppdatera när en ny version finns tillgänglig.
 Uppdateringar installeras mellan 03:00 och 05:00.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>Ny version finns tillgänglig.
 YIO fjärrkontroll %1</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
       <translation>Din mjukvara är senaste versionen.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
       <translation>Installerad version: YIO Fjärrkontroll </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
       <translation>YIO Fjärrkontroll </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
       <translation>Uppdatera</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
       <translation>Ladda ned</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
       <translation>Leta efter uppdatering</translation>
     </message>
@@ -1059,17 +1086,17 @@ YIO fjärrkontroll %1</translation>
       <translation>Nedladdningen är slutförd</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
       <translation>Laddar ner</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
       <translation>Uppdatera</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
       <translation>Avbryt</translation>
     </message>
@@ -1100,22 +1127,22 @@ YIO fjärrkontroll %1</translation>
   <context>
     <name>Wifi</name>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
       <source>Area detection</source>
       <translation>Områdesdetektering</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Sök automatiskt efter bluetooth-beacons associerade med området, hitta automatiskt närmaste och visa enheter i området.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
       <translation>WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
       <source>Other networks</source>
       <translation>Andra nätverk</translation>
     </message>
@@ -1135,7 +1162,7 @@ YIO fjärrkontroll %1</translation>
       <translation>Lösenord</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
+      <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
       <source>Join</source>
       <translation>Gå med</translation>
     </message>

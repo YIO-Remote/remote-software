@@ -365,6 +365,33 @@ To learn more about the project, visit
     </message>
   </context>
   <context>
+    <name>ConfigError</name>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="41"/>
+      <source>Invalid configuration file</source>
+      <translation type="unfinished">Invalid configuration file</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>Navigate your internet browser to: http://</source>
+      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>
+ and use the web configurator
+to fix the problem.</source>
+      <translation type="unfinished">
+ and use the web configurator
+to fix the problem.</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="90"/>
+      <source>Reboot</source>
+      <translation type="unfinished">Reboot</translation>
+    </message>
+  </context>
+  <context>
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
@@ -781,7 +808,7 @@ Navigate your internet browser to: http://</source>
       <translation>密码</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="140"/>
+      <location filename="../setup/SetupStep4.qml" line="173"/>
       <source>Join</source>
       <translation>加入</translation>
     </message>
@@ -999,51 +1026,51 @@ Remote configuration after restarting the remote.</source>
   <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
       <translation>自动更新</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation>当有新软件版本可用时，自动寻找更新和更新。
 更新安装在 03.00时至05:00时之间。  </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>新软件可用。
 YIO 遥控器 %1</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
       <translation>您的系统已是最新版本</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
       <translation>已安装版本: YIO 遥控器</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
       <translation>YIO 遥控器</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
       <translation>更新</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
       <translation>下载</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
       <translation>检查更新</translation>
     </message>
@@ -1056,17 +1083,17 @@ YIO 遥控器 %1</translation>
       <translation>下载完成</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
       <translation>正在下载...</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
       <translation>更新</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
       <translation>取消</translation>
     </message>
@@ -1097,22 +1124,22 @@ YIO 遥控器 %1</translation>
   <context>
     <name>Wifi</name>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
       <source>Area detection</source>
       <translation>区域检测</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>自动扫描区域内的蓝牙信标，在该区域找到最近的设备和显示设备。</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
       <translation>WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
       <source>Other networks</source>
       <translation>其他网络</translation>
     </message>
@@ -1132,7 +1159,7 @@ YIO 遥控器 %1</translation>
       <translation>密码</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
+      <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
       <source>Join</source>
       <translation>加入</translation>
     </message>

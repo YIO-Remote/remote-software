@@ -365,6 +365,33 @@ Para obtener más información sobre el proyecto, visite
     </message>
   </context>
   <context>
+    <name>ConfigError</name>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="41"/>
+      <source>Invalid configuration file</source>
+      <translation type="unfinished">Invalid configuration file</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>Navigate your internet browser to: http://</source>
+      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>
+ and use the web configurator
+to fix the problem.</source>
+      <translation type="unfinished">
+ and use the web configurator
+to fix the problem.</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="90"/>
+      <source>Reboot</source>
+      <translation type="unfinished">Reboot</translation>
+    </message>
+  </context>
+  <context>
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
@@ -782,7 +809,7 @@ Lleve su navegador de internet a: http://</translation>
       <translation>Contraseña</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="140"/>
+      <location filename="../setup/SetupStep4.qml" line="173"/>
       <source>Join</source>
       <translation>Unirse</translation>
     </message>
@@ -1002,51 +1029,51 @@ configuración remota después de reiniciar el remoto.</translation>
   <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
       <translation>Actualización automática</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation>Busca actualizaciones y actualiza automáticamente cuando esté disponible una nueva versión de software.
 Las actualizaciones se instalan entre las 03:00 am y las 05:00 am.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>Nuevo software disponible.
 YIO remoto %1</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
       <translation>Su software está actualizado.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
       <translation>Versión instalada: Mando YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
       <translation>Mando YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
       <translation>Actualizar</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
       <translation>Descargar</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
       <translation>Buscar actualizaciones</translation>
     </message>
@@ -1059,17 +1086,17 @@ YIO remoto %1</translation>
       <translation>Descarga completada</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
       <translation>Descargando</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
       <translation>Actualizar</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
       <translation>Cancelar</translation>
     </message>
@@ -1100,22 +1127,22 @@ YIO remoto %1</translation>
   <context>
     <name>Wifi</name>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
       <source>Area detection</source>
       <translation>Detección de área</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Escanea automáticamente las balizas Bluetooth asociadas al área, encuentra la más próxima y muestra los dispositivos Bluetooth en esta área.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
       <translation>WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
       <source>Other networks</source>
       <translation>Otras redes</translation>
     </message>
@@ -1135,7 +1162,7 @@ YIO remoto %1</translation>
       <translation>Contraseña</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
+      <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
       <source>Join</source>
       <translation>Unirse</translation>
     </message>
