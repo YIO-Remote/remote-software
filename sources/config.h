@@ -49,9 +49,6 @@ class Config : public QObject, public ConfigInterface {
     static const QString KEY_WORKERTHREAD;
     static const QString OBJ_DATA;
 
-    enum UnitSystem { METRIC = 0, IMPERIAL = 1 };
-    Q_ENUM(UnitSystem)
-
     Q_PROPERTY(bool valid READ isValid CONSTANT)
     Q_PROPERTY(QString error READ getError CONSTANT)
     Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
@@ -62,7 +59,7 @@ class Config : public QObject, public ConfigInterface {
     Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
-    Q_PROPERTY(UnitSystem unitSystem READ unitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
+    Q_PROPERTY(UnitSystem unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
 
     // valid
     bool isValid() const { return m_error.isEmpty(); }
@@ -71,8 +68,8 @@ class Config : public QObject, public ConfigInterface {
     QString getError() const { return m_error; }
 
     // config
-    QVariantMap getConfig() { return m_config; }
-    void        setConfig(const QVariantMap& config);
+    QVariantMap getConfig() override { return m_config; }
+    void        setConfig(const QVariantMap& config) override;
 
     // profile Id
     QString getProfileId() { return m_cacheProfileId; }
@@ -82,7 +79,7 @@ class Config : public QObject, public ConfigInterface {
     QStringList profileFavorites() { return m_cacheUIProfile.value("favorites").toStringList(); }
 
     // settings
-    QVariantMap getSettings() { return m_cacheSettings; }
+    QVariantMap getSettings() override { return m_cacheSettings; }
     void        setSettings(const QVariantMap& config);
 
     // profiles
@@ -102,7 +99,7 @@ class Config : public QObject, public ConfigInterface {
     void        setGroups(const QVariantMap& config);
 
     // unit system
-    UnitSystem unitSystem() { return m_cacheUnitSystem; }
+    UnitSystem getUnitSystem() override { return m_cacheUnitSystem; }
     void       setUnitSystem(UnitSystem value);
 
     // languages
@@ -129,18 +126,18 @@ class Config : public QObject, public ConfigInterface {
 
     // get a QML object, you need to have objectName property of the QML object set to be able to use this
     QObject* getQMLObject(QList<QObject*> nodes, const QString& name);
-    QObject* getQMLObject(const QString& name);
+    QObject* getQMLObject(const QString& name) override;
 
     // get all integrations and entities
-    QVariantMap getAllIntegrations() { return m_config["integrations"].toMap(); }
-    QVariantMap getIntegration(const QString& type) { return getAllIntegrations().value(type).toMap(); }
+    QVariantMap getAllIntegrations() override { return m_config["integrations"].toMap(); }
+    QVariantMap getIntegration(const QString& type) override { return getAllIntegrations().value(type).toMap(); }
 
-    QVariantMap  getAllEntities() { return m_config["entities"].toMap(); }
-    QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
+    QVariantMap  getAllEntities() override { return m_config["entities"].toMap(); }
+    QVariantList getEntities(const QString& type) override { return getAllEntities().value(type).toList(); }
 
  public:
     explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath, QString appPath);
-    virtual ~Config();
+    virtual ~Config() override;
 
     static Config* getInstance() { return s_instance; }
 

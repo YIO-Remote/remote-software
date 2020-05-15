@@ -61,6 +61,8 @@ Config::Config(QQmlApplicationEngine *engine, QString configFilePath, QString sc
     QString translationsPath = appPath.append(QString("/translations.json"));
     m_tf->setName(translationsPath);
     m_languages = m_tf->read().toList();
+
+    qmlRegisterUncreatableType<ConfigInterface>("Config.Units", 1, 0, "Units", "Not creatable as it is an enum type.");
 }
 
 Config::~Config() { s_instance = nullptr; }
