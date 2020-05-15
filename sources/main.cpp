@@ -91,6 +91,7 @@ int main(int argc, char* argv[]) {
     cmdLineHandler.process(app, appPath);
 
     // LOAD CONFIG
+    bool configError = false;
     if (!QFile::exists(cmdLineHandler.configFile())) {
         qFatal("App configuration file not found: %s", cmdLineHandler.configFile().toLatin1().constData());
         return 1;
@@ -98,9 +99,11 @@ int main(int argc, char* argv[]) {
     Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), appPath);
     if (!config->isValid()) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
-        // TODO(marton) show error screen with shutdon / reboot / web-configurator option
+        configError = true;
     }
+
     engine.rootContext()->setContextProperty("config", config);
+    engine.rootContext()->setContextProperty("configError", configError);
 
     // LOGGER
     QVariantMap logCfg = config->getSettings().value("logging").toMap();
