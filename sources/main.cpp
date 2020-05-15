@@ -100,6 +100,9 @@ int main(int argc, char* argv[]) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
         // TODO(marton) show error screen with shutdon / reboot / web-configurator option
     }
+
+    qmlRegisterUncreatableType<Config>("Config", 1, 0, "Config", "Not creatable as it is an enum type");
+    qRegisterMetaType<UnitSystem>("UnitSystem");
     engine.rootContext()->setContextProperty("config", config);
 
     // LOGGER

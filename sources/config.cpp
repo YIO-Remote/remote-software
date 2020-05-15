@@ -61,8 +61,6 @@ Config::Config(QQmlApplicationEngine *engine, QString configFilePath, QString sc
     QString translationsPath = appPath.append(QString("/translations.json"));
     m_tf->setName(translationsPath);
     m_languages = m_tf->read().toList();
-
-    qmlRegisterUncreatableType<ConfigInterface>("Config.Units", 1, 0, "Units", "Not creatable as it is an enum type.");
 }
 
 Config::~Config() { s_instance = nullptr; }
@@ -157,12 +155,14 @@ void Config::setGroups(const QVariantMap &config) {
     emit groupsChanged();
 }
 
-void Config::setUnitSystem(Config::UnitSystem value) {
-    m_cacheUnitSystem = value;
+void Config::setUnitSystem(UnitSystem value) {
+    if (m_cacheUnitSystem != value) {
+        m_cacheUnitSystem = value;
+        emit unitSystemChanged();
+    }
     if (writeConfig()) {
         emit configWriteError(m_error);
     }
-    emit unitSystemChanged();
 }
 
 QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {
@@ -204,7 +204,7 @@ void Config::syncConfigToCache() {
 
     m_cacheUIProfile = m_cacheUIProfiles[m_cacheProfileId].toMap();
 
-    m_cacheUnitSystem = static_cast<UnitSystem>(m_cacheSettings["unit"].toInt());
+    //    m_cacheUnitSystem = static_cast<UnitSystem>(m_cacheSettings["unit"].toInt());
 }
 
 void Config::syncCacheToConfig() {
@@ -213,7 +213,7 @@ void Config::syncCacheToConfig() {
     m_cacheUIConfig.insert("pages", m_cacheUIPages);
     m_cacheUIConfig.insert("groups", m_cacheUIGroups);
 
-    m_cacheSettings.insert("unit", static_cast<int>(m_cacheUnitSystem));
+    //    m_cacheSettings.insert("unit", static_cast<int>(m_cacheUnitSystem));
 
     m_config.insert("settings", m_cacheSettings);
     m_config.insert("ui_config", m_cacheUIConfig);

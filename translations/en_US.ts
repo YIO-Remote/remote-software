@@ -775,7 +775,7 @@ Navigate your internet browser to: http://</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setup/SetupStep4.qml" line="140"/>
+        <location filename="../setup/SetupStep4.qml" line="173"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
@@ -984,49 +984,49 @@ Remote configuration after restarting the remote.</source>
 <context>
     <name>Softwareupdate</name>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
         <source>Auto update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
         <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
         <source>New software is available.
 YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
         <source>Your software is up to date.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
         <source>Installed version: YIO Remote </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
         <source>YIO Remote </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
+        <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
         <source>Check for update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1039,17 +1039,17 @@ YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
         <source>Downloading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+        <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1057,22 +1057,37 @@ YIO remote %1</source>
 <context>
     <name>System</name>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="62"/>
+        <location filename="../basic_ui/settings/System.qml" line="79"/>
+        <source>Unit system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/System.qml" line="113"/>
+        <source>Metric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/System.qml" line="148"/>
+        <source>Imperial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basic_ui/settings/System.qml" line="167"/>
         <source>Uptime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="87"/>
+        <location filename="../basic_ui/settings/System.qml" line="194"/>
         <source>CPU temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="111"/>
+        <location filename="../basic_ui/settings/System.qml" line="218"/>
         <source>Reboot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="125"/>
+        <location filename="../basic_ui/settings/System.qml" line="232"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1080,22 +1095,22 @@ YIO remote %1</source>
 <context>
     <name>Wifi</name>
     <message>
-        <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
+        <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
         <source>Area detection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
+        <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
         <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
+        <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
         <source>WiFi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
+        <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
         <source>Other networks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1114,7 +1129,7 @@ YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
+        <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>

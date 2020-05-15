@@ -35,6 +35,18 @@ class Config : public QObject, public ConfigInterface {
     Q_OBJECT
     Q_INTERFACES(ConfigInterface)
 
+    Q_PROPERTY(bool valid READ isValid CONSTANT)
+    Q_PROPERTY(QString error READ getError CONSTANT)
+    Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(QString profileId READ getProfileId WRITE setProfileId NOTIFY profileIdChanged)
+    Q_PROPERTY(QStringList profileFavorites READ profileFavorites NOTIFY profileFavoritesChanged)
+    Q_PROPERTY(QVariantMap settings READ getSettings WRITE setSettings NOTIFY settingsChanged)
+    Q_PROPERTY(QVariantMap profiles READ getProfiles NOTIFY profilesChanged)
+    Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
+    Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
+    Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
+    Q_PROPERTY(UnitSystem unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
+
  public:
     // Common configuration keys. Initialized in config.cpp
     // HELP: anyone knows how to properly define "static const QString" constants across Qt plugin boundaries?
@@ -49,17 +61,7 @@ class Config : public QObject, public ConfigInterface {
     static const QString KEY_WORKERTHREAD;
     static const QString OBJ_DATA;
 
-    Q_PROPERTY(bool valid READ isValid CONSTANT)
-    Q_PROPERTY(QString error READ getError CONSTANT)
-    Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
-    Q_PROPERTY(QString profileId READ getProfileId WRITE setProfileId NOTIFY profileIdChanged)
-    Q_PROPERTY(QStringList profileFavorites READ profileFavorites NOTIFY profileFavoritesChanged)
-    Q_PROPERTY(QVariantMap settings READ getSettings WRITE setSettings NOTIFY settingsChanged)
-    Q_PROPERTY(QVariantMap profiles READ getProfiles NOTIFY profilesChanged)
-    Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
-    Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
-    Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
-    Q_PROPERTY(UnitSystem unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
+    Q_ENUM(UnitSystem)
 
     // valid
     bool isValid() const { return m_error.isEmpty(); }
@@ -178,3 +180,5 @@ class Config : public QObject, public ConfigInterface {
     QVariantMap m_cacheUIGroups;
     UnitSystem  m_cacheUnitSystem = METRIC;
 };
+
+typedef Config::UnitSystem UnitSystem;
