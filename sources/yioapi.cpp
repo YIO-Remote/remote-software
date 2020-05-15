@@ -445,7 +445,6 @@ void YioAPI::discoverNetworkServices(QString mdns) {
     m_prevIp          = "";
 
     connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, context, [=](QZeroConfService item) {
-        qCDebug(CLASS_LC) << "Zeroconf found" << item;
         QVariantMap txt;
 
         QMap<QByteArray, QByteArray> txtInfo = item->txt();
@@ -456,6 +455,8 @@ void YioAPI::discoverNetworkServices(QString mdns) {
         }
 
         if (m_prevIp != item->ip().toString()) {
+            qCDebug(CLASS_LC) << "Zeroconf found" << item;
+
             m_prevIp = item->ip().toString();
 
             QVariantMap map;
