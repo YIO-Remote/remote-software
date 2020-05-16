@@ -68,8 +68,26 @@ Item {
                         // show success page
                         // stop timeout timer
                         mdnsDiscoveryTimeout.stop();
-                        _swipeView.dockSuccess = true;
-                        _swipeView.incrementCurrentIndex();
+
+                        // add dock to configuration
+
+                        var integration = {};
+                        integration["type"] = "dock";
+                        integration["id"] = services[key]["name"];
+                        integration["friendly_name"] = services[key]["name"];
+
+                        var data = {};
+                        data["ip"] = services[key]["ip"];
+
+                        integration["data"] = data;
+
+                        if (api.addIntegration(integration)) {
+                            _swipeView.dockSuccess = true;
+                            _swipeView.incrementCurrentIndex();
+                        } else {
+                            _swipeView.dockSuccess = false;
+                            _swipeView.incrementCurrentIndex();
+                        }
                     }
                 }
             }
