@@ -38,7 +38,6 @@ Item {
         onDockFound: {
             bluetoothDiscoveryTimeout.stop();
             macAddress = address.toString();
-            //            macAddress = macAddress.replace(/:/g,"");
             console.debug("Dock found: " + macAddress);
         }
         onDockPairingFinished: {
@@ -65,7 +64,6 @@ Item {
                 if (services.hasOwnProperty(key)) {
                     console.debug("Found dock:" + key);
                     if (key === macAddress) {
-                        // show success page
                         // stop timeout timer
                         mdnsDiscoveryTimeout.stop();
 
