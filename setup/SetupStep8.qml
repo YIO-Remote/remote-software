@@ -44,7 +44,7 @@ Item {
             console.debug("Pairing succces, preparing message.");
             // show dock page
             var msg = {};
-            msg.ssid = wifi.wifiStatus.name;
+            msg.ssid = wifiSsid;
             msg.password = wifiPassword;
             msg.remote_id = api.hostname;
             bluetoothArea.sendInfoToDock(JSON.stringify(msg));
