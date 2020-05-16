@@ -656,7 +656,7 @@ YIO distancinio valdymo pulto nustatymams</translation>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation>Jei norite koreguoti savo profilius, naudokite naršyklės koregavimo įrankį nustatymose.</translation>
+      <translation>Jei norite koreguoti savo profilius, naudokite Web koregavimo įrankį nustatymuose.</translation>
     </message>
   </context>
   <context>
@@ -704,7 +704,7 @@ YIO distancinio valdymo pulto nustatymams</translation>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation>YIO nustatymams naudokite interneto naršyklę arba parsisiųskite ir nusiųskite atsargines duomenų kopijas.
+      <translation>YIO nustatymams naudokite interneto naršyklę arba naudokite atsarginių duomenų kopijų atstatymu.
 Atsidarykite naršyklę ir eikite adresu: http://</translation>
     </message>
   </context>
@@ -750,7 +750,7 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
-      <translation>liko m</translation>
+      <translation>m liko</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="230"/>
@@ -866,8 +866,8 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Įjunkite YIO maitinimo stovelį į 
-elektros tinklą lr ukterkite kol lemputė pradės mirksėti.
+      <translation>YIO maitinimo stovelį prijunkite prie 
+elektros tinklo ir lukterkite kol lemputė pradės mirksėti.
 
  Jei norite su YIO maitinimo stoveliu pasidalinti 'Wi-Fi' nustatymais, spauskite tęsti.</translation>
     </message>
@@ -925,8 +925,8 @@ Remote configuration after restarting the remote.</source>
       <translation>YIO stovelį galite vėliau valdyti per WEB konfigūratorių.
 
 Jei norite naudotis WEB konfigūratoriumi, 
-eikite į Nustatymus ir įjunkite
-Distancinio valdymas po distancinio pulto perkrovimo (?).</translation>
+po distancinio pulto perkrovimo eikite į 
+"Nustatymai" ir įjunkite Distancinio valdymą.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
