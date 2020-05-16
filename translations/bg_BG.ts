@@ -365,6 +365,33 @@ To learn more about the project, visit
     </message>
   </context>
   <context>
+    <name>ConfigError</name>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="41"/>
+      <source>Invalid configuration file</source>
+      <translation>Недействителен конфигурационен файл</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>Navigate your internet browser to: http://</source>
+      <translation>Навигирайте браузъра си до: http://</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="53"/>
+      <source>
+ and use the web configurator
+to fix the problem.</source>
+      <translation>
+и употребете уебконфигуратора,
+за да оправите проблема.</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/ConfigError.qml" line="90"/>
+      <source>Reboot</source>
+      <translation>Рестартиране</translation>
+    </message>
+  </context>
+  <context>
     <name>ContextMenu</name>
     <message>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
@@ -781,7 +808,7 @@ Navigate your internet browser to: http://</source>
       <translation>Парола</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="140"/>
+      <location filename="../setup/SetupStep4.qml" line="173"/>
       <source>Join</source>
       <translation>Присъединяване</translation>
     </message>
@@ -1001,50 +1028,50 @@ Remote configuration after restarting the remote.</source>
   <context>
     <name>Softwareupdate</name>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="48"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
       <translation>Самообновяване</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="71"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
       <translation>Автоматично гледа за обновяване и обновява при наличие на нов софтуер. Обновяванията се инсталират между 3 и 5 сутринта.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
       <translation>Има нов софтуер.
 Дистанционно YIO %1</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="91"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
       <translation>Вашият софтуер е осъвременен.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
       <translation>Инсталирана версия: Дистанционно YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="102"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
       <translation>Дистанционно YIO </translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
       <translation>Обновяване</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="112"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
       <translation>Изтегляне</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Softwareupdate.qml" line="142"/>
+      <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
       <translation>Проверка за нова версия</translation>
     </message>
@@ -1057,17 +1084,17 @@ YIO remote %1</source>
       <translation>Изтеглянето приключи</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="44"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
       <translation>Изтегля се</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="68"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
       <translation>Обновяване</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="82"/>
+      <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
       <translation>Отказ</translation>
     </message>
@@ -1098,22 +1125,22 @@ YIO remote %1</source>
   <context>
     <name>Wifi</name>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="49"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
       <source>Area detection</source>
       <translation>Засичане на област</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="79"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
       <translation>Автоматично сканиране за блутутфарове свързани с областите, намира най-близката и показва устройствата в тази област.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="108"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
       <translation>WiFi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="188"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
       <source>Other networks</source>
       <translation>Други мрежи</translation>
     </message>
@@ -1133,7 +1160,7 @@ YIO remote %1</source>
       <translation>Парола</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/WifiConnect.qml" line="136"/>
+      <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
       <source>Join</source>
       <translation>Присъединяване</translation>
     </message>
