@@ -1103,22 +1103,37 @@ YIO remote %1</translation>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="62"/>
+      <location filename="../basic_ui/settings/System.qml" line="79"/>
+      <source>Unit system</source>
+      <translation type="unfinished">Unit system</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="113"/>
+      <source>Metric</source>
+      <translation type="unfinished">Metric</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="148"/>
+      <source>Imperial</source>
+      <translation type="unfinished">Imperial</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Uptime</source>
       <translation>Oppetid</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="87"/>
+      <location filename="../basic_ui/settings/System.qml" line="194"/>
       <source>CPU temperature</source>
       <translation>Prosessor temperatur</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="111"/>
+      <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Reboot</source>
       <translation>Start på nytt</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="125"/>
+      <location filename="../basic_ui/settings/System.qml" line="232"/>
       <source>Shutdown</source>
       <translation>Slå av</translation>
     </message>
