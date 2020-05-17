@@ -369,26 +369,26 @@ Para obtener más información sobre el proyecto, visite
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="41"/>
       <source>Invalid configuration file</source>
-      <translation type="unfinished">Invalid configuration file</translation>
+      <translation>Archivo de configuración no válido</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Navega tu navegador de Internet a: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>
  and use the web configurator
 to fix the problem.</source>
-      <translation type="unfinished">
- and use the web configurator
-to fix the problem.</translation>
+      <translation>
+ y utilice el configurador web
+para solucionar el problema.</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Reiniciar</translation>
     </message>
   </context>
   <context>
@@ -453,12 +453,12 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Light</source>
-      <translation type="unfinished">Light</translation>
+      <translation>Luz</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Blind</source>
-      <translation type="unfinished">Blind</translation>
+      <translation>Cortina</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
@@ -504,13 +504,13 @@ to fix the problem.</translation>
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>Utilice el configurador web
+para configurar el mando YIO</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Navega tu navegador de Internet a: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
@@ -1139,17 +1139,17 @@ YIO remoto %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="79"/>
       <source>Unit system</source>
-      <translation type="unfinished">Unit system</translation>
+      <translation>Sistema de unidades</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="113"/>
       <source>Metric</source>
-      <translation type="unfinished">Metric</translation>
+      <translation>Métrico</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="148"/>
       <source>Imperial</source>
-      <translation type="unfinished">Imperial</translation>
+      <translation>Imperial</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="167"/>
