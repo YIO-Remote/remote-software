@@ -29,7 +29,10 @@ Item {
     id: volume
     width:  parent.width; height: 160
 
-    property int volumePosition
+    property Timer timer: timer;
+    property int volumePosition;
+    property bool volumeUp: false;
+    signal volumeChanged();
 
     state: "hidden"
 
@@ -116,6 +119,33 @@ Item {
 
         Behavior on y {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        }
+    }
+
+    Timer {
+        id: timer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+
+        property int count: 0;
+
+        onRunningChanged: {
+            if (!running) {
+                count = 0;
+                interval = 300;
+            }
+        }
+
+        onTriggered: {
+            count++;
+
+            if (count >= 4) {
+                interval = 50;
+            }
+
+            volume.volumeChanged();
         }
     }
 }
