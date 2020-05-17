@@ -42,9 +42,16 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var swipeViewObj
 
-    function joinNetwork(name, security) {
+    function joinNetwork(name) {
         swipeViewObj.parent.parent.wifiPassword = passwordField.text;
         swipeViewObj.parent.parent.wifiSsid = name;
+
+        let security;
+        if (passwordField.text == "") {
+            security = WifiSecurityEnum.NONE_OPEN;
+        } else {
+            security = WifiSecurityEnum.DEFAULT;
+        }
 
         wifi.join(name, passwordField.text, security);
         inputPanel.active = false;
@@ -168,7 +175,7 @@ Rectangle {
             }
 
             onAccepted: {
-                joinNetwork(ssidField.text, WifiSecurityEnum.WPA2_PSK);
+                joinNetwork(ssidField.text);
             }
 
             Text {
@@ -199,7 +206,7 @@ Rectangle {
         buttonText: qsTr("Join") + translateHandler.emptyString
         mouseArea.onClicked: {
             Haptic.playEffect(Haptic.Click);
-            joinNetwork(ssidField.text, WifiSecurityEnum.WPA2_PSK);
+            joinNetwork(ssidField.text);
         }
     }
 
