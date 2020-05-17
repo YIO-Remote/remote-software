@@ -468,6 +468,11 @@ win32 {
 }
 
 DISTFILES += \
+    components/remote/ui/ir/Button.qml \
+    components/remote/ui/ir/Card.qml \
+    components/remote/ui/ir/CardButtons.qml \
+    components/remote/ui/ir/CardChannels.qml \
+    components/remote/ui/ir/CardNumberPad.qml \
     config.json \
     config-schema.json \
     dependencies.cfg \

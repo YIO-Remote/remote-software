@@ -135,39 +135,8 @@ Item {
     }
 
     Connections {
-        target: ButtonHandler
-        enabled: loader_main.state === "visible" || miniMediaPlayer.state == "open" ? true : false
-
-        onButtonPressed: {
-            switch (button) {
-            case ButtonHandler.VOLUME_UP:
-                buttonTimeout.stop();
-                buttonTimeout.volumeUp = true;
-                buttonTimeout.start();
-                break;
-            case ButtonHandler.VOLUME_DOWN:
-                buttonTimeout.stop();
-                buttonTimeout.volumeUp = false;
-                buttonTimeout.start();
-                break;
-            }
-        }
-
-        onButtonReleased: {
-            buttonTimeout.stop();
-        }
-    }
-
-    Timer {
-        id: buttonTimeout
-        interval: 300
-        repeat: true
-        running: false
-        triggeredOnStart: true
-
-        property bool volumeUp: false
-
-        onTriggered: {
+        target: volume
+        onVolumeChanged: {
             if (volumeUp) {
                 if (volume.state !== "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
@@ -187,6 +156,30 @@ Item {
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             }
+        }
+    }
+
+    Connections {
+        target: ButtonHandler
+        enabled: loader_main.state === "visible" || miniMediaPlayer.state == "open" ? true : false
+
+        onButtonPressed: {
+            switch (button) {
+                case ButtonHandler.VOLUME_UP:
+                    volume.timer.stop();
+                    volume.timer.volumeUp = true;
+                    volume.timer.start();
+                    break;
+                case ButtonHandler.VOLUME_DOWN:
+                    volume.timer.stop();
+                    volume.timer.volumeUp = false;
+                    volume.timer.start();
+                    break;
+            }
+        }
+
+        onButtonReleased: {
+            volume.timer.stop();
         }
     }
 

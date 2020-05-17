@@ -43,9 +43,13 @@ QtObject {
 
     readonly property  QtObject color: QtObject {
         property color green: "#19D37B"
+        property color greenTint: Qt.lighter(green)
         property color red: "#EA003C"
+        property color redTint: Qt.lighter(red)
         property color orange: "#FF7241"
+        property color orangeTint: Qt.lighter(orange)
         property color blue: "#19435E"
+        property color blueTint: Qt.lighter(blue)
 
         property color background: darkMode ? "#000000" : "#ffffff"
         property color backgroundTransparent: darkMode ? "#00000000" :  "#00000000"
