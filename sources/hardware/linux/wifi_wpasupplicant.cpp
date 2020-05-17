@@ -36,6 +36,7 @@
 #include <QEventLoop>
 #include <QFile>
 #include <QLoggingCategory>
+#include <QProcess>
 #include <QThread>
 #include <QTimer>
 #include <QVector>
@@ -432,6 +433,16 @@ QString WifiWpaSupplicant::countryCode() {
 }
 
 void WifiWpaSupplicant::setCountryCode(const QString& countryCode) {
+    // turned out, that setting the country code in wpa_supplicant alone wasn't enough
+    QProcess process;
+    QString command = "iw reg set " + countryCode;
+    process.start(command);
+    if (!process.waitForFinished(10000)) {
+        qCWarning(CLASS_LC) << "Failed to execute" << command << ":"
+                            << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
+                            << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
+    }
+
     QString cmd = "SET country %1";
     if (controlRequest(cmd.arg(countryCode.toUpper()))) {
         saveConfiguration(false);
