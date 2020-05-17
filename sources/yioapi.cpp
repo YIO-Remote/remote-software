@@ -133,9 +133,14 @@ bool YioAPI::addEntity(QVariantMap entity) {
 
     // check if entity alread loaded. If so, it exist in config.json and the database
     QObject *eObj = m_entities->get(entity.value("entity_id").toString());
+
+    qCDebug(CLASS_LC) << "Entity object:" << eObj;
     if (eObj) {
+        qCDebug(CLASS_LC) << "Entity is loaded.";
         return false;
     }
+
+    qCDebug(CLASS_LC) << "Entity is not loaded.";
 
     // get the config
     QVariantMap  c            = getConfig();
@@ -157,14 +162,22 @@ bool YioAPI::addEntity(QVariantMap entity) {
     // if the config write is successful, load the entity to the database
     if (success) {
         // get the integration object
-        QObject *             obj         = m_integrations->get(entity.value("integration").toString());
-        IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
+        QObject *obj = m_integrations->get(entity.value("integration").toString());
+        if (obj) {
+            IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
 
-        // add it to the entity registry
-        m_entities->add(entityType, entity, integration);
+            // add it to the entity registry
+            m_entities->add(entityType, entity, integration);
 
-        return true;
+            qCDebug(CLASS_LC) << "Add entity success: true";
+
+            return true;
+        } else {
+            qCDebug(CLASS_LC) << "Add entity success: false";
+            return false;
+        }
     } else {
+        qCDebug(CLASS_LC) << "Add entity success: false";
         return false;
     }
 }
@@ -465,7 +478,7 @@ void YioAPI::discoverNetworkServices(QString mdns) {
             map.insert(QString("mdns"), mdns);
             map.insert(QString("txt"), txt);
 
-            QMap<QString, QVariantMap> discoveredServices;
+            QVariantMap discoveredServices;
             discoveredServices.insert(item->name(), map);
 
             emit serviceDiscovered(discoveredServices);
@@ -837,21 +850,21 @@ void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
     QTimer * timeOutTimer = new QTimer();
     QObject *context      = new QObject(this);
 
-    QObject::connect(this, &YioAPI::serviceDiscovered, context, [=](QMap<QString, QVariantMap> services) {
+    QObject::connect(this, &YioAPI::serviceDiscovered, context, [=](QVariantMap services) {
         qCDebug(CLASS_LC) << "Service discovered";
         QVariantMap response;
         QVariantMap map;
 
         // let's go through the returned list of discovered integrations
-        QMap<QString, QVariantMap>::iterator i;
+        QVariantMap::iterator i;
         for (i = services.begin(); i != services.end(); i++) {
-            QString friendlyName = i.value().value("txt").toMap().value("FriendlyName").toString();
+            QString friendlyName = i.value().toMap().value("txt").toMap().value("FriendlyName").toString();
             if (friendlyName.isEmpty()) {
-                friendlyName = i.value().value("name").toString();
+                friendlyName = i.value().toMap().value("name").toString();
             }
             map.insert("friendly_name", friendlyName);
-            map.insert("ip", i.value().value("ip").toString());
-            map.insert("type", m_integrations->getTypeByMdns(i.value().value("mdns").toString()));
+            map.insert("ip", i.value().toMap().value("ip").toString());
+            map.insert("type", m_integrations->getTypeByMdns(i.value().toMap().value("mdns").toString()));
         }
 
         response.insert("discovered_integration", map);

@@ -1,25 +1,25 @@
 /******************************************************************************
-*
-* Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
-* Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
-*
-* This file is part of the YIO-Remote software project.
-*
-* YIO-Remote software is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* YIO-Remote software is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
-*
-* SPDX-License-Identifier: GPL-3.0-or-later
-*****************************************************************************/
+ *
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ *
+ * This file is part of the YIO-Remote software project.
+ *
+ * YIO-Remote software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * YIO-Remote software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with YIO-Remote software. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *****************************************************************************/
 #pragma once
 
 #include <QJsonArray>
@@ -35,6 +35,18 @@ class Config : public QObject, public ConfigInterface {
     Q_OBJECT
     Q_INTERFACES(ConfigInterface)
 
+    Q_PROPERTY(bool valid READ isValid CONSTANT)
+    Q_PROPERTY(QString error READ getError CONSTANT)
+    Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(QString profileId READ getProfileId WRITE setProfileId NOTIFY profileIdChanged)
+    Q_PROPERTY(QStringList profileFavorites READ profileFavorites NOTIFY profileFavoritesChanged)
+    Q_PROPERTY(QVariantMap settings READ getSettings WRITE setSettings NOTIFY settingsChanged)
+    Q_PROPERTY(QVariantMap profiles READ getProfiles NOTIFY profilesChanged)
+    Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
+    Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
+    Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
+    Q_PROPERTY(UnitSystem unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
+
  public:
     // Common configuration keys. Initialized in config.cpp
     // HELP: anyone knows how to properly define "static const QString" constants across Qt plugin boundaries?
@@ -49,16 +61,7 @@ class Config : public QObject, public ConfigInterface {
     static const QString KEY_WORKERTHREAD;
     static const QString OBJ_DATA;
 
-    Q_PROPERTY(bool valid READ isValid CONSTANT)
-    Q_PROPERTY(QString error READ getError CONSTANT)
-    Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
-    Q_PROPERTY(QString profileId READ getProfileId WRITE setProfileId NOTIFY profileIdChanged)
-    Q_PROPERTY(QStringList profileFavorites READ profileFavorites NOTIFY profileFavoritesChanged)
-    Q_PROPERTY(QVariantMap settings READ getSettings WRITE setSettings NOTIFY settingsChanged)
-    Q_PROPERTY(QVariantMap profiles READ getProfiles NOTIFY profilesChanged)
-    Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
-    Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
-    Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
+    Q_ENUM(UnitSystem)
 
     // valid
     bool isValid() const { return m_error.isEmpty(); }
@@ -67,8 +70,8 @@ class Config : public QObject, public ConfigInterface {
     QString getError() const { return m_error; }
 
     // config
-    QVariantMap getConfig() { return m_config; }
-    void        setConfig(const QVariantMap& config);
+    QVariantMap getConfig() override { return m_config; }
+    void        setConfig(const QVariantMap& config) override;
 
     // profile Id
     QString getProfileId() { return m_cacheProfileId; }
@@ -78,7 +81,7 @@ class Config : public QObject, public ConfigInterface {
     QStringList profileFavorites() { return m_cacheUIProfile.value("favorites").toStringList(); }
 
     // settings
-    QVariantMap getSettings() { return m_cacheSettings; }
+    QVariantMap getSettings() override { return m_cacheSettings; }
     void        setSettings(const QVariantMap& config);
 
     // profiles
@@ -96,6 +99,10 @@ class Config : public QObject, public ConfigInterface {
     // groups
     QVariantMap getGroups() { return m_cacheUIGroups; }
     void        setGroups(const QVariantMap& config);
+
+    // unit system
+    UnitSystem getUnitSystem() override { return m_cacheUnitSystem; }
+    void       setUnitSystem(UnitSystem value);
 
     // languages
     QVariantList getLanguages() { return m_languages; }
@@ -121,18 +128,18 @@ class Config : public QObject, public ConfigInterface {
 
     // get a QML object, you need to have objectName property of the QML object set to be able to use this
     QObject* getQMLObject(QList<QObject*> nodes, const QString& name);
-    QObject* getQMLObject(const QString& name);
+    QObject* getQMLObject(const QString& name) override;
 
     // get all integrations and entities
-    QVariantMap getAllIntegrations() { return m_config["integrations"].toMap(); }
-    QVariantMap getIntegration(const QString& type) { return getAllIntegrations().value(type).toMap(); }
+    QVariantMap getAllIntegrations() override { return m_config["integrations"].toMap(); }
+    QVariantMap getIntegration(const QString& type) override { return getAllIntegrations().value(type).toMap(); }
 
-    QVariantMap  getAllEntities() { return m_config["entities"].toMap(); }
-    QVariantList getEntities(const QString& type) { return getAllEntities().value(type).toList(); }
+    QVariantMap  getAllEntities() override { return m_config["entities"].toMap(); }
+    QVariantList getEntities(const QString& type) override { return getAllEntities().value(type).toList(); }
 
  public:
     explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath, QString appPath);
-    virtual ~Config();
+    ~Config() override;
 
     static Config* getInstance() { return s_instance; }
 
@@ -145,6 +152,7 @@ class Config : public QObject, public ConfigInterface {
     void uiConfigChanged();
     void pagesChanged();
     void groupsChanged();
+    void unitSystemChanged();
     void configWriteError(const QString& error);
 
  private:
@@ -170,4 +178,7 @@ class Config : public QObject, public ConfigInterface {
     QVariantMap m_cacheUIProfiles;
     QVariantMap m_cacheUIPages;
     QVariantMap m_cacheUIGroups;
+    UnitSystem  m_cacheUnitSystem = METRIC;
 };
+
+typedef Config::UnitSystem UnitSystem;

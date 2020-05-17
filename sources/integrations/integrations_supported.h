@@ -28,6 +28,6 @@ class IntegrationsSupported : public QObject {
 
  public:
     /// ADD NEW INTEGRATION TYPE HERE
-    enum SupportedIntegrationTypes { HOMEASSISTANT, HOMEY, SPOTIFY, OPENHAB, OPENWEATHER, ROON };
+    enum SupportedIntegrationTypes { DOCK, HOMEASSISTANT, HOMEY, SPOTIFY, OPENHAB, OPENWEATHER, ROON };
     Q_ENUM(SupportedIntegrationTypes)
 };
