@@ -180,25 +180,25 @@ void BluetoothThread::turnOn() {
 }
 
 void BluetoothThread::onDeviceDiscovered(const QBluetoothDeviceInfo &device) {
-    //    if (m_areas.contains(device.address().toString()) && device.rssi() != 0) {
-    //        int rssi = static_cast<int>(device.rssi()) * -1;
-    //        m_rssi.insert(m_areas.value(device.address().toString()), rssi);
+    if (m_areas.contains(device.address().toString()) && device.rssi() != 0) {
+        int rssi = static_cast<int>(device.rssi()) * -1;
+        m_rssi.insert(m_areas.value(device.address().toString()), rssi);
 
-    //        //        qCDebug(CLASS_LC) << "Found" << m_areas.value(device.address().toString()) << rssi;
+        //        qCDebug(CLASS_LC) << "Found" << m_areas.value(device.address().toString()) << rssi;
 
-    //        // this map will be sorted by default
-    //        QMap<int, QString> sortedMap;
+        // this map will be sorted by default
+        QMap<int, QString> sortedMap;
 
-    //        for (QMap<QString, int>::iterator i = m_rssi.begin(); i != m_rssi.end(); ++i) {
-    //            sortedMap.insert(i.value(), i.key());
-    //        }
+        for (QMap<QString, int>::iterator i = m_rssi.begin(); i != m_rssi.end(); ++i) {
+            sortedMap.insert(i.value(), i.key());
+        }
 
-    //        // qmap ordered by key, so now we get the first key to get the closest beacon
-    //        m_currentArea = sortedMap.value(sortedMap.firstKey());
-    //        emit foundRoom(m_currentArea);
+        // qmap ordered by key, so now we get the first key to get the closest beacon
+        m_currentArea = sortedMap.value(sortedMap.firstKey());
+        emit foundRoom(m_currentArea);
 
-    //        // qCDebug(CLASS_LC) << "Current area" << m_currentArea;
-    //    }
+        // qCDebug(CLASS_LC) << "Current area" << m_currentArea;
+    }
 
     // if dock is found
     if (device.name().contains("YIO-Dock")) {
