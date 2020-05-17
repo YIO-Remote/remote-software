@@ -153,11 +153,6 @@ Rectangle {
             sourceComponent: buttonView
         }
 
-        Loader {
-            asynchronous: true
-            sourceComponent: numberPadView
-        }
-
         // channels
         Loader {
 //            active: SwipeView.isCurrentItem
@@ -169,11 +164,6 @@ Rectangle {
     Component {
         id: buttonView
         CardButtons {}
-    }
-
-    Component {
-        id: numberPadView
-        CardNumberPad {}
     }
 
     Component {

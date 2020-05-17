@@ -21,8 +21,8 @@
  *****************************************************************************/
 import QtQuick 2.11
 import Style 1.0
+
 import Entity.Remote 1.0
-import Haptic 1.0
 
 Rectangle {
     id: bg
@@ -35,7 +35,6 @@ Rectangle {
 
     property alias title: title.text
     property alias mouseArea: mouseArea
-    property alias background: bg.color
 
     Text {
         id: title
@@ -55,13 +54,7 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         onClicked: {
-            Haptic.playEffect(Haptic.Click);
-        }
-        onPressed: {
-            bg.color = Style.color.light
-        }
-        onReleased: {
-            bg.color = Style.color.backgroundTransparent
+            haptic.playEffect(Haptic.Click);
         }
     }
 } // Rectangle end
