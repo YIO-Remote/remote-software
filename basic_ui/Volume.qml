@@ -33,6 +33,7 @@ Item {
     property alias timer: timer
     property int volumePosition
     property bool volumeUp: false
+
     signal volumeChanged()
 
     state: "hidden"
@@ -130,7 +131,7 @@ Item {
         running: false
         triggeredOnStart: true
 
-        property int count: 0;
+        property int count: 0
 
         onRunningChanged: {
             if (!running) {
