@@ -114,6 +114,10 @@ Item {
             }
         }
 
+        Behavior on width {
+            NumberAnimation { duration: 200; easing.type: Easing.OutExpo }
+        }
+
 
         Behavior on height {
             NumberAnimation { duration: 200; easing.type: Easing.OutExpo }
