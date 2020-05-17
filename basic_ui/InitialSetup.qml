@@ -51,7 +51,7 @@ Item {
     }
 
     Image {
-        visible: wifi.wifiStatus.ipAddress = ""
+        visible: wifi.wifiStatus.ipAddress == ""
         asynchronous: true
         width: 26; height: 26
         anchors { top: smallText.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
@@ -60,7 +60,7 @@ Item {
 
         RotationAnimator on rotation {
             id: loadingIconAnim
-            running: wifi.wifiStatus.ipAddress = ""
+            running: wifi.wifiStatus.ipAddress == ""
             loops: Animation.Infinite
             from: 0; to: 360
             duration: 2000
