@@ -105,7 +105,6 @@ class Integrations : public QObject, IntegrationsInterface {
     QString                 m_pluginPath;
     int                     m_integrationsToLoad = 0;
     int                     m_integrationsLoaded = 0;
-    int                     m_integrationCount   = 0;
 
     static Integrations* s_instance;
 
