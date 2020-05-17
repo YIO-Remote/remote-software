@@ -21,8 +21,10 @@
  *****************************************************************************/
 
 import QtQuick 2.11
+import QtQuick.Controls 2.5
 import Style 1.0
 import Launcher 1.0
+import Config 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -56,82 +58,185 @@ Rectangle {
     // UI ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Text {
-        id: uptimeText
-        color: Style.color.text
-        text: qsTr("Uptime") + translateHandler.emptyString
-        anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
-        font: Style.font.button
-    }
-
-    Text {
-        id: uptimeValue
-        color: Style.color.text
-        text: "0h"
-        horizontalAlignment: Text.AlignRight
-        anchors { right: parent.right; rightMargin: 20; verticalCenter: uptimeText.verticalCenter }
-        font: Style.font.button
-    }
-
-    Rectangle {
-        id: line7
+    Flow {
+        id: flow
         width: parent.width
-        height: 2
-        color: Style.color.background
-        anchors { top: uptimeText.bottom; topMargin: 20 }
-    }
+        spacing: 0
 
-    Text {
-        id: temperatureText
-        color: Style.color.text
-        text: qsTr("CPU temperature") + translateHandler.emptyString
-        anchors { left: parent.left; leftMargin: 20; top: line7.bottom; topMargin: 20 }
-        font: Style.font.button
-    }
+        Softwareupdate {}
 
-    Text {
-        id: temperatureValue
-        color: Style.color.text
-        text: "36ºC"
-        horizontalAlignment: Text.AlignRight
-        anchors { right: parent.right; rightMargin: 20; verticalCenter: temperatureText.verticalCenter }
-        font: Style.font.button
-    }
-
-    Rectangle {
-        id: line8
-        width: parent.width
-        height: 2
-        color: Style.color.background
-        anchors { top: temperatureText.bottom; topMargin: 20 }
-    }
-
-    BasicUI.CustomButton {
-        id: buttonReboot
-        buttonText: qsTr("Reboot") + translateHandler.emptyString
-        anchors { top: line8.bottom; topMargin: 30; left: parent.left; leftMargin: (parent.width - (buttonReboot.width + buttonShutdown.width + 40))/2 }
-
-        mouseArea.onClicked: {
-            // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
-            settingsLauncher.launch("fbv -d 1 $YIO_MEDIA_DIR/splash/bye.png")
-            console.debug("now reboot")
-            // TODO create a device class for system reboot instead of launching hard coded shell scripts from QML
-            settingsLauncher.launch("reboot");
+        Rectangle {
+            width: parent.width; height: 2
+            color: Style.color.background
         }
-    }
 
-    BasicUI.CustomButton {
-        id: buttonShutdown
-        buttonText: qsTr("Shutdown") + translateHandler.emptyString
-        anchors { top: line8.bottom; topMargin: 30; left: buttonReboot.right; leftMargin: 40 }
+        Item {
+            width: parent.width; height: childrenRect.height + 40
 
-        mouseArea.onClicked: {
-            loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
-            loadingScreen.active = true;
+            Text {
+                id: unitText
+                color: Style.color.text
+                text: qsTr("Unit system") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
+            }
+
+            CheckBox {
+                id: metricCheckBox
+                checked: config.unitSystem == 0
+                anchors { left: parent.left; leftMargin: 20; top: unitText.bottom; topMargin: 20 }
+
+                indicator: Rectangle {
+                    implicitWidth: 20; implicitHeight: 20
+                    anchors.centerIn: parent
+                    radius: Style.cornerRadius
+                    color: metricCheckBox.checked ? Style.color.text : Style.color.light
+                }
+
+                background: Rectangle {
+                    radius: 20
+                    color: metricCheckBox.checked ? Style.color.highlight1 : Style.color.dark
+                    border { width: 2; color: metricCheckBox.checked ? Style.color.highlight1 : Style.color.light }
+                }
+
+                onCheckedChanged: {
+                    if (checked) {
+                        config.unitSystem = 0;
+                    }
+                }
+            }
+
+            Text {
+                id: metricCheckBoxText
+                color: Style.color.text
+                opacity: metricCheckBox.checked ? 1 : 0.5
+                text: qsTr("Metric") + translateHandler.emptyString
+                anchors { left: metricCheckBox.right; leftMargin: 20; verticalCenter: metricCheckBox.verticalCenter }
+                font: Style.font.button
+
+                Behavior on opacity { NumberAnimation { duration: 200 } }
+            }
+
+            CheckBox {
+                id: imperialCheckBox
+                checked: config.unitSystem == 1
+                anchors { left: metricCheckBoxText.right; leftMargin: 20; verticalCenter: metricCheckBox.verticalCenter }
+
+                indicator: Rectangle {
+                    implicitWidth: 20; implicitHeight: 20
+                    anchors.centerIn: parent
+                    radius: Style.cornerRadius
+                    color: imperialCheckBox.checked ? Style.color.text : Style.color.light
+                }
+
+                background: Rectangle {
+                    radius: 20
+                    color: imperialCheckBox.checked ? Style.color.highlight1 : Style.color.dark
+                    border { width: 2; color: imperialCheckBox.checked ? Style.color.highlight1 : Style.color.light }
+                }
+
+                onCheckedChanged: {
+                    if (checked) {
+                        config.unitSystem = 1;
+                    }
+                }
+            }
+
+            Text {
+                color: Style.color.text
+                opacity: imperialCheckBox.checked ? 1 : 0.5
+                text: qsTr("Imperial") + translateHandler.emptyString
+                anchors { left: imperialCheckBox.right; leftMargin: 20; verticalCenter: imperialCheckBox.verticalCenter }
+                font: Style.font.button
+
+                Behavior on opacity { NumberAnimation { duration: 200 } }
+            }
         }
-    }
 
-    Softwareupdate {
-        anchors { top: buttonShutdown.bottom; topMargin: 30 }
+        Rectangle {
+            width: parent.width; height: 2
+            color: Style.color.background
+        }
+
+        Item {
+            width: parent.width; height: childrenRect.height + 40
+
+            Text {
+                id: uptimeText
+                color: Style.color.text
+                text: qsTr("Uptime") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
+            }
+
+            Text {
+                id: uptimeValue
+                color: Style.color.text
+                text: "0h"
+                horizontalAlignment: Text.AlignRight
+                anchors { right: parent.right; rightMargin: 20; verticalCenter: uptimeText.verticalCenter }
+                font: Style.font.button
+            }
+
+        }
+
+        Rectangle {
+            width: parent.width; height: 2
+            color: Style.color.background
+        }
+
+        Item {
+            width: parent.width; height: childrenRect.height + 40
+
+            Text {
+                id: temperatureText
+                color: Style.color.text
+                text: qsTr("CPU temperature") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
+            }
+
+            Text {
+                id: temperatureValue
+                color: Style.color.text
+                text: "36ºC"
+                horizontalAlignment: Text.AlignRight
+                anchors { right: parent.right; rightMargin: 20; verticalCenter: temperatureText.verticalCenter }
+                font: Style.font.button
+            }
+        }
+
+        Rectangle {
+            width: parent.width; height: 2
+            color: Style.color.background
+        }
+
+        Item {
+            width: parent.width; height: childrenRect.height + 30
+            BasicUI.CustomButton {
+                id: buttonReboot
+                buttonText: qsTr("Reboot") + translateHandler.emptyString
+                anchors { top: parent.top; topMargin: 30; left: parent.left; leftMargin: (parent.width - (buttonReboot.width + buttonShutdown.width + 40))/2 }
+
+                mouseArea.onClicked: {
+                    // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
+                    settingsLauncher.launch("fbv -d 1 $YIO_MEDIA_DIR/splash/bye.png")
+                    console.debug("now reboot")
+                    // TODO create a device class for system reboot instead of launching hard coded shell scripts from QML
+                    settingsLauncher.launch("reboot");
+                }
+            }
+
+            BasicUI.CustomButton {
+                id: buttonShutdown
+                buttonText: qsTr("Shutdown") + translateHandler.emptyString
+                anchors { top: parent.top; topMargin: 30; left: buttonReboot.right; leftMargin: 40 }
+
+                mouseArea.onClicked: {
+                    loadingScreen.source = "qrc:/basic_ui/ClosingScreen.qml";
+                    loadingScreen.active = true;
+                }
+            }
+        }
     }
 }

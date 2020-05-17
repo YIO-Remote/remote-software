@@ -93,8 +93,6 @@ void Config::setConfig(const QVariantMap &config) {
     writeConfig();
 }
 
-// QVariant Config::getContextProperty(const QString &name) { return m_engine->rootContext()->contextProperty(name); }
-
 bool Config::readConfig(const QString &filePath) {
     // load the config.json file from the filesystem
     m_jsf->setName(filePath);
@@ -157,6 +155,16 @@ void Config::setGroups(const QVariantMap &config) {
     emit groupsChanged();
 }
 
+void Config::setUnitSystem(UnitSystem value) {
+    if (m_cacheUnitSystem != value) {
+        m_cacheUnitSystem = value;
+        emit unitSystemChanged();
+    }
+    if (writeConfig()) {
+        emit configWriteError(m_error);
+    }
+}
+
 QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {
     for (int i = 0; i < nodes.size(); i++) {
         if (nodes.at(i) && nodes.at(i)->objectName() == name) {
@@ -195,6 +203,8 @@ void Config::syncConfigToCache() {
     m_cacheUIGroups   = m_cacheUIConfig["groups"].toMap();
 
     m_cacheUIProfile = m_cacheUIProfiles[m_cacheProfileId].toMap();
+
+    //    m_cacheUnitSystem = static_cast<UnitSystem>(m_cacheSettings["unit"].toInt());
 }
 
 void Config::syncCacheToConfig() {
@@ -202,6 +212,8 @@ void Config::syncCacheToConfig() {
     m_cacheUIConfig.insert("profiles", m_cacheUIProfiles);
     m_cacheUIConfig.insert("pages", m_cacheUIPages);
     m_cacheUIConfig.insert("groups", m_cacheUIGroups);
+
+    //    m_cacheSettings.insert("unit", static_cast<int>(m_cacheUnitSystem));
 
     m_config.insert("settings", m_cacheSettings);
     m_config.insert("ui_config", m_cacheUIConfig);
