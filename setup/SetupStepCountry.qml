@@ -24,11 +24,15 @@ import QtQuick 2.11
 import Style 1.0
 import Haptic 1.0
 import WifiControl 1.0
+import Launcher 1.0
 
 Item {
     id: container
     width: 480; height: 800
 
+    Launcher {
+        id: launcher
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
@@ -109,6 +113,8 @@ Item {
                     Haptic.playEffect(Haptic.Click);
                     countryListView.currentIndex = index;
                     wifi.countryCode = countries[index].Code;
+                    let command = "iw reg set " + countries[index].Code;
+                    launcher.launch(command);
                     console.debug("New WiFi country code: " + wifi.countryCode);
                     container.parent.parent.incrementCurrentIndex();
                 }
