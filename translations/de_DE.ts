@@ -381,14 +381,14 @@ Um mehr über das Projekt zu erfahren, besuche
       <source>
  and use the web configurator
 to fix the problem.</source>
-      <translation type="unfinished">
- and use the web configurator
-to fix the problem.</translation>
+      <translation>
+und verwenden Sie den Web-Konfigurator
+um das Problem zu lösen.</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Neustart</translation>
     </message>
   </context>
   <context>
