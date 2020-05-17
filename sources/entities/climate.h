@@ -25,8 +25,9 @@
 #include <QObject>
 #include <QVariant>
 
-#include "yio-interface/entities/climateinterface.h"
+#include "../config.h"
 #include "entity.h"
+#include "yio-interface/entities/climateinterface.h"
 
 class Climate : public Entity, ClimateInterface {
     Q_OBJECT
@@ -73,7 +74,7 @@ class Climate : public Entity, ClimateInterface {
  private:
     double  m_temperature;
     double  m_targetTemperature;
-    QString m_temperatureUnit = "ºC";
-    double  m_temperatureMax  = 35.0;
-    double  m_temperatureMin  = 4.0;
+    QString m_temperatureUnit;
+    double  m_temperatureMax;
+    double  m_temperatureMin;
 };

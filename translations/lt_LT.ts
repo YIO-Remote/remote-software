@@ -12,7 +12,7 @@
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation>YIO būdamas atviro kodo projektu priklauso nuo visų prisidedančių. Didelis dėkui kiekvienam kuris projektui iki šiol yra kažką nuveikęs:
+      <translation>YIO būdamas atviro kodo projektu priklauso nuo visų prisidedančių. Labai dėkojame kiekvienam kuris iki šiol yra prisidėjęs prie projekto:
 %1</translation>
     </message>
     <message>
@@ -128,7 +128,7 @@ Jei norite sužinoti daugiau apie projektą, eikite
   <context>
     <name>BluetoothThread</name>
     <message>
-      <location filename="../sources/bluetootharea.cpp" line="122"/>
+      <location filename="../sources/bluetootharea.cpp" line="126"/>
       <source>Bluetooth device was not found.</source>
       <translation>Bluetooth įrenginys nerastas.</translation>
     </message>
@@ -505,12 +505,17 @@ kad sutvarkyti šią problemą.</translation>
       <source>Use the web configurator
 to set up YIO remote</source>
       <translation>Naudokite WEB konfigūratorių
-YIO pulto nustatymams</translation>
+YIO distancinio valdymo pulto nustatymams</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
       <translation>Atsidarykite naršyklę ir eikite adresu: http://</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/InitialSetup.qml" line="44"/>
+      <source>Loading</source>
+      <translation type="unfinished">Loading</translation>
     </message>
   </context>
   <context>
@@ -656,7 +661,7 @@ YIO pulto nustatymams</translation>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation>Jei norite koreguoti savo profilius, naudokite naršyklės koregavimo įrankį nustatymose.</translation>
+      <translation>Jei norite koreguoti savo profilius, naudokite Web koregavimo įrankį nustatymuose.</translation>
     </message>
   </context>
   <context>
@@ -704,7 +709,7 @@ YIO pulto nustatymams</translation>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation>YIO nustatymams naudokite interneto naršyklę arba parsisiųskite ir nusiųskite atsargines duomenų kopijas.
+      <translation>YIO nustatymams naudokite interneto naršyklę arba naudokite atsarginių duomenų kopijų atstatymu.
 Atsidarykite naršyklę ir eikite adresu: http://</translation>
     </message>
   </context>
@@ -750,7 +755,7 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
-      <translation>liko m</translation>
+      <translation>m liko</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="230"/>
@@ -784,34 +789,62 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
   <context>
     <name>SetupStep3</name>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="61"/>
+      <location filename="../setup/SetupStep3.qml" line="63"/>
       <source>Wi-Fi setup</source>
       <translation>Bevielio ryšio nustatymai</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="72"/>
+      <location filename="../setup/SetupStep3.qml" line="74"/>
       <source>Select a Wi-Fi network.</source>
       <translation>Pasirinkite „Wi-Fi“ tinklą.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep3.qml" line="164"/>
+      <source>Join other</source>
+      <translation type="unfinished">Join other</translation>
     </message>
   </context>
   <context>
     <name>SetupStep4</name>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="96"/>
+      <location filename="../setup/SetupStep4.qml" line="97"/>
       <source>Enter password for
 &quot;%1&quot;</source>
       <translation>Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="114"/>
+      <location filename="../setup/SetupStep4.qml" line="115"/>
       <source>Password</source>
       <translation>Slaptažodis</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="173"/>
+      <location filename="../setup/SetupStep4.qml" line="174"/>
       <source>Join</source>
       <translation>Prisijungti</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep4Other</name>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="104"/>
+      <source>Enter your WiFi network credentials</source>
+      <translation type="unfinished">Enter your WiFi network credentials</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="122"/>
+      <source>SSID</source>
+      <translation type="unfinished">SSID</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="157"/>
+      <source>Password</source>
+      <translation type="unfinished">Password</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="206"/>
+      <source>Join</source>
+      <translation type="unfinished">Join</translation>
     </message>
   </context>
   <context>
@@ -866,8 +899,8 @@ Atsidarykite naršyklę ir eikite adresu: http://</translation>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation>Įjunkite YIO maitinimo stovelį į 
-elektros tinklą lr ukterkite kol lemputė pradės mirksėti.
+      <translation>YIO maitinimo stovelį prijunkite prie 
+elektros tinklo ir lukterkite kol lemputė pradės mirksėti.
 
  Jei norite su YIO maitinimo stoveliu pasidalinti 'Wi-Fi' nustatymais, spauskite tęsti.</translation>
     </message>
@@ -885,7 +918,7 @@ elektros tinklą lr ukterkite kol lemputė pradės mirksėti.
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="122"/>
+      <location filename="../setup/SetupStep8.qml" line="139"/>
       <source>Setting up your YIO Dock</source>
       <translation>YIO stovelio nustatymai</translation>
     </message>
@@ -925,8 +958,8 @@ Remote configuration after restarting the remote.</source>
       <translation>YIO stovelį galite vėliau valdyti per WEB konfigūratorių.
 
 Jei norite naudotis WEB konfigūratoriumi, 
-eikite į Nustatymus ir įjunkite
-Distancinio valdymas po distancinio pulto perkrovimo (?).</translation>
+po distancinio pulto perkrovimo eikite į 
+"Nustatymai" ir įjunkite Distancinio valdymą.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
@@ -948,16 +981,16 @@ Distancinio valdymas po distancinio pulto perkrovimo (?).</translation>
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">YIO Dock has successfully connected to your Wi-Fi network.
+      <translation>YIO stovelis sėkmingai prisijungė prie bevielio tinklo.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Jei norite naudotis WEB konfigūratoriumi, 
+po distancinio pulto perkrovimo eikite į 
+"Nustatymai" ir įjunkite Distancinio valdymą.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Perkrauti</translation>
     </message>
   </context>
   <context>
@@ -965,7 +998,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStepCountry.qml" line="65"/>
       <source>Select your country or region</source>
-      <translation type="unfinished">Select your country or region</translation>
+      <translation>Pasirinkite savo šalį ar regioną</translation>
     </message>
   </context>
   <context>
@@ -973,57 +1006,57 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
       <source>Cannot connect to the update server.</source>
-      <translation type="unfinished">Cannot connect to the update server.</translation>
+      <translation>Nepavyko prisijungti prie atnaujinimų serverio.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
-      <translation type="unfinished">Invalid request.</translation>
+      <translation>Bloga užklausa.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="199"/>
       <source>Unsupported device.</source>
-      <translation type="unfinished">Unsupported device.</translation>
+      <translation>Nepalaikomas įrenginys.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation type="unfinished">Service currently not available.</translation>
+      <translation>Paslauga šiuo metu negalima.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
       <source>Request error %1</source>
-      <translation type="unfinished">Request error %1</translation>
+      <translation>Užklausos klaida %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>Programinės įrangos atnaujinimas:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>New software is available</source>
-      <translation type="unfinished">New software is available</translation>
+      <translation>Rasta nauja programinės įrangos versija</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Atsisiųsti</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
+      <translation>Distancinio valdymo pultas turi būti įkrautas mažiausiai 50% jei norite atnaujinti programinę įrangą.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation type="unfinished">Download failed: %1</translation>
+      <translation>Atsisiųsti nepavyko: %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation type="unfinished">Failed to start app update script!</translation>
+      <translation>Nepavyko paleisti programos atnaujinimo skripto!</translation>
     </message>
   </context>
   <context>
@@ -1043,8 +1076,8 @@ Updates are installed between 03.00 am and 05.00 am.</source>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
-YIO remote %1</translation>
+      <translation>Rastas programinės įrangos atnaujinimas.
+YIO distancinis valdymas %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
@@ -1069,7 +1102,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Atsisiųsti</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
@@ -1082,43 +1115,58 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Parsisiuntimas baigtas</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>Siunčiama</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Atnaujinimas</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Atšaukti</translation>
     </message>
   </context>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="62"/>
+      <location filename="../basic_ui/settings/System.qml" line="79"/>
+      <source>Unit system</source>
+      <translation type="unfinished">Unit system</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="113"/>
+      <source>Metric</source>
+      <translation type="unfinished">Metric</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="148"/>
+      <source>Imperial</source>
+      <translation type="unfinished">Imperial</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Uptime</source>
       <translation>Veikimo laikas</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="87"/>
+      <location filename="../basic_ui/settings/System.qml" line="194"/>
       <source>CPU temperature</source>
       <translation>Procesoriaus temperatūra</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="111"/>
+      <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Reboot</source>
       <translation>Perkrauti</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="125"/>
+      <location filename="../basic_ui/settings/System.qml" line="232"/>
       <source>Shutdown</source>
       <translation>Išjungti</translation>
     </message>

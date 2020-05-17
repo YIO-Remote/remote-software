@@ -80,10 +80,12 @@ class BluetoothArea : public QObject {
 
     void dockFound(const QString &address);
     void dockMessage(const QString &message);
+    void dockPairingFinished();
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void deviceDiscovered(const QString &);
     void foundDock(const QString &address);
+    void onPairingFinished();
 
  private:
     QString                m_currentArea;
@@ -104,19 +106,23 @@ class BluetoothThread : public QObject {
  signals:
     void foundRoom(const QString &area);
     void foundDock(const QString &address);
+    void pairingFinished();
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void startScan();
     void stopScan();
     void turnOff();
     void turnOn();
-    void deviceDiscovered(const QBluetoothDeviceInfo &device);
-    void discoveryFinished();
+    void onDeviceDiscovered(const QBluetoothDeviceInfo &device);
+    void onDiscoveryFinished();
 
     void lookForDock();
     void receiveInfoForDock(const QString &msg);
-    void dockConnected();
-    void dockStateChanged(QBluetoothSocket::SocketState state);
+    void onDockConnected();
+    void onDockDisconnected();
+    void onDockConnectionError(QBluetoothSocket::SocketError error);
+    void onDockStateChanged(QBluetoothSocket::SocketState state);
+    void onPairingFinished(const QBluetoothAddress &address, QBluetoothLocalDevice::Pairing pairing);
 
     void onTimeout();
 

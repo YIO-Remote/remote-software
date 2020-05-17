@@ -41,7 +41,7 @@ Item {
         id: smallText
         color: Style.color.text
         opacity: 0.5
-        text: qsTr("Navigate your internet browser to: http://") + wifi.wifiStatus.ipAddress + translateHandler.emptyString
+        text: wifi.wifiStatus.ipAddress == "" ? qsTr("Loading") + translateHandler.emptyString : qsTr("Navigate your internet browser to: http://") + wifi.wifiStatus.ipAddress + translateHandler.emptyString
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
         width: parent.width - 80
@@ -50,4 +50,20 @@ Item {
         lineHeight: 1
     }
 
+    Image {
+        visible: wifi.wifiStatus.ipAddress = ""
+        asynchronous: true
+        width: 26; height: 26
+        anchors { top: smallText.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:/images/statusbar/statusbar-loader.png"
+
+        RotationAnimator on rotation {
+            id: loadingIconAnim
+            running: wifi.wifiStatus.ipAddress = ""
+            loops: Animation.Infinite
+            from: 0; to: 360
+            duration: 2000
+        }
+    }
 }

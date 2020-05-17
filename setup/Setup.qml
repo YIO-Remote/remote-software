@@ -28,6 +28,7 @@ import Style 1.0
 Item {
     width: 480; height: 800
 
+    property string wifiSsid
     property string wifiPassword
 
     SwipeView {

@@ -71,6 +71,7 @@ void BluetoothArea::init(const QVariantMap &config) {
     // connect signals from objet in thread to bluetootharea
     connect(blThread, &BluetoothThread::foundRoom, this, &BluetoothArea::deviceDiscovered);
     connect(blThread, &BluetoothThread::foundDock, this, &BluetoothArea::foundDock);
+    connect(blThread, &BluetoothThread::pairingFinished, this, &BluetoothArea::onPairingFinished);
 
     // start thread
     m_thread.start();
@@ -96,6 +97,8 @@ void BluetoothArea::deviceDiscovered(const QString &area) {
 
 void BluetoothArea::foundDock(const QString &address) { emit dockFound(address); }
 
+void BluetoothArea::onPairingFinished() { emit dockPairingFinished(); }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// BLUETOOTHTHREAD CLASS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,13 +110,14 @@ BluetoothThread::BluetoothThread(QMap<QString, QString> areas, int interval) {
     m_timer->setSingleShot(true);
     m_timer->stop();
 
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+    QObject::connect(m_timer, &QTimer::timeout, this, &BluetoothThread::onTimeout);
 
     // if there is a bluetooth device, let's set up some things
     if (m_localDevice.isValid()) {
-        connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)), this,
-                SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
-        connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+        QObject::connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this,
+                         &BluetoothThread::onDeviceDiscovered);
+        QObject::connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished, this,
+                         &BluetoothThread::onDiscoveryFinished);
 
         qCDebug(CLASS_LC) << "Bluetooth init OK";
 
@@ -175,7 +179,7 @@ void BluetoothThread::turnOn() {
     }
 }
 
-void BluetoothThread::deviceDiscovered(const QBluetoothDeviceInfo &device) {
+void BluetoothThread::onDeviceDiscovered(const QBluetoothDeviceInfo &device) {
     if (m_areas.contains(device.address().toString()) && device.rssi() != 0) {
         int rssi = static_cast<int>(device.rssi()) * -1;
         m_rssi.insert(m_areas.value(device.address().toString()), rssi);
@@ -199,15 +203,20 @@ void BluetoothThread::deviceDiscovered(const QBluetoothDeviceInfo &device) {
     // if dock is found
     if (device.name().contains("YIO-Dock")) {
         // stop the discovery
-        m_dock_address = device.address();
         m_discoveryAgent->stop();
+
+        m_dock_address = device.address();
+        QString name   = device.name();
+
+        QObject::connect(&m_localDevice, &QBluetoothLocalDevice::pairingFinished, this,
+                         &BluetoothThread::onPairingFinished);
         m_localDevice.requestPairing(m_dock_address, QBluetoothLocalDevice::Paired);
-        emit foundDock(m_dock_address.toString());
-        qCDebug(CLASS_LC) << "YIO Dock found" << m_dock_address;
+        emit foundDock(name);
+        qCDebug(CLASS_LC) << "YIO Dock found" << name;
     }
 }
 
-void BluetoothThread::discoveryFinished() {
+void BluetoothThread::onDiscoveryFinished() {
     // restart scan after delay
     running = false;
     m_timer->start();
@@ -232,27 +241,48 @@ void BluetoothThread::receiveInfoForDock(const QString &msg) {
     m_dock_message = msg;
 
     m_socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this);
-    connect(m_socket, &QBluetoothSocket::connected, this, &BluetoothThread::dockConnected);
-    connect(m_socket, &QBluetoothSocket::stateChanged, this, &BluetoothThread::dockStateChanged);
+    QObject::connect(m_socket, &QBluetoothSocket::connected, this, &BluetoothThread::onDockConnected);
+    QObject::connect(m_socket, &QBluetoothSocket::disconnected, this, &BluetoothThread::onDockDisconnected);
+    QObject::connect(m_socket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error), this,
+                     &BluetoothThread::onDockConnectionError);
+    QObject::connect(m_socket, &QBluetoothSocket::stateChanged, this, &BluetoothThread::onDockStateChanged);
+
+    qCDebug(CLASS_LC) << "Connect to Bluetooth socket service";
     m_socket->connectToService(QBluetoothAddress(m_dock_address),
                                QBluetoothUuid(QStringLiteral("00001101-0000-1000-8000-00805f9b34fb")));
 }
 
-void BluetoothThread::dockConnected() {
+void BluetoothThread::onDockConnected() {
     // open the bluetooth socket
     m_socket->open(QIODevice::WriteOnly);
 
     // format the message
     QByteArray text = m_dock_message.toUtf8() + '\n';
+    qCDebug(CLASS_LC) << "Sending message to dock:" << text;
     m_socket->write(text);
-    qCDebug(CLASS_LC) << "Message sent to dock";
+    qCDebug(CLASS_LC) << "Message sent to dock.";
 
     // close and delete the socket
-    //    m_socket->close();
-    //    delete  m_socket;
+    m_socket->close();
+    m_socket->deleteLater();
     //    m_socket = nullptr;
 }
 
-void BluetoothThread::dockStateChanged(QBluetoothSocket::SocketState state) { qCDebug(CLASS_LC) << state; }
+void BluetoothThread::onDockDisconnected() { qCDebug(CLASS_LC) << "Dock disconnected"; }
+
+void BluetoothThread::onDockConnectionError(QBluetoothSocket::SocketError error) {
+    qCDebug(CLASS_LC) << "Dock connection error:" << error;
+}
+
+void BluetoothThread::onDockStateChanged(QBluetoothSocket::SocketState state) {
+    qCDebug(CLASS_LC) << "Dock state changed:" << state;
+}
+
+void BluetoothThread::onPairingFinished(const QBluetoothAddress &address, QBluetoothLocalDevice::Pairing pairing) {
+    qCDebug(CLASS_LC) << "Pairing finished with:" << address << "result:" << pairing;
+    if (pairing == QBluetoothLocalDevice::Paired) {
+        emit pairingFinished();
+    }
+}
 
 void BluetoothThread::onTimeout() { m_discoveryAgent->start(); }

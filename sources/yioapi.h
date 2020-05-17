@@ -55,13 +55,13 @@ class YioAPI : public YioAPIInterface {
     QVariantMap getConfig() override;
     bool        setConfig(QVariantMap config);
 
-    bool addEntity(QVariantMap entity);
-    bool updatEntity(QVariantMap entity);
-    bool removeEntity(QString entityId);
+    bool addEntity(QVariantMap entity) override;
+    bool updatEntity(QVariantMap entity) override;
+    bool removeEntity(QString entityId) override;
 
-    bool addIntegration(QVariantMap integration);
-    bool updateIntegration(QVariantMap integration);
-    bool removeIntegration(QString integrationId);
+    Q_INVOKABLE bool addIntegration(QVariantMap integration);
+    bool             updateIntegration(QVariantMap integration);
+    bool             removeIntegration(QString integrationId);
 
     // NETWORK SERVICES DISCOVERY
     void             discoverNetworkServices() override;

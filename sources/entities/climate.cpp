@@ -23,7 +23,6 @@
 #include "climate.h"
 
 #include <QQmlApplicationEngine>
-#include <QtDebug>
 
 QString Climate::Type = "climate";
 
@@ -122,4 +121,22 @@ Climate::Climate(const QVariantMap &config, IntegrationInterface *integrationObj
     m_enumState         = &metaEnumState;
     m_specificInterface = qobject_cast<ClimateInterface *>(this);
     initializeSupportedFeatures(config);
+
+    Config *   configObj = Config::getInstance();
+    UnitSystem us        = configObj->getUnitSystem();
+    if (us == Config::METRIC) {
+        m_temperatureUnit = "ºC";
+    } else {
+        m_temperatureUnit = "ºF";
+    }
+    emit temperatureUnitChanged();
+
+    QObject::connect(configObj, &Config::unitSystemChanged, this, [=]() {
+        if (configObj->getUnitSystem() == Config::METRIC) {
+            m_temperatureUnit = "ºC";
+        } else {
+            m_temperatureUnit = "ºF";
+        }
+        emit temperatureUnitChanged();
+    });
 }

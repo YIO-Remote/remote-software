@@ -89,7 +89,6 @@ void Integrations::createInstance(QObject* pluginObj, QVariantMap map) {
         connect(interface, &PluginInterface::createDone, this, &Integrations::onCreateDone);
 
         interface->create(map, entities, notifications, api, config);
-        m_integrationCount++;
     }
 }
 
@@ -109,11 +108,9 @@ void Integrations::load() {
     // read the config
     QVariantMap c = config->getAllIntegrations();
 
-    m_integrationCount = 0;
-
     qCDebug(CLASS_LC) << "Plugin path:" << m_pluginPath;
 
-    // let's load the plugins first
+    // let's load the plugins
     for (QVariantMap::const_iterator iter = c.begin(); iter != c.end(); ++iter) {
         QObject* obj;
         if (!isPluginLoaded(iter.key())) {
@@ -128,25 +125,9 @@ void Integrations::load() {
         map.insert(Config::KEY_TYPE, iter.key());
 
         // create instance of the integration
+        m_integrationsToLoad++;
         createInstance(obj, map);
     }
-
-    // load plugins that are not defined in config.json aka default plugins
-    QStringList defaultIntegrations = {"dock"};
-
-    for (int k = 0; k < defaultIntegrations.length(); k++) {
-        if (!isPluginLoaded(defaultIntegrations[k])) {
-            QObject* obj = loadPlugin(defaultIntegrations[k]);
-
-            QVariantMap map;
-            map.insert(Config::KEY_TYPE, defaultIntegrations[k]);
-
-            // create instances of the integration, no config needed for built in integrations
-            createInstance(obj, map);
-        }
-    }
-
-    m_integrationsToLoad = m_integrationCount;
 
     if (m_integrationsToLoad == 0) {
         emit loadComplete();
@@ -159,6 +140,8 @@ void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
         add(iter.value().toMap(), iter.key(), iter.value().toMap().value("type").toString());
     }
     m_integrationsLoaded++;
+
+    qCDebug(CLASS_LC) << "Integrations loaded:" << m_integrationsLoaded << "from:" << m_integrationsToLoad;
 
     if (m_integrationsLoaded == m_integrationsToLoad) {
         emit loadComplete();

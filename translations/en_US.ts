@@ -124,7 +124,7 @@ To learn more about the project, visit
 <context>
     <name>BluetoothThread</name>
     <message>
-        <location filename="../sources/bluetootharea.cpp" line="122"/>
+        <location filename="../sources/bluetootharea.cpp" line="126"/>
         <source>Bluetooth device was not found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -505,6 +505,11 @@ to set up YIO remote</source>
         <source>Navigate your internet browser to: http://</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../basic_ui/InitialSetup.qml" line="44"/>
+        <source>Loading</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Integrations</name>
@@ -776,31 +781,59 @@ Navigate your internet browser to: http://</source>
 <context>
     <name>SetupStep3</name>
     <message>
-        <location filename="../setup/SetupStep3.qml" line="61"/>
+        <location filename="../setup/SetupStep3.qml" line="63"/>
         <source>Wi-Fi setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setup/SetupStep3.qml" line="72"/>
+        <location filename="../setup/SetupStep3.qml" line="74"/>
         <source>Select a Wi-Fi network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep3.qml" line="164"/>
+        <source>Join other</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SetupStep4</name>
     <message>
-        <location filename="../setup/SetupStep4.qml" line="96"/>
+        <location filename="../setup/SetupStep4.qml" line="97"/>
         <source>Enter password for
 &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setup/SetupStep4.qml" line="114"/>
+        <location filename="../setup/SetupStep4.qml" line="115"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setup/SetupStep4.qml" line="173"/>
+        <location filename="../setup/SetupStep4.qml" line="174"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SetupStep4Other</name>
+    <message>
+        <location filename="../setup/SetupStep4Other.qml" line="104"/>
+        <source>Enter your WiFi network credentials</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep4Other.qml" line="122"/>
+        <source>SSID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep4Other.qml" line="157"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setup/SetupStep4Other.qml" line="206"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
@@ -873,7 +906,7 @@ a power source and wait until it starts blinking.
 <context>
     <name>SetupStep8</name>
     <message>
-        <location filename="../setup/SetupStep8.qml" line="122"/>
+        <location filename="../setup/SetupStep8.qml" line="139"/>
         <source>Setting up your YIO Dock</source>
         <translation type="unfinished"></translation>
     </message>

@@ -81,6 +81,7 @@
         <file>components/switch/ui/CardSwitch.qml</file>
         <file>basic_ui/ProfileLoading.qml</file>
         <file>basic_ui/InitialSetup.qml</file>
+        <file>setup/SetupStep4Other.qml</file>
         <file>basic_ui/ConfigError.qml</file>
     </qresource>
 </RCC>

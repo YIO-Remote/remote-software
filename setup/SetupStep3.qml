@@ -26,6 +26,8 @@ import Style 1.0
 import Haptic 1.0
 import WifiControl 1.0
 
+import "qrc:/basic_ui" as BasicUI
+
 Item {
     id: container
     width: 480; height: 800
@@ -40,7 +42,7 @@ Item {
         height: parent.height
         maximumFlickVelocity: 6000
         flickDeceleration: 1000
-        contentHeight: networkList.y + networkList.height
+        contentHeight: networkList.y + networkList.height + joinOtherButton.height + 40
         boundsBehavior: Flickable.DragAndOvershootBounds
         flickableDirection: Flickable.VerticalFlick
 
@@ -153,6 +155,18 @@ Item {
 
             displaced: Transition {
                 PropertyAnimation { properties: "x,y"; duration: 400; easing.type: Easing.OutBounce }
+            }
+        }
+
+        BasicUI.CustomButton {
+            id: joinOtherButton
+            anchors { top: networkList.bottom; topMargin: 40; left: parent.left; leftMargin: 20 }
+            buttonText: qsTr("Join other") + translateHandler.emptyString
+            mouseArea.onClicked: {
+                Haptic.playEffect(Haptic.Click);
+                loader_second.setSource("qrc:/setup/SetupStep4Other.qml", { "swipeViewObj": container.parent.parent })
+                loader_second.active = true;
+                networkScanTimer.stop();
             }
         }
     }

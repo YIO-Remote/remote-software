@@ -133,9 +133,14 @@ bool YioAPI::addEntity(QVariantMap entity) {
 
     // check if entity alread loaded. If so, it exist in config.json and the database
     QObject *eObj = m_entities->get(entity.value("entity_id").toString());
+
+    qCDebug(CLASS_LC) << "Entity object:" << eObj;
     if (eObj) {
+        qCDebug(CLASS_LC) << "Entity is loaded.";
         return false;
     }
+
+    qCDebug(CLASS_LC) << "Entity is not loaded.";
 
     // get the config
     QVariantMap  c            = getConfig();
@@ -157,14 +162,22 @@ bool YioAPI::addEntity(QVariantMap entity) {
     // if the config write is successful, load the entity to the database
     if (success) {
         // get the integration object
-        QObject *             obj         = m_integrations->get(entity.value("integration").toString());
-        IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
+        QObject *obj = m_integrations->get(entity.value("integration").toString());
+        if (obj) {
+            IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
 
-        // add it to the entity registry
-        m_entities->add(entityType, entity, integration);
+            // add it to the entity registry
+            m_entities->add(entityType, entity, integration);
 
-        return true;
+            qCDebug(CLASS_LC) << "Add entity success: true";
+
+            return true;
+        } else {
+            qCDebug(CLASS_LC) << "Add entity success: false";
+            return false;
+        }
     } else {
+        qCDebug(CLASS_LC) << "Add entity success: false";
         return false;
     }
 }
@@ -445,7 +458,6 @@ void YioAPI::discoverNetworkServices(QString mdns) {
     m_prevIp          = "";
 
     connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, context, [=](QZeroConfService item) {
-        qCDebug(CLASS_LC) << "Zeroconf found" << item;
         QVariantMap txt;
 
         QMap<QByteArray, QByteArray> txtInfo = item->txt();
@@ -456,6 +468,8 @@ void YioAPI::discoverNetworkServices(QString mdns) {
         }
 
         if (m_prevIp != item->ip().toString()) {
+            qCDebug(CLASS_LC) << "Zeroconf found" << item;
+
             m_prevIp = item->ip().toString();
 
             QVariantMap map;
