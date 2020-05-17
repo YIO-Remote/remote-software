@@ -128,7 +128,7 @@ Per saber més del projecte, visita
   <context>
     <name>BluetoothThread</name>
     <message>
-      <location filename="../sources/bluetootharea.cpp" line="122"/>
+      <location filename="../sources/bluetootharea.cpp" line="126"/>
       <source>Bluetooth device was not found.</source>
       <translation>No s'ha trobat el dispositiu bluetooth.</translation>
     </message>
@@ -512,6 +512,11 @@ to set up YIO remote</translation>
       <source>Navigate your internet browser to: http://</source>
       <translation type="unfinished">Navigate your internet browser to: http://</translation>
     </message>
+    <message>
+      <location filename="../basic_ui/InitialSetup.qml" line="44"/>
+      <source>Loading</source>
+      <translation type="unfinished">Loading</translation>
+    </message>
   </context>
   <context>
     <name>Integrations</name>
@@ -784,34 +789,62 @@ Ves amb el navegador a: http://</translation>
   <context>
     <name>SetupStep3</name>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="61"/>
+      <location filename="../setup/SetupStep3.qml" line="63"/>
       <source>Wi-Fi setup</source>
       <translation>Configuració Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="72"/>
+      <location filename="../setup/SetupStep3.qml" line="74"/>
       <source>Select a Wi-Fi network.</source>
       <translation>Seleccioneu la vostra xarxa Wi-Fi.</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep3.qml" line="164"/>
+      <source>Join other</source>
+      <translation type="unfinished">Join other</translation>
     </message>
   </context>
   <context>
     <name>SetupStep4</name>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="96"/>
+      <location filename="../setup/SetupStep4.qml" line="97"/>
       <source>Enter password for
 &quot;%1&quot;</source>
       <translation>Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="114"/>
+      <location filename="../setup/SetupStep4.qml" line="115"/>
       <source>Password</source>
       <translation>Contrasenya</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="173"/>
+      <location filename="../setup/SetupStep4.qml" line="174"/>
       <source>Join</source>
       <translation>Unir-se</translation>
+    </message>
+  </context>
+  <context>
+    <name>SetupStep4Other</name>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="104"/>
+      <source>Enter your WiFi network credentials</source>
+      <translation type="unfinished">Enter your WiFi network credentials</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="122"/>
+      <source>SSID</source>
+      <translation type="unfinished">SSID</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="157"/>
+      <source>Password</source>
+      <translation type="unfinished">Password</translation>
+    </message>
+    <message>
+      <location filename="../setup/SetupStep4Other.qml" line="206"/>
+      <source>Join</source>
+      <translation type="unfinished">Join</translation>
     </message>
   </context>
   <context>
@@ -885,7 +918,7 @@ Per compartir les credencials Wi-Fi amb la Base, marca següent.</translation>
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="122"/>
+      <location filename="../setup/SetupStep8.qml" line="139"/>
       <source>Setting up your YIO Dock</source>
       <translation>Configurant la base YIO</translation>
     </message>
