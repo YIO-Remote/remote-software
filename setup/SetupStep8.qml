@@ -36,12 +36,15 @@ Item {
     Connections {
         target: bluetoothArea
         onDockFound: {
-            console.debug("Dock found: %1 Sending credentials...").arg(address);
-            macAddress = address;
-
+            bluetoothDiscoveryTimeout.stop();
+            macAddress = address.toString();
+            console.debug("Dock found: " + macAddress);
+        }
+        onDockPairingFinished: {
+            console.debug("Pairing succces, preparing message.");
             // show dock page
             var msg = {};
-            msg.ssid = wifi.wifiStatus.name;
+            msg.ssid = wifiSsid;
             msg.password = wifiPassword;
             msg.remote_id = api.hostname;
             bluetoothArea.sendInfoToDock(JSON.stringify(msg));
@@ -57,20 +60,34 @@ Item {
         id: apiConnection
         target: api
         onServiceDiscovered: {
-            // stop timeout timer
-            mdnsDiscoveryTimeout.stop();
-            bluetoothDiscoveryTimeout.stop();
+            for (let key in services) {
+                if (services.hasOwnProperty(key)) {
+                    console.debug("Found dock:" + key);
+                    if (key === macAddress) {
+                        // stop timeout timer
+                        mdnsDiscoveryTimeout.stop();
 
-            // TODO: need to check if the same dock was found as in the bluetooth setup
-            console.debug("Dock API discovered: " + services);
+                        // add dock to configuration
 
-            if (macAddress) {
-                // show success page
-                _swipeView.dockSuccess = true;
-                _swipeView.incrementCurrentIndex();
-            } else {
-                _swipeView.dockSuccess = false;
-                _swipeView.incrementCurrentIndex();
+                        var integration = {};
+                        integration["type"] = "dock";
+                        integration["id"] = services[key]["name"];
+                        integration["friendly_name"] = services[key]["name"];
+
+                        var data = {};
+                        data["ip"] = services[key]["ip"];
+
+                        integration["data"] = data;
+
+                        if (api.addIntegration(integration)) {
+                            _swipeView.dockSuccess = true;
+                            _swipeView.incrementCurrentIndex();
+                        } else {
+                            _swipeView.dockSuccess = false;
+                            _swipeView.incrementCurrentIndex();
+                        }
+                    }
+                }
             }
         }
     }
@@ -78,7 +95,7 @@ Item {
     Timer {
         id: bluetoothDiscoveryTimeout
         running: _currentItem
-        interval: 20000
+        interval: 10000
         repeat: false
 
         onTriggered: {

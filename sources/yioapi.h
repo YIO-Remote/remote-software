@@ -59,9 +59,9 @@ class YioAPI : public YioAPIInterface {
     bool updatEntity(QVariantMap entity);
     bool removeEntity(QString entityId);
 
-    bool addIntegration(QVariantMap integration);
-    bool updateIntegration(QVariantMap integration);
-    bool removeIntegration(QString integrationId);
+    Q_INVOKABLE bool addIntegration(QVariantMap integration);
+    bool             updateIntegration(QVariantMap integration);
+    bool             removeIntegration(QString integrationId);
 
     // NETWORK SERVICES DISCOVERY
     void             discoverNetworkServices() override;

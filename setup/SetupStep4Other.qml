@@ -24,6 +24,7 @@ import QtQuick 2.11
 import QtQuick.Controls 2.12
 import Style 1.0
 import Haptic 1.0
+import WifiControl 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -39,7 +40,6 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var obj
     property var swipeViewObj
 
     function joinNetwork(name, security) {
@@ -94,16 +94,51 @@ Rectangle {
         width: parent.width - 100
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
-        text: qsTr("Enter password for\n\"%1\"").arg(obj.name) + translateHandler.emptyString
+        text: qsTr("Enter your WiFi network credentials") + translateHandler.emptyString
         anchors { left: parent.left; leftMargin: 20; verticalCenter: closeButton.verticalCenter }
         font: Style.font.button
         lineHeight: 1.2
     }
 
     Rectangle {
-        id: searchContainer
+        id: ssidFieldContainer
         width: parent.width - 40; height: 80
         anchors { top: closeButton.bottom; topMargin: 20; horizontalCenter: parent.horizontalCenter }
+        color: Style.color.text
+        radius: Style.cornerRadius
+
+        TextField {
+            id: ssidField
+            cursorVisible: false
+            width: parent.width-80; height: parent.height
+            anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
+            placeholderText: qsTr("SSID") + translateHandler.emptyString
+            echoMode: TextInput.Normal
+            color: Style.color.background
+            font { family: "Open Sans Regular"; pixelSize: 27 }
+            focus: true
+
+            background: Rectangle {
+                color: Style.color.backgroundTransparent
+                border.width: 0
+            }
+
+            onFocusChanged: {
+                if (focus) {
+                    inputPanel.active = true;
+                }
+            }
+
+            Component.onCompleted: {
+                ssidField.forceActiveFocus();
+            }
+        }
+    }
+
+    Rectangle {
+        id: passwordFieldContainer
+        width: parent.width - 40; height: 80
+        anchors { top: ssidFieldContainer.bottom; topMargin: 20; horizontalCenter: parent.horizontalCenter }
         color: Style.color.text
         radius: Style.cornerRadius
 
@@ -133,14 +168,7 @@ Rectangle {
             }
 
             onAccepted: {
-                joinNetwork(obj.name, obj.security);
-            }
-
-            onFocusChanged: {
-                if (focus) {
-                    inputPanel.active = true;
-                } else
-                    inputPanel.active = false;
+                joinNetwork(ssidField.text, WifiSecurityEnum.WPA2_PSK);
             }
 
             Text {
@@ -163,19 +191,15 @@ Rectangle {
                     }
                 }
             }
-
-            Component.onCompleted: {
-                passwordField.forceActiveFocus();
-            }
         }
+    }
 
-        BasicUI.CustomButton {
-            anchors { top: passwordField.bottom; topMargin: 40; left: passwordField.left }
-            buttonText: qsTr("Join") + translateHandler.emptyString
-            mouseArea.onClicked: {
-                Haptic.playEffect(Haptic.Click);
-                joinNetwork(obj.name, obj.security);
-            }
+    BasicUI.CustomButton {
+        anchors { top: passwordFieldContainer.bottom; topMargin: 40; left: passwordFieldContainer.left }
+        buttonText: qsTr("Join") + translateHandler.emptyString
+        mouseArea.onClicked: {
+            Haptic.playEffect(Haptic.Click);
+            joinNetwork(ssidField.text, WifiSecurityEnum.WPA2_PSK);
         }
     }
 
