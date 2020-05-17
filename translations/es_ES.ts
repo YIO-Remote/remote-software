@@ -515,7 +515,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation type="unfinished">Loading</translation>
+      <translation>Cargando</translation>
     </message>
   </context>
   <context>
@@ -801,7 +801,7 @@ Lleve su navegador de internet a: http://</translation>
     <message>
       <location filename="../setup/SetupStep3.qml" line="164"/>
       <source>Join other</source>
-      <translation type="unfinished">Join other</translation>
+      <translation>Únete a otros</translation>
     </message>
   </context>
   <context>
@@ -829,22 +829,22 @@ Lleve su navegador de internet a: http://</translation>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="104"/>
       <source>Enter your WiFi network credentials</source>
-      <translation type="unfinished">Enter your WiFi network credentials</translation>
+      <translation>Introduzca sus credenciales de red WiFi</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="122"/>
       <source>SSID</source>
-      <translation type="unfinished">SSID</translation>
+      <translation>SSID</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="157"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Contraseña</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="206"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Unirse</translation>
     </message>
   </context>
   <context>
