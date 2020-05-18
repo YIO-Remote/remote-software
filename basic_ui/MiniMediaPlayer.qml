@@ -1,6 +1,7 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020 Chris Shepherd
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -135,40 +136,9 @@ Item {
     }
 
     Connections {
-        target: ButtonHandler
-        enabled: loader_main.state === "visible" || miniMediaPlayer.state == "open" ? true : false
-
-        onButtonPressed: {
-            switch (button) {
-            case ButtonHandler.VOLUME_UP:
-                buttonTimeout.stop();
-                buttonTimeout.volumeUp = true;
-                buttonTimeout.start();
-                break;
-            case ButtonHandler.VOLUME_DOWN:
-                buttonTimeout.stop();
-                buttonTimeout.volumeUp = false;
-                buttonTimeout.start();
-                break;
-            }
-        }
-
-        onButtonReleased: {
-            buttonTimeout.stop();
-        }
-    }
-
-    Timer {
-        id: buttonTimeout
-        interval: 300
-        repeat: true
-        running: false
-        triggeredOnStart: true
-
-        property bool volumeUp: false
-
-        onTriggered: {
-            if (volumeUp) {
+        target: volume
+        onVolumeChanged: {
+            if (volume.volumeUp) {
                 if (volume.state !== "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
@@ -187,6 +157,30 @@ Item {
                 mediaPlayers.currentItem.player.obj.setVolume(newvolume);
                 volume.volumePosition = newvolume;
             }
+        }
+    }
+
+    Connections {
+        target: ButtonHandler
+        enabled: loader_main.state === "visible" || miniMediaPlayer.state == "open" ? true : false
+
+        onButtonPressed: {
+            switch (button) {
+                case ButtonHandler.VOLUME_UP:
+                    volume.stop();
+                    volume.volumeUp = true;
+                    volume.start();
+                    break;
+                case ButtonHandler.VOLUME_DOWN:
+                    volume.stop();
+                    volume.volumeUp = false;
+                    volume.start();
+                    break;
+            }
+        }
+
+        onButtonReleased: {
+            volume.stop();
         }
     }
 

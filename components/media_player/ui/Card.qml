@@ -33,7 +33,7 @@ import "qrc:/basic_ui" as BasicUI
 Rectangle {
     id: card
     width: parent.width; height: parent.height
-//    color: mediaplayerUtils.pixelColor === "#000000" ? Style.color.dark : mediaplayerUtils.pixelColor
+    //    color: mediaplayerUtils.pixelColor === "#000000" ? Style.color.dark : mediaplayerUtils.pixelColor
     color: Style.color.dark
     radius: Style.cornerRadius
 
@@ -53,34 +53,28 @@ Rectangle {
         onButtonPressed: {
             switch (button) {
             case ButtonHandler.VOLUME_UP:
-                buttonTimeout.stop();
-                buttonTimeout.volumeUp = true;
-                buttonTimeout.start();
+                volume.stop();
+                volume.volumeUp = true;
+                volume.start();
                 break;
             case ButtonHandler.VOLUME_DOWN:
-                buttonTimeout.stop();
-                buttonTimeout.volumeUp = false;
-                buttonTimeout.start();
+                volume.stop();
+                volume.volumeUp = false;
+                volume.start();
                 break;
             }
         }
 
         onButtonReleased: {
-            buttonTimeout.stop();
+            volume.stop();
         }
     }
 
-    Timer {
-        id: buttonTimeout
-        interval: 300
-        repeat: true
-        running: false
-        triggeredOnStart: true
+    Connections {
+        target: volume
 
-        property bool volumeUp: false
-
-        onTriggered: {
-            if (volumeUp) {
+        onVolumeChanged: {
+            if (volume.volumeUp) {
                 if (volume.state !== "visible") {
                     volume.volumePosition = obj.volume;
                     volume.state = "visible";

@@ -1,6 +1,7 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020 Chris Shepherd
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -30,6 +31,18 @@ Item {
     width:  parent.width; height: 160
 
     property int volumePosition
+    property bool volumeUp: false
+    property int changeInterval: 250
+
+    signal volumeChanged()
+
+    function start() {
+        timer.start();
+    }
+
+    function stop() {
+        timer.stop();
+    }
 
     state: "hidden"
 
@@ -97,6 +110,10 @@ Item {
             height: parent.height; width: bg.width * volumePosition/100
             color: Style.color.line
             anchors.left: parent.left
+
+            Behavior on width {
+                NumberAnimation { duration: changeInterval; easing.type: Easing.OutExpo }
+            }
         }
 
         Image {
@@ -109,13 +126,39 @@ Item {
             }
         }
 
-
         Behavior on height {
             NumberAnimation { duration: 200; easing.type: Easing.OutExpo }
         }
 
         Behavior on y {
             NumberAnimation { duration: 300; easing.type: Easing.OutExpo }
+        }
+    }
+
+    Timer {
+        id: timer
+        interval: changeInterval
+        repeat: true
+        running: false
+        triggeredOnStart: true
+
+        property int count: 0
+
+        onRunningChanged: {
+            if (!running) {
+                count = 0;
+                changeInterval = 300;
+            }
+        }
+
+        onTriggered: {
+            count++;
+
+            if (count >= 4) {
+                changeInterval = 80;
+            }
+
+            volume.volumeChanged();
         }
     }
 }
