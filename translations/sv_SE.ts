@@ -165,7 +165,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn on</source>
-      <translation>På</translation>
+      <translation>Sätt på</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="416"/>
@@ -185,7 +185,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
-      <translation>Sval</translation>
+      <translation>Kyla</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
