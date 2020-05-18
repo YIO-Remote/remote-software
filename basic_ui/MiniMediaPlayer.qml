@@ -138,7 +138,7 @@ Item {
     Connections {
         target: volume
         onVolumeChanged: {
-            if (volumeUp) {
+            if (volume.volumeUp) {
                 if (volume.state !== "visible") {
                     volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
@@ -167,20 +167,20 @@ Item {
         onButtonPressed: {
             switch (button) {
                 case ButtonHandler.VOLUME_UP:
-                    volume.timer.stop();
-                    volume.timer.volumeUp = true;
-                    volume.timer.start();
+                    volume.stop();
+                    volume.volumeUp = true;
+                    volume.start();
                     break;
                 case ButtonHandler.VOLUME_DOWN:
-                    volume.timer.stop();
-                    volume.timer.volumeUp = false;
-                    volume.timer.start();
+                    volume.stop();
+                    volume.volumeUp = false;
+                    volume.start();
                     break;
             }
         }
 
         onButtonReleased: {
-            volume.timer.stop();
+            volume.stop();
         }
     }
 

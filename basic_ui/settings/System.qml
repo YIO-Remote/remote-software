@@ -23,6 +23,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import Style 1.0
+import Haptic 1.0
 import Launcher 1.0
 import Config 1.0
 
@@ -83,12 +84,13 @@ Rectangle {
 
             CheckBox {
                 id: metricCheckBox
-                checked: config.unitSystem == 0
+                width: 40; height: 40
                 anchors { left: parent.left; leftMargin: 20; top: unitText.bottom; topMargin: 20 }
+                checked: config.unitSystem == 0
 
                 indicator: Rectangle {
                     implicitWidth: 20; implicitHeight: 20
-                    anchors.centerIn: parent
+                    x: parent.width / 2 - width /2; y: parent.height / 2 - height / 2
                     radius: Style.cornerRadius
                     color: metricCheckBox.checked ? Style.color.text : Style.color.light
                 }
@@ -103,6 +105,10 @@ Rectangle {
                     if (checked) {
                         config.unitSystem = 0;
                     }
+                }
+
+                onPressed: {
+                    Haptic.playEffect(Haptic.Click);
                 }
             }
 
@@ -119,11 +125,13 @@ Rectangle {
 
             CheckBox {
                 id: imperialCheckBox
-                checked: config.unitSystem == 1
+                width: 40; height: 40
                 anchors { left: metricCheckBoxText.right; leftMargin: 20; verticalCenter: metricCheckBox.verticalCenter }
+                checked: config.unitSystem == 1
 
                 indicator: Rectangle {
                     implicitWidth: 20; implicitHeight: 20
+                    x: parent.width / 2 - width /2; y: parent.height / 2 - height / 2
                     anchors.centerIn: parent
                     radius: Style.cornerRadius
                     color: imperialCheckBox.checked ? Style.color.text : Style.color.light
@@ -139,6 +147,10 @@ Rectangle {
                     if (checked) {
                         config.unitSystem = 1;
                     }
+                }
+
+                onPressed: {
+                    Haptic.playEffect(Haptic.Click);
                 }
             }
 

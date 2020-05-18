@@ -30,11 +30,19 @@ Item {
     id: volume
     width:  parent.width; height: 160
 
-    property alias timer: timer
     property int volumePosition
     property bool volumeUp: false
+    property int changeInterval: 250
 
     signal volumeChanged()
+
+    function start() {
+        timer.start();
+    }
+
+    function stop() {
+        timer.stop();
+    }
 
     state: "hidden"
 
@@ -102,6 +110,10 @@ Item {
             height: parent.height; width: bg.width * volumePosition/100
             color: Style.color.line
             anchors.left: parent.left
+
+            Behavior on width {
+                NumberAnimation { duration: changeInterval; easing.type: Easing.OutExpo }
+            }
         }
 
         Image {
@@ -114,11 +126,6 @@ Item {
             }
         }
 
-        Behavior on width {
-            NumberAnimation { duration: 200; easing.type: Easing.OutExpo }
-        }
-
-
         Behavior on height {
             NumberAnimation { duration: 200; easing.type: Easing.OutExpo }
         }
@@ -130,7 +137,7 @@ Item {
 
     Timer {
         id: timer
-        interval: 250
+        interval: changeInterval
         repeat: true
         running: false
         triggeredOnStart: true
@@ -140,7 +147,7 @@ Item {
         onRunningChanged: {
             if (!running) {
                 count = 0;
-                interval = 300;
+                changeInterval = 300;
             }
         }
 
@@ -148,7 +155,7 @@ Item {
             count++;
 
             if (count >= 4) {
-                interval = 50;
+                changeInterval = 80;
             }
 
             volume.volumeChanged();
