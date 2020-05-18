@@ -1139,12 +1139,12 @@ YIO fjärrkontroll %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="79"/>
       <source>Unit system</source>
-      <translation type="unfinished">Unit system</translation>
+      <translation>Enhetssystem</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="113"/>
       <source>Metric</source>
-      <translation type="unfinished">Metric</translation>
+      <translation>Metrisk</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="148"/>
