@@ -34,21 +34,21 @@ Item {
     property string macAddress
 
     Connections {
-        target: bluetoothArea
+        target: bluetooth
         onDockFound: {
             bluetoothDiscoveryTimeout.stop();
-            macAddress = address.toString();
+            macAddress = name;
             console.debug("Dock found: " + macAddress);
-        }
-        onDockPairingFinished: {
-            console.debug("Pairing succces, preparing message.");
+
             // show dock page
             var msg = {};
             msg.ssid = wifiSsid;
             msg.password = wifiPassword;
             msg.remote_id = api.hostname;
-            bluetoothArea.sendInfoToDock(JSON.stringify(msg));
+            bluetooth.sendCredentialsToDock(JSON.stringify(msg));
+        }
 
+        onDockMessageSent: {
             // mdns discovery of docks
             apiConnection.enabled = true;
             api.discoverNetworkServices("_yio-dock-api._tcp");
@@ -95,7 +95,7 @@ Item {
     Timer {
         id: bluetoothDiscoveryTimeout
         running: _currentItem
-        interval: 10000
+        interval: 20000
         repeat: false
 
         onTriggered: {

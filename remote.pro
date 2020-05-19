@@ -91,6 +91,7 @@ isEmpty(INTG_LIB_PATH) {
 
 HEADERS += \
     components/media_player/sources/utils_mediaplayer.h \
+    sources/bluetooth.h \
     sources/commandlinehandler.h \
     sources/config.h \
     sources/configutil.h \
@@ -150,12 +151,12 @@ HEADERS += \
     sources/entities/blind.h \
     sources/notifications.h \
     sources/entities/mediaplayer.h \
-    sources/bluetootharea.h \
     sources/utils.h \
     sources/yioapi.h
 
 SOURCES += \
     components/media_player/sources/utils_mediaplayer.cpp \
+    sources/bluetooth.cpp \
     sources/commandlinehandler.cpp \
     sources/config.cpp \
     sources/configutil.cpp \
@@ -187,7 +188,6 @@ SOURCES += \
     sources/entities/blind.cpp \
     sources/notifications.cpp \
     sources/entities/mediaplayer.cpp \
-    sources/bluetootharea.cpp \
     sources/softwareupdate.cpp \
     sources/standbycontrol.cpp \
     sources/translation.cpp \

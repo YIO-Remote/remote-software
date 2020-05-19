@@ -91,23 +91,18 @@ ApplicationWindow {
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
         VirtualKeyboardSettings.locale = Qt.binding(function() { return config.settings.language })
 
-        // load bluetooth
-        bluetoothArea.init(config.config);
-        if (config.settings.bluetootharea) {
-            bluetoothArea.startScan();
-        }
-
         // Start websocket API
         api.start();
 
         // load the integrations if it's not the first time setup
-        if (fileio.exists("/firstrun")) {
-            console.debug("Starting first time setup");
-            loader_main.setSource("qrc:/setup/Setup.qml");
-            translateHandler.selectLanguage(config.settings.language);
-        } else {
-            integrations.load();
-        }
+        loader_main.setSource("qrc:/setup/Setup.qml");
+//        if (fileio.exists("/firstrun")) {
+//            console.debug("Starting first time setup");
+//            loader_main.setSource("qrc:/setup/Setup.qml");
+//            translateHandler.selectLanguage(config.settings.language);
+//        } else {
+//            integrations.load();
+//        }
     }
 
     // load the entities when the integrations are loaded
