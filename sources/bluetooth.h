@@ -50,6 +50,7 @@ class BluetoothControl : public QObject {
     void onDiscoveryFinished();
     void sendCredentialsToDock(const QString &msg);
     void onDockConnected();
+    void onPairingDone(const QBluetoothAddress &address, QBluetoothLocalDevice::Pairing pairing);
 
  private:
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent;

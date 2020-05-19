@@ -36,11 +36,7 @@ Item {
     Connections {
         target: bluetooth
         onDockFound: {
-            bluetoothDiscoveryTimeout.stop();
             macAddress = name;
-            console.debug("Dock found: " + macAddress);
-
-            // show dock page
             var msg = {};
             msg.ssid = wifiSsid;
             msg.password = wifiPassword;
@@ -49,7 +45,8 @@ Item {
         }
 
         onDockMessageSent: {
-            // mdns discovery of docks
+            bluetoothDiscoveryTimeout.stop();
+
             apiConnection.enabled = true;
             api.discoverNetworkServices("_yio-dock-api._tcp");
             mdnsDiscoveryTimeout.start();

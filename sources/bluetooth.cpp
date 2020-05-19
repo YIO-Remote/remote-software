@@ -1,6 +1,7 @@
 #include "bluetooth.h"
 
 #include <QLoggingCategory>
+#include <QTimer>
 
 #include "notifications.h"
 
@@ -41,8 +42,8 @@ void BluetoothControl::lookForDocks() {
                      &BluetoothControl::onDeviceDiscovered);
     QObject::connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished, this,
                      &BluetoothControl::onDiscoveryFinished);
+    qCDebug(CLASS_LC) << "Starting Bluetooth discovery...";
     m_discoveryAgent->start();
-    qCDebug(CLASS_LC) << "Bluetooth discovery started.";
 }
 
 void BluetoothControl::onDeviceDiscovered(const QBluetoothDeviceInfo &device) {
@@ -52,7 +53,7 @@ void BluetoothControl::onDeviceDiscovered(const QBluetoothDeviceInfo &device) {
         m_discoveryAgent->stop();
 
         m_dockAddress = device.address();
-        if (device.serviceUuids().length() != 0) {
+        if (device.serviceUuids().length() >= 1) {
             m_dockServiceUuid = device.serviceUuids()[0];
         } else {
             m_dockServiceUuid = QBluetoothUuid(QStringLiteral("00001101-0000-1000-8000-00805f9b34fb"));
@@ -61,6 +62,11 @@ void BluetoothControl::onDeviceDiscovered(const QBluetoothDeviceInfo &device) {
 
         emit dockFound(name);
         qCDebug(CLASS_LC) << "YIO Dock found" << name;
+
+        QObject::connect(&m_localDevice, &QBluetoothLocalDevice::pairingFinished, this,
+                         &BluetoothControl::onPairingDone);
+        qCDebug(CLASS_LC) << "Pairing requested.";
+        m_localDevice.requestPairing(m_dockAddress, QBluetoothLocalDevice::Paired);
     }
 }
 
@@ -72,13 +78,8 @@ void BluetoothControl::onDiscoveryFinished() {
 }
 
 void BluetoothControl::sendCredentialsToDock(const QString &msg) {
+    qCDebug(CLASS_LC) << "Got the wifi credentials.";
     m_dockMessage = msg;
-    m_dockSocket  = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this);
-
-    QObject::connect(m_dockSocket, &QBluetoothSocket::connected, this, &BluetoothControl::onDockConnected);
-
-    m_dockSocket->connectToService(m_dockAddress, m_dockServiceUuid);
-    qCDebug(CLASS_LC) << "Connect to bluetooth service" << m_dockAddress << m_dockServiceUuid;
 }
 
 void BluetoothControl::onDockConnected() {
@@ -91,13 +92,27 @@ void BluetoothControl::onDockConnected() {
     qCDebug(CLASS_LC) << "Sending message to dock:" << text;
     m_dockSocket->write(text);
     qCDebug(CLASS_LC) << "Message sent to dock.";
-    emit dockMessageSent();
 
-    // close and delete the socket
-    m_dockSocket->close();
-    m_dockSocket->deleteLater();
+    QTimer::singleShot(6000, [=]() {
+        // close and delete the socket
+        m_dockSocket->close();
+        m_dockSocket->deleteLater();
 
-    // power off the bluetooth
-    turnOff();
-    m_discoveryAgent->deleteLater();
+        // power off the bluetooth
+        turnOff();
+        m_discoveryAgent->deleteLater();
+        emit dockMessageSent();
+    });
+}
+
+void BluetoothControl::onPairingDone(const QBluetoothAddress &address, QBluetoothLocalDevice::Pairing pairing) {
+    if (address == m_dockAddress && pairing == QBluetoothLocalDevice::Paired) {
+        qCDebug(CLASS_LC) << "Pairing done.";
+        m_dockSocket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this);
+
+        QObject::connect(m_dockSocket, &QBluetoothSocket::connected, this, &BluetoothControl::onDockConnected);
+
+        m_dockSocket->connectToService(m_dockAddress, m_dockServiceUuid);
+        qCDebug(CLASS_LC) << "Connecting to bluetooth service" << m_dockAddress << m_dockServiceUuid;
+    }
 }

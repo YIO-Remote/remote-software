@@ -291,6 +291,7 @@ OTHER_FILES += main.qml \
           basic_ui/*.qml \
           basic_ui/pages/*.qml \
           basic_ui/settings/*.qml \
+          setup/*.qml \
           components/light/ui/*.qml \
           components/blind/ui/*.qml \
           components/media_player/ui/*.qml \
