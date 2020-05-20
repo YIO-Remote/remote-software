@@ -43,6 +43,7 @@ Rectangle {
         opacity: 0.5
         text: qsTr("YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:\n%1").arg("
 Christian Riedl
+Christopher Shepherd
 Markus Mahr
 Markus Zehnder
 Niels de Klerk
