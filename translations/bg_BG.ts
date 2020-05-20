@@ -175,7 +175,7 @@ To learn more about the project, visit
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
       <source>Off</source>
-      <translation>Изкл.</translation>
+      <translation>Изкл</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
