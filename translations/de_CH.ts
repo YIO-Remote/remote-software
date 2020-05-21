@@ -554,17 +554,17 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation>Datei &apos;%1&apos; chan nöd beschribä werde</translation>
+      <translation>Datei &apos;%1&apos; chan nöd beschribä werde: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation>Datei &apos;%1&apos; chan nöd glesä werde: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation>Ungültigi JASON Datei &apos;%1&apos; bi Offset %2</translation>
     </message>
   </context>
   <context>
@@ -573,27 +573,27 @@ dini YIO Fernbedienig izrichtä</translation>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoritä</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Istelligä</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Lampä</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Rolläde</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Medien</translation>
     </message>
   </context>
   <context>
@@ -601,22 +601,22 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="64"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Netzwerk</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="246"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Wi-Fi Signalstärchi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP Adressä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC Adressä</translation>
     </message>
   </context>
   <context>
@@ -624,7 +624,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Abbrechä</translation>
     </message>
   </context>
   <context>
@@ -632,7 +632,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Mitteiligä</translation>
     </message>
   </context>
   <context>
@@ -640,12 +640,12 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Schwachi Batterie</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Bitte d'Fernbedienig bald ladä</translation>
     </message>
   </context>
   <context>
@@ -653,7 +653,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="112"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profile</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
