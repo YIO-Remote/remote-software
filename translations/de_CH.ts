@@ -1060,51 +1060,51 @@ a nachdem d'Fernbedienig neu gstartet häsch.</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
-      <translation type="unfinished">Auto update</translation>
+      <translation>Automatischs Update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>I mach's Update für diich automatisch.
+Wen i nöd verschlofä inschtallier is z'wüschet äm drüü und feufi am Morgä.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
-YIO remote %1</translation>
+      <translation>Juhu, neui Software isch verfügbar.
+YIO Fernbedienig %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Diini Software isch uf em letschtä Stand.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Instalierti Version: YIO Fernbedienig </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>YIO Fernbedienig </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Uffrüschig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Abäladä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Uffrüschig überprüefä</translation>
     </message>
   </context>
   <context>
@@ -1112,22 +1112,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Abäladä isch fix und fertig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>Bin am abäladä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Uffrüschig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Abbrechä</translation>
     </message>
   </context>
   <context>
@@ -1135,37 +1135,37 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="79"/>
       <source>Unit system</source>
-      <translation type="unfinished">Unit system</translation>
+      <translation>Einheitäsystem</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="113"/>
       <source>Metric</source>
-      <translation type="unfinished">Metric</translation>
+      <translation>Metrisch</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="148"/>
       <source>Imperial</source>
-      <translation type="unfinished">Imperial</translation>
+      <translation>Imperial</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Uptime</source>
-      <translation type="unfinished">Uptime</translation>
+      <translation>Betriebsziit</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="194"/>
       <source>CPU temperature</source>
-      <translation type="unfinished">CPU temperature</translation>
+      <translation>CPU Temperatur</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Neustart</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="232"/>
       <source>Shutdown</source>
-      <translation type="unfinished">Shutdown</translation>
+      <translation>Abstellä</translation>
     </message>
   </context>
   <context>
@@ -1173,22 +1173,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Gebietserkennig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Automatischi Suechi nach Blauzahn-Beacons die mit emne Berich verchnüpft sind. Findet die Grät wo am nöchschte sind und zeigt sie i dem Bereich a.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
-      <translation type="unfinished">WiFi</translation>
+      <translation>Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
       <source>Other networks</source>
-      <translation type="unfinished">Other networks</translation>
+      <translation>Anderi Netzwerk</translation>
     </message>
   </context>
   <context>
@@ -1197,18 +1197,18 @@ YIO remote %1</translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation type="unfinished">Enter password for
+      <translation>S'Passwort ige für
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Passwort</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Verbindä</translation>
     </message>
   </context>
 </TS>

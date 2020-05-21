@@ -189,12 +189,12 @@ To learn more about the project, visit
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation type="unfinished">Mute</translation>
+      <translation>Заглушить</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Назад</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
@@ -207,22 +207,22 @@ To learn more about the project, visit
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
       <source>Source</source>
-      <translation type="unfinished">Source</translation>
+      <translation>Источник</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Информация</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Меню</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation type="unfinished">Guide</translation>
+      <translation>Руководство</translation>
     </message>
   </context>
   <context>
@@ -230,17 +230,17 @@ To learn more about the project, visit
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Выключить</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Включить</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="280"/>
       <source>Color</source>
-      <translation type="unfinished">Color</translation>
+      <translation>Цвет</translation>
     </message>
   </context>
   <context>
@@ -248,12 +248,12 @@ To learn more about the project, visit
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Выключить</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Включить</translation>
     </message>
   </context>
   <context>
@@ -261,7 +261,7 @@ To learn more about the project, visit
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
       <source>My playlists</source>
-      <translation type="unfinished">My playlists</translation>
+      <translation>Мои плейлисты</translation>
     </message>
   </context>
   <context>
@@ -270,41 +270,41 @@ To learn more about the project, visit
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Поиск</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation type="unfinished">Recent searches</translation>
+      <translation>История поиска</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation type="unfinished">Clear</translation>
+      <translation>Очистить</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="410"/>
       <source>Albums</source>
-      <translation type="unfinished">Albums</translation>
+      <translation>Альбомы</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
-      <translation type="unfinished">Tracks</translation>
+      <translation>Треки</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
-      <translation type="unfinished">Artists</translation>
+      <translation>Исполнители</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
       <source>Playlists</source>
-      <translation type="unfinished">Playlists</translation>
+      <translation>Плейлисты</translation>
     </message>
   </context>
   <context>
@@ -313,7 +313,7 @@ To learn more about the project, visit
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Выключить</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
