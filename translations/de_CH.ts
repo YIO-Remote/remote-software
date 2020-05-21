@@ -658,7 +658,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Um dini Profil z'bearbeitä niim bitte de Web-Konfigurator i de Istelligä.</translation>
     </message>
   </context>
   <context>
@@ -666,7 +666,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>Wi-Fi Grät isch nöd gfundä wordä.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
