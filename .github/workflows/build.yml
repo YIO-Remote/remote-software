@@ -13,6 +13,7 @@
     APP_NAME: YIO-remote-software
     APP_ARCHITECTURE: RPi0
     PROJECT_NAME: remote-software
+    HASH_FILENAME: yio-remote-software.hash
 
   jobs:
     build:
@@ -96,6 +97,7 @@
           run: |
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
+            for filename in *.tar; do echo "sha256  `sha256sum $filename" >> ${{ env.HASH_FILENAME }}; done;
 
         - name: Create Pre-Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
@@ -107,12 +109,14 @@
             title: "Development Build ${{ env.APP_VERSION }}"
             files: |
                 *.tar
+                ${{ env.HASH_FILENAME }}
 
         - name: Create GitHub release archives
           if: "contains(github.ref, 'tags/v')"
           run: |
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
+            for filename in *.tar; do echo "sha256  `sha256sum $filename" >> ${{ env.HASH_FILENAME }}; done;
 
         - name: Create Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
@@ -122,3 +126,4 @@
             prerelease: false
             files: |
               *.tar
+              ${{ env.HASH_FILENAME }}
