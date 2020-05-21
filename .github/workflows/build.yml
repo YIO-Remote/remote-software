@@ -97,7 +97,7 @@
           run: |
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
-            for filename in *.tar; do echo "sha256  `sha256sum $filename" >> ${{ env.HASH_FILENAME }}; done;
+            for filename in *.tar; do echo "sha256  `sha256sum $filename`" >> ${{ env.HASH_FILENAME }}; done;
 
         - name: Create Pre-Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
@@ -116,7 +116,7 @@
           run: |
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
-            for filename in *.tar; do echo "sha256  `sha256sum $filename" >> ${{ env.HASH_FILENAME }}; done;
+            for filename in *.tar; do echo "sha256  `sha256sum $filename`" >> ${{ env.HASH_FILENAME }}; done;
 
         - name: Create Release ${{ env.APP_VERSION }}
           uses: "marvinpinto/action-automatic-releases@latest"
