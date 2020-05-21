@@ -942,7 +942,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="39"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Erledigt</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="50"/>

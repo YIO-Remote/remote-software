@@ -6,14 +6,13 @@
     <message>
       <location filename="../basic_ui/settings/About.qml" line="35"/>
       <source>Thank you!</source>
-      <translation type="unfinished">Thank you!</translation>
+      <translation>Благодарим вас!</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
-%1</translation>
+      <translation>YIO - проект с открытым исходным кодом. Большое спасибо каждому, кто внёс свой вклад в его развитие: %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="50"/>
@@ -21,9 +20,9 @@
 
 To learn more about the project, visit
 %1</source>
-      <translation type="unfinished">
+      <translation>
 
-To learn more about the project, visit
+Узнать больше можно по ссылке
 %1</translation>
     </message>
   </context>
@@ -37,59 +36,59 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
       <source>Remaining time</source>
-      <translation type="unfinished">Remaining time</translation>
+      <translation>Оставшееся время</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
       <source>Screen on</source>
-      <translation type="unfinished">Screen on</translation>
+      <translation>Экран включен</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="177"/>
       <source>Screen off</source>
-      <translation type="unfinished">Screen off</translation>
+      <translation>Экран выключен</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="206"/>
       <source>Battery level</source>
-      <translation type="unfinished">Battery level</translation>
+      <translation>Уровень заряда батареи</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="253"/>
       <source>Average power</source>
-      <translation type="unfinished">Average power</translation>
+      <translation>Средняя мощность</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="313"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation type="unfinished">No data available yet</translation>
+      <translation>Пока нет доступных данных</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
       <source>Power saving</source>
-      <translation type="unfinished">Power saving</translation>
+      <translation>Энергосбережение</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Never turn off Wi-Fi</source>
-      <translation type="unfinished">Never turn off Wi-Fi</translation>
+      <translation>Никогда не отключать Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
+      <translation>Выключить Wi-Fi после %1 минут бездействия</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
       <location filename="../basic_ui/settings/Battery.qml" line="549"/>
       <source>Never</source>
-      <translation type="unfinished">Never</translation>
+      <translation>Никогда</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="442"/>
       <source>60 minutes</source>
-      <translation type="unfinished">60 minutes</translation>
+      <translation>60 минут</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
