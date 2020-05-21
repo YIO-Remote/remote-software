@@ -93,17 +93,17 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation type="unfinished">Never turn off the remote</translation>
+      <translation>Никогда не выключать пульт</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
+      <translation>Выключить пульт после %1 часов бездействия</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation type="unfinished">8 hours</translation>
+      <translation>8 часов</translation>
     </message>
   </context>
   <context>
@@ -111,17 +111,17 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
       <source>Bluetooth</source>
-      <translation type="unfinished">Bluetooth</translation>
+      <translation>Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
       <source>Area detection</source>
-      <translation type="unfinished">Area detection</translation>
+      <translation>Область обнаружения</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
+      <translation>Автоматически сканирует Bluetooth-маяки, связанные с областью, находит ближайший и отображает устройства этой области.</translation>
     </message>
   </context>
   <context>
@@ -129,7 +129,7 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/bluetootharea.cpp" line="126"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Устройство Bluetooth не найдено.</translation>
     </message>
   </context>
   <context>
@@ -138,7 +138,7 @@ To learn more about the project, visit
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation type="unfinished">Temperature: </translation>
+      <translation>Температура: </translation>
     </message>
   </context>
   <context>
@@ -146,12 +146,12 @@ To learn more about the project, visit
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Remove from favorites</source>
-      <translation type="unfinished">Remove from favorites</translation>
+      <translation>Удалить из избранного</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Add to favorites</source>
-      <translation type="unfinished">Add to favorites</translation>
+      <translation>Добавить в избранное</translation>
     </message>
   </context>
   <context>
@@ -159,32 +159,32 @@ To learn more about the project, visit
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Выключить</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Включить</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="416"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Режим</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
       <source>Off</source>
-      <translation type="unfinished">Off</translation>
+      <translation>Выкл</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
       <source>Heat</source>
-      <translation type="unfinished">Heat</translation>
+      <translation>Тепло</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
-      <translation type="unfinished">Cool</translation>
+      <translation>Холод</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
