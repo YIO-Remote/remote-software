@@ -120,7 +120,7 @@ Wetsch me über's Projekt wüsse, den chum verbi %1</translation>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Automatischi Suechi nach Blauzahn-Beacons wo mit emne Berich verchnüpft sind. Findet und die Grät wo am nöchschte sind und zeigt sie i dem Bereich a.</translation>
+      <translation>Automatischi Suechi nach Blauzahn-Beacons die mitemne Berich verchnüpft sind. Findet die Grät wo am nöchschte sind und zeigt sie i dem Bereich a.</translation>
     </message>
   </context>
   <context>
@@ -1178,7 +1178,7 @@ YIO Fernbedienig %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Automatischi Suechi nach Blauzahn-Beacons die mit emne Berich verchnüpft sind. Findet die Grät wo am nöchschte sind und zeigt sie i dem Bereich a.</translation>
+      <translation>Automatischi Suechi nach Blauzahn-Beacons die mitemne Berich verchnüpft sind. Findet die Grät wo am nöchschte sind und zeigt sie i dem Bereich a.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
