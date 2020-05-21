@@ -422,22 +422,22 @@ und den nimsch de Web-Konfigurator um's Problem z'lösä.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>Wie wiit söll der Anöcherigssensor luegä um dini Hand z'erkennä.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Dunkel Modus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Putz Modus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Streichle de Bildschirm für 10 Sekundä um de Putz Modus ab z'schaltä.</translation>
     </message>
   </context>
   <context>
@@ -445,32 +445,32 @@ und den nimsch de Web-Konfigurator um's Problem z'lösä.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Medien</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Light</source>
-      <translation type="unfinished">Light</translation>
+      <translation>Lampä</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Blind</source>
-      <translation type="unfinished">Blind</translation>
+      <translation>Rolladä</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Fernbedienig</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Klima</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Schalter</translation>
     </message>
   </context>
   <context>
@@ -479,7 +479,7 @@ und den nimsch de Web-Konfigurator um's Problem z'lösä.</translation>
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Favoritä</translation>
     </message>
   </context>
   <context>
@@ -487,12 +487,12 @@ und den nimsch de Web-Konfigurator um's Problem z'lösä.</translation>
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation type="unfinished">Not enough free space (%1 MB).</translation>
+      <translation>Nöd gnueg freiä Platz (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation type="unfinished">Destination file already exists</translation>
+      <translation>Zielddatei exischtiert scho</translation>
     </message>
   </context>
   <context>
@@ -501,18 +501,18 @@ und den nimsch de Web-Konfigurator um's Problem z'lösä.</translation>
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>Verwend de Web-Konfigurator um
+dini YIO Fernbedienig izrichtä</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Navigiersch mit diim Browser folgendi Adressä a: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation type="unfinished">Loading</translation>
+      <translation>Isch am Ladä</translation>
     </message>
   </context>
   <context>
@@ -520,22 +520,22 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Nöd verbundä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Verbindä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Nöd verbundä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Neu hinzuefüegä</translation>
     </message>
   </context>
   <context>
@@ -544,17 +544,17 @@ to set up YIO remote</translation>
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation type="unfinished">empty name</translation>
+      <translation>leerä Namä</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation type="unfinished">empty data</translation>
+      <translation>leeri Datä</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation>Datei &apos;%1&apos; chan nöd beschribä werde</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
