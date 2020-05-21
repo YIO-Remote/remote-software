@@ -792,12 +792,12 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep3.qml" line="74"/>
       <source>Select a Wi-Fi network.</source>
-      <translation type="unfinished">Select a Wi-Fi network.</translation>
+      <translation>Wähl bitte es Wi-Fi Netzwerk us.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep3.qml" line="164"/>
       <source>Join other</source>
-      <translation type="unfinished">Join other</translation>
+      <translation>Nimm es anders</translation>
     </message>
   </context>
   <context>
@@ -806,18 +806,18 @@ Navigate your internet browser to: http://</source>
       <location filename="../setup/SetupStep4.qml" line="97"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation type="unfinished">Enter password for
+      <translation>Passwort ige für
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="115"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Passwort</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="174"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Verbindä</translation>
     </message>
   </context>
   <context>
@@ -825,22 +825,22 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="104"/>
       <source>Enter your WiFi network credentials</source>
-      <translation type="unfinished">Enter your WiFi network credentials</translation>
+      <translation>Giib diis Wi-Fi Netzwerk Passwort i</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="122"/>
       <source>SSID</source>
-      <translation type="unfinished">SSID</translation>
+      <translation>SSID</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="157"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Passwort</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="206"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>Verbindä</translation>
     </message>
   </context>
   <context>
@@ -848,7 +848,7 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep5.qml" line="70"/>
       <source>Connecting</source>
-      <translation type="unfinished">Connecting</translation>
+      <translation>I bin am verbindä</translation>
     </message>
   </context>
   <context>
@@ -856,17 +856,17 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Dami siech, d'Verbindig hät nöd klapet</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote could not connect to your Wi-Fi network.</translation>
+      <translation>YIO Fernbedienig hät sich nöd mit diim Wi-Fi Netzwerk chönä verbindä.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Versuechs nomal</translation>
     </message>
   </context>
   <context>
@@ -874,17 +874,17 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="36"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Verbundä</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Remote has successfully connected to your Wi-Fi network.</translation>
+      <translation>YIO Fernbedienig hät sich erfolgrich mit diim Wi-Fi Netzwerk verbundä.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Wiiter</translation>
     </message>
   </context>
   <context>
@@ -895,20 +895,20 @@ Navigate your internet browser to: http://</source>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to
-a power source and wait until it starts blinking.
+      <translation>Verbind's YIO Dock mit
+ä chli Strom und wart bis es afangt blinkä.
 
- To share the Wi-Fi network credentials with the dock, tap next.</translation>
+ Ums Wi-Fi Passwort mit em Dock z'teilä chasch jetzt wiiter klickä.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="72"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Wiiter</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="83"/>
       <source>Skip</source>
-      <translation type="unfinished">Skip</translation>
+      <translation>Überspringä</translation>
     </message>
   </context>
   <context>
@@ -916,7 +916,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep8.qml" line="139"/>
       <source>Setting up your YIO Dock</source>
-      <translation type="unfinished">Setting up your YIO Dock</translation>
+      <translation>YIO Dock irichtä</translation>
     </message>
   </context>
   <context>
@@ -924,17 +924,17 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Han's nöd gschafft zum Verbindä</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="49"/>
       <source>YIO Dock could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Dock could not connect to your Wi-Fi network.</translation>
+      <translation>YIO Dock hät sich nöd mit diim Wi-Fi Netzwerk chönä verbindä.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Bitte wieder versuechä</translation>
     </message>
   </context>
   <context>
