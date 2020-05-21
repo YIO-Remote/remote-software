@@ -334,32 +334,32 @@ Wetsch me über's Projekt wüsse, den chum verbi %1</translation>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="40"/>
       <source>Use configuration profile.</source>
-      <translation type="unfinished">Use configuration profile.</translation>
+      <translation>Konfigurationsprofil verwendä.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="43"/>
       <source>Use configuration file.</source>
-      <translation type="unfinished">Use configuration file.</translation>
+      <translation>Konfigurationsdatei verwendä.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="44"/>
       <source>Use configuration schema file.</source>
-      <translation type="unfinished">Use configuration schema file.</translation>
+      <translation>Konfigurationsschema verwendä.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use hardware configuration file.</source>
-      <translation type="unfinished">Use hardware configuration file.</translation>
+      <translation>Hardware-Konfigurationsdatei verwendä.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use hardware configuration schema file.</source>
-      <translation type="unfinished">Use hardware configuration schema file.</translation>
+      <translation>Hardware-Konfigurationsschema verwendä.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
       <source>Validate json configuration files and exit.</source>
-      <translation type="unfinished">Validate json configuration files and exit.</translation>
+      <translation>Json Konfigurationsdateiä überprüefä und ab de Bessä.</translation>
     </message>
   </context>
   <context>
@@ -367,26 +367,25 @@ Wetsch me über's Projekt wüsse, den chum verbi %1</translation>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="41"/>
       <source>Invalid configuration file</source>
-      <translation type="unfinished">Invalid configuration file</translation>
+      <translation>Ungültigi Konfigurationsdatei</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Navigiersch mit diim Browser folgendi Adressä a: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>
  and use the web configurator
 to fix the problem.</source>
-      <translation type="unfinished">
- and use the web configurator
-to fix the problem.</translation>
+      <translation>
+und den nimsch de Web-Konfigurator um's Problem z'lösä.</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Neustart</translation>
     </message>
   </context>
   <context>
@@ -395,7 +394,7 @@ to fix the problem.</translation>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Abbruch</translation>
     </message>
   </context>
   <context>
@@ -403,22 +402,22 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Automatischi Helligkeit</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>Anöcherigserkännig</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Wiit wiit weg</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Ganz nöch</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
