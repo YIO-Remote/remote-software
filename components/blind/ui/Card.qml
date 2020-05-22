@@ -227,6 +227,7 @@ Rectangle {
     Text {
         id: percentage
         color: Style.color.text
+        visible: obj.isSupported(Blind.F_POSITION)
         text: userMove ? percent : obj.position
         horizontalAlignment: Text.AlignLeft
         anchors { top: parent.top; topMargin: 100; left: parent.left; leftMargin: 30 }
@@ -235,6 +236,7 @@ Rectangle {
 
     Text {
         color: Style.color.text
+        visible: obj.isSupported(Blind.F_POSITION)
         opacity: percentage.opacity
         text: "%"
         anchors { left: percentage.right; bottom: percentage.bottom; bottomMargin: 30 }
