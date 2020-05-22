@@ -455,11 +455,11 @@ void YioAPI::discoverNetworkServices() {
 }
 
 void YioAPI::discoverNetworkServices(QString mdns) {
-    m_zeroConfBrowser = new QZeroConf;
-    QObject *context  = new QObject();
-    m_prevIp          = "";
+    QZeroConf *zeroConfBrowser = new QZeroConf(this);
+    QObject *  context         = new QObject();
+    m_prevIp                   = "";
 
-    connect(m_zeroConfBrowser, &QZeroConf::serviceAdded, context, [=](QZeroConfService item) {
+    connect(zeroConfBrowser, &QZeroConf::serviceAdded, context, [=](QZeroConfService item) {
         QVariantMap txt;
 
         QMap<QByteArray, QByteArray> txtInfo = item->txt();
@@ -486,11 +486,54 @@ void YioAPI::discoverNetworkServices(QString mdns) {
 
             emit serviceDiscovered(discoveredServices);
         }
-        context->deleteLater();
-        m_zeroConfBrowser->deleteLater();
+        //        context->deleteLater();
+        //        zeroConfBrowser->stopBrowser();
+        //        zeroConfBrowser->deleteLater();
     });
 
-    m_zeroConfBrowser->startBrowser(mdns);
+    connect(zeroConfBrowser, &QZeroConf::serviceUpdated, context, [=](QZeroConfService item) {
+        QVariantMap txt;
+
+        QMap<QByteArray, QByteArray> txtInfo = item->txt();
+
+        QMap<QByteArray, QByteArray>::iterator i;
+        for (i = txtInfo.begin(); i != txtInfo.end(); ++i) {
+            txt.insert(i.key(), i.value());
+        }
+
+        if (m_prevIp != item->ip().toString()) {
+            qCDebug(CLASS_LC) << "Zeroconf found" << item;
+
+            m_prevIp = item->ip().toString();
+
+            QVariantMap map;
+            map.insert(QString("name"), item->name());
+            map.insert(QString("ip"), m_prevIp);
+            map.insert(QString("port"), item->port());
+            map.insert(QString("mdns"), mdns);
+            map.insert(QString("txt"), txt);
+
+            QVariantMap discoveredServices;
+            discoveredServices.insert(item->name(), map);
+
+            emit serviceDiscovered(discoveredServices);
+        }
+        //        context->deleteLater();
+        //        zeroConfBrowser->stopBrowser();
+        //        zeroConfBrowser->deleteLater();
+    });
+
+    if (!zeroConfBrowser->browserExists()) {
+        zeroConfBrowser->startBrowser(mdns);
+        QTimer::singleShot(10000, [=]() {
+            qCDebug(CLASS_LC) << "Stopping mdns discovery after 10 seconds";
+            context->deleteLater();
+            zeroConfBrowser->stopBrowser();
+            qCDebug(CLASS_LC) << "Zeroconf browser stopped";
+            zeroConfBrowser->deleteLater();
+            qCDebug(CLASS_LC) << "Zeroconf browser deleted";
+        });
+    }
 }
 
 void YioAPI::onNewConnection() {
