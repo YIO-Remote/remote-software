@@ -33,7 +33,7 @@ MediaPlayerUtils::MediaPlayerUtils() {
     m_manager = new QNetworkAccessManager(this);
     connect(m_manager, &QNetworkAccessManager::finished, m_worker, &MediaPlayerUtilsWorker::generateImagesReply);
 
-    m_workerThread = new QThread(this);
+    m_workerThread = new QThread();
     connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
     m_worker->moveToThread(m_workerThread);
     m_workerThread->start();
@@ -104,6 +104,7 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
 
         if (!image.load(reply, nullptr)) {
             qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
+            return;
         } else {
             ////////////////////////////////////////////////////////////////////
             /// GET DOMINANT COLOR
@@ -182,6 +183,7 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
     } else {
         qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << reply->errorString();
         emit processingDone(QColor("black"), "", "");
+        return;
     }
 }
 

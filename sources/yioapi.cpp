@@ -447,8 +447,10 @@ void YioAPI::discoverNetworkServices() {
     m_discoverableServices = Integrations::getInstance()->getMDNSList();
 
     for (int i = 0; i < m_discoverableServices.length(); i++) {
-        qCDebug(CLASS_LC) << "Starting mdns discovery" << m_discoverableServices[i];
-        discoverNetworkServices(m_discoverableServices[i]);
+        if (m_discoverableServices[i] != "") {
+            qCDebug(CLASS_LC) << "Starting mdns discovery" << m_discoverableServices[i];
+            discoverNetworkServices(m_discoverableServices[i]);
+        }
     }
 }
 
