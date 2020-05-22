@@ -708,7 +708,8 @@ void YioAPI::processMessage(QString message) {
 void YioAPI::onClientDisconnected() {
     qCDebug(CLASS_LC) << "Client disconnected";
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
-    if (client) {
+    if (client->isValid()) {
+        client->close();
         m_clients.remove(client);
         client->deleteLater();
         qCDebug(CLASS_LC) << "Client removed";
@@ -736,9 +737,14 @@ void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &succ
 
     QJsonDocument json = QJsonDocument::fromVariant(response);
 
-    if (m_clients.contains(client)) {
+    if (m_clients.contains(client) && client->isValid()) {
         qCDebug(CLASS_LC) << "Sending response to client" << client;
         client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+    } else {
+        client->close();
+        m_clients.remove(client);
+        client->deleteLater();
+        qCDebug(CLASS_LC) << "Cannot send message to client. Client removed";
     }
     //    qCDebug(CLASS_LC) << "Response sent to client:" << client << "id:" << id << "response:" << response;
 }
