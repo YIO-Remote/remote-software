@@ -27,8 +27,8 @@
 #include <QString>
 #include <QVariant>
 
-#include "yio-interface/entities/blindinterface.h"
 #include "entity.h"
+#include "yio-interface/entities/blindinterface.h"
 
 class Blind : public Entity, BlindInterface {
     Q_OBJECT
@@ -51,6 +51,7 @@ class Blind : public Entity, BlindInterface {
     void turnOff() override { close(); }
     int  position() override { return m_position; }
     bool isOn() override { return m_state == BlindDef::CLOSED; }
+    bool supportsOn() override { return isSupported(BlindDef::F_POSITION); }
 
     Blind(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent = nullptr);
 
