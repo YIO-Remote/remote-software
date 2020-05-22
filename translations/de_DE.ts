@@ -730,7 +730,7 @@ Navigieren Sie Ihren Internet-Browser zu: http://</translation>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
-      <translation>Ihre Software ist auf dem neuesten Stand.</translation>
+      <translation>Ihre Software ist aktuell.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
@@ -1164,7 +1164,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Reboot</source>
-      <translation>Neu starten</translation>
+      <translation>Neustart</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="232"/>

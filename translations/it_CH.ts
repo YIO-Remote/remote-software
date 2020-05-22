@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru" sourcelanguage="en">
+<TS version="2.1" language="it-CH" sourcelanguage="en">
   <context>
     <name>About</name>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="35"/>
       <source>Thank you!</source>
-      <translation>Благодарим вас!</translation>
+      <translation type="unfinished">Thank you!</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation>YIO - проект с открытым исходным кодом. Большое спасибо каждому, кто внёс свой вклад в его развитие: %1</translation>
+      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
+%1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="50"/>
@@ -20,9 +21,9 @@
 
 To learn more about the project, visit
 %1</source>
-      <translation>
+      <translation type="unfinished">
 
-Узнать больше можно по ссылке
+To learn more about the project, visit
 %1</translation>
     </message>
   </context>
@@ -31,79 +32,79 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="99"/>
       <source>Battery health</source>
-      <translation>Максимальная ёмкость</translation>
+      <translation type="unfinished">Battery health</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
       <source>Remaining time</source>
-      <translation>Оставшееся время</translation>
+      <translation type="unfinished">Remaining time</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
       <source>Screen on</source>
-      <translation>Экран включен</translation>
+      <translation type="unfinished">Screen on</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="177"/>
       <source>Screen off</source>
-      <translation>Экран выключен</translation>
+      <translation type="unfinished">Screen off</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="206"/>
       <source>Battery level</source>
-      <translation>Уровень заряда батареи</translation>
+      <translation type="unfinished">Battery level</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="253"/>
       <source>Average power</source>
-      <translation>Средняя мощность</translation>
+      <translation type="unfinished">Average power</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="313"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation>Пока нет доступных данных</translation>
+      <translation type="unfinished">No data available yet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
       <source>Power saving</source>
-      <translation>Энергосбережение</translation>
+      <translation type="unfinished">Power saving</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Never turn off Wi-Fi</source>
-      <translation>Никогда не отключать Wi-Fi</translation>
+      <translation type="unfinished">Never turn off Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Turn off Wi-Fi after %1 minutes of inactivity</source>
-      <translation>Выключить Wi-Fi после %1 минут бездействия</translation>
+      <translation type="unfinished">Turn off Wi-Fi after %1 minutes of inactivity</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="433"/>
       <location filename="../basic_ui/settings/Battery.qml" line="549"/>
       <source>Never</source>
-      <translation>Никогда</translation>
+      <translation type="unfinished">Never</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="442"/>
       <source>60 minutes</source>
-      <translation>60 минут</translation>
+      <translation type="unfinished">60 minutes</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation>Никогда не выключать пульт</translation>
+      <translation type="unfinished">Never turn off the remote</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation>Выключить пульт после %1 часов бездействия</translation>
+      <translation type="unfinished">Turn off the remote after %1 hours of inactivity</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
       <source>8 hours</source>
-      <translation>8 часов</translation>
+      <translation type="unfinished">8 hours</translation>
     </message>
   </context>
   <context>
@@ -111,17 +112,17 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
       <source>Bluetooth</source>
-      <translation>Bluetooth</translation>
+      <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
       <source>Area detection</source>
-      <translation>Область обнаружения</translation>
+      <translation type="unfinished">Area detection</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Автоматически сканирует Bluetooth-маяки, связанные с областью, находит ближайший и отображает устройства этой области.</translation>
+      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
     </message>
   </context>
   <context>
@@ -129,7 +130,7 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/bluetootharea.cpp" line="126"/>
       <source>Bluetooth device was not found.</source>
-      <translation>Устройство Bluetooth не найдено.</translation>
+      <translation type="unfinished">Bluetooth device was not found.</translation>
     </message>
   </context>
   <context>
@@ -138,7 +139,7 @@ To learn more about the project, visit
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation>Температура: </translation>
+      <translation type="unfinished">Temperature: </translation>
     </message>
   </context>
   <context>
@@ -146,12 +147,12 @@ To learn more about the project, visit
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Remove from favorites</source>
-      <translation>Удалить из избранного</translation>
+      <translation type="unfinished">Remove from favorites</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Add to favorites</source>
-      <translation>Добавить в избранное</translation>
+      <translation type="unfinished">Add to favorites</translation>
     </message>
   </context>
   <context>
@@ -159,47 +160,47 @@ To learn more about the project, visit
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn off</source>
-      <translation>Выключить</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn on</source>
-      <translation>Включить</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="416"/>
       <source>Mode</source>
-      <translation>Режим</translation>
+      <translation type="unfinished">Mode</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="426"/>
       <source>Off</source>
-      <translation>Выкл</translation>
+      <translation type="unfinished">Off</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="432"/>
       <source>Heat</source>
-      <translation>Тепло</translation>
+      <translation type="unfinished">Heat</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="438"/>
       <source>Cool</source>
-      <translation>Холод</translation>
+      <translation type="unfinished">Cool</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
       <source>Mute</source>
-      <translation>Заглушить</translation>
+      <translation type="unfinished">Mute</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
       <source>Back</source>
-      <translation>Назад</translation>
+      <translation type="unfinished">Back</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
       <source>Menu</source>
-      <translation>Меню</translation>
+      <translation type="unfinished">Menu</translation>
     </message>
   </context>
   <context>
@@ -207,22 +208,22 @@ To learn more about the project, visit
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
       <source>Source</source>
-      <translation>Источник</translation>
+      <translation type="unfinished">Source</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
       <source>Info</source>
-      <translation>Информация</translation>
+      <translation type="unfinished">Info</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
       <source>Menu</source>
-      <translation>Меню</translation>
+      <translation type="unfinished">Menu</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
       <source>Guide</source>
-      <translation>Руководство</translation>
+      <translation type="unfinished">Guide</translation>
     </message>
   </context>
   <context>
@@ -230,17 +231,17 @@ To learn more about the project, visit
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn off</source>
-      <translation>Выключить</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
-      <translation>Включить</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="280"/>
       <source>Color</source>
-      <translation>Цвет</translation>
+      <translation type="unfinished">Color</translation>
     </message>
   </context>
   <context>
@@ -248,12 +249,12 @@ To learn more about the project, visit
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn off</source>
-      <translation>Выключить</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn on</source>
-      <translation>Включить</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
   </context>
   <context>
@@ -261,7 +262,7 @@ To learn more about the project, visit
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
       <source>My playlists</source>
-      <translation>Мои плейлисты</translation>
+      <translation type="unfinished">My playlists</translation>
     </message>
   </context>
   <context>
@@ -270,41 +271,41 @@ To learn more about the project, visit
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation>Поиск</translation>
+      <translation type="unfinished">Search</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation>История поиска</translation>
+      <translation type="unfinished">Recent searches</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation>Очистить</translation>
+      <translation type="unfinished">Clear</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="410"/>
       <source>Albums</source>
-      <translation>Альбомы</translation>
+      <translation type="unfinished">Albums</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
-      <translation>Треки</translation>
+      <translation type="unfinished">Tracks</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
-      <translation>Исполнители</translation>
+      <translation type="unfinished">Artists</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
       <source>Playlists</source>
-      <translation>Плейлисты</translation>
+      <translation type="unfinished">Playlists</translation>
     </message>
   </context>
   <context>
@@ -313,13 +314,13 @@ To learn more about the project, visit
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
-      <translation>Выключить</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn on</source>
-      <translation>Включить</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
   </context>
   <context>
@@ -327,7 +328,7 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="136"/>
       <source>% Charged</source>
-      <translation>% заряжено</translation>
+      <translation type="unfinished">% Charged</translation>
     </message>
   </context>
   <context>
@@ -335,32 +336,32 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="40"/>
       <source>Use configuration profile.</source>
-      <translation>Использовать профиль конфигурации.</translation>
+      <translation type="unfinished">Use configuration profile.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="43"/>
       <source>Use configuration file.</source>
-      <translation>Использовать файл конфигурации.</translation>
+      <translation type="unfinished">Use configuration file.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="44"/>
       <source>Use configuration schema file.</source>
-      <translation>Использовать файл схемы конфигурации.</translation>
+      <translation type="unfinished">Use configuration schema file.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use hardware configuration file.</source>
-      <translation>Использовать конфигурационный файл оборудования.</translation>
+      <translation type="unfinished">Use hardware configuration file.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use hardware configuration schema file.</source>
-      <translation>Использовать схему конфигурации для оборудования.</translation>
+      <translation type="unfinished">Use hardware configuration schema file.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
       <source>Validate json configuration files and exit.</source>
-      <translation>Проверить конфигурационные файлы json и выйти.</translation>
+      <translation type="unfinished">Validate json configuration files and exit.</translation>
     </message>
   </context>
   <context>
@@ -368,26 +369,26 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="41"/>
       <source>Invalid configuration file</source>
-      <translation>Недопустимая конфигурация</translation>
+      <translation type="unfinished">Invalid configuration file</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation>Перейдите в браузер по ссылке: http://</translation>
+      <translation type="unfinished">Navigate your internet browser to: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>
  and use the web configurator
 to fix the problem.</source>
-      <translation>
- и используйте веб-конфигуратор
-для исправления проблемы.</translation>
+      <translation type="unfinished">
+ and use the web configurator
+to fix the problem.</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation>Перезагрузить</translation>
+      <translation type="unfinished">Reboot</translation>
     </message>
   </context>
   <context>
@@ -396,7 +397,7 @@ to fix the problem.</source>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation>Отмена</translation>
+      <translation type="unfinished">Cancel</translation>
     </message>
   </context>
   <context>
@@ -404,42 +405,42 @@ to fix the problem.</source>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation>Авто-яркость</translation>
+      <translation type="unfinished">Auto brightness</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation>Определение приближения</translation>
+      <translation type="unfinished">Proximity detection</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation>Далеко</translation>
+      <translation type="unfinished">Far</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation>Близко</translation>
+      <translation type="unfinished">Close</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation>Как должен выглядеть датчик приближения при определении вашей руки.</translation>
+      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation>Тёмный режим</translation>
+      <translation type="unfinished">Dark mode</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
       <source>Cleaning mode</source>
-      <translation>Режим очистки</translation>
+      <translation type="unfinished">Cleaning mode</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Жмите на дисплей в течение 10 секунд, чтобы отключить режим очистки.</translation>
+      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
     </message>
   </context>
   <context>
@@ -447,7 +448,7 @@ to fix the problem.</source>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Media</source>
-      <translation>Медиа</translation>
+      <translation type="unfinished">Media</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -462,17 +463,17 @@ to fix the problem.</source>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Remote</source>
-      <translation>Управление</translation>
+      <translation type="unfinished">Remote</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
-      <translation>Климат</translation>
+      <translation type="unfinished">Climate</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
-      <translation>Переключатель</translation>
+      <translation type="unfinished">Switch</translation>
     </message>
   </context>
   <context>
@@ -481,7 +482,7 @@ to fix the problem.</source>
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Избранное</translation>
+      <translation type="unfinished">Favorites</translation>
     </message>
   </context>
   <context>
@@ -489,12 +490,12 @@ to fix the problem.</source>
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation>Недостаточно свободного места (%1 MB).</translation>
+      <translation type="unfinished">Not enough free space (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation>Файл уже существует</translation>
+      <translation type="unfinished">Destination file already exists</translation>
     </message>
   </context>
   <context>
@@ -503,18 +504,18 @@ to fix the problem.</source>
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation>Используйте веб-конфигуратор
-для настройки управления YIO</translation>
+      <translation type="unfinished">Use the web configurator
+to set up YIO remote</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation>Перейдите в браузер по ссылке: http://</translation>
+      <translation type="unfinished">Navigate your internet browser to: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation>Загрузка</translation>
+      <translation type="unfinished">Loading</translation>
     </message>
   </context>
   <context>
@@ -522,22 +523,22 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
       <source> - Disconnected</source>
-      <translation> - Отключено</translation>
+      <translation type="unfinished"> - Disconnected</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation>Подключить</translation>
+      <translation type="unfinished">Connect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation>Отключить</translation>
+      <translation type="unfinished">Disconnect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation>Добавить</translation>
+      <translation type="unfinished">Add new</translation>
     </message>
   </context>
   <context>
@@ -546,27 +547,27 @@ to set up YIO remote</source>
       <location filename="../sources/jsonfile.cpp" line="80"/>
       <location filename="../sources/jsonfile.cpp" line="129"/>
       <source>empty name</source>
-      <translation>нет имени</translation>
+      <translation type="unfinished">empty name</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="86"/>
       <source>empty data</source>
-      <translation>нет данных</translation>
+      <translation type="unfinished">empty data</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="97"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation>cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="136"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation>cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="145"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation>invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
     </message>
   </context>
   <context>
@@ -575,27 +576,27 @@ to set up YIO remote</source>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation>Избранное</translation>
+      <translation type="unfinished">Favorites</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Settings</source>
-      <translation>Настройки</translation>
+      <translation type="unfinished">Settings</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Lights</source>
-      <translation>Свет</translation>
+      <translation type="unfinished">Lights</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Blinds</source>
-      <translation>Жалюзи</translation>
+      <translation type="unfinished">Blinds</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Media</source>
-      <translation>Медиа</translation>
+      <translation type="unfinished">Media</translation>
     </message>
   </context>
   <context>
@@ -603,22 +604,22 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="64"/>
       <source>Network</source>
-      <translation>Сеть</translation>
+      <translation type="unfinished">Network</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="246"/>
       <source>Wi-Fi signal strength</source>
-      <translation>Мощность сигнала Wi-Fi</translation>
+      <translation type="unfinished">Wi-Fi signal strength</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation>IP-адрес</translation>
+      <translation type="unfinished">IP address</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
       <source>MAC address</source>
-      <translation>MAC-адрес</translation>
+      <translation type="unfinished">MAC address</translation>
     </message>
   </context>
   <context>
@@ -626,7 +627,7 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
-      <translation>Отклонить</translation>
+      <translation type="unfinished">Dismiss</translation>
     </message>
   </context>
   <context>
@@ -634,7 +635,7 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
-      <translation>Уведомления</translation>
+      <translation type="unfinished">Notifications</translation>
     </message>
   </context>
   <context>
@@ -642,12 +643,12 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
-      <translation>Аккумулятор разряжен</translation>
+      <translation type="unfinished">Low battery</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
-      <translation>Пожалуйста, зарядите пульт</translation>
+      <translation type="unfinished">Please charge the remote soon</translation>
     </message>
   </context>
   <context>
@@ -655,12 +656,12 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="112"/>
       <source>Profiles</source>
-      <translation>Профили</translation>
+      <translation type="unfinished">Profiles</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation>Для редактирования профилей воспользуйтесь инструментом веб-конфигурации в настройках.</translation>
+      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
     </message>
   </context>
   <context>
@@ -668,33 +669,33 @@ to set up YIO remote</source>
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation>Wi-Fi устройство не найдено.</translation>
+      <translation type="unfinished">WiFi device was not found.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation>Не удается инициализировать датчик батареи. Пожалуйста, перезапустите пульт.</translation>
+      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation>Ошибка связи с датчиком батареи. Пожалуйста, перезапустите пульт.</translation>
+      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation>Не удаётся инициализировать движок. Пожалуйста, перезапустите пульт.</translation>
+      <translation type="unfinished">Cannot initialize the haptic motor. Please restart the remote.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
       <source>Cannot initialize the interrupt handler. Please restart the remote.</source>
-      <translation>Не удаётся инициализировать обработчик прерываний. Пожалуйста, перезапустите пульт.</translation>
+      <translation type="unfinished">Cannot initialize the interrupt handler. Please restart the remote.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation>Не удаётся инициализировать датчик приближения. Пожалуйста, перезапустите пульт.</translation>
+      <translation type="unfinished">Cannot initialize the proximity sensor. Please restart the remote.</translation>
     </message>
   </context>
   <context>
@@ -702,14 +703,14 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="39"/>
       <source>Remote configuration</source>
-      <translation>Конфигурация пульта</translation>
+      <translation type="unfinished">Remote configuration</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation>Используйте браузер для конфигурации YIO пульта или загрузки резервных копий.
-Перейдите по ссылке http://</translation>
+      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups.
+Navigate your internet browser to: http://</translation>
     </message>
   </context>
   <context>
@@ -719,57 +720,57 @@ Navigate your internet browser to: http://</source>
       <location filename="../basic_ui/pages/Settings.qml" line="106"/>
       <location filename="../basic_ui/pages/Settings.qml" line="162"/>
       <source>Settings</source>
-      <translation>Настройки</translation>
+      <translation type="unfinished">Settings</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
-      <translation>Доступно обновление.</translation>
+      <translation type="unfinished">New software is available.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
-      <translation>Установлена последняя версия.</translation>
+      <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
       <source>Display</source>
-      <translation>Экран</translation>
+      <translation type="unfinished">Display</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
-      <translation>Язык</translation>
+      <translation type="unfinished">Language</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
-      <translation>Интеграция</translation>
+      <translation type="unfinished">Integrations</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="216"/>
       <source>Battery &amp; power</source>
-      <translation>Батарея и мощность</translation>
+      <translation type="unfinished">Battery &amp; power</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
-      <translation>м осталось</translation>
+      <translation type="unfinished">m remaining</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation>Wi-Fi и Bluetooth</translation>
+      <translation type="unfinished">WiFi &amp; bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
-      <translation>Система</translation>
+      <translation type="unfinished">System</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="242"/>
       <source>About</source>
-      <translation>О приложении</translation>
+      <translation type="unfinished">About</translation>
     </message>
   </context>
   <context>
@@ -777,12 +778,12 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep1.qml" line="34"/>
       <source>Hello</source>
-      <translation>Здравствуйте</translation>
+      <translation type="unfinished">Hello</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep1.qml" line="45"/>
       <source>Tap the screen to begin</source>
-      <translation>Коснитесь экрана, чтобы начать</translation>
+      <translation type="unfinished">Tap the screen to begin</translation>
     </message>
   </context>
   <context>
@@ -790,17 +791,17 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep3.qml" line="63"/>
       <source>Wi-Fi setup</source>
-      <translation>Настройки Wi-Fi</translation>
+      <translation type="unfinished">Wi-Fi setup</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep3.qml" line="74"/>
       <source>Select a Wi-Fi network.</source>
-      <translation>Выберите сеть Wi-Fi.</translation>
+      <translation type="unfinished">Select a Wi-Fi network.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep3.qml" line="164"/>
       <source>Join other</source>
-      <translation>Присоединиться к другому</translation>
+      <translation type="unfinished">Join other</translation>
     </message>
   </context>
   <context>
@@ -809,18 +810,18 @@ Navigate your internet browser to: http://</source>
       <location filename="../setup/SetupStep4.qml" line="97"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation type="unfinished">Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="115"/>
       <source>Password</source>
-      <translation>Пароль</translation>
+      <translation type="unfinished">Password</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="174"/>
       <source>Join</source>
-      <translation>Присоединиться</translation>
+      <translation type="unfinished">Join</translation>
     </message>
   </context>
   <context>
@@ -828,22 +829,22 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="104"/>
       <source>Enter your WiFi network credentials</source>
-      <translation>Введите данные Wi-Fi сети</translation>
+      <translation type="unfinished">Enter your WiFi network credentials</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="122"/>
       <source>SSID</source>
-      <translation>SSID</translation>
+      <translation type="unfinished">SSID</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="157"/>
       <source>Password</source>
-      <translation>Пароль</translation>
+      <translation type="unfinished">Password</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="206"/>
       <source>Join</source>
-      <translation>Присоединиться</translation>
+      <translation type="unfinished">Join</translation>
     </message>
   </context>
   <context>
@@ -851,7 +852,7 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep5.qml" line="70"/>
       <source>Connecting</source>
-      <translation>Соединение</translation>
+      <translation type="unfinished">Connecting</translation>
     </message>
   </context>
   <context>
@@ -859,17 +860,17 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation>Не удалось подключиться</translation>
+      <translation type="unfinished">Failed to connect</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation>Приложению не удалось подключиться к Wi-Fi сети.</translation>
+      <translation type="unfinished">YIO Remote could not connect to your Wi-Fi network.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation>Попробовать снова</translation>
+      <translation type="unfinished">Try again</translation>
     </message>
   </context>
   <context>
@@ -877,12 +878,12 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="36"/>
       <source>Connected</source>
-      <translation>Подключено</translation>
+      <translation type="unfinished">Connected</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation>Приложение успешно подключено к Wi-Fi сети.</translation>
+      <translation type="unfinished">YIO Remote has successfully connected to your Wi-Fi network.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
@@ -1045,17 +1046,17 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation>Для обновления требуется более 50% заряда батареи.</translation>
+      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation>Ошибка загрузки: %1</translation>
+      <translation type="unfinished">Download failed: %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation>Не удалось запустить обновление!</translation>
+      <translation type="unfinished">Failed to start app update script!</translation>
     </message>
   </context>
   <context>
@@ -1063,51 +1064,51 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
-      <translation>Автообновление</translation>
+      <translation type="unfinished">Auto update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation>Автоматически искать обновления и устанавливать их при наличии. 
-Установка происходит в промежутке с 03:00 по 05:00.</translation>
+      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
+Updates are installed between 03.00 am and 05.00 am.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation>Доступно обновление.
+      <translation type="unfinished">New software is available.
 YIO remote %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
-      <translation>Установлена последняя версия.</translation>
+      <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
-      <translation>Текущая версия: YIO Remote </translation>
+      <translation type="unfinished">Installed version: YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
-      <translation>YIO Remote </translation>
+      <translation type="unfinished">YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
-      <translation>Обновить</translation>
+      <translation type="unfinished">Update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
-      <translation>Скачать</translation>
+      <translation type="unfinished">Download</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
-      <translation>Проверить обновления</translation>
+      <translation type="unfinished">Check for update</translation>
     </message>
   </context>
   <context>
@@ -1115,22 +1116,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation>Загрузка завершена</translation>
+      <translation type="unfinished">Download completed</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
-      <translation>Загрузка</translation>
+      <translation type="unfinished">Downloading</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
-      <translation>Обновить</translation>
+      <translation type="unfinished">Update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
-      <translation>Отмена</translation>
+      <translation type="unfinished">Cancel</translation>
     </message>
   </context>
   <context>
@@ -1138,12 +1139,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="79"/>
       <source>Unit system</source>
-      <translation>Единицы измерения</translation>
+      <translation type="unfinished">Unit system</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="113"/>
       <source>Metric</source>
-      <translation>Метрика</translation>
+      <translation type="unfinished">Metric</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="148"/>
@@ -1153,22 +1154,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Uptime</source>
-      <translation>Аптайм</translation>
+      <translation type="unfinished">Uptime</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="194"/>
       <source>CPU temperature</source>
-      <translation>Температура процессора</translation>
+      <translation type="unfinished">CPU temperature</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Reboot</source>
-      <translation>Перезагрузить</translation>
+      <translation type="unfinished">Reboot</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="232"/>
       <source>Shutdown</source>
-      <translation>Выключить</translation>
+      <translation type="unfinished">Shutdown</translation>
     </message>
   </context>
   <context>
@@ -1176,22 +1177,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="51"/>
       <source>Area detection</source>
-      <translation>Область обнаружения</translation>
+      <translation type="unfinished">Area detection</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="81"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Автоматически сканирует Bluetooth-маяки, связанные с областью, находит ближайший и отображает устройства этой области.</translation>
+      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
-      <translation>Wi-Fi</translation>
+      <translation type="unfinished">WiFi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
       <source>Other networks</source>
-      <translation>Другие сети</translation>
+      <translation type="unfinished">Other networks</translation>
     </message>
   </context>
   <context>
@@ -1200,18 +1201,18 @@ YIO remote %1</translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation type="unfinished">Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="110"/>
       <source>Password</source>
-      <translation>Пароль</translation>
+      <translation type="unfinished">Password</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="169"/>
       <source>Join</source>
-      <translation>Присоединиться</translation>
+      <translation type="unfinished">Join</translation>
     </message>
   </context>
 </TS>
