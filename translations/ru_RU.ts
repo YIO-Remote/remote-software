@@ -719,12 +719,12 @@ Navigate your internet browser to: http://</source>
       <location filename="../basic_ui/pages/Settings.qml" line="106"/>
       <location filename="../basic_ui/pages/Settings.qml" line="162"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Настройки</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
-      <translation type="unfinished">New software is available.</translation>
+      <translation>Доступно обновление.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
@@ -1045,17 +1045,17 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
-      <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
+      <translation>Для обновления требуется более 50% заряда батареи.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="303"/>
       <source>Download failed: %1</source>
-      <translation type="unfinished">Download failed: %1</translation>
+      <translation>Ошибка загрузки: %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="322"/>
       <source>Failed to start app update script!</source>
-      <translation type="unfinished">Failed to start app update script!</translation>
+      <translation>Не удалось запустить обновление!</translation>
     </message>
   </context>
   <context>
@@ -1069,45 +1069,45 @@ Remote configuration after restarting the remote.</translation>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
-Updates are installed between 03.00 am and 05.00 am.</translation>
+      <translation>Автоматически искать обновления и устанавливать их при наличии. 
+Установка происходит в промежутке с 03:00 по 05:00.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>New software is available.
 YIO remote %1</source>
-      <translation type="unfinished">New software is available.
+      <translation>Доступно обновление.
 YIO remote %1</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Установлена последняя версия.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
-      <translation type="unfinished">Installed version: YIO Remote </translation>
+      <translation>Текущая версия: YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
-      <translation type="unfinished">YIO Remote </translation>
+      <translation>YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Обновить</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Скачать</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
-      <translation type="unfinished">Check for update</translation>
+      <translation>Проверить обновления</translation>
     </message>
   </context>
   <context>
@@ -1115,22 +1115,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Загрузка завершена</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>Загрузка</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Обновить</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Отмена</translation>
     </message>
   </context>
   <context>
@@ -1138,12 +1138,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="79"/>
       <source>Unit system</source>
-      <translation type="unfinished">Unit system</translation>
+      <translation>Единицы измерения</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="113"/>
       <source>Metric</source>
-      <translation type="unfinished">Metric</translation>
+      <translation>Метрика</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="148"/>
