@@ -708,7 +708,7 @@ void YioAPI::processMessage(QString message) {
 void YioAPI::onClientDisconnected() {
     qCDebug(CLASS_LC) << "Client disconnected";
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
-    if (client->isValid()) {
+    if (client) {
         client->close();
         m_clients.remove(client);
         client->deleteLater();
