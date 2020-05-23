@@ -887,7 +887,7 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Далее</translation>
     </message>
   </context>
   <context>
@@ -898,20 +898,20 @@ Navigate your internet browser to: http://</source>
 a power source and wait until it starts blinking.
 
  To share the Wi-Fi network credentials with the dock, tap next.</source>
-      <translation type="unfinished">Connect the YIO Dock to
-a power source and wait until it starts blinking.
+      <translation>Подключите YIO Dock к
+источнику питания и дождитесь мигания индикатора.
 
- To share the Wi-Fi network credentials with the dock, tap next.</translation>
+ Чтобы поделиться данными Wi-Fi сети с док-станцией, нажмите Далее.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="72"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Далее</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep7.qml" line="83"/>
       <source>Skip</source>
-      <translation type="unfinished">Skip</translation>
+      <translation>Пропустить</translation>
     </message>
   </context>
   <context>
@@ -919,7 +919,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep8.qml" line="139"/>
       <source>Setting up your YIO Dock</source>
-      <translation type="unfinished">Setting up your YIO Dock</translation>
+      <translation>Настройка YIO Dock</translation>
     </message>
   </context>
   <context>
@@ -927,17 +927,17 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="36"/>
       <source>Failed to connect</source>
-      <translation type="unfinished">Failed to connect</translation>
+      <translation>Не удалось подключиться</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="49"/>
       <source>YIO Dock could not connect to your Wi-Fi network.</source>
-      <translation type="unfinished">YIO Dock could not connect to your Wi-Fi network.</translation>
+      <translation>YIO Dock не удалось подключиться к Wi-Fi сети.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Failure.qml" line="60"/>
       <source>Try again</source>
-      <translation type="unfinished">Try again</translation>
+      <translation>Попробовать снова</translation>
     </message>
   </context>
   <context>
@@ -945,7 +945,7 @@ a power source and wait until it starts blinking.
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="39"/>
       <source>Done</source>
-      <translation type="unfinished">Done</translation>
+      <translation>Готово</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="50"/>
@@ -954,16 +954,15 @@ a power source and wait until it starts blinking.
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">You can setup your YIO Dock later from the web configurator.
+      <translation>Вы можете настроить YIO Dock позже через веб-конфигуратор.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Чтобы использовать веб-конфигуратор, перейдите в Настройки
+Настройка управления после перезапуски пульта.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Перезагрузить</translation>
     </message>
   </context>
   <context>
@@ -971,7 +970,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="39"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Подключено</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="50"/>
@@ -980,16 +979,15 @@ Remote configuration after restarting the remote.</translation>
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">YIO Dock has successfully connected to your Wi-Fi network.
+      <translation>YIO Dock успешно подключен к Wi-Fi сети .
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Чтобы использовать веб-конфигуратор, перейдите в Настройки
+Настройка управления после перезапуски пульта.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Перезагрузить</translation>
     </message>
   </context>
   <context>
@@ -997,7 +995,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStepCountry.qml" line="65"/>
       <source>Select your country or region</source>
-      <translation type="unfinished">Select your country or region</translation>
+      <translation>Выберите страну или регион</translation>
     </message>
   </context>
   <context>
@@ -1005,42 +1003,42 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
       <source>Cannot connect to the update server.</source>
-      <translation type="unfinished">Cannot connect to the update server.</translation>
+      <translation>Не удается подключиться к серверу для обновления.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
-      <translation type="unfinished">Invalid request.</translation>
+      <translation>Неверный запрос.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="199"/>
       <source>Unsupported device.</source>
-      <translation type="unfinished">Unsupported device.</translation>
+      <translation>Устройство не поддерживается.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation type="unfinished">Service currently not available.</translation>
+      <translation>Служба недоступна.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
       <source>Request error %1</source>
-      <translation type="unfinished">Request error %1</translation>
+      <translation>Ошибка в запросе %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>Программное обновление:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>New software is available</source>
-      <translation type="unfinished">New software is available</translation>
+      <translation>Доступно обновление</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Скачать</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>

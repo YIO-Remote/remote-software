@@ -682,7 +682,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
       <source>Cannot initialize the haptic motor. Please restart the remote.</source>
-      <translation>I gspürä mit Haptikmotor nöd. Bitte start mich neu.</translation>
+      <translation>I gspürä mit Haptikmotor nöd. Bitte start mi neu.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/interrupthandler.h" line="28"/>
@@ -692,7 +692,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <message>
       <location filename="../sources/hardware/proximitysensor.h" line="28"/>
       <source>Cannot initialize the proximity sensor. Please restart the remote.</source>
-      <translation>I schaf's nöd der Abstands-Sensor z'initialisierä. Bitte d'Fernbedienig neu startä.</translation>
+      <translation>I schaf's nöd de Abstands-Sensor z'initialisierä. Bitte d'Fernbedienig neu startä.</translation>
     </message>
   </context>
   <context>
@@ -1002,7 +1002,7 @@ a nachdem d'Fernbedienig neu gstartet häsch.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="165"/>
       <source>Cannot connect to the update server.</source>
-      <translation>Hueresiech, i chan mi nöd mit em Uffrüschigs-Server verbindä.</translation>
+      <translation>Hüeresiech, i chan mi nöd mit em Uffrüschigs-Server verbindä.</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
