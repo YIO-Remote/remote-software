@@ -486,9 +486,6 @@ void YioAPI::discoverNetworkServices(QString mdns) {
 
             emit serviceDiscovered(discoveredServices);
         }
-        //        context->deleteLater();
-        //        zeroConfBrowser->stopBrowser();
-        //        zeroConfBrowser->deleteLater();
     });
 
     connect(zeroConfBrowser, &QZeroConf::serviceUpdated, context, [=](QZeroConfService item) {
@@ -502,7 +499,7 @@ void YioAPI::discoverNetworkServices(QString mdns) {
         }
 
         if (m_prevIp != item->ip().toString()) {
-            qCDebug(CLASS_LC) << "Zeroconf found" << item;
+            qCDebug(CLASS_LC) << "Zeroconf updated" << item;
 
             m_prevIp = item->ip().toString();
 
@@ -518,19 +515,23 @@ void YioAPI::discoverNetworkServices(QString mdns) {
 
             emit serviceDiscovered(discoveredServices);
         }
-        //        context->deleteLater();
-        //        zeroConfBrowser->stopBrowser();
-        //        zeroConfBrowser->deleteLater();
     });
 
     if (!zeroConfBrowser->browserExists()) {
         zeroConfBrowser->startBrowser(mdns);
         QTimer::singleShot(10000, [=]() {
             qCDebug(CLASS_LC) << "Stopping mdns discovery after 10 seconds";
-            context->deleteLater();
-            zeroConfBrowser->stopBrowser();
+            if (context) {
+                context->deleteLater();
+            }
+            qCDebug(CLASS_LC) << "Context deleted";
+            if (zeroConfBrowser->browserExists()) {
+                zeroConfBrowser->stopBrowser();
+            }
             qCDebug(CLASS_LC) << "Zeroconf browser stopped";
-            zeroConfBrowser->deleteLater();
+            if (zeroConfBrowser) {
+                zeroConfBrowser->deleteLater();
+            }
             qCDebug(CLASS_LC) << "Zeroconf browser deleted";
         });
     }
@@ -710,6 +711,7 @@ void YioAPI::onClientDisconnected() {
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
         client->close();
+        qCDebug(CLASS_LC) << "Client closed" << client;
         m_clients.remove(client);
         client->deleteLater();
         qCDebug(CLASS_LC) << "Client removed";
@@ -737,14 +739,13 @@ void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &succ
 
     QJsonDocument json = QJsonDocument::fromVariant(response);
 
-    if (m_clients.contains(client) && client->isValid()) {
-        qCDebug(CLASS_LC) << "Sending response to client" << client;
-        client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
-    } else {
-        client->close();
-        m_clients.remove(client);
-        client->deleteLater();
-        qCDebug(CLASS_LC) << "Cannot send message to client. Client removed";
+    if (client) {
+        if (m_clients.contains(client)) {
+            if (client->isValid()) {
+                client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+                qCDebug(CLASS_LC) << "Sent response to client" << client;
+            }
+        }
     }
     //    qCDebug(CLASS_LC) << "Response sent to client:" << client << "id:" << id << "response:" << response;
 }
@@ -929,11 +930,15 @@ void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
     timeOutTimer->setSingleShot(true);
 
     connect(timeOutTimer, &QTimer::timeout, this, [=]() {
+        qCDebug(CLASS_LC) << "API Discovery timeout.";
         QVariantMap response;
         response.insert("message", "discovery_done");
+        qCDebug(CLASS_LC) << "API Discovery timeout, response created.";
         apiSendResponse(client, id, true, response);
 
-        context->deleteLater();
+        if (context) {
+            context->deleteLater();
+        }
         timeOutTimer->deleteLater();
     });
     timeOutTimer->start(10000);
