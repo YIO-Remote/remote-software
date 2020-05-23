@@ -305,6 +305,7 @@ TRANSLATIONS = translations/bg_BG.ts \
                translations/cs_CZ.ts \
                translations/da_DK.ts \
                translations/de_DE.ts \
+               translations/de_CH.ts \
                translations/el_GR.ts \
                translations/en_US.ts \
                translations/es_ES.ts \
