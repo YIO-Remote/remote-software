@@ -86,10 +86,10 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
             m_workerThread->terminate();
             m_workerThread->wait();
             qCWarning(CLASS_LC()) << "Thread terminated.";
+            m_workerThread->deleteLater();
+            qCDebug(CLASS_LC()) << "Thread removed and deleted";
         }
     }
-    m_workerThread->deleteLater();
-    qCDebug(CLASS_LC()) << "Thread removed and deleted";
     m_worker->deleteLater();
     qCDebug(CLASS_LC()) << "Worker class deleted";
     m_manager->deleteLater();
@@ -193,8 +193,10 @@ void MediaPlayerUtilsWorker::generateImagesReply(QNetworkReply *reply) {
             qCDebug(CLASS_LC()) << "Creating large image DONE";
 
             emit processingDone(m_pixelColor, m_smallImage, m_largeImage);
-
-            reply->deleteLater();
+            if (reply) {
+                reply->deleteLater();
+                reply = nullptr;
+            }
             qCDebug(CLASS_LC()) << "Network reply deleted";
         }
     } else {
