@@ -38,10 +38,10 @@ MediaPlayerUtils::~MediaPlayerUtils() {
             m_workerThread->terminate();
             m_workerThread->wait();
             qCWarning(CLASS_LC()) << "Destructor: Thread terminated.";
+            m_workerThread->deleteLater();
+            qCDebug(CLASS_LC()) << "Destructor: Thread removed and deleted";
         }
     }
-    m_workerThread->deleteLater();
-    qCDebug(CLASS_LC()) << "Destructor: Thread removed and deleted";
     m_worker->deleteLater();
     qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
     m_manager->deleteLater();
