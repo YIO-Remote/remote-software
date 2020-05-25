@@ -39,13 +39,20 @@ MediaPlayerUtils::~MediaPlayerUtils() {
             m_workerThread->wait();
             qCWarning(CLASS_LC()) << "Destructor: Thread terminated.";
             m_workerThread->deleteLater();
+            m_workerThread = nullptr;
             qCDebug(CLASS_LC()) << "Destructor: Thread removed and deleted";
         }
     }
-    m_worker->deleteLater();
-    qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
-    m_manager->deleteLater();
-    qCDebug(CLASS_LC()) << "Destructor: QNetworkAccessManager deleted";
+    if (m_worker) {
+        m_worker->deleteLater();
+        m_worker = nullptr;
+        qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
+    }
+    if (m_manager) {
+        m_manager->deleteLater();
+        m_manager = nullptr;
+        qCDebug(CLASS_LC()) << "Destructor: QNetworkAccessManager deleted";
+    }
 }
 
 void MediaPlayerUtils::setImageURL(QString url) {
@@ -87,12 +94,15 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
             m_workerThread->wait();
             qCWarning(CLASS_LC()) << "Thread terminated.";
             m_workerThread->deleteLater();
+            m_workerThread = nullptr;
             qCDebug(CLASS_LC()) << "Thread removed and deleted";
         }
     }
     m_worker->deleteLater();
+    m_worker = nullptr;
     qCDebug(CLASS_LC()) << "Worker class deleted";
     m_manager->deleteLater();
+    m_manager = nullptr;
     qCDebug(CLASS_LC()) << "QNetworkAccessManager deleted";
 }
 
