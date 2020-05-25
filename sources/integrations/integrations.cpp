@@ -22,6 +22,7 @@
 
 #include "integrations.h"
 
+#include <QDirIterator>
 #include <QLoggingCategory>
 #include <QPluginLoader>
 #include <QtDebug>
@@ -41,15 +42,15 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath) {
     s_instance = this;
 
-    const QMetaObject& metaObject             = IntegrationsSupported::staticMetaObject;
-    int                index                  = metaObject.indexOfEnumerator("SupportedIntegrationTypes");
-    QMetaEnum          metaEnumSupportedTypes = metaObject.enumerator(index);
-    m_enumSupportedIntegrationTypes           = &metaEnumSupportedTypes;
-
-    for (int i = 0; i < m_enumSupportedIntegrationTypes->keyCount(); i++) {
-        QString name(m_enumSupportedIntegrationTypes->key(i));
-        qCDebug(CLASS_LC()) << "Adding supported integration type:" << name.toLower();
-        m_supportedIntegrations.append(name.toLower());
+    // scan for plugins
+    QDirIterator it(m_pluginPath);
+    while (it.hasNext()) {
+        QPluginLoader pluginLoader(it.next());
+        QString       pluginName = pluginLoader.metaData()["MetaData"].toObject().value("name").toString();
+        if (pluginName != "") {
+            m_supportedIntegrations.append(pluginName.toLower());
+            qCDebug(CLASS_LC()) << "Adding supported integration type:" << pluginName;
+        }
     }
 }
 

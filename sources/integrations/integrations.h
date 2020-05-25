@@ -25,7 +25,6 @@
 #include <QMap>
 #include <QObject>
 
-#include "integrations_supported.h"
 #include "integrationsinterface.h"
 #include "yio-interface/integrationinterface.h"
 #include "yio-interface/plugininterface.h"
@@ -107,7 +106,4 @@ class Integrations : public QObject, IntegrationsInterface {
     int                     m_integrationsLoaded = 0;
 
     static Integrations* s_instance;
-
- protected:
-    QMetaEnum* m_enumSupportedIntegrationTypes;
 };

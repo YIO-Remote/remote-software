@@ -120,7 +120,6 @@ HEADERS += \
     sources/hardware/proximitysensor.h \
     sources/hardware/mock/proximitysensor_mock.h \
     sources/integrations/integrations.h \
-    sources/integrations/integrations_supported.h \
     sources/integrations/integrationsinterface.h \
     sources/jsonfile.h \
     sources/launcher.h \
