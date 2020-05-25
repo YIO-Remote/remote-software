@@ -111,6 +111,8 @@ void Integrations::load() {
     qCDebug(CLASS_LC) << "Plugin path:" << m_pluginPath;
 
     // let's load the plugins
+    m_integrationsToLoad = c.count();
+
     for (QVariantMap::const_iterator iter = c.begin(); iter != c.end(); ++iter) {
         QObject* obj;
         if (!isPluginLoaded(iter.key())) {
@@ -125,7 +127,6 @@ void Integrations::load() {
         map.insert(Config::KEY_TYPE, iter.key());
 
         // create instance of the integration
-        m_integrationsToLoad++;
         createInstance(obj, map);
     }
 

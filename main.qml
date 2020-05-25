@@ -302,7 +302,9 @@ ApplicationWindow {
         background: Item { x: parent.width - 1; width: parent.width; height: parent.height }
 
         onOpacityChanged: {
-            loader_main.item.opacity = 1 - opacity + 0.3
+            if (loader_main.item) {
+                loader_main.item.opacity = 1 - opacity + 0.3
+            }
         }
 
         Rectangle {
