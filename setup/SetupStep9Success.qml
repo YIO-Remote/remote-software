@@ -61,10 +61,13 @@ Item {
         buttonText: qsTr("Reboot") + translateHandler.emptyString
         mouseArea.onClicked: {
             Haptic.playEffect(Haptic.Click);
-            // delete /firstrun
-            console.debug("Deleting /firstrun success: " + fileio.deleteFile("/firstrun"));
             // reboot remote
             myLauncher.launch("reboot");
         }
+    }
+
+    Component.onCompleted: {
+        // delete /firstrun
+        console.debug("Deleting /firstrun success: " + fileio.deleteFile("/firstrun"));
     }
 }

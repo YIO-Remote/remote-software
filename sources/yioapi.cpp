@@ -274,6 +274,8 @@ bool YioAPI::removeEntity(QString entityId) {
 bool YioAPI::addIntegration(QVariantMap integration) {
     // get the type of the new integration
     QString integrationType = integration.value("type").toString();
+    QString integrationId   = integration.value("id").toString();
+
     qCDebug(CLASS_LC) << "Adding integration type:" << integrationType;
 
     // remove the key that is not needed
@@ -295,9 +297,16 @@ bool YioAPI::addIntegration(QVariantMap integration) {
     qCDebug(CLASS_LC) << "Input data is OK.";
 
     // check if the integration already exists
-    QObject *iObj = m_integrations->get(integration.value("id").toString());
+    QObject *iObj = m_integrations->get(integrationId);
     if (iObj) {
-        return false;
+        IntegrationInterface *ii = qobject_cast<IntegrationInterface *>(iObj);
+        if (ii) {
+            if (ii->integrationId() == integrationId) {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     delete iObj;
