@@ -75,7 +75,7 @@ Item {
                 Haptic.playEffect(Haptic.Click);
                 container.parent.parent.parent.dockSkip = false;
                 container.parent.parent.parent.incrementCurrentIndex();
-                bluetoothArea.lookForDock();
+                bluetooth.lookForDocks();
             }
         }
 

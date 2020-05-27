@@ -91,12 +91,6 @@ ApplicationWindow {
         Proximity.proximitySetting = Qt.binding(function() { return config.settings.proximity })
         VirtualKeyboardSettings.locale = Qt.binding(function() { return config.settings.language })
 
-        // load bluetooth
-        bluetoothArea.init(config.config);
-        if (config.settings.bluetootharea) {
-            bluetoothArea.startScan();
-        }
-
         // Start websocket API
         api.start();
 

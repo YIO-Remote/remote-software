@@ -31,7 +31,7 @@
 #include <QQuickWindow>
 #include <QtDebug>
 
-#include "bluetootharea.h"
+#include "bluetooth.h"
 #include "commandlinehandler.h"
 #include "components/media_player/sources/utils_mediaplayer.h"
 #include "config.h"
@@ -172,8 +172,8 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor", &HardwareFactory::lightSensorProvider);
 
     // BLUETOOTH AREA
-    BluetoothArea bluetoothArea;
-    engine.rootContext()->setContextProperty("bluetoothArea", &bluetoothArea);
+    BluetoothControl bluetooth;
+    engine.rootContext()->setContextProperty("bluetooth", &bluetooth);
 
     // TRANSLATION
     TranslationHandler transHndl(&engine);
