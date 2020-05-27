@@ -36,16 +36,21 @@ class MediaPlayerUtilsWorker : public QObject {
 
  public:
     MediaPlayerUtilsWorker() {}
-    virtual ~MediaPlayerUtilsWorker() {}
+    virtual ~MediaPlayerUtilsWorker();
+
+    void terminateWork();
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
-    void generateImagesReply(QNetworkReply* reply);
+    void generateImages(const QString& url);
+    void generateImagesReply();
 
  signals:
     void processingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
 
  private:
-    QColor dominantColor(const QImage& image);
+    QNetworkAccessManager* m_manager;
+    QNetworkReply*         m_reply;
+    QColor                 dominantColor(const QImage& image);
 };
 
 class MediaPlayerUtils : public QObject {
@@ -91,7 +96,6 @@ class MediaPlayerUtils : public QObject {
 
     void generateImages(const QString& url);
 
-    QNetworkAccessManager*  m_manager;
     QThread*                m_workerThread;
     MediaPlayerUtilsWorker* m_worker;
 };
