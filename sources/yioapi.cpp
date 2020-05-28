@@ -235,7 +235,6 @@ bool YioAPI::removeEntity(QString entityId) {
         item.insert("favorites", profileEntities);
         profiles.insert(iter.key(), item);
     }
-    m_config->setProfiles(profiles);
 
     // remove from config
     // get the config
@@ -246,7 +245,6 @@ bool YioAPI::removeEntity(QString entityId) {
     for (int i = 0; i < entitiesType.length(); i++) {
         if (entitiesType[i].toMap().value("entity_id").toString() == entityId) {
             entitiesType.removeAt(i);
-            qCDebug(CLASS_LC) << "4";
             break;
         }
     }
@@ -265,8 +263,11 @@ bool YioAPI::removeEntity(QString entityId) {
 
         // remove from database
         m_entities->remove(entityId);
+        m_config->setProfiles(profiles);
+        qCDebug(CLASS_LC) << "Removing entity success:" << entityId;
         return true;
     } else {
+        qCDebug(CLASS_LC) << "Removing entity failure:" << entityId;
         return false;
     }
 }

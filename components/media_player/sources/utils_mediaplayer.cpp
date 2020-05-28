@@ -30,25 +30,25 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 MediaPlayerUtils::MediaPlayerUtils() {}
 
 MediaPlayerUtils::~MediaPlayerUtils() {
-    if (m_workerThread->isRunning()) {
-        qCDebug(CLASS_LC()) << "Destructor: Thread is running. Quitting.";
-        m_worker->terminateWork();
-        m_workerThread->quit();
-        if (!m_workerThread->wait(5000)) {
-            qCWarning(CLASS_LC()) << "Destructor: Thread didn't quit. Terminating.";
-            m_workerThread->terminate();
-            m_workerThread->wait();
-            qCWarning(CLASS_LC()) << "Destructor: Thread terminated.";
-            if (m_workerThread) {
-                m_workerThread->deleteLater();
-                m_workerThread = nullptr;
+    if (m_workerThread) {
+        if (m_workerThread->isRunning()) {
+            qCDebug(CLASS_LC()) << "Destructor: Thread is running. Quitting.";
+            m_worker->terminateWork();
+            m_workerThread->quit();
+            if (!m_workerThread->wait(5000)) {
+                qCWarning(CLASS_LC()) << "Destructor: Thread didn't quit. Terminating.";
+                m_workerThread->terminate();
+                m_workerThread->wait();
+                qCWarning(CLASS_LC()) << "Destructor: Thread terminated.";
+                if (m_workerThread) {
+                    m_workerThread->deleteLater();
+                }
+                qCDebug(CLASS_LC()) << "Destructor: Thread removed and deleted";
             }
-            qCDebug(CLASS_LC()) << "Destructor: Thread removed and deleted";
         }
     }
     if (m_worker) {
         m_worker->deleteLater();
-        m_worker = nullptr;
         qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
     }
 }
@@ -83,30 +83,31 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
     m_image = largeImage;
     emit imageChanged();
 
-    if (m_workerThread->isRunning()) {
-        m_worker->terminateWork();
-        qCDebug(CLASS_LC()) << "Thread is running. Quitting.";
-        m_workerThread->quit();
-        if (!m_workerThread->wait(5000)) {
-            qCWarning(CLASS_LC()) << "Thread didn't quit. Terminating.";
-            m_workerThread->terminate();
-            m_workerThread->wait();
-            qCWarning(CLASS_LC()) << "Thread terminated.";
-            if (m_workerThread) {
-                m_workerThread->deleteLater();
-                m_workerThread = nullptr;
+    if (m_workerThread) {
+        if (m_workerThread->isRunning()) {
+            m_worker->terminateWork();
+            qCDebug(CLASS_LC()) << "Thread is running. Quitting.";
+            m_workerThread->quit();
+            if (!m_workerThread->wait(5000)) {
+                qCWarning(CLASS_LC()) << "Thread didn't quit. Terminating.";
+                m_workerThread->terminate();
+                m_workerThread->wait();
+                qCWarning(CLASS_LC()) << "Thread terminated.";
+                if (m_workerThread) {
+                    m_workerThread->deleteLater();
+                }
+                qCDebug(CLASS_LC()) << "Thread removed and deleted";
             }
-            qCDebug(CLASS_LC()) << "Thread removed and deleted";
         }
     }
     if (m_worker) {
         m_worker->deleteLater();
-        m_worker = nullptr;
     }
     qCDebug(CLASS_LC()) << "Worker class deleted";
 }
 
 void MediaPlayerUtils::generateImages(const QString &url) {
+    qCDebug(CLASS_LC()) << "Generate images for" << url;
     if (url != m_prevImageURL) {
         m_prevImageURL = url;
         emit processingStarted();
