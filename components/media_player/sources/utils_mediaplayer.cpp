@@ -39,8 +39,10 @@ MediaPlayerUtils::~MediaPlayerUtils() {
             m_workerThread->terminate();
             m_workerThread->wait();
             qCWarning(CLASS_LC()) << "Destructor: Thread terminated.";
-            m_workerThread->deleteLater();
-            m_workerThread = nullptr;
+            if (m_workerThread) {
+                m_workerThread->deleteLater();
+                m_workerThread = nullptr;
+            }
             qCDebug(CLASS_LC()) << "Destructor: Thread removed and deleted";
         }
     }
@@ -90,13 +92,17 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
             m_workerThread->terminate();
             m_workerThread->wait();
             qCWarning(CLASS_LC()) << "Thread terminated.";
-            m_workerThread->deleteLater();
-            m_workerThread = nullptr;
+            if (m_workerThread) {
+                m_workerThread->deleteLater();
+                m_workerThread = nullptr;
+            }
             qCDebug(CLASS_LC()) << "Thread removed and deleted";
         }
     }
-    m_worker->deleteLater();
-    m_worker = nullptr;
+    if (m_worker) {
+        m_worker->deleteLater();
+        m_worker = nullptr;
+    }
     qCDebug(CLASS_LC()) << "Worker class deleted";
 }
 

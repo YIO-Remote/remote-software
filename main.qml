@@ -233,6 +233,7 @@ ApplicationWindow {
         asynchronous: true
         source: "qrc:/basic_ui/ChargingScreen.qml"
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
+        active: visible
     }
 
 
