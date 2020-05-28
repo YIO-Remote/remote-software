@@ -123,6 +123,11 @@ void Integrations::load() {
             obj = getPlugin(iter.key());
         }
 
+        // if the plugin is the config, but not in the plugins directory
+        if (obj == nullptr) {
+            m_integrationsToLoad--;
+        }
+
         // push the config to the integration
         QVariantMap map = iter.value().toMap();
         map.insert(Config::KEY_TYPE, iter.key());
