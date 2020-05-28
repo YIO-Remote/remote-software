@@ -33,12 +33,14 @@ Comp.ButtonBase {
     icon: Style.icon.light
 
     cardLoader.source: {
-        if (obj.isSupported(Light.F_COLOR)) {
-            return "qrc:/components/light/ui/CardColor.qml";
-        } else if (obj.isSupported(Light.F_BRIGHTNESS)) {
-            return "qrc:/components/light/ui/CardDimmable.qml";
-        } else {
-            return "qrc:/components/light/ui/CardSwitch.qml";
+        if (obj) {
+            if (obj.isSupported(Light.F_COLOR)) {
+                return "qrc:/components/light/ui/CardColor.qml";
+            } else if (obj.isSupported(Light.F_BRIGHTNESS)) {
+                return "qrc:/components/light/ui/CardDimmable.qml";
+            } else {
+                return "qrc:/components/light/ui/CardSwitch.qml";
+            }
         }
     }
 

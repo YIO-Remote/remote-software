@@ -183,6 +183,8 @@ bool YioAPI::addEntity(QVariantMap entity) {
 }
 
 bool YioAPI::updatEntity(QVariantMap entity) {
+    QMutexLocker locker(&m_mutex);
+
     qCDebug(CLASS_LC) << "Update entity:" << entity.value("entity_id").toString();
 
     // remove entity
@@ -195,14 +197,18 @@ bool YioAPI::updatEntity(QVariantMap entity) {
 }
 
 bool YioAPI::removeEntity(QString entityId) {
+    QMutexLocker locker(&m_mutex);
+
     qCDebug(CLASS_LC) << "Removing entity:" << entityId;
 
     QObject *        o = m_entities->get(entityId);
     EntityInterface *eIface;
     if (o) {
         eIface = qobject_cast<EntityInterface *>(o);
-    } else {
-        return false;
+        if (!eIface) {
+            qCDebug(CLASS_LC) << "Entity doesn't exist, probably already removed:" << entityId;
+            return false;
+        }
     }
 
     // remove entity from groups
@@ -236,8 +242,11 @@ bool YioAPI::removeEntity(QString entityId) {
         profiles.insert(iter.key(), item);
     }
 
+    //    m_config->setProfiles(profiles);
+
     // remove from config
     // get the config
+    eIface                    = qobject_cast<EntityInterface *>(o);
     QVariantMap  c            = getConfig();
     QVariantMap  entities     = c.value("entities").toMap();
     QVariantList entitiesType = entities.value(eIface->type()).toList();
@@ -341,6 +350,8 @@ bool YioAPI::addIntegration(QVariantMap integration) {
 }
 
 bool YioAPI::updateIntegration(QVariantMap integration) {
+    QMutexLocker locker(&m_mutex);
+
     // get the integration of the new integration
     QString integrationType = integration.value("type").toString();
 
@@ -398,6 +409,8 @@ bool YioAPI::updateIntegration(QVariantMap integration) {
 }
 
 bool YioAPI::removeIntegration(QString integrationId) {
+    QMutexLocker locker(&m_mutex);
+
     QObject *integration     = m_integrations->get(integrationId);
     QString  integrationType = m_integrations->getType(integrationId);
 

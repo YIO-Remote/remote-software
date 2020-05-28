@@ -65,7 +65,7 @@ Comp.ButtonBase {
         id: info
         color: Style.color.text
         opacity: 0.5
-        text: obj.source
+        text: obj ? obj.source : ""
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
         width: title.width
@@ -80,10 +80,10 @@ Comp.ButtonBase {
     }
 
     // album art
-    property string m_image: obj.mediaImage
+    property string m_image: obj ? obj.mediaImage : ""
 
     onM_imageChanged: {
-        mediaplayerUtils.imageURL = obj.mediaImage
+        mediaplayerUtils.imageURL = obj ? obj.mediaImage : ""
     }
 
     BasicUI.CustomImageLoader {

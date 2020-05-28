@@ -117,6 +117,8 @@ class YioAPI : public YioAPIInterface {
     Integrations* m_integrations;
     Config*       m_config;
 
+    QMutex m_mutex;
+
     // API CALLS
     void apiSendResponse(QWebSocket* client, const int& id, const bool& success, QVariantMap response);
 

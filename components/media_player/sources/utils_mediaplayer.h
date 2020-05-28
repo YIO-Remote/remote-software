@@ -35,10 +35,8 @@ class MediaPlayerUtilsWorker : public QObject {
     Q_OBJECT
 
  public:
-    MediaPlayerUtilsWorker() {}
-    virtual ~MediaPlayerUtilsWorker();
-
-    void terminateWork();
+    explicit MediaPlayerUtilsWorker(QObject* parent = nullptr);
+    ~MediaPlayerUtilsWorker();
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void generateImages(const QString& url);
@@ -57,8 +55,8 @@ class MediaPlayerUtils : public QObject {
     Q_OBJECT
 
  public:
-    MediaPlayerUtils();
-    virtual ~MediaPlayerUtils();
+    explicit MediaPlayerUtils(QObject* parent = nullptr);
+    ~MediaPlayerUtils();
 
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
@@ -96,6 +94,6 @@ class MediaPlayerUtils : public QObject {
 
     void generateImages(const QString& url);
 
-    QThread*                m_workerThread;
-    MediaPlayerUtilsWorker* m_worker;
+    QThread*                m_workerThread = nullptr;
+    MediaPlayerUtilsWorker* m_worker       = nullptr;
 };
