@@ -128,16 +128,20 @@ void MediaPlayerUtils::generateImages(const QString &url) {
 MediaPlayerUtilsWorker::~MediaPlayerUtilsWorker() {
     qCDebug(CLASS_LC()) << "Worker destructor: terminate work.";
     m_manager->disconnect();
-    m_manager->deleteLater();
-    m_manager = nullptr;
+    if (m_manager) {
+        m_manager->deleteLater();
+        m_manager = nullptr;
+    }
     qCDebug(CLASS_LC()) << "Worker destructor: Manager deleted.";
 }
 
 void MediaPlayerUtilsWorker::terminateWork() {
     qCDebug(CLASS_LC()) << "Worker: terminate work.";
     m_manager->disconnect();
-    m_manager->deleteLater();
-    m_manager = nullptr;
+    if (m_manager) {
+        m_manager->deleteLater();
+        m_manager = nullptr;
+    }
     qCDebug(CLASS_LC()) << "Worker: Manager deleted.";
 }
 
