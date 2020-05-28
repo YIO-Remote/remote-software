@@ -958,7 +958,7 @@ void YioAPI::apiIntegrationsGetSupported(QWebSocket *client, const int &id) {
 
     QVariantMap response;
     QStringList supportedIntegrations = m_integrations->supportedIntegrations();
-    if (supportedIntegrations.length() > 1) {
+    if (supportedIntegrations.length() > 0) {
         response.insert("supported_integrations", supportedIntegrations);
         apiSendResponse(client, id, true, response);
     } else {
@@ -1053,7 +1053,7 @@ void YioAPI::apiEntitiesGetSupported(QWebSocket *client, const int &id) {
 
     QVariantMap response;
     QStringList supportedEntities = m_entities->supportedEntities();
-    if (supportedEntities.length() > 1) {
+    if (supportedEntities.length() > 0) {
         response.insert("supported_entities", supportedEntities);
         apiSendResponse(client, id, true, response);
     } else {
