@@ -25,8 +25,8 @@
 #include <QDir>
 #include <iostream>
 
-Logger*     Logger::s_instance = nullptr;
-QStringList Logger::s_msgTypeString = {"DEBUG", "WARN ", "CRIT ", "FATAL", "INFO "};  // parallel to QMsgType
+Logger*     Logger::s_instance        = nullptr;
+QStringList Logger::s_msgTypeString   = {"DEBUG", "WARN ", "CRIT ", "FATAL", "INFO "};  // parallel to QMsgType
 QtMsgType   Logger::s_msgTypeSorted[] = {QtDebugMsg, QtInfoMsg, QtWarningMsg, QtCriticalMsg,
                                        QtFatalMsg};  // sorted by severity
 
@@ -77,8 +77,8 @@ int Logger::toMsgType(const QString& msgType) {
 
 void Logger::setLogLevel(int logLevel) {
     QtMsgType level = static_cast<QtMsgType>(logLevel);
-    m_logLevel = level;
-    m_logLevelMask = logLevelToMask(level);
+    m_logLevel      = level;
+    m_logLevelMask  = logLevelToMask(level);
 }
 
 void Logger::setCategoryLogLevel(const QString& category, int logLevel) {
@@ -88,7 +88,7 @@ void Logger::setCategoryLogLevel(const QString& category, int logLevel) {
 void Logger::defineLogCategory(const QString& category, int level, QLoggingCategory* loggingCategory,
                                PluginInterface* plugin) {
     QtMsgType  logLevel = static_cast<QtMsgType>(level);
-    SCategory* cat = m_categories.value(category);
+    SCategory* cat      = m_categories.value(category);
     if (cat == nullptr) {
         // Add new category
         cat = new SCategory(logLevel, loggingCategory, plugin);
@@ -97,12 +97,12 @@ void Logger::defineLogCategory(const QString& category, int level, QLoggingCateg
     } else {
         if (cat->logLevel != logLevel) {
             qInfo() << "Set logging category" << category << "Level : " << s_msgTypeString[level];
-            cat->logLevel = logLevel;
+            cat->logLevel     = logLevel;
             cat->logLevelMask = logLevelToMask(logLevel);
         }
     }
     bool enable = false;
-    int  size = sizeof(s_msgTypeSorted) / sizeof(s_msgTypeSorted[0]);
+    int  size   = sizeof(s_msgTypeSorted) / sizeof(s_msgTypeSorted[0]);
     for (int i = 0; i < size; i++) {
         QtMsgType thisLevel = s_msgTypeSorted[i];
         if (logLevel == thisLevel) {
@@ -128,9 +128,9 @@ int Logger::getCategoryLogLevel(const QString& category) {
 }
 
 quint16 Logger::logLevelToMask(QtMsgType logLevel) {
-    int     size = sizeof(s_msgTypeSorted) / sizeof(s_msgTypeSorted[0]);
+    int     size   = sizeof(s_msgTypeSorted) / sizeof(s_msgTypeSorted[0]);
     bool    enable = false;
-    quint16 mask = 0;
+    quint16 mask   = 0;
     for (int i = 0; i < size; i++) {
         if (logLevel == s_msgTypeSorted[i]) {
             enable = true;
@@ -145,7 +145,7 @@ quint16 Logger::logLevelToMask(QtMsgType logLevel) {
 void Logger::processMessage(QtMsgType type, const char* category, const char* source, int line, const QString& msg,
                             bool writeanyHow) {
     QString    cat = category == nullptr ? "default" : category;
-    SCategory* c = m_categories.value(cat);
+    SCategory* c   = m_categories.value(cat);
     if (c == nullptr) {
         // Add new category
         c = new SCategory(m_logLevel);  // Initialize with overall log level
@@ -180,13 +180,13 @@ void Logger::messageOutput(::QtMsgType type, const QMessageLogContext& context, 
 }
 
 void Logger::writeFile(const SMessage& message, const QDateTime& dt) {
-    int hour = dt.time().hour();
-    if (hour != m_lastHour || m_file == nullptr) {
-        m_lastHour = hour;
+    int day = dt.date().day();
+    if (day != m_lastDay || m_file == nullptr) {
+        m_lastDay = day;
         if (m_file != nullptr) {
             m_file->close();
         }
-        m_file = new QFile;
+        m_file       = new QFile;
         QString path = QString("%1/%2.log").arg(m_directory, dt.toString("yyyy-MM-dd-hh"));
         m_file->setFileName(path);
         m_file->open(QIODevice::Append | QIODevice::Text);
@@ -210,7 +210,7 @@ void Logger::writeQueue(const SMessage& message) {
     m_queue.enqueue(message);
 }
 
-void Logger::writeConsole(const SMessage &message) {
+void Logger::writeConsole(const SMessage& message) {
     QString msg = QString("%1 %2 %3 %4\n")
                       .arg(s_msgTypeString[message.type])
                       .arg(message.category)
@@ -228,10 +228,10 @@ void Logger::writeWarning(const QString& msg) {
 }
 void Logger::purgeFiles(int purgeHours) {
     QDir      dir(m_directory);
-    QDateTime dt = QDateTime::currentDateTime();
-    dt = dt.addSecs(-purgeHours * 3600);
+    QDateTime dt          = QDateTime::currentDateTime();
+    dt                    = dt.addSecs(-purgeHours * 3600);
     QStringList fileNames = dir.entryList(QStringList("*.log"), QDir::Files);
-    int         count = 0;
+    int         count     = 0;
     for (QStringList::iterator i = fileNames.begin(); i != fileNames.end(); ++i) {
         try {
             int idx = i->lastIndexOf('.');
@@ -258,7 +258,7 @@ int Logger::getFileCount() {
 
 QJsonArray Logger::getQueuedMessages(int maxCount, int logLevel, const QStringList& categories) {
     QJsonArray array;
-    int        i = 0;
+    int        i         = 0;
     quint16    levelMask = logLevelToMask(static_cast<QtMsgType>(logLevel));
     while (i < maxCount && !m_queue.isEmpty()) {
         SMessage msg = m_queue.dequeue();

@@ -138,7 +138,7 @@ class Logger : public QObject {
     bool             m_fileEnabled;           // output to log file
     bool             m_queueEnabled;          // output to queue for JSON API
     bool             m_showSource;            // Show source file and line
-    int              m_lastHour;              // Every hour we create a new file
+    int              m_lastDay;               // Every day we create a new file
     int              m_maxQueueSize;          // Maximum Queue size
     QString          m_directory;             // For files
     QFile*           m_file;                  // File

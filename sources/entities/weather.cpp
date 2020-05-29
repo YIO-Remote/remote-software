@@ -62,21 +62,22 @@ Weather::Weather(const QVariantMap& config, IntegrationInterface* integrationObj
     static QMetaEnum metaEnumCommands;
     static QMetaEnum metaEnumState;
     if (!metaEnumAttr.isValid()) {
-        int index = WeatherDef::staticMetaObject.indexOfEnumerator("Attributes");
-        metaEnumAttr = WeatherDef::staticMetaObject.enumerator(index);
-        index = WeatherDef::staticMetaObject.indexOfEnumerator("States");
-        metaEnumState = WeatherDef::staticMetaObject.enumerator(index);
-        index = WeatherDef::staticMetaObject.indexOfEnumerator("Features");
+        int index        = WeatherDef::staticMetaObject.indexOfEnumerator("Attributes");
+        metaEnumAttr     = WeatherDef::staticMetaObject.enumerator(index);
+        index            = WeatherDef::staticMetaObject.indexOfEnumerator("States");
+        metaEnumState    = WeatherDef::staticMetaObject.enumerator(index);
+        index            = WeatherDef::staticMetaObject.indexOfEnumerator("Features");
         metaEnumFeatures = WeatherDef::staticMetaObject.enumerator(index);
-        index = WeatherDef::staticMetaObject.indexOfEnumerator("Commands");
+        index            = WeatherDef::staticMetaObject.indexOfEnumerator("Commands");
         metaEnumCommands = WeatherDef::staticMetaObject.enumerator(index);
         qmlRegisterUncreatableType<WeatherDef>("Entity.Weather", 1, 0, "Weather",
                                                "Not creatable as it is an enum type.");
     }
-    m_enumAttr = &metaEnumAttr;
+    m_enumAttr     = &metaEnumAttr;
     m_enumFeatures = &metaEnumFeatures;
     m_enumCommands = &metaEnumCommands;
-    m_enumState = &metaEnumState;
+    m_enumState    = &metaEnumState;
+    m_forecast     = nullptr;
     initializeSupportedFeatures(config);
     m_specificInterface = qobject_cast<WeatherInterface*>(this);
 }

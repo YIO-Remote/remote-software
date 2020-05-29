@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -27,6 +27,17 @@ import "qrc:/components" as Comp
 
 Comp.ButtonBase {
     id: weatherButton
-    icon: Style.icon.weather
+    icon: ""
+    title.text: obj.friendly_name + "\r\n" + obj.current.temp
     cardLoader.source: "qrc:/components/weather/ui/Card.qml"
+
+    Image {
+       id: image
+       asynchronous: true
+       width: 85
+       height: 85
+       fillMode: Image.PreserveAspectFit
+       anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
+       source: obj.current.imageurl;
+       }
 }
