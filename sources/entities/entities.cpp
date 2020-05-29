@@ -82,14 +82,6 @@ void Entities::load() {
         }
     }
     emit entitiesLoaded();
-
-    // when all entities are loaded, connect the integrations
-    QList<QObject *> integrations = Integrations::getInstance()->list();
-    for (int i = 0; i < integrations.count(); i++) {
-        QObject *             obj = integrations[i];
-        IntegrationInterface *ii  = qobject_cast<IntegrationInterface *>(obj);
-        ii->connect();
-    }
 }
 
 QList<EntityInterface *> Entities::getByType(const QString &type) {

@@ -145,6 +145,10 @@ void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
     // add the integrations to the integration database
     for (QMap<QObject*, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
         add(iter.value().toMap(), iter.key(), iter.value().toMap().value("type").toString());
+        IntegrationInterface* ii = qobject_cast<IntegrationInterface*>(iter.key());
+        if (ii) {
+            ii->connect();
+        }
     }
     m_integrationsLoaded++;
 
