@@ -183,8 +183,6 @@ bool YioAPI::addEntity(QVariantMap entity) {
 }
 
 bool YioAPI::updatEntity(QVariantMap entity) {
-    QMutexLocker locker(&m_mutex);
-
     qCDebug(CLASS_LC) << "Update entity:" << entity.value("entity_id").toString();
 
     // remove entity
@@ -197,8 +195,6 @@ bool YioAPI::updatEntity(QVariantMap entity) {
 }
 
 bool YioAPI::removeEntity(QString entityId) {
-    QMutexLocker locker(&m_mutex);
-
     qCDebug(CLASS_LC) << "Removing entity:" << entityId;
 
     QObject *        o = m_entities->get(entityId);
@@ -350,8 +346,6 @@ bool YioAPI::addIntegration(QVariantMap integration) {
 }
 
 bool YioAPI::updateIntegration(QVariantMap integration) {
-    QMutexLocker locker(&m_mutex);
-
     // get the integration of the new integration
     QString integrationType = integration.value("type").toString();
 
@@ -409,13 +403,11 @@ bool YioAPI::updateIntegration(QVariantMap integration) {
 }
 
 bool YioAPI::removeIntegration(QString integrationId) {
-    QMutexLocker locker(&m_mutex);
-
     QObject *integration     = m_integrations->get(integrationId);
     QString  integrationType = m_integrations->getType(integrationId);
 
     // unload all entities connected to the integration
-    QList<EntityInterface *> entities = m_entities->getByIntegration(integrationType);
+    QList<EntityInterface *> entities = m_entities->getByIntegration(integrationId);
     for (int i = 0; i < entities.length(); i++) {
         // remove entity from config and database
         if (entities[i]->integration() == integrationId) {
