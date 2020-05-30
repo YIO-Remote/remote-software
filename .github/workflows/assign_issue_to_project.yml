@@ -2,7 +2,7 @@ name: Auto assign issues to YIO Remote software project
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [opened]
 env:
   MY_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Assign new issues to project
       uses: srggrs/assign-one-project-github-action@1.2.0
-      if: github.event.action == 'labeled'
+      if: github.event.action == 'opened'
       with:
         project: 'https://github.com/orgs/YIO-Remote/projects/11'
         column_name: 'Backlog'
