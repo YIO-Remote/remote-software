@@ -15,5 +15,5 @@ jobs:
       uses: srggrs/assign-one-project-github-action@1.2.0
       if: github.event.action == 'labeled'
       with:
-        project: https://github.com/orgs/YIO-Remote/projects/11
-        column_name: Backlog
+        project: 'https://github.com/orgs/YIO-Remote/projects/11'
+        column_name: 'Backlog'
