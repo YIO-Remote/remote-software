@@ -9,7 +9,6 @@ env:
 jobs:
   assign_one_project:
     runs-on: ubuntu-latest
-    name: Assign to YIO Remote software project
     steps:
     - name: Assign new issues to project
       uses: srggrs/assign-one-project-github-action@1.2.0
