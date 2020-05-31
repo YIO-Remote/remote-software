@@ -113,7 +113,7 @@ void MediaPlayerUtils::generateImages(const QString &url) {
         m_prevImageURL = url;
         emit processingStarted();
 
-        m_worker       = new MediaPlayerUtilsWorker(this);
+        m_worker       = new MediaPlayerUtilsWorker();
         m_workerThread = new QThread(this);
 
         connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
