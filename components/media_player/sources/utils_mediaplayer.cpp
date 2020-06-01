@@ -27,7 +27,11 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
-MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {}
+MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
+    m_startTimer = new QTimer(this);
+    m_startTimer->setSingleShot(true);
+    m_startTimer->setInterval(1000);
+}
 
 MediaPlayerUtils::~MediaPlayerUtils() {
     qCDebug(CLASS_LC()) << "Destructor called";
@@ -68,7 +72,11 @@ void MediaPlayerUtils::setImageURL(QString url) {
     m_imageURL = url;
 
     if (m_imageURL != m_prevImageURL && m_enabled && !m_imageURL.isEmpty()) {
-        generateImages(m_imageURL);
+        if (m_startTimer->isActive()) {
+            m_startTimer->stop();
+        }
+        QObject::connect(m_startTimer, &QTimer::timeout, this, [=] { generateImages(m_imageURL); });
+        m_startTimer->start();
     }
 }
 

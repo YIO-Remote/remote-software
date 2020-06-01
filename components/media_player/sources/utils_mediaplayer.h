@@ -30,6 +30,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QThread>
+#include <QTimer>
 
 class MediaPlayerUtilsWorker : public QObject {
     Q_OBJECT
@@ -91,6 +92,7 @@ class MediaPlayerUtils : public QObject {
     QString m_image;
     QString m_smallImage;
     QColor  m_pixelColor;
+    QTimer* m_startTimer;
 
     void generateImages(const QString& url);
 
