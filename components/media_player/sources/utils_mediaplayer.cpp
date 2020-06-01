@@ -44,6 +44,9 @@ MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
 
 MediaPlayerUtils::~MediaPlayerUtils() {
     qCDebug(CLASS_LC()) << "Destructor called";
+    m_engine->removeImageProvider(m_imageProviderId);
+    qCDebug(CLASS_LC()) << "Image provider removed:" << m_imageProviderId;
+
     if (m_worker != nullptr) {
         m_worker->disconnect();
         qCDebug(CLASS_LC()) << "Destructor: signal disconnected from Worker class";

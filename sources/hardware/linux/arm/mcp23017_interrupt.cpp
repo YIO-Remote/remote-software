@@ -106,11 +106,6 @@ bool Mcp23017InterruptHandler::setupGPIO() {
 }
 
 void Mcp23017InterruptHandler::interruptHandler() {
-    QFile file(m_gpioValueDevice);
-    if (!file.open(QIODevice::ReadOnly)) {
-        qCCritical(CLASS_LC) << "Error opening:" << m_gpioValueDevice;
-        return;
-    }
     int  e = mcp.readInterrupt();
     emit interruptEvent(e);
 }
