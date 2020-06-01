@@ -53,6 +53,8 @@ MediaPlayerUtils::~MediaPlayerUtils() {
         qCDebug(CLASS_LC()) << "Destructor: signal disconnected from Worker class";
     }
 
+    qCDebug(CLASS_LC()) << "Destructor: Worker was null moving on";
+
     if (m_workerThread != nullptr) {
         if (m_workerThread->isRunning()) {
             qCDebug(CLASS_LC()) << "Destructor: Worker thread is running";
@@ -61,27 +63,41 @@ MediaPlayerUtils::~MediaPlayerUtils() {
                 qCDebug(CLASS_LC()) << "Destructor: Terminating worker thread";
                 m_workerThread->terminate();
                 m_workerThread->wait();
+                delete m_worker;
                 m_worker = nullptr;
                 qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
+                delete m_workerThread;
                 m_workerThread = nullptr;
                 qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
             } else {
+                delete m_worker;
                 m_worker = nullptr;
                 qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
+                delete m_workerThread;
                 m_workerThread = nullptr;
                 qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
             }
         } else {
+            delete m_worker;
             m_worker = nullptr;
             qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
+            delete m_workerThread;
             m_workerThread = nullptr;
             qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
         }
     }
 
-    m_startTimer    = nullptr;
-    m_engine        = nullptr;
+    qCDebug(CLASS_LC()) << "Destructor: WorkerThread was null moving on";
+
+    if (m_startTimer->isActive()) {
+        m_startTimer->stop();
+    }
+    delete m_startTimer;
+    m_startTimer = nullptr;
+    m_engine     = nullptr;
+    delete m_engine;
     m_imageProvider = nullptr;
+    delete m_imageProvider;
 
     qCDebug(CLASS_LC()) << "Destructor end";
 }
@@ -129,19 +145,25 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QImage &
                 qCDebug(CLASS_LC()) << "Terminating worker thread";
                 m_workerThread->terminate();
                 m_workerThread->wait();
+                delete m_worker;
                 m_worker = nullptr;
                 qCDebug(CLASS_LC()) << "Worker class deleted";
+                delete m_workerThread;
                 m_workerThread = nullptr;
                 qCDebug(CLASS_LC()) << "Worker thread deleted";
             } else {
+                delete m_worker;
                 m_worker = nullptr;
                 qCDebug(CLASS_LC()) << "Worker class deleted";
+                delete m_workerThread;
                 m_workerThread = nullptr;
                 qCDebug(CLASS_LC()) << "Worker thread deleted";
             }
         } else {
+            delete m_worker;
             m_worker = nullptr;
             qCDebug(CLASS_LC()) << "Worker class deleted";
+            delete m_workerThread;
             m_workerThread = nullptr;
             qCDebug(CLASS_LC()) << "Worker thread deleted";
         }
@@ -190,6 +212,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
             qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
             if (m_reply) {
                 m_reply->deleteLater();
+                m_reply = nullptr;
             }
             return;
         } else {
@@ -241,6 +264,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
     }
     if (m_reply) {
         m_reply->deleteLater();
+        m_reply = nullptr;
     }
     qCDebug(CLASS_LC()) << "Network reply deleted";
 }
