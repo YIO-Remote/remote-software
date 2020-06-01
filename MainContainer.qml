@@ -85,22 +85,22 @@ Item {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // AUTO ROOM SELECTION BASED ON BLUETOOTH TAGS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Connections {
-        target: bluetoothArea
-        enabled: config.settings.bluetootharea
+//    Connections {
+//        target: bluetoothArea
+//        enabled: config.settings.bluetootharea
 
-        onCurrentAreaChanged: {
-            var p = config.pages
+//        onCurrentAreaChanged: {
+//            var p = config.pages
 
-            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name !== bluetoothArea.currentArea) {
-                for (var i=0; i<p.length; i++) {
-                    if (p[i].name === bluetoothArea.currentArea) {
-                        mainNavigationSwipeview.currentIndex = i;
-                    }
-                }
-            }
-        }
-    }
+//            if (mainNavigation.menuConfig[mainNavigation.menuConfig.currentIndex].name !== bluetoothArea.currentArea) {
+//                for (var i=0; i<p.length; i++) {
+//                    if (p[i].name === bluetoothArea.currentArea) {
+//                        mainNavigationSwipeview.currentIndex = i;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MAIN CONTAINER CONTENT

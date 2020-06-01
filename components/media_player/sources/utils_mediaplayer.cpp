@@ -40,11 +40,20 @@ MediaPlayerUtils::~MediaPlayerUtils() {
         if (m_workerThread->isRunning()) {
             qCDebug(CLASS_LC()) << "Destructor: Worker thread is running";
             m_workerThread->exit();
-            m_workerThread->wait(5000);
-            m_worker = nullptr;
-            qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
-            m_workerThread = nullptr;
-            qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
+            if (!m_workerThread->wait(5000)) {
+                qCDebug(CLASS_LC()) << "Destructor: Terminating worker thread";
+                m_workerThread->terminate();
+                m_workerThread->wait();
+                m_worker = nullptr;
+                qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
+                m_workerThread = nullptr;
+                qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
+            } else {
+                m_worker = nullptr;
+                qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
+                m_workerThread = nullptr;
+                qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
+            }
         } else {
             m_worker = nullptr;
             qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
@@ -52,6 +61,7 @@ MediaPlayerUtils::~MediaPlayerUtils() {
             qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
         }
     }
+    qCDebug(CLASS_LC()) << "Destructor end";
 }
 
 void MediaPlayerUtils::setImageURL(QString url) {
@@ -93,11 +103,20 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString 
         if (m_workerThread->isRunning()) {
             qCDebug(CLASS_LC()) << "Worker thread is running";
             m_workerThread->exit();
-            m_workerThread->wait(5000);
-            m_worker = nullptr;
-            qCDebug(CLASS_LC()) << "Worker class deleted";
-            m_workerThread = nullptr;
-            qCDebug(CLASS_LC()) << "Worker thread deleted";
+            if (!m_workerThread->wait(5000)) {
+                qCDebug(CLASS_LC()) << "Terminating worker thread";
+                m_workerThread->terminate();
+                m_workerThread->wait();
+                m_worker = nullptr;
+                qCDebug(CLASS_LC()) << "Worker class deleted";
+                m_workerThread = nullptr;
+                qCDebug(CLASS_LC()) << "Worker thread deleted";
+            } else {
+                m_worker = nullptr;
+                qCDebug(CLASS_LC()) << "Worker class deleted";
+                m_workerThread = nullptr;
+                qCDebug(CLASS_LC()) << "Worker thread deleted";
+            }
         } else {
             m_worker = nullptr;
             qCDebug(CLASS_LC()) << "Worker class deleted";

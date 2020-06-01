@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
- * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -124,6 +124,10 @@ int main(int argc, char* argv[]) {
     engine.rootContext()->setContextProperty("logger", &logger);
     Logger::getInstance()->write(QString("YIO App %1").arg(version));
 
+    // NOTIFICATIONS
+    Notifications notifications(&engine);
+    engine.rootContext()->setContextProperty("notifications", &notifications);
+
     // LOADING CUSTOM COMPONENTS
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<JsonFile>("JsonFile", 1, 0, "JsonFile");
@@ -190,10 +194,6 @@ int main(int argc, char* argv[]) {
     // ENTITIES
     Entities entities;
     engine.rootContext()->setContextProperty("entities", &entities);
-
-    // NOTIFICATIONS
-    Notifications notifications(&engine);
-    engine.rootContext()->setContextProperty("notifications", &notifications);
 
     // Ready for device startup!
     hwFactory->initialize();
