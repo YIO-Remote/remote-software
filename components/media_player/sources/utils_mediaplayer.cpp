@@ -58,7 +58,7 @@ MediaPlayerUtils::~MediaPlayerUtils() {
     if (m_workerThread != nullptr) {
         if (m_workerThread->isRunning()) {
             qCDebug(CLASS_LC()) << "Destructor: Worker thread is running";
-            m_workerThread->exit();
+            m_workerThread->quit();
             if (!m_workerThread->wait(5000)) {
                 qCDebug(CLASS_LC()) << "Destructor: Terminating worker thread";
                 m_workerThread->terminate();
@@ -140,7 +140,7 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QImage &
     if (m_workerThread != nullptr) {
         if (m_workerThread->isRunning()) {
             qCDebug(CLASS_LC()) << "Worker thread is running";
-            m_workerThread->exit();
+            m_workerThread->quit();
             if (!m_workerThread->wait(5000)) {
                 qCDebug(CLASS_LC()) << "Terminating worker thread";
                 m_workerThread->terminate();
@@ -187,18 +187,21 @@ void MediaPlayerUtils::generateImages(const QString &url) {
     }
 }
 
-MediaPlayerUtilsWorker::MediaPlayerUtilsWorker(QObject *parent) : QObject(parent) {}
+MediaPlayerUtilsWorker::MediaPlayerUtilsWorker(QObject *parent) : QObject(parent) {
+    m_manager = new QNetworkAccessManager();
+}
 
 MediaPlayerUtilsWorker::~MediaPlayerUtilsWorker() {
     qCDebug(CLASS_LC()) << "Worker destructor";
+    if (m_manager) {
+        delete m_manager;
+    }
     m_manager = nullptr;
     qCDebug(CLASS_LC()) << "Worker destructor: Manager deleted.";
 }
 
 void MediaPlayerUtilsWorker::generateImages(const QString &url) {
-    m_manager = new QNetworkAccessManager();
-    m_reply   = m_manager->get(QNetworkRequest(QUrl(url)));
-
+    m_reply = m_manager->get(QNetworkRequest(QUrl(url)));
     connect(m_reply, &QNetworkReply::finished, this, &MediaPlayerUtilsWorker::generateImagesReply);
 }
 

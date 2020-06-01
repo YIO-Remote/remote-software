@@ -47,7 +47,7 @@ Item {
         id: image1
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-        asynchronous: true
+        asynchronous: false
         cache: false
 
         onStatusChanged: {
@@ -61,7 +61,7 @@ Item {
         id: image2
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-        asynchronous: true
+        asynchronous: false
         opacity: 0
         cache: false
 
