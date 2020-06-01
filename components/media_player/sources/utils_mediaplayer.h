@@ -39,11 +39,9 @@ class MediaPlayerUtilsImageProvider : public QObject, public QQuickImageProvider
     Q_OBJECT
 
  public:
-    MediaPlayerUtilsImageProvider();
+    explicit MediaPlayerUtilsImageProvider();
 
     QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
-
-    static MediaPlayerUtilsImageProvider* getInstance() { return s_instance; }
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void updateImage(const QImage& image);
@@ -54,8 +52,6 @@ class MediaPlayerUtilsImageProvider : public QObject, public QQuickImageProvider
  private:
     QImage m_image;
     QImage m_noImage;
-
-    static MediaPlayerUtilsImageProvider* s_instance;
 };
 
 class MediaPlayerUtilsWorker : public QObject {
@@ -87,7 +83,7 @@ class MediaPlayerUtils : public QObject {
 
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
-    Q_PROPERTY(QString imageProviderId READ imageProviderId CONSTANT);
+    Q_PROPERTY(QString imageProviderId READ imageProviderId CONSTANT)
     Q_PROPERTY(QColor pixelColor READ pixelColor NOTIFY pixelColorChanged)
 
     bool    enabled() { return m_enabled; }

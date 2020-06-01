@@ -24,6 +24,7 @@
 
 #include <QDebug>
 #include <QLoggingCategory>
+
 #include "../sources/config.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
@@ -275,15 +276,9 @@ QColor MediaPlayerUtilsWorker::dominantColor(const QImage &image) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// IMAGE PROVIDER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-MediaPlayerUtilsImageProvider *MediaPlayerUtilsImageProvider::s_instance = nullptr;
-
 MediaPlayerUtilsImageProvider::MediaPlayerUtilsImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {
-    s_instance = this;
-
-    m_noImage = QImage(280, 280, QImage::Format_RGB888);
-    m_noImage.fill(Qt::black);
-    blockSignals(false);
+    m_noImage = QImage(280, 280, QImage::Format_ARGB32);
+    m_noImage.fill(qRgba(0, 0, 0, 0));
 }
 
 QImage MediaPlayerUtilsImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize) {
