@@ -182,10 +182,14 @@ void MediaPlayerUtilsWorker::generateImages(const QString &url) {
 void MediaPlayerUtilsWorker::generateImagesReply() {
     if (m_reply->error() == QNetworkReply::NoError) {
         // run image processing in different thread
-        QImage image;
+        QImage image(280, 280, QImage::Format_RGB888);
+        image.fill(Qt::black);
 
         if (!image.load(m_reply, nullptr)) {
             qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
+            if (m_reply) {
+                m_reply->deleteLater();
+            }
             return;
         } else {
             ////////////////////////////////////////////////////////////////////
@@ -234,7 +238,9 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
         qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << m_reply->errorString();
         emit processingDone(QColor("black"), QImage());
     }
-    m_reply->deleteLater();
+    if (m_reply) {
+        m_reply->deleteLater();
+    }
     qCDebug(CLASS_LC()) << "Network reply deleted";
 }
 
@@ -275,7 +281,8 @@ MediaPlayerUtilsImageProvider *MediaPlayerUtilsImageProvider::s_instance = nullp
 MediaPlayerUtilsImageProvider::MediaPlayerUtilsImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {
     s_instance = this;
 
-    m_noImage = QImage();
+    m_noImage = QImage(280, 280, QImage::Format_RGB888);
+    m_noImage.fill(Qt::black);
     blockSignals(false);
 }
 
