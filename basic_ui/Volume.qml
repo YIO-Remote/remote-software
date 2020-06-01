@@ -154,8 +154,10 @@ Item {
         onTriggered: {
             count++;
 
-            if (count >= 4) {
-                changeInterval = 80;
+            if (count >= 5) {
+                changeInterval = 50;
+            } else if (count >= 3) {
+                changeInterval = 150;
             }
 
             volume.volumeChanged();

@@ -23,6 +23,7 @@
 
 #include "mcp23017_interrupt.h"
 
+#include <QFileSystemWatcher>
 #include <QLoggingCategory>
 #include <QtDebug>
 
@@ -95,13 +96,11 @@ bool Mcp23017InterruptHandler::setupGPIO() {
     edgeFile.close();
 
     // GPIO to look at; This is connected to the MCP23017 INTA&INTB ports
-    file = new QFile(m_gpioValueDevice);
-    file->open(QIODevice::ReadOnly);
 
     // connect to a signal
-    notifier = new QSocketNotifier(file->handle(), QSocketNotifier::Exception);
-    notifier->setEnabled(true);
-    connect(notifier, &QSocketNotifier::activated, this, &Mcp23017InterruptHandler::interruptHandler);
+    QFileSystemWatcher* notifier = new QFileSystemWatcher(this);
+    notifier->addPath(m_gpioValueDevice);
+    connect(notifier, &QFileSystemWatcher::fileChanged, this, &Mcp23017InterruptHandler::interruptHandler);
 
     return true;
 }
@@ -112,16 +111,8 @@ void Mcp23017InterruptHandler::interruptHandler() {
         qCCritical(CLASS_LC) << "Error opening:" << m_gpioValueDevice;
         return;
     }
-
-    int gpioVal = file.readAll().toInt();
-
-    // if the GPIO is 0, then it's a button press
-    if (gpioVal == 0) {
-        // check the MCP23017 what caused the interrupt
-        int  e = mcp.readInterrupt();
-        emit interruptEvent(e);
-    }
-    delay(10);
+    int  e = mcp.readInterrupt();
+    emit interruptEvent(e);
 }
 
 const QLoggingCategory& Mcp23017InterruptHandler::logCategory() const { return CLASS_LC(); }

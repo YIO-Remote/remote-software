@@ -57,212 +57,82 @@ QObject *ButtonHandler::getQMLInstance(QQmlEngine *engine, QJSEngine *scriptEngi
 void ButtonHandler::onInterrupt(int event) {
     switch (event) {
         case (DPAD_UP): {
-            if (m_buttonPressed != DPAD_UP) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = DPAD_UP;
-                emit buttonPressed(DPAD_UP);
-                qCDebug(CLASS_LC) << "Dpad up pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = DPAD_UP;
-                emit buttonReleased(DPAD_UP);
-                qCDebug(CLASS_LC) << "Dpad up released";
-            }
+            emit buttonPressed(DPAD_UP);
+        } break;
+        case (DPAD_UP_RELEASED): {
+            emit buttonReleased(DPAD_UP);
         } break;
         case (DPAD_DOWN): {
-            if (m_buttonPressed != DPAD_DOWN) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = DPAD_DOWN;
-                emit buttonPressed(DPAD_DOWN);
-                qCDebug(CLASS_LC) << "Dpad down pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = DPAD_DOWN;
-                emit buttonReleased(DPAD_DOWN);
-                qCDebug(CLASS_LC) << "Dpad down released";
-            }
+            emit buttonPressed(DPAD_DOWN);
+        } break;
+        case (DPAD_DOWN_RELEASED): {
+            emit buttonReleased(DPAD_DOWN);
         } break;
         case (DPAD_LEFT): {
-            if (m_buttonPressed != DPAD_LEFT) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = DPAD_LEFT;
-                emit buttonPressed(DPAD_LEFT);
-                qCDebug(CLASS_LC) << "Dpad left pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = DPAD_LEFT;
-                emit buttonReleased(DPAD_LEFT);
-                qCDebug(CLASS_LC) << "Dpad left released";
-            }
+            emit buttonPressed(DPAD_LEFT);
+        } break;
+        case (DPAD_LEFT_RELEASED): {
+            emit buttonReleased(DPAD_LEFT);
         } break;
         case (DPAD_RIGHT): {
-            if (m_buttonPressed != DPAD_RIGHT) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = DPAD_RIGHT;
-                emit buttonPressed(DPAD_RIGHT);
-                qCDebug(CLASS_LC) << "Dpad right pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = DPAD_RIGHT;
-                emit buttonReleased(DPAD_RIGHT);
-                qCDebug(CLASS_LC) << "Dpad right released";
-            }
+            emit buttonPressed(DPAD_RIGHT);
+        } break;
+        case (DPAD_RIGHT_RELEASED): {
+            emit buttonReleased(DPAD_RIGHT);
         } break;
         case (DPAD_MIDDLE): {
-            if (m_buttonPressed != DPAD_MIDDLE) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = DPAD_MIDDLE;
-                emit buttonPressed(DPAD_MIDDLE);
-                qCDebug(CLASS_LC) << "Dpad middle pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = DPAD_MIDDLE;
-                emit buttonReleased(DPAD_MIDDLE);
-                qCDebug(CLASS_LC) << "Dpad middle released";
-            }
+            emit buttonPressed(DPAD_MIDDLE);
+        } break;
+        case (DPAD_MIDDLE_RELEASED): {
+            emit buttonReleased(DPAD_MIDDLE);
         } break;
         case (TOP_LEFT): {
-            if (m_buttonPressed != TOP_LEFT) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = TOP_LEFT;
-                emit buttonPressed(TOP_LEFT);
-                qCDebug(CLASS_LC) << "Top left pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = TOP_LEFT;
-                emit buttonReleased(TOP_LEFT);
-                qCDebug(CLASS_LC) << "Top left released";
-            }
+            emit buttonPressed(TOP_LEFT);
+        } break;
+        case (TOP_LEFT_RELEASED): {
+            emit buttonReleased(TOP_LEFT);
         } break;
         case (TOP_RIGHT): {
-            if (m_buttonPressed != TOP_RIGHT) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = TOP_RIGHT;
-                emit buttonPressed(TOP_RIGHT);
-                qCDebug(CLASS_LC) << "Top right pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = TOP_RIGHT;
-                emit buttonReleased(TOP_RIGHT);
-                qCDebug(CLASS_LC) << "Top right released";
-            }
+            emit buttonPressed(TOP_RIGHT);
+        } break;
+        case (TOP_RIGHT_RELEASED): {
+            emit buttonReleased(TOP_RIGHT);
         } break;
         case (BOTTOM_LEFT): {
-            if (m_buttonPressed != BOTTOM_LEFT) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = BOTTOM_LEFT;
-                emit buttonPressed(BOTTOM_LEFT);
-                qCDebug(CLASS_LC) << "Bottom left pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = BOTTOM_LEFT;
-                emit buttonReleased(BOTTOM_LEFT);
-                qCDebug(CLASS_LC) << "Bottom left released";
-            }
+            emit buttonPressed(BOTTOM_LEFT);
+        } break;
+        case (BOTTOM_LEFT_RELEASED): {
+            emit buttonReleased(BOTTOM_LEFT);
         } break;
         case (BOTTOM_RIGHT): {
-            if (m_buttonPressed != BOTTOM_RIGHT) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = BOTTOM_RIGHT;
-                emit buttonPressed(BOTTOM_RIGHT);
-                qCDebug(CLASS_LC) << "Bottom right pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = BOTTOM_RIGHT;
-                emit buttonReleased(BOTTOM_RIGHT);
-                qCDebug(CLASS_LC) << "Bottom right released";
-            }
+            emit buttonPressed(BOTTOM_RIGHT);
+        } break;
+        case (BOTTOM_RIGHT_RELEASED): {
+            emit buttonReleased(BOTTOM_RIGHT);
         } break;
         case (VOLUME_UP): {
-            if (m_buttonPressed != VOLUME_UP) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = VOLUME_UP;
-                emit buttonPressed(VOLUME_UP);
-                qCDebug(CLASS_LC) << "Volume up pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = VOLUME_UP;
-                emit buttonReleased(VOLUME_UP);
-                qCDebug(CLASS_LC) << "Volume up released";
-            }
+            emit buttonPressed(VOLUME_UP);
+        } break;
+        case (VOLUME_UP_RELEASED): {
+            emit buttonReleased(VOLUME_UP);
         } break;
         case (VOLUME_DOWN): {
-            if (m_buttonPressed != VOLUME_DOWN) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = VOLUME_DOWN;
-                emit buttonPressed(VOLUME_DOWN);
-                qCDebug(CLASS_LC) << "Volume down pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = VOLUME_DOWN;
-                emit buttonReleased(VOLUME_DOWN);
-                qCDebug(CLASS_LC) << "Volume down released";
-            }
+            emit buttonPressed(VOLUME_DOWN);
+        } break;
+        case (VOLUME_DOWN_RELEASED): {
+            emit buttonReleased(VOLUME_DOWN);
         } break;
         case (CHANNEL_UP): {
-            if (m_buttonPressed != CHANNEL_UP) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = CHANNEL_UP;
-                emit buttonPressed(CHANNEL_UP);
-                qCDebug(CLASS_LC) << "Channel up pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = CHANNEL_UP;
-                emit buttonReleased(CHANNEL_UP);
-                qCDebug(CLASS_LC) << "Channel up released";
-            }
+            emit buttonPressed(CHANNEL_UP);
+        } break;
+        case (CHANNEL_UP_RELEASED): {
+            emit buttonReleased(CHANNEL_UP);
         } break;
         case (CHANNEL_DOWN): {
-            if (m_buttonPressed != CHANNEL_DOWN) {
-                m_buttonReleased = -1;
-                emit buttonReleased(-1);
-
-                m_buttonPressed = CHANNEL_DOWN;
-                emit buttonPressed(CHANNEL_DOWN);
-                qCDebug(CLASS_LC) << "Channel down pressed";
-            } else {
-                m_buttonPressed = -1;
-
-                m_buttonReleased = CHANNEL_DOWN;
-                emit buttonReleased(CHANNEL_DOWN);
-                qCDebug(CLASS_LC) << "Channel down released";
-            }
+            emit buttonPressed(CHANNEL_DOWN);
+        } break;
+        case (CHANNEL_DOWN_RELEASED): {
+            emit buttonReleased(CHANNEL_DOWN);
         } break;
     }
 }

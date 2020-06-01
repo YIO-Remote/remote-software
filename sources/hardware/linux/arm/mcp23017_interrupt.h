@@ -24,7 +24,6 @@
 #pragma once
 
 #include <QFile>
-#include <QSocketNotifier>
 
 #include "../../interrupthandler.h"
 #include "mcp23017_handler.h"
@@ -33,8 +32,8 @@ class Mcp23017InterruptHandler : public InterruptHandler {
     Q_OBJECT
 
  public:
-    explicit Mcp23017InterruptHandler(const QString &i2cDevice, int i2cDeviceId = MCP23017_ADDRESS,
-                                      int gpio = 18, QObject *parent = nullptr);
+    explicit Mcp23017InterruptHandler(const QString &i2cDevice, int i2cDeviceId = MCP23017_ADDRESS, int gpio = 18,
+                                      QObject *parent = nullptr);
 
     // ~Mcp23017InterruptHandler() override {}
 
@@ -53,11 +52,10 @@ class Mcp23017InterruptHandler : public InterruptHandler {
     void interruptHandler();
 
  private:
-    QString          m_i2cDevice;
-    int              m_i2cDeviceId;
-    int              m_gpio;
-    MCP23017         mcp = MCP23017();
-    QSocketNotifier *notifier;
-    QFile *          file;
-    QString          m_gpioValueDevice;
+    QString  m_i2cDevice;
+    int      m_i2cDeviceId;
+    int      m_gpio;
+    MCP23017 mcp = MCP23017();
+    QFile *  file;
+    QString  m_gpioValueDevice;
 };
