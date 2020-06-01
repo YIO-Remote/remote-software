@@ -24,11 +24,18 @@
 
 #include <QDebug>
 #include <QLoggingCategory>
+#include "../sources/config.h"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
 MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
-    m_imageProvider = MediaPlayerUtilsImageProvider::getInstance();
+    // ADD IMAGE PROVIDER
+    m_engine = Config::getInstance()->getAppEngine();
+
+    m_imageProviderId = QUuid::createUuid().toString().replace("{", "").replace("}", "");
+    m_imageProvider   = new MediaPlayerUtilsImageProvider();
+    m_engine->addImageProvider(m_imageProviderId, m_imageProvider);
+    qCDebug(CLASS_LC()) << "Image provider added:" << m_imageProviderId << m_imageProvider;
 
     m_startTimer = new QTimer(this);
     m_startTimer->setSingleShot(true);

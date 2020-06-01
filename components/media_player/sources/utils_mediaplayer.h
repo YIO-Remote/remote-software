@@ -29,9 +29,11 @@
 #include <QNetworkReply>
 #include <QObject>
 #include <QPainter>
+#include <QQmlApplicationEngine>
 #include <QQuickImageProvider>
 #include <QThread>
 #include <QTimer>
+#include <QUuid>
 
 class MediaPlayerUtilsImageProvider : public QObject, public QQuickImageProvider {
     Q_OBJECT
@@ -85,10 +87,12 @@ class MediaPlayerUtils : public QObject {
 
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
+    Q_PROPERTY(QString imageProviderId READ imageProviderId CONSTANT);
     Q_PROPERTY(QColor pixelColor READ pixelColor NOTIFY pixelColorChanged)
 
     bool    enabled() { return m_enabled; }
     QString imageURL() { return m_imageURL; }
+    QString imageProviderId() { return m_imageProviderId; }
     QColor  pixelColor() { return m_pixelColor; }
 
     void setImageURL(QString url);
@@ -116,4 +120,7 @@ class MediaPlayerUtils : public QObject {
     QThread*                       m_workerThread = nullptr;
     MediaPlayerUtilsWorker*        m_worker       = nullptr;
     MediaPlayerUtilsImageProvider* m_imageProvider;
+    QString                        m_imageProviderId;
+
+    QQmlApplicationEngine* m_engine;
 };

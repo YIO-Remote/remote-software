@@ -114,6 +114,7 @@ Rectangle {
 
     Component.onCompleted: {
         cardHome.state = "open";
+        counter = !counter;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +188,7 @@ Rectangle {
         id: albumArt
         width: 280; height: 280
         anchors { top: parent.top; topMargin: 118; horizontalCenter: parent.horizontalCenter }
-        url: "image://mediautilsprovider/image?id=" + counter
+        url: "image://" + mediaplayerUtils.imageProviderId + "/image?id=" + counter
     }
 
     Text {

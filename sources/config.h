@@ -137,6 +137,8 @@ class Config : public QObject, public ConfigInterface {
     QVariantMap  getAllEntities() override { return m_config["entities"].toMap(); }
     QVariantList getEntities(const QString& type) override { return getAllEntities().value(type).toList(); }
 
+    QQmlApplicationEngine* getAppEngine() { return m_engine; }
+
  public:
     explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath, QString appPath);
     ~Config() override;
