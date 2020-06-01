@@ -33,19 +33,32 @@ class ButtonHandler : public QObject {
 
  public:
     enum Buttons {
-        DPAD_UP      = InterruptHandler::DPAD_UP,
-        DPAD_DOWN    = InterruptHandler::DPAD_DOWN,
-        DPAD_LEFT    = InterruptHandler::DPAD_LEFT,
-        DPAD_RIGHT   = InterruptHandler::DPAD_RIGHT,
-        DPAD_MIDDLE  = InterruptHandler::DPAD_MIDDLE,
-        TOP_RIGHT    = InterruptHandler::TOP_RIGHT,
-        TOP_LEFT     = InterruptHandler::TOP_LEFT,
-        BOTTOM_RIGHT = InterruptHandler::BOTTOM_RIGHT,
-        BOTTOM_LEFT  = InterruptHandler::BOTTOM_LEFT,
-        VOLUME_UP    = InterruptHandler::VOLUME_UP,
-        VOLUME_DOWN  = InterruptHandler::VOLUME_DOWN,
-        CHANNEL_UP   = InterruptHandler::CHANNEL_UP,
-        CHANNEL_DOWN = InterruptHandler::CHANNEL_DOWN
+        DPAD_UP               = InterruptHandler::DPAD_UP,
+        DPAD_UP_RELEASED      = InterruptHandler::DPAD_UP_RELEASED,
+        DPAD_DOWN             = InterruptHandler::DPAD_DOWN,
+        DPAD_DOWN_RELEASED    = InterruptHandler::DPAD_DOWN_RELEASED,
+        DPAD_LEFT             = InterruptHandler::DPAD_LEFT,
+        DPAD_LEFT_RELEASED    = InterruptHandler::DPAD_LEFT_RELEASED,
+        DPAD_RIGHT            = InterruptHandler::DPAD_RIGHT,
+        DPAD_RIGHT_RELEASED   = InterruptHandler::DPAD_RIGHT_RELEASED,
+        DPAD_MIDDLE           = InterruptHandler::DPAD_MIDDLE,
+        DPAD_MIDDLE_RELEASED  = InterruptHandler::DPAD_MIDDLE_RELEASED,
+        TOP_RIGHT             = InterruptHandler::TOP_RIGHT,
+        TOP_RIGHT_RELEASED    = InterruptHandler::TOP_RIGHT_RELEASED,
+        TOP_LEFT              = InterruptHandler::TOP_LEFT,
+        TOP_LEFT_RELEASED     = InterruptHandler::TOP_LEFT_RELEASED,
+        BOTTOM_RIGHT          = InterruptHandler::BOTTOM_RIGHT,
+        BOTTOM_RIGHT_RELEASED = InterruptHandler::BOTTOM_RIGHT_RELEASED,
+        BOTTOM_LEFT           = InterruptHandler::BOTTOM_LEFT,
+        BOTTOM_LEFT_RELEASED  = InterruptHandler::BOTTOM_LEFT_RELEASED,
+        VOLUME_UP             = InterruptHandler::VOLUME_UP,
+        VOLUME_UP_RELEASED    = InterruptHandler::VOLUME_UP_RELEASED,
+        VOLUME_DOWN           = InterruptHandler::VOLUME_DOWN,
+        VOLUME_DOWN_RELEASED  = InterruptHandler::VOLUME_DOWN_RELEASED,
+        CHANNEL_UP            = InterruptHandler::CHANNEL_UP,
+        CHANNEL_UP_RELEASED   = InterruptHandler::CHANNEL_UP_RELEASED,
+        CHANNEL_DOWN          = InterruptHandler::CHANNEL_DOWN,
+        CHANNEL_DOWN_RELEASED = InterruptHandler::CHANNEL_DOWN_RELEASED
     };
     Q_ENUM(Buttons)
 

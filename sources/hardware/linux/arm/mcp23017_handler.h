@@ -35,7 +35,7 @@
 
 #include "../../interrupthandler.h"
 
-#define MCP23017_ADDRESS  0x20
+#define MCP23017_ADDRESS 0x20
 #define MCP23017_ADDRESS2 0x21
 
 // registers
@@ -123,61 +123,117 @@ class MCP23017 {
     }
 
     int readInterrupt() {
-        int intf;
+        int intfA = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFA);
+        int gpioA = wiringPiI2CReadReg8(m_i2cFd, MCP23017_GPIOA);
 
-        intf = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFA);
-
-        switch (intf) {
-            case 0x01:
-                clearInterrupt();
-                return InterruptHandler::APDS9960;
+        switch (intfA) {
             case 0x02:
                 clearInterrupt();
-                return InterruptHandler::DPAD_UP;
+                if (gpioA & 0x02) {
+                    return InterruptHandler::DPAD_UP_RELEASED;
+                } else {
+                    return InterruptHandler::DPAD_UP;
+                }
             case 0x04:
                 clearInterrupt();
-                return InterruptHandler::TOP_RIGHT;
+                if (gpioA & 0x04) {
+                    return InterruptHandler::TOP_RIGHT_RELEASED;
+                } else {
+                    return InterruptHandler::TOP_RIGHT;
+                }
             case 0x08:
                 clearInterrupt();
-                return InterruptHandler::CHANNEL_UP;
+                if (gpioA & 0x08) {
+                    return InterruptHandler::CHANNEL_UP_RELEASED;
+                } else {
+                    return InterruptHandler::CHANNEL_UP;
+                }
             case 0x10:
                 clearInterrupt();
-                return InterruptHandler::DPAD_RIGHT;
+                if (gpioA & 0x10) {
+                    return InterruptHandler::DPAD_RIGHT_RELEASED;
+                } else {
+                    return InterruptHandler::DPAD_RIGHT;
+                }
             case 0x20:
                 clearInterrupt();
-                return InterruptHandler::CHANNEL_DOWN;
-            case 0x80:
-                clearInterrupt();
-                return InterruptHandler::BATTERY;
+                if (gpioA & 0x20) {
+                    return InterruptHandler::CHANNEL_DOWN_RELEASED;
+                } else {
+                    return InterruptHandler::CHANNEL_DOWN;
+                }
         }
 
-        intf = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFB);
+        int intfB = wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTFB);
+        int gpioB = wiringPiI2CReadReg8(m_i2cFd, MCP23017_GPIOB);
 
-        switch (intf) {
+        switch (intfB) {
             case 0x01:
                 clearInterrupt();
-                return InterruptHandler::BOTTOM_RIGHT;
+                if (gpioB & 0x01) {
+                    return InterruptHandler::BOTTOM_RIGHT_RELEASED;
+                } else {
+                    return InterruptHandler::BOTTOM_RIGHT;
+                }
             case 0x02:
                 clearInterrupt();
-                return InterruptHandler::DPAD_MIDDLE;
+                if (gpioB & 0x02) {
+                    return InterruptHandler::DPAD_MIDDLE_RELEASED;
+                } else {
+                    return InterruptHandler::DPAD_MIDDLE;
+                }
             case 0x04:
                 clearInterrupt();
-                return InterruptHandler::DPAD_DOWN;
+                if (gpioB & 0x04) {
+                    return InterruptHandler::DPAD_DOWN_RELEASED;
+                } else {
+                    return InterruptHandler::DPAD_DOWN;
+                }
             case 0x08:
                 clearInterrupt();
-                return InterruptHandler::BOTTOM_LEFT;
+                if (gpioB & 0x08) {
+                    return InterruptHandler::BOTTOM_LEFT_RELEASED;
+                } else {
+                    return InterruptHandler::BOTTOM_LEFT;
+                }
             case 0x10:
                 clearInterrupt();
-                return InterruptHandler::VOLUME_DOWN;
+                if (gpioB & 0x10) {
+                    return InterruptHandler::VOLUME_DOWN_RELEASED;
+                } else {
+                    return InterruptHandler::VOLUME_DOWN;
+                }
             case 0x20:
                 clearInterrupt();
-                return InterruptHandler::DPAD_LEFT;
+                if (gpioB & 0x20) {
+                    return InterruptHandler::DPAD_LEFT_RELEASED;
+                } else {
+                    return InterruptHandler::DPAD_LEFT;
+                }
             case 0x40:
                 clearInterrupt();
-                return InterruptHandler::VOLUME_UP;
+                if (gpioB & 0x40) {
+                    return InterruptHandler::VOLUME_UP_RELEASED;
+                } else {
+                    return InterruptHandler::VOLUME_UP;
+                }
             case 0x80:
                 clearInterrupt();
-                return InterruptHandler::TOP_LEFT;
+                if (gpioB & 0x80) {
+                    return InterruptHandler::TOP_LEFT_RELEASED;
+                } else {
+                    return InterruptHandler::TOP_LEFT;
+                }
+        }
+
+        if (intfA == 0x80) {
+            clearInterrupt();
+            return InterruptHandler::BATTERY;
+        }
+
+        if (intfA == 0x01) {
+            clearInterrupt();
+            return InterruptHandler::APDS9960;
         }
         return -1;
     }

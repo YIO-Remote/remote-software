@@ -111,16 +111,8 @@ void Mcp23017InterruptHandler::interruptHandler() {
         qCCritical(CLASS_LC) << "Error opening:" << m_gpioValueDevice;
         return;
     }
-
-    int gpioVal = file.readAll().toInt();
-
-    // if the GPIO is 0, then it's a button press
-    if (gpioVal == 0) {
-        // check the MCP23017 what caused the interrupt
-        int  e = mcp.readInterrupt();
-        emit interruptEvent(e);
-    }
-    delay(10);
+    int  e = mcp.readInterrupt();
+    emit interruptEvent(e);
 }
 
 const QLoggingCategory& Mcp23017InterruptHandler::logCategory() const { return CLASS_LC(); }

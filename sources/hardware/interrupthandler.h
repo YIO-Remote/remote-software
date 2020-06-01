@@ -35,18 +35,31 @@ class InterruptHandler : public Device {
         APDS9960,
         BATTERY,
         DPAD_UP,
+        DPAD_UP_RELEASED,
         DPAD_DOWN,
+        DPAD_DOWN_RELEASED,
         DPAD_LEFT,
+        DPAD_LEFT_RELEASED,
         DPAD_RIGHT,
+        DPAD_RIGHT_RELEASED,
         DPAD_MIDDLE,
+        DPAD_MIDDLE_RELEASED,
         TOP_RIGHT,
+        TOP_RIGHT_RELEASED,
         TOP_LEFT,
+        TOP_LEFT_RELEASED,
         BOTTOM_RIGHT,
+        BOTTOM_RIGHT_RELEASED,
         BOTTOM_LEFT,
+        BOTTOM_LEFT_RELEASED,
         VOLUME_UP,
+        VOLUME_UP_RELEASED,
         VOLUME_DOWN,
+        VOLUME_DOWN_RELEASED,
         CHANNEL_UP,
-        CHANNEL_DOWN
+        CHANNEL_UP_RELEASED,
+        CHANNEL_DOWN,
+        CHANNEL_DOWN_RELEASED
     };
     Q_ENUM(Events)
 
