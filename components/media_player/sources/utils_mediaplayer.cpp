@@ -74,6 +74,11 @@ MediaPlayerUtils::~MediaPlayerUtils() {
             qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
         }
     }
+
+    m_startTimer    = nullptr;
+    m_engine        = nullptr;
+    m_imageProvider = nullptr;
+
     qCDebug(CLASS_LC()) << "Destructor end";
 }
 
