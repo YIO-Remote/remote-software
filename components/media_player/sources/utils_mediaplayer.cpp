@@ -212,7 +212,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
             ////////////////////////////////////////////////////////////////////
             /// CREATE LARGE BACKGROUND IMAGE
             ////////////////////////////////////////////////////////////////////
-            qCDebug(CLASS_LC()) << "Creating large image";
+            qCDebug(CLASS_LC()) << "Creating image";
             // resize image
             image.scaledToHeight(280, Qt::SmoothTransformation);
 
@@ -226,7 +226,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
             painter.drawImage(image.rect(), noise);
             painter.end();
 
-            qCDebug(CLASS_LC()) << "Creating large image DONE";
+            qCDebug(CLASS_LC()) << "Creating image DONE";
 
             emit processingDone(m_pixelColor, image);
         }
@@ -234,10 +234,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
         qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << m_reply->errorString();
         emit processingDone(QColor("black"), QImage());
     }
-    if (m_reply) {
-        m_reply->deleteLater();
-        m_reply = nullptr;
-    }
+    m_reply->deleteLater();
     qCDebug(CLASS_LC()) << "Network reply deleted";
 }
 
