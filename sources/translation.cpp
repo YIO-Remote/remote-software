@@ -43,7 +43,7 @@ void TranslationHandler::selectLanguage(QString language) {
     qGuiApp->removeTranslator(m_translator);
     m_translator->load(":/translations/" + language);
     qGuiApp->installTranslator(m_translator);
-    qCDebug(CLASS_LC) << "Installed transslation for main app" << language;
+    qCDebug(CLASS_LC) << "Installed translation for main app" << language;
 
     // install plugin translations
     QList<QObject *> plugins = Integrations::getInstance()->getAllPlugins();
@@ -52,7 +52,7 @@ void TranslationHandler::selectLanguage(QString language) {
         if (pInterface) {
             qGuiApp->removeTranslator(pInterface->pluginTranslator());
             qGuiApp->installTranslator(pInterface->installTranslator(language));
-            qCDebug(CLASS_LC) << "Installed transslation for plugin" << language << pInterface;
+            qCDebug(CLASS_LC) << "Installed translation for plugin" << language << pInterface;
         }
     }
 
