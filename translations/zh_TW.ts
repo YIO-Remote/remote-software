@@ -12,8 +12,7 @@
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation type="unfinished">YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
-%1</translation>
+      <translation>YIO是一個開源項目，得益於所有貢獻者。 非常感謝到目前為止為項目作出貢獻的每個人：</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="50"/>
@@ -21,10 +20,9 @@
 
 To learn more about the project, visit
 %1</source>
-      <translation type="unfinished">
+      <translation>
 
-To learn more about the project, visit
-%1</translation>
+要了解更多有關本項目的信息，請到訪 %1</translation>
     </message>
   </context>
   <context>
@@ -369,26 +367,26 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="41"/>
       <source>Invalid configuration file</source>
-      <translation type="unfinished">Invalid configuration file</translation>
+      <translation>無效的設定檔</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>將您的瀏覽器引導到：http：//</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>
  and use the web configurator
 to fix the problem.</source>
-      <translation type="unfinished">
- and use the web configurator
-to fix the problem.</translation>
+      <translation>
+並使用網頁配置器
+ 解決問題。</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>重新啟動</translation>
     </message>
   </context>
   <context>
@@ -453,12 +451,12 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Light</source>
-      <translation type="unfinished">Light</translation>
+      <translation>燈</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Blind</source>
-      <translation type="unfinished">Blind</translation>
+      <translation>百葉窗</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
@@ -504,18 +502,18 @@ to fix the problem.</translation>
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>使用網頁配置器
+ 設置YIO遙控器</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>將您的瀏覽器引導到：http：//</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation type="unfinished">Loading</translation>
+      <translation>正在載入</translation>
     </message>
   </context>
   <context>
@@ -800,7 +798,7 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep3.qml" line="164"/>
       <source>Join other</source>
-      <translation type="unfinished">Join other</translation>
+      <translation>加入其他</translation>
     </message>
   </context>
   <context>
@@ -828,22 +826,22 @@ Navigate your internet browser to: http://</source>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="104"/>
       <source>Enter your WiFi network credentials</source>
-      <translation type="unfinished">Enter your WiFi network credentials</translation>
+      <translation>輸入您的WiFi網絡憑據</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="122"/>
       <source>SSID</source>
-      <translation type="unfinished">SSID</translation>
+      <translation>Wi-Fi 名稱</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="157"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>密碼</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="206"/>
       <source>Join</source>
-      <translation type="unfinished">Join</translation>
+      <translation>加入</translation>
     </message>
   </context>
   <context>
@@ -953,16 +951,15 @@ a power source and wait until it starts blinking.
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">You can setup your YIO Dock later from the web configurator.
+      <translation>您可以稍後通過網頁配置器設定YIO Dock。
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+要使用網頁配置器，
+請先重新啟動遙控器，之後到設定並開啟遠端設定工能。</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>重新啟動</translation>
     </message>
   </context>
   <context>
@@ -970,7 +967,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="39"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>已連接</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="50"/>
@@ -979,16 +976,15 @@ Remote configuration after restarting the remote.</translation>
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">YIO Dock has successfully connected to your Wi-Fi network.
+      <translation>YIO Dock已成功連接到您的Wi-Fi網絡
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+要使用網頁配置器，
+請先重新啟動遙控器，之後到設定並開啟遠端設定功能。</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="61"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>重新啟動</translation>
     </message>
   </context>
   <context>
@@ -996,7 +992,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../setup/SetupStepCountry.qml" line="65"/>
       <source>Select your country or region</source>
-      <translation type="unfinished">Select your country or region</translation>
+      <translation>選擇國家或地區</translation>
     </message>
   </context>
   <context>
@@ -1009,37 +1005,37 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="196"/>
       <source>Invalid request.</source>
-      <translation type="unfinished">Invalid request.</translation>
+      <translation>無效的請求</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="199"/>
       <source>Unsupported device.</source>
-      <translation type="unfinished">Unsupported device.</translation>
+      <translation>不支援的裝置</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="202"/>
       <source>Service currently not available.</source>
-      <translation type="unfinished">Service currently not available.</translation>
+      <translation>目前未提供此服務</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="205"/>
       <source>Request error %1</source>
-      <translation type="unfinished">Request error %1</translation>
+      <translation>請求出錯 %1</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>軟體更新:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>New software is available</source>
-      <translation type="unfinished">New software is available</translation>
+      <translation>有新版本可用</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>下載</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="243"/>
@@ -1137,17 +1133,17 @@ YIO遙控器 %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="79"/>
       <source>Unit system</source>
-      <translation type="unfinished">Unit system</translation>
+      <translation>單位系統</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="113"/>
       <source>Metric</source>
-      <translation type="unfinished">Metric</translation>
+      <translation>公制</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="148"/>
       <source>Imperial</source>
-      <translation type="unfinished">Imperial</translation>
+      <translation>英制</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="167"/>
