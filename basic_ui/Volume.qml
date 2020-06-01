@@ -34,9 +34,10 @@ Item {
     property bool volumeUp: false
     property int changeInterval: 250
 
-    signal volumeChanged()
+    signal volumeChanged(int newVolume)
 
-    function start() {
+    function start(volume) {
+        volumePosition = volume;
         timer.start();
     }
 
@@ -61,7 +62,7 @@ Item {
     ]
 
     onVolumePositionChanged : {
-            hideTimer.restart();
+        hideTimer.restart();
     }
 
     Timer {
@@ -99,9 +100,9 @@ Item {
         layer.effect: OpacityMask {
             maskSource:
                 Rectangle {
-                    width: bg.width
-                    height: bg.height
-                    radius: bg.radius
+                width: bg.width
+                height: bg.height
+                radius: bg.radius
             }
         }
 
@@ -154,13 +155,25 @@ Item {
         onTriggered: {
             count++;
 
-            if (count >= 5) {
-                changeInterval = 50;
-            } else if (count >= 3) {
+            if (count >= 3) {
                 changeInterval = 150;
+                if (volumeUp) {
+                    volumePosition = volumePosition + 3;
+                } else {
+                    volumePosition = volumePosition - 3;
+                }
+            } else {
+                if (volumeUp) {
+                    volumePosition = volumePosition + 2;
+                } else {
+                    volumePosition = volumePosition - 2;
+                }
             }
 
-            volume.volumeChanged();
+            if (volumePosition < 0) volumePosition = 0;
+            if (volumePosition > 100) volumePosition = 100;
+
+            volume.volumeChanged(volumePosition);
         }
     }
 }

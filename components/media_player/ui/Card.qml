@@ -55,12 +55,12 @@ Rectangle {
             case ButtonHandler.VOLUME_UP:
                 volume.stop();
                 volume.volumeUp = true;
-                volume.start();
+                volume.start(obj.volume);
                 break;
             case ButtonHandler.VOLUME_DOWN:
                 volume.stop();
                 volume.volumeUp = false;
-                volume.start();
+                volume.start(obj.volume);
                 break;
             }
         }
@@ -76,22 +76,14 @@ Rectangle {
         onVolumeChanged: {
             if (volume.volumeUp) {
                 if (volume.state !== "visible") {
-                    volume.volumePosition = obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = obj.volume + 2;
-                if (newvolume > 100) newvolume = 100;
-                obj.setVolume(newvolume);
-                volume.volumePosition = newvolume;
+                obj.setVolume(newVolume);
             } else {
                 if (volume.state !== "visible") {
-                    volume.volumePosition = obj.volume;
                     volume.state = "visible";
                 }
-                newvolume = obj.volume - 2;
-                if (newvolume < 0) newvolume = 0;
-                obj.setVolume(newvolume);
-                volume.volumePosition = newvolume;
+                obj.setVolume(newVolume);
             }
         }
     }

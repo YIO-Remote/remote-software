@@ -140,22 +140,14 @@ Item {
         onVolumeChanged: {
             if (volume.volumeUp) {
                 if (volume.state !== "visible") {
-                    volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                var newvolume = mediaPlayers.currentItem.player.obj.volume + 2;
-                if (newvolume > 100) newvolume = 100;
-                mediaPlayers.currentItem.player.obj.setVolume(newvolume);
-                volume.volumePosition = newvolume;
+                mediaPlayers.currentItem.player.obj.setVolume(newVolume);
             } else {
                 if (volume.state !== "visible") {
-                    volume.volumePosition = mediaPlayers.currentItem.player.obj.volume;
                     volume.state = "visible";
                 }
-                newvolume = mediaPlayers.currentItem.player.obj.volume - 2;
-                if (newvolume < 0) newvolume = 0;
-                mediaPlayers.currentItem.player.obj.setVolume(newvolume);
-                volume.volumePosition = newvolume;
+                mediaPlayers.currentItem.player.obj.setVolume(newVolume);
             }
         }
     }
@@ -169,12 +161,12 @@ Item {
                 case ButtonHandler.VOLUME_UP:
                     volume.stop();
                     volume.volumeUp = true;
-                    volume.start();
+                    volume.start(mediaPlayers.currentItem.player.obj.volume);
                     break;
                 case ButtonHandler.VOLUME_DOWN:
                     volume.stop();
                     volume.volumeUp = false;
-                    volume.start();
+                    volume.start(mediaPlayers.currentItem.player.obj.volume);
                     break;
             }
         }
