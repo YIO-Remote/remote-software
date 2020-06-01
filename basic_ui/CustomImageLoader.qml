@@ -48,6 +48,7 @@ Item {
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
+        cache: false
 
         onStatusChanged: {
             if (image1.status == Image.Ready) {
@@ -62,6 +63,7 @@ Item {
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
         opacity: 0
+        cache: false
 
         Behavior on opacity {
             NumberAnimation { duration: 800; easing.type: Easing.OutExpo }

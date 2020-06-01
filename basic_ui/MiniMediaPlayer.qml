@@ -40,6 +40,8 @@ Item {
     width: Style.screen.width; height: 90
     anchors.bottom: parent.bottom
 
+    property bool counter: false
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -346,6 +348,7 @@ Item {
                     property var m_image: obj ? obj.mediaImage : ""
 
                     onM_imageChanged: {
+                        counter = !counter
                         if (obj) {
                             mediaplayerUtils.imageURL = obj.mediaImage
                         }
@@ -355,7 +358,7 @@ Item {
                         id: bgImage
                         width: 280; height: 280
                         anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 86 }
-                        url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
+                        url: "image://mediautilsprovider/image?id=" + counter //obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
@@ -363,7 +366,7 @@ Item {
                     id: image
                     width: 90; height: 90
                     anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: 0 }
-                    url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
+                    url: "image://mediautilsprovider/image?id=" + counter //obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
                 Item {

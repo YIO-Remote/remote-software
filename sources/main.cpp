@@ -247,6 +247,11 @@ int main(int argc, char* argv[]) {
     // set rending of text
     QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
 
+    // ADD IMAGE PROVIDER
+    QScopedPointer<MediaPlayerUtilsImageProvider> mediaPlayerUtilsImageProvider(new MediaPlayerUtilsImageProvider());
+    engine.rootContext()->setContextProperty("mediautilsprovider", mediaPlayerUtilsImageProvider.data());
+    engine.addImageProvider("mediautilsprovider", mediaPlayerUtilsImageProvider.data());
+
     engine.addImportPath("qrc:/");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

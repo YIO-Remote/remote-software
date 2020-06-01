@@ -28,6 +28,8 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
 
 MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
+    m_imageProvider = MediaPlayerUtilsImageProvider::getInstance();
+
     m_startTimer = new QTimer(this);
     m_startTimer->setSingleShot(true);
     m_startTimer->setInterval(1000);
@@ -91,16 +93,12 @@ void MediaPlayerUtils::setEnabled(bool value) {
     }
 }
 
-void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QString &smallImage,
-                                        const QString &largeImage) {
+void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QImage &image) {
+    m_imageProvider->updateImage(image);
+    emit imageChanged();
+
     m_pixelColor = pixelColor;
     emit pixelColorChanged();
-
-    m_smallImage = smallImage;
-    emit smallImageChanged();
-
-    m_image = largeImage;
-    emit imageChanged();
 
     if (m_worker != nullptr) {
         m_worker->disconnect();
@@ -197,25 +195,6 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
             }
 
             ////////////////////////////////////////////////////////////////////
-            /// CREATE A SMALL THUMBNAIL IMAGE
-            ////////////////////////////////////////////////////////////////////
-            qCDebug(CLASS_LC()) << "Creating small image";
-            QImage smallImage = image;
-            smallImage.scaledToHeight(90, Qt::SmoothTransformation);
-
-            // create byte array and then convert to base64
-            QByteArray bArray;
-            QBuffer    buffer(&bArray);
-            buffer.open(QIODevice::WriteOnly);
-            smallImage.save(&buffer, "JPEG");
-
-            QString bImage("data:image/jpg;base64,");
-            bImage.append(QString::fromLatin1(bArray.toBase64().data()));
-
-            QString m_smallImage = bImage;
-            qCDebug(CLASS_LC()) << "Creating small image DONE";
-
-            ////////////////////////////////////////////////////////////////////
             /// CREATE LARGE BACKGROUND IMAGE
             ////////////////////////////////////////////////////////////////////
             qCDebug(CLASS_LC()) << "Creating large image";
@@ -232,23 +211,13 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
             painter.drawImage(image.rect(), noise);
             painter.end();
 
-            // create byte array and then convert to base64
-            QByteArray lArray;
-            QBuffer    lBuffer(&lArray);
-            lBuffer.open(QIODevice::WriteOnly);
-            image.save(&lBuffer, "JPEG");
-
-            QString lImage("data:image/jpg;base64,");
-            lImage.append(QString::fromLatin1(lArray.toBase64().data()));
-
-            QString m_largeImage = lImage;
             qCDebug(CLASS_LC()) << "Creating large image DONE";
 
-            emit processingDone(m_pixelColor, m_smallImage, m_largeImage);
+            emit processingDone(m_pixelColor, image);
         }
     } else {
         qCWarning(CLASS_LC) << "NETWORK REPLY ERROR" << m_reply->errorString();
-        emit processingDone(QColor("black"), "", "");
+        emit processingDone(QColor("black"), QImage());
     }
     if (m_reply) {
         m_reply->deleteLater();
@@ -282,5 +251,45 @@ QColor MediaPlayerUtilsWorker::dominantColor(const QImage &image) {
         return Qt::black;
     } else {
         return QColor(averageRed / n, averageGreen / n, averageBlue / n);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// IMAGE PROVIDER
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MediaPlayerUtilsImageProvider *MediaPlayerUtilsImageProvider::s_instance = nullptr;
+
+MediaPlayerUtilsImageProvider::MediaPlayerUtilsImageProvider() : QQuickImageProvider(QQuickImageProvider::Image) {
+    s_instance = this;
+
+    m_noImage = QImage();
+    blockSignals(false);
+}
+
+QImage MediaPlayerUtilsImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize) {
+    Q_UNUSED(id)
+
+    QImage result = m_image;
+
+    if (result.isNull()) {
+        result = m_noImage;
+    }
+
+    if (size) {
+        *size = result.size();
+    }
+
+    if (requestedSize.width() > 0 && requestedSize.height() > 0) {
+        result = result.scaled(requestedSize.width(), requestedSize.height(), Qt::KeepAspectRatio);
+    }
+
+    return result;
+}
+
+void MediaPlayerUtilsImageProvider::updateImage(const QImage &image) {
+    if (m_image != image) {
+        m_image = image;
+        emit imageChanged();
     }
 }

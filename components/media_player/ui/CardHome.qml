@@ -38,6 +38,8 @@ Rectangle {
         ColorAnimation { duration: 300 }
     }
 
+    property bool counter: false
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,6 +137,7 @@ Rectangle {
 
         onImageChanged: {
             albumArt.stopLoader();
+            counter = !counter;
         }
     }
 
@@ -184,7 +187,7 @@ Rectangle {
         id: albumArt
         width: 280; height: 280
         anchors { top: parent.top; topMargin: 118; horizontalCenter: parent.horizontalCenter }
-        url: mediaplayerUtils.image === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image
+        url: "image://mediautilsprovider/image?id=" + counter
     }
 
     Text {
