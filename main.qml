@@ -233,7 +233,32 @@ ApplicationWindow {
         asynchronous: true
         source: "qrc:/basic_ui/ChargingScreen.qml"
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
-        active: visible
+        active: false
+    }
+
+    Connections {
+        target: Battery
+
+        onIsChargingChanged: {
+            if (Battery.isCharging) {
+                chargingScreen.setSource("qrc:/basic_ui/ChargingScreen.qml");
+                chargingScreen.active = true;
+            } else {
+                chargingScreenTimer.start();
+            }
+        }
+    }
+
+    Timer {
+        id: chargingScreenTimer
+        repeat: false
+        interval: 700
+        running: false
+
+        onTriggered: {
+            chargingScreen.setSource("");
+            chargingScreen.active = false;
+        }
     }
 
 
