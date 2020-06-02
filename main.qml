@@ -231,7 +231,6 @@ ApplicationWindow {
         width: 480; height: 800
         x: 0; y: 0
         asynchronous: true
-        source: "qrc:/basic_ui/ChargingScreen.qml"
         visible: StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM
         active: false
     }
