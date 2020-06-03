@@ -51,43 +51,20 @@ MediaPlayerUtils::~MediaPlayerUtils() {
     if (m_worker != nullptr) {
         m_worker->disconnect();
         qCDebug(CLASS_LC()) << "Destructor: signal disconnected from Worker class";
+        delete m_worker;
+        m_worker = nullptr;
+        qCDebug(CLASS_LC()) << "Destructor: worker deleted";
     }
-
-    qCDebug(CLASS_LC()) << "Destructor: Worker was null moving on";
 
     if (m_workerThread != nullptr) {
         if (m_workerThread->isRunning()) {
-            qCDebug(CLASS_LC()) << "Destructor: Worker thread is running";
             m_workerThread->quit();
-            if (!m_workerThread->wait(5000)) {
-                qCDebug(CLASS_LC()) << "Destructor: Terminating worker thread";
-                m_workerThread->terminate();
-                m_workerThread->wait();
-                delete m_worker;
-                m_worker = nullptr;
-                qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
-                delete m_workerThread;
-                m_workerThread = nullptr;
-                qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
-            } else {
-                delete m_worker;
-                m_worker = nullptr;
-                qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
-                delete m_workerThread;
-                m_workerThread = nullptr;
-                qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
-            }
-        } else {
-            delete m_worker;
-            m_worker = nullptr;
-            qCDebug(CLASS_LC()) << "Destructor: Worker class deleted";
+            m_workerThread->wait();
             delete m_workerThread;
             m_workerThread = nullptr;
-            qCDebug(CLASS_LC()) << "Destructor: Worker thread deleted";
+            qCDebug(CLASS_LC()) << "Destructor: WorkerThread was deleted";
         }
     }
-
-    qCDebug(CLASS_LC()) << "Destructor: WorkerThread was null moving on";
 
     if (m_startTimer->isActive()) {
         m_startTimer->stop();
@@ -135,39 +112,22 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QImage &
     if (m_worker != nullptr) {
         m_worker->disconnect();
         qCDebug(CLASS_LC()) << "Signal disconnected from Worker class";
+        delete m_worker;
+        m_worker = nullptr;
+        qCDebug(CLASS_LC()) << "Worker deleted";
     }
 
     if (m_workerThread != nullptr) {
         if (m_workerThread->isRunning()) {
-            qCDebug(CLASS_LC()) << "Worker thread is running";
             m_workerThread->quit();
-            if (!m_workerThread->wait(5000)) {
-                qCDebug(CLASS_LC()) << "Terminating worker thread";
-                m_workerThread->terminate();
-                m_workerThread->wait();
-                delete m_worker;
-                m_worker = nullptr;
-                qCDebug(CLASS_LC()) << "Worker class deleted";
-                delete m_workerThread;
-                m_workerThread = nullptr;
-                qCDebug(CLASS_LC()) << "Worker thread deleted";
-            } else {
-                delete m_worker;
-                m_worker = nullptr;
-                qCDebug(CLASS_LC()) << "Worker class deleted";
-                delete m_workerThread;
-                m_workerThread = nullptr;
-                qCDebug(CLASS_LC()) << "Worker thread deleted";
-            }
-        } else {
-            delete m_worker;
-            m_worker = nullptr;
-            qCDebug(CLASS_LC()) << "Worker class deleted";
+            m_workerThread->wait();
             delete m_workerThread;
             m_workerThread = nullptr;
-            qCDebug(CLASS_LC()) << "Worker thread deleted";
+            qCDebug(CLASS_LC()) << "WorkerThread was deleted";
         }
     }
+
+    qCDebug(CLASS_LC()) << "Processing done";
 }
 
 void MediaPlayerUtils::generateImages(const QString &url) {
@@ -195,9 +155,9 @@ MediaPlayerUtilsWorker::~MediaPlayerUtilsWorker() {
     qCDebug(CLASS_LC()) << "Worker destructor";
     if (m_manager) {
         delete m_manager;
+        qCDebug(CLASS_LC()) << "Worker destructor: Manager deleted.";
     }
     m_manager = nullptr;
-    qCDebug(CLASS_LC()) << "Worker destructor: Manager deleted.";
 }
 
 void MediaPlayerUtilsWorker::generateImages(const QString &url) {
