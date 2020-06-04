@@ -112,6 +112,7 @@ class MediaPlayerUtils : public QObject {
     QTimer* m_startTimer;
 
     void generateImages(const QString& url);
+    void deleteWorker();
 
     QThread*                       m_workerThread = nullptr;
     MediaPlayerUtilsWorker*        m_worker       = nullptr;
