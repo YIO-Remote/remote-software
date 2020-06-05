@@ -40,6 +40,8 @@ Item {
     width: Style.screen.width; height: 90
     anchors.bottom: parent.bottom
 
+    property bool counter: false
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -206,6 +208,7 @@ Item {
                     onImageChanged: {
                         bgImage.stopLoader();
                         image.stopLoader();
+                        counter = !counter
                     }
                 }
 
@@ -355,7 +358,7 @@ Item {
                         id: bgImage
                         width: 280; height: 280
                         anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 86 }
-                        url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
+                        url: "image://" + mediaplayerUtils.imageProviderId + "/image?id=" + counter //obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.image //utils.miniMusicPlayerImage
                     }
                 }
 
@@ -363,7 +366,7 @@ Item {
                     id: image
                     width: 90; height: 90
                     anchors { verticalCenter: parent.verticalCenter; left: parent.left; leftMargin: 0 }
-                    url: obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
+                    url: "image://" + mediaplayerUtils.imageProviderId + "/image?id=" + counter //obj && obj.mediaImage === "" ? "qrc:/images/mini-music-player/no_image.png" : mediaplayerUtils.smallImage
                 }
 
                 Item {

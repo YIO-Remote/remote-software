@@ -38,6 +38,8 @@ Comp.ButtonBase {
     // override default settings
     title.anchors.verticalCenterOffset: obj && obj.source === "" ? 0 : -15
 
+    property alias mediaplayerUtils: mediaplayerUtils
+
     // include mediaplayer utils
     MediaPlayerUtils {
         id: mediaplayerUtils
@@ -49,6 +51,7 @@ Comp.ButtonBase {
 
         onImageChanged: {
             image.stopLoader();
+            counter = !counter;
         }
     }
 
@@ -81,6 +84,7 @@ Comp.ButtonBase {
 
     // album art
     property string m_image: obj ? obj.mediaImage : ""
+    property bool counter: false
 
     onM_imageChanged: {
         mediaplayerUtils.imageURL = obj ? obj.mediaImage : ""
@@ -91,7 +95,7 @@ Comp.ButtonBase {
         visible: mediaplayerButton.state == "closed" ? true : false
         width: 80; height: 80
         anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
-        url: mediaplayerUtils.smallImage == "" ? "" : mediaplayerUtils.smallImage
+        url: "image://" + mediaplayerUtils.imageProviderId + "/image?id=" + counter
 
         layer.enabled: true
         layer.effect: OpacityMask {
