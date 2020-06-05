@@ -105,6 +105,11 @@ void MediaPlayerUtils::generateImages(const QString &url) {
         m_prevImageURL = url;
         emit processingStarted();
 
+        if (m_startTimer->isActive()) {
+            m_startTimer->stop();
+            qCDebug(CLASS_LC()) << this << "Timer stopped";
+        }
+
         deleteWorker();
 
         m_worker       = new MediaPlayerUtilsWorker();
@@ -151,9 +156,9 @@ MediaPlayerUtilsWorker::~MediaPlayerUtilsWorker() {
     qCDebug(CLASS_LC()) << this << "Worker destructor";
     if (m_manager != nullptr) {
         delete m_manager;
+        m_manager = nullptr;
         qCDebug(CLASS_LC()) << this << "Worker destructor: Manager deleted.";
     }
-    m_manager = nullptr;
 }
 
 void MediaPlayerUtilsWorker::generateImages(const QString &url) {
