@@ -41,6 +41,14 @@ MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
     m_startTimer = new QTimer(this);
     m_startTimer->setSingleShot(true);
     m_startTimer->setInterval(1000);
+
+    m_worker       = new MediaPlayerUtilsWorker();
+    m_workerThread = new QThread(this);
+
+    QObject::connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
+
+    m_worker->moveToThread(m_workerThread);
+    m_workerThread->start();
 }
 
 MediaPlayerUtils::~MediaPlayerUtils() {
@@ -48,7 +56,25 @@ MediaPlayerUtils::~MediaPlayerUtils() {
     m_engine->removeImageProvider(m_imageProviderId);
     qCDebug(CLASS_LC()) << this << "Destructor: Image provider removed:" << m_imageProviderId;
 
-    deleteWorker();
+    if (m_worker != nullptr) {
+        qCDebug(CLASS_LC()) << this << "Destructor: Worker was not null";
+        m_worker->disconnect();
+        qCDebug(CLASS_LC()) << this << "Destructor: Signal disconnected from Worker class";
+        delete m_worker;
+        m_worker = nullptr;
+        qCDebug(CLASS_LC()) << this << "Destructor: Worker deleted";
+    }
+
+    if (m_workerThread != nullptr) {
+        qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread was not null";
+        if (m_workerThread->isRunning()) {
+            m_workerThread->exit();
+            m_workerThread->wait(5000);
+        }
+        delete m_workerThread;
+        m_workerThread = nullptr;
+        qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread was deleted";
+    }
 
     if (m_startTimer->isActive()) {
         m_startTimer->stop();
@@ -93,8 +119,6 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QImage &
     m_pixelColor = pixelColor;
     emit pixelColorChanged();
 
-    deleteWorker();
-
     qCDebug(CLASS_LC()) << this << "Processing done";
 }
 
@@ -105,47 +129,8 @@ void MediaPlayerUtils::generateImages(const QString &url) {
         m_prevImageURL = url;
         emit processingStarted();
 
-        if (m_startTimer->isActive()) {
-            m_startTimer->stop();
-            qCDebug(CLASS_LC()) << this << "Timer stopped";
-        }
-
-        deleteWorker();
-
-        m_worker       = new MediaPlayerUtilsWorker();
-        m_workerThread = new QThread(this);
-
-        qCDebug(CLASS_LC()) << this << "New Worker and WorkerThread created";
-
-        QObject::connect(m_worker, &MediaPlayerUtilsWorker::processingDone, this, &MediaPlayerUtils::onProcessingDone);
-
-        m_worker->moveToThread(m_workerThread);
-        m_workerThread->start();
         m_worker->generateImages(url);
     }
-}
-
-void MediaPlayerUtils::deleteWorker() {
-    if (m_worker != nullptr) {
-        qCDebug(CLASS_LC()) << this << "Deleteworker: Worker was not null";
-        m_worker->disconnect();
-        qCDebug(CLASS_LC()) << this << "Deleteworker: Signal disconnected from Worker class";
-        delete m_worker;
-        m_worker = nullptr;
-        qCDebug(CLASS_LC()) << this << "Deleteworker: Worker deleted";
-    }
-
-    if (m_workerThread != nullptr) {
-        qCDebug(CLASS_LC()) << this << "Deleteworker: WorkerThread was not null";
-        if (m_workerThread->isRunning()) {
-            m_workerThread->exit();
-            m_workerThread->wait(5000);
-        }
-        delete m_workerThread;
-        m_workerThread = nullptr;
-        qCDebug(CLASS_LC()) << this << "Deleteworker: WorkerThread was deleted";
-    }
-    qCDebug(CLASS_LC()) << this << "Deleteworker: End";
 }
 
 MediaPlayerUtilsWorker::MediaPlayerUtilsWorker(QObject *parent) : QObject(parent) {
@@ -167,70 +152,73 @@ void MediaPlayerUtilsWorker::generateImages(const QString &url) {
 }
 
 void MediaPlayerUtilsWorker::generateImagesReply() {
-    if (m_reply->error() == QNetworkReply::NoError) {
-        // run image processing in different thread
-        QImage image(280, 280, QImage::Format_RGB888);
-        image.fill(Qt::black);
-
-        if (!image.load(m_reply, nullptr)) {
-            qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
-            if (m_reply) {
-                m_reply->deleteLater();
-                m_reply = nullptr;
-            }
-            return;
-        } else {
-            ////////////////////////////////////////////////////////////////////
-            /// GET DOMINANT COLOR
-            ////////////////////////////////////////////////////////////////////
-            qCDebug(CLASS_LC()) << this << "Getting dominant color";
-            //            QColor m_pixelColor = dominantColor(image);
-
-            // shrink down image to 1x1 pixel and measure the color
-            QImage onePixel = image;
-            onePixel.scaled(1, 1, Qt::IgnoreAspectRatio);
-            QColor m_pixelColor = onePixel.pixel(1, 1);
-
-            // change the brightness of the color if it's too bright
-            if (m_pixelColor.lightness() > 150) {
-                m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
-            }
-
-            // if the color is close to white, return black instead
-            if (m_pixelColor.lightness() > 210) {
-                m_pixelColor = QColor("black");
-            }
-
-            ////////////////////////////////////////////////////////////////////
-            /// CREATE LARGE BACKGROUND IMAGE
-            ////////////////////////////////////////////////////////////////////
-            qCDebug(CLASS_LC()) << this << "Creating image";
-            // resize image
-            image.scaledToHeight(280, Qt::SmoothTransformation);
-
-            // create noise layer
-            QImage noise(":/images/mini-music-player/noise.png");
-            noise.scaledToHeight(280, Qt::SmoothTransformation);
-            noise = noise.convertToFormat(QImage::Format_ARGB32);
-
-            // merge the images together
-            QPainter painter(&image);
-            painter.drawImage(image.rect(), noise);
-            painter.end();
-
-            qCDebug(CLASS_LC()) << this << "Creating image DONE";
-
-            emit processingDone(m_pixelColor, image);
-        }
-    } else {
-        qCWarning(CLASS_LC) << this << "NETWORK REPLY ERROR" << m_reply->errorString();
-        emit processingDone(QColor("black"), QImage());
-    }
     if (m_reply != nullptr) {
+        m_reply->disconnect();
+
+        if (m_reply->error() == QNetworkReply::NoError) {
+            // run image processing in different thread
+            QImage image(280, 280, QImage::Format_RGB888);
+            image.fill(Qt::black);
+
+            if (!image.load(m_reply, nullptr)) {
+                qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
+                if (m_reply) {
+                    m_reply->deleteLater();
+                    m_reply = nullptr;
+                }
+                return;
+            } else {
+                ////////////////////////////////////////////////////////////////////
+                /// GET DOMINANT COLOR
+                ////////////////////////////////////////////////////////////////////
+                qCDebug(CLASS_LC()) << this << "Getting dominant color";
+                //            QColor m_pixelColor = dominantColor(image);
+
+                // shrink down image to 1x1 pixel and measure the color
+                QImage onePixel = image;
+                onePixel.scaled(1, 1, Qt::IgnoreAspectRatio);
+                QColor m_pixelColor = onePixel.pixel(1, 1);
+
+                // change the brightness of the color if it's too bright
+                if (m_pixelColor.lightness() > 150) {
+                    m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
+                }
+
+                // if the color is close to white, return black instead
+                if (m_pixelColor.lightness() > 210) {
+                    m_pixelColor = QColor("black");
+                }
+
+                ////////////////////////////////////////////////////////////////////
+                /// CREATE LARGE BACKGROUND IMAGE
+                ////////////////////////////////////////////////////////////////////
+                qCDebug(CLASS_LC()) << this << "Creating image";
+                // resize image
+                image.scaledToHeight(280, Qt::SmoothTransformation);
+
+                // create noise layer
+                QImage noise(":/images/mini-music-player/noise.png");
+                noise.scaledToHeight(280, Qt::SmoothTransformation);
+                noise = noise.convertToFormat(QImage::Format_ARGB32);
+
+                // merge the images together
+                QPainter painter(&image);
+                painter.drawImage(image.rect(), noise);
+                painter.end();
+
+                qCDebug(CLASS_LC()) << this << "Creating image DONE";
+
+                emit processingDone(m_pixelColor, image);
+            }
+        } else {
+            qCWarning(CLASS_LC) << this << "NETWORK REPLY ERROR" << m_reply->errorString();
+            emit processingDone(QColor("black"), QImage());
+        }
+
         delete m_reply;
         m_reply = nullptr;
+        qCDebug(CLASS_LC()) << this << "Network reply deleted";
     }
-    qCDebug(CLASS_LC()) << this << "Network reply deleted";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
