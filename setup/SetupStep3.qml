@@ -122,11 +122,11 @@ Item {
                 Text {
                     color: Style.color.text
                     text: {
-                        if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
+                        if (wifi.networkScanResult[index].signalStrength === SignalStrength.WEAK || wifi.networkScanResult[index].signalStrength === SignalStrength.NONE)
                             return Style.icon.wifi_1
-                        else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.OK)
+                        else if (wifi.networkScanResult[index].signalStrength === SignalStrength.OK)
                             return Style.icon.wifi_2
-                        else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.GOOD || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.EXCELLENT)
+                        else if (wifi.networkScanResult[index].signalStrength === SignalStrength.GOOD || wifi.networkScanResult[index].signalStrength === SignalStrength.EXCELLENT)
                             return Style.icon.wifi_3
                         else return ""
                     }

@@ -48,9 +48,9 @@ Rectangle {
 
         let security;
         if (passwordField.text == "") {
-            security = WifiSecurityEnum.NONE_OPEN;
+            security = WifiSecurity.NONE_OPEN;
         } else {
-            security = WifiSecurityEnum.DEFAULT;
+            security = WifiSecurity.DEFAULT;
         }
 
         wifi.join(name, passwordField.text, security);
