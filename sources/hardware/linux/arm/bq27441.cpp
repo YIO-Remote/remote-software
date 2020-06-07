@@ -161,7 +161,7 @@ void BQ27441::updateBatteryValues() {
 void BQ27441::begin() {
     ASSERT_DEVICE_OPEN()
     updateBatteryValues();
-    /*        QFile poweronFile("/usr/bin/yio-remote/poweron");
+    /*        QFile poweronFile("/opt/yio/poweron");
     if (poweronFile.exists()) {
         // remove the file, so on a reboot we won't calibare the gauge again
         poweronFile.remove();

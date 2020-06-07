@@ -285,7 +285,7 @@
                       "title": "The Image Schema",
                       "default": "",
                       "examples": [
-                        "/usr/bin/yio-remote/images/mtv.jpg"
+                        "/opt/yio/media/images/mtv.jpg"
                       ],
                       "pattern": ""
                     }
@@ -1103,7 +1103,7 @@
                   "type": "string",
                   "title": "The Image Schema",
                   "examples": [
-                    "/usr/bin/yio-remote/images/livingroom.jpg"
+                    "/opt/yio/media/images/livingroom.jpg"
                   ],
                   "pattern": "^(.*)$"
                 },

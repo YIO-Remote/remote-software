@@ -48,7 +48,7 @@ Rectangle {
 
         onTriggered: {
             // TODO(zehnm) create a device class instead of launching hard coded shell scripts from QML
-            uptimeValue.text = settingsLauncher.launch("/usr/bin/yio-remote/uptime.sh").trim();
+            uptimeValue.text = settingsLauncher.launch("/opt/yio/scripts/uptime.sh").trim();
             // TODO(zehnm) create a sensor class for reading CPU temp instead of launching hard coded shell scripts from QML
             var temp = parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp")) / 1000
             if (Number.isNaN(temp)) {

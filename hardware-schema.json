@@ -403,7 +403,7 @@
                   "title": "Connect network script",
                   "default": "",
                   "examples": [
-                    "/usr/bin/yio-remote/wifi_network_create.sh"
+                    "/opt/yio/scripts/wifi_network_create.sh"
                   ],
                   "pattern": "^(.*)$"
                 },
@@ -412,7 +412,7 @@
                   "title": "List networks script",
                   "default": "",
                   "examples": [
-                    "/usr/bin/yio-remote/wifi_network_list.sh"
+                    "/opt/yio/scripts/wifi_network_list.sh"
                   ],
                   "pattern": "^(.*)$"
                 },
@@ -421,7 +421,7 @@
                   "title": "Start access point script",
                   "default": "",
                   "examples": [
-                    "/usr/bin/yio-remote/reset-wifi.sh"
+                    "/opt/yio/scripts/reset-wifi.sh"
                   ],
                   "pattern": "^(.*)$"
                 },
@@ -430,7 +430,7 @@
                   "title": "Get ssid script",
                   "default": "",
                   "examples": [
-                    "/usr/bin/yio-remote/wifi_ssid.sh"
+                    "/opt/yio/scripts/wifi_ssid.sh"
                   ],
                   "pattern": "^(.*)$"
                 },
@@ -439,7 +439,7 @@
                   "title": "Get ip address script",
                   "default": "",
                   "examples": [
-                    "/usr/bin/yio-remote/wifi_ip.sh"
+                    "/opt/yio/scripts/wifi_ip.sh"
                   ],
                   "pattern": "^(.*)$"
                 },
@@ -457,7 +457,7 @@
                   "title": "Get rssi script",
                   "default": "",
                   "examples": [
-                    "/usr/bin/yio-remote/wifi_rssi.sh"
+                    "/opt/yio/scripts/wifi_rssi.sh"
                   ],
                   "pattern": "^(.*)$"
                 }
