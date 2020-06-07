@@ -43,7 +43,7 @@ Comp.ButtonBase {
     // include mediaplayer utils
     MediaPlayerUtils {
         id: mediaplayerUtils
-        enabled: _isCurrentItem && (StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM)
+        enabled: (_isCurrentItem || mediaplayerButton.state == "open") && (StandbyControl.mode == StandbyControl.ON || StandbyControl.mode == StandbyControl.DIM)
 
         onProcessingStarted: {
             image.startLoader();
