@@ -26,13 +26,17 @@
 
 /**
  * @brief Enum class for WiFi security.
- * @details Dedicated class for improved QML usability based on https://qml.guide/enums-in-qt-qml/
+ * @details Dedicated class for clearly separated enums and improved QML usability based on
+ * https://www.embeddeduse.com/2017/09/15/passing-enum-properties-between-c-and-qml/
+ *
+ * Note: the "typedef style" described in https://qml.guide/enums-in-qt-qml/ unfortunately doesn't work with
+ * "=== Strict Equality Comparison" in QML!
  */
-class WifiSecurityEnum {
+class WifiSecurity {
     Q_GADGET
 
  public:
-    enum Value {
+    enum Enum {
         DEFAULT,
         NONE_OPEN,
         NONE_WEP,
@@ -43,10 +47,8 @@ class WifiSecurityEnum {
         WPA2_PSK,
         WPA2_EAP
     };
-    Q_ENUM(Value)
+    Q_ENUM(Enum)
 
  private:
-    WifiSecurityEnum() {}
+    WifiSecurity() {}
 };
-
-typedef WifiSecurityEnum::Value WifiSecurity;

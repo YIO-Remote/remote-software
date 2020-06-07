@@ -936,6 +936,16 @@
             }
           }
         },
+        "unit": {
+          "$id": "#/properties/settings/properties/unit",
+          "type": "string",
+          "enum": [
+            "METRIC",
+            "IMPERIAL"
+          ],
+          "title": "Unit system",
+          "default": "METRIC"
+        },
         "wifitime": {
           "$id": "#/properties/settings/properties/wifitime",
           "type": "integer",

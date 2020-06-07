@@ -159,13 +159,15 @@ Item {
                 Text {
                     color: Style.color.text
                     text: {
-                        if (wifi.wifiStatus.signalStrength == SignalStrengthEnum.WEAK || wifi.wifiStatus.signalStrength == SignalStrengthEnum.NONE)
-                            return Style.icon.wifi_1
-                        else if (wifi.wifiStatus.signalStrength == SignalStrengthEnum.OK)
-                            return Style.icon.wifi_2
-                        else if (wifi.wifiStatus.signalStrength == SignalStrengthEnum.GOOD || wifi.wifiStatus.signalStrength == SignalStrengthEnum.EXCELLENT)
-                            return Style.icon.wifi_3
-                        else return ""
+                        switch(wifi.wifiStatus.signalStrength) {
+                        case SignalStrength.EXCELLENT:
+                        case SignalStrength.GOOD:
+                            return Style.icon.wifi_3;
+                        case SignalStrength.OK:
+                            return Style.icon.wifi_2;
+                        default:
+                            return Style.icon.wifi_1;
+                        }
                     }
                     renderType: Text.NativeRendering
                     width: 70; height: 70
@@ -238,13 +240,15 @@ Item {
                         Text {
                             color: Style.color.text
                             text: {
-                                if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.WEAK || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.NONE)
-                                    return Style.icon.wifi_1
-                                else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.OK)
-                                    return Style.icon.wifi_2
-                                else if (wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.GOOD || wifi.networkScanResult[index].signalStrength == SignalStrengthEnum.EXCELLENT)
-                                    return Style.icon.wifi_3
-                                else return ""
+                                switch(wifi.networkScanResult[index].signalStrength) {
+                                case SignalStrength.EXCELLENT:
+                                case SignalStrength.GOOD:
+                                    return Style.icon.wifi_3;
+                                case SignalStrength.OK:
+                                    return Style.icon.wifi_2;
+                                default:
+                                    return Style.icon.wifi_1;
+                                }
                             }
                             renderType: Text.NativeRendering
                             width: 70; height: 70

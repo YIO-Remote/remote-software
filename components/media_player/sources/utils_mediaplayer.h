@@ -29,7 +29,30 @@
 #include <QNetworkReply>
 #include <QObject>
 #include <QPainter>
+#include <QQmlApplicationEngine>
+#include <QQuickImageProvider>
 #include <QThread>
+#include <QTimer>
+#include <QUuid>
+
+class MediaPlayerUtilsImageProvider : public QObject, public QQuickImageProvider {
+    Q_OBJECT
+
+ public:
+    explicit MediaPlayerUtilsImageProvider();
+
+    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
+
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void updateImage(const QImage& image);
+
+ signals:
+    void imageChanged();
+
+ private:
+    QImage m_image;
+    QImage m_noImage;
+};
 
 class MediaPlayerUtilsWorker : public QObject {
     Q_OBJECT
@@ -43,7 +66,7 @@ class MediaPlayerUtilsWorker : public QObject {
     void generateImagesReply();
 
  signals:
-    void processingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
+    void processingDone(const QColor& pixelColor, const QImage& image);
 
  private:
     QNetworkAccessManager* m_manager;
@@ -60,27 +83,24 @@ class MediaPlayerUtils : public QObject {
 
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(QString imageURL READ imageURL WRITE setImageURL)
-    Q_PROPERTY(QString image READ image NOTIFY imageChanged)
-    Q_PROPERTY(QString smallImage READ smallImage NOTIFY smallImageChanged)
+    Q_PROPERTY(QString imageProviderId READ imageProviderId CONSTANT)
     Q_PROPERTY(QColor pixelColor READ pixelColor NOTIFY pixelColorChanged)
 
     bool    enabled() { return m_enabled; }
     QString imageURL() { return m_imageURL; }
-    QString image() { return m_image; }
-    QString smallImage() { return m_smallImage; }
+    QString imageProviderId() { return m_imageProviderId; }
     QColor  pixelColor() { return m_pixelColor; }
 
     void setImageURL(QString url);
     void setEnabled(bool value);
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
-    void onProcessingDone(const QColor& pixelColor, const QString& smallImage, const QString& largeImage);
+    void onProcessingDone(const QColor& pixelColor, const QImage& image);
 
  signals:
     void processingStarted();
     void enabledChanged();
     void imageChanged();
-    void smallImageChanged();
     void pixelColorChanged();
 
  private:
@@ -88,12 +108,15 @@ class MediaPlayerUtils : public QObject {
 
     QString m_imageURL;
     QString m_prevImageURL;
-    QString m_image;
-    QString m_smallImage;
     QColor  m_pixelColor;
+    QTimer* m_startTimer;
 
     void generateImages(const QString& url);
 
-    QThread*                m_workerThread = nullptr;
-    MediaPlayerUtilsWorker* m_worker       = nullptr;
+    QThread*                       m_workerThread = nullptr;
+    MediaPlayerUtilsWorker*        m_worker       = nullptr;
+    MediaPlayerUtilsImageProvider* m_imageProvider;
+    QString                        m_imageProviderId;
+
+    QQmlApplicationEngine* m_engine;
 };

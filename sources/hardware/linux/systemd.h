@@ -34,17 +34,17 @@ class Systemd : public SystemService {
     Q_OBJECT
 
  public:
-    explicit Systemd(const QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent = nullptr);
+    explicit Systemd(const QMap<SystemServiceName::Enum, QString> &serviceNameMap, QObject *parent = nullptr);
 
     void setUseSudo(bool sudo);
     bool isUseSudo();
 
     // SystemService interface
  public:
-    Q_INVOKABLE bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE bool stopService(SystemServiceName serviceName) override;
-    Q_INVOKABLE bool restartService(SystemServiceName serviceName) override;
-    Q_INVOKABLE bool reloadService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool startService(SystemServiceName::Enum serviceName) override;
+    Q_INVOKABLE bool stopService(SystemServiceName::Enum serviceName) override;
+    Q_INVOKABLE bool restartService(SystemServiceName::Enum serviceName) override;
+    Q_INVOKABLE bool reloadService(SystemServiceName::Enum serviceName) override;
 
     int  systemctlTimeout() const;
     void setSystemctlTimeout(int systemctlTimeout);
@@ -52,7 +52,8 @@ class Systemd : public SystemService {
  private:
     bool launch(const QString &command);
 
-    bool                             m_useSudo;
-    int                              m_systemctlTimeout;
-    QMap<SystemServiceName, QString> m_serviceNameMap;
+    bool m_useSudo;
+    int  m_systemctlTimeout;
+
+    QMap<SystemServiceName::Enum, QString> m_serviceNameMap;
 };

@@ -82,7 +82,7 @@ class WifiWpaSupplicant : public WifiControl {
     Q_INVOKABLE bool reset() override;
     Q_INVOKABLE bool clearConfiguredNetworks() override;
     Q_INVOKABLE bool join(const QString& ssid, const QString& password,
-                          WifiSecurity security = WifiSecurity::DEFAULT) override;
+                          WifiSecurity::Enum security = WifiSecurity::DEFAULT) override;
     Q_INVOKABLE void startNetworkScan() override;
     Q_INVOKABLE bool startAccessPoint() override;
 
@@ -202,7 +202,7 @@ class WifiWpaSupplicant : public WifiControl {
      * @param networkId optional network identification to retrieve more information if required
      * @return Security enumeration
      */
-    WifiSecurity getSecurityFromFlags(const QString& flags, int networkId = -1);
+    WifiSecurity::Enum getSecurityFromFlags(const QString& flags, int networkId = -1);
 
     /**
      * @brief getConfiguredNetworks Returns the configured networks with command LIST_NETWORKS

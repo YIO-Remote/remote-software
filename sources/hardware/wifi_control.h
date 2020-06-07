@@ -106,7 +106,7 @@ class WifiControl : public QObject {
      *         false if connection setup failed.
      */
     Q_INVOKABLE virtual bool join(const QString &ssid, const QString &password,
-                                  WifiSecurity security = WifiSecurity::DEFAULT) = 0;
+                                  WifiSecurity::Enum security = WifiSecurity::DEFAULT) = 0;
 
     /**
      * @brief Checks if the WiFi connection is established
@@ -237,7 +237,7 @@ class WifiControl : public QObject {
     /**
      * @brief validateAuthentication Validates the authentication mode and pre shared key
      */
-    bool validateAuthentication(WifiSecurity security, const QString &preSharedKey);
+    bool validateAuthentication(WifiSecurity::Enum security, const QString &preSharedKey);
 
     /**
      * @brief Set Wifi connection status.

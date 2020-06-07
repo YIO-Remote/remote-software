@@ -175,7 +175,7 @@ bool WifiWpaSupplicant::clearConfiguredNetworks() {
     return true;
 }
 
-bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiSecurity security) {
+bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiSecurity::Enum security) {
     qCDebug(CLASS_LC) << "Joining network:" << ssid << security;
 
     // For more details about network creation & security option see:
@@ -675,7 +675,7 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
         }
     }
 
-    WifiSecurity security = getSecurityFromFlags(flags, networkId);
+    WifiSecurity::Enum security = getSecurityFromFlags(flags, networkId);
     WifiNetwork  network{id, ssid, bssid, level, security, flags.contains("[WPS")};
 
     // qCDebug(CLASS_LC) << "Network found:" << network; // too verbose
@@ -685,10 +685,10 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
     return true;
 }
 
-WifiSecurity WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int networkId) {
+WifiSecurity::Enum WifiWpaSupplicant::getSecurityFromFlags(const QString& flags, int networkId) {
     // Partial implementation of security flags, e.g. no support for EAP
     // Sufficiant for now...
-    WifiSecurity auth;
+    WifiSecurity::Enum auth;
     if (flags.indexOf("[WPA2-EAP") >= 0) {
         auth = WifiSecurity::WPA2_EAP;
     } else if (flags.indexOf("[WPA-EAP") >= 0) {

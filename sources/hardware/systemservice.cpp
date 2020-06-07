@@ -27,7 +27,7 @@ SystemService::SystemService(QObject *parent) : QObject(parent) {}
 /**
  * @brief SystemService::restartService default implementation: stops and starts service
  */
-bool SystemService::restartService(SystemServiceName serviceName) {
+bool SystemService::restartService(SystemServiceName::Enum serviceName) {
     stopService(serviceName);
     return startService(serviceName);
 }
@@ -35,7 +35,7 @@ bool SystemService::restartService(SystemServiceName serviceName) {
 /**
  * @brief SystemService::reloadService default implementation: stops and starts service
  */
-bool SystemService::reloadService(SystemServiceName serviceName) {
+bool SystemService::reloadService(SystemServiceName::Enum serviceName) {
     stopService(serviceName);
     return startService(serviceName);
 }

@@ -26,22 +26,26 @@
 
 /**
  * @brief Enum class for WiFi signal strength.
- * @details Dedicated class for improved QML usability based on https://qml.guide/enums-in-qt-qml/
+ * @details Dedicated class for clearly separated enums and improved QML usability based on
+ * https://www.embeddeduse.com/2017/09/15/passing-enum-properties-between-c-and-qml/
+ *
+ * Note: the "typedef style" described in https://qml.guide/enums-in-qt-qml/ unfortunately doesn't work with
+ * "=== Strict Equality Comparison" in QML!
  */
-class SignalStrengthEnum {
+class SignalStrength {
     Q_GADGET
 
  public:
-    enum Value {
+    enum Enum {
         NONE,
         WEAK,
         OK,
         GOOD,
         EXCELLENT
     };
-    Q_ENUM(Value)
+    Q_ENUM(Enum)
 
-    static Value fromRssi(int rssi) {
+    static Enum fromRssi(int rssi) {
         // Calibration is based on "various Internet sources", taken from wpa_cute project
         if (rssi >= -60)
             return EXCELLENT;
@@ -56,7 +60,5 @@ class SignalStrengthEnum {
     }
 
  private:
-    SignalStrengthEnum() {}
+    SignalStrength() {}
 };
-
-typedef SignalStrengthEnum::Value SignalStrength;

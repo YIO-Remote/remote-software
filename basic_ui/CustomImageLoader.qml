@@ -47,7 +47,8 @@ Item {
         id: image1
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-        asynchronous: true
+        asynchronous: false
+        cache: false
 
         onStatusChanged: {
             if (image1.status == Image.Ready) {
@@ -60,8 +61,9 @@ Item {
         id: image2
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-        asynchronous: true
+        asynchronous: false
         opacity: 0
+        cache: false
 
         Behavior on opacity {
             NumberAnimation { duration: 800; easing.type: Easing.OutExpo }

@@ -39,7 +39,7 @@ class WifiStatus {
     Q_PROPERTY(QString ipAddress READ ipAddress CONSTANT)
     Q_PROPERTY(QString macAddress READ macAddress CONSTANT)
     Q_PROPERTY(int rssi READ rssi CONSTANT)
-    Q_PROPERTY(SignalStrength signalStrength READ signalStrength CONSTANT)
+    Q_PROPERTY(SignalStrength::Enum signalStrength READ signalStrength CONSTANT)
     Q_PROPERTY(bool connected READ isConnected CONSTANT)
 
  public:
@@ -81,7 +81,7 @@ class WifiStatus {
     /**
      * @brief signalStrength Signal strength classification based on rssi.
      */
-    SignalStrength signalStrength() const { return SignalStrengthEnum::fromRssi(m_rssi); }
+    SignalStrength::Enum signalStrength() const { return SignalStrength::fromRssi(m_rssi); }
 
     /**
      * @brief isConnected Returns the access point connection status.
