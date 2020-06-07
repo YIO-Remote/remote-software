@@ -172,21 +172,16 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
                 /// GET DOMINANT COLOR
                 ////////////////////////////////////////////////////////////////////
                 qCDebug(CLASS_LC()) << this << "Getting dominant color";
-                //            QColor m_pixelColor = dominantColor(image);
-
-                // shrink down image to 1x1 pixel and measure the color
-                QImage onePixel = image;
-                onePixel.scaled(1, 1, Qt::IgnoreAspectRatio);
-                QColor m_pixelColor = onePixel.pixel(1, 1);
+                QColor pixelColor = dominantColor(image);
 
                 // change the brightness of the color if it's too bright
-                if (m_pixelColor.lightness() > 150) {
-                    m_pixelColor.setHsv(m_pixelColor.hue(), m_pixelColor.saturation(), (m_pixelColor.value() - 80));
+                if (pixelColor.lightness() > 150) {
+                    pixelColor.setHsv(pixelColor.hue(), pixelColor.saturation(), (pixelColor.value() - 80));
                 }
 
                 // if the color is close to white, return black instead
-                if (m_pixelColor.lightness() > 210) {
-                    m_pixelColor = QColor("black");
+                if (pixelColor.lightness() > 210) {
+                    pixelColor = QColor("black");
                 }
 
                 ////////////////////////////////////////////////////////////////////
@@ -208,7 +203,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
 
                 qCDebug(CLASS_LC()) << this << "Creating image DONE";
 
-                emit processingDone(m_pixelColor, image);
+                emit processingDone(pixelColor, image);
             }
         } else {
             qCWarning(CLASS_LC) << this << "NETWORK REPLY ERROR" << m_reply->errorString();
