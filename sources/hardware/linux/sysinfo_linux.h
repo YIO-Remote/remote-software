@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -22,26 +22,35 @@
 
 #pragma once
 
-#include "../hardwarefactory_default.h"
+#include "../sysinfo.h"
 
-/**
- * @brief Generic Linux hardware factory implementation.
- * May be sub-classed by more specific hardware factories. E.g. RPi or YIO remote.
- */
-class HardwareFactoryLinux : public HardwareFactoryDefault {
+class SystemInfoLinux : public SystemInfo {
     Q_OBJECT
 
  public:
-    explicit HardwareFactoryLinux(const QVariantMap &config, const QString &profile, QObject *parent = nullptr);
+    explicit SystemInfoLinux(const QString &sysfsTemp, QObject *parent = nullptr);
 
-    // HardwareFactory interface
- protected:
-    bool buildDevices(const QVariantMap &config) override;
+    // SystemInformation interface
+ public:
+    void    init() override;
+    QString uptime() override;
+    float   usedMemory() override;
+    bool    cpuTemperatureSupported() override;
+    float   cpuTemperature() override;
+    float   cpuLoadAverage() override;
 
-    // Helper methods
- protected:
-    virtual WifiControl *     buildWifiControl(const QVariantMap &config);
-    virtual SystemService *   buildSystemService(const QVariantMap &config);
-    virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
-    virtual SystemInfo *      buildSystemInfo(const QVariantMap &config);
+ private:
+    struct CpuSample {
+     public:
+        quint64 totalSystemTime;
+        quint64 totalUserTime;
+        quint64 totalIdleTime;
+    };
+
+    bool getCpuSample(CpuSample *sample);
+
+ private:
+    bool      m_cpuTempSupported = true;
+    QString   m_sysfsTemp;
+    CpuSample m_lastCpuSample;
 };

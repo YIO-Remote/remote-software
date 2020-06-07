@@ -1,1 +1,1 @@
-cpplint --filter=-build/include_subdir --linelength=120 --root=sources --recursive sources
+cpplint --filter=-build/include_subdir,-build/c++11 --linelength=120 --root=sources --recursive sources

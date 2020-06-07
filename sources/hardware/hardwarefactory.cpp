@@ -191,3 +191,12 @@ QObject *HardwareFactory::proximitySensorProvider(QQmlEngine *engine, QJSEngine 
     engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
     return device;
 }
+
+QObject *HardwareFactory::systemInformationProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(scriptEngine)
+    Q_ASSERT(s_instance);
+
+    QObject *device = s_instance->getSystemInformation();
+    engine->setObjectOwnership(device, QQmlEngine::CppOwnership);
+    return device;
+}

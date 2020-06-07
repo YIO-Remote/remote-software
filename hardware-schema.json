@@ -520,6 +520,19 @@
           }
         }
       }
+    },
+    "sysinfo": {
+      "type": "object",
+      "title": "System information",
+      "properties": {
+        "enabled": { "$ref": "#/definitions/enabled" },
+        "sysfsTemp": {
+          "type": "string",
+          "title": "sysfs thermal",
+          "description": "Only relevant for Linux systems",
+          "default": "/sys/class/thermal/thermal_zone0/temp"
+        }
+      }
     }
   }
 }

@@ -22,6 +22,8 @@
 
 #include "hw_factory_mac.h"
 
+#include "sysinfo_mac.h"
+
 HardwareFactoryMacOS::HardwareFactoryMacOS(const QVariantMap &config, QObject *parent)
     : HardwareFactoryDefault(parent) {
     Q_UNUSED(config)
@@ -30,5 +32,9 @@ HardwareFactoryMacOS::HardwareFactoryMacOS(const QVariantMap &config, QObject *p
 bool HardwareFactoryMacOS::buildDevices(const QVariantMap &config) {
     // TODO(anyone) add your macOS specific device building here...
     // At the moment there's no macOS specific drivers, so we're just using the dummy implementations!
-    return HardwareFactoryDefault::buildDevices(config);
+    bool result = HardwareFactoryDefault::buildDevices(config);
+
+    p_systemInformation = new SystemInfoMac(this);
+
+    return result;
 }

@@ -126,3 +126,7 @@
 #define HW_DEF_LIGHTTPD_WIFI_CFG   "/etc/lighttpd/lighttpd-wifisetup.conf"
 #define HW_CFG_LIGHTTPD_WEB_CFG    "webConfiguratorConfig"
 #define HW_DEF_LIGHTTPD_WEB_CFG    "/etc/lighttpd/lighttpd-config.conf"
+
+#define HW_CFG_SYSINFO             "sysinfo"
+#define HW_CFG_SYSINFO_SYSFS_TEMP  "sysfsTemp"
+#define HW_DEF_SYSINFO_SYSFS_TEMP  "/sys/class/thermal/thermal_zone0/temp"

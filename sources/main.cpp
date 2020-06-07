@@ -174,6 +174,8 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<ProximitySensor>("Proximity", 1, 0, "Proximity",
                                               &HardwareFactory::proximitySensorProvider);
     qmlRegisterSingletonType<LightSensor>("LightSensor", 1, 0, "LightSensor", &HardwareFactory::lightSensorProvider);
+    qmlRegisterSingletonType<SystemInfo>("SystemInformation", 1, 0, "SystemInformation",
+                                         &HardwareFactory::systemInformationProvider);
 
     // BLUETOOTH AREA
     BluetoothControl bluetooth;

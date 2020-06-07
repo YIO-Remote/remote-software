@@ -118,5 +118,9 @@
             "wifiSetupConfig": "/etc/lighttpd/lighttpd-wifisetup.conf",
             "webConfiguratorConfig": "/etc/lighttpd/lighttpd-config.conf"
         }
+    },
+    "sysinfo": {
+        "enabled": true,
+        "sysfsTemp": "/sys/class/thermal/thermal_zone0/temp"
     }
 }

@@ -31,6 +31,7 @@
 
 #include "../../../configutil.h"
 #include "../../hw_config.h"
+#include "../sysinfo_linux.h"
 #include "apds9960gesture.h"
 #include "apds9960light.h"
 #include "apds9960proximity.h"
@@ -98,6 +99,9 @@ bool HardwareFactoryYio::buildDevices(const QVariantMap &config) {
 
     deviceCfg = ConfigUtil::getValue(config, HW_CFG_PROXIMITY).toMap();
     p_proximitySensor = ConfigUtil::isEnabled(deviceCfg) ? buildProximitySensor(deviceCfg) : dummyProximitySensor();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_SYSINFO).toMap();
+    p_systemInformation = ConfigUtil::isEnabled(deviceCfg) ? buildSystemInfo(deviceCfg) : dummySystemInformation();
 
     return true;
 }

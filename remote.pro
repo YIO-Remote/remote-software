@@ -118,8 +118,10 @@ HEADERS += \
     sources/hardware/mock/interrupthandler_mock.h \
     sources/hardware/lightsensor.h \
     sources/hardware/mock/lightsensor_mock.h \
+    sources/hardware/mock/sysinfo_mock.h \
     sources/hardware/proximitysensor.h \
     sources/hardware/mock/proximitysensor_mock.h \
+    sources/hardware/sysinfo.h \
     sources/integrations/integrations.h \
     sources/integrations/integrationsinterface.h \
     sources/jsonfile.h \
@@ -222,11 +224,13 @@ linux {
 
     HEADERS += \
         sources/hardware/linux/hw_factory_linux.h \
+        sources/hardware/linux/sysinfo_linux.h \
         sources/hardware/linux/systemd.h \
         sources/hardware/linux/webserver_lighttpd.h \
         sources/hardware/linux/wifi_shellscripts.h
     SOURCES += \
         sources/hardware/linux/hw_factory_linux.cpp \
+        sources/hardware/linux/sysinfo_linux.cpp \
         sources/hardware/linux/systemd.cpp \
         sources/hardware/linux/webserver_lighttpd.cpp \
         sources/hardware/linux/wifi_shellscripts.cpp
@@ -268,19 +272,28 @@ android {
     SOURCES += \
         sources/hardware/android/hw_factory_android.cpp
 }
-# macOS specific files (empty template for now)
+# macOS specific files
 macx {
     HEADERS += \
-        sources/hardware/macos/hw_factory_mac.h
+        sources/hardware/macos/hw_factory_mac.h \
+        sources/hardware/macos/smc.h \
+        sources/hardware/macos/sysinfo_mac.h
     SOURCES += \
-        sources/hardware/macos/hw_factory_mac.cpp
+        sources/hardware/macos/hw_factory_mac.cpp \
+        sources/hardware/macos/smc.c \
+        sources/hardware/macos/sysinfo_mac.cpp
 }
-# Windows specific files (empty template for now)
+# Windows specific files
 win32 {
+    DEFINES += "WINVER=0x0600"
+    DEFINES += "_WIN32_WINNT=0x0600"
+
     HEADERS += \
-        sources/hardware/windows/hw_factory_win.h
+        sources/hardware/windows/hw_factory_win.h \
+        sources/hardware/windows/sysinfo_win.h
     SOURCES += \
-        sources/hardware/windows/hw_factory_win.cpp
+        sources/hardware/windows/hw_factory_win.cpp \
+        sources/hardware/windows/sysinfo_win.cpp
 }
 
 # === start TRANSLATION section =======================================
