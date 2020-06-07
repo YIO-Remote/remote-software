@@ -100,6 +100,10 @@ bool JsonFile::write(const QVariantMap &data) {
     }
     bool success = m_file.write(json) == json.size();
     m_file.close();
+    if (!success) {
+        m_error = m_file.errorString();
+        qCWarning(CLASS_LC) << "Error writing json file:" << m_error;
+    }
     return success;
 }
 

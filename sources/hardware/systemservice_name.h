@@ -26,13 +26,17 @@
 
 /**
  * @brief Enum class for system services
- * @details Dedicated class for improved QML usability based on https://qml.guide/enums-in-qt-qml/
+ * @details Dedicated class for clearly separated enums and improved QML usability based on
+ * https://www.embeddeduse.com/2017/09/15/passing-enum-properties-between-c-and-qml/
+ *
+ * Note: the "typedef style" described in https://qml.guide/enums-in-qt-qml/ unfortunately doesn't work with
+ * "=== Strict Equality Comparison" in QML!
  */
-class SystemServiceNameEnum {
+class SystemServiceName {
     Q_GADGET
 
  public:
-    enum Value {
+    enum Enum {
         WIFI,
         WEBSERVER,
         DHCP,
@@ -41,10 +45,8 @@ class SystemServiceNameEnum {
         NTP,
         ZEROCONF
     };
-    Q_ENUM(Value)
+    Q_ENUM(Enum)
 
  private:
-    SystemServiceNameEnum() {}
+    SystemServiceName() {}
 };
-
-typedef SystemServiceNameEnum::Value SystemServiceName;

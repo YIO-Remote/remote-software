@@ -30,7 +30,7 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "systemd");
 
 // TODO(mze) direct d-bus interaction? https://doc.qt.io/qt-5/qtdbus-index.html
-Systemd::Systemd(const QMap<SystemServiceName, QString> &serviceNameMap, QObject *parent)
+Systemd::Systemd(const QMap<SystemServiceName::Enum, QString> &serviceNameMap, QObject *parent)
     : SystemService(parent),
       m_useSudo(HW_DEF_SYSTEMD_SUDO),
       m_systemctlTimeout(HW_DEF_SYSTEMD_TIMEOUT),
@@ -41,22 +41,22 @@ void Systemd::setUseSudo(bool sudo) { m_useSudo = sudo; }
 
 bool Systemd::isUseSudo() { return m_useSudo; }
 
-bool Systemd::startService(SystemServiceName serviceName) {
+bool Systemd::startService(SystemServiceName::Enum serviceName) {
     QString cmd = "systemctl start %1";
     return launch(cmd.arg(m_serviceNameMap.value(serviceName)));
 }
 
-bool Systemd::stopService(SystemServiceName serviceName) {
+bool Systemd::stopService(SystemServiceName::Enum serviceName) {
     QString cmd = "systemctl stop %1";
     return launch(cmd.arg(m_serviceNameMap.value(serviceName)));
 }
 
-bool Systemd::restartService(SystemServiceName serviceName) {
+bool Systemd::restartService(SystemServiceName::Enum serviceName) {
     QString cmd = "systemctl restart %1";
     return launch(cmd.arg(m_serviceNameMap.value(serviceName)));
 }
 
-bool Systemd::reloadService(SystemServiceName serviceName) {
+bool Systemd::reloadService(SystemServiceName::Enum serviceName) {
     QString cmd = "systemctl reload %1";
     return launch(cmd.arg(m_serviceNameMap.value(serviceName)));
 }

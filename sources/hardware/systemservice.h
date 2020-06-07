@@ -41,26 +41,26 @@ class SystemService : public QObject {
      * @param serviceName the name of the service
      * @return true if the service was started successfully
      */
-    Q_INVOKABLE virtual bool startService(SystemServiceName serviceName) = 0;
+    Q_INVOKABLE virtual bool startService(SystemServiceName::Enum serviceName) = 0;
 
     /**
      * @brief Stopps the given service
      * @param serviceName the name of the service
      * @return true if the service was stopped successfully
      */
-    Q_INVOKABLE virtual bool stopService(SystemServiceName serviceName) = 0;
+    Q_INVOKABLE virtual bool stopService(SystemServiceName::Enum serviceName) = 0;
 
     /**
      * @brief Restarts the given service
      * @param serviceName the name of the service
      * @return true if the service was restarted successfully
      */
-    Q_INVOKABLE virtual bool restartService(SystemServiceName serviceName);
+    Q_INVOKABLE virtual bool restartService(SystemServiceName::Enum serviceName);
 
     /**
      * @brief Reloads the configuration of the given service
      * @param serviceName the name of the service
      * @return true if the service was reloaded successfully
      */
-    Q_INVOKABLE virtual bool reloadService(SystemServiceName serviceName);
+    Q_INVOKABLE virtual bool reloadService(SystemServiceName::Enum serviceName);
 };

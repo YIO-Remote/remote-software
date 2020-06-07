@@ -54,7 +54,7 @@ bool WifiMock::clearConfiguredNetworks() {
     return true;
 }
 
-bool WifiMock::join(const QString &ssid, const QString &password, WifiSecurity security) {
+bool WifiMock::join(const QString &ssid, const QString &password, WifiSecurity::Enum security) {
     qCDebug(CLASS_LC) << "join " << ssid;
 
     if (!validateAuthentication(security, password)) {
@@ -79,6 +79,7 @@ void WifiMock::startNetworkScan() {
     m_scanResults.clear();
     m_scanResults.append({"0", "Mock Net", "34:31:c4:e1:d3:97", -77, WifiSecurity::WPA_PSK});
     m_scanResults.append({"1", "Guest Network", "33:31:44:55:66:77", -66, WifiSecurity::NONE_OPEN});
+    m_scanResults.append({"2", "FooBar", "33:31:44:55:66:88", -70, WifiSecurity::WPA2_PSK});
 
     setScanStatus(ScanOk);
 

@@ -34,6 +34,6 @@ class SystemServiceMock : public SystemService {
 
     // SystemService interface
  public:
-    Q_INVOKABLE bool startService(SystemServiceName serviceName) override;
-    Q_INVOKABLE bool stopService(SystemServiceName serviceName) override;
+    Q_INVOKABLE bool startService(SystemServiceName::Enum serviceName) override;
+    Q_INVOKABLE bool stopService(SystemServiceName::Enum serviceName) override;
 };

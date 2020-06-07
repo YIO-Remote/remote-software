@@ -30,14 +30,14 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "bluetooth");
 
 BluetoothControl::BluetoothControl(QObject *parent) : QObject(parent) {
-    qCritical(CLASS_LC) << "Bluetooth starting";
+    qCInfo(CLASS_LC) << "Bluetooth starting";
 
     // if there is a bluetooth device, let's set up some things
     if (m_localDevice.isValid()) {
         qCDebug(CLASS_LC) << "Bluetooth init OK";
 
     } else {
-        qCritical(CLASS_LC) << "Bluetooth device was not found.";
+        qCCritical(CLASS_LC) << "Bluetooth device was not found.";
         Notifications::getInstance()->add(true, tr("Bluetooth device was not found."));
     }
 }

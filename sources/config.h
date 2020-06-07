@@ -30,6 +30,7 @@
 
 #include "jsonfile.h"
 #include "yio-interface/configinterface.h"
+#include "yio-interface/unitsystem.h"
 
 class Config : public QObject, public ConfigInterface {
     Q_OBJECT
@@ -45,7 +46,7 @@ class Config : public QObject, public ConfigInterface {
     Q_PROPERTY(QVariantMap ui_config READ getUIConfig WRITE setUIConfig NOTIFY uiConfigChanged)
     Q_PROPERTY(QVariantMap pages READ getPages NOTIFY pagesChanged)
     Q_PROPERTY(QVariantMap groups READ getGroups NOTIFY groupsChanged)
-    Q_PROPERTY(UnitSystem unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
+    Q_PROPERTY(UnitSystem::Enum unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
 
  public:
     // Common configuration keys. Initialized in config.cpp
@@ -60,8 +61,6 @@ class Config : public QObject, public ConfigInterface {
     static const QString KEY_MDNS;
     static const QString KEY_WORKERTHREAD;
     static const QString OBJ_DATA;
-
-    Q_ENUM(UnitSystem)
 
     // valid
     bool isValid() const { return m_error.isEmpty(); }
@@ -101,8 +100,8 @@ class Config : public QObject, public ConfigInterface {
     void        setGroups(const QVariantMap& config);
 
     // unit system
-    UnitSystem getUnitSystem() override { return m_cacheUnitSystem; }
-    void       setUnitSystem(UnitSystem value);
+    UnitSystem::Enum getUnitSystem() override { return m_cacheUnitSystem; }
+    void             setUnitSystem(UnitSystem::Enum value);
 
     // languages
     QVariantList getLanguages() { return m_languages; }
@@ -122,8 +121,12 @@ class Config : public QObject, public ConfigInterface {
     // set favorite entity
     void setFavorite(const QString& entityId, bool value);
 
-    // read and write configuration to file
-    bool readConfig(const QString& filePath);
+    // read configuration to file
+    bool readConfig();
+    /**
+     * @brief Persists the configuration. In case of an error, configWriteError is emitted.
+     * @return true if configuration could be successfully written
+     */
     bool writeConfig();
 
     // get a QML object, you need to have objectName property of the QML object set to be able to use this
@@ -161,26 +164,40 @@ class Config : public QObject, public ConfigInterface {
     void syncConfigToCache();
     void syncCacheToConfig();
 
+    template <class EnumClass>
+    QString enumToString(const EnumClass& enumKey) const {
+        const auto metaEnum = QMetaEnum::fromType<EnumClass>();
+        return metaEnum.valueToKey(static_cast<int>(enumKey));
+    }
+
+    template <class EnumClass>
+    EnumClass stringToEnum(const QVariant& enumString, const EnumClass& defaultValue) const {
+        const auto metaEnum = QMetaEnum::fromType<EnumClass>();
+        bool ok;
+        const auto value = metaEnum.keyToValue(enumString.toString().toUtf8(), &ok);
+        return ok ? static_cast<EnumClass>(value) : defaultValue;
+    }
+
+ private:
     static Config*         s_instance;
     QQmlApplicationEngine* m_engine;
 
+    // loaded configuration values
     QVariantMap  m_config;
     QVariantList m_languages;
 
-    JsonFile* m_jsf;
-    QString   m_error;
-
-    JsonFile* m_tf;
+    // json configuration file
+    JsonFile m_jsf;
+    // last read or write error message
+    QString m_error;
 
     // Caches to improve performance
-    QString     m_cacheProfileId;
-    QVariantMap m_cacheSettings;
-    QVariantMap m_cacheUIConfig;
-    QVariantMap m_cacheUIProfile;  // of selected Profile
-    QVariantMap m_cacheUIProfiles;
-    QVariantMap m_cacheUIPages;
-    QVariantMap m_cacheUIGroups;
-    UnitSystem  m_cacheUnitSystem = METRIC;
+    QString          m_cacheProfileId;
+    QVariantMap      m_cacheSettings;
+    QVariantMap      m_cacheUIConfig;
+    QVariantMap      m_cacheUIProfile;  // of selected Profile
+    QVariantMap      m_cacheUIProfiles;
+    QVariantMap      m_cacheUIPages;
+    QVariantMap      m_cacheUIGroups;
+    UnitSystem::Enum m_cacheUnitSystem = UnitSystem::METRIC;
 };
-
-typedef Config::UnitSystem UnitSystem;

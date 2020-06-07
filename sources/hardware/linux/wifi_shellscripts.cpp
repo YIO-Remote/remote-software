@@ -78,7 +78,7 @@ bool WifiShellScripts::clearConfiguredNetworks() {
     return true;
 }
 
-bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSecurity security) {
+bool WifiShellScripts::join(const QString &ssid, const QString &password, WifiSecurity::Enum security) {
     if (!validateAuthentication(security, password)) {
         return false;
     }

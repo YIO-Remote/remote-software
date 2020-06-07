@@ -47,13 +47,25 @@ Rectangle {
         triggeredOnStart: true
 
         onTriggered: {
-            // TODO create a device class instead of launching hard coded shell scripts from QML
+            // TODO(zehnm) create a device class instead of launching hard coded shell scripts from QML
             uptimeValue.text = settingsLauncher.launch("/usr/bin/yio-remote/uptime.sh").trim();
-            temperatureValue.text = Math.round(parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp"))/1000) + "ºC";
+            // TODO(zehnm) create a sensor class for reading CPU temp instead of launching hard coded shell scripts from QML
+            var temp = parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp")) / 1000
+            if (Number.isNaN(temp)) {
+                temp = 36
+            }
+
+            if (config.unitSystem === UnitSystem.IMPERIAL) {
+                temperatureValue.text = Math.round(temp * 9/5 + 32) + "ºF"
+            } else {
+                temperatureValue.text = Math.round(temp) + "ºC"
+            }
         }
     }
 
-    Component.onCompleted: timer.start()
+    Component.onCompleted: {
+        timer.start()
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS
@@ -71,6 +83,8 @@ Rectangle {
             color: Style.color.background
         }
 
+        ButtonGroup { id: radioGroup }
+
         Item {
             width: parent.width; height: childrenRect.height + 40
 
@@ -82,11 +96,12 @@ Rectangle {
                 font: Style.font.button
             }
 
-            CheckBox {
+            RadioButton {
                 id: metricCheckBox
                 width: 40; height: 40
                 anchors { left: parent.left; leftMargin: 20; top: unitText.bottom; topMargin: 20 }
-                checked: config.unitSystem == 0
+                checked: config.unitSystem === UnitSystem.METRIC
+                ButtonGroup.group: radioGroup
 
                 indicator: Rectangle {
                     implicitWidth: 20; implicitHeight: 20
@@ -102,9 +117,8 @@ Rectangle {
                 }
 
                 onCheckedChanged: {
-                    if (checked) {
-                        config.unitSystem = 0;
-                    }
+                    config.unitSystem = checked ? UnitSystem.METRIC : UnitSystem.IMPERIAL
+                    timer.restart()
                 }
 
                 onPressed: {
@@ -123,11 +137,12 @@ Rectangle {
                 Behavior on opacity { NumberAnimation { duration: 200 } }
             }
 
-            CheckBox {
+            RadioButton {
                 id: imperialCheckBox
                 width: 40; height: 40
                 anchors { left: metricCheckBoxText.right; leftMargin: 20; verticalCenter: metricCheckBox.verticalCenter }
-                checked: config.unitSystem == 1
+                checked: config.unitSystem === UnitSystem.IMPERIAL
+                ButtonGroup.group: radioGroup
 
                 indicator: Rectangle {
                     implicitWidth: 20; implicitHeight: 20
@@ -141,12 +156,6 @@ Rectangle {
                     radius: 20
                     color: imperialCheckBox.checked ? Style.color.highlight1 : Style.color.dark
                     border { width: 2; color: imperialCheckBox.checked ? Style.color.highlight1 : Style.color.light }
-                }
-
-                onCheckedChanged: {
-                    if (checked) {
-                        config.unitSystem = 1;
-                    }
                 }
 
                 onPressed: {
@@ -211,7 +220,7 @@ Rectangle {
             Text {
                 id: temperatureValue
                 color: Style.color.text
-                text: "36ºC"
+                text: ""
                 horizontalAlignment: Text.AlignRight
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: temperatureText.verticalCenter }
                 font: Style.font.button
@@ -231,10 +240,10 @@ Rectangle {
                 anchors { top: parent.top; topMargin: 30; left: parent.left; leftMargin: (parent.width - (buttonReboot.width + buttonShutdown.width + 40))/2 }
 
                 mouseArea.onClicked: {
-                    // TODO create a framebuffer device class instead of launching hard coded shell scripts from QML
+                    // TODO(zehnm) create a framebuffer device class instead of launching hard coded shell scripts from QML
                     settingsLauncher.launch("fbv -d 1 $YIO_MEDIA_DIR/splash/bye.png")
                     console.debug("now reboot")
-                    // TODO create a device class for system reboot instead of launching hard coded shell scripts from QML
+                    // TODO(zehnm) create a device class for system reboot instead of launching hard coded shell scripts from QML
                     settingsLauncher.launch("reboot");
                 }
             }
