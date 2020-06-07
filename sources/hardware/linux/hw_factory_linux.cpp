@@ -74,7 +74,7 @@ SystemService *HardwareFactoryLinux::buildSystemService(const QVariantMap &confi
     QVariantMap systemdCfg = ConfigUtil::getValue(config, HW_CFG_SYSTEMD).toMap();
     QVariantMap serviceCfg = systemdCfg.value(HW_CFG_SYSTEMD_SERVICES).toMap();
 
-    QMap<SystemServiceName, QString> serviceNameMap;
+    QMap<SystemServiceName::Enum, QString> serviceNameMap;
     serviceNameMap.insert(SystemServiceName::WIFI,
                           serviceCfg.value(HW_CFG_SERVICE_WIFI, HW_DEF_SERVICE_WIFI).toString());
     serviceNameMap.insert(SystemServiceName::NAME_RESOLUTION,

@@ -46,7 +46,7 @@ WifiControl::~WifiControl() {
     stopScanTimer();
 }
 
-bool WifiControl::validateAuthentication(WifiSecurity security, const QString& preSharedKey) {
+bool WifiControl::validateAuthentication(WifiSecurity::Enum security, const QString& preSharedKey) {
     switch (security) {
         case WifiSecurity::IEEE8021X:
         case WifiSecurity::WPA_EAP:

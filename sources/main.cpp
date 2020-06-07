@@ -104,8 +104,7 @@ int main(int argc, char* argv[]) {
 
     qmlRegisterUncreatableType<Config>("Config", 1, 0, "Config",
                                        "Not creatable as it is a global object managed from cpp");
-    qmlRegisterUncreatableType<UnitSystem>("Config", 1, 0, "UnitSystem",
-                                       "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<UnitSystem>("Config", 1, 0, "UnitSystem", "Not creatable as it is an enum type");
 
     engine.rootContext()->setContextProperty("config", config);
     engine.rootContext()->setContextProperty("configError", configError);
@@ -140,16 +139,12 @@ int main(int argc, char* argv[]) {
 
     qmlRegisterUncreatableType<WifiNetwork>("WifiControl", 1, 0, "WifiNetwork",
                                             "Not creatable as it is an information object only");
-    // register all Qt enums (based on https://qml.guide/enums-in-qt-qml/)
-    qRegisterMetaType<SystemServiceName>("SystemServiceName");
-    qmlRegisterUncreatableType<SystemServiceNameEnum>("SystemService", 1, 0, "SystemServiceName",
-                                                      "Not creatable as it is an enum type");
-    qRegisterMetaType<WifiSecurity>("WifiSecurity");
-    qmlRegisterUncreatableType<WifiSecurityEnum>("WifiControl", 1, 0, "WifiSecurity",
-                                                 "Not creatable as it is an enum type");
-    qRegisterMetaType<SignalStrength>("SignalStrength");
-    qmlRegisterUncreatableType<SignalStrengthEnum>("WifiControl", 1, 0, "SignalStrength",
-                                                   "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<SystemServiceName>("SystemService", 1, 0, "SystemServiceName",
+                                                  "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<WifiSecurity>("WifiControl", 1, 0, "WifiSecurity",
+                                             "Not creatable as it is an enum type");
+    qmlRegisterUncreatableType<SignalStrength>("WifiControl", 1, 0, "SignalStrength",
+                                               "Not creatable as it is an enum type");
     qRegisterMetaType<WifiStatus>("WifiStatus");
     qmlRegisterUncreatableType<WifiStatus>("WifiControl", 1, 0, "WifiStatus",
                                            "Not creatable as it is an information object only");
@@ -221,7 +216,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
     // SOFTWARE UPDATE
-    QVariantMap     appUpdCfg      = config->getSettings().value("softwareupdate").toMap();
+    QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
     SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 

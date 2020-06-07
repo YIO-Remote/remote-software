@@ -29,12 +29,12 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "SysSrvMock");
 
 SystemServiceMock::SystemServiceMock(QObject *parent) : SystemService(parent) { qCDebug(CLASS_LC) << Q_FUNC_INFO; }
 
-bool SystemServiceMock::startService(SystemServiceName serviceName) {
+bool SystemServiceMock::startService(SystemServiceName::Enum serviceName) {
     qCDebug(CLASS_LC) << "start service:" << serviceName;
     return true;
 }
 
-bool SystemServiceMock::stopService(SystemServiceName serviceName) {
+bool SystemServiceMock::stopService(SystemServiceName::Enum serviceName) {
     qCDebug(CLASS_LC) << "stop service:" << serviceName;
     return true;
 }

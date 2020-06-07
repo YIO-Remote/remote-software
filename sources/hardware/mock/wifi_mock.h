@@ -41,7 +41,7 @@ class WifiMock : public WifiControl {
     Q_INVOKABLE bool reset() override;
     Q_INVOKABLE bool clearConfiguredNetworks() override;
     Q_INVOKABLE bool join(const QString &ssid, const QString &password,
-                                  WifiSecurity security = WifiSecurity::DEFAULT) override;
+                          WifiSecurity::Enum security = WifiSecurity::DEFAULT) override;
     Q_INVOKABLE bool isConnected() override;
     Q_INVOKABLE void startNetworkScan() override;
     Q_INVOKABLE bool startAccessPoint() override;

@@ -39,15 +39,15 @@ class WifiNetwork {
     Q_PROPERTY(QString name READ name CONSTANT)
     Q_PROPERTY(QString bssid READ bssid CONSTANT)
     Q_PROPERTY(int rssi READ rssi CONSTANT)
-    Q_PROPERTY(SignalStrength signalStrength READ signalStrength CONSTANT)
+    Q_PROPERTY(SignalStrength::Enum signalStrength READ signalStrength CONSTANT)
     Q_PROPERTY(bool encrypted READ isEncrypted CONSTANT)
-    Q_PROPERTY(WifiSecurity security READ security CONSTANT)
+    Q_PROPERTY(WifiSecurity::Enum security READ security CONSTANT)
     Q_PROPERTY(bool wpsAvailable READ isWpsAvailable CONSTANT)
     Q_PROPERTY(bool connected READ isConnected CONSTANT)
 
  public:
     WifiNetwork() {}
-    WifiNetwork(QString id, QString name, QString bssid, int rssi, WifiSecurity security = WifiSecurity::WPA_PSK,
+    WifiNetwork(QString id, QString name, QString bssid, int rssi, WifiSecurity::Enum security = WifiSecurity::WPA_PSK,
                 bool wpsAvailable = false, bool connected = false)
         : m_id(id),
           m_name(name),
@@ -82,20 +82,20 @@ class WifiNetwork {
      */
     bool isEncrypted() const { return m_security != WifiSecurity::NONE_OPEN; }  // what about NoneWep?
 
-    WifiSecurity security() const { return m_security; }
+    WifiSecurity::Enum security() const { return m_security; }
 
     bool isWpsAvailable() const { return m_wpsAvailable; }
 
     bool isConnected() const { return m_connected; }
 
-    SignalStrength signalStrength() const { return SignalStrengthEnum::fromRssi(m_rssi); }
+    SignalStrength::Enum signalStrength() const { return SignalStrength::fromRssi(m_rssi); }
 
  private:
-    QString      m_id;
-    QString      m_name;
-    QString      m_bssid;
-    int          m_rssi = -100;
-    WifiSecurity m_security = WifiSecurity::WPA_PSK;
-    bool         m_wpsAvailable = false;
-    bool         m_connected = false;
+    QString            m_id;
+    QString            m_name;
+    QString            m_bssid;
+    int                m_rssi = -100;
+    WifiSecurity::Enum m_security = WifiSecurity::WPA_PSK;
+    bool               m_wpsAvailable = false;
+    bool               m_connected = false;
 };
