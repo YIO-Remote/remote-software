@@ -29,6 +29,7 @@
 #include <QtDebug>
 
 #include "../../../notifications.h"
+#include "../../../standbycontrol.h"
 #include "QFile"
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.BQ27441");
@@ -47,6 +48,9 @@ BQ27441::BQ27441(InterruptHandler *interruptHandler, const QString &i2cDevice, i
             updateBatteryValues();
         }
     });
+
+    StandbyControl *standbyControl = StandbyControl::getInstance();
+    connect(standbyControl, &StandbyControl::standByOff, this, [=]() { updateBatteryValues(); });
 }
 
 BQ27441::~BQ27441() { close(); }
