@@ -149,7 +149,8 @@ void BQ27441::updateBatteryValues() {
     }
 
     // calculate remaining battery life
-    m_remainingLife = static_cast<float>(getRemainingCapacity()) / static_cast<float>(abs(getAverageCurrent()));
+    float remainingLife = static_cast<float>(getRemainingCapacity()) / static_cast<float>(abs(getAverageCurrent()));
+    m_remainingLife     = (m_remainingLife + remainingLife) / 2;
     emit remainingLifeChanged();
 
     qCDebug(CLASS_LC()) << "Average power" << m_averagePower << "mW";
