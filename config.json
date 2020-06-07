@@ -26,6 +26,7 @@
             "appUpdateScript": "/opt/yio/scripts/app-update.sh",
             "systemUpdateScript": "/opt/yio/scripts/TODO.sh"
         },
+        "unit": "METRIC",
         "wifitime": 1740
     },
     "ui_config": {
