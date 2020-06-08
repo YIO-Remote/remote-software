@@ -15,7 +15,7 @@
       <translation>YIO isch es Open Source Projekt und profitiert vo allne wo mitmachet. Es grosses Dankäschön a alli wo bis jetzt öpis derzu biitreit händ: %1</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/About.qml" line="50"/>
+      <location filename="../basic_ui/settings/About.qml" line="51"/>
       <source>
 
 To learn more about the project, visit
@@ -124,11 +124,11 @@ Wetsch me über's Projekt wüsse, den chum verbi %1</translation>
     </message>
   </context>
   <context>
-    <name>BluetoothThread</name>
+    <name>BluetoothControl</name>
     <message>
-      <location filename="../sources/bluetootharea.cpp" line="126"/>
+      <location filename="../sources/bluetooth.cpp" line="41"/>
       <source>Bluetooth device was not found.</source>
-      <translation>Blauzahn Grät isch nöd gfunde wordä.</translation>
+      <translation type="unfinished">Bluetooth device was not found.</translation>
     </message>
   </context>
   <context>
@@ -186,17 +186,17 @@ Wetsch me über's Projekt wüsse, den chum verbi %1</translation>
       <translation>Chälti</translation>
     </message>
     <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="211"/>
+      <location filename="../components/remote/ui/ir/Card.qml" line="253"/>
       <source>Mute</source>
       <translation>Stumm</translation>
     </message>
     <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="236"/>
+      <location filename="../components/remote/ui/ir/Card.qml" line="278"/>
       <source>Back</source>
       <translation>Z'rug</translation>
     </message>
     <message>
-      <location filename="../components/remote/ui/ir/Card.qml" line="261"/>
+      <location filename="../components/remote/ui/ir/Card.qml" line="303"/>
       <source>Menu</source>
       <translation>Menü</translation>
     </message>
@@ -204,24 +204,77 @@ Wetsch me über's Projekt wüsse, den chum verbi %1</translation>
   <context>
     <name>CardButtons</name>
     <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="74"/>
+      <location filename="../components/remote/ui/ir/CardButtons.qml" line="69"/>
       <source>Source</source>
       <translation>Quellä</translation>
     </message>
+  </context>
+  <context>
+    <name>CardButtonsTransport</name>
     <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="84"/>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="39"/>
+      <source>Play</source>
+      <translation type="unfinished">Play</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="45"/>
+      <source>Pause</source>
+      <translation type="unfinished">Pause</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="51"/>
+      <source>Stop</source>
+      <translation type="unfinished">Stop</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="57"/>
+      <source>Prev</source>
+      <translation type="unfinished">Prev</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="63"/>
+      <source>Next</source>
+      <translation type="unfinished">Next</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="69"/>
       <source>Info</source>
-      <translation>Information</translation>
+      <translation type="unfinished">Info</translation>
     </message>
     <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="94"/>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="75"/>
+      <source>BWD</source>
+      <translation type="unfinished">BWD</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="81"/>
+      <source>FWD</source>
+      <translation type="unfinished">FWD</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="87"/>
+      <source>Rec</source>
+      <translation type="unfinished">Rec</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="95"/>
+      <source>Exit</source>
+      <translation type="unfinished">Exit</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="103"/>
+      <source>Back</source>
+      <translation type="unfinished">Back</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="109"/>
+      <source>Home</source>
+      <translation type="unfinished">Home</translation>
+    </message>
+    <message>
+      <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="115"/>
       <source>Menu</source>
-      <translation>Menü</translation>
-    </message>
-    <message>
-      <location filename="../components/remote/ui/ir/CardButtons.qml" line="104"/>
-      <source>Guide</source>
-      <translation>Aleitig</translation>
+      <translation type="unfinished">Menu</translation>
     </message>
   </context>
   <context>
@@ -542,7 +595,7 @@ dini YIO Fernbedienig izrichtä</translation>
     <name>JsonFile</name>
     <message>
       <location filename="../sources/jsonfile.cpp" line="80"/>
-      <location filename="../sources/jsonfile.cpp" line="129"/>
+      <location filename="../sources/jsonfile.cpp" line="133"/>
       <source>empty name</source>
       <translation>leerä Namä</translation>
     </message>
@@ -557,12 +610,12 @@ dini YIO Fernbedienig izrichtä</translation>
       <translation>Datei &apos;%1&apos; chan nöd beschribä werde: %2</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="136"/>
+      <location filename="../sources/jsonfile.cpp" line="140"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
       <translation>Datei &apos;%1&apos; chan nöd glesä werde: %2</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="145"/>
+      <location filename="../sources/jsonfile.cpp" line="149"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
       <translation>Ungültigi JASON Datei &apos;%1&apos; bi Offset %2</translation>
     </message>
@@ -659,6 +712,19 @@ dini YIO Fernbedienig izrichtä</translation>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
       <translation>Um dini Profil z'bearbeitä niim bitte de Web-Konfigurator i de Istelligä.</translation>
+    </message>
+  </context>
+  <context>
+    <name>QGuiApplication</name>
+    <message>
+      <location filename="../sources/main.cpp" line="242"/>
+      <source>An error occured while restoring to defaults. Please try again.</source>
+      <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
+    </message>
+    <message>
+      <location filename="../sources/main.cpp" line="246"/>
+      <source>Default config file not found. Cannot restore to defaults.</source>
+      <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
     </message>
   </context>
   <context>
@@ -795,7 +861,7 @@ Navigate your internet browser to: http://</source>
       <translation>Wähl bitte es Wi-Fi Netzwerk us.</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="164"/>
+      <location filename="../setup/SetupStep3.qml" line="166"/>
       <source>Join other</source>
       <translation>Nimm es anders</translation>
     </message>
@@ -914,7 +980,7 @@ a power source and wait until it starts blinking.
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="139"/>
+      <location filename="../setup/SetupStep8.qml" line="136"/>
       <source>Setting up your YIO Dock</source>
       <translation>YIO Dock irichtä</translation>
     </message>
@@ -1133,37 +1199,37 @@ YIO Fernbedienig %1</translation>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="79"/>
+      <location filename="../basic_ui/settings/System.qml" line="94"/>
       <source>Unit system</source>
       <translation>Einheitäsystem</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="113"/>
+      <location filename="../basic_ui/settings/System.qml" line="133"/>
       <source>Metric</source>
       <translation>Metrisch</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="148"/>
+      <location filename="../basic_ui/settings/System.qml" line="169"/>
       <source>Imperial</source>
       <translation>Imperial</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="167"/>
+      <location filename="../basic_ui/settings/System.qml" line="188"/>
       <source>Uptime</source>
       <translation>Betriebsziit</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="194"/>
+      <location filename="../basic_ui/settings/System.qml" line="215"/>
       <source>CPU temperature</source>
       <translation>CPU Temperatur</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="218"/>
+      <location filename="../basic_ui/settings/System.qml" line="239"/>
       <source>Reboot</source>
       <translation>Neustart</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="232"/>
+      <location filename="../basic_ui/settings/System.qml" line="253"/>
       <source>Shutdown</source>
       <translation>Abstellä</translation>
     </message>
@@ -1186,7 +1252,7 @@ YIO Fernbedienig %1</translation>
       <translation>Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
+      <location filename="../basic_ui/settings/Wifi.qml" line="192"/>
       <source>Other networks</source>
       <translation>Anderi Netzwerk</translation>
     </message>
