@@ -31,10 +31,42 @@ import Entity.Remote 1.0
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
-    id: cardRemote
+    id: card
     width: parent.width; height: parent.height
     color: Style.color.dark
     radius: Style.cornerRadius
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STATES
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    state: "closed"
+
+    states: [
+        State {
+            name: "open"
+        },
+        State {
+            name: "closed"
+            PropertyChanges {target: topItem; opacity: 0; }
+            PropertyChanges {target: pagesSwipeView; opacity: 0; }
+            PropertyChanges {target: tooltips; opacity: 0; }
+            PropertyChanges {target: indicator; opacity: 0; }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: "closed"
+            PropertyAnimation { target: topItem; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: pagesSwipeView; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: tooltips; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: indicator; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
+        }
+    ]
+
+    Component.onCompleted: {
+        card.state = "open";
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
@@ -147,15 +179,20 @@ Rectangle {
         anchors { top: topItem.bottom; topMargin: 0 }
         currentIndex: 0
 
-        //buttons
+        // buttons
         Loader {
             asynchronous: true
             sourceComponent: buttonView
         }
 
+        // transport buttons
+        Loader {
+            asynchronous: true
+            sourceComponent: buttonTransportView
+        }
+
         // channels
         Loader {
-//            active: SwipeView.isCurrentItem
             asynchronous: true
             sourceComponent: channelView
         }
@@ -164,6 +201,11 @@ Rectangle {
     Component {
         id: buttonView
         CardButtons {}
+    }
+
+    Component {
+        id: buttonTransportView
+        CardButtonsTransport {}
     }
 
     Component {

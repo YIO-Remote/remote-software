@@ -83,5 +83,6 @@
         <file>basic_ui/InitialSetup.qml</file>
         <file>setup/SetupStep4Other.qml</file>
         <file>basic_ui/ConfigError.qml</file>
+        <file>components/remote/ui/ir/CardButtonsTransport.qml</file>
     </qresource>
 </RCC>
