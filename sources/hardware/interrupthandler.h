@@ -67,6 +67,7 @@ class InterruptHandler : public Device {
 
  signals:
     void interruptEvent(int event);
+    void resetEvent();
 
  protected:
     explicit InterruptHandler(QString name, QObject *parent = nullptr) : Device(name, parent) {}

@@ -22,16 +22,16 @@
 
 #pragma once
 
-#include <QLoggingCategory>
-#include <QString>
-#include <QtDebug>
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <time.h>
 #include <unistd.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+
+#include <QLoggingCategory>
+#include <QString>
+#include <QtDebug>
 
 #include "../../interrupthandler.h"
 
@@ -120,6 +120,16 @@ class MCP23017 {
         wiringPiI2CReadReg8(m_i2cFd, MCP23017_INTCAPB);
 
         return true;
+    }
+
+    bool readReset() {
+        // read initial state to determine if reset is needed
+        int gpioB = wiringPiI2CReadReg8(m_i2cFd, MCP23017_GPIOB);
+        if (!(gpioB & 0x040) && !(gpioB & 0x080) && !(gpioB & 0x04)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     int readInterrupt() {

@@ -33,6 +33,7 @@ import Battery 1.0
 import DisplayControl 1.0
 import Proximity 1.0
 import StandbyControl 1.0
+import ButtonHandler 1.0
 
 import "qrc:/basic_ui" as BasicUI // TODO: can this be done in a singleton?
 
@@ -82,6 +83,7 @@ ApplicationWindow {
     // CONFIGURATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Component.onCompleted: {
+        console.debug("Reset button combination was pressed: " + ButtonHandler.resetButtonsPressed());
         console.debug("UI loading");
         console.debug("Resolution: " + Style.screen.width + "x" + Style.screen.height);
         console.debug("Pixel density: " + Style.screen.pixelDensity);
