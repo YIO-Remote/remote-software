@@ -65,7 +65,7 @@ class ButtonHandler : public QObject {
     explicit ButtonHandler(InterruptHandler* interruptHandler, YioAPI* api, QObject* parent = nullptr);
     virtual ~ButtonHandler();
 
-    Q_INVOKABLE bool resetButtonsPressed() { return m_resetButtonsPressed; }
+    bool resetButtonsPressed() { return m_resetButtonsPressed; }
 
     static ButtonHandler* getInstance() { return s_instance; }
     static QObject*       getQMLInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
