@@ -94,8 +94,8 @@ int main(int argc, char* argv[]) {
     bool configError = false;
     if (!QFile::exists(cmdLineHandler.configFile())) {
         qFatal("App configuration file not found: %s", cmdLineHandler.configFile().toLatin1().constData());
-        return 1;
     }
+
     Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), appPath);
     if (!config->readConfig()) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
@@ -209,23 +209,36 @@ int main(int argc, char* argv[]) {
 
     // reset combination was pressed on startup
     if (buttonHandler->resetButtonsPressed()) {
-        // create marker file
-        QFile file("/firstrun");
-        if (file.open(QIODevice::WriteOnly)) {
-            file.close();
+        if (QFile::exists(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json") &&
+            QFile::exists("/boot/config.json")) {
+            // create marker file
+            QFile file("/firstrun");
+            if (file.open(QIODevice::WriteOnly)) {
+                file.close();
+
+                // rename existing config
+                QFile::rename("/boot/config.json", "/boot/config.json.old");
+
+                // copy default config
+                QFile::copy(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json",
+                            "/boot/config.json");
+
+                // reset wifi settings
+                wifiControl->clearConfiguredNetworks();
+
+                // reboot
+                Launcher().launch("reboot");
+
+                return -1;
+            } else {
+                qCCritical(CLASS_LC) << "Error writing firstrun marker file";
+                notifications.add(
+                    true, QGuiApplication::tr("An error occured while restoring to defaults. Please try again."));
+            }
+        } else {
+            qCCritical(CLASS_LC) << "Default config file not found. Cannot restore to defaults.";
+            notifications.add(true, QGuiApplication::tr("Default config file not found. Cannot restore to defaults."));
         }
-
-        // restore default config
-        if (QFile::exists("/boot/config.json")) {
-            QFile::remove("/boot/config.json");
-        }
-        QFile::copy("/opt/yio/app/config.json", "/boot/config.json");
-
-        // reboot the remote
-        Launcher* l = new Launcher();
-        l->launch("reboot");
-
-        return -1;
     }
 
     // STANDBY CONTROL

@@ -15,7 +15,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/About.qml" line="50"/>
+        <location filename="../basic_ui/settings/About.qml" line="51"/>
         <source>
 
 To learn more about the project, visit
@@ -122,9 +122,9 @@ To learn more about the project, visit
     </message>
 </context>
 <context>
-    <name>BluetoothThread</name>
+    <name>BluetoothControl</name>
     <message>
-        <location filename="../sources/bluetootharea.cpp" line="126"/>
+        <location filename="../sources/bluetooth.cpp" line="41"/>
         <source>Bluetooth device was not found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -538,7 +538,7 @@ to set up YIO remote</source>
     <name>JsonFile</name>
     <message>
         <location filename="../sources/jsonfile.cpp" line="80"/>
-        <location filename="../sources/jsonfile.cpp" line="129"/>
+        <location filename="../sources/jsonfile.cpp" line="133"/>
         <source>empty name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -553,12 +553,12 @@ to set up YIO remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/jsonfile.cpp" line="136"/>
+        <location filename="../sources/jsonfile.cpp" line="140"/>
         <source>cannot open file &apos;%1&apos; for reading: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/jsonfile.cpp" line="145"/>
+        <location filename="../sources/jsonfile.cpp" line="149"/>
         <source>invalid JSON file &apos;%1&apos; at offset %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -654,6 +654,19 @@ to set up YIO remote</source>
     <message>
         <location filename="../basic_ui/Profiles.qml" line="194"/>
         <source>To edit your profiles, use the web configurator tool in settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QGuiApplication</name>
+    <message>
+        <location filename="../sources/main.cpp" line="236"/>
+        <source>An error occured while restoring to defaults. Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/main.cpp" line="240"/>
+        <source>Default config file not found. Cannot restore to defaults.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -791,7 +804,7 @@ Navigate your internet browser to: http://</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setup/SetupStep3.qml" line="164"/>
+        <location filename="../setup/SetupStep3.qml" line="166"/>
         <source>Join other</source>
         <translation type="unfinished"></translation>
     </message>
@@ -906,7 +919,7 @@ a power source and wait until it starts blinking.
 <context>
     <name>SetupStep8</name>
     <message>
-        <location filename="../setup/SetupStep8.qml" line="139"/>
+        <location filename="../setup/SetupStep8.qml" line="136"/>
         <source>Setting up your YIO Dock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1115,37 +1128,37 @@ YIO remote %1</source>
 <context>
     <name>System</name>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="79"/>
+        <location filename="../basic_ui/settings/System.qml" line="94"/>
         <source>Unit system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="113"/>
+        <location filename="../basic_ui/settings/System.qml" line="133"/>
         <source>Metric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="148"/>
+        <location filename="../basic_ui/settings/System.qml" line="169"/>
         <source>Imperial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="167"/>
+        <location filename="../basic_ui/settings/System.qml" line="188"/>
         <source>Uptime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="194"/>
+        <location filename="../basic_ui/settings/System.qml" line="215"/>
         <source>CPU temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="218"/>
+        <location filename="../basic_ui/settings/System.qml" line="239"/>
         <source>Reboot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/System.qml" line="232"/>
+        <location filename="../basic_ui/settings/System.qml" line="253"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,7 +1181,7 @@ YIO remote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basic_ui/settings/Wifi.qml" line="190"/>
+        <location filename="../basic_ui/settings/Wifi.qml" line="192"/>
         <source>Other networks</source>
         <translation type="unfinished"></translation>
     </message>
