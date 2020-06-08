@@ -209,19 +209,32 @@ int main(int argc, char* argv[]) {
 
     // reset combination was pressed on startup
     if (buttonHandler->resetButtonsPressed()) {
-        if (QFile::exists(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json") &&
-            QFile::exists("/boot/config.json")) {
+        if (QFile::exists(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json")) {
             // create marker file
             QFile file("/firstrun");
             if (file.open(QIODevice::WriteOnly)) {
                 file.close();
 
+                // remove old config if exists
+                if (QFile::exists("/boot/config.json.old")) {
+                    if (!QFile::remove("/boot/config.json.old")) {
+                        qCCritical(CLASS_LC) << "Error removing old configuration file.";
+                    }
+                }
+
                 // rename existing config
-                QFile::rename("/boot/config.json", "/boot/config.json.old");
+                if (!QFile::rename("/boot/config.json", "/boot/config.json.old")) {
+                    qCCritical(CLASS_LC) << "Error backing up exiting configuration.";
+                }
 
                 // copy default config
-                QFile::copy(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json",
-                            "/boot/config.json");
+                if (!QFile::copy(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json",
+                                 "/boot/config.json")) {
+                    qCCritical(CLASS_LC) << "Error copying default configuration.";
+
+                    // rename old config file
+                    QFile::rename("/boot/config.json.old", "/boot/config.json");
+                }
 
                 // reset wifi settings
                 wifiControl->clearConfiguredNetworks();
