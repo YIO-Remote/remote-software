@@ -22,6 +22,7 @@
 import QtQuick 2.11
 import Style 1.0
 
+import Haptic 1.0
 import Entity.Remote 1.0
 
 Item {
@@ -44,7 +45,7 @@ Item {
 
             Rectangle {
                 id: imageContainer
-                width: 80; height: 80
+                width: 118; height: 118
                 anchors.centerIn: parent
                 radius: Style.cornerRadius
                 color: Style.color.medium
@@ -54,7 +55,7 @@ Item {
                     text: number
                     verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
                     anchors.centerIn: parent
-                    font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
+                    font { family: "Open Sans Regular"; weight: Font.Normal; pixelSize: 40 }
                     lineHeight: 1
                 }
 
@@ -68,7 +69,7 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        haptic.playEffect(Haptic.Click);
+                        Haptic.playEffect(Haptic.Click);
                         obj.channel(number);
                     }
                 }

@@ -101,21 +101,12 @@ void Remote::powerOn() { command(RemoteDef::C_POWER_ON, ""); }
 
 void Remote::powerOff() { command(RemoteDef::C_POWER_OFF, ""); }
 
-void Remote::powerToggle() {
-    qCDebug(m_log) << "POWERTOGGLE";
-    command(RemoteDef::C_POWER_TOGGLE, "");
-}
+void Remote::powerToggle() { command(RemoteDef::C_POWER_TOGGLE, ""); }
 
 // tuner commands
-void Remote::channelUp() {
-    qCDebug(m_log) << "CHANNEL_UP";
-    command(RemoteDef::C_CHANNEL_UP, "");
-}
+void Remote::channelUp() { command(RemoteDef::C_CHANNEL_UP, ""); }
 
-void Remote::channelDown() {
-    qCDebug(m_log) << "CHANNEL_DOWN";
-    command(RemoteDef::C_CHANNEL_DOWN, "");
-}
+void Remote::channelDown() { command(RemoteDef::C_CHANNEL_DOWN, ""); }
 
 void Remote::channelSearch() { command(RemoteDef::C_CHANNEL_SEARCH, ""); }
 
@@ -180,15 +171,9 @@ void Remote::channel(int ch) {
 void Remote::source() { command(RemoteDef::C_SOURCE, ""); }
 
 // volume commands
-void Remote::volumeUp() {
-    qCDebug(m_log) << "VOLUME_UP";
-    command(RemoteDef::C_VOLUME_UP, "");
-}
+void Remote::volumeUp() { command(RemoteDef::C_VOLUME_UP, ""); }
 
-void Remote::volumeDown() {
-    qCDebug(m_log) << "VOLUME_DOWN";
-    command(RemoteDef::C_VOLUME_DOWN, "");
-}
+void Remote::volumeDown() { command(RemoteDef::C_VOLUME_DOWN, ""); }
 
 void Remote::muteToggle() { command(RemoteDef::C_MUTE_TOGGLE, ""); }
 
@@ -202,10 +187,10 @@ bool Remote::supportsOn() {
 
 bool Remote::isOn() { return m_state == RemoteDef::ONLINE; }
 
-Remote::Remote(QObject* parent) : Entity(Type, QVariantMap(), nullptr, parent), m_log("REMOTE ENTITY") {}
+Remote::Remote(QObject* parent) : Entity(Type, QVariantMap(), nullptr, parent), m_log("remote entity") {}
 
 Remote::Remote(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent)
-    : Entity(Type, config, integrationObj, parent), m_log("REMOTE ENTITY") {
+    : Entity(Type, config, integrationObj, parent), m_log("remote entity") {
     staticInitialize();
 
     m_enumAttr     = &s_metaEnumAttr;

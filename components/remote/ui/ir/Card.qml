@@ -147,15 +147,20 @@ Rectangle {
         anchors { top: topItem.bottom; topMargin: 0 }
         currentIndex: 0
 
-        //buttons
+        // buttons
         Loader {
             asynchronous: true
             sourceComponent: buttonView
         }
 
+        // transport buttons
+        Loader {
+            asynchronous: true
+            sourceComponent: buttonTransportView
+        }
+
         // channels
         Loader {
-//            active: SwipeView.isCurrentItem
             asynchronous: true
             sourceComponent: channelView
         }
@@ -164,6 +169,11 @@ Rectangle {
     Component {
         id: buttonView
         CardButtons {}
+    }
+
+    Component {
+        id: buttonTransportView
+        CardButtonsTransport {}
     }
 
     Component {

@@ -21,16 +21,13 @@
  *****************************************************************************/
 import QtQuick 2.11
 import Style 1.0
-import Entity.Remote 1.0
 import Haptic 1.0
 
 Rectangle {
     id: bg
-    width: 110
-    height: 60
+    width: 118; height: 70
     radius: height/2
-    border.color: Style.color.light
-    border.width: 2
+    border { color: Style.color.light; width: 2 }
     color: Style.color.backgroundTransparent
 
     property alias title: title.text
@@ -42,13 +39,9 @@ Rectangle {
         color: Style.color.text
         width: parent.width-20
         elide: Text.ElideRight
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
         anchors.centerIn: parent
-        font.family: "Open Sans Regular"
-        font.weight: Font.Normal
-        font.pixelSize: 24
-        lineHeight: 1
+        font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 24 }
     }
 
     MouseArea {
