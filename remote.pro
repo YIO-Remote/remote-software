@@ -22,7 +22,7 @@
  #############################################################################/
 
 QT += qml quick websockets quickcontrols2 bluetooth
-CONFIG += c++14 disable-desktop
+CONFIG += c++17 disable-desktop
 #disable qtquickcompiler for QML debugging!
 CONFIG += qtquickcompiler
 

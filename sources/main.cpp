@@ -30,6 +30,7 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QtDebug>
+#include <filesystem>
 
 #include "bluetooth.h"
 #include "commandlinehandler.h"
@@ -209,40 +210,32 @@ int main(int argc, char* argv[]) {
 
     // reset combination was pressed on startup
     if (buttonHandler->resetButtonsPressed()) {
-        if (QFile::exists(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json")) {
+        QString defaultConfigPath = qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json";
+
+        if (QFile::exists(defaultConfigPath)) {
             // create marker file
             QFile file("/firstrun");
             if (file.open(QIODevice::WriteOnly)) {
                 file.close();
 
-                // remove old config if exists
-                if (QFile::exists("/boot/config.json.old")) {
-                    if (!QFile::remove("/boot/config.json.old")) {
-                        qCCritical(CLASS_LC) << "Error removing old configuration file.";
+                // make a copy of existing configuration
+                if (!std::filesystem::copy_file("/boot/config.json", "/boot/config.json.old",
+                                                std::filesystem::copy_options::overwrite_existing)) {
+                    qCCritical(CLASS_LC) << "Error backing up existing configuration.";
+                } else {
+                    if (!std::filesystem::copy_file(defaultConfigPath.toStdString(), "/boot/config.json",
+                                                    std::filesystem::copy_options::overwrite_existing)) {
+                        qCCritical(CLASS_LC) << "Error copying default configuration.";
+                    } else {
+                        // reset wifi settings
+                        wifiControl->clearConfiguredNetworks();
+
+                        // reboot
+                        Launcher().launch("reboot");
+
+                        return -1;
                     }
                 }
-
-                // rename existing config
-                if (!QFile::rename("/boot/config.json", "/boot/config.json.old")) {
-                    qCCritical(CLASS_LC) << "Error backing up exiting configuration.";
-                }
-
-                // copy default config
-                if (!QFile::copy(qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json",
-                                 "/boot/config.json")) {
-                    qCCritical(CLASS_LC) << "Error copying default configuration.";
-
-                    // rename old config file
-                    QFile::rename("/boot/config.json.old", "/boot/config.json");
-                }
-
-                // reset wifi settings
-                wifiControl->clearConfiguredNetworks();
-
-                // reboot
-                Launcher().launch("reboot");
-
-                return -1;
             } else {
                 qCCritical(CLASS_LC) << "Error writing firstrun marker file";
                 notifications.add(
