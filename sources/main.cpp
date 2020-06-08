@@ -30,7 +30,9 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QtDebug>
+#if defined(Q_PROCESSOR_ARM)
 #include <filesystem>
+#endif
 
 #include "bluetooth.h"
 #include "commandlinehandler.h"
@@ -208,7 +210,8 @@ int main(int argc, char* argv[]) {
     ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
     qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
 
-    // reset combination was pressed on startup
+#if defined(Q_PROCESSOR_ARM)
+    // reset combination was pressed on startup (only on the remote hardware)
     if (buttonHandler->resetButtonsPressed()) {
         QString defaultConfigPath = qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json";
 
@@ -246,6 +249,7 @@ int main(int argc, char* argv[]) {
             notifications.add(true, QGuiApplication::tr("Default config file not found. Cannot restore to defaults."));
         }
     }
+#endif
 
     // STANDBY CONTROL
     StandbyControl* standbyControl =
