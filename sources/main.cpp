@@ -30,6 +30,9 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QtDebug>
+#if defined(Q_PROCESSOR_ARM)
+#include <filesystem>
+#endif
 
 #include "bluetooth.h"
 #include "commandlinehandler.h"
@@ -94,8 +97,8 @@ int main(int argc, char* argv[]) {
     bool configError = false;
     if (!QFile::exists(cmdLineHandler.configFile())) {
         qFatal("App configuration file not found: %s", cmdLineHandler.configFile().toLatin1().constData());
-        return 1;
     }
+
     Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), appPath);
     if (!config->readConfig()) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
@@ -207,6 +210,47 @@ int main(int argc, char* argv[]) {
     ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
     qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
 
+#if defined(Q_PROCESSOR_ARM)
+    // reset combination was pressed on startup (only on the remote hardware)
+    if (buttonHandler->resetButtonsPressed()) {
+        QString defaultConfigPath = qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json";
+
+        if (QFile::exists(defaultConfigPath)) {
+            // create marker file
+            QFile file("/firstrun");
+            if (file.open(QIODevice::WriteOnly)) {
+                file.close();
+
+                // make a copy of existing configuration
+                if (!std::filesystem::copy_file("/boot/config.json", "/boot/config.json.old",
+                                                std::filesystem::copy_options::overwrite_existing)) {
+                    qCCritical(CLASS_LC) << "Error backing up existing configuration.";
+                } else {
+                    if (!std::filesystem::copy_file(defaultConfigPath.toStdString(), "/boot/config.json",
+                                                    std::filesystem::copy_options::overwrite_existing)) {
+                        qCCritical(CLASS_LC) << "Error copying default configuration.";
+                    } else {
+                        // reset wifi settings
+                        wifiControl->clearConfiguredNetworks();
+
+                        // reboot
+                        Launcher().launch("reboot");
+
+                        return -1;
+                    }
+                }
+            } else {
+                qCCritical(CLASS_LC) << "Error writing firstrun marker file";
+                notifications.add(
+                    true, QGuiApplication::tr("An error occured while restoring to defaults. Please try again."));
+            }
+        } else {
+            qCCritical(CLASS_LC) << "Default config file not found. Cannot restore to defaults.";
+            notifications.add(true, QGuiApplication::tr("Default config file not found. Cannot restore to defaults."));
+        }
+    }
+#endif
+
     // STANDBY CONTROL
     StandbyControl* standbyControl =
         new StandbyControl(displayControl, hwFactory->getProximitySensor(), hwFactory->getLightSensor(),
@@ -216,7 +260,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
     // SOFTWARE UPDATE
-    QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
+    QVariantMap     appUpdCfg      = config->getSettings().value("softwareupdate").toMap();
     SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 

@@ -711,6 +711,19 @@ to set up YIO remote</source>
     </message>
 </context>
 <context>
+    <name>QGuiApplication</name>
+    <message>
+        <location filename="../sources/main.cpp" line="242"/>
+        <source>An error occured while restoring to defaults. Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/main.cpp" line="246"/>
+        <source>Default config file not found. Cannot restore to defaults.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../sources/hardware/wifi_control.h" line="37"/>

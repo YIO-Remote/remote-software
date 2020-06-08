@@ -22,7 +22,7 @@
  #############################################################################/
 
 QT += qml quick websockets quickcontrols2 bluetooth
-CONFIG += c++14 disable-desktop
+CONFIG += c++17 disable-desktop
 #disable qtquickcompiler for QML debugging!
 CONFIG += qtquickcompiler
 
@@ -255,8 +255,10 @@ linux {
             sources/hardware/linux/arm/displaycontrol_yio.cpp \
             sources/hardware/linux/arm/drv2605.cpp \
             sources/hardware/linux/arm/mcp23017_interrupt.cpp
-    }
 
+        # needed for std::filesystem
+        LIBS += -lstdc++fs
+    }
 }
 
 # Android specific files (empty template for now)

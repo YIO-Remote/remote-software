@@ -65,6 +65,8 @@ class InterruptHandler : public Device {
 
     Q_INVOKABLE virtual void shutdown() = 0;
 
+    bool m_wasResetPress = false;
+
  signals:
     void interruptEvent(int event);
 

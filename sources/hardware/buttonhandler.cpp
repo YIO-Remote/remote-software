@@ -30,11 +30,12 @@ static Q_LOGGING_CATEGORY(CLASS_LC, "hw.buttonhandler");
 ButtonHandler *ButtonHandler::s_instance = nullptr;
 
 ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, YioAPI *api, QObject *parent)
-    : QObject(parent), m_itnerruptHandler(interruptHandler), m_api(api) {
+    : QObject(parent), m_itnerruptHandler(interruptHandler), m_api(api), m_resetButtonsPressed(false) {
     s_instance = this;
 
     // connect to interrupt handler
     connect(m_itnerruptHandler, &InterruptHandler::interruptEvent, this, &ButtonHandler::onInterrupt);
+    m_resetButtonsPressed = m_itnerruptHandler->m_wasResetPress;
 
     // connect to API
     connect(m_api, &YioAPI::buttonPressed, this, &ButtonHandler::onYIOAPIPressed);

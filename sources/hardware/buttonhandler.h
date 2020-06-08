@@ -65,6 +65,8 @@ class ButtonHandler : public QObject {
     explicit ButtonHandler(InterruptHandler* interruptHandler, YioAPI* api, QObject* parent = nullptr);
     virtual ~ButtonHandler();
 
+    bool resetButtonsPressed() { return m_resetButtonsPressed; }
+
     static ButtonHandler* getInstance() { return s_instance; }
     static QObject*       getQMLInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
 
@@ -76,9 +78,7 @@ class ButtonHandler : public QObject {
     static ButtonHandler* s_instance;
     InterruptHandler*     m_itnerruptHandler;
     YioAPI*               m_api;
-
-    int m_buttonPressed  = -1;
-    int m_buttonReleased = -1;
+    bool                  m_resetButtonsPressed;
 
  private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onInterrupt(int event);
