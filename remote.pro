@@ -26,6 +26,9 @@ CONFIG += c++17 disable-desktop
 #disable qtquickcompiler for QML debugging!
 CONFIG += qtquickcompiler
 
+# needed for std::filesystem
+LIBS += -lstdc++fs
+
 DEFINES += QT_DEPRECATED_WARNINGS
 
 # SOFTWARE VERSION
