@@ -35,7 +35,7 @@ ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, YioAPI *api, QO
 
     // connect to interrupt handler
     connect(m_itnerruptHandler, &InterruptHandler::interruptEvent, this, &ButtonHandler::onInterrupt);
-    connect(m_itnerruptHandler, &InterruptHandler::resetEvent, this, &ButtonHandler::onResetEvent);
+    m_resetButtonsPressed = m_itnerruptHandler->m_wasResetPress;
 
     // connect to API
     connect(m_api, &YioAPI::buttonPressed, this, &ButtonHandler::onYIOAPIPressed);
@@ -137,8 +137,6 @@ void ButtonHandler::onInterrupt(int event) {
         } break;
     }
 }
-
-void ButtonHandler::onResetEvent() { m_resetButtonsPressed = true; }
 
 void ButtonHandler::onYIOAPIPressed(QString button) {
     if (button == "dpad up") {

@@ -103,7 +103,7 @@ bool Mcp23017InterruptHandler::setupGPIO() {
     connect(notifier, &QFileSystemWatcher::fileChanged, this, &Mcp23017InterruptHandler::interruptHandler);
 
     if (mcp.readReset()) {
-        emit resetEvent();
+        m_wasResetPress = true;
     }
 
     return true;

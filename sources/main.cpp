@@ -207,6 +207,27 @@ int main(int argc, char* argv[]) {
     ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
     qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
 
+    // reset combination was pressed on startup
+    if (buttonHandler->resetButtonsPressed()) {
+        // create marker file
+        QFile file("/firstrun");
+        if (file.open(QIODevice::WriteOnly)) {
+            file.close();
+        }
+
+        // restore default config
+        if (QFile::exists("/boot/config.json")) {
+            QFile::remove("/boot/config.json");
+        }
+        QFile::copy("/opt/yio/app/config.json", "/boot/config.json");
+
+        // reboot the remote
+        Launcher* l = new Launcher();
+        l->launch("reboot");
+
+        return -1;
+    }
+
     // STANDBY CONTROL
     StandbyControl* standbyControl =
         new StandbyControl(displayControl, hwFactory->getProximitySensor(), hwFactory->getLightSensor(),
@@ -216,7 +237,7 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
     // SOFTWARE UPDATE
-    QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
+    QVariantMap     appUpdCfg      = config->getSettings().value("softwareupdate").toMap();
     SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
 
