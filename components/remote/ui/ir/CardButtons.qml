@@ -149,37 +149,6 @@ Item {
             mouseArea.onClicked: { }
         }
     }
-
-    //    Button {
-    //        visible: obj.isSupported(Remote.F_INFO)
-    //        anchors.bottom: parent.bottom
-    //        anchors.left: parent.left
-    //        title: qsTr("Info") + translateHandler.emptyString
-    //        mouseArea.onClicked: {
-    //            obj.info();
-    //        }
-    //    }
-
-    //    Button {
-    //        visible: obj.isSupported(Remote.F_MENU)
-    //        anchors.bottom: parent.bottom
-    //        anchors.horizontalCenter: parent.horizontalCenter
-    //        title: qsTr("Menu") + translateHandler.emptyString
-    //        mouseArea.onClicked: {
-    //            obj.menu();
-    //        }
-    //    }
-
-    //    Button {
-    //        visible: obj.isSupported(Remote.F_GUIDE)
-    //        anchors.bottom: parent.bottom
-    //        anchors.right: parent.right
-    //        title: qsTr("Guide") + translateHandler.emptyString
-    //        mouseArea.onClicked: {
-    //            obj.guide();
-    //        }
-    //    }
-
 }
 
 
