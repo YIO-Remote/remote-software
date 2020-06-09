@@ -34,6 +34,10 @@ Rectangle {
     property alias mouseArea: mouseArea
     property alias background: bg.color
 
+    Behavior on color {
+        PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
+    }
+
     Text {
         id: title
         color: Style.color.text
@@ -54,6 +58,9 @@ Rectangle {
             bg.color = Style.color.light
         }
         onReleased: {
+            bg.color = Style.color.backgroundTransparent
+        }
+        onCanceled: {
             bg.color = Style.color.backgroundTransparent
         }
     }
