@@ -718,12 +718,12 @@ to set up YIO remote</source>
   <context>
     <name>QGuiApplication</name>
     <message>
-      <location filename="../sources/main.cpp" line="242"/>
+      <location filename="../sources/main.cpp" line="247"/>
       <source>An error occured while restoring to defaults. Please try again.</source>
       <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
     </message>
     <message>
-      <location filename="../sources/main.cpp" line="246"/>
+      <location filename="../sources/main.cpp" line="251"/>
       <source>Default config file not found. Cannot restore to defaults.</source>
       <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
     </message>
@@ -1197,37 +1197,47 @@ YIO遙控器 %1</translation>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="94"/>
+      <location filename="../basic_ui/settings/System.qml" line="92"/>
       <source>Unit system</source>
       <translation>單位系統</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="133"/>
+      <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Metric</source>
       <translation>公制</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="169"/>
+      <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Imperial</source>
       <translation>英制</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="188"/>
+      <location filename="../basic_ui/settings/System.qml" line="186"/>
       <source>Uptime</source>
       <translation>執行時間</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="215"/>
+      <location filename="../basic_ui/settings/System.qml" line="214"/>
       <source>CPU temperature</source>
       <translation>處理器溫度</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="239"/>
+      <location filename="../basic_ui/settings/System.qml" line="241"/>
+      <source>CPU load</source>
+      <translation type="unfinished">CPU load</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="267"/>
+      <source>Used memory</source>
+      <translation type="unfinished">Used memory</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="291"/>
       <source>Reboot</source>
       <translation>重新啟動</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="253"/>
+      <location filename="../basic_ui/settings/System.qml" line="305"/>
       <source>Shutdown</source>
       <translation>關機</translation>
     </message>

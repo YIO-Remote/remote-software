@@ -130,7 +130,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../sources/bluetooth.cpp" line="41"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Bluetooth-enheten kunde inte hittas.</translation>
     </message>
   </context>
   <context>
@@ -216,17 +216,17 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="39"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>Spela</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="45"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pausa</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="51"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Stopp</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="57"/>
@@ -276,7 +276,7 @@ För att lära dig mer om projektet, besök
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="115"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Meny</translation>
     </message>
   </context>
   <context>
@@ -720,14 +720,14 @@ för att konfigurera YIO-fjärrkontrollen</translation>
   <context>
     <name>QGuiApplication</name>
     <message>
-      <location filename="../sources/main.cpp" line="242"/>
+      <location filename="../sources/main.cpp" line="247"/>
       <source>An error occured while restoring to defaults. Please try again.</source>
-      <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
+      <translation>Ett fel uppstod vid återställning till standardinställningar. Försök igen.</translation>
     </message>
     <message>
-      <location filename="../sources/main.cpp" line="246"/>
+      <location filename="../sources/main.cpp" line="251"/>
       <source>Default config file not found. Cannot restore to defaults.</source>
-      <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
+      <translation>Standardkonfigurationsfilen kunde inte hittas. Kan inte återställa till standardinställningar.</translation>
     </message>
   </context>
   <context>
@@ -1203,37 +1203,47 @@ YIO fjärrkontroll %1</translation>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="94"/>
+      <location filename="../basic_ui/settings/System.qml" line="92"/>
       <source>Unit system</source>
       <translation>Enhetssystem</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="133"/>
+      <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Metric</source>
       <translation>Metrisk</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="169"/>
+      <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Imperial</source>
       <translation>Imperiell</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="188"/>
+      <location filename="../basic_ui/settings/System.qml" line="186"/>
       <source>Uptime</source>
       <translation>Upptid</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="215"/>
+      <location filename="../basic_ui/settings/System.qml" line="214"/>
       <source>CPU temperature</source>
       <translation>CPU Temperatur</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="239"/>
+      <location filename="../basic_ui/settings/System.qml" line="241"/>
+      <source>CPU load</source>
+      <translation type="unfinished">CPU load</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="267"/>
+      <source>Used memory</source>
+      <translation type="unfinished">Used memory</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="291"/>
       <source>Reboot</source>
       <translation>Omstart</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="253"/>
+      <location filename="../basic_ui/settings/System.qml" line="305"/>
       <source>Shutdown</source>
       <translation>Stäng av</translation>
     </message>

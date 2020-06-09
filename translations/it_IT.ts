@@ -130,7 +130,7 @@ Per saperne di più sul progetto, visita
     <message>
       <location filename="../sources/bluetooth.cpp" line="41"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Dispositivo Bluetooth non trovato.</translation>
     </message>
   </context>
   <context>
@@ -216,67 +216,67 @@ Per saperne di più sul progetto, visita
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="39"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>Play</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="45"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Pause</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="51"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Stop</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="57"/>
       <source>Prev</source>
-      <translation type="unfinished">Prev</translation>
+      <translation>Prev</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="63"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Next</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="69"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Info</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="75"/>
       <source>BWD</source>
-      <translation type="unfinished">BWD</translation>
+      <translation>BWD</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="81"/>
       <source>FWD</source>
-      <translation type="unfinished">FWD</translation>
+      <translation>FWD</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="87"/>
       <source>Rec</source>
-      <translation type="unfinished">Rec</translation>
+      <translation>Rec</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="95"/>
       <source>Exit</source>
-      <translation type="unfinished">Exit</translation>
+      <translation>Esci</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="103"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Indietro</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="109"/>
       <source>Home</source>
-      <translation type="unfinished">Home</translation>
+      <translation>Inizio</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="115"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Menu</translation>
     </message>
   </context>
   <context>
@@ -720,14 +720,14 @@ per impostare YIO Remote</translation>
   <context>
     <name>QGuiApplication</name>
     <message>
-      <location filename="../sources/main.cpp" line="242"/>
+      <location filename="../sources/main.cpp" line="247"/>
       <source>An error occured while restoring to defaults. Please try again.</source>
-      <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
+      <translation>Si è verificato un errore durante il ripristino dei valori predefiniti. Per favore riprova.</translation>
     </message>
     <message>
-      <location filename="../sources/main.cpp" line="246"/>
+      <location filename="../sources/main.cpp" line="251"/>
       <source>Default config file not found. Cannot restore to defaults.</source>
-      <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
+      <translation>File di configurazione predefinito non trovato. Impossibile ripristinare i valori predefiniti.</translation>
     </message>
   </context>
   <context>
@@ -1203,37 +1203,47 @@ YIO remote %1</translation>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="94"/>
+      <location filename="../basic_ui/settings/System.qml" line="92"/>
       <source>Unit system</source>
       <translation>Sistema di unità</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="133"/>
+      <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Metric</source>
       <translation>Metrico</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="169"/>
+      <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Imperial</source>
       <translation>Imperiale</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="188"/>
+      <location filename="../basic_ui/settings/System.qml" line="186"/>
       <source>Uptime</source>
       <translation>Tempo di attività</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="215"/>
+      <location filename="../basic_ui/settings/System.qml" line="214"/>
       <source>CPU temperature</source>
       <translation>Temperatura della CPU</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="239"/>
+      <location filename="../basic_ui/settings/System.qml" line="241"/>
+      <source>CPU load</source>
+      <translation type="unfinished">CPU load</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="267"/>
+      <source>Used memory</source>
+      <translation type="unfinished">Used memory</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="291"/>
       <source>Reboot</source>
       <translation>Riavvia</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="253"/>
+      <location filename="../basic_ui/settings/System.qml" line="305"/>
       <source>Shutdown</source>
       <translation>Spegni</translation>
     </message>

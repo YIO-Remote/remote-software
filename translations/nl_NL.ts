@@ -720,14 +720,14 @@ om de YIO afstandsbediening in te stellen</translation>
   <context>
     <name>QGuiApplication</name>
     <message>
-      <location filename="../sources/main.cpp" line="242"/>
+      <location filename="../sources/main.cpp" line="247"/>
       <source>An error occured while restoring to defaults. Please try again.</source>
-      <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
+      <translation>Er is een fout opgetreden bij terugzetten van de standaard instellingen! Probeer het opnieuw.</translation>
     </message>
     <message>
-      <location filename="../sources/main.cpp" line="246"/>
+      <location filename="../sources/main.cpp" line="251"/>
       <source>Default config file not found. Cannot restore to defaults.</source>
-      <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
+      <translation>Standaard configuratiebestand niet gevonden. Kan standaardwaarden niet herstellen.</translation>
     </message>
   </context>
   <context>
@@ -1202,37 +1202,47 @@ YIO remote %1</translation>
   <context>
     <name>System</name>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="94"/>
+      <location filename="../basic_ui/settings/System.qml" line="92"/>
       <source>Unit system</source>
       <translation>Eenheid systeem</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="133"/>
+      <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Metric</source>
       <translation>Metrisch</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="169"/>
+      <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Imperial</source>
       <translation>Imperial</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="188"/>
+      <location filename="../basic_ui/settings/System.qml" line="186"/>
       <source>Uptime</source>
       <translation>Beschikbaarheid</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="215"/>
+      <location filename="../basic_ui/settings/System.qml" line="214"/>
       <source>CPU temperature</source>
       <translation>CPU-temperatuur</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="239"/>
+      <location filename="../basic_ui/settings/System.qml" line="241"/>
+      <source>CPU load</source>
+      <translation type="unfinished">CPU load</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="267"/>
+      <source>Used memory</source>
+      <translation type="unfinished">Used memory</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="291"/>
       <source>Reboot</source>
       <translation>Herstart</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="253"/>
+      <location filename="../basic_ui/settings/System.qml" line="305"/>
       <source>Shutdown</source>
       <translation>Uitschakelen</translation>
     </message>
