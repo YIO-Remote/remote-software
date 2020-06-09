@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -22,26 +22,32 @@
 
 #pragma once
 
-#include "../hardwarefactory_default.h"
+#include "../sysinfo.h"
 
-/**
- * @brief Generic Linux hardware factory implementation.
- * May be sub-classed by more specific hardware factories. E.g. RPi or YIO remote.
- */
-class HardwareFactoryLinux : public HardwareFactoryDefault {
+class SystemInfoMac : public SystemInfo {
     Q_OBJECT
 
  public:
-    explicit HardwareFactoryLinux(const QVariantMap &config, const QString &profile, QObject *parent = nullptr);
+    explicit SystemInfoMac(QObject *parent = nullptr);
 
-    // HardwareFactory interface
- protected:
-    bool buildDevices(const QVariantMap &config) override;
+    // SystemInformation interface
+ public:
+    void    init() override;
+    QString uptime() override;
+    float   usedMemory() override;
+    float   cpuTemperature() override;
+    float   cpuLoadAverage() override;
 
-    // Helper methods
- protected:
-    virtual WifiControl *     buildWifiControl(const QVariantMap &config);
-    virtual SystemService *   buildSystemService(const QVariantMap &config);
-    virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
-    virtual SystemInfo *      buildSystemInfo(const QVariantMap &config);
+ private:
+    struct CpuSample {
+     public:
+        uint64_t totalSystemTime;
+        uint64_t totalUserTime;
+        uint64_t totalIdleTime;
+    };
+
+    bool getCpuSample(CpuSample *sample);
+
+ private:
+    CpuSample m_lastCpuSample;
 };

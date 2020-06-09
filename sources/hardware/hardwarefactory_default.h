@@ -93,6 +93,11 @@ class HardwareFactoryDefault : public HardwareFactory {
         return p_proximitySensor;
     }
 
+    SystemInfo *getSystemInformation() override {
+        Q_ASSERT(p_systemInformation);
+        return p_systemInformation;
+    }
+
     // HardwareFactory interface
  protected:
     bool buildDevices(const QVariantMap &config) override;
@@ -143,6 +148,10 @@ class HardwareFactoryDefault : public HardwareFactory {
      * @brief Returns a mock implementation of the ProximitySensor device.
      */
     ProximitySensor *dummyProximitySensor();
+    /**
+     * @brief Returns a mock implementation of the SystemInformation device.
+     */
+    SystemInfo *dummySystemInformation();
 
  protected:
     WifiControl *     p_wifiControl;
@@ -156,4 +165,5 @@ class HardwareFactoryDefault : public HardwareFactory {
     GestureSensor *   p_gestureSensor;
     LightSensor *     p_lightSensor;
     ProximitySensor * p_proximitySensor;
+    SystemInfo *      p_systemInformation;
 };

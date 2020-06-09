@@ -56,13 +56,13 @@
                 "sudo": false,
                 "timeout": 30000,
                 "clearNetworks": "",
-                "connect": "/usr/bin/yio-remote/wifi_network_create.sh",
-                "listNetworks": "/usr/bin/yio-remote/wifi_network_list.sh",
-                "startAP": "/usr/bin/yio-remote/reset-wifi.sh",
-                "getSSID": "/usr/bin/yio-remote/wifi_ssid.sh",
-                "getIP": "/usr/bin/yio-remote/wifi_ip.sh",
+                "connect": "/opt/yio/scripts/wifi_network_create.sh",
+                "listNetworks": "/opt/yio/scripts/wifi_network_list.sh",
+                "startAP": "/opt/yio/scripts/reset-wifi.sh",
+                "getSSID": "/opt/yio/scripts/wifi_ssid.sh",
+                "getIP": "/opt/yio/scripts/wifi_ip.sh",
                 "getMAC": "cat /sys/class/net/wlan0/address",
-                "getRSSI": "/usr/bin/yio-remote/wifi_rssi.sh"
+                "getRSSI": "/opt/yio/scripts/wifi_rssi.sh"
             }
         },
         "accessPoint": {

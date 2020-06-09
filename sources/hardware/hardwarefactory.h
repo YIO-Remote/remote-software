@@ -33,6 +33,7 @@
 #include "interrupthandler.h"
 #include "lightsensor.h"
 #include "proximitysensor.h"
+#include "sysinfo.h"
 #include "systemservice.h"
 #include "webserver_control.h"
 #include "wifi_control.h"
@@ -144,6 +145,12 @@ class HardwareFactory : public QObject {
      */
     virtual ProximitySensor* getProximitySensor() = 0;
 
+    /**
+     * @brief Returns the concrete SystemInformation implementation.
+     * @details Needs to be overriden by a concrete hardware factory.
+     */
+    virtual SystemInfo* getSystemInformation() = 0;
+
     // QML callback providers for qmlRegisterSingletonType
     static QObject* batteryChargerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* batteryFuelGaugeProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
@@ -153,6 +160,7 @@ class HardwareFactory : public QObject {
     static QObject* gestureSensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* lightSensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
     static QObject* proximitySensorProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+    static QObject* systemInformationProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 
  protected:
     explicit HardwareFactory(QObject* parent = nullptr);

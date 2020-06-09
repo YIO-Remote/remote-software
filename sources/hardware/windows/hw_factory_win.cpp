@@ -22,6 +22,8 @@
 
 #include "hw_factory_win.h"
 
+#include "sysinfo_win.h"
+
 HardwareFactoryWindows::HardwareFactoryWindows(const QVariantMap &config, QObject *parent)
     : HardwareFactoryDefault(parent) {
     Q_UNUSED(config)
@@ -30,5 +32,9 @@ HardwareFactoryWindows::HardwareFactoryWindows(const QVariantMap &config, QObjec
 bool HardwareFactoryWindows::buildDevices(const QVariantMap &config) {
     // TODO(anyone) add your Windows specific device building here...
     // At the moment there's no Windows specific drivers, so we're just using the dummy implementations!
-    return HardwareFactoryDefault::buildDevices(config);
+    bool result = HardwareFactoryDefault::buildDevices(config);
+
+    p_systemInformation = new SystemInfoWin(this);
+
+    return result;
 }

@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2019-2020 Markus Zehnder <business@markuszehnder.ch>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -22,26 +22,26 @@
 
 #pragma once
 
-#include "../hardwarefactory_default.h"
+#include "../sysinfo.h"
 
 /**
- * @brief Generic Linux hardware factory implementation.
- * May be sub-classed by more specific hardware factories. E.g. RPi or YIO remote.
+ * @brief A mock implementation of the SystemService interface for unsupported platforms.
  */
-class HardwareFactoryLinux : public HardwareFactoryDefault {
+class SystemInformationMock : public SystemInfo {
     Q_OBJECT
 
  public:
-    explicit HardwareFactoryLinux(const QVariantMap &config, const QString &profile, QObject *parent = nullptr);
+    explicit SystemInformationMock(QObject *parent = nullptr) : SystemInfo(parent) {}
 
-    // HardwareFactory interface
- protected:
-    bool buildDevices(const QVariantMap &config) override;
+    // SystemInformation interface
+ public:
+    void init() override{};
 
-    // Helper methods
- protected:
-    virtual WifiControl *     buildWifiControl(const QVariantMap &config);
-    virtual SystemService *   buildSystemService(const QVariantMap &config);
-    virtual WebServerControl *buildWebServerControl(const QVariantMap &config);
-    virtual SystemInfo *      buildSystemInfo(const QVariantMap &config);
+    QString uptime() override { return "n/a"; }
+
+    float usedMemory() override { return 42; }
+
+    float cpuTemperature() override { return 36.0; };
+
+    float cpuLoadAverage() override { return 0.1; };
 };

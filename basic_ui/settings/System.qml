@@ -26,6 +26,7 @@ import Style 1.0
 import Haptic 1.0
 import Launcher 1.0
 import Config 1.0
+import SystemInformation 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
@@ -39,6 +40,7 @@ Rectangle {
         id: settingsLauncher
     }
 
+    // TODO stop timer while display is dimmed
     Timer {
         id: timer
         running: false
@@ -47,19 +49,15 @@ Rectangle {
         triggeredOnStart: true
 
         onTriggered: {
-            // TODO(zehnm) create a device class instead of launching hard coded shell scripts from QML
-            uptimeValue.text = settingsLauncher.launch("/usr/bin/yio-remote/uptime.sh").trim();
-            // TODO(zehnm) create a sensor class for reading CPU temp instead of launching hard coded shell scripts from QML
-            var temp = parseInt(settingsLauncher.launch("cat /sys/class/thermal/thermal_zone0/temp")) / 1000
-            if (Number.isNaN(temp)) {
-                temp = 36
-            }
-
+            uptimeValue.text = SystemInformation.uptime
+            var temp = SystemInformation.cpuTemperature
             if (config.unitSystem === UnitSystem.IMPERIAL) {
                 temperatureValue.text = Math.round(temp * 9/5 + 32) + "ºF"
             } else {
                 temperatureValue.text = Math.round(temp) + "ºC"
             }
+            usedMemValue.text = Math.round(SystemInformation.usedMemory) + "%"
+            cpuLoadValue.text = Math.round(SystemInformation.cpuLoadAverage) + "%"
         }
     }
 
@@ -207,6 +205,7 @@ Rectangle {
         }
 
         Item {
+            visible: SystemInformation.cpuTemperatureSupported
             width: parent.width; height: childrenRect.height + 40
 
             Text {
@@ -223,6 +222,59 @@ Rectangle {
                 text: ""
                 horizontalAlignment: Text.AlignRight
                 anchors { right: parent.right; rightMargin: 20; verticalCenter: temperatureText.verticalCenter }
+                font: Style.font.button
+            }
+        }
+
+        Rectangle {
+            visible: SystemInformation.cpuTemperatureSupported
+            width: parent.width; height: 2
+            color: Style.color.background
+        }
+
+        Item {
+            width: parent.width; height: childrenRect.height + 40
+
+            Text {
+                id: cpuLoadText
+                color: Style.color.text
+                text: qsTr("CPU load") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
+            }
+
+            Text {
+                id: cpuLoadValue
+                color: Style.color.text
+                text: ""
+                horizontalAlignment: Text.AlignRight
+                anchors { right: parent.right; rightMargin: 20; verticalCenter: cpuLoadText.verticalCenter }
+                font: Style.font.button
+            }
+        }
+
+        Rectangle {
+            width: parent.width; height: 2
+            color: Style.color.background
+        }
+
+        Item {
+            width: parent.width; height: childrenRect.height + 40
+
+            Text {
+                id: usedMemText
+                color: Style.color.text
+                text: qsTr("Used memory") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
+            }
+
+            Text {
+                id: usedMemValue
+                color: Style.color.text
+                text: ""
+                horizontalAlignment: Text.AlignRight
+                anchors { right: parent.right; rightMargin: 20; verticalCenter: usedMemText.verticalCenter }
                 font: Style.font.button
             }
         }

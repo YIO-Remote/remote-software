@@ -34,6 +34,7 @@
 #include "mock/interrupthandler_mock.h"
 #include "mock/lightsensor_mock.h"
 #include "mock/proximitysensor_mock.h"
+#include "mock/sysinfo_mock.h"
 #include "mock/systemservice_mock.h"
 #include "mock/webserver_mock.h"
 #include "mock/wifi_mock.h"
@@ -52,8 +53,8 @@ HardwareFactoryDefault::HardwareFactoryDefault(QObject *parent)
       p_hapticMotor(nullptr),
       p_gestureSensor(nullptr),
       p_lightSensor(nullptr),
-      p_proximitySensor(nullptr) {
-}
+      p_proximitySensor(nullptr),
+      p_systemInformation(nullptr) {}
 
 int HardwareFactoryDefault::initialize() {
     int state = 0;
@@ -72,6 +73,8 @@ int HardwareFactoryDefault::initialize() {
     getBatteryFuelGauge()->open();
     getInterruptHandler()->open();
 
+    getSystemInformation()->init();
+
     return state;
 }
 
@@ -89,6 +92,7 @@ bool HardwareFactoryDefault::buildDevices(const QVariantMap &config) {
     p_gestureSensor = dummyGestureSensor();
     p_lightSensor = dummyLightSensor();
     p_proximitySensor = dummyProximitySensor();
+    p_systemInformation = dummySystemInformation();
 
     return true;
 }
@@ -148,4 +152,9 @@ LightSensor *HardwareFactoryDefault::dummyLightSensor() {
 ProximitySensor *HardwareFactoryDefault::dummyProximitySensor() {
     qCDebug(CLASS_LC) << "Using ProximitySensorMock";
     return new ProximitySensorMock(this);
+}
+
+SystemInfo *HardwareFactoryDefault::dummySystemInformation() {
+    qCDebug(CLASS_LC) << "Using SystemInformationMock";
+    return new SystemInformationMock(this);
 }

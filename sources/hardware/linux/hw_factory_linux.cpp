@@ -28,6 +28,7 @@
 #include "../../configutil.h"
 #include "../hw_config.h"
 #include "../systemservice_name.h"
+#include "sysinfo_linux.h"
 #include "systemd.h"
 #include "webserver_lighttpd.h"
 #include "wifi_shellscripts.h"
@@ -55,6 +56,9 @@ bool HardwareFactoryLinux::buildDevices(const QVariantMap &config) {
 
     deviceCfg = ConfigUtil::getValue(config, HW_CFG_WIFI).toMap();
     p_wifiControl = ConfigUtil::isEnabled(deviceCfg) ? buildWifiControl(deviceCfg) : dummyWifiControl();
+
+    deviceCfg = ConfigUtil::getValue(config, HW_CFG_SYSINFO).toMap();
+    p_systemInformation = ConfigUtil::isEnabled(deviceCfg) ? buildSystemInfo(deviceCfg) : dummySystemInformation();
 
     // dummy devices
     p_interruptHandler = dummyInterruptHandler();
@@ -104,6 +108,13 @@ WebServerControl *HardwareFactoryLinux::buildWebServerControl(const QVariantMap 
     lighttpd->setWifiSetupConfig(webCfg.value(HW_CFG_LIGHTTPD_WIFI_CFG, HW_DEF_LIGHTTPD_WIFI_CFG).toString());
     lighttpd->setWebConfiguratorConfig(webCfg.value(HW_CFG_LIGHTTPD_WEB_CFG, HW_DEF_LIGHTTPD_WEB_CFG).toString());
     return lighttpd;
+}
+
+SystemInfo *HardwareFactoryLinux::buildSystemInfo(const QVariantMap &config) {
+    QString          sysfsTemp = config.value(HW_CFG_SYSINFO_SYSFS_TEMP, HW_DEF_SYSINFO_SYSFS_TEMP).toString();
+    SystemInfoLinux *sysInfo = new SystemInfoLinux(sysfsTemp, this);
+
+    return sysInfo;
 }
 
 // -- WiFi control - RPi uses wpa_supplicant control interface and as fallback the old shell scripts
