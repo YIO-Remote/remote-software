@@ -1230,12 +1230,12 @@ YIO fjärrkontroll %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="241"/>
       <source>CPU load</source>
-      <translation type="unfinished">CPU load</translation>
+      <translation>CPU belastning</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="267"/>
       <source>Used memory</source>
-      <translation type="unfinished">Used memory</translation>
+      <translation>Använt minne</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="291"/>

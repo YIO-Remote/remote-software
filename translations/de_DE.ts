@@ -721,12 +721,12 @@ to set up YIO remote</source>
     <message>
       <location filename="../sources/main.cpp" line="247"/>
       <source>An error occured while restoring to defaults. Please try again.</source>
-      <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
+      <translation>Beim laden der Grundkonfiguration ist ein Fehler aufgetreten. Bitte erneut versuchen.</translation>
     </message>
     <message>
       <location filename="../sources/main.cpp" line="251"/>
       <source>Default config file not found. Cannot restore to defaults.</source>
-      <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
+      <translation>Standardkonfigurationsdatei nicht gefunden. Standardeinstellungen können nicht wiederhergestellt werden.</translation>
     </message>
   </context>
   <context>
@@ -1229,12 +1229,12 @@ YIO Remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="241"/>
       <source>CPU load</source>
-      <translation type="unfinished">CPU load</translation>
+      <translation>CPU Last</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="267"/>
       <source>Used memory</source>
-      <translation type="unfinished">Used memory</translation>
+      <translation>Verwendeter Speicher</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="291"/>
