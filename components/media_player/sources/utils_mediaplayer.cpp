@@ -210,7 +210,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
             emit processingDone(QColor("black"), QImage());
         }
 
-        delete m_reply;
+        m_reply->deleteLater();
         m_reply = nullptr;
         qCDebug(CLASS_LC()) << this << "Network reply deleted";
     }
