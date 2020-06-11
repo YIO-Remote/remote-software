@@ -153,8 +153,13 @@ void StandbyControl::wakeup() {
             // start bluetooth scanning
 
             // reset battery charging screen
-            QObject *showClock = m_config->getQMLObject("showClock");
-            QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
+            if (m_batteryFuelGauge->getIsCharging()) {
+                qCDebug(CLASS_LC()) << "Battery is charging";
+                QObject *showClock = m_config->getQMLObject("showClock");
+                QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
+            } else {
+                qCDebug(CLASS_LC()) << "Battery not is charging";
+            }
 
             QTimer::singleShot(300, this, [=]() {
                 // disable touch event catcher
