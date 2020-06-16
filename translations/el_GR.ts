@@ -130,7 +130,7 @@ To learn more about the project, visit
     <message>
       <location filename="../sources/bluetooth.cpp" line="41"/>
       <source>Bluetooth device was not found.</source>
-      <translation type="unfinished">Bluetooth device was not found.</translation>
+      <translation>Δεν βρέθηκαν συσκευές bluetooth.</translation>
     </message>
   </context>
   <context>
@@ -216,32 +216,32 @@ To learn more about the project, visit
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="39"/>
       <source>Play</source>
-      <translation type="unfinished">Play</translation>
+      <translation>Αναπαραγωγή</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="45"/>
       <source>Pause</source>
-      <translation type="unfinished">Pause</translation>
+      <translation>Παύση</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="51"/>
       <source>Stop</source>
-      <translation type="unfinished">Stop</translation>
+      <translation>Διακοπή</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="57"/>
       <source>Prev</source>
-      <translation type="unfinished">Prev</translation>
+      <translation>Προηγούμενο</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="63"/>
       <source>Next</source>
-      <translation type="unfinished">Next</translation>
+      <translation>Επόμενο</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="69"/>
       <source>Info</source>
-      <translation type="unfinished">Info</translation>
+      <translation>Πληροφορίες</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="75"/>
@@ -256,27 +256,27 @@ To learn more about the project, visit
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="87"/>
       <source>Rec</source>
-      <translation type="unfinished">Rec</translation>
+      <translation>Εγγραφή</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="95"/>
       <source>Exit</source>
-      <translation type="unfinished">Exit</translation>
+      <translation>Έξοδος</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="103"/>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Επιστροφή</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="109"/>
       <source>Home</source>
-      <translation type="unfinished">Home</translation>
+      <translation>Αρχική Σελίδα</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/CardButtonsTransport.qml" line="115"/>
       <source>Menu</source>
-      <translation type="unfinished">Menu</translation>
+      <translation>Μενού</translation>
     </message>
   </context>
   <context>
@@ -422,12 +422,12 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="41"/>
       <source>Invalid configuration file</source>
-      <translation type="unfinished">Invalid configuration file</translation>
+      <translation>Μη έγκυρο αρχείο ρύθμισης παραμέτρων</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Κατευθυνθείτε χρησιμοποιώντας το πρόγραμμα περιήγησης σας στο: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
@@ -441,7 +441,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Επανεκκίνηση</translation>
     </message>
   </context>
   <context>
@@ -568,7 +568,7 @@ to set up YIO remote</source>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation type="unfinished">Loading</translation>
+      <translation>Φόρτωση</translation>
     </message>
   </context>
   <context>
