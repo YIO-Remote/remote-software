@@ -57,7 +57,7 @@ Saadaksesi lisätietoja projektista, käy osoitteessa
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="253"/>
       <source>Average power</source>
-      <translation>Keskiarvoinen teho</translation>
+      <translation>Virrankäyttö</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="313"/>
@@ -389,32 +389,32 @@ Saadaksesi lisätietoja projektista, käy osoitteessa
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="40"/>
       <source>Use configuration profile.</source>
-      <translation type="unfinished">Use configuration profile.</translation>
+      <translation>Käytä konfigurointiprofiilia.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="43"/>
       <source>Use configuration file.</source>
-      <translation type="unfinished">Use configuration file.</translation>
+      <translation>Käytä konfigurointitiedostoa.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="44"/>
       <source>Use configuration schema file.</source>
-      <translation type="unfinished">Use configuration schema file.</translation>
+      <translation>Käytä konfiguroinnin mallitiedostoa.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use hardware configuration file.</source>
-      <translation type="unfinished">Use hardware configuration file.</translation>
+      <translation>Käytä laitteiston konfigurointitiedostoa.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use hardware configuration schema file.</source>
-      <translation type="unfinished">Use hardware configuration schema file.</translation>
+      <translation>Käytä laitteiston mallikonfigurointiitiedostoa.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
       <source>Validate json configuration files and exit.</source>
-      <translation type="unfinished">Validate json configuration files and exit.</translation>
+      <translation>Vahvista json konfigurointitiedoston kelpoisuus ja poistu.</translation>
     </message>
   </context>
   <context>
@@ -422,26 +422,26 @@ Saadaksesi lisätietoja projektista, käy osoitteessa
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="41"/>
       <source>Invalid configuration file</source>
-      <translation type="unfinished">Invalid configuration file</translation>
+      <translation>Virheellinen konfiguraatiotiedosto</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Siirry verkkoselaimella osoitteeseen: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="53"/>
       <source>
  and use the web configurator
 to fix the problem.</source>
-      <translation type="unfinished">
- and use the web configurator
-to fix the problem.</translation>
+      <translation>
+ ja käytä verkkokonfiguraattoria
+korjataksesi ongelman.</translation>
     </message>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Uudelleenkäynnistys</translation>
     </message>
   </context>
   <context>
@@ -450,7 +450,7 @@ to fix the problem.</translation>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Peruuta</translation>
     </message>
   </context>
   <context>
@@ -458,42 +458,42 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Automaattinen kirkkauden säätö</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
       <source>Proximity detection</source>
-      <translation type="unfinished">Proximity detection</translation>
+      <translation>Läheisyysanturin herkkyys</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Kaukaa</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Läheltä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
       <source>How far the proximity sensor should look when detecting your hand.</source>
-      <translation type="unfinished">How far the proximity sensor should look when detecting your hand.</translation>
+      <translation>Kuinka kaukaa läheisyysanturi tunnistaa kätesi.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Tumma tila</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
       <source>Cleaning mode</source>
-      <translation type="unfinished">Cleaning mode</translation>
+      <translation>Näytön puhdistus tila</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
+      <translation>Kytkeäksesi Näytön puhdistus tilan pois päältä, kosketa näyttöä yhtäjaksoisesti 10 sekunnin ajan.</translation>
     </message>
   </context>
   <context>
@@ -501,32 +501,32 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Light</source>
-      <translation type="unfinished">Light</translation>
+      <translation>Valo</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Blind</source>
-      <translation type="unfinished">Blind</translation>
+      <translation>Verho</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Remote</source>
-      <translation type="unfinished">Remote</translation>
+      <translation>Kaukosäädin</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Ilmastointi</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Kytkin</translation>
     </message>
   </context>
   <context>
@@ -535,7 +535,7 @@ to fix the problem.</translation>
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Suosikit</translation>
     </message>
   </context>
   <context>
@@ -543,12 +543,12 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/filedownload.cpp" line="114"/>
       <source>Not enough free space (%1 MB).</source>
-      <translation type="unfinished">Not enough free space (%1 MB).</translation>
+      <translation>Ei tarpeeksi vapaata tilaa (%1 MB).</translation>
     </message>
     <message>
       <location filename="../sources/filedownload.cpp" line="121"/>
       <source>Destination file already exists</source>
-      <translation type="unfinished">Destination file already exists</translation>
+      <translation>Kohdetiedosto on jo olemassa</translation>
     </message>
   </context>
   <context>
@@ -557,18 +557,18 @@ to fix the problem.</translation>
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation type="unfinished">Use the web configurator
-to set up YIO remote</translation>
+      <translation>Käytä verkkokonfiguraattoria
+asentaaksesi YIO kaukosäätimen</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Navigate your internet browser to: http://</translation>
+      <translation>Siirry verkkoselaimella osoitteeseen: http://</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation type="unfinished">Loading</translation>
+      <translation>Ladataan</translation>
     </message>
   </context>
   <context>
@@ -576,22 +576,22 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
       <source> - Disconnected</source>
-      <translation type="unfinished"> - Disconnected</translation>
+      <translation> - Katkaise yhteys</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Yhdistä</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Katkaise yhteys</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Lisää uusi</translation>
     </message>
   </context>
   <context>
@@ -629,27 +629,27 @@ to set up YIO remote</translation>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Suosikit</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Asetukset</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Lights</source>
-      <translation type="unfinished">Lights</translation>
+      <translation>Valot</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Blinds</source>
-      <translation type="unfinished">Blinds</translation>
+      <translation>Verhot</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Media</source>
-      <translation type="unfinished">Media</translation>
+      <translation>Media</translation>
     </message>
   </context>
   <context>
@@ -657,22 +657,22 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="64"/>
       <source>Network</source>
-      <translation type="unfinished">Network</translation>
+      <translation>Verkko</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="246"/>
       <source>Wi-Fi signal strength</source>
-      <translation type="unfinished">Wi-Fi signal strength</translation>
+      <translation>Wi-Fi signaalin voimakkuus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation type="unfinished">IP address</translation>
+      <translation>IP-osoite</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
       <source>MAC address</source>
-      <translation type="unfinished">MAC address</translation>
+      <translation>MAC-osoite</translation>
     </message>
   </context>
   <context>
@@ -680,7 +680,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
-      <translation type="unfinished">Dismiss</translation>
+      <translation>Ohita</translation>
     </message>
   </context>
   <context>
@@ -688,7 +688,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
-      <translation type="unfinished">Notifications</translation>
+      <translation>Ilmoitukset</translation>
     </message>
   </context>
   <context>
@@ -696,12 +696,12 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
-      <translation type="unfinished">Low battery</translation>
+      <translation>Akku vähissä</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
-      <translation type="unfinished">Please charge the remote soon</translation>
+      <translation>Ole hyvä ja lataa kaukosäädin pian</translation>
     </message>
   </context>
   <context>
@@ -709,12 +709,12 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="112"/>
       <source>Profiles</source>
-      <translation type="unfinished">Profiles</translation>
+      <translation>Profiilit</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
+      <translation>Muokataksesi profiileja, käytä verkkokonfiguraattoria.</translation>
     </message>
   </context>
   <context>
@@ -722,12 +722,12 @@ to set up YIO remote</translation>
     <message>
       <location filename="../sources/main.cpp" line="247"/>
       <source>An error occured while restoring to defaults. Please try again.</source>
-      <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
+      <translation>Virhe palautettaessa asetuksia. Yritä uudelleen.</translation>
     </message>
     <message>
       <location filename="../sources/main.cpp" line="251"/>
       <source>Default config file not found. Cannot restore to defaults.</source>
-      <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
+      <translation>Oletus konfigurointitiedostoa ei löytynyt. Laitetta ei voida palauttaa oletusarvoihin.</translation>
     </message>
   </context>
   <context>
@@ -735,18 +735,18 @@ to set up YIO remote</translation>
     <message>
       <location filename="../sources/hardware/wifi_control.h" line="37"/>
       <source>WiFi device was not found.</source>
-      <translation type="unfinished">WiFi device was not found.</translation>
+      <translation>Yhtään Wi-Fi laitetta ei löytynyt.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="29"/>
       <source>Cannot initialize the battery sensor. Please restart the remote.</source>
-      <translation type="unfinished">Cannot initialize the battery sensor. Please restart the remote.</translation>
+      <translation>Akkusensoria ei voida alustaa. Ole hyvä ja käynnistä laite uudelleen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/batteryfuelgauge.h" line="30"/>
       <location filename="../sources/hardware/proximitysensor.h" line="29"/>
       <source>Battery sensor communication error. Please restart the remote.</source>
-      <translation type="unfinished">Battery sensor communication error. Please restart the remote.</translation>
+      <translation>Akkusensorin yhteysvirhe. Ole hyvä ja käynnistä laite uudelleen.</translation>
     </message>
     <message>
       <location filename="../sources/hardware/hapticmotor.h" line="29"/>
@@ -769,14 +769,14 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="39"/>
       <source>Remote configuration</source>
-      <translation type="unfinished">Remote configuration</translation>
+      <translation>Etäkonfigurointi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation type="unfinished">Use your browser to configure your YIO remote or download and upload backups.
-Navigate your internet browser to: http://</translation>
+      <translation>Käytä verkkoselainta YIO Kaukosäätimen konfigurointiin tai ladataksesi varmuuskopioita.
+Siirry verkkoselaimella osoitteeseen: http://</translation>
     </message>
   </context>
   <context>
@@ -786,52 +786,52 @@ Navigate your internet browser to: http://</translation>
       <location filename="../basic_ui/pages/Settings.qml" line="106"/>
       <location filename="../basic_ui/pages/Settings.qml" line="162"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Asetukset</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>New software is available.</source>
-      <translation type="unfinished">New software is available.</translation>
+      <translation>Järjestelmäpäivitys on saatavilla.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="173"/>
       <source>Your software is up to date.</source>
-      <translation type="unfinished">Your software is up to date.</translation>
+      <translation>Järjestelmä on ajan tasalla.</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="190"/>
       <source>Display</source>
-      <translation type="unfinished">Display</translation>
+      <translation>Näyttö</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="196"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Kieli</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="209"/>
       <source>Integrations</source>
-      <translation type="unfinished">Integrations</translation>
+      <translation>Integraatiot</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="216"/>
       <source>Battery &amp; power</source>
-      <translation type="unfinished">Battery &amp; power</translation>
+      <translation>Akku ja virrankäyttö</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="223"/>
       <source>m remaining</source>
-      <translation type="unfinished">m remaining</translation>
+      <translation>m jäljellä</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="230"/>
       <source>WiFi &amp; bluetooth</source>
-      <translation type="unfinished">WiFi &amp; bluetooth</translation>
+      <translation>Wi-Fi ja Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="236"/>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Järjestelmä</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="242"/>
@@ -1021,11 +1021,10 @@ a power source and wait until it starts blinking.
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">You can setup your YIO Dock later from the web configurator.
+      <translation>Voit asentaa YIO Telakan myöhemmin verkkokonfiguraattorilla.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Uudelleenkäynnistyksen jälkeen voit käyttää verkkokonfiguraattoria
+siirtymällä 'Asetukset' ja ottamalla käyttöön 'Etähallinta'.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Skip.qml" line="61"/>
@@ -1047,11 +1046,10 @@ Remote configuration after restarting the remote.</translation>
 To use the web configurator,
 go to Settings and turn on
 Remote configuration after restarting the remote.</source>
-      <translation type="unfinished">YIO Dock has successfully connected to your Wi-Fi network.
+      <translation>YIO Telakka on onnistuneesti liitetty Wi-Fi verkkoosi.
 
-To use the web configurator,
-go to Settings and turn on
-Remote configuration after restarting the remote.</translation>
+Uudelleenkäynnistyksen jälkeen voit käyttää verkkokonfiguraattoria
+siirtymällä 'Asetukset' ja ottamalla käyttöön 'Etähallinta'.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep9Success.qml" line="61"/>
