@@ -60,7 +60,7 @@ MediaPlayerUtils::~MediaPlayerUtils() {
         qCDebug(CLASS_LC()) << this << "Destructor: Worker was not null";
         m_worker->disconnect();
         qCDebug(CLASS_LC()) << this << "Destructor: Signal disconnected from Worker class";
-        delete m_worker;
+        m_worker->deleteLater();
         m_worker = nullptr;
         qCDebug(CLASS_LC()) << this << "Destructor: Worker deleted";
     }
@@ -68,10 +68,13 @@ MediaPlayerUtils::~MediaPlayerUtils() {
     if (m_workerThread != nullptr) {
         qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread was not null";
         if (m_workerThread->isRunning()) {
-            m_workerThread->exit();
-            m_workerThread->wait(5000);
+            qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread is running";
+            m_workerThread->quit();
+            qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread exit was called";
+            m_workerThread->wait();
+            qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread wait";
         }
-        delete m_workerThread;
+        m_workerThread->deleteLater();
         m_workerThread = nullptr;
         qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread was deleted";
     }
@@ -79,12 +82,12 @@ MediaPlayerUtils::~MediaPlayerUtils() {
     if (m_startTimer->isActive()) {
         m_startTimer->stop();
     }
-    delete m_startTimer;
+    m_startTimer->deleteLater();
     m_startTimer = nullptr;
     m_engine     = nullptr;
-    delete m_engine;
+    m_engine->deleteLater();
     m_imageProvider = nullptr;
-    delete m_imageProvider;
+    m_imageProvider->deleteLater();
 
     qCDebug(CLASS_LC()) << this << "Destructor end";
 }
@@ -140,7 +143,7 @@ MediaPlayerUtilsWorker::MediaPlayerUtilsWorker(QObject *parent) : QObject(parent
 MediaPlayerUtilsWorker::~MediaPlayerUtilsWorker() {
     qCDebug(CLASS_LC()) << this << "Worker destructor";
     if (m_manager != nullptr) {
-        delete m_manager;
+        m_manager->deleteLater();
         m_manager = nullptr;
         qCDebug(CLASS_LC()) << this << "Worker destructor: Manager deleted.";
     }

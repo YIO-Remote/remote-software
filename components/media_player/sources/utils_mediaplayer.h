@@ -113,8 +113,8 @@ class MediaPlayerUtils : public QObject {
 
     void generateImages(const QString& url);
 
-    QThread*                       m_workerThread = nullptr;
     MediaPlayerUtilsWorker*        m_worker       = nullptr;
+    QThread*                       m_workerThread = nullptr;
     MediaPlayerUtilsImageProvider* m_imageProvider;
     QString                        m_imageProviderId;
 
