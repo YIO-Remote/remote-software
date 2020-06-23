@@ -72,6 +72,11 @@ SwipeView {
             secondPageLoader.active = false;
             secondPageLoader.source = "";
             settingsSwipeView.decrementCurrentIndex();
+            wifi.stopSignalStrengthScanning();
+            wifi.stopWifiStatusScanning();
+        } else {
+            wifi.startSignalStrengthScanning();
+            wifi.startWifiStatusScanning();
         }
     }
 
