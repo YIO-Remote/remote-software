@@ -73,7 +73,8 @@ Saadaksesi lisätietoja projektista, käy osoitteessa
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
       <source>Never turn off Wi-Fi</source>
-      <translation>Älä sammuta Wi-Fi-yhteyttä</translation>
+      <translation>Älä sammuta Wi-Fi-yhteyttä
+</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="345"/>
@@ -94,12 +95,13 @@ Saadaksesi lisätietoja projektista, käy osoitteessa
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Never turn off the remote</source>
-      <translation>Älä sammuta kaukosäädintä koskaan</translation>
+      <translation>Älä sammuta kaukosäädintä
+</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="461"/>
       <source>Turn off the remote after %1 hours of inactivity</source>
-      <translation>Sammuta kaukosäädin kun se on ollut käyttämättä %1 minuuttia</translation>
+      <translation>Sammuta kaukosäädin kun se on ollut käyttämättä %1 tuntia</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="558"/>
@@ -494,7 +496,7 @@ kirkkauden säätö</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Paina näyttöä 10 sekuntia poistuaksesi siivoustilasta.</translation>
+      <translation>Paina näyttöä yhtäjaksoisesti 10 sekuntia poistuaksesi puhdistustilasta.</translation>
     </message>
   </context>
   <context>
@@ -558,8 +560,8 @@ kirkkauden säätö</translation>
       <location filename="../basic_ui/InitialSetup.qml" line="33"/>
       <source>Use the web configurator
 to set up YIO remote</source>
-      <translation>Käytä web-hallinta työkalua
-asentaaksesi YIO Kaukosäätimen</translation>
+      <translation>Asentaaksesi YIO Remoten
+käytä web-hallinta työkalua</translation>
     </message>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
@@ -776,7 +778,7 @@ asentaaksesi YIO Kaukosäätimen</translation>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
       <source>Use your browser to configure your YIO remote or download and upload backups.
 Navigate your internet browser to: http://</source>
-      <translation>Käytä verkkoselainta YIO Kaukosäätimen hallintaan tai ladataksesi varmuuskopioita.
+      <translation>Käytä verkkoselainta YIO Remoten ja varmuuskopioiden hallintaan.
 Siirry verkkoselaimella osoitteeseen: http://</translation>
     </message>
   </context>
@@ -896,7 +898,7 @@ Siirry verkkoselaimella osoitteeseen: http://</translation>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="104"/>
       <source>Enter your WiFi network credentials</source>
-      <translation>Syötä WiFi -verkon tunnukset</translation>
+      <translation>Syötä Wi-Fi -verkon tunnukset</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4Other.qml" line="122"/>
@@ -932,7 +934,7 @@ Siirry verkkoselaimella osoitteeseen: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="49"/>
       <source>YIO Remote could not connect to your Wi-Fi network.</source>
-      <translation>YIO kaukosäädin ei saanut yhteyttä Wi-Fi -verkkoon.</translation>
+      <translation>YIO Remote ei saanut yhteyttä Wi-Fi -verkkoon.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Failure.qml" line="60"/>
@@ -950,7 +952,7 @@ Siirry verkkoselaimella osoitteeseen: http://</translation>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="47"/>
       <source>YIO Remote has successfully connected to your Wi-Fi network.</source>
-      <translation>YIO kaukosäädin on yhdistetty Wi-Fi -verkkoon onnistuneesti.</translation>
+      <translation>YIO Remoten yhdistetäminen Wi-Fi -verkkoon onnistui.</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep6Success.qml" line="58"/>
@@ -1157,7 +1159,7 @@ YIO Remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
-      <translation>YIO kaukosäädin </translation>
+      <translation>YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
@@ -1208,12 +1210,12 @@ YIO Remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
       <source>Metric</source>
-      <translation>Metrijärjestelmä</translation>
+      <translation>Metrinen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="167"/>
       <source>Imperial</source>
-      <translation>Brittiläinen yksikköjärjestelmä</translation>
+      <translation>Brittiläinen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="186"/>
@@ -1228,17 +1230,18 @@ YIO Remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="241"/>
       <source>CPU load</source>
-      <translation>Prosessorin kuorma</translation>
+      <translation>Prosessorin kuormitus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="267"/>
       <source>Used memory</source>
-      <translation>Käytetty muisti</translation>
+      <translation>Muistin käyttö</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="291"/>
       <source>Reboot</source>
-      <translation>Käynnistä uudelleen</translation>
+      <translation>Käynnistä
+uudelleen</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="305"/>
@@ -1261,7 +1264,7 @@ YIO Remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="110"/>
       <source>WiFi</source>
-      <translation>WiFi</translation>
+      <translation>Wi-Fi</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Wifi.qml" line="192"/>
@@ -1275,7 +1278,7 @@ YIO Remote %1</translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation>Syötä salasana verkolle: 
 &quot;%1&quot;</translation>
     </message>
     <message>
