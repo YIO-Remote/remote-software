@@ -33,10 +33,11 @@ bool Light::updateAttrByIndex(int attrIndex, const QVariant& value) {
     bool chg = false;
     switch (attrIndex) {
         case LightDef::STATE:
-            if (value.type() == QVariant::String)
+            if (value.type() == QVariant::String) {
                 chg = setStateText(value.toString());
-            else
+            } else {
                 chg = setState(value.toInt());
+            }
             break;
         case LightDef::BRIGHTNESS:
             if (m_brightness != value.toInt()) {
@@ -47,13 +48,17 @@ bool Light::updateAttrByIndex(int attrIndex, const QVariant& value) {
             break;
         case LightDef::COLOR:
             if (m_color != value) {
-                m_color = QColor(value.toString());
-                chg     = true;
+                if (value.type() == QVariant::Color) {
+                    m_color = value.value<QColor>();
+                } else {
+                    m_color = QColor(value.toString());
+                }
+                chg = true;
                 emit colorChanged();
             }
             break;
         case LightDef::COLORTEMP:
-            if (m_colorTemp != value) {
+            if (m_colorTemp != value.toInt()) {
                 m_colorTemp = value.toInt();
                 chg         = true;
                 emit colorTempChanged();
