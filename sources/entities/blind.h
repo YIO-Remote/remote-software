@@ -50,7 +50,7 @@ class Blind : public Entity, BlindInterface {
     void turnOn() override { open(); }
     void turnOff() override { close(); }
     int  position() override { return m_position; }
-    bool isOn() override { return m_state == BlindDef::CLOSED; }
+    bool isOn() override { return m_state == BlindDef::OPEN; }
     bool supportsOn() override { return isSupported(BlindDef::F_POSITION); }
 
     Blind(const QVariantMap& config, IntegrationInterface* integrationObj, QObject* parent = nullptr);
