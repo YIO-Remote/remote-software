@@ -441,7 +441,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Restartovat</translation>
     </message>
   </context>
   <context>
@@ -568,7 +568,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation type="unfinished">Loading</translation>
+      <translation>Načítá se</translation>
     </message>
   </context>
   <context>
@@ -882,7 +882,7 @@ Navigate your internet browser to: http://</translation>
     <message>
       <location filename="../setup/SetupStep4.qml" line="115"/>
       <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <translation>Heslo</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="174"/>
@@ -1097,7 +1097,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="209"/>
       <source>Software update:</source>
-      <translation type="unfinished">Software update:</translation>
+      <translation>Aktualizace softwaru:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="226"/>
@@ -1169,7 +1169,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
-      <translation type="unfinished">Download</translation>
+      <translation>Stáhnout</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
@@ -1182,22 +1182,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation type="unfinished">Download completed</translation>
+      <translation>Stahování dokončeno</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
-      <translation type="unfinished">Downloading</translation>
+      <translation>Stahování</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
-      <translation type="unfinished">Update</translation>
+      <translation>Aktualizace</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Zrušit</translation>
     </message>
   </context>
   <context>
@@ -1205,7 +1205,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="92"/>
       <source>Unit system</source>
-      <translation type="unfinished">Unit system</translation>
+      <translation>Jednotky</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
@@ -1235,7 +1235,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="267"/>
       <source>Used memory</source>
-      <translation type="unfinished">Used memory</translation>
+      <translation>Využitá paměť</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="291"/>
