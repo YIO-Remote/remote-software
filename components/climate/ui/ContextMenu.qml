@@ -117,7 +117,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        haptic.playEffect(Haptic.Click);
+                        Haptic.playEffect(Haptic.Click);
                         main.state = "closed";
                         if (list[index]["original"] === "Off")
                             climateObj.turnOff();
