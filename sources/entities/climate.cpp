@@ -89,15 +89,15 @@ void Climate::turnOff() { command(ClimateDef::C_OFF, ""); }
 bool Climate::isOn() { return m_state == ClimateDef::ON || m_state == ClimateDef::HEAT || m_state == ClimateDef::COOL; }
 
 bool Climate::supportsOn() {
-    if (isSupported(ClimateDef::F_OFF)) {
-        return true;
-    } else {
-        return false;
-    }
+    return isSupported(ClimateDef::F_OFF);
 }
 
 Climate::Climate(const QVariantMap &config, IntegrationInterface *integrationObj, QObject *parent)
-    : Entity(Type, config, integrationObj, parent), m_temperature(0), m_targetTemperature(0) {
+    : Entity(Type, config, integrationObj, parent),
+      m_temperature(0),
+      m_targetTemperature(0),
+      m_temperatureMax(0),
+      m_temperatureMin(0) {
     static QMetaEnum metaEnumAttr;
     static QMetaEnum metaEnumFeatures;
     static QMetaEnum metaEnumCommands;
