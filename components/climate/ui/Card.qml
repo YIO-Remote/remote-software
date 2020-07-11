@@ -179,6 +179,9 @@ Rectangle {
                 return i;
             }
         }
+        // TODO(marton) is there a case where a number cannot be found?
+        // In this case we could return the old value `dialListView.currentIndex`
+        return 0;
     }
 
     Component.onCompleted: {
@@ -317,16 +320,13 @@ Rectangle {
         onValueChanged: {
             Haptic.playEffect(Haptic.Bump);
             targetTemperature = value;
-            var i = findNumber(targetTemperature);
-            if (i)
-                dialListView.currentIndex = i;
+            dialListView.currentIndex = findNumber(targetTemperature);
         }
 
         onPressedChanged: {
             if (pressed) {
                 card.state = "moving"
-            }
-            else {
+            } else {
                 obj.setTargetTemperature(targetTemperature);
                 card.state = "notmoving"
             }
@@ -404,7 +404,11 @@ Rectangle {
 
         mouseArea.onClicked: {
             Haptic.playEffect(Haptic.Click);
-            obj.toggle();
+            if (obj.isOn) {
+                obj.turnOff();
+            } else {
+                obj.turnOn();
+            }
         }
     }
 
@@ -448,8 +452,9 @@ Rectangle {
         visible: modeButton.visible
 
         onStatusChanged: {
-            if (contextMenuLoader.status == Loader.Ready)
+            if (contextMenuLoader.status == Loader.Ready) {
                 contextMenuLoader.item.state = "open"
+            }
         }
     }
 }

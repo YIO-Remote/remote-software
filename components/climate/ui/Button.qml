@@ -41,10 +41,11 @@ Comp.ButtonBase {
         color: Style.color.text
         opacity: 0.5
         text: {
-            if (obj.isSupported(Climate.F_TEMPERATURE))
-                return qsTr("Temperature: ") + obj.temperature + obj.temperatureUnit + translateHandler.emptyString
-            else if (obj.isSupported(Climate.F_TARGET_TEMPERATURE))
-                return qsTr("Temperature: ") + obj.targetTemperature + obj.temperatureUnit + translateHandler.emptyString
+            if (obj.isSupported(Climate.F_TEMPERATURE)) {
+                return qsTr("Temperature: ") + obj.temperature.toFixed(1) + obj.temperatureUnit + translateHandler.emptyString
+            } else if (obj.isSupported(Climate.F_TARGET_TEMPERATURE)) {
+                return qsTr("Temperature: ") + obj.targetTemperature.toFixed(1) + obj.temperatureUnit + translateHandler.emptyString
+            }
         }
         elide: Text.ElideRight
         wrapMode: Text.WordWrap
