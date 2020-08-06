@@ -12,7 +12,7 @@
       <location filename="../basic_ui/settings/About.qml" line="44"/>
       <source>YIO being an open source project, benefits from all the contributors. Big thanks to everyone who added something to the project so far:
 %1</source>
-      <translation>YIO es un proyecto de código abierto, se beneficia de todos los colaboradores. Gran gracias a todos los que han añadido algo al proyecto hasta ahora:
+      <translation>YIO al ser un proyecto de código abierto, se beneficia de todos los colaboradores. Muchas gracias a todos los que han añadido algo al proyecto hasta ahora:
 %1</translation>
     </message>
     <message>
@@ -1230,12 +1230,12 @@ YIO remoto %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="241"/>
       <source>CPU load</source>
-      <translation type="unfinished">CPU load</translation>
+      <translation>Carga de la CPU</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="267"/>
       <source>Used memory</source>
-      <translation type="unfinished">Used memory</translation>
+      <translation>Memoria usada</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="291"/>
