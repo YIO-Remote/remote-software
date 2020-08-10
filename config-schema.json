@@ -408,7 +408,7 @@
                     "device": {
                       "$id": "#/properties/entities/properties/remote/items/properties/commands/items/properties/device",
                       "type": "string",
-                      "default": null,
+                      "default": null
                     }
                   }
                 }
