@@ -146,6 +146,12 @@ void MediaPlayer::playMedia(const QString &itemKey, const QString &type) {
     map.insert("id", itemKey);
     command(MediaPlayerDef::C_PLAY_ITEM, map);
 }
+void MediaPlayer::addToQueue(const QString &itemKey, const QString &type) {
+    QVariantMap map;
+    map.insert("type", type);
+    map.insert("id", itemKey);
+    command(MediaPlayerDef::C_QUEUE, map);
+}
 void MediaPlayer::search(const QString &searchText, const QString &itemKey) {
     QVariantMap map;
     map["id"]   = itemKey;
