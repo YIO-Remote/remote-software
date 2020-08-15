@@ -160,6 +160,7 @@
                     "MEDIA_ALBUM",
                     "MEDIA_DURATION",
                     "MEDIA_POSITION",
+                    "MEDIA_PROGRESS",
                     "MEDIA_IMAGE",
                     "PLAY",
                     "PAUSE",
