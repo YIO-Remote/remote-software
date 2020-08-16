@@ -34,7 +34,7 @@ class BatteryFuelGaugeMock : public BatteryFuelGauge {
 
     // BatteryFuelGauge interface
  public:
-    void    begin() override {}
+    void    begin() override { emit isChargingChanged(); }
     int     getVoltage() override { return 5000; }
     int     getFullChargeCapacity() override { return 2500; }
     int     getAverageCurrent() override { return -1600; }
@@ -48,6 +48,6 @@ class BatteryFuelGaugeMock : public BatteryFuelGauge {
     void    changeCapacity(int newCapacity) override { Q_UNUSED(newCapacity) }
     int     getLevel() override { return 100; }
     int     getHealth() override { return 100; }
-    bool    getIsCharging() override { return false; }
+    bool    getIsCharging() override { return false; }  // to test charging screen: return true
     float   remainingLife() override { return 2; }
 };

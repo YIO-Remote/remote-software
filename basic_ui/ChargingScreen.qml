@@ -143,7 +143,7 @@ Rectangle {
     Text {
         id: timeText
         color: Style.color.text
-        text: loader_main.item ? loader_main.item.statusBar.timeText.text : ""
+        text: loader_main.item ? loader_main.item.statusBar.timeText.text.replace(" ", "\n") : ""
         verticalAlignment: Text.AlignVCenter
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: -400 }
         font { family: "Open Sans Light"; weight: Font.Light; pixelSize: 150 }
