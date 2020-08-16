@@ -55,7 +55,7 @@ Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath)
 }
 
 QObject* Integrations::loadPlugin(const QString& type) {
-    Launcher* l   = new Launcher();
+    Launcher* l = new Launcher();
     QObject*  obj = l->loadPlugin(m_pluginPath, type);
 
     // store the plugin objects
@@ -80,10 +80,10 @@ bool Integrations::isPluginLoaded(const QString& type) {
 }
 
 void Integrations::createInstance(QObject* pluginObj, QVariantMap map) {
-    Entities*      entities      = Entities::getInstance();
+    Entities*      entities = Entities::getInstance();
     Notifications* notifications = Notifications::getInstance();
-    YioAPI*        api           = YioAPI::getInstance();
-    Config*        config        = Config::getInstance();
+    YioAPI*        api = YioAPI::getInstance();
+    Config*        config = Config::getInstance();
 
     PluginInterface* interface = qobject_cast<PluginInterface*>(pluginObj);
     if (interface) {
@@ -94,7 +94,7 @@ void Integrations::createInstance(QObject* pluginObj, QVariantMap map) {
 }
 
 QJsonObject Integrations::getPluginMetaData(const QString& pluginName) {
-    Launcher* launcher   = new Launcher();
+    Launcher* launcher = new Launcher();
     QString   pluginPath = launcher->getPluginPath(m_pluginPath, pluginName);
     qCDebug(CLASS_LC()) << "Getting metadata for:" << pluginPath;
     QPluginLoader pluginLoader(pluginPath);
@@ -114,7 +114,7 @@ void Integrations::load() {
     // let's load the plugins
     m_integrationsToLoad = c.count();
 
-    for (QVariantMap::const_iterator iter = c.begin(); iter != c.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = c.cbegin(); iter != c.cend(); ++iter) {
         QObject* obj;
         if (!isPluginLoaded(iter.key())) {
             // load the plugin
@@ -143,7 +143,7 @@ void Integrations::load() {
 
 void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
     // add the integrations to the integration database
-    for (QMap<QObject*, QVariant>::const_iterator iter = map.begin(); iter != map.end(); ++iter) {
+    for (QMap<QObject*, QVariant>::const_iterator iter = map.cbegin(); iter != map.cend(); ++iter) {
         add(iter.value().toMap(), iter.key(), iter.value().toMap().value("type").toString());
     }
     m_integrationsLoaded++;
@@ -160,7 +160,8 @@ QList<QObject*> Integrations::list() { return m_integrations.values(); }
 QStringList Integrations::listIds() {
     QStringList r_list;
 
-    for (QMap<QString, QObject*>::const_iterator iter = m_integrations.begin(); iter != m_integrations.end(); ++iter) {
+    for (QMap<QString, QObject*>::const_iterator iter = m_integrations.cbegin(); iter != m_integrations.cend();
+         ++iter) {
         r_list.append(iter.key());
     }
 
