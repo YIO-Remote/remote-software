@@ -60,4 +60,5 @@ class HardwareFactoryYio : public HardwareFactoryLinux {
 
     // default values for YIO
     static const QString DEF_I2C_DEVICE;
+    static const int     DEF_BATTERY_CAPACITY;
 };

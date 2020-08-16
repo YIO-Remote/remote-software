@@ -71,7 +71,10 @@ class BatteryFuelGauge : public Device {
     void chargingDone();
 
  protected:
-    explicit BatteryFuelGauge(QString name, QObject *parent = nullptr) : Device(name, parent) {}
+    explicit BatteryFuelGauge(QString name, int capacity, QObject *parent = nullptr)
+        : Device(name, parent), m_capacity(capacity) {
+        Q_ASSERT(capacity);
+    }
 
-    int m_capacity = 2500;
+    int m_capacity;
 };

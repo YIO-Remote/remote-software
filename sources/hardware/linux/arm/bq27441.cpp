@@ -34,14 +34,15 @@
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.BQ27441");
 
-BQ27441::BQ27441(InterruptHandler *interruptHandler, const QString &i2cDevice, int i2cDeviceId, QObject *parent)
-    : BatteryFuelGauge("BQ27441 battery fuel gauge", parent),
+BQ27441::BQ27441(InterruptHandler *interruptHandler, int capacity, const QString &i2cDevice, int i2cDeviceId,
+                 QObject *parent)
+    : BatteryFuelGauge("BQ27441 battery fuel gauge", capacity, parent),
       m_i2cDevice(i2cDevice),
       m_i2cDeviceId(i2cDeviceId),
       m_i2cFd(0) {
     Q_ASSERT(interruptHandler);
     Q_ASSERT(!i2cDevice.isEmpty());
-    qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId;
+    qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId << ", capacity:" << capacity;
 
     connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
         if (event == InterruptHandler::BATTERY) {
@@ -63,7 +64,7 @@ bool BQ27441::open() {
 
     /* Initialize I2C */
     bool initialized = false;
-    m_i2cFd          = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
+    m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
     if (m_i2cFd == -1) {
         qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
     } else {
@@ -96,23 +97,23 @@ const QLoggingCategory &BQ27441::logCategory() const { return CLASS_LC(); }
 
 void BQ27441::updateBatteryValues() {
     if (getDesignCapacity() != m_capacity) {
-        qCDebug(CLASS_LC) << "Design capacity does not match.";
-
         // calibrate the gauge
-        qCDebug(CLASS_LC) << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+        qCDebug(CLASS_LC) << "Design capacity does not match. Fuel gauge calibration. Setting charge capacity to:"
+                          << m_capacity;
         changeCapacity(m_capacity);
     }
 
     m_level = getStateOfCharge();
     emit levelChanged();
-    qCDebug(CLASS_LC()) << "Battery level:" << m_level;
 
     m_voltage = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);  // getVoltage();
-    qCDebug(CLASS_LC()) << "Battery voltage:" << m_voltage;
 
     m_health = getStateOfHealth();
+    if (CLASS_LC().isDebugEnabled()) {
+        qCDebug(CLASS_LC()) << "Battery level:" << m_level << "%, battery voltage:" << m_voltage
+                            << "mV, battery health:" << m_health;
+    }
     emit healthChanged();
-    qCDebug(CLASS_LC()) << "Battery health:" << m_health;
 
     m_averagePower = static_cast<int>(
         static_cast<int16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_AVG_POWER)));  // getAveragePower();
@@ -154,12 +155,13 @@ void BQ27441::updateBatteryValues() {
 
     // calculate remaining battery life
     float remainingLife = static_cast<float>(getRemainingCapacity()) / static_cast<float>(abs(getAverageCurrent()));
-    m_remainingLife     = (m_remainingLife + remainingLife) / 2;
+    m_remainingLife = (m_remainingLife + remainingLife) / 2;
     emit remainingLifeChanged();
 
-    qCDebug(CLASS_LC()) << "Average power" << m_averagePower << "mW";
-    qCDebug(CLASS_LC()) << "Average current" << getAverageCurrent() << "mA";
-    qCDebug(CLASS_LC()) << "Remaining battery life" << m_remainingLife << "h";
+    if (CLASS_LC().isDebugEnabled()) {
+        qCDebug(CLASS_LC()) << "Average power" << m_averagePower << "mW, average current" << getAverageCurrent()
+                            << "mA, remaining battery life" << m_remainingLife << "h";
+    }
 }
 
 void BQ27441::begin() {

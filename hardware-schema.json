@@ -124,6 +124,11 @@
       "title": "Battery fuel gauge",
       "properties": {
         "enabled": { "$ref": "#/definitions/enabled" },
+        "capacity": {
+            "type": "integer",
+            "minimum": 1000,
+            "default": 2500
+        },
         "i2c":  { "$ref": "#/definitions/i2c" }
       }
     },

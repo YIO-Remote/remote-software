@@ -37,6 +37,7 @@
 #define HW_CFG_BTN_INTR_HANDLER   "buttonInterruptHandler"
 #define HW_CFG_BATTERY_CHARGER    "batteryCharger"
 #define HW_CFG_BATTERY_FUEL_GAUGE "batteryFuelGauge"
+#define HW_CFG_BATTERY_CAPACITY   "capacity"
 #define HW_CFG_HAPTIC_MOTOR       "hapticMotor"
 #define HW_CFG_GESTURE            "gesture"
 #define HW_CFG_LIGHT              "light"
