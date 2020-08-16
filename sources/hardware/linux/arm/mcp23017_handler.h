@@ -266,7 +266,7 @@ class MCP23017 {
     int m_i2cFd;
 
  private:
-    void bitWrite(int x, int n, bool b) {
+    void bitWrite(int &x, int n, bool b) {
         if (n <= 7 && n >= 0) {
             if (b) {
                 x |= (1u << n);
