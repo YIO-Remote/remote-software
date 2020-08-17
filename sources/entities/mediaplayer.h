@@ -85,6 +85,7 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     // extension for media browsing
     Q_INVOKABLE void browse(QString command);  // Command item_key, "TOP", "BACK", "PLAY"
     Q_INVOKABLE void playMedia(const QString& itemKey, const QString& type);
+    Q_INVOKABLE void addToQueue(const QString& itemKey, const QString& type);
     Q_INVOKABLE void search(const QString& searchText, const QString& itemKey);  // Search
     Q_INVOKABLE void search(const QString& searchText);
     Q_INVOKABLE void getAlbum(const QString& id);
