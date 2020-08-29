@@ -47,7 +47,7 @@ void TranslationHandler::selectLanguage(QString language) {
 
     // install plugin translations
     QList<QObject *> plugins = Integrations::getInstance()->getAllPlugins();
-    for (QList<QObject *>::const_iterator iter = plugins.begin(); iter != plugins.end(); ++iter) {
+    for (QList<QObject *>::const_iterator iter = plugins.cbegin(); iter != plugins.cend(); ++iter) {
         PluginInterface *pInterface = qobject_cast<PluginInterface *>(*iter);
         if (pInterface) {
             qGuiApp->removeTranslator(pInterface->pluginTranslator());

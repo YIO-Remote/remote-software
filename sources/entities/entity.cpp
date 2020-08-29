@@ -61,7 +61,7 @@ void Entity::command(int command, const QVariant& param) {
 
 bool Entity::update(const QVariantMap& attributes) {
     bool chg = false;
-    for (QVariantMap::const_iterator iter = attributes.begin(); iter != attributes.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = attributes.cbegin(); iter != attributes.cend(); ++iter) {
         if (updateAttrByName(iter.key(), iter.value()))
             chg = true;
     }

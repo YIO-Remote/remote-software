@@ -209,7 +209,7 @@ bool YioAPI::removeEntity(QString entityId) {
 
     // remove entity from groups
     QVariantMap groups = m_config->getGroups();
-    for (QVariantMap::const_iterator iter = groups.begin(); iter != groups.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = groups.cbegin(); iter != groups.cend(); ++iter) {
         QVariantMap  item          = iter.value().toMap();
         QVariantList groupEntities = item.value("entities").toList();
         for (int i = 0; i < groupEntities.length(); i++) {
@@ -225,7 +225,7 @@ bool YioAPI::removeEntity(QString entityId) {
 
     // remove entity from favorites
     QVariantMap profiles = m_config->getProfiles();
-    for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = profiles.cbegin(); iter != profiles.cend(); ++iter) {
         QVariantMap  item            = iter.value().toMap();
         QVariantList profileEntities = item.value("favorites").toList();
         for (int i = 0; i < profileEntities.length(); i++) {
@@ -1187,7 +1187,7 @@ void YioAPI::apiProfilesAdd(QWebSocket *client, const int &id, const QVariantMap
 
     QVariantMap newProfile = map.value("profile").toMap();
     if (!newProfile.isEmpty()) {
-        for (QVariantMap::const_iterator iter = newProfile.begin(); iter != newProfile.end(); ++iter) {
+        for (QVariantMap::const_iterator iter = newProfile.cbegin(); iter != newProfile.cend(); ++iter) {
             profiles.insert(iter.key(), iter.value().toMap());
         }
 
@@ -1228,7 +1228,7 @@ void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariant
         return;
     }
 
-    for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = profiles.cbegin(); iter != profiles.cend(); ++iter) {
         if (iter.key() == map.value("profile_id").toString()) {
             profiles.remove(iter.key());
             success = true;
@@ -1266,7 +1266,7 @@ void YioAPI::apiPagesAdd(QWebSocket *client, const int &id, const QVariantMap &m
     QVariantMap newPage = map.value("page").toMap();
 
     if (!newPage.isEmpty()) {
-        for (QVariantMap::const_iterator iter = newPage.begin(); iter != newPage.end(); ++iter) {
+        for (QVariantMap::const_iterator iter = newPage.cbegin(); iter != newPage.cend(); ++iter) {
             pages.insert(iter.key(), iter.value().toMap());
             m_config->setPages(pages);
             apiSendResponse(client, id, true, response);
@@ -1301,7 +1301,7 @@ void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap
     // remove the page from the profiles
     QVariantMap profiles = m_config->getProfiles();
 
-    for (QVariantMap::const_iterator iter = profiles.begin(); iter != profiles.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = profiles.cbegin(); iter != profiles.cend(); ++iter) {
         QVariantMap profile = iter.value().toMap();
         QStringList pages   = profile.value("pages").toStringList();
 
@@ -1321,7 +1321,7 @@ void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap
     // remove the page from the profiles list
     QVariantMap pages = m_config->getPages();
 
-    for (QVariantMap::const_iterator iter = pages.begin(); iter != pages.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = pages.cbegin(); iter != pages.cend(); ++iter) {
         if (iter.key() == map.value("page_id").toString()) {
             pages.remove(iter.key());
             m_config->setPages(pages);
@@ -1358,7 +1358,7 @@ void YioAPI::apiGroupsAdd(QWebSocket *client, const int &id, const QVariantMap &
     QVariantMap newGroup = map.value("group").toMap();
 
     if (!newGroup.isEmpty()) {
-        for (QVariantMap::const_iterator iter = newGroup.begin(); iter != newGroup.end(); ++iter) {
+        for (QVariantMap::const_iterator iter = newGroup.cbegin(); iter != newGroup.cend(); ++iter) {
             groups.insert(iter.key(), iter.value().toMap());
             m_config->setGroups(groups);
             apiSendResponse(client, id, true, response);
@@ -1391,7 +1391,7 @@ void YioAPI::apiGroupsRemove(QWebSocket *client, const int &id, const QVariantMa
     QVariantMap response;
     QVariantMap groups = m_config->getGroups();
 
-    for (QVariantMap::const_iterator iter = groups.begin(); iter != groups.end(); ++iter) {
+    for (QVariantMap::const_iterator iter = groups.cbegin(); iter != groups.cend(); ++iter) {
         if (iter.key() == map.value("group_id").toString()) {
             groups.remove(iter.key());
             m_config->setGroups(groups);
