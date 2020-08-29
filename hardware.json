@@ -35,6 +35,7 @@
     },
     "batteryFuelGauge": {
         "enabled": true,
+        "capacity": 2500,
         "i2c": {
             "device": "/dev/i2c-3",
             "id": 85

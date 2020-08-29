@@ -81,7 +81,7 @@ class BQ27441 : public BatteryFuelGauge {
     Q_OBJECT
 
  public:
-    explicit BQ27441(InterruptHandler *interruptHandler, const QString &i2cDevice,
+    explicit BQ27441(InterruptHandler *interruptHandler, int capacity, const QString &i2cDevice,
                      int i2cDeviceId = BQ27441_I2C_ADDRESS, QObject *parent = nullptr);
     ~BQ27441() override;
 

@@ -28,9 +28,7 @@ class BatteryFuelGaugeMock : public BatteryFuelGauge {
     Q_OBJECT
 
  public:
-    explicit BatteryFuelGaugeMock(QObject* parent = nullptr) : BatteryFuelGauge("BatteryFuelGaugeMock", parent) {
-        setCapacity(2500);
-    }
+    explicit BatteryFuelGaugeMock(QObject* parent = nullptr) : BatteryFuelGauge("BatteryFuelGaugeMock", 2500, parent) {}
 
     ~BatteryFuelGaugeMock() override {}
 

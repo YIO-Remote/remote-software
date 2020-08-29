@@ -42,6 +42,7 @@
 #include "mcp23017_interrupt.h"
 
 const QString HardwareFactoryYio::DEF_I2C_DEVICE = "/dev/i2c-3";
+const int HardwareFactoryYio::DEF_BATTERY_CAPACITY = 2500;
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.yio");
 
@@ -187,10 +188,11 @@ BatteryCharger *HardwareFactoryYio::buildBatteryCharger(const QVariantMap &confi
 }
 
 BatteryFuelGauge *HardwareFactoryYio::buildBatteryFuelGauge(const QVariantMap &config) {
+    auto capacity = ConfigUtil::getValue(config, HW_CFG_BATTERY_CAPACITY, DEF_BATTERY_CAPACITY).toInt();
     auto dev = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_DEV, DEF_I2C_DEVICE).toString();
     auto id = ConfigUtil::getValue(config, HW_CFG_PATH_I2C_ID, BQ27441_I2C_ADDRESS).toInt();
 
-    BatteryFuelGauge *device = new BQ27441(getInterruptHandler(), dev, id, this);
+    BatteryFuelGauge *device = new BQ27441(getInterruptHandler(), capacity, dev, id, this);
     connect(device, &Device::error, this, &HardwareFactoryYio::onError);
 
     return device;
