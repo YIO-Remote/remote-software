@@ -94,15 +94,15 @@ class MCP23017 {
 
         // set up interrupts
         int ioconfValue = wiringPiI2CReadReg8(m_i2cFd, MCP23017_IOCONA);
-        bitWrite(ioconfValue, 6, true);
-        bitWrite(ioconfValue, 2, false);
-        bitWrite(ioconfValue, 1, false);
+        bitWrite(&ioconfValue, 6, true);
+        bitWrite(&ioconfValue, 2, false);
+        bitWrite(&ioconfValue, 1, false);
         wiringPiI2CWriteReg8(m_i2cFd, MCP23017_IOCONA, ioconfValue);
 
         ioconfValue = wiringPiI2CReadReg8(m_i2cFd, MCP23017_IOCONB);
-        bitWrite(ioconfValue, 6, true);   // mirror
-        bitWrite(ioconfValue, 2, false);  //
-        bitWrite(ioconfValue, 1, false);  // polarity
+        bitWrite(&ioconfValue, 6, true);   // mirror
+        bitWrite(&ioconfValue, 2, false);  //
+        bitWrite(&ioconfValue, 1, false);  // polarity
         wiringPiI2CWriteReg8(m_i2cFd, MCP23017_IOCONB, ioconfValue);
 
         // setup pin for interrupt
@@ -266,12 +266,12 @@ class MCP23017 {
     int m_i2cFd;
 
  private:
-    void bitWrite(int x, int n, bool b) {
+    void bitWrite(int *x, int n, bool b) {
         if (n <= 7 && n >= 0) {
             if (b) {
-                x |= (1u << n);
+                *x |= (1u << n);
             } else {
-                x &= ~(1u << n);
+                *x &= ~(1u << n);
             }
         }
     }
