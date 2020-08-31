@@ -37,7 +37,8 @@ class Environment : public QObject {
     static const char* ENV_YIO_APP_DIR;
     static const char* ENV_YIO_OS_VERSION;
     static const char* ENV_YIO_PLUGIN_DIR;
-    static const char* UNKNOWN;
+
+    static const QString UNKNOWN;
 
  public:
     /**
@@ -72,6 +73,30 @@ class Environment : public QObject {
      */
     QString getRemoteOsVersion() const;
 
+    /**
+     * @brief Returns the directory which contains the application resources
+     * @details The application resources are usually stored in the same directory of the application executable.
+     */
+    QString getResourcePath() const;
+    QString getConfigurationPath() const;
+
+    /**
+     * @brief Sets the first run marker for the next startup.
+     * @return True if the operation succeeded, false otherwise.
+     */
+    bool prepareFirstRun();
+
+    /**
+     * @brief Returns true if it's the first run of the remote to start the initial setup.
+     */
+    bool isFirstRun() const;
+
+    /**
+     * @brief Removes the first run marker.
+     * @return True if the operation succeeded, false otherwise.
+     */
+    bool finishFirstRun();
+
  private:
     OS      determineOS();
     QString getRaspberryRevision(OS os);
@@ -82,4 +107,5 @@ class Environment : public QObject {
     OS      m_os;
     bool    m_yioRemote;
     bool    m_raspberryPi;
+    QString m_markerFileFirstRun;
 };

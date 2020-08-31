@@ -22,9 +22,12 @@
 
 #include "environment.h"
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
+#include <QFileInfo>
 #include <QLoggingCategory>
+#include <QStorageInfo>
 #include <QSysInfo>
 #include <QTextStream>
 
@@ -33,22 +36,69 @@ const char *Environment::ENV_YIO_APP_DIR = "YIO_APP_DIR";
 const char *Environment::ENV_YIO_OS_VERSION = "YIO_OS_VERSION";
 const char *Environment::ENV_YIO_PLUGIN_DIR = "YIO_PLUGIN_DIR";
 
-const char *Environment::UNKNOWN = "UNKNOWN";
+const QString Environment::UNKNOWN = "UNKNOWN";
 
 static Q_LOGGING_CATEGORY(CLASS_LC, "env");
 
-Environment::Environment(QObject *parent) : QObject(parent) {
+Environment::Environment(QObject *parent) : QObject(parent), m_markerFileFirstRun("/firstrun") {
     m_os = determineOS();
     QString rpiRevision = getRaspberryRevision(m_os);
     m_raspberryPi = !rpiRevision.isEmpty();
     m_yioRemote = runningOnYioRemote(rpiRevision);
     m_deviceType = determineDeviceType(m_os, m_yioRemote, rpiRevision);
 
-    qCInfo(CLASS_LC) << "Device type:" << m_deviceType << "RPi revision:" << rpiRevision
-                     << "YIO remote:" << m_yioRemote;
+    if (m_yioRemote) {
+        QStorageInfo storage = QStorageInfo("/");
+        if (storage.isReadOnly()) {
+            m_markerFileFirstRun = "/var/yio/firstrun";
+        }
+    }
+
+    qCDebug(CLASS_LC) << "Device type:" << m_deviceType << "RPi revision:" << rpiRevision
+                      << "YIO remote:" << m_yioRemote << "First run marker file:" << m_markerFileFirstRun;
 }
 
 QString Environment::getRemoteOsVersion() const { return qEnvironmentVariable(ENV_YIO_OS_VERSION, UNKNOWN); }
+
+QString Environment::getResourcePath() const {
+    QString appPath = QCoreApplication::applicationDirPath();
+    if (m_os == OS::macOS) {
+        return QFileInfo(appPath + "/../").canonicalPath() + "/Contents/Resources";
+    }
+
+    return appPath;
+}
+
+QString Environment::getConfigurationPath() const {
+    if (m_yioRemote) {
+        return "/boot";
+    }
+
+    return getResourcePath();
+}
+
+bool Environment::prepareFirstRun() {
+    qCDebug(CLASS_LC) << "Creating marker file for first run:" << m_markerFileFirstRun;
+
+    QFile file(m_markerFileFirstRun);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qCCritical(CLASS_LC) << "Error writing firstrun marker file:" << m_markerFileFirstRun;
+        return false;
+    }
+    file.close();
+    return true;
+}
+
+bool Environment::isFirstRun() const {
+    bool firstRun = QFile::exists(m_markerFileFirstRun);
+    qCDebug(CLASS_LC) << "First run:" << firstRun;
+    return firstRun;
+}
+
+bool Environment::finishFirstRun() {
+    qCDebug(CLASS_LC) << "First run finished, removing marker file:" << m_markerFileFirstRun;
+    return QFile::remove(m_markerFileFirstRun);
+}
 
 OS Environment::determineOS() {
 #if defined(Q_OS_ANDROID)
@@ -112,8 +162,6 @@ bool Environment::runningOnYioRemote(const QString &rpiRevision) {
 
     bool envVarsPresent = qEnvironmentVariableIsSet(ENV_YIO_HOME) && qEnvironmentVariableIsSet(ENV_YIO_APP_DIR) &&
                           qEnvironmentVariableIsSet(ENV_YIO_OS_VERSION);
-
-    qCDebug(CLASS_LC) << "RPi revision:" << rpiRevision << "YIO env vars present:" << envVarsPresent;
 
     if (rpiRevision.isEmpty()) {
         return false;

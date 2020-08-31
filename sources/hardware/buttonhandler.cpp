@@ -41,7 +41,7 @@ ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, YioAPI *api, QO
     connect(m_api, &YioAPI::buttonPressed, this, &ButtonHandler::onYIOAPIPressed);
     connect(m_api, &YioAPI::buttonReleased, this, &ButtonHandler::onYIOAPIReleased);
 
-    qCDebug(CLASS_LC) << "Intialized";
+    qCDebug(CLASS_LC) << "Initialized";
 }
 
 ButtonHandler::~ButtonHandler() { s_instance = nullptr; }

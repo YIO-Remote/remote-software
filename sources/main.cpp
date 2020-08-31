@@ -30,9 +30,6 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QtDebug>
-#if defined(Q_PROCESSOR_ARM)
-#include <filesystem>
-#endif
 
 #include "bluetooth.h"
 #include "commandlinehandler.h"
@@ -76,22 +73,16 @@ int main(int argc, char* argv[]) {
 
     engine.addImportPath("qrc:/keyboard");
 
-    // Get the applications dir path and expose it to QML (prevents setting the JSON config variable)
-    QString appPath = app.applicationDirPath();
-    QString macPath = QFileInfo(appPath + "/../").canonicalPath() + "/Contents/Resources";
+    Environment* environment = new Environment(&app);
 
-    // In case the translation file does not exist at root level (which is copied via the .pro file)
-    // we are probably running on a mac, which gives a different result for the applicationDirPath
-    // (actually points to '.../remote.app/Contents/MacOS/remote')
-    if ((!QFile::exists(appPath + "/translations.json")) && (QFile::exists(macPath + "/translations.json"))) {
-        appPath = macPath;
-    }
-    engine.rootContext()->setContextProperty("appPath", appPath);
+    // Get the application's resource dir path and expose it to QML (prevents setting the JSON config variable)
+    QString resourcePath = environment->getResourcePath();
+    engine.rootContext()->setContextProperty("appPath", resourcePath);
 
     // Process command line arguments
     CommandLineHandler cmdLineHandler;
     // Attention: app might terminate within process depending on cmd line arguments!
-    cmdLineHandler.process(app, appPath);
+    cmdLineHandler.process(app, resourcePath, environment->getConfigurationPath());
 
     // LOAD CONFIG
     bool configError = false;
@@ -99,7 +90,7 @@ int main(int argc, char* argv[]) {
         qFatal("App configuration file not found: %s", cmdLineHandler.configFile().toLatin1().constData());
     }
 
-    Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), appPath);
+    Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), environment);
     if (!config->readConfig()) {
         qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
         configError = true;
@@ -120,7 +111,7 @@ int main(int argc, char* argv[]) {
     //   - <otherwise>        => absolute directory path (e.g. "/var/log")
     QString path = logCfg.value("path", ".").toString();
     if (path == ".") {
-        path = appPath + "/log";
+        path = resourcePath + "/log";
     }
     Logger logger(path, logCfg.value("level", "WARN").toString(), logCfg.value("console", true).toBool(),
                   logCfg.value("showSource", true).toBool(), logCfg.value("queueSize", 100).toInt(),
@@ -187,7 +178,7 @@ int main(int argc, char* argv[]) {
 
     // INTEGRATIONS
     Integrations* integrations =
-        new Integrations(qEnvironmentVariable(Environment::ENV_YIO_PLUGIN_DIR, appPath + "/plugins"));
+        new Integrations(qEnvironmentVariable(Environment::ENV_YIO_PLUGIN_DIR, resourcePath + "/plugins"));
     // Make integration state available in QML
     qmlRegisterUncreatableType<Integrations>("Integrations", 1, 0, "Integrations",
                                              "Not creatable, only used for enum.");
@@ -212,46 +203,21 @@ int main(int argc, char* argv[]) {
     ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
     qmlRegisterSingletonType<ButtonHandler>("ButtonHandler", 1, 0, "ButtonHandler", &ButtonHandler::getQMLInstance);
 
-#if defined(Q_PROCESSOR_ARM)
     // reset combination was pressed on startup (only on the remote hardware)
-    if (buttonHandler->resetButtonsPressed()) {
-        QString defaultConfigPath = qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, appPath) + "/config.json";
-
-        if (QFile::exists(defaultConfigPath)) {
-            // create marker file
-            QFile file("/firstrun");
-            if (file.open(QIODevice::WriteOnly)) {
-                file.close();
-
-                // make a copy of existing configuration
-                if (!std::filesystem::copy_file("/boot/config.json", "/boot/config.json.old",
-                                                std::filesystem::copy_options::overwrite_existing)) {
-                    qCCritical(CLASS_LC) << "Error backing up existing configuration.";
-                } else {
-                    if (!std::filesystem::copy_file(defaultConfigPath.toStdString(), "/boot/config.json",
-                                                    std::filesystem::copy_options::overwrite_existing)) {
-                        qCCritical(CLASS_LC) << "Error copying default configuration.";
-                    } else {
-                        // reset wifi settings
-                        wifiControl->clearConfiguredNetworks();
-
-                        // reboot
-                        Launcher().launch("reboot");
-
-                        return -1;
-                    }
-                }
-            } else {
-                qCCritical(CLASS_LC) << "Error writing firstrun marker file";
-                notifications.add(
-                    true, QGuiApplication::tr("An error occured while restoring to defaults. Please try again."));
-            }
+    if (environment->isYioRemote() && buttonHandler->resetButtonsPressed()) {
+        QVariantMap oldCfg = config->getConfig();
+        if (config->resetConfigurationForFirstRun()) {
+            // reset wifi settings
+            wifiControl->clearConfiguredNetworks();
+            // reboot
+            Launcher().launch("reboot");
+            return -1;
         } else {
-            qCCritical(CLASS_LC) << "Default config file not found. Cannot restore to defaults.";
-            notifications.add(true, QGuiApplication::tr("Default config file not found. Cannot restore to defaults."));
+            config->setConfig(oldCfg);
+            notifications.add(true,
+                              QGuiApplication::tr("An error occured while restoring to defaults. Please try again."));
         }
     }
-#endif
 
     // STANDBY CONTROL
     StandbyControl* standbyControl =
@@ -262,30 +228,24 @@ int main(int argc, char* argv[]) {
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
 
     // SOFTWARE UPDATE
-    QVariantMap     appUpdCfg      = config->getSettings().value("softwareupdate").toMap();
+    QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
     SoftwareUpdate* softwareUpdate = new SoftwareUpdate(appUpdCfg, hwFactory->getBatteryFuelGauge());
     qmlRegisterSingletonType<SoftwareUpdate>("SoftwareUpdate", 1, 0, "SoftwareUpdate", &SoftwareUpdate::getQMLInstance);
-
-    // FIXME move initialization code to a device driver factory
-    //    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopSignalStrengthScanning()));
-    //    QObject::connect(standbyControl, SIGNAL(standByOn()), wifiControl, SLOT(stopWifiStatusScanning()));
-    //    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startSignalStrengthScanning()));
-    //    QObject::connect(standbyControl, SIGNAL(standByOff()), wifiControl, SLOT(startWifiStatusScanning()));
 
     // UTILS
     qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
 
     // LOAD FONTS
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Light.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Regular.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-SemiBold.ttf");
-    QFontDatabase::addApplicationFont(appPath + "/fonts/OpenSans-Bold.ttf");
+    QFontDatabase::addApplicationFont(resourcePath + "/fonts/OpenSans-Light.ttf");
+    QFontDatabase::addApplicationFont(resourcePath + "/fonts/OpenSans-Regular.ttf");
+    QFontDatabase::addApplicationFont(resourcePath + "/fonts/OpenSans-SemiBold.ttf");
+    QFontDatabase::addApplicationFont(resourcePath + "/fonts/OpenSans-Bold.ttf");
 
     // LOAD STYLES
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/Style.qml")), "Style", 1, 0, "Style");
 
     // LOAD ICONS
-    QFontDatabase::addApplicationFont(appPath + "/icons/icons.ttf");
+    QFontDatabase::addApplicationFont(resourcePath + "/icons/icons.ttf");
 
     // set rending of text
     QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
