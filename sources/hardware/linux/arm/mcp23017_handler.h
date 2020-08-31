@@ -65,7 +65,7 @@
 
 #define MCP23017_INT_ERR 255
 
-static Q_LOGGING_CATEGORY(CLASS_LC2, "MCP23017");
+static Q_LOGGING_CATEGORY(CLASS_LC2, "hw.dev.MCP23017");
 
 class MCP23017 {
  public:
@@ -122,14 +122,18 @@ class MCP23017 {
         return true;
     }
 
+    /**
+     * @brief Returns true if volume up, top left button (outline circle), and dpad down are pressed together during
+     * startup.
+     */
     bool readReset() {
         // read initial state to determine if reset is needed
-        int gpioB = wiringPiI2CReadReg8(m_i2cFd, MCP23017_GPIOB);
-        if (!(gpioB & 0x040) && !(gpioB & 0x080) && !(gpioB & 0x04)) {
-            return true;
-        } else {
-            return false;
-        }
+        int  gpioB = wiringPiI2CReadReg8(m_i2cFd, MCP23017_GPIOB);
+        bool volUp = !(gpioB & 0x040);
+        bool topLeft = !(gpioB & 0x080);
+        bool dpadDown = !(gpioB & 0x04);
+        qCDebug(CLASS_LC2) << "Reading reset keys [vol up][top left][dpad down]:" << volUp << topLeft << dpadDown;
+        return volUp && topLeft && dpadDown;
     }
 
     int readInterrupt() {

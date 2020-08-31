@@ -26,8 +26,16 @@
 #include <QJsonDocument>
 #include <QLoggingCategory>
 
+#if defined(Q_OS_LINUX)
+#include <filesystem>
+#endif
+
+#include "environment.h"
+
 static Q_LOGGING_CATEGORY(CLASS_LC, "config");
 
+const QString Config::CFG_FILE_NAME = "config.json";
+const QString Config::CFG_FILE_NAME_DEF = "config.json.def";
 const QString Config::KEY_ID = CFG_KEY_ID;
 const QString Config::KEY_FRIENDLYNAME = CFG_KEY_FRIENDLYNAME;
 const QString Config::KEY_ENTITY_ID = CFG_KEY_ENTITY_ID;
@@ -43,15 +51,18 @@ Config *Config::s_instance = nullptr;
 
 ConfigInterface::~ConfigInterface() {}
 
-Config::Config(QQmlApplicationEngine *engine, QString configFilePath, QString schemaFilePath, QString appPath)
-    : m_engine(engine), m_jsf(configFilePath, schemaFilePath), m_error("") {
+Config::Config(QQmlApplicationEngine *engine, QString configFilePath, QString schemaFilePath, Environment *environment)
+    : m_engine(engine), m_jsf(configFilePath, schemaFilePath), m_error(""), m_environment(environment) {
     Q_ASSERT(engine);
+    Q_ASSERT(environment);
 
     s_instance = this;
 
     // load translations file
-    JsonFile translationCfg(appPath.append(QString("/translations.json")), "");
+    JsonFile translationCfg(environment->getResourcePath().append(QString("/translations.json")), "");
     m_languages = translationCfg.read().toList();
+
+    qCDebug(CLASS_LC) << "Configuration file:" << configFilePath;
 }
 
 Config::~Config() { s_instance = nullptr; }
@@ -158,6 +169,46 @@ QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {
 }
 
 QObject *Config::getQMLObject(const QString &name) { return getQMLObject(m_engine->rootObjects(), name); }
+
+bool Config::resetConfigurationForFirstRun() {
+    qCWarning(CLASS_LC) << "Resetting remote configuration for first run";
+
+    QString defaultConfigFile =
+        qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, m_environment->getResourcePath()) + "/" + CFG_FILE_NAME_DEF;
+
+    if (!QFile::exists(defaultConfigFile)) {
+        qCCritical(CLASS_LC) << "Default config file not found. Cannot restore to defaults.";
+        return false;
+    }
+
+    if (m_environment->isYioRemote()) {
+        QString cfgFile = QString("%1/%2").arg(m_environment->getConfigurationPath()).arg(CFG_FILE_NAME);
+        QString cfgFileBackup = cfgFile + ".old";
+        qCDebug(CLASS_LC) << "Backing up configuration file" << cfgFile
+                          << "and replacing it with default configuration:" << defaultConfigFile;
+#if defined(Q_OS_LINUX)
+        try {
+            // make a copy of existing configuration
+            if (!std::filesystem::copy_file(cfgFile.toStdString(), cfgFileBackup.toStdString(),
+                                            std::filesystem::copy_options::overwrite_existing)) {
+                qCCritical(CLASS_LC) << "Error backing up existing configuration.";
+                return false;
+            }
+
+            if (!std::filesystem::copy_file(defaultConfigFile.toStdString(), cfgFile.toStdString(),
+                                            std::filesystem::copy_options::overwrite_existing)) {
+                qCCritical(CLASS_LC) << "Error copying default configuration.";
+                return false;
+            }
+        } catch (std::exception &e) {
+            qCCritical(CLASS_LC) << "Error resetting configuration:" << qPrintable(e.what());
+            return false;
+        }
+#endif
+    }
+
+    return m_environment->prepareFirstRun();
+}
 
 void Config::setProfileId(QString id) {
     qCDebug(CLASS_LC) << "Profile id changing to:" << id << "from:" << m_cacheProfileId;

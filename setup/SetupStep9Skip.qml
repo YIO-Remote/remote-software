@@ -67,7 +67,6 @@ Item {
     }
 
     Component.onCompleted: {
-        // delete /firstrun
-        console.debug("Deleting /firstrun success: " + fileio.deleteFile("/firstrun"));
+        config.finishFirstRun()
     }
 }

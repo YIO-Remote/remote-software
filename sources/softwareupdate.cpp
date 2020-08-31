@@ -50,7 +50,7 @@ SoftwareUpdate::SoftwareUpdate(const QVariantMap &cfg, BatteryFuelGauge *battery
       m_appUpdateUrl(cfg.value("updateUrl", "https://update.yio.app/v1/")
                          .toUrl()
                          .resolved(cfg.value("updateUrlAppPath", "app/updates").toUrl())),
-      m_downloadDir(cfg.value("downloadDir", "/tmp/yio").toString()),
+      m_downloadDir(cfg.value("downloadDir", "/var/yio/download").toString()),
       m_appUpdateScript(cfg.value("appUpdateScript", "/opt/yio/scripts/app-update.sh").toString()),
       m_channel(cfg.value("channel", "release").toString()) {
     Q_ASSERT(m_batteryFuelGauge);

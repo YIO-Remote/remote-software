@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include <QObject>
 #include <QCoreApplication>
+#include <QObject>
 
 class CommandLineHandler : public QObject {
     Q_OBJECT
@@ -31,21 +31,20 @@ class CommandLineHandler : public QObject {
  public:
     explicit CommandLineHandler(QObject *parent = nullptr);
 
-    void process(const QCoreApplication &app, const QString &defaultConfigPath);
+    void process(const QCoreApplication &app, const QString &resourcePath, const QString &configurationPath);
 
-    QString getProfile() { return m_profile; }
+    QString getProfile() const { return m_profile; }
 
-    QString configFile() { return m_cfgFile; }
-    QString configSchemaFile() { return m_cfgSchemaFile; }
-    QString hardwareConfigFile() { return m_hwCfgFile; }
-    QString hardwareConfigSchemaFile() { return m_hwCfgSchemaFile; }
+    QString configFile() const { return m_cfgFile; }
+    QString configSchemaFile() const { return m_cfgSchemaFile; }
+    QString hardwareConfigFile() const { return m_hwCfgFile; }
+    QString hardwareConfigSchemaFile() const { return m_hwCfgSchemaFile; }
 
  private:
     bool validateJson(const QString &filePath, const QString &schemaPath);
 
  private:
     QString m_profile;
-    QString m_cfgPath;
     QString m_cfgFile;
     QString m_cfgSchemaFile;
     QString m_hwCfgFile;

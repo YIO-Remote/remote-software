@@ -23,13 +23,18 @@
 #include "commandlinehandler.h"
 
 #include <QCommandLineParser>
+#include <QLoggingCategory>
 #include <QtDebug>
 
+#include "config.h"
 #include "jsonfile.h"
 
-CommandLineHandler::CommandLineHandler(QObject *parent) : QObject(parent), m_profile("") {}
+static Q_LOGGING_CATEGORY(CLASS_LC, "env");
 
-void CommandLineHandler::process(const QCoreApplication &app, const QString &defaultConfigPath) {
+CommandLineHandler::CommandLineHandler(QObject *parent) : QObject(parent), m_profile(""), m_cfgFile("") {}
+
+void CommandLineHandler::process(const QCoreApplication &app, const QString &resourcePath,
+                                 const QString &configurationPath) {
     QCommandLineParser parser;
     parser.setApplicationDescription("YIO remote app");
     parser.addHelpOption();
@@ -64,27 +69,17 @@ void CommandLineHandler::process(const QCoreApplication &app, const QString &def
         m_profile = parser.value(profileOption);
     }
 
-    // Determine configuration path
-    m_cfgPath = defaultConfigPath;
-
-    // YIO remote: check for app configuration file in /boot
-#if defined(Q_PROCESSOR_ARM)  // TODO(zehnm) implement a real YIO remote hardware check!
-    if (QFile::exists("/boot/config.json")) {
-        m_cfgPath = "/boot";
-    }
-#endif
-
     // Plain and simple profile option: apply to configuration files as suffix
     if (!m_profile.isEmpty()) {
-        m_cfgFile = QString("%1/config-%2.json").arg(m_cfgPath).arg(m_profile);
-        m_cfgSchemaFile = QString("%1/config-%2-schema.json").arg(defaultConfigPath).arg(m_profile);
-        m_hwCfgFile = QString("%1/hardware-%2.json").arg(defaultConfigPath).arg(m_profile);
-        m_hwCfgSchemaFile = QString("%1/hardware-%2-schema.json").arg(defaultConfigPath).arg(m_profile);
+        m_cfgFile = QString("%1/config-%2.json").arg(configurationPath).arg(m_profile);
+        m_cfgSchemaFile = QString("%1/config-%2-schema.json").arg(resourcePath).arg(m_profile);
+        m_hwCfgFile = QString("%1/hardware-%2.json").arg(resourcePath).arg(m_profile);
+        m_hwCfgSchemaFile = QString("%1/hardware-%2-schema.json").arg(resourcePath).arg(m_profile);
     } else {
-        m_cfgFile = QString("%1/config.json").arg(m_cfgPath);
-        m_cfgSchemaFile = QString("%1/config-schema.json").arg(defaultConfigPath);
-        m_hwCfgFile = QString("%1/hardware.json").arg(defaultConfigPath);
-        m_hwCfgSchemaFile = QString("%1/hardware-schema.json").arg(defaultConfigPath);
+        m_cfgFile = QString("%1/%2").arg(configurationPath).arg(Config::CFG_FILE_NAME);
+        m_cfgSchemaFile = QString("%1/config-schema.json").arg(resourcePath);
+        m_hwCfgFile = QString("%1/hardware.json").arg(resourcePath);
+        m_hwCfgSchemaFile = QString("%1/hardware-schema.json").arg(resourcePath);
     }
 
     // Check if a configuration file is specified as cmd line argument
@@ -104,26 +99,28 @@ void CommandLineHandler::process(const QCoreApplication &app, const QString &def
     if (parser.isSet(validateOption)) {
         bool valid = validateJson(m_cfgFile, m_cfgSchemaFile);
         valid &= validateJson(m_hwCfgFile, m_hwCfgSchemaFile);
-        qInfo() << (valid ? "OK" : "FAIL");
+        qInfo() << (valid ? "OK" : "FAIL");  // no category logging: only used in cmd line
 
         exit(valid ? 0 : 1);
     }
 
     if (!QFile::exists(m_cfgSchemaFile)) {
-        qWarning() << "App configuration schema not found, configuration file will not be validated! Missing file:"
-                   << m_cfgSchemaFile;
+        qCWarning(CLASS_LC)
+            << "App configuration schema not found, configuration file will not be validated! Missing file:"
+            << m_cfgSchemaFile;
     }
 
     if (!QFile::exists(m_hwCfgSchemaFile)) {
-        qWarning() << "Hardware configuration schema not found, configuration file will not be validated! Missing file:"
-                   << m_hwCfgSchemaFile;
+        qCWarning(CLASS_LC)
+            << "Hardware configuration schema not found, configuration file will not be validated! Missing file:"
+            << m_hwCfgSchemaFile;
     }
 }
 
 bool CommandLineHandler::validateJson(const QString &filePath, const QString &schemaPath) {
     JsonFile jsonFile(filePath, schemaPath);
     jsonFile.read();
-    qInfo() << "Validating" << filePath << "with schema" << schemaPath;
+    qInfo() << "Validating" << filePath << "with schema" << schemaPath;  // no category logging: only used in cmd line
     if (jsonFile.isValid()) {
         return true;
     } else {
