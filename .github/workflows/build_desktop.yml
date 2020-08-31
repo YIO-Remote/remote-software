@@ -35,7 +35,7 @@ jobs:
         - {
             name: "Linux Latest x64", artifact: "Linux-x64", build: "release",
             qmake-args: "CONFIG+=release",
-            os: ubuntu-latest
+            os: ubuntu-20.04
           }
         - {
             name: "macOS Latest x64", artifact: "macOS-x64", build: "release",
@@ -79,7 +79,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt update
-        sudo apt install libavahi-client-dev libgl1-mesa-dev
+        sudo apt install libavahi-client-dev libgl1-mesa-dev g++-8 libstdc++-8-dev
 
     - name: Download Qt Creator
       id: qt_creator
