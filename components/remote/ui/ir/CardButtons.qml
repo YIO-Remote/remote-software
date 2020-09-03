@@ -20,6 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 import QtQuick 2.11
+import QtQuick.Layouts 1.3
 import Style 1.0
 
 import Haptic 1.0
@@ -35,7 +36,7 @@ Item {
         width: 118; height: 60
         radius: height/2
         color: Style.color.red
-        anchors { top: parent.top; left: parent.left }
+        anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
 
         Text {
             color: Style.color.line
@@ -70,83 +71,99 @@ Item {
         mouseArea.onClicked: { obj.source(); }
     }
 
-    Flow {
+    ColumnLayout {
         width: parent.width
         visible: obj.isSupported(Remote.F_DIGIT_0) && obj.isSupported(Remote.F_DIGIT_1) && obj.isSupported(Remote.F_DIGIT_2) && obj.isSupported(Remote.F_DIGIT_3) && obj.isSupported(Remote.F_DIGIT_4) && obj.isSupported(Remote.F_DIGIT_5)
                  && obj.isSupported(Remote.F_DIGIT_6) && obj.isSupported(Remote.F_DIGIT_7) && obj.isSupported(Remote.F_DIGIT_8) && obj.isSupported(Remote.F_DIGIT_9)
         anchors { top: powerButton.bottom; topMargin: 30; horizontalCenter: parent.horizontalCenter }
         spacing: 32
 
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_1)
-            title: "1"
-            mouseArea.onClicked: { obj.channel(1); }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_1)
+                title: "1"
+                mouseArea.onClicked: { obj.channel(1); }
+            }
+
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_2)
+                title: "2"
+                mouseArea.onClicked: { obj.channel(2); }
+            }
+
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_3)
+                title: "3"
+                mouseArea.onClicked: { obj.channel(3); }
+            }
         }
 
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_2)
-            title: "2"
-            mouseArea.onClicked: { obj.channel(2); }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_4)
+                title: "4"
+                mouseArea.onClicked: { obj.channel(4); }
+            }
+
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_5)
+                title: "5"
+                mouseArea.onClicked: { obj.channel(5); }
+            }
+
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_6)
+                title: "6"
+                mouseArea.onClicked: { obj.channel(6); }
+            }
         }
 
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_3)
-            title: "3"
-            mouseArea.onClicked: { obj.channel(3); }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_7)
+                title: "7"
+                mouseArea.onClicked: { obj.channel(7); }
+            }
+
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_8)
+                title: "8"
+                mouseArea.onClicked: { obj.channel(8); }
+            }
+
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_9)
+                title: "9"
+                mouseArea.onClicked: { obj.channel(9); }
+            }
         }
 
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_4)
-            title: "4"
-            mouseArea.onClicked: { obj.channel(4); }
-        }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_SEPARATOR)
+                title: "-"
+                mouseArea.onClicked: { }
+            }
 
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_5)
-            title: "5"
-            mouseArea.onClicked: { obj.channel(5); }
-        }
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_0)
+                title: "0"
+                mouseArea.onClicked: { obj.channel(0); }
+            }
 
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_6)
-            title: "6"
-            mouseArea.onClicked: { obj.channel(6); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_7)
-            title: "7"
-            mouseArea.onClicked: { obj.channel(7); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_8)
-            title: "8"
-            mouseArea.onClicked: { obj.channel(8); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_9)
-            title: "9"
-            mouseArea.onClicked: { obj.channel(9); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_SEPARATOR)
-            title: "-"
-            mouseArea.onClicked: { }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_0)
-            title: "0"
-            mouseArea.onClicked: { obj.channel(0); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_DIGIT_ENTER)
-            title: "Pre-CH"
-            mouseArea.onClicked: { }
+            Button {
+                visible: obj.isSupported(Remote.F_DIGIT_ENTER)
+                title: "E"
+                mouseArea.onClicked: { }
+            }
         }
     }
 }

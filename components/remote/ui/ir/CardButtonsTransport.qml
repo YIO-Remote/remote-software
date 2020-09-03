@@ -20,6 +20,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 import QtQuick 2.11
+import QtQuick.Layouts 1.3
 import Style 1.0
 
 import Haptic 1.0
@@ -29,91 +30,118 @@ Item {
     width: parent.width - 60
     anchors.horizontalCenter: parent.horizontalCenter
 
-    Flow {
+    ColumnLayout {
+        anchors {
+            top: parent.top
+            horizontalCenter: parent.horizontalCenter
+        }
         width: parent.width - 60
-        anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
         spacing: 32
 
-        Button {
-            visible: obj.isSupported(Remote.F_PLAY)
-            title: qsTr("Play") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.play(); }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            IconButton {
+                visible: obj.isSupported(Remote.F_RECORD)
+                image.source: "qrc:/images/remote/fiber_manual_record-white-48dp.svg"
+                mouseArea.onClicked: { obj.record(); }
+            }
+
+            IconButton {
+                visible: obj.isSupported(Remote.F_PLAY)
+                image.source: "qrc:/images/remote/play_arrow-white-48dp.svg"
+                mouseArea.onClicked: { obj.play(); }
+            }
+
+            IconButton {
+                visible: obj.isSupported(Remote.F_STOP)
+                image.visible: true
+                image.source: "qrc:/images/remote/stop-white-48dp.svg"
+                mouseArea.onClicked: { obj.stop(); }
+            }
         }
 
-        Button {
-            visible: obj.isSupported(Remote.F_PAUSE)
-            title: qsTr("Pause") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.pause(); }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            IconButton {
+                visible: obj.isSupported(Remote.F_BACKWARD)
+                image.source: "qrc:/images/remote/fast_rewind-white-48dp.svg"
+                mouseArea.onClicked: { obj.backward(); }
+            }
+
+            IconButton {
+                visible: obj.isSupported(Remote.F_PAUSE)
+                image.visible: true
+                image.source: "qrc:/images/remote/pause-white-48dp.svg"
+                mouseArea.onClicked: { obj.pause(); }
+            }
+
+            IconButton {
+                visible: obj.isSupported(Remote.F_FORWARD)
+                image.source: "qrc:/images/remote/fast_forward-white-48dp.svg"
+                mouseArea.onClicked: { obj.forward(); }
+            }
         }
 
-        Button {
-            visible: obj.isSupported(Remote.F_STOP)
-            title: qsTr("Stop") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.stop(); }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            IconButton {
+                visible: obj.isSupported(Remote.F_PREVIOUS)
+                image.source: "qrc:/images/remote/skip_previous-white-48dp.svg"
+                mouseArea.onClicked: { obj.previous(); }
+            }
+
+            IconButton {
+                visible: obj.isSupported(Remote.F_INFO)
+                image.source: "qrc:/images/remote/info-white-48dp.svg"
+                mouseArea.onClicked: { obj.info(); }
+            }
+
+            IconButton {
+                visible: obj.isSupported(Remote.F_NEXT)
+                image.source: "qrc:/images/remote/skip_next-white-48dp.svg"
+                mouseArea.onClicked: { obj.next(); }
+            }
         }
 
-        Button {
-            visible: obj.isSupported(Remote.F_PREVIOUS)
-            title: qsTr("Prev") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.previous(); }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            Button {
+                visible: obj.isSupported(Remote.F_EXIT)
+                title: qsTr("Exit") + translateHandler.emptyString
+                mouseArea.onClicked: { obj.exit(); }
+            }
+
+            Button {
+                visible: obj.isSupported(Remote.F_GUIDE)
+                title: qsTr("Guide") + translateHandler.emptyString
+                mouseArea.onClicked: { obj.guide(); }
+            }
         }
 
-        Button {
-            visible: obj.isSupported(Remote.F_NEXT)
-            title: qsTr("Next") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.next(); }
-        }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
+            Button {
+                visible: obj.isSupported(Remote.F_BACK)
+                title: qsTr("Back") + translateHandler.emptyString
+                mouseArea.onClicked: { obj.back(); }
+            }
 
-        Button {
-            visible: obj.isSupported(Remote.F_INFO)
-            title: qsTr("Info") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.info(); }
-        }
+            IconButton {
+                visible: obj.isSupported(Remote.F_HOME)
+                image.source: "qrc:/images/remote/home-white-48dp.svg"
+                mouseArea.onClicked: { obj.home(); }
+            }
 
-        Button {
-            visible: obj.isSupported(Remote.F_BACKWARD)
-            title: qsTr("BWD") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.backward(); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_FORWARD)
-            title: qsTr("FWD") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.forward(); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_RECORD)
-            title: qsTr("Rec") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.record(); }
-        }
-
-        Item { width: 118; height: 70 }
-
-        Button {
-            visible: obj.isSupported(Remote.F_EXIT)
-            title: qsTr("Exit") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.exit(); }
-        }
-
-        Item { width: 118; height: 70 }
-
-        Button {
-            visible: obj.isSupported(Remote.F_BACK)
-            title: qsTr("Back") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.back(); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_HOME)
-            title: qsTr("Home") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.home(); }
-        }
-
-        Button {
-            visible: obj.isSupported(Remote.F_MENU)
-            title: qsTr("Menu") + translateHandler.emptyString
-            mouseArea.onClicked: { obj.menu(); }
+            IconButton {
+                visible: obj.isSupported(Remote.F_MENU)
+                image.source: "qrc:/images/remote/menu-white-48dp.svg"
+                mouseArea.onClicked: { obj.menu(); }
+            }
         }
     }
 }

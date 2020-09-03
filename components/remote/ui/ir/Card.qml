@@ -69,51 +69,163 @@ Rectangle {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // BUTTON REPEAT TIMER
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Timer {
+        id: volumeUpTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.volumeUp()
+    }
+
+    Timer {
+        id: volumeDownTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.volumeDown()
+    }
+
+    Timer {
+        id: channelUpTimer
+        interval: 500
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.channelUp()
+    }
+
+    Timer {
+        id: channelDownTimer
+        interval: 500
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.channelDown()
+    }
+
+    Timer {
+        id: cursorUpTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorUp()
+    }
+
+    Timer {
+        id: cursorDownTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorDown()
+    }
+
+    Timer {
+        id: cursorLeftTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorLeft()
+    }
+
+    Timer {
+        id: cursorRightTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorRight()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
         target: ButtonHandler
 
+        onButtonReleased: {
+            switch (button) {
+            case ButtonHandler.VOLUME_UP:
+                print("volume up released")
+                volumeUpTimer.stop()
+                break;
+            case ButtonHandler.VOLUME_DOWN:
+                print("volume down released")
+                volumeDownTimer.stop()
+                break;
+            case ButtonHandler.CHANNEL_UP:
+                print("channel up released")
+                channelUpTimer.stop()
+                break;
+            case ButtonHandler.CHANNEL_DOWN:
+                print("channel down released")
+                channelDownTimer.stop()
+                break;
+            case ButtonHandler.DPAD_UP:
+                print("dpad up released")
+                cursorUpTimer.stop()
+                break;
+            case ButtonHandler.DPAD_DOWN:
+                print("dpad down released")
+                cursorDownTimer.stop()
+                break;
+            case ButtonHandler.DPAD_LEFT:
+                print("dpad left released")
+                cursorLeftTimer.stop()
+                break;
+            case ButtonHandler.DPAD_RIGHT:
+                print("dpad right released")
+                cursorRightTimer.stop()
+                break;
+            }
+        }
+
         onButtonPressed: {
             switch (button) {
             case ButtonHandler.VOLUME_UP:
                 if (obj.isSupported(Remote.F_VOLUME_UP)) {
-                    obj.volumeUp();
+                    volumeUpTimer.start()
                 }
                 break;
             case ButtonHandler.VOLUME_DOWN:
                 if (obj.isSupported(Remote.F_VOLUME_DOWN)) {
-                    obj.volumeDown();
+                    volumeDownTimer.start()
                 }
                 break;
             case ButtonHandler.CHANNEL_UP:
                 if (obj.isSupported(Remote.F_CHANNEL_UP)) {
-                    obj.channelUp();
+                    channelUpTimer.start()
                 }
                 break;
             case ButtonHandler.CHANNEL_DOWN:
                 if (obj.isSupported(Remote.F_CHANNEL_DOWN)) {
-                    obj.channelDown();
+                    channelDownTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_UP:
                 if (obj.isSupported(Remote.F_CURSOR_UP)) {
-                    obj.cursorUp();
+                   cursorUpTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_DOWN:
                 if (obj.isSupported(Remote.F_CURSOR_DOWN)) {
-                    obj.cursorDown();
+                    cursorDownTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_LEFT:
                 if (obj.isSupported(Remote.F_CURSOR_LEFT)) {
-                    obj.cursorLeft();
+                    cursorLeftTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_RIGHT:
                 if (obj.isSupported(Remote.F_CURSOR_RIGHT)) {
-                    obj.cursorRight();
+                    cursorRightTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_MIDDLE:
@@ -191,11 +303,34 @@ Rectangle {
             sourceComponent: buttonTransportView
         }
 
+        // function buttons
+        Repeater {
+            model: (obj.isSupported(Remote.F_FUNCTION_RED) ||
+                     obj.isSupported(Remote.F_FUNCTION_GREEN) ||
+                     obj.isSupported(Remote.F_FUNCTION_BLUE) ||
+                     obj.isSupported(Remote.F_FUNCTION_YELLOW) ||
+                     obj.isSupported(Remote.F_FUNCTION_ORANGE)) ? 1 : 0
+            Loader {
+                asynchronous: true
+                sourceComponent: functionButtonView
+            }
+        }
+
         // channels
+        Repeater {
+            model: (obj.channels.length > 0) ? 1 : 0
+            Loader {
+                asynchronous: true
+                sourceComponent: channelView
+            }
+        }
+
+        // custom buttons
         Loader {
             asynchronous: true
-            sourceComponent: channelView
+            sourceComponent: customButtonView
         }
+
     }
 
     Component {
@@ -211,6 +346,16 @@ Rectangle {
     Component {
         id: channelView
         CardChannels {}
+    }
+
+    Component {
+        id: customButtonView
+        CustomButtons {}
+    }
+
+    Component {
+        id: functionButtonView
+        FunctionButtons {}
     }
 
     PageIndicator {

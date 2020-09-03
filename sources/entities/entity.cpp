@@ -23,6 +23,7 @@
 #include "entity.h"
 
 #include <QTimer>
+#include <QDebug>
 
 #include "../config.h"
 
@@ -42,7 +43,8 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
       m_enumAttr(nullptr),
       m_enumFeatures(nullptr),
       m_enumCommands(nullptr),
-      m_specificInterface(nullptr) {
+      m_specificInterface(nullptr),
+      m_custom_features(config.value(Config::KEY_CUSTOM_FEATURES).toStringList()) {
     memset(m_supported_features, 0, sizeof(m_supported_features));
 
     QString entityId = config.value("entity_id").toString();
@@ -50,6 +52,8 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
 
     QStringList f = Config::getInstance()->profileFavorites();
     m_favorite    = f.contains(entityId);
+
+    qDebug() << "custom features" << m_custom_features;
 }
 
 Entity::~Entity() {}
@@ -119,6 +123,21 @@ bool Entity::isSupported(int feature) {
     int bit  = feature % 8;
     Q_ASSERT(byte < static_cast<int>(sizeof(m_supported_features)));
     return !!(m_supported_features[byte] & (1 << bit));
+}
+
+QStringList Entity::customButtons() {
+    qDebug() << "m_custom_features size:" << m_custom_features.size();
+    return m_custom_features;
+}
+
+void Entity::clickCustomButton(int index) {
+    qDebug() << "clicking custom button" << index;
+    if (m_integrationObj) {
+        qDebug() << "sendCustomCommand" << m_type << entity_id() << index;
+        m_integrationObj->sendCustomCommand(m_type, entity_id(), index, "");
+    } else {
+        qWarning() << "m_integrationObj is false";
+    }
 }
 
 QStringList Entity::supported_features() {

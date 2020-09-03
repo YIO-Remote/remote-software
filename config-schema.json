@@ -444,6 +444,21 @@
                 ],
                 "pattern": ""
               },
+              "custom_features": {
+                "$id": "#/properties/entities/properties/remote/items/properties/custom_features",
+                "type": "array",
+                "title": "The custom_features Schema",
+                "items": {
+                  "$id": "#/properties/entities/properties/remote/items/properties/custom_features/items",
+                  "type": "string",
+                  "title": "The Custom Features Schema",
+                  "default": "",
+                  "examples": [
+                    "Button1, Button2, Button3"
+                  ],
+                  "pattern": ""
+                }
+              },
               "supported_features": {
                 "$id": "#/properties/entities/properties/remote/items/properties/supported_features",
                 "type": "array",

@@ -166,6 +166,10 @@ bool YioAPI::addEntity(QVariantMap entity) {
         if (obj) {
             IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
 
+            if (!integration) {
+                qCWarning(CLASS_LC) << "integration pointer is null" << entity.value(Config::KEY_ENTITY_ID);
+            }
+
             // add it to the entity registry
             m_entities->add(entityType, entity, integration);
 

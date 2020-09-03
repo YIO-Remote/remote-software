@@ -87,6 +87,16 @@ class Remote : public Entity, RemoteInterface {
     Q_INVOKABLE void volumeDown();
     Q_INVOKABLE void muteToggle();
 
+    // function commands
+    Q_INVOKABLE void red();
+    Q_INVOKABLE void green();
+    Q_INVOKABLE void yellow();
+    Q_INVOKABLE void blue();
+    Q_INVOKABLE void orange();
+
+    // custom commands
+    Q_INVOKABLE void customCommand(int index);
+
     void turnOn() override { powerOn(); }
     void turnOff() override { powerOff(); }
     bool supportsOn() override;

@@ -57,6 +57,7 @@ class Config : public QObject, public ConfigInterface {
     static const QString KEY_AREA;
     static const QString KEY_INTEGRATION;
     static const QString KEY_SUPPORTED_FEATURES;
+    static const QString KEY_CUSTOM_FEATURES;
     static const QString KEY_TYPE;
     static const QString KEY_MDNS;
     static const QString KEY_WORKERTHREAD;

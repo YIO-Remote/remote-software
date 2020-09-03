@@ -48,8 +48,7 @@ class Entity : public QObject, EntityInterface {
     Q_PROPERTY(QString integration READ integration CONSTANT)
     Q_PROPERTY(bool favorite READ favorite WRITE setFavorite NOTIFY favoriteChanged)
     Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
-    Q_PROPERTY(
-        QStringList supported_features READ supported_features CONSTANT)  // !!!!! use isSupported if possible !!!!!!!
+    Q_PROPERTY(QStringList supported_features READ supported_features CONSTANT)  // !!! use isSupported if possible !!!
 
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString stateText READ stateText WRITE setStateText NOTIFY stateTextChanged)
@@ -67,6 +66,10 @@ class Entity : public QObject, EntityInterface {
 
     // check for feature
     Q_INVOKABLE bool isSupported(int feature);  // Use Feature enum F_XXXXX
+
+    // custom buttons
+    Q_INVOKABLE QStringList customButtons();
+    Q_INVOKABLE void clickCustomButton(int index);
 
     // update an entity with attributes from integration hub, return true in case of change
     Q_INVOKABLE bool update(const QVariantMap& attributes);
@@ -134,4 +137,5 @@ class Entity : public QObject, EntityInterface {
     QMetaEnum*            m_enumFeatures;
     QMetaEnum*            m_enumCommands;
     void*                 m_specificInterface;
+    QStringList           m_custom_features;
 };
