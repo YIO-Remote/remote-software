@@ -171,13 +171,15 @@ QObject *Config::getQMLObject(QList<QObject *> nodes, const QString &name) {
 QObject *Config::getQMLObject(const QString &name) { return getQMLObject(m_engine->rootObjects(), name); }
 
 bool Config::resetConfigurationForFirstRun() {
+    m_error.clear();
     qCWarning(CLASS_LC) << "Resetting remote configuration for first run";
 
     QString defaultConfigFile =
         qEnvironmentVariable(Environment::ENV_YIO_APP_DIR, m_environment->getResourcePath()) + "/" + CFG_FILE_NAME_DEF;
 
     if (!QFile::exists(defaultConfigFile)) {
-        qCCritical(CLASS_LC) << "Default config file not found. Cannot restore to defaults.";
+        m_error = "Default config file not found: " + defaultConfigFile;
+        qCCritical(CLASS_LC) << m_error;
         return false;
     }
 
@@ -191,23 +193,30 @@ bool Config::resetConfigurationForFirstRun() {
             // make a copy of existing configuration
             if (!std::filesystem::copy_file(cfgFile.toStdString(), cfgFileBackup.toStdString(),
                                             std::filesystem::copy_options::overwrite_existing)) {
-                qCCritical(CLASS_LC) << "Error backing up existing configuration.";
+                m_error = "Error backing up existing configuration.";
+                qCCritical(CLASS_LC) << m_error;
                 return false;
             }
 
             if (!std::filesystem::copy_file(defaultConfigFile.toStdString(), cfgFile.toStdString(),
                                             std::filesystem::copy_options::overwrite_existing)) {
-                qCCritical(CLASS_LC) << "Error copying default configuration.";
+                m_error = "Error copying default configuration.";
+                qCCritical(CLASS_LC) << m_error;
                 return false;
             }
         } catch (std::exception &e) {
-            qCCritical(CLASS_LC) << "Error resetting configuration:" << qPrintable(e.what());
+            m_error = QString("Error resetting configuration: %1").arg(qPrintable(e.what()));
+            qCCritical(CLASS_LC) << m_error;
             return false;
         }
 #endif
     }
 
-    return m_environment->prepareFirstRun();
+    bool result = m_environment->prepareFirstRun();
+    if (!result) {
+        m_error = m_environment->getError();
+    }
+    return result;
 }
 
 void Config::setProfileId(QString id) {

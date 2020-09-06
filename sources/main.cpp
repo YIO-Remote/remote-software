@@ -37,6 +37,7 @@
 #include "config.h"
 #include "entities/entities.h"
 #include "environment.h"
+#include "factoryreset.h"
 #include "fileio.h"
 #include "hardware/buttonhandler.h"
 #include "hardware/hardwarefactory.h"
@@ -54,6 +55,8 @@
 static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
 int main(int argc, char* argv[]) {
+    bool initializing = true;
+
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     qputenv("QT_VIRTUALKEYBOARD_LAYOUT_PATH", "qrc:/keyboard/layouts");
     qputenv("QT_VIRTUALKEYBOARD_STYLE", "remotestyle");
@@ -191,13 +194,22 @@ int main(int argc, char* argv[]) {
     // Ready for device startup!
     hwFactory->initialize();
 
-    // FILE IO
-    FileIO fileIO;
-    engine.rootContext()->setContextProperty("fileio", &fileIO);
-
     // YIO API
     YioAPI* yioapi = new YioAPI(&engine);
     engine.rootContext()->setContextProperty("api", yioapi);
+
+    // FACTORY RESET HANDLER
+    FactoryReset factoryReset(environment);
+    QObject::connect(&factoryReset, &FactoryReset::factoryResetCompleted, [environment, &initializing]() {
+        if (environment->isYioRemote()) {
+            Launcher().launch("reboot");
+        }
+        initializing ? exit(0) : QCoreApplication::exit(0);
+    });
+    QObject::connect(&factoryReset, &FactoryReset::factoryResetFailed, [&notifications](const QString& error) {
+        notifications.add(true, QGuiApplication::tr("Factory reset failed.\n %1").arg(error));
+    });
+    engine.rootContext()->setContextProperty("factoryReset", &factoryReset);
 
     // BUTTON HANDLER
     ButtonHandler* buttonHandler = new ButtonHandler(hwFactory->getInterruptHandler(), yioapi);
@@ -205,18 +217,7 @@ int main(int argc, char* argv[]) {
 
     // reset combination was pressed on startup (only on the remote hardware)
     if (environment->isYioRemote() && buttonHandler->resetButtonsPressed()) {
-        QVariantMap oldCfg = config->getConfig();
-        if (config->resetConfigurationForFirstRun()) {
-            // reset wifi settings
-            wifiControl->clearConfiguredNetworks();
-            // reboot
-            Launcher().launch("reboot");
-            return -1;
-        } else {
-            config->setConfig(oldCfg);
-            notifications.add(true,
-                              QGuiApplication::tr("An error occured while restoring to defaults. Please try again."));
-        }
+        factoryReset.performReset();
     }
 
     // STANDBY CONTROL
@@ -261,6 +262,7 @@ int main(int argc, char* argv[]) {
 
     QObject* mainApplicationWindow = config->getQMLObject("applicationWindow");
     touchEventFilter->setSource(mainApplicationWindow);
+    initializing = false;
 
     return app.exec();
 }

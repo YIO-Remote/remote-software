@@ -311,5 +311,22 @@ Rectangle {
                 }
             }
         }
+
+        // TODO(marton/zehnm) only show factory reset button if: factoryReset.supported
+        // TODO(marton/zehnm) add user confirmation to make sure that the remote will be resetted
+        /*
+        Item {
+            width: parent.width; height: childrenRect.height + 30
+            BasicUI.CustomButton {
+                id: buttonFactoryReset
+                buttonText: qsTr("Factory reset") + translateHandler.emptyString
+                anchors { top: parent.top; topMargin: 30; left: parent.left; leftMargin: 40 }
+
+                mouseArea.onClicked: {
+                    factoryReset.performReset();
+                }
+            }
+        }
+        */
     }
 }
