@@ -594,9 +594,9 @@
                       "ip": {
                         "$id": "#/properties/integrations/properties/mqtt/properties/data/items/properties/data/properties/ip",
                         "type": "string",
-                        "title": "IP address",
+                        "title": "MQTT Broker IP address",
                         "examples": [
-                          "192.168.100.1"
+                          "192.168.100.1:1883"
                         ],
                         "pattern": "^(.*)$"
                       }
