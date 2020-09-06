@@ -492,7 +492,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
 
     buf[buflen] = '\0';
     if (res < 0) {
-        qCCritical(CLASS_LC) << "wpa_ctrl_request failed for command" << cmd << "with error:" << res;
+        qCCritical(CLASS_LC) << "wpa_ctrl_request failed for command" << cmd << "with error:" << res << strerror(errno);
         return false;
     }
 

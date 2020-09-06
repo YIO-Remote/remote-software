@@ -79,6 +79,10 @@ class Environment : public QObject {
      */
     QString getResourcePath() const;
     QString getConfigurationPath() const;
+    /**
+     * @brief Returns the path for storing data at runtime
+     */
+    QString getUserStoragePath() const;
 
     /**
      * @brief Sets the first run marker for the next startup.
@@ -97,6 +101,8 @@ class Environment : public QObject {
      */
     bool finishFirstRun();
 
+    QString getError() const { return m_error; }
+
  private:
     OS      determineOS();
     QString getRaspberryRevision(OS os);
@@ -108,4 +114,5 @@ class Environment : public QObject {
     bool    m_yioRemote;
     bool    m_raspberryPi;
     QString m_markerFileFirstRun;
+    QString m_error;
 };

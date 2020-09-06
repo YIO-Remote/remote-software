@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2020 Foo Bar <foo@bar.com>
+ * Copyright (C) 2020 Markus Zehnder <business@markuszehnder.ch>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -77,12 +77,24 @@ QString Environment::getConfigurationPath() const {
     return getResourcePath();
 }
 
+QString Environment::getUserStoragePath() const {
+    if (m_yioRemote) {
+        return "/var/yio";
+    }
+
+    // TODO(zehnm) refine storage path for non YIO remote environments
+    return getResourcePath() + "/UserData";
+}
+
 bool Environment::prepareFirstRun() {
     qCDebug(CLASS_LC) << "Creating marker file for first run:" << m_markerFileFirstRun;
 
+    m_error.clear();
+
     QFile file(m_markerFileFirstRun);
     if (!file.open(QIODevice::WriteOnly)) {
-        qCCritical(CLASS_LC) << "Error writing firstrun marker file:" << m_markerFileFirstRun;
+        m_error = "Error writing firstrun marker file: " + m_markerFileFirstRun;
+        qCCritical(CLASS_LC) << m_error;
         return false;
     }
     file.close();
