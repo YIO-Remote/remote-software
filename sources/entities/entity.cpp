@@ -22,8 +22,8 @@
 
 #include "entity.h"
 
-#include <QTimer>
 #include <QDebug>
+#include <QTimer>
 
 #include "../config.h"
 
@@ -51,9 +51,7 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
     setObjectName(entityId);
 
     QStringList f = Config::getInstance()->profileFavorites();
-    m_favorite    = f.contains(entityId);
-
-    qDebug() << "custom features" << m_custom_features;
+    m_favorite = f.contains(entityId);
 }
 
 Entity::~Entity() {}
@@ -133,8 +131,8 @@ QStringList Entity::customButtons() {
 void Entity::clickCustomButton(int index) {
     qDebug() << "clicking custom button" << index;
     if (m_integrationObj) {
-        qDebug() << "sendCustomCommand" << m_type << entity_id() << index;
-        m_integrationObj->sendCustomCommand(m_type, entity_id(), index, "");
+        qDebug() << "sending custom command" << m_type << entity_id() << index;
+        m_integrationObj->sendCommand(m_type, entity_id(), index, "custom_command");
     } else {
         qWarning() << "m_integrationObj is false";
     }
