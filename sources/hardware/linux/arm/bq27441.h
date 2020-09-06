@@ -117,6 +117,9 @@ class BQ27441 : public BatteryFuelGauge {
     // Extended Data Commands
     uint16_t getOpConfig();
 
+ public slots:
+    void  updateBatteryValues() override;
+
     // Device interface
  public:
     bool open() override;
@@ -146,5 +149,4 @@ class BQ27441 : public BatteryFuelGauge {
     bool  m_isCharging           = false;
     bool  m_wasLowBatteryWarning = false;
     float m_remainingLife        = 0;
-    void  updateBatteryValues();
 };

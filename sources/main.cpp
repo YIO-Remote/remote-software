@@ -227,6 +227,8 @@ int main(int argc, char* argv[]) {
                            hwFactory->getBatteryFuelGauge(), config, yioapi, integrations);
     Q_UNUSED(standbyControl);
     qmlRegisterSingletonType<StandbyControl>("StandbyControl", 1, 0, "StandbyControl", &StandbyControl::getQMLInstance);
+    QObject::connect(standbyControl, &StandbyControl::standByOff, hwFactory->getBatteryFuelGauge(),
+                     &BatteryFuelGauge::updateBatteryValues);
 
     // SOFTWARE UPDATE
     QVariantMap     appUpdCfg = config->getSettings().value("softwareupdate").toMap();
