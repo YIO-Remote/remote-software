@@ -77,9 +77,6 @@ void Entities::load() {
                 QVariantMap           map = type[k].toMap();
                 QObject *             obj = Integrations::getInstance()->get(map.value("integration").toString());
                 IntegrationInterface *integration = qobject_cast<IntegrationInterface *>(obj);
-                if (!integration) {
-                    qCWarning(CLASS_LC()) << "integration pointer is null" << map.value("integration").toString();
-                }
                 add(m_supportedEntities[i], map, integration);
             }
         }

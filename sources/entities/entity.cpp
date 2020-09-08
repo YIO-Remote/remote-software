@@ -123,18 +123,11 @@ bool Entity::isSupported(int feature) {
     return !!(m_supported_features[byte] & (1 << bit));
 }
 
-QStringList Entity::customButtons() {
-    qDebug() << "m_custom_features size:" << m_custom_features.size();
-    return m_custom_features;
-}
+QStringList Entity::customButtons() { return m_custom_features; }
 
 void Entity::clickCustomButton(int index) {
-    qDebug() << "clicking custom button" << index;
     if (m_integrationObj) {
-        qDebug() << "sending custom command" << m_type << entity_id() << index;
         m_integrationObj->sendCommand(m_type, entity_id(), index, "custom_command");
-    } else {
-        qWarning() << "m_integrationObj is false";
     }
 }
 
