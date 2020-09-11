@@ -50,4 +50,7 @@ class BatteryFuelGaugeMock : public BatteryFuelGauge {
     int     getHealth() override { return 100; }
     bool    getIsCharging() override { return false; }  // to test charging screen: return true
     float   remainingLife() override { return 2; }
+
+ public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void updateBatteryValues() override {};
 };
