@@ -124,13 +124,12 @@ Item {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     Timer { // timer that updates the time and date
         id: timer
-        interval: 100
+        interval: 2000
         repeat: true
         running: true
 
-        onTriggered:
-        {
-            timeText.text =  Qt.formatDateTime(new Date(),"hh:mm")
+        onTriggered: {
+            timeText.text = Qt.formatTime(new Date(), config.settings.clock12h ? "hh:mm AP" : "hh:mm")
         }
     }
 
@@ -139,7 +138,7 @@ Item {
     Text { // time in the middle
         id: timeText
         color: Style.color.text
-        text: "22:00"
+        text: ""
         verticalAlignment: Text.AlignVCenter
         height: parent.height
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }

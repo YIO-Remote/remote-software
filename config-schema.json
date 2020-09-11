@@ -799,6 +799,12 @@
           "title": "Enable Bluetooth area beacons",
           "default": false
         },
+        "clock12h": {
+          "$id": "#/properties/settings/properties/clock12h",
+          "type": "boolean",
+          "title": "Use 12-hour clock",
+          "default": false
+        },
         "language": {
           "$id": "#/properties/settings/properties/language",
           "type": "string",

@@ -4,6 +4,7 @@
     "settings": {
         "autobrightness": true,
         "bluetootharea": false,
+        "clock12h": false,
         "language": "en_US",
         "logging": {
             "console": true,
