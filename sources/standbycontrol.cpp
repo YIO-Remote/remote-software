@@ -179,13 +179,15 @@ void StandbyControl::wakeup() {
 
             m_wifiControl->on();
 
-            QObject::connect(m_wifiControl, &WifiControl::connected, this, [=]() {
+            QObject *context = new QObject(this);
+            QObject::connect(m_wifiControl, &WifiControl::connected, context, [=]() {
                 // connect integrations
                 for (int i = 0; i < m_integrations->list().length(); i++) {
                     IntegrationInterface *integrationObj =
                         qobject_cast<IntegrationInterface *>(m_integrations->list().at(i));
                     integrationObj->connect();
                 }
+                context->deleteLater();
             });
 
             m_displayControl->setMode(DisplayControl::StandbyOff);
