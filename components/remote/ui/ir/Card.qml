@@ -289,15 +289,14 @@ Rectangle {
         id: pagesSwipeView
         width: parent.width; height: parent.height - topItem.height - tooltips.height - 50
         anchors { top: topItem.bottom; topMargin: 0 }
-        currentIndex: 0
 
         // buttons
         Repeater {
-            id: buttonRepeater
             model: pages()
             Loader {
                 asynchronous: true
-                source: modelData
+                sourceComponent: modelData
+                onStatusChanged: if (status === Loader.Ready) pagesSwipeView.setCurrentIndex(0)
             }
         }
     }
@@ -318,7 +317,7 @@ Rectangle {
                 obj.isSupported(Remote.F_DIGIT_SEPARATOR) ||
                 obj.isSupported(Remote.F_DIGIT_0) ||
                 obj.isSupported(Remote.F_DIGIT_ENTER)) {
-            items.push("CardButtons.qml")
+            items.push(buttonView)
         }
         if (obj.isSupported(Remote.F_RECORD) ||
                 obj.isSupported(Remote.F_PLAY) ||
@@ -334,23 +333,72 @@ Rectangle {
                 obj.isSupported(Remote.F_BACK) ||
                 obj.isSupported(Remote.F_HOME) ||
                 obj.isSupported(Remote.F_MENU)) {
-            items.push("CardButtonsTransport.qml")
+            items.push(buttonTransportView)
         }
         if (obj.isSupported(Remote.F_FUNCTION_RED) ||
                 obj.isSupported(Remote.F_FUNCTION_GREEN) ||
                 obj.isSupported(Remote.F_FUNCTION_BLUE) ||
                 obj.isSupported(Remote.F_FUNCTION_YELLOW) ||
                 obj.isSupported(Remote.F_FUNCTION_ORANGE)) {
-            items.push("FunctionButtons.qml")
+            items.push(functionButtonView)
         }
         if (obj.channels.length > 0) {
-            items.push("CardChannels.qml")
+            items.push(channelView)
         }
         if (obj.customButtons().length > 0) {
-            items.push("CustomButtons.qml")
+            items.push(customButtonView)
         }
-        console.log(items)
         return items
+    }
+
+    Component {
+        id: buttonView
+        CardButtons {
+            Component.onCompleted: {
+                console.log("created: buttonView")
+                console.log("pagesSwipeView count:", pagesSwipeView.count)
+            }
+        }
+    }
+
+    Component {
+        id: buttonTransportView
+        CardButtonsTransport {
+            Component.onCompleted: {
+                console.log("created: buttonTransportView")
+                console.log("pagesSwipeView count:", pagesSwipeView.count)
+            }
+        }
+    }
+
+    Component {
+        id: channelView
+        CardChannels {
+            Component.onCompleted: {
+                console.log("created: channelView")
+                console.log("pagesSwipeView count:", pagesSwipeView.count)
+            }
+        }
+    }
+
+    Component {
+        id: customButtonView
+        CustomButtons {
+            Component.onCompleted: {
+                console.log("created: customButtonView")
+                console.log("pagesSwipeView count:", pagesSwipeView.count)
+            }
+        }
+    }
+
+    Component {
+        id: functionButtonView
+        FunctionButtons {
+            Component.onCompleted: {
+                console.log("created: functionButtonView")
+                console.log("pagesSwipeView count:", pagesSwipeView.count)
+            }
+        }
     }
 
     PageIndicator {
