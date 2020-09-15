@@ -292,24 +292,56 @@ Rectangle {
         currentIndex: 0
 
         // buttons
-        Loader {
-            asynchronous: true
-            sourceComponent: buttonView
+        Repeater {
+            model: (obj.isSupported(Remote.F_POWER_TOGGLE) ||
+                    (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) ||
+                    obj.isSupported(Remote.F_DIGIT_1) ||
+                    obj.isSupported(Remote.F_DIGIT_2) ||
+                    obj.isSupported(Remote.F_DIGIT_3) ||
+                    obj.isSupported(Remote.F_DIGIT_4) ||
+                    obj.isSupported(Remote.F_DIGIT_5) ||
+                    obj.isSupported(Remote.F_DIGIT_6) ||
+                    obj.isSupported(Remote.F_DIGIT_7) ||
+                    obj.isSupported(Remote.F_DIGIT_8) ||
+                    obj.isSupported(Remote.F_DIGIT_9) ||
+                    obj.isSupported(Remote.F_DIGIT_SEPARATOR) ||
+                    obj.isSupported(Remote.F_DIGIT_0) ||
+                    obj.isSupported(Remote.F_DIGIT_ENTER)) ? 1 : 0
+            Loader {
+                asynchronous: true
+                sourceComponent: buttonView
+            }
         }
 
         // transport buttons
-        Loader {
-            asynchronous: true
-            sourceComponent: buttonTransportView
+        Repeater {
+            model: (obj.isSupported(Remote.F_RECORD) ||
+                    obj.isSupported(Remote.F_PLAY) ||
+                    obj.isSupported(Remote.F_STOP) ||
+                    obj.isSupported(Remote.F_BACKWARD) ||
+                    obj.isSupported(Remote.F_PAUSE) ||
+                    obj.isSupported(Remote.F_FORWARD) ||
+                    obj.isSupported(Remote.F_PREVIOUS) ||
+                    obj.isSupported(Remote.F_INFO) ||
+                    obj.isSupported(Remote.F_NEXT) ||
+                    obj.isSupported(Remote.F_EXIT) ||
+                    obj.isSupported(Remote.F_GUIDE) ||
+                    obj.isSupported(Remote.F_BACK) ||
+                    obj.isSupported(Remote.F_HOME) ||
+                    obj.isSupported(Remote.F_MENU)) ? 1 : 0
+            Loader {
+                asynchronous: true
+                sourceComponent: buttonTransportView
+            }
         }
 
         // function buttons
         Repeater {
             model: (obj.isSupported(Remote.F_FUNCTION_RED) ||
-                     obj.isSupported(Remote.F_FUNCTION_GREEN) ||
-                     obj.isSupported(Remote.F_FUNCTION_BLUE) ||
-                     obj.isSupported(Remote.F_FUNCTION_YELLOW) ||
-                     obj.isSupported(Remote.F_FUNCTION_ORANGE)) ? 1 : 0
+                    obj.isSupported(Remote.F_FUNCTION_GREEN) ||
+                    obj.isSupported(Remote.F_FUNCTION_BLUE) ||
+                    obj.isSupported(Remote.F_FUNCTION_YELLOW) ||
+                    obj.isSupported(Remote.F_FUNCTION_ORANGE)) ? 1 : 0
             Loader {
                 asynchronous: true
                 sourceComponent: functionButtonView
@@ -326,9 +358,12 @@ Rectangle {
         }
 
         // custom buttons
-        Loader {
-            asynchronous: true
-            sourceComponent: customButtonView
+        Repeater {
+            model: (obj.customButtons().length > 0) ? 1 : 0
+            Loader {
+                asynchronous: true
+                sourceComponent: customButtonView
+            }
         }
 
     }
