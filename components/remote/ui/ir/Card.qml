@@ -293,104 +293,64 @@ Rectangle {
 
         // buttons
         Repeater {
-            model: (obj.isSupported(Remote.F_POWER_TOGGLE) ||
-                    (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) ||
-                    obj.isSupported(Remote.F_DIGIT_1) ||
-                    obj.isSupported(Remote.F_DIGIT_2) ||
-                    obj.isSupported(Remote.F_DIGIT_3) ||
-                    obj.isSupported(Remote.F_DIGIT_4) ||
-                    obj.isSupported(Remote.F_DIGIT_5) ||
-                    obj.isSupported(Remote.F_DIGIT_6) ||
-                    obj.isSupported(Remote.F_DIGIT_7) ||
-                    obj.isSupported(Remote.F_DIGIT_8) ||
-                    obj.isSupported(Remote.F_DIGIT_9) ||
-                    obj.isSupported(Remote.F_DIGIT_SEPARATOR) ||
-                    obj.isSupported(Remote.F_DIGIT_0) ||
-                    obj.isSupported(Remote.F_DIGIT_ENTER)) ? 1 : 0
+            id: buttonRepeater
+            model: pages()
             Loader {
                 asynchronous: true
-                sourceComponent: buttonView
+                source: modelData
             }
         }
+    }
 
-        // transport buttons
-        Repeater {
-            model: (obj.isSupported(Remote.F_RECORD) ||
-                    obj.isSupported(Remote.F_PLAY) ||
-                    obj.isSupported(Remote.F_STOP) ||
-                    obj.isSupported(Remote.F_BACKWARD) ||
-                    obj.isSupported(Remote.F_PAUSE) ||
-                    obj.isSupported(Remote.F_FORWARD) ||
-                    obj.isSupported(Remote.F_PREVIOUS) ||
-                    obj.isSupported(Remote.F_INFO) ||
-                    obj.isSupported(Remote.F_NEXT) ||
-                    obj.isSupported(Remote.F_EXIT) ||
-                    obj.isSupported(Remote.F_GUIDE) ||
-                    obj.isSupported(Remote.F_BACK) ||
-                    obj.isSupported(Remote.F_HOME) ||
-                    obj.isSupported(Remote.F_MENU)) ? 1 : 0
-            Loader {
-                asynchronous: true
-                sourceComponent: buttonTransportView
-            }
+    function pages() {
+        var items = []
+        if (obj.isSupported(Remote.F_POWER_TOGGLE) ||
+                (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) ||
+                obj.isSupported(Remote.F_DIGIT_1) ||
+                obj.isSupported(Remote.F_DIGIT_2) ||
+                obj.isSupported(Remote.F_DIGIT_3) ||
+                obj.isSupported(Remote.F_DIGIT_4) ||
+                obj.isSupported(Remote.F_DIGIT_5) ||
+                obj.isSupported(Remote.F_DIGIT_6) ||
+                obj.isSupported(Remote.F_DIGIT_7) ||
+                obj.isSupported(Remote.F_DIGIT_8) ||
+                obj.isSupported(Remote.F_DIGIT_9) ||
+                obj.isSupported(Remote.F_DIGIT_SEPARATOR) ||
+                obj.isSupported(Remote.F_DIGIT_0) ||
+                obj.isSupported(Remote.F_DIGIT_ENTER)) {
+            items.push("CardButtons.qml")
         }
-
-        // function buttons
-        Repeater {
-            model: (obj.isSupported(Remote.F_FUNCTION_RED) ||
-                    obj.isSupported(Remote.F_FUNCTION_GREEN) ||
-                    obj.isSupported(Remote.F_FUNCTION_BLUE) ||
-                    obj.isSupported(Remote.F_FUNCTION_YELLOW) ||
-                    obj.isSupported(Remote.F_FUNCTION_ORANGE)) ? 1 : 0
-            Loader {
-                asynchronous: true
-                sourceComponent: functionButtonView
-            }
+        if (obj.isSupported(Remote.F_RECORD) ||
+                obj.isSupported(Remote.F_PLAY) ||
+                obj.isSupported(Remote.F_STOP) ||
+                obj.isSupported(Remote.F_BACKWARD) ||
+                obj.isSupported(Remote.F_PAUSE) ||
+                obj.isSupported(Remote.F_FORWARD) ||
+                obj.isSupported(Remote.F_PREVIOUS) ||
+                obj.isSupported(Remote.F_INFO) ||
+                obj.isSupported(Remote.F_NEXT) ||
+                obj.isSupported(Remote.F_EXIT) ||
+                obj.isSupported(Remote.F_GUIDE) ||
+                obj.isSupported(Remote.F_BACK) ||
+                obj.isSupported(Remote.F_HOME) ||
+                obj.isSupported(Remote.F_MENU)) {
+            items.push("CardButtonsTransport.qml")
         }
-
-        // channels
-        Repeater {
-            model: (obj.channels.length > 0) ? 1 : 0
-            Loader {
-                asynchronous: true
-                sourceComponent: channelView
-            }
+        if (obj.isSupported(Remote.F_FUNCTION_RED) ||
+                obj.isSupported(Remote.F_FUNCTION_GREEN) ||
+                obj.isSupported(Remote.F_FUNCTION_BLUE) ||
+                obj.isSupported(Remote.F_FUNCTION_YELLOW) ||
+                obj.isSupported(Remote.F_FUNCTION_ORANGE)) {
+            items.push("FunctionButtons.qml")
         }
-
-        // custom buttons
-        Repeater {
-            model: (obj.customButtons().length > 0) ? 1 : 0
-            Loader {
-                asynchronous: true
-                sourceComponent: customButtonView
-            }
+        if (obj.channels.length > 0) {
+            items.push("CardChannels.qml")
         }
-
-    }
-
-    Component {
-        id: buttonView
-        CardButtons {}
-    }
-
-    Component {
-        id: buttonTransportView
-        CardButtonsTransport {}
-    }
-
-    Component {
-        id: channelView
-        CardChannels {}
-    }
-
-    Component {
-        id: customButtonView
-        CustomButtons {}
-    }
-
-    Component {
-        id: functionButtonView
-        FunctionButtons {}
+        if (obj.customButtons().length > 0) {
+            items.push("CustomButtons.qml")
+        }
+        console.log(items)
+        return items
     }
 
     PageIndicator {
