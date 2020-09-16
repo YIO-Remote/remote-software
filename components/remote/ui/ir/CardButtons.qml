@@ -30,52 +30,62 @@ Item {
     width: parent.width - 60
     anchors.horizontalCenter: parent.horizontalCenter
 
-    Rectangle {
-        id: powerButton
-        visible: obj.isSupported(Remote.F_POWER_TOGGLE) || (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF))
-        width: 118; height: 60
-        radius: height/2
-        color: Style.color.red
-        anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
+    ColumnLayout {
+        id: topLayout
+        width: parent.width
+        visible: obj.isSupported(Remote.F_SOURCE) || (obj.isSupported(Remote.F_POWER_TOGGLE) || (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)))
+        anchors { horizontalCenter: parent.horizontalCenter }
 
-        Text {
-            color: Style.color.line
-            text: Style.icon.power_on
-            width: 70; height: 70
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 60 }
-            anchors.centerIn: parent
-        }
+        Row {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 32
 
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            onClicked: {
-                Haptic.playEffect(Haptic.Click);
-                if (obj.isSupported(Remote.F_POWER_TOGGLE)) {
-                    obj.powerToggle();
-                } else if (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) {
-                    if (obj.isOn)
-                        obj.powerOff();
-                    else
-                        obj.powerOn();
+            Rectangle {
+                id: powerButton
+                visible: obj.isSupported(Remote.F_POWER_TOGGLE) || (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF))
+                width: 118; height: 60
+                radius: height/2
+                color: Style.color.red
+
+                Text {
+                    color: Style.color.line
+                    text: Style.icon.power_on
+                    width: 70; height: 70
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                    font {family: "icons"; pixelSize: 60 }
+                    anchors.centerIn: parent
                 }
+
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        if (obj.isSupported(Remote.F_POWER_TOGGLE)) {
+                            obj.powerToggle();
+                        } else if (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) {
+                            if (obj.isOn)
+                                obj.powerOff();
+                            else
+                                obj.powerOn();
+                        }
+                    }
+                }
+            } // Rectangle end
+
+            Button {
+                visible: obj.isSupported(Remote.F_SOURCE)
+                title: qsTr("Source") + translateHandler.emptyString
+                mouseArea.onClicked: { obj.source(); }
             }
         }
-    } // Rectangle end
-
-    Button {
-        visible: obj.isSupported(Remote.F_SOURCE)
-        anchors { top: parent.top; right: parent.right }
-        title: qsTr("Source") + translateHandler.emptyString
-        mouseArea.onClicked: { obj.source(); }
     }
 
     ColumnLayout {
         width: parent.width
         visible: obj.isSupported(Remote.F_DIGIT_0) && obj.isSupported(Remote.F_DIGIT_1) && obj.isSupported(Remote.F_DIGIT_2) && obj.isSupported(Remote.F_DIGIT_3) && obj.isSupported(Remote.F_DIGIT_4) && obj.isSupported(Remote.F_DIGIT_5)
                  && obj.isSupported(Remote.F_DIGIT_6) && obj.isSupported(Remote.F_DIGIT_7) && obj.isSupported(Remote.F_DIGIT_8) && obj.isSupported(Remote.F_DIGIT_9)
-        anchors { top: powerButton.bottom; topMargin: 30; horizontalCenter: parent.horizontalCenter }
+        anchors { top: topLayout.bottom; topMargin: 30; horizontalCenter: parent.horizontalCenter }
         spacing: 32
 
         Row {
