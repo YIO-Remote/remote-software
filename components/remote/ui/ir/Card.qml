@@ -289,14 +289,20 @@ Rectangle {
         id: pagesSwipeView
         width: parent.width; height: parent.height - topItem.height - tooltips.height - 50
         anchors { top: topItem.bottom; topMargin: 0 }
+        visible: false
 
         // buttons
         Repeater {
             model: pages()
-            Loader {
+            delegate: Loader {
                 asynchronous: true
                 sourceComponent: modelData
-                onStatusChanged: if (status === Loader.Ready) pagesSwipeView.setCurrentIndex(0)
+                onLoaded: {
+                    if (index == 0) {
+                        pagesSwipeView.setCurrentIndex(0)
+                        pagesSwipeView.visible = true
+                    }
+                }
             }
         }
     }
