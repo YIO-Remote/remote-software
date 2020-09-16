@@ -58,8 +58,8 @@ Item {
         }
 
         Component.onCompleted: {
-            console.log("customButtonFlick.contentHeight:", customButtonFlick.contentHeight)
-            console.log("customButtonRep.count:", customButtonRep.count)
+            //console.log("customButtonFlick.contentHeight:", customButtonFlick.contentHeight)
+            //console.log("customButtonRep.count:", customButtonRep.count)
         }
     }
 }

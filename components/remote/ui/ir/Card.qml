@@ -355,8 +355,8 @@ Rectangle {
         id: buttonView
         CardButtons {
             Component.onCompleted: {
-                console.log("created: buttonView")
-                console.log("pagesSwipeView count:", pagesSwipeView.count)
+                //console.log("created: buttonView")
+                //console.log("pagesSwipeView count:", pagesSwipeView.count)
             }
         }
     }
@@ -365,8 +365,8 @@ Rectangle {
         id: buttonTransportView
         CardButtonsTransport {
             Component.onCompleted: {
-                console.log("created: buttonTransportView")
-                console.log("pagesSwipeView count:", pagesSwipeView.count)
+                //console.log("created: buttonTransportView")
+                //console.log("pagesSwipeView count:", pagesSwipeView.count)
             }
         }
     }
@@ -375,8 +375,8 @@ Rectangle {
         id: channelView
         CardChannels {
             Component.onCompleted: {
-                console.log("created: channelView")
-                console.log("pagesSwipeView count:", pagesSwipeView.count)
+                //console.log("created: channelView")
+                //console.log("pagesSwipeView count:", pagesSwipeView.count)
             }
         }
     }
@@ -385,8 +385,8 @@ Rectangle {
         id: customButtonView
         CustomButtons {
             Component.onCompleted: {
-                console.log("created: customButtonView")
-                console.log("pagesSwipeView count:", pagesSwipeView.count)
+                //console.log("created: customButtonView")
+                //console.log("pagesSwipeView count:", pagesSwipeView.count)
             }
         }
     }
@@ -395,8 +395,8 @@ Rectangle {
         id: functionButtonView
         FunctionButtons {
             Component.onCompleted: {
-                console.log("created: functionButtonView")
-                console.log("pagesSwipeView count:", pagesSwipeView.count)
+                //console.log("created: functionButtonView")
+                //console.log("pagesSwipeView count:", pagesSwipeView.count)
             }
         }
     }
