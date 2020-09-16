@@ -84,8 +84,8 @@
         <file>setup/SetupStep4Other.qml</file>
         <file>basic_ui/ConfigError.qml</file>
         <file>components/remote/ui/ir/CardButtonsTransport.qml</file>
-        <file>components/remote/ui/ir/CustomButtons.qml</file>
+        <file>components/remote/ui/ir/CardButtonsCustom.qml</file>
         <file>components/remote/ui/ir/IconButton.qml</file>
-        <file>components/remote/ui/ir/FunctionButtons.qml</file>
+        <file>components/remote/ui/ir/CardButtonsFunction.qml</file>
     </qresource>
 </RCC>
