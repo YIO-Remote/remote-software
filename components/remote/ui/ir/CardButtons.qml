@@ -31,10 +31,9 @@ Item {
     anchors.horizontalCenter: parent.horizontalCenter
 
     ColumnLayout {
-        id: topLayout
         width: parent.width
-        visible: obj.isSupported(Remote.F_SOURCE) || (obj.isSupported(Remote.F_POWER_TOGGLE) || (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)))
-        anchors { horizontalCenter: parent.horizontalCenter }
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 32
 
         Row {
             Layout.alignment: Qt.AlignHCenter
@@ -43,7 +42,7 @@ Item {
             Rectangle {
                 id: powerButton
                 visible: obj.isSupported(Remote.F_POWER_TOGGLE) || (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF))
-                width: 118; height: 60
+                width: 118; height: 70
                 radius: height/2
                 color: Style.color.red
 
@@ -79,14 +78,6 @@ Item {
                 mouseArea.onClicked: { obj.source(); }
             }
         }
-    }
-
-    ColumnLayout {
-        width: parent.width
-        visible: obj.isSupported(Remote.F_DIGIT_0) && obj.isSupported(Remote.F_DIGIT_1) && obj.isSupported(Remote.F_DIGIT_2) && obj.isSupported(Remote.F_DIGIT_3) && obj.isSupported(Remote.F_DIGIT_4) && obj.isSupported(Remote.F_DIGIT_5)
-                 && obj.isSupported(Remote.F_DIGIT_6) && obj.isSupported(Remote.F_DIGIT_7) && obj.isSupported(Remote.F_DIGIT_8) && obj.isSupported(Remote.F_DIGIT_9)
-        anchors { top: topLayout.bottom; topMargin: 30; horizontalCenter: parent.horizontalCenter }
-        spacing: 32
 
         Row {
             Layout.alignment: Qt.AlignHCenter
