@@ -26,10 +26,6 @@
               name: "RPi0 Release Build", artifact: "RPi0-release",
               qmake-args: "CONFIG+=release"
             }
-          - {
-              name: "RPi0 Debug Build", artifact: "RPi0-debug",
-              qmake-args: "CONFIG+=debug CONFIG+=qml_debug"
-            }
   
       steps:
         - name: github env vars
@@ -56,7 +52,7 @@
   
         - name: Cross compile
           id: cross-compile
-          uses: zehnm/yio-crosscompile-action@master
+          uses: zehnm/yio-crosscompile-action@v1.1.0
           with:
             project-name: ${{ env.PROJECT_NAME }}
             output-path: ${GITHUB_WORKSPACE}/binaries/app
@@ -75,17 +71,13 @@
       needs: build
 
       steps:
-        - run: mkdir release debug
+        - run: mkdir release
         - name: Download release artifact
           uses: actions/download-artifact@v1
           with:
             name: ${{ env.APP_NAME }}-${{ env.APP_ARCHITECTURE }}-release
             path: ./release
-        - name: Download debug artifact
-          uses: actions/download-artifact@v1
-          with:
-            name: ${{ env.APP_NAME }}-${{ env.APP_ARCHITECTURE }}-debug
-            path: ./debug
+
         - name: Get artifact version
           run: |
             read -r APP_VERSION < release/version.txt
@@ -95,7 +87,6 @@
         - name: Create GitHub development build archives
           if: "!contains(github.ref, 'tags/v')"
           run: |
-            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
             for filename in *.tar; do echo "sha256  `sha256sum $filename`" >> ${{ env.HASH_FILENAME }}; done;
 
@@ -114,7 +105,6 @@
         - name: Create GitHub release archives
           if: "contains(github.ref, 'tags/v')"
           run: |
-            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
             tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
             for filename in *.tar; do echo "sha256  `sha256sum $filename`" >> ${{ env.HASH_FILENAME }}; done;
 
@@ -125,5 +115,5 @@
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             prerelease: false
             files: |
-              *.tar
-              ${{ env.HASH_FILENAME }}
+                *.tar
+                ${{ env.HASH_FILENAME }}
