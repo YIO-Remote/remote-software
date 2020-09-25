@@ -38,6 +38,7 @@
 #include <QSocketNotifier>
 #include <QString>
 #include <QStringRef>
+#include <QTimer>
 #include <memory>
 #include <mutex>
 #include <thread>
