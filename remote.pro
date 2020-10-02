@@ -28,10 +28,24 @@ CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# SOFTWARE VERSION
-GIT_HASH = "$$system(git log -1 --format="%H")"
-GIT_BRANCH = "$$system(git rev-parse --abbrev-ref HEAD)"
-GIT_VERSION = "$$system(git describe --match "v[0-9]*" --tags HEAD --always)"
+# === Version and build information ===========================================
+# If built in Buildroot use custom package version, otherwise Git
+isEmpty(YIO_BUILD_VERSION) {
+    GIT_VERSION = "$$system(git describe --match "v[0-9]*" --tags HEAD --always)"
+    GIT_HASH = "$$system(git log -1 --format="%H")"
+    GIT_BRANCH = "$$system(git rev-parse --abbrev-ref HEAD)"
+} else {
+    GIT_VERSION = $$YIO_BUILD_VERSION
+    contains(GIT_VERSION, "^v?(0|[1-9]\d*)\..*") {
+        # (simplified) version string = regular release
+        GIT_HASH = ""
+        GIT_BRANCH = "master"
+    } else {
+        # git hash as version = custom build
+        GIT_HASH = $$YIO_BUILD_VERSION
+        GIT_BRANCH = ""
+    }
+}
 REMOTE_VERSION = $$replace(GIT_VERSION, v, "")
 DEFINES += APP_VERSION=\\\"$$REMOTE_VERSION\\\"
 
@@ -42,6 +56,8 @@ win32 {
 } else {
     BUILDDATE=$$system(date +"%Y-%m-%dT%H:%M:%S")
 }
+# =============================================================================
+
 CONFIG(debug, debug|release) {
     DEBUG_BUILD = true
 } else {
