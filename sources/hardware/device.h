@@ -25,6 +25,8 @@
 #include <QIODevice>
 #include <QObject>
 
+#include "../logging.h"
+
 // debug macro from https://stackoverflow.com/a/1644898
 #ifdef QT_DEBUG
 #define DEBUG_TEST 1
@@ -34,12 +36,12 @@
 
 // ASSERT_DEVICE_OPEN is a safety check if the device is really open.
 // It should only be used where it is expected that the device is open and
-// MAY NOT be used where it's possible that the device might be closed!
+// MAY NOT be used where it's possible that the device could be closed!
 #define ASSERT_DEVICE_OPEN(retVal) \
     do { \
       if (DEBUG_TEST) { \
         if (!isOpen()) { \
-            qCWarning(CLASS_LC) << DBG_WARN_DEVICE_CLOSED; \
+            qCWarning(logCategory()) << DBG_WARN_DEVICE_CLOSED; \
             return retVal; \
         } \
       } \

@@ -27,6 +27,7 @@ CONFIG += c++17 disable-desktop
 CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_MESSAGELOGCONTEXT
 
 # === Version and build information ===========================================
 # If built in Buildroot use custom package version, otherwise Git
@@ -144,6 +145,7 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/logger.h \
+    sources/logging.h \
     sources/softwareupdate.h \
     sources/standbycontrol.h \
     sources/translation.h \
@@ -191,6 +193,7 @@ SOURCES += \
     sources/hardware/touchdetect.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
+    sources/logging.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \

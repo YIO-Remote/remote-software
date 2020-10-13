@@ -26,7 +26,6 @@
 #include <wiringPi.h>
 
 #include <QDateTime>
-#include <QLoggingCategory>
 #include <QtDebug>
 
 #include "../../../configutil.h"
@@ -43,8 +42,6 @@
 
 const QString HardwareFactoryYio::DEF_I2C_DEVICE = "/dev/i2c-3";
 const int HardwareFactoryYio::DEF_BATTERY_CAPACITY = 2500;
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.yio");
 
 HardwareFactoryYio::HardwareFactoryYio(const QVariantMap &config, const QString &profile, QObject *parent)
     : HardwareFactoryLinux(config, profile, parent) {
@@ -119,11 +116,11 @@ bool HardwareFactoryYio::initializeWiringPi(const QVariantMap &config) {
     // The 2nd IO expander for display SPI and battery charger is accessed through WiringPi
     auto pinBase = ConfigUtil::getValue(config, "ioExpander/pinBase", 100).toInt();
     auto id = ConfigUtil::getValue(config, "ioExpander/i2cId", MCP23017_ADDRESS2).toInt();
-    qCDebug(CLASS_LC) << "Initializing 2nd MCP23017ML IO expander using WiringPi on i2c address" << id
+    qCDebug(lcHwFactory) << "Initializing 2nd MCP23017ML IO expander using WiringPi on i2c address" << id
                       << "with pin base" << pinBase;
 
     if (mcp23017Setup(pinBase, id) == 0) {
-        qCCritical(CLASS_LC) << "Error initializing 2nd MCP23017ML IO expander! i2c id:" << id
+        qCCritical(lcHwFactory) << "Error initializing 2nd MCP23017ML IO expander! i2c id:" << id
                              << "pin base:" << pinBase;
         return false;
     }
@@ -158,7 +155,7 @@ int HardwareFactoryYio::initialize() {
             while (!p_apds9960->colorDataReady()) {
                 delay(5);
                 if (QDateTime::currentMSecsSinceEpoch() > timeout) {
-                    qCWarning(CLASS_LC) << "Error retrieving color data from APDS9960 sensor";
+                    qCWarning(lcHwFactory) << "Error retrieving color data from APDS9960 sensor";
                     break;
                 }
             }

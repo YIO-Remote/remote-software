@@ -26,19 +26,17 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QJsonDocument>
-#include <QLoggingCategory>
 #include <QUrl>
-#include <QtDebug>
-
 #include <iostream>
 #include <string>
-
 #include <valijson/adapters/qtjson_adapter.hpp>
 #include <valijson/schema.hpp>
 #include <valijson/schema_parser.hpp>
 #include <valijson/utils/qtjson_utils.hpp>
 #include <valijson/validation_results.hpp>
 #include <valijson/validator.hpp>
+
+#include "logging.h"
 
 using std::endl;
 
@@ -47,8 +45,6 @@ using valijson::SchemaParser;
 using valijson::ValidationResults;
 using valijson::Validator;
 using valijson::adapters::QtJsonAdapter;
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "json");
 
 JsonFile::JsonFile(QObject *parent) : QObject(parent) {}
 
@@ -63,7 +59,9 @@ void JsonFile::setName(const QString &name) {
     }
 }
 
-QString JsonFile::fileName() const { return QFileInfo(m_file).fileName(); }
+QString JsonFile::fileName() const {
+    return QFileInfo(m_file).fileName();
+}
 
 bool JsonFile::rename(const QString &newName) {
     bool success = m_file.rename(newName);
@@ -76,33 +74,33 @@ bool JsonFile::rename(const QString &newName) {
 bool JsonFile::write(const QVariantMap &data) {
     m_error.clear();
     if (m_file.fileName().isEmpty()) {
-        qCWarning(CLASS_LC) << "Not writing json file: no filename set!";
+        qCWarning(lcCfgJson) << "Not writing json file: no filename set!";
         m_error = tr("empty name");
         return false;
     }
     QJsonDocument doc = QJsonDocument::fromVariant(data);
     if (doc.isNull() || doc.isEmpty()) {
-        qCWarning(CLASS_LC) << "Not writing json file" << m_file.fileName() << ": empty data!";
+        qCWarning(lcCfgJson) << "Not writing json file" << m_file.fileName() << ": empty data!";
         m_error = tr("empty data");
         return false;
     }
 
     if (!validate(doc, m_error)) {
-        qCWarning(CLASS_LC) << "JSON document failed schema validation before writing:" << m_file.fileName();
+        qCWarning(lcCfgJson) << "JSON document failed schema validation before writing:" << m_file.fileName();
         return false;
     }
 
     QByteArray json = doc.toJson();
     if (!m_file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
         m_error = tr("cannot open file '%1' for writing: %2").arg(m_file.fileName()).arg((m_file.errorString()));
-        qCWarning(CLASS_LC) << m_error;
+        qCWarning(lcCfgJson) << m_error;
         return false;
     }
     bool success = m_file.write(json) == json.size();
     m_file.close();
     if (!success) {
         m_error = m_file.errorString();
-        qCWarning(CLASS_LC) << "Error writing json file:" << m_error;
+        qCWarning(lcCfgJson) << "Error writing json file:" << m_error;
     }
     return success;
 }
@@ -115,7 +113,7 @@ QVariant JsonFile::read() {
     }
 
     if (!validate(doc, m_error)) {
-        qCWarning(CLASS_LC) << "Read JSON document failed schema validation:" << m_file.fileName();
+        qCWarning(lcCfgJson) << "Read JSON document failed schema validation:" << m_file.fileName();
         // FIXME decide on how to handle errors:
         // a) only schema validated docs are used:
         //    -> app needs fatal error handling during startup, otherwise: spinning circle of death
@@ -129,7 +127,7 @@ QVariant JsonFile::read() {
 
 bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc) {
     if (path.isEmpty()) {
-        qCWarning(CLASS_LC) << "Cannot load json file: no filename set!";
+        qCWarning(lcCfgJson) << "Cannot load json file: no filename set!";
         m_error = tr("empty name");
         return false;
     }
@@ -138,7 +136,7 @@ bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc) {
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         m_error = tr("cannot open file '%1' for reading: %2").arg(file.fileName()).arg((file.errorString()));
-        qCWarning(CLASS_LC) << m_error;
+        qCWarning(lcCfgJson) << m_error;
         return false;
     }
     QByteArray json = file.readAll();
@@ -147,7 +145,7 @@ bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc) {
     doc = QJsonDocument::fromJson(json, &error);
     if (error.error != QJsonParseError::NoError) {
         m_error = tr("invalid JSON file '%1' at offset %2").arg(error.errorString()).arg(error.offset);
-        qCCritical(CLASS_LC) << m_error;
+        qCCritical(lcCfgJson) << m_error;
         return false;
     }
 
@@ -156,7 +154,7 @@ bool JsonFile::loadDocument(const QString &path, QJsonDocument &doc) {
 
 bool JsonFile::validate(const QJsonDocument &doc, QString &errorText) {
     if (m_schemaPath.isEmpty()) {
-        qCDebug(CLASS_LC) << "Skipping json document schema validation: no schema file set";
+        qCDebug(lcCfgJson) << "Skipping json document schema validation: no schema file set";
         return true;
     }
 

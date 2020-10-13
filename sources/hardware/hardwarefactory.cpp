@@ -22,7 +22,6 @@
 
 #include "hardwarefactory.h"
 
-#include <QLoggingCategory>
 #include <QtDebug>
 
 #include "../config.h"
@@ -46,8 +45,6 @@
 #include "hardwarefactory_default.h"
 #endif
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory");
-
 HardwareFactory *HardwareFactory::s_instance = nullptr;
 
 HardwareFactory::HardwareFactory(QObject *parent) : QObject(parent) {}
@@ -69,7 +66,7 @@ HardwareFactory *HardwareFactory::build(const QString &configFileName, const QSt
         // FIXME decide how to proceed:
         // a) use an empty configuration for build to use default values
         // b) return null and let caller handle this as a fatal error.
-        qCCritical(CLASS_LC).noquote() << "Invalid hardware configuration!"
+        qCCritical(lcHwFactory).noquote() << "Invalid hardware configuration!"
                                        << "Ignoring configuration file and using default values. Errors:" << endl
                                        << hwCfg.error();
         config.clear();
@@ -79,7 +76,7 @@ HardwareFactory *HardwareFactory::build(const QString &configFileName, const QSt
 
 HardwareFactory *HardwareFactory::build(const QVariantMap &config, const QString &profile) {
     if (s_instance != nullptr) {
-        qCCritical(CLASS_LC)
+        qCCritical(lcHwFactory)
             << "BUG ALERT: Invalid program flow! HardwareFactory already initialized, ignoring build() call.";
         return s_instance;
     }

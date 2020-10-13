@@ -29,10 +29,7 @@
 
 #include <sysinfoapi.h>
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "sysinfo");
+#include "../../logging.h"
 
 SystemInfoWin::SystemInfoWin(QObject* parent) : SystemInfo(parent) {}
 
@@ -90,7 +87,7 @@ bool SystemInfoWin::getCpuSample(SystemInfoWin::CpuSample* sample) {
     FILETIME kernelTime, userTime, idleTime;
 
     if (!GetSystemTimes(&idleTime, &kernelTime, &userTime)) {
-        qCCritical(CLASS_LC) << "Error getting system time information";
+        qCCritical(lcSysInfo) << "Error getting system time information";
         return false;
     }
 

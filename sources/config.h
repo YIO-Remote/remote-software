@@ -26,7 +26,6 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QtDebug>
 
 #include "environment.h"
 #include "jsonfile.h"

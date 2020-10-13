@@ -23,13 +23,13 @@
 #include "environment.h"
 
 #include <QCoreApplication>
-#include <QDebug>
 #include <QFile>
 #include <QFileInfo>
-#include <QLoggingCategory>
 #include <QStorageInfo>
 #include <QSysInfo>
 #include <QTextStream>
+
+#include "logging.h"
 
 const char *Environment::ENV_YIO_HOME = "YIO_HOME";
 const char *Environment::ENV_YIO_APP_DIR = "YIO_APP_DIR";
@@ -37,8 +37,6 @@ const char *Environment::ENV_YIO_OS_VERSION = "YIO_OS_VERSION";
 const char *Environment::ENV_YIO_PLUGIN_DIR = "YIO_PLUGIN_DIR";
 
 const QString Environment::UNKNOWN = "UNKNOWN";
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "env");
 
 Environment::Environment(QObject *parent) : QObject(parent), m_markerFileFirstRun("/firstrun") {
     m_os = determineOS();
@@ -54,11 +52,13 @@ Environment::Environment(QObject *parent) : QObject(parent), m_markerFileFirstRu
         }
     }
 
-    qCDebug(CLASS_LC) << "Device type:" << m_deviceType << "RPi revision:" << rpiRevision
-                      << "YIO remote:" << m_yioRemote << "First run marker file:" << m_markerFileFirstRun;
+    qCDebug(lcEnv) << "Device type:" << m_deviceType << "RPi revision:" << rpiRevision << "YIO remote:" << m_yioRemote
+                   << "First run marker file:" << m_markerFileFirstRun;
 }
 
-QString Environment::getRemoteOsVersion() const { return qEnvironmentVariable(ENV_YIO_OS_VERSION, UNKNOWN); }
+QString Environment::getRemoteOsVersion() const {
+    return qEnvironmentVariable(ENV_YIO_OS_VERSION, UNKNOWN);
+}
 
 QString Environment::getResourcePath() const {
     QString appPath = QCoreApplication::applicationDirPath();
@@ -87,14 +87,14 @@ QString Environment::getUserStoragePath() const {
 }
 
 bool Environment::prepareFirstRun() {
-    qCDebug(CLASS_LC) << "Creating marker file for first run:" << m_markerFileFirstRun;
+    qCDebug(lcEnv) << "Creating marker file for first run:" << m_markerFileFirstRun;
 
     m_error.clear();
 
     QFile file(m_markerFileFirstRun);
     if (!file.open(QIODevice::WriteOnly)) {
         m_error = "Error writing firstrun marker file: " + m_markerFileFirstRun;
-        qCCritical(CLASS_LC) << m_error;
+        qCCritical(lcEnv) << m_error;
         return false;
     }
     file.close();
@@ -103,12 +103,12 @@ bool Environment::prepareFirstRun() {
 
 bool Environment::isFirstRun() const {
     bool firstRun = QFile::exists(m_markerFileFirstRun);
-    qCDebug(CLASS_LC) << "First run:" << firstRun;
+    qCDebug(lcEnv) << "First run:" << firstRun;
     return firstRun;
 }
 
 bool Environment::finishFirstRun() {
-    qCDebug(CLASS_LC) << "First run finished, removing marker file:" << m_markerFileFirstRun;
+    qCDebug(lcEnv) << "First run finished, removing marker file:" << m_markerFileFirstRun;
     return QFile::remove(m_markerFileFirstRun);
 }
 
@@ -153,10 +153,10 @@ QString Environment::getRaspberryRevision(OS os) {
         }
         cpuinfo.close();
     } else {
-        qCDebug(CLASS_LC) << "Error opening /proc/cpuinfo:" << cpuinfo.errorString();
+        qCDebug(lcEnv) << "Error opening /proc/cpuinfo:" << cpuinfo.errorString();
     }
 
-    qCDebug(CLASS_LC) << "cpuinfo: hardware=" << hardware << "revision=" << revision;
+    qCDebug(lcEnv) << "cpuinfo: hardware=" << hardware << "revision=" << revision;
 
     // TODO(zehnm) is this really required? Or is RPi always BCM2835? Looks like a kernel thing...
     if (hardware.contains(QRegExp("(BCM2835|BCM2836|BCM2837|BCM2838|BCM2711|BCM2708|BCM2709)"))) {
@@ -168,7 +168,7 @@ QString Environment::getRaspberryRevision(OS os) {
 
 bool Environment::runningOnYioRemote(const QString &rpiRevision) {
     if (qEnvironmentVariableIsSet("I_AM_YIO")) {
-        qCInfo(CLASS_LC) << "Magic env variable set: we are now a YIO remote!";
+        qCInfo(lcEnv) << "Magic env variable set: we are now a YIO remote!";
         return true;
     }
 

@@ -22,7 +22,6 @@
 
 #include "blind.h"
 #include <QQmlApplicationEngine>
-#include <QtDebug>
 
 BlindInterface::~BlindInterface() {}
 

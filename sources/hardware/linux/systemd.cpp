@@ -20,26 +20,27 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QProcess>
-#include <QtDebug>
-
-#include "../hw_config.h"
 #include "systemd.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "systemd");
+#include <QProcess>
+
+#include "../../logging.h"
+#include "../hw_config.h"
 
 // TODO(mze) direct d-bus interaction? https://doc.qt.io/qt-5/qtdbus-index.html
 Systemd::Systemd(const QMap<SystemServiceName::Enum, QString> &serviceNameMap, QObject *parent)
     : SystemService(parent),
       m_useSudo(HW_DEF_SYSTEMD_SUDO),
       m_systemctlTimeout(HW_DEF_SYSTEMD_TIMEOUT),
-      m_serviceNameMap(serviceNameMap) {
+      m_serviceNameMap(serviceNameMap) {}
+
+void Systemd::setUseSudo(bool sudo) {
+    m_useSudo = sudo;
 }
 
-void Systemd::setUseSudo(bool sudo) { m_useSudo = sudo; }
-
-bool Systemd::isUseSudo() { return m_useSudo; }
+bool Systemd::isUseSudo() {
+    return m_useSudo;
+}
 
 bool Systemd::startService(SystemServiceName::Enum serviceName) {
     QString cmd = "systemctl start %1";
@@ -62,7 +63,7 @@ bool Systemd::reloadService(SystemServiceName::Enum serviceName) {
 }
 
 bool Systemd::launch(const QString &command) {
-    qCDebug(CLASS_LC) << command;
+    qCDebug(lcSystemd) << command;
 
     QProcess process;
 
@@ -76,12 +77,16 @@ bool Systemd::launch(const QString &command) {
         return true;
     }
 
-    qCWarning(CLASS_LC) << "Failed to execute" << command << ":"
-                        << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
-                        << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
+    qCWarning(lcSystemd) << "Failed to execute" << command << ":"
+                         << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
+                         << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
     return false;
 }
 
-int Systemd::systemctlTimeout() const { return m_systemctlTimeout; }
+int Systemd::systemctlTimeout() const {
+    return m_systemctlTimeout;
+}
 
-void Systemd::setSystemctlTimeout(int systemctlTimeout) { m_systemctlTimeout = systemctlTimeout; }
+void Systemd::setSystemctlTimeout(int systemctlTimeout) {
+    m_systemctlTimeout = systemctlTimeout;
+}

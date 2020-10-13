@@ -23,15 +23,12 @@
 
 #include "apds9960light.h"
 
-#include <QLoggingCategory>
 #include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960.light");
 
 Apds9960LightSensor::Apds9960LightSensor(APDS9960 *apds, QObject *parent)
     : LightSensor("APDS9960 light sensor", parent), p_apds(apds) {
     Q_ASSERT(apds);
-    qCDebug(CLASS_LC) << name();
+    qCDebug(lcApds9960Light) << name();
 }
 
 int Apds9960LightSensor::readAmbientLight() {
@@ -43,14 +40,16 @@ int Apds9960LightSensor::readAmbientLight() {
         m_ambientLight = p_apds->getAmbientLight();
         p_apds->getColorData(&m_r, &m_g, &m_b, &m_c);
 
-        qCDebug(CLASS_LC) << "Ambientlight:" << m_ambientLight;
-        qCDebug(CLASS_LC) << "Lux:" << calculateIlluminance(m_r, m_g, m_b);  // not really precise
+        qCDebug(lcApds9960Light) << "Ambientlight:" << m_ambientLight;
+        qCDebug(lcApds9960Light) << "Lux:" << calculateIlluminance(m_r, m_g, m_b);  // not really precise
     }
 
     return static_cast<int>(m_ambientLight);
 }
 
-const QLoggingCategory &Apds9960LightSensor::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory &Apds9960LightSensor::logCategory() const {
+    return lcApds9960Light();
+}
 
 uint16_t Apds9960LightSensor::calculateIlluminance(uint16_t r, uint16_t g, uint16_t b) {
     float lux;

@@ -24,9 +24,8 @@
 #include "softwareupdate.h"
 
 #include <QDataStream>
-#include <QDebug>
 #include <QJsonDocument>
-#include <QLoggingCategory>
+#include <QJsonObject>
 #include <QProcess>
 #include <QUrlQuery>
 
@@ -37,8 +36,6 @@
 
 static const QString UPDATE_BASENAME = "latest";
 static const QString UPDATE_FILEMARKER = "latest.version";
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "softwareupdate");
 
 SoftwareUpdate *SoftwareUpdate::s_instance = nullptr;
 
@@ -60,12 +57,12 @@ SoftwareUpdate::SoftwareUpdate(const QVariantMap &cfg, BatteryFuelGauge *battery
 
     int checkIntervallSec = cfg.value("checkInterval", 3600).toInt();  // 1 hour
     if (checkIntervallSec < 600) {
-        qCInfo(CLASS_LC) << "Adjusting check intervall to 600s because configured value is too short!";
+        qCInfo(lcOta) << "Adjusting check intervall to 600s because configured value is too short!";
         checkIntervallSec = 600;
     }
 
-    qCDebug(CLASS_LC) << "Auto update:" << m_autoUpdate << ", app update url:" << m_appUpdateUrl.toString()
-                      << ", download dir:" << m_downloadDir.path();
+    qCDebug(lcOta) << "Auto update:" << m_autoUpdate << ", app update url:" << m_appUpdateUrl.toString()
+                   << ", download dir:" << m_downloadDir.path();
 
     m_checkForUpdateTimer.setInterval(checkIntervallSec * 1000);
     connect(&m_checkForUpdateTimer, &QTimer::timeout, this, &SoftwareUpdate::onCheckForUpdateTimerTimeout);
@@ -107,14 +104,13 @@ QObject *SoftwareUpdate::getQMLInstance(QQmlEngine *engine, QJSEngine *scriptEng
 void SoftwareUpdate::setAutoUpdate(bool update) {
     m_autoUpdate = update;
     emit autoUpdateChanged();
-    qCDebug(CLASS_LC) << "Autoupdate:" << m_autoUpdate;
+    qCDebug(lcOta) << "Autoupdate:" << m_autoUpdate;
 
     if (update == false) {
-        qCDebug(CLASS_LC) << "Stopping software update timer";
+        qCDebug(lcOta) << "Stopping software update timer";
         m_checkForUpdateTimer.stop();
     } else if (!m_checkForUpdateTimer.isActive()) {
-        qCDebug(CLASS_LC) << "Starting software update timer. Interval:" << m_checkForUpdateTimer.interval() / 1000
-                          << "s";
+        qCDebug(lcOta) << "Starting software update timer. Interval:" << m_checkForUpdateTimer.interval() / 1000 << "s";
         m_checkForUpdateTimer.start();
     }
 }
@@ -122,17 +118,19 @@ void SoftwareUpdate::setAutoUpdate(bool update) {
 void SoftwareUpdate::setChannel(const QString &channel) {
     m_channel = channel;
     emit channelChanged();
-    qCDebug(CLASS_LC) << "Software update channel:" << channel;
+    qCDebug(lcOta) << "Software update channel:" << channel;
 }
 
-void SoftwareUpdate::onCheckForUpdateTimerTimeout() { checkForUpdate(); }
+void SoftwareUpdate::onCheckForUpdateTimerTimeout() {
+    checkForUpdate();
+}
 
 void SoftwareUpdate::checkForUpdate() {
     // TODO(zehnm) enhance StandbyControl with isWifiAvailable() to encapsulate standby logic.
     //             This allows enhanced standby logic in the future (loose coupling).
     // only check update if standby mode is not WIFI_OFF
     if (StandbyControl::getInstance()->mode() == StandbyControl::WIFI_OFF) {
-        qCDebug(CLASS_LC) << "Update check skipped: WiFi not available";
+        qCDebug(lcOta) << "Update check skipped: WiFi not available";
         return;
     }
 
@@ -151,7 +149,7 @@ void SoftwareUpdate::checkForUpdate() {
     QNetworkRequest request(updateUrl);
     request.setRawHeader("Accept", "application/json");
 
-    qCDebug(CLASS_LC) << "Checking for update:" << updateUrl;
+    qCDebug(lcOta) << "Checking for update:" << updateUrl;
     m_manager.get(request);
     //  the get request will signal onCheckForUpdateFinished() with QNetworkReply where it will also be deleted
 }
@@ -161,7 +159,7 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
 
     // handle well defined API status codes separately. Treat all others as connection error.
     if (!(status == 200 || status == 400 || status == 501 || status == 503)) {
-        qCWarning(CLASS_LC) << "Network reply error: " << reply->error() << reply->errorString();
+        qCWarning(lcOta) << "Network reply error: " << reply->error() << reply->errorString();
         Notifications::getInstance()->add(true, tr("Cannot connect to the update server."));
         reply->deleteLater();
         return;
@@ -174,7 +172,7 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
 
     if (status == 200) {
         if (!jsonObject["available"].toBool(false)) {
-            qCInfo(CLASS_LC) << "Current version is up to date";
+            qCInfo(lcOta) << "Current version is up to date";
             return;
         }
         m_downloadUrl.setUrl(jsonObject["url"].toString());
@@ -182,7 +180,7 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
 
         // Make sure returned data is valid
         if (!m_downloadUrl.isValid()) {
-            qCWarning(CLASS_LC) << "Invalid download URL:" << m_downloadUrl;
+            qCWarning(lcOta) << "Invalid download URL:" << m_downloadUrl;
             status = 500;
         }
     }
@@ -205,7 +203,7 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
                 error = tr("Request error %1").arg(status);
         }
 
-        qCWarning(CLASS_LC) << "Update check failed:" << status << jsonObject;
+        qCWarning(lcOta) << "Update check failed:" << status << jsonObject;
         Notifications::getInstance()->add(true, tr("Software update:") + " " + error);
         return;
     }
@@ -213,7 +211,7 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
     m_updateAvailable = false;
 
     if (isAlreadyDownloaded(m_newVersion)) {
-        qCInfo(CLASS_LC) << "Update has already been downloaded:" << m_newVersion;
+        qCInfo(lcOta) << "Update has already been downloaded:" << m_newVersion;
         // trigger install screen
         m_updateAvailable = true;
         emit downloadComplete();
@@ -232,7 +230,7 @@ void SoftwareUpdate::onCheckForUpdateFinished(QNetworkReply *reply) {
 
 bool SoftwareUpdate::startDownload() {
     if (!m_downloadUrl.isValid() || m_newVersion.isEmpty()) {
-        qCWarning(CLASS_LC) << "Ignoring download: no valid download URL or version set!";
+        qCWarning(lcOta) << "Ignoring download: no valid download URL or version set!";
         m_updateAvailable = false;
         emit updateAvailableChanged();
         return false;
@@ -245,7 +243,7 @@ bool SoftwareUpdate::startDownload() {
     }
 
     if (!m_downloadDir.mkpath(m_downloadDir.path())) {
-        qCCritical(CLASS_LC) << "Error creating download directory" << m_downloadDir.path();
+        qCCritical(lcOta) << "Error creating download directory" << m_downloadDir.path();
         return false;
     }
 
@@ -278,8 +276,8 @@ void SoftwareUpdate::onDownloadComplete(int id, const QString &filePath) {
     // create meta file containing version string
     QFile metafile(m_downloadDir.path() + "/" + UPDATE_FILEMARKER);
     if (!metafile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
-        qCCritical(CLASS_LC) << "Error creating update filemarker for downloaded file:" << filePath
-                             << "Error:" << metafile.errorString();
+        qCCritical(lcOta) << "Error creating update filemarker for downloaded file:" << filePath
+                          << "Error:" << metafile.errorString();
         onDownloadFailed(id, metafile.errorString());
         return;
     }
@@ -290,7 +288,7 @@ void SoftwareUpdate::onDownloadComplete(int id, const QString &filePath) {
     out << "Url\t:\t" << m_downloadUrl.toString() << "\n";
     metafile.close();
 
-    qCInfo(CLASS_LC) << "Created update filemarker '" << metafile.fileName() << "' for downloaded update:" << filePath;
+    qCInfo(lcOta) << "Created update filemarker '" << metafile.fileName() << "' for downloaded update:" << filePath;
 
     emit downloadComplete();
     emit installAvailable();
@@ -298,16 +296,18 @@ void SoftwareUpdate::onDownloadComplete(int id, const QString &filePath) {
 
 void SoftwareUpdate::onDownloadFailed(int id, QString errorMsg) {
     Q_UNUSED(id)
-    qCWarning(CLASS_LC) << "Download of update failed:" << errorMsg;
+    qCWarning(lcOta) << "Download of update failed:" << errorMsg;
 
     Notifications::getInstance()->add(true, tr("Download failed: %1").arg(errorMsg));
     emit downloadFailed();
 }
 
-bool SoftwareUpdate::installAvailable() { return m_downloadDir.exists(UPDATE_FILEMARKER); }
+bool SoftwareUpdate::installAvailable() {
+    return m_downloadDir.exists(UPDATE_FILEMARKER);
+}
 
 bool SoftwareUpdate::performAppUpdate() {
-    qCDebug(CLASS_LC) << "Executing app update script:" << m_appUpdateScript;
+    qCDebug(lcOta) << "Executing app update script:" << m_appUpdateScript;
 
     QProcess process;
     process.setProgram(m_appUpdateScript);
@@ -315,17 +315,17 @@ bool SoftwareUpdate::performAppUpdate() {
     qint64 pid;
     // fire and forget: update script will take over and restart YIO app
     if (process.startDetached(&pid)) {
-        qCDebug(CLASS_LC) << "Started update script, pid:" << pid;
+        qCDebug(lcOta) << "Started update script, pid:" << pid;
         return true;
     } else {
-        qCritical(CLASS_LC) << "Failed to start app update script:" << m_appUpdateScript;
+        qCCritical(lcOta) << "Failed to start app update script:" << m_appUpdateScript;
         Notifications::getInstance()->add(true, tr("Failed to start app update script!"));
         return false;
     }
 }
 
 bool SoftwareUpdate::startDockUpdate() {
-    qCWarning(CLASS_LC) << "startDockUpdate() NOT YET IMPLEMENTED";
+    qCWarning(lcOta) << "startDockUpdate() NOT YET IMPLEMENTED";
     return false;
 }
 
@@ -354,6 +354,6 @@ QString SoftwareUpdate::getDownloadFileName(const QUrl &url) const {
         return UPDATE_BASENAME + ".tar";
     }
 
-    qCWarning(CLASS_LC) << "Download file suffix is neither .zip nor .tar: forcing .tar!" << url.toString();
+    qCWarning(lcOta) << "Download file suffix is neither .zip nor .tar: forcing .tar!" << url.toString();
     return UPDATE_BASENAME + ".tar";
 }

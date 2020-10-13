@@ -24,10 +24,8 @@
 #include "mcp23017_interrupt.h"
 
 #include <QFileSystemWatcher>
-#include <QLoggingCategory>
-#include <QtDebug>
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.MCP23017");
+#include "../../../logging.h"
 
 Mcp23017InterruptHandler::Mcp23017InterruptHandler(const QString& i2cDevice, int i2cDeviceId, int gpio, QObject* parent)
     : InterruptHandler("Mcp23017 interrupt handler", parent),
@@ -37,14 +35,14 @@ Mcp23017InterruptHandler::Mcp23017InterruptHandler(const QString& i2cDevice, int
     Q_ASSERT(!i2cDevice.isEmpty());
     Q_ASSERT(i2cDeviceId);
     Q_ASSERT(gpio);
-    qCDebug(CLASS_LC) << name() << i2cDevice << "with id:" << i2cDeviceId << "using interrupt on gpio" << gpio;
+    qCDebug(lcDevPortExp) << name() << i2cDevice << "with id:" << i2cDeviceId << "using interrupt on gpio" << gpio;
 
     m_gpioValueDevice = QString("/sys/class/gpio/gpio%1/value").arg(gpio);
 }
 
 bool Mcp23017InterruptHandler::open() {
     if (isOpen()) {
-        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        qCWarning(lcDevPortExp) << DBG_WARN_DEVICE_OPEN;
         return true;
     }
 
@@ -64,23 +62,23 @@ bool Mcp23017InterruptHandler::open() {
 }
 
 bool Mcp23017InterruptHandler::setupGPIO() {
-    qCDebug(CLASS_LC) << "Using GPIO device" << m_gpioValueDevice;
+    qCDebug(lcDevPortExp) << "Using GPIO device" << m_gpioValueDevice;
 
     QFile exportFile("/sys/class/gpio/export");
     if (!exportFile.open(QIODevice::WriteOnly)) {
-        qCCritical(CLASS_LC) << "Error opening: /sys/class/gpio/export";
+        qCCritical(lcDevPortExp) << "Error opening: /sys/class/gpio/export";
         return false;
     }
 
     QByteArray interruptVal = QString::number(m_gpio).toLocal8Bit();
-    qCDebug(CLASS_LC) << "Configuring interrupt on GPIO" << interruptVal;
+    qCDebug(lcDevPortExp) << "Configuring interrupt on GPIO" << interruptVal;
     exportFile.write(interruptVal);
     exportFile.close();
 
     QString directionDev = QString("/sys/class/gpio/gpio%1/direction").arg(m_gpio);
     QFile   directionFile(directionDev);
     if (!directionFile.open(QIODevice::WriteOnly)) {
-        qCCritical(CLASS_LC) << "Error opening:" << directionDev;
+        qCCritical(lcDevPortExp) << "Error opening:" << directionDev;
         return false;
     }
     directionFile.write("in");
@@ -89,7 +87,7 @@ bool Mcp23017InterruptHandler::setupGPIO() {
     QString edgeDev = QString("/sys/class/gpio/gpio%1/edge").arg(m_gpio);
     QFile   edgeFile(edgeDev);
     if (!edgeFile.open(QIODevice::WriteOnly)) {
-        qCCritical(CLASS_LC) << "Error opening:" << edgeDev;
+        qCCritical(lcDevPortExp) << "Error opening:" << edgeDev;
         return false;
     }
     edgeFile.write("falling");
@@ -103,7 +101,7 @@ bool Mcp23017InterruptHandler::setupGPIO() {
     connect(notifier, &QFileSystemWatcher::fileChanged, this, &Mcp23017InterruptHandler::interruptHandler);
 
     if (mcp.readReset()) {
-        qCInfo(CLASS_LC) << "Reset keys pressed!";
+        qCInfo(lcDevPortExp) << "Reset keys pressed!";
         m_wasResetPress = true;
     }
 
@@ -115,4 +113,6 @@ void Mcp23017InterruptHandler::interruptHandler() {
     emit interruptEvent(e);
 }
 
-const QLoggingCategory& Mcp23017InterruptHandler::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory& Mcp23017InterruptHandler::logCategory() const {
+    return lcDevPortExp();
+}

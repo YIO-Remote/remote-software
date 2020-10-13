@@ -20,21 +20,20 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
 #include "systemservice_mock.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "SysSrvMock");
+#include "../../logging.h"
 
-SystemServiceMock::SystemServiceMock(QObject *parent) : SystemService(parent) { qCDebug(CLASS_LC) << Q_FUNC_INFO; }
+SystemServiceMock::SystemServiceMock(QObject *parent) : SystemService(parent) {
+    qCDebug(lcServiceMock) << "Created system service mock";
+}
 
 bool SystemServiceMock::startService(SystemServiceName::Enum serviceName) {
-    qCDebug(CLASS_LC) << "start service:" << serviceName;
+    qCDebug(lcServiceMock) << "Mocking start service:" << serviceName;
     return true;
 }
 
 bool SystemServiceMock::stopService(SystemServiceName::Enum serviceName) {
-    qCDebug(CLASS_LC) << "stop service:" << serviceName;
+    qCDebug(lcServiceMock) << "Mocking stop service:" << serviceName;
     return true;
 }

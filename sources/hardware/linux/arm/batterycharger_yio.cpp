@@ -25,27 +25,26 @@
 
 #include <wiringPi.h>
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.battery");
+#include "../../../logging.h"
 
 BatteryChargerYio::BatteryChargerYio(int pin, QObject *parent)
     : BatteryCharger("YIO battery charger", parent), m_pin(pin) {
     Q_ASSERT(pin);
-    qCDebug(CLASS_LC()) << name() << "on GPIO" << pin;
+    qCDebug(lcDevBatCharger) << name() << "on GPIO" << pin;
 }
 
 void BatteryChargerYio::batteryChargingOn() {
     pinMode(m_pin, OUTPUT);
     digitalWrite(m_pin, LOW);
-    qCDebug(CLASS_LC) << "Turning battery charging on";
+    qCDebug(lcDevBatCharger) << "Turning battery charging on";
 }
 
 void BatteryChargerYio::batteryChargingOff() {
     pinMode(m_pin, OUTPUT);
     digitalWrite(m_pin, HIGH);
-    qCDebug(CLASS_LC) << "Turning battery charging off";
+    qCDebug(lcDevBatCharger) << "Turning battery charging off";
 }
 
-const QLoggingCategory &BatteryChargerYio::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory &BatteryChargerYio::logCategory() const {
+    return lcDevBatCharger();
+}

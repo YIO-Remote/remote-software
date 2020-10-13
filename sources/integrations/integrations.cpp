@@ -23,21 +23,18 @@
 #include "integrations.h"
 
 #include <QDirIterator>
-#include <QLoggingCategory>
 #include <QPluginLoader>
-#include <QtDebug>
 
 #include "../config.h"
 #include "../entities/entities.h"
 #include "../launcher.h"
+#include "../logging.h"
 #include "../notifications.h"
 #include "../yioapi.h"
 
 IntegrationsInterface::~IntegrationsInterface() {}
 
 Integrations* Integrations::s_instance = nullptr;
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 
 Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath) {
     s_instance = this;
@@ -49,7 +46,7 @@ Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath)
         QString       pluginName = pluginLoader.metaData()["MetaData"].toObject().value("name").toString();
         if (pluginName != "") {
             m_supportedIntegrations.append(pluginName.toLower());
-            qCDebug(CLASS_LC()) << "Adding supported integration type:" << pluginName;
+            qCDebug(lcPlugin) << "Adding supported integration type:" << pluginName;
         }
     }
 }
@@ -67,9 +64,13 @@ QObject* Integrations::loadPlugin(const QString& type) {
     return obj;
 }
 
-QObject* Integrations::getPlugin(const QString& type) { return m_plugins.value(type); }
+QObject* Integrations::getPlugin(const QString& type) {
+    return m_plugins.value(type);
+}
 
-QList<QObject*> Integrations::getAllPlugins() { return m_plugins.values(); }
+QList<QObject*> Integrations::getAllPlugins() {
+    return m_plugins.values();
+}
 
 bool Integrations::isPluginLoaded(const QString& type) {
     if (m_plugins.contains(type)) {
@@ -96,7 +97,7 @@ void Integrations::createInstance(QObject* pluginObj, QVariantMap map) {
 QJsonObject Integrations::getPluginMetaData(const QString& pluginName) {
     Launcher* launcher = new Launcher();
     QString   pluginPath = launcher->getPluginPath(m_pluginPath, pluginName);
-    qCDebug(CLASS_LC()) << "Getting metadata for:" << pluginPath;
+    qCDebug(lcPlugin) << "Getting metadata for:" << pluginPath;
     QPluginLoader pluginLoader(pluginPath);
     return pluginLoader.metaData()["MetaData"].toObject();
 }
@@ -109,7 +110,7 @@ void Integrations::load() {
     // read the config
     QVariantMap c = config->getAllIntegrations();
 
-    qCDebug(CLASS_LC) << "Plugin path:" << m_pluginPath;
+    qCDebug(lcPlugin) << "Plugin path:" << m_pluginPath;
 
     // let's load the plugins
     m_integrationsToLoad = c.count();
@@ -148,14 +149,16 @@ void Integrations::onCreateDone(QMap<QObject*, QVariant> map) {
     }
     m_integrationsLoaded++;
 
-    qCDebug(CLASS_LC) << "Integrations loaded:" << m_integrationsLoaded << "from:" << m_integrationsToLoad;
+    qCDebug(lcPlugin) << "Integrations loaded:" << m_integrationsLoaded << "of" << m_integrationsToLoad;
 
     if (m_integrationsLoaded == m_integrationsToLoad) {
         emit loadComplete();
     }
 }
 
-QList<QObject*> Integrations::list() { return m_integrations.values(); }
+QList<QObject*> Integrations::list() {
+    return m_integrations.values();
+}
 
 QStringList Integrations::listIds() {
     QStringList r_list;
@@ -168,10 +171,12 @@ QStringList Integrations::listIds() {
     return r_list;
 }
 
-QObject* Integrations::get(const QString& id) { return m_integrations.value(id); }
+QObject* Integrations::get(const QString& id) {
+    return m_integrations.value(id);
+}
 
 void Integrations::add(const QVariantMap& config, QObject* obj, const QString& type) {
-    qCDebug(CLASS_LC()) << "Adding integration:" << type;
+    qCDebug(lcPlugin) << "Adding integration:" << type;
     const QString id = config.value(Config::KEY_ID).toString();
     m_integrations.insert(id, obj);
     m_integrationsFriendlyNames.insert(id, config.value(Config::KEY_FRIENDLYNAME).toString());
@@ -185,14 +190,18 @@ void Integrations::remove(const QString& id) {
     emit listChanged();
 }
 
-QString Integrations::getFriendlyName(const QString& id) { return m_integrationsFriendlyNames.value(id); }
+QString Integrations::getFriendlyName(const QString& id) {
+    return m_integrationsFriendlyNames.value(id);
+}
 
 QString Integrations::getFriendlyName(QObject* obj) {
     QString name = m_integrations.key(obj);
     return m_integrationsFriendlyNames.value(name);
 }
 
-QString Integrations::getMDNS(const QString& id) { return m_integrationsMdns.value(id); }
+QString Integrations::getMDNS(const QString& id) {
+    return m_integrationsMdns.value(id);
+}
 
 QStringList Integrations::getMDNSList() {
     QStringList mdnsList;
@@ -203,7 +212,9 @@ QStringList Integrations::getMDNSList() {
     return mdnsList;
 }
 
-QString Integrations::getType(const QString& id) { return m_integrationsTypes.value(id); }
+QString Integrations::getType(const QString& id) {
+    return m_integrationsTypes.value(id);
+}
 
 QString Integrations::getTypeByMdns(const QString& mdns) {
     for (int i = 0; i < m_supportedIntegrations.length(); i++) {

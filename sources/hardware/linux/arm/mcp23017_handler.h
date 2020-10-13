@@ -29,9 +29,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-#include <QLoggingCategory>
 #include <QString>
-#include <QtDebug>
 
 #include "../../interrupthandler.h"
 
@@ -65,8 +63,6 @@
 
 #define MCP23017_INT_ERR 255
 
-static Q_LOGGING_CATEGORY(CLASS_LC2, "hw.dev.MCP23017");
-
 class MCP23017 {
  public:
     MCP23017() : m_i2cFd(0) {}
@@ -84,7 +80,7 @@ class MCP23017 {
 
         m_i2cFd = wiringPiI2CSetupInterface(qPrintable(i2cDevice), i2cDeviceId);
         if (m_i2cFd == -1) {
-            qCCritical(CLASS_LC2) << "Unable to open or select I2C device" << i2cDevice << "on" << i2cDeviceId;
+            qCCritical(lcDevPortExp) << "Unable to open or select I2C device" << i2cDevice << "on" << i2cDeviceId;
             return false;
         }
 
@@ -132,7 +128,7 @@ class MCP23017 {
         bool volUp = !(gpioB & 0x040);
         bool topLeft = !(gpioB & 0x080);
         bool dpadDown = !(gpioB & 0x04);
-        qCDebug(CLASS_LC2) << "Reading reset keys [vol up][top left][dpad down]:" << volUp << topLeft << dpadDown;
+        qCDebug(lcDevPortExp) << "Reading reset keys [vol up][top left][dpad down]:" << volUp << topLeft << dpadDown;
         return volUp && topLeft && dpadDown;
     }
 

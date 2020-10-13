@@ -31,21 +31,21 @@
 #include <sys/types.h>
 
 #include <QFile>
-#include <QLoggingCategory>
-#include <QtDebug>
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "sysinfo");
+#include "../../logging.h"
 
 SystemInfoLinux::SystemInfoLinux(const QString &sysfsTemp, QObject *parent)
     : SystemInfo(parent), m_sysfsTemp(sysfsTemp), m_lastCpuSample({0, 0, 0}) {}
 
-void SystemInfoLinux::init() { getCpuSample(&m_lastCpuSample); }
+void SystemInfoLinux::init() {
+    getCpuSample(&m_lastCpuSample);
+}
 
 QString SystemInfoLinux::uptime() {
     struct sysinfo sys_info;
 
     if (sysinfo(&sys_info) != 0) {
-        qCWarning(CLASS_LC) << "Failed to call sysinfo:" << strerror(errno);
+        qCWarning(lcSysInfo) << "Failed to call sysinfo:" << strerror(errno);
         return "error";
     }
 
@@ -70,14 +70,16 @@ float SystemInfoLinux::usedMemory() {
     return qBound(0.0f, percent, 100.0f);
 }
 
-bool SystemInfoLinux::cpuTemperatureSupported() { return m_cpuTempSupported; }
+bool SystemInfoLinux::cpuTemperatureSupported() {
+    return m_cpuTempSupported;
+}
 
 float SystemInfoLinux::cpuTemperature() {
     QFile file(m_sysfsTemp);
     if (!file.open(QIODevice::ReadOnly)) {
         if (m_cpuTempSupported) {
-            qCWarning(CLASS_LC) << "Temperature cannot be read from sysfs:" << m_sysfsTemp
-                                << "Error:" << file.errorString();
+            qCWarning(lcSysInfo) << "Temperature cannot be read from sysfs:" << m_sysfsTemp
+                                 << "Error:" << file.errorString();
             m_cpuTempSupported = false;
             emit cpuTemperatureSupportChanged();
         }
@@ -109,10 +111,10 @@ float SystemInfoLinux::cpuLoadAverage() {
 
     auto totalTime = delta.totalSystemTime + delta.totalUserTime + delta.totalIdleTime;
     auto onePercent = totalTime / 100.0;
-    if (CLASS_LC().isDebugEnabled()) {
-        qCDebug(CLASS_LC) << "system:" << static_cast<double>(delta.totalSystemTime) / onePercent
-                          << "user:" << static_cast<double>(delta.totalUserTime) / onePercent
-                          << "idle:" << static_cast<double>(delta.totalIdleTime) / onePercent;
+    if (lcSysInfo().isDebugEnabled()) {
+        qCDebug(lcSysInfo) << "system:" << static_cast<double>(delta.totalSystemTime) / onePercent
+                           << "user:" << static_cast<double>(delta.totalUserTime) / onePercent
+                           << "idle:" << static_cast<double>(delta.totalIdleTime) / onePercent;
     }
 
     auto percent = static_cast<double>(delta.totalSystemTime + delta.totalUserTime) / onePercent;
@@ -130,7 +132,7 @@ bool SystemInfoLinux::getCpuSample(SystemInfoLinux::CpuSample *sample) {
     quint64 totalUser = 0, totalUserNice = 0, totalSystem = 0, totalIdle = 0;
     int ret = std::sscanf(line.data(), "cpu %llu %llu %llu %llu", &totalUser, &totalUserNice, &totalSystem, &totalIdle);
     if (ret != 4) {
-        qCWarning(CLASS_LC) << "sscanf failed";
+        qCWarning(lcSysInfo) << "sscanf failed";
         return false;
     }
 

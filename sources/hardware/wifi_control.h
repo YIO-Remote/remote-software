@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include <QDebug>
 #include <QList>
 #include <QObject>
 #include <QProcess>

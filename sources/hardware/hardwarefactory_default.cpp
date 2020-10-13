@@ -22,7 +22,6 @@
 
 #include "hardwarefactory_default.h"
 
-#include <QLoggingCategory>
 #include <QtDebug>
 
 #include "../notifications.h"
@@ -38,8 +37,6 @@
 #include "mock/systemservice_mock.h"
 #include "mock/webserver_mock.h"
 #include "mock/wifi_mock.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory");
 
 HardwareFactoryDefault::HardwareFactoryDefault(QObject *parent)
     : HardwareFactory(parent),
@@ -100,61 +97,61 @@ bool HardwareFactoryDefault::buildDevices(const QVariantMap &config) {
 // Dummy default implementations of all devices.
 // They may also be used by concrete sub factories needing a default implementation of a driver.
 WifiControl *HardwareFactoryDefault::dummyWifiControl() {
-    qCDebug(CLASS_LC) << "Using WifiMock";
+    qCDebug(lcHwFactory) << "Using WifiMock";
     return new WifiMock(this);
 }
 
 SystemService *HardwareFactoryDefault::dummySystemService() {
-    qCDebug(CLASS_LC) << "Using SystemServiceMock";
+    qCDebug(lcHwFactory) << "Using SystemServiceMock";
     return new SystemServiceMock(this);
 }
 
 WebServerControl *HardwareFactoryDefault::dummyWebServerControl() {
-    qCDebug(CLASS_LC) << "Using WebServerMock";
+    qCDebug(lcHwFactory) << "Using WebServerMock";
     return new WebServerMock(this);
 }
 
 DisplayControl *HardwareFactoryDefault::dummyDisplayControl() {
-    qCDebug(CLASS_LC) << "Using DisplayControlMock";
+    qCDebug(lcHwFactory) << "Using DisplayControlMock";
     return new DisplayControlMock(this);
 }
 
 BatteryCharger *HardwareFactoryDefault::dummyBatteryCharger() {
-    qCDebug(CLASS_LC) << "Using BatteryChargerMock";
+    qCDebug(lcHwFactory) << "Using BatteryChargerMock";
     return new BatteryChargerMock(this);
 }
 
 BatteryFuelGauge *HardwareFactoryDefault::dummyBatteryFuelGauge() {
-    qCDebug(CLASS_LC) << "Using BatteryFuelGaugeMock";
+    qCDebug(lcHwFactory) << "Using BatteryFuelGaugeMock";
     return new BatteryFuelGaugeMock(this);
 }
 
 InterruptHandler *HardwareFactoryDefault::dummyInterruptHandler() {
-    qCDebug(CLASS_LC) << "Using InterruptHandlerMock";
+    qCDebug(lcHwFactory) << "Using InterruptHandlerMock";
     return new InterruptHandlerMock(this);
 }
 
 HapticMotor *HardwareFactoryDefault::dummyHapticMotor() {
-    qCDebug(CLASS_LC) << "Using HapticMotorMock";
+    qCDebug(lcHwFactory) << "Using HapticMotorMock";
     return new HapticMotorMock(this);
 }
 
 GestureSensor *HardwareFactoryDefault::dummyGestureSensor() {
-    qCDebug(CLASS_LC) << "Using GestureSensorMock";
+    qCDebug(lcHwFactory) << "Using GestureSensorMock";
     return new GestureSensorMock(this);
 }
 
 LightSensor *HardwareFactoryDefault::dummyLightSensor() {
-    qCDebug(CLASS_LC) << "Using LightSensorMock";
+    qCDebug(lcHwFactory) << "Using LightSensorMock";
     return new LightSensorMock(this);
 }
 
 ProximitySensor *HardwareFactoryDefault::dummyProximitySensor() {
-    qCDebug(CLASS_LC) << "Using ProximitySensorMock";
+    qCDebug(lcHwFactory) << "Using ProximitySensorMock";
     return new ProximitySensorMock(this);
 }
 
 SystemInfo *HardwareFactoryDefault::dummySystemInformation() {
-    qCDebug(CLASS_LC) << "Using SystemInformationMock";
+    qCDebug(lcHwFactory) << "Using SystemInformationMock";
     return new SystemInformationMock(this);
 }

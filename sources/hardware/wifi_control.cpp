@@ -20,12 +20,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-
-#include "hw_config.h"
 #include "wifi_control.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "WifiCtrl");
+#include "../logging.h"
+#include "hw_config.h"
 
 WifiControl::WifiControl(QObject* parent)
     : QObject(parent),
@@ -39,8 +37,7 @@ WifiControl::WifiControl(QObject* parent)
       m_pollInterval(HW_DEF_WIFI_POLL_INTERVAL),
       m_timerId(0),
       m_networkJoinRetryCount(HW_DEF_WIFI_JOIN_RETRY),
-      m_networkJoinRetryDelay(HW_DEF_WIFI_JOIN_DELAY) {
-}
+      m_networkJoinRetryDelay(HW_DEF_WIFI_JOIN_DELAY) {}
 
 WifiControl::~WifiControl() {
     stopScanTimer();
@@ -51,7 +48,7 @@ bool WifiControl::validateAuthentication(WifiSecurity::Enum security, const QStr
         case WifiSecurity::IEEE8021X:
         case WifiSecurity::WPA_EAP:
         case WifiSecurity::WPA2_EAP:
-            qWarning(CLASS_LC) << "Authentication mode not supported:" << security;
+            qCWarning(lcWifi) << "Authentication mode not supported:" << security;
             return false;
         default:
             break;
@@ -59,7 +56,7 @@ bool WifiControl::validateAuthentication(WifiSecurity::Enum security, const QStr
 
     if (security == WifiSecurity::DEFAULT || security == WifiSecurity::WPA_PSK || security == WifiSecurity::WPA2_PSK) {
         if (preSharedKey.length() < 8 || preSharedKey.length() > 64) {
-            qWarning(CLASS_LC) << "WPA Pre-Shared Key Error:"
+            qCCritical(lcWifi) << "WPA Pre-Shared Key Error:"
                                << "WPA-PSK requires a passphrase of 8 to 63 characters or 64 hex digit PSK";
             return false;
         }
@@ -71,14 +68,16 @@ bool WifiControl::validateAuthentication(WifiSecurity::Enum security, const QStr
 /**
  * Default implementation
  */
-bool WifiControl::isConnected() { return m_connected; }
+bool WifiControl::isConnected() {
+    return m_connected;
+}
 
 void WifiControl::setConnected(bool state) {
     if (state == m_connected) {
         return;
     }
 
-    qCDebug(CLASS_LC) << "Connection status changed to:" << state;
+    qCInfo(lcWifi) << "Connection status changed to:" << state;
     m_connected = state;
 
     if (state) {
@@ -88,7 +87,9 @@ void WifiControl::setConnected(bool state) {
     }
 }
 
-WifiStatus WifiControl::wifiStatus() const { return m_wifiStatus; }
+WifiStatus WifiControl::wifiStatus() const {
+    return m_wifiStatus;
+}
 
 WifiControl::ScanStatus WifiControl::scanStatus() const {
     return m_scanStatus;
@@ -99,7 +100,9 @@ void WifiControl::setScanStatus(ScanStatus stat) {
     scanStatusChanged(m_scanStatus);
 }
 
-QList<WifiNetwork>& WifiControl::scanResult() { return m_scanResults; }
+QList<WifiNetwork>& WifiControl::scanResult() {
+    return m_scanResults;
+}
 
 QVariantList WifiControl::networkScanResult() const {
     QVariantList list;
@@ -135,14 +138,14 @@ void WifiControl::stopWifiStatusScanning() {
 
 void WifiControl::startScanTimer() {
     if (m_timerId == 0) {
-        qCDebug(CLASS_LC) << "Starting scan timer with interval:" << m_pollInterval;
+        qCDebug(lcWifi) << "Starting scan timer with interval:" << m_pollInterval;
         m_timerId = startTimer(m_pollInterval);
     }
 }
 
 void WifiControl::stopScanTimer() {
     if (m_timerId > 0) {
-        qCDebug(CLASS_LC) << "Stopping scan timer";
+        qCDebug(lcWifi) << "Stopping scan timer";
         killTimer(m_timerId);
         m_timerId = 0;
     }

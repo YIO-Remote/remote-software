@@ -22,12 +22,8 @@
 
 #include "utils_mediaplayer.h"
 
-#include <QDebug>
-#include <QLoggingCategory>
-
 #include "../sources/config.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "mediaplayer utils");
+#include "../sources/logging.h"
 
 MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
     // ADD IMAGE PROVIDER
@@ -36,7 +32,7 @@ MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
     m_imageProviderId = QUuid::createUuid().toString().replace("{", "").replace("}", "");
     m_imageProvider   = new MediaPlayerUtilsImageProvider();
     m_engine->addImageProvider(m_imageProviderId, m_imageProvider);
-    qCDebug(CLASS_LC()) << this << "Image provider added:" << m_imageProviderId << m_imageProvider;
+    qCDebug(lcMediaPlayer) << this << "Image provider added:" << m_imageProviderId << m_imageProvider;
 
     m_startTimer = new QTimer(this);
     m_startTimer->setSingleShot(true);
@@ -52,31 +48,31 @@ MediaPlayerUtils::MediaPlayerUtils(QObject *parent) : QObject(parent) {
 }
 
 MediaPlayerUtils::~MediaPlayerUtils() {
-    qCDebug(CLASS_LC()) << this << "Destructor called";
+    qCDebug(lcMediaPlayer) << this << "Destructor called";
     m_engine->removeImageProvider(m_imageProviderId);
-    qCDebug(CLASS_LC()) << this << "Destructor: Image provider removed:" << m_imageProviderId;
+    qCDebug(lcMediaPlayer) << this << "Destructor: Image provider removed:" << m_imageProviderId;
 
     if (m_worker != nullptr) {
-        qCDebug(CLASS_LC()) << this << "Destructor: Worker was not null";
+        qCDebug(lcMediaPlayer) << this << "Destructor: Worker was not null";
         m_worker->disconnect();
-        qCDebug(CLASS_LC()) << this << "Destructor: Signal disconnected from Worker class";
+        qCDebug(lcMediaPlayer) << this << "Destructor: Signal disconnected from Worker class";
         m_worker->deleteLater();
         m_worker = nullptr;
-        qCDebug(CLASS_LC()) << this << "Destructor: Worker deleted";
+        qCDebug(lcMediaPlayer) << this << "Destructor: Worker deleted";
     }
 
     if (m_workerThread != nullptr) {
-        qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread was not null";
+        qCDebug(lcMediaPlayer) << this << "Destructor: WorkerThread was not null";
         if (m_workerThread->isRunning()) {
-            qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread is running";
+            qCDebug(lcMediaPlayer) << this << "Destructor: WorkerThread is running";
             m_workerThread->quit();
-            qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread exit was called";
+            qCDebug(lcMediaPlayer) << this << "Destructor: WorkerThread exit was called";
             m_workerThread->wait();
-            qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread wait";
+            qCDebug(lcMediaPlayer) << this << "Destructor: WorkerThread wait";
         }
         m_workerThread->deleteLater();
         m_workerThread = nullptr;
-        qCDebug(CLASS_LC()) << this << "Destructor: WorkerThread was deleted";
+        qCDebug(lcMediaPlayer) << this << "Destructor: WorkerThread was deleted";
     }
 
     if (m_startTimer->isActive()) {
@@ -89,7 +85,7 @@ MediaPlayerUtils::~MediaPlayerUtils() {
     m_imageProvider = nullptr;
     m_imageProvider->deleteLater();
 
-    qCDebug(CLASS_LC()) << this << "Destructor end";
+    qCDebug(lcMediaPlayer) << this << "Destructor end";
 }
 
 void MediaPlayerUtils::setImageURL(QString url) {
@@ -122,12 +118,12 @@ void MediaPlayerUtils::onProcessingDone(const QColor &pixelColor, const QImage &
     m_pixelColor = pixelColor;
     emit pixelColorChanged();
 
-    qCDebug(CLASS_LC()) << this << "Processing done";
+    qCDebug(lcMediaPlayer) << this << "Processing done";
 }
 
 void MediaPlayerUtils::generateImages(const QString &url) {
     if (url != m_prevImageURL) {
-        qCDebug(CLASS_LC()) << this << "Generate images for" << url;
+        qCDebug(lcMediaPlayer) << this << "Generate images for" << url;
 
         m_prevImageURL = url;
         emit processingStarted();
@@ -141,11 +137,11 @@ MediaPlayerUtilsWorker::MediaPlayerUtilsWorker(QObject *parent) : QObject(parent
 }
 
 MediaPlayerUtilsWorker::~MediaPlayerUtilsWorker() {
-    qCDebug(CLASS_LC()) << this << "Worker destructor";
+    qCDebug(lcMediaPlayer) << this << "Worker destructor";
     if (m_manager != nullptr) {
         m_manager->deleteLater();
         m_manager = nullptr;
-        qCDebug(CLASS_LC()) << this << "Worker destructor: Manager deleted.";
+        qCDebug(lcMediaPlayer) << this << "Worker destructor: Manager deleted.";
     }
 }
 
@@ -164,7 +160,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
             image.fill(Qt::black);
 
             if (!image.load(m_reply, nullptr)) {
-                qCWarning(CLASS_LC) << "ERROR LOADING IMAGE";
+                qCWarning(lcMediaPlayer) << "ERROR LOADING IMAGE";
                 if (m_reply) {
                     m_reply->deleteLater();
                     m_reply = nullptr;
@@ -174,7 +170,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
                 ////////////////////////////////////////////////////////////////////
                 /// GET DOMINANT COLOR
                 ////////////////////////////////////////////////////////////////////
-                qCDebug(CLASS_LC()) << this << "Getting dominant color";
+                qCDebug(lcMediaPlayer) << this << "Getting dominant color";
                 QColor pixelColor = dominantColor(image);
 
                 // change the brightness of the color if it's too bright
@@ -190,7 +186,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
                 ////////////////////////////////////////////////////////////////////
                 /// CREATE LARGE BACKGROUND IMAGE
                 ////////////////////////////////////////////////////////////////////
-                qCDebug(CLASS_LC()) << this << "Creating image";
+                qCDebug(lcMediaPlayer) << this << "Creating image";
                 // resize image
                 image.scaledToHeight(280, Qt::SmoothTransformation);
 
@@ -204,18 +200,18 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
                 painter.drawImage(image.rect(), noise);
                 painter.end();
 
-                qCDebug(CLASS_LC()) << this << "Creating image DONE";
+                qCDebug(lcMediaPlayer) << this << "Creating image DONE";
 
                 emit processingDone(pixelColor, image);
             }
         } else {
-            qCWarning(CLASS_LC) << this << "NETWORK REPLY ERROR" << m_reply->errorString();
+            qCWarning(lcMediaPlayer) << this << "NETWORK REPLY ERROR" << m_reply->errorString();
             emit processingDone(QColor("black"), QImage());
         }
 
         m_reply->deleteLater();
         m_reply = nullptr;
-        qCDebug(CLASS_LC()) << this << "Network reply deleted";
+        qCDebug(lcMediaPlayer) << this << "Network reply deleted";
     }
 }
 
