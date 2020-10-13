@@ -166,4 +166,6 @@ class YioAPI : public YioAPIInterface {
     void apiSettingsSetLanguage(QWebSocket* client, const int& id, const QVariantMap& map);
     void apiSettingsSetAutoBrightness(QWebSocket* client, const int& id, const QVariantMap& map);
     void apiSettingsSetDarkMode(QWebSocket* client, const int& id, const QVariantMap& map);
+
+    void apiLoggerControl(QWebSocket* client, const int& id, const QVariantMap& map);
 };

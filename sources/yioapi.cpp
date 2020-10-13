@@ -714,6 +714,9 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "set_dark_mode") {
                 /// Set dark mode
                 apiSettingsSetDarkMode(client, id, map);
+            } else if (type == "log") {
+                /// Logger control
+                apiLoggerControl(client, id, map);
             }
 
         } else {
