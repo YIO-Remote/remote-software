@@ -21,10 +21,7 @@
  *****************************************************************************/
 
 #include "translation.h"
-
-#include <QLoggingCategory>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "translation");
+#include "logging.h"
 
 TranslationHandler *TranslationHandler::s_instance = nullptr;
 
@@ -38,12 +35,12 @@ TranslationHandler::TranslationHandler(QQmlEngine *engine) {
 TranslationHandler::~TranslationHandler() { s_instance = nullptr; }
 
 void TranslationHandler::selectLanguage(QString language) {
-    qCDebug(CLASS_LC) << "Language selected:" << language;
+    qCDebug(lcI18n) << "Language selected:" << language;
 
     qGuiApp->removeTranslator(m_translator);
     m_translator->load(":/translations/" + language);
     qGuiApp->installTranslator(m_translator);
-    qCDebug(CLASS_LC) << "Installed translation for main app" << language;
+    qCDebug(lcI18n) << "Installed translation for main app" << language;
 
     // install plugin translations
     QList<QObject *> plugins = Integrations::getInstance()->getAllPlugins();
@@ -52,7 +49,7 @@ void TranslationHandler::selectLanguage(QString language) {
         if (pInterface) {
             qGuiApp->removeTranslator(pInterface->pluginTranslator());
             qGuiApp->installTranslator(pInterface->installTranslator(language));
-            qCDebug(CLASS_LC) << "Installed translation for plugin" << language << pInterface;
+            qCDebug(lcI18n) << "Installed translation for plugin" << language << pInterface;
         }
     }
 

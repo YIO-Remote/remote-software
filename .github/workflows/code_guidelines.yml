@@ -13,12 +13,13 @@ on:
 
 jobs:
   cpplint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
       - run: python -m pip install cpplint
-      - run: sudo update-alternatives --install /usr/bin/python python ${pythonLocation}/bin/python3.8 10
       - name: cpplint
         shell: python
         run: |

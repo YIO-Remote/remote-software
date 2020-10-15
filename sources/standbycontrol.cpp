@@ -22,12 +22,8 @@
 
 #include "standbycontrol.h"
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
+#include "logging.h"
 #include "yio-interface/integrationinterface.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "standbycontrol");
 
 StandbyControl *StandbyControl::s_instance = nullptr;
 
@@ -99,7 +95,7 @@ StandbyControl::StandbyControl(DisplayControl *displayControl, ProximitySensor *
         loadingScreen->setProperty("active", true);
     });
 
-    qCDebug(CLASS_LC) << "Standby Control intialized";
+    qCDebug(lcStandby) << "Standby Control intialized";
 }
 
 StandbyControl::~StandbyControl() { s_instance = nullptr; }
@@ -116,17 +112,17 @@ QObject *StandbyControl::getQMLInstance(QQmlEngine *engine, QJSEngine *scriptEng
 void StandbyControl::wakeup() {
     switch (mode()) {
         case (DIM): {
-            qCDebug(CLASS_LC) << "Wakeup from DIM";
+            qCDebug(lcStandby) << "Wakeup from DIM";
             readAmbientLight();
             setMode(ON);
         } break;
 
         case (STANDBY): {
-            qCDebug(CLASS_LC) << "Wakeup from STANDBY";
+            qCDebug(lcStandby) << "Wakeup from STANDBY";
 
             m_format.setSwapInterval(1);
             QSurfaceFormat::setDefaultFormat(m_format);
-            qCDebug(CLASS_LC) << "Changing swap interval to " << m_format.swapInterval();
+            qCDebug(lcStandby) << "Changing swap interval to " << m_format.swapInterval();
 
             // delay reading ambient light so the sensor is clear of your hand
             QTimer *timer = new QTimer(this);
@@ -154,11 +150,11 @@ void StandbyControl::wakeup() {
 
             // reset battery charging screen
             if (m_batteryFuelGauge->getIsCharging()) {
-                qCDebug(CLASS_LC()) << "Battery is charging";
+                qCDebug(lcStandby) << "Battery is charging";
                 QObject *showClock = m_config->getQMLObject("showClock");
                 QMetaObject::invokeMethod(showClock, "start", Qt::AutoConnection);
             } else {
-                qCDebug(CLASS_LC()) << "Battery not is charging";
+                qCDebug(lcStandby) << "Battery not is charging";
             }
 
             QTimer::singleShot(300, this, [=]() {
@@ -171,11 +167,11 @@ void StandbyControl::wakeup() {
         } break;
 
         case (WIFI_OFF): {
-            qCDebug(CLASS_LC) << "Wakeup from WIFI_OFF";
+            qCDebug(lcStandby) << "Wakeup from WIFI_OFF";
 
             m_format.setSwapInterval(1);
             QSurfaceFormat::setDefaultFormat(m_format);
-            qCDebug(CLASS_LC) << "Changing swap interval to " << m_format.swapInterval();
+            qCDebug(lcStandby) << "Changing swap interval to " << m_format.swapInterval();
 
             m_wifiControl->on();
 
@@ -293,7 +289,7 @@ void StandbyControl::onSecondsTimerTimeout() {
 
         // change mode
         setMode(DIM);
-        qCDebug(CLASS_LC) << "State set to DIM";
+        qCDebug(lcStandby) << "State set to DIM";
     }
 
     // STANDBY
@@ -328,9 +324,9 @@ void StandbyControl::onSecondsTimerTimeout() {
 
         m_format.setSwapInterval(60);
         QSurfaceFormat::setDefaultFormat(m_format);
-        qCDebug(CLASS_LC) << "Changing swap interval to " << m_format.swapInterval();
+        qCDebug(lcStandby) << "Changing swap interval to " << m_format.swapInterval();
 
-        qCDebug(CLASS_LC) << "State set to STANDBY";
+        qCDebug(lcStandby) << "State set to STANDBY";
     }
 
     // TURN OFF BLUETOOTH
@@ -356,13 +352,13 @@ void StandbyControl::onSecondsTimerTimeout() {
         m_wifiControl->off();
 
         setMode(WIFI_OFF);
-        qCDebug(CLASS_LC) << "State set to WIFI OFF";
+        qCDebug(lcStandby) << "State set to WIFI OFF";
     }
 
     // SHUTDOWN
     if (m_elapsedTime == m_shutDownTime && m_shutDownTime != 0 && (m_mode == STANDBY || m_mode == WIFI_OFF) &&
         m_batteryFuelGauge->getAveragePower() < 0 && !m_batteryFuelGauge->getIsCharging()) {
-        qCInfo(CLASS_LC) << "TIMER SHUTDOWN"
+        qCInfo(lcStandby) << "TIMER SHUTDOWN"
                          << "Average power:" << m_batteryFuelGauge->getAveragePower()
                          << "Is charging:" << m_batteryFuelGauge->getIsCharging();
 
@@ -385,7 +381,7 @@ void StandbyControl::onTouchDetected() {
 }
 
 void StandbyControl::onProximityDetected() {
-    qCDebug(CLASS_LC) << "Proximity detected";
+    qCDebug(lcStandby) << "Proximity detected";
     wakeup();
 }
 

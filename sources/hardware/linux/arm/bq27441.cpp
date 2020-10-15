@@ -25,13 +25,9 @@
 
 #include <unistd.h>
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
+#include "../../../logging.h"
 #include "../../../notifications.h"
 #include "QFile"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.BQ27441");
 
 BQ27441::BQ27441(InterruptHandler *interruptHandler, int capacity, const QString &i2cDevice, int i2cDeviceId,
                  QObject *parent)
@@ -41,7 +37,7 @@ BQ27441::BQ27441(InterruptHandler *interruptHandler, int capacity, const QString
       m_i2cFd(0) {
     Q_ASSERT(interruptHandler);
     Q_ASSERT(!i2cDevice.isEmpty());
-    qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId << ", capacity:" << capacity;
+    qCDebug(lcDevFuelGauge) << name() << i2cDevice << "with id:" << i2cDeviceId << ", capacity:" << capacity;
 
     connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
         if (event == InterruptHandler::BATTERY) {
@@ -50,11 +46,13 @@ BQ27441::BQ27441(InterruptHandler *interruptHandler, int capacity, const QString
     });
 }
 
-BQ27441::~BQ27441() { close(); }
+BQ27441::~BQ27441() {
+    close();
+}
 
 bool BQ27441::open() {
     if (isOpen()) {
-        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        qCWarning(lcDevFuelGauge) << DBG_WARN_DEVICE_OPEN;
         return true;
     }
 
@@ -62,7 +60,7 @@ bool BQ27441::open() {
     bool initialized = false;
     m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
     if (m_i2cFd == -1) {
-        qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
+        qCCritical(lcDevFuelGauge) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
     } else {
         // Get device type and set lipo_status
         /// To be implemented later
@@ -72,7 +70,7 @@ bool BQ27441::open() {
     }
 
     if (!initialized) {
-        qCCritical(CLASS_LC) << "Cannot initialize the BQ27441 battery sensor.";
+        qCCritical(lcDevFuelGauge) << "Cannot initialize the BQ27441 battery sensor.";
         setErrorString(ERR_DEV_BATTERY_INIT);
         emit error(InitializationError, ERR_DEV_BATTERY_INIT);
         return false;
@@ -89,13 +87,15 @@ void BQ27441::close() {
     }
 }
 
-const QLoggingCategory &BQ27441::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory &BQ27441::logCategory() const {
+    return lcDevFuelGauge();
+}
 
 void BQ27441::updateBatteryValues() {
     if (getDesignCapacity() != m_capacity) {
         // calibrate the gauge
-        qCDebug(CLASS_LC) << "Design capacity does not match. Fuel gauge calibration. Setting charge capacity to:"
-                          << m_capacity;
+        qCDebug(lcDevFuelGauge) << "Design capacity does not match. Fuel gauge calibration. Setting charge capacity to:"
+                                << m_capacity;
         changeCapacity(m_capacity);
     }
 
@@ -105,9 +105,9 @@ void BQ27441::updateBatteryValues() {
     m_voltage = wiringPiI2CReadReg16(m_i2cFd, BQ27441_COMMAND_VOLTAGE);  // getVoltage();
 
     m_health = getStateOfHealth();
-    if (CLASS_LC().isDebugEnabled()) {
-        qCDebug(CLASS_LC()) << "Battery level:" << m_level << "%, battery voltage:" << m_voltage
-                            << "mV, battery health:" << m_health;
+    if (lcDevFuelGauge().isDebugEnabled()) {
+        qCDebug(lcDevFuelGauge) << "Battery level:" << m_level << "%, battery voltage:" << m_voltage
+                                << "mV, battery health:" << m_health;
     }
     emit healthChanged();
 
@@ -135,11 +135,11 @@ void BQ27441::updateBatteryValues() {
         // check if the battery is charging
         if (m_averagePower >= 0) {
             m_isCharging = true;
-            qCDebug(CLASS_LC()) << "Battery is charging";
+            qCDebug(lcDevFuelGauge) << "Battery is charging";
             emit isChargingChanged();
         } else {
             m_isCharging = false;
-            qCDebug(CLASS_LC()) << "Battery is not charging";
+            qCDebug(lcDevFuelGauge) << "Battery is not charging";
             emit isChargingChanged();
         }
 
@@ -154,9 +154,9 @@ void BQ27441::updateBatteryValues() {
     m_remainingLife = (m_remainingLife + remainingLife) / 2;
     emit remainingLifeChanged();
 
-    if (CLASS_LC().isDebugEnabled()) {
-        qCDebug(CLASS_LC()) << "Average power" << m_averagePower << "mW, average current" << getAverageCurrent()
-                            << "mA, remaining battery life" << m_remainingLife << "h";
+    if (lcDevFuelGauge().isDebugEnabled()) {
+        qCDebug(lcDevFuelGauge) << "Average power" << m_averagePower << "mW, average current" << getAverageCurrent()
+                                << "mA, remaining battery life" << m_remainingLife << "h";
     }
 }
 
@@ -169,14 +169,14 @@ void BQ27441::begin() {
         poweronFile.remove();
 
         // calibrate the gauge
-        qCDebug(CLASS_LC) << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+        qCDebug(lcDevFuelGauge) << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
         // changeCapacity(m_capacity);
     } else */
     //    if (getDesignCapacity() != m_capacity) {
-    //        qCDebug(CLASS_LC) << "Design capacity does not match.";
+    //        qCDebug(lcDevFuelGauge) << "Design capacity does not match.";
 
     //        // calibrate the gauge
-    //        qCDebug(CLASS_LC) << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
+    //        qCDebug(lcDevFuelGauge) << "Fuel gauge calibration. Setting charge capacity to:" << m_capacity;
     //        changeCapacity(m_capacity);
     //    }
 }
@@ -299,13 +299,21 @@ void BQ27441::changeCapacity(int newCapacity) {
     }
 }
 
-int BQ27441::getLevel() { return m_level; }
+int BQ27441::getLevel() {
+    return m_level;
+}
 
-int BQ27441::getHealth() { return m_health; }
+int BQ27441::getHealth() {
+    return m_health;
+}
 
-bool BQ27441::getIsCharging() { return m_isCharging; }
+bool BQ27441::getIsCharging() {
+    return m_isCharging;
+}
 
-float BQ27441::remainingLife() { return m_remainingLife; }
+float BQ27441::remainingLife() {
+    return m_remainingLife;
+}
 
 int BQ27441::getTemperatureC() {  // Result in 1 Celcius
     ASSERT_DEVICE_OPEN(0)
@@ -439,7 +447,7 @@ uint16_t BQ27441::getOpConfig() {
 
     uint16_t result = static_cast<uint16_t>(wiringPiI2CReadReg16(m_i2cFd, BQ27441_EXTENDED_OPCONFIG));
     if ((result & (1 << 5)) == 0) {
-        qCDebug(CLASS_LC()) << "Device is in sleep mode";
+        qCDebug(lcDevFuelGauge) << "Device is in sleep mode";
     }
 
     return result;

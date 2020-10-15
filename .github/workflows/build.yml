@@ -69,7 +69,7 @@
         - name: Get artifact version
           run: |
             read -r APP_VERSION < binaries/version.txt
-            echo "::set-env name=APP_VERSION::$APP_VERSION"
+            echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
         - name: Upload build artefacts
           uses: actions/upload-artifact@v2
@@ -93,8 +93,8 @@
 
         - name: Get timestamp
           run: |
-            echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"
-  
+            echo "TIMESTAMP=$(date +"%Y%m%d_%H%M%S")" >> $GITHUB_ENV
+
         - name: Create GitHub development build archives
           if: "!contains(github.ref, 'tags/v')"
           run: |

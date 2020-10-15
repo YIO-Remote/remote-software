@@ -21,15 +21,13 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QVector>
-#include <QtDebug>
-
-#include "../../fileio.h"
-#include "../hw_config.h"
 #include "wifi_shellscripts.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "WifiShellScripts");
+#include <QVector>
+
+#include "../../fileio.h"
+#include "../../logging.h"
+#include "../hw_config.h"
 
 WifiShellScripts::WifiShellScripts(SystemService *systemService, QObject *parent)
     : WifiControl(parent),
@@ -53,7 +51,7 @@ bool WifiShellScripts::init() {
 }
 
 void WifiShellScripts::on() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    qCDebug(lcWifiShellScript) << Q_FUNC_INFO;
 
     p_systemService->startService(SystemServiceName::WIFI);
     startScanTimer();
@@ -61,7 +59,7 @@ void WifiShellScripts::on() {
 }
 
 void WifiShellScripts::off() {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    qCDebug(lcWifiShellScript) << Q_FUNC_INFO;
 
     stopScanTimer();
     p_systemService->stopService(SystemServiceName::WIFI);
@@ -105,26 +103,28 @@ void WifiShellScripts::startNetworkScan() {
 }
 
 bool WifiShellScripts::startAccessPoint() {
-    qCDebug(CLASS_LC) << "Resetting WiFi and starting access point...";
+    qCDebug(lcWifiShellScript) << "Resetting WiFi and starting access point...";
 
     launch(m_scriptStartAP);
     return true;
 }
 
-QString WifiShellScripts::countryCode() { return ""; }
+QString WifiShellScripts::countryCode() {
+    return "";
+}
 
 void WifiShellScripts::setCountryCode(const QString &countryCode) {
-    qCWarning(CLASS_LC) << "setCountryCode not implemented! Requested:" << countryCode;
+    qCWarning(lcWifiShellScript) << "setCountryCode not implemented! Requested:" << countryCode;
 }
 
 WifiNetwork WifiShellScripts::lineToNetwork(int index, const QStringRef &line) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO;
+    qCDebug(lcWifiShellScript) << Q_FUNC_INFO;
     QVector<QStringRef> list = line.split(",");
 
     if (list.size() > 1) {
         auto name = list.at(1).toString();
         auto signal = list.at(0).toInt();
-        qCDebug(CLASS_LC) << "network:" << name << signal;
+        qCDebug(lcWifiShellScript) << "network:" << name << signal;
         WifiNetwork nw{QVariant(index).toString(), name, "", signal};
         return nw;
     } else {
@@ -140,7 +140,7 @@ QList<WifiNetwork> WifiShellScripts::parseScanresult(const QString &buffer) {
             cont.append(lineToNetwork(i, lines[i]));
         } catch (std::exception &e) {
             setScanStatus(ScanFailed);
-            qCCritical(CLASS_LC) << e.what() << lines[i];
+            qCCritical(lcWifiShellScript) << e.what() << lines[i];
         }
     }
     return cont;
@@ -178,7 +178,7 @@ QString WifiShellScripts::launch(const QString &command) {
 }
 
 QString WifiShellScripts::launch(const QString &command, const QStringList &arguments) {
-    qCDebug(CLASS_LC) << Q_FUNC_INFO << command;
+    qCDebug(lcWifiShellScript) << "Launching:" << command << arguments;
 
     if (command.isNull() || command.isEmpty()) {
         return "";
@@ -187,9 +187,9 @@ QString WifiShellScripts::launch(const QString &command, const QStringList &argu
     QProcess process;
     process.start(command, arguments);
     if (!process.waitForFinished(m_scriptTimeout)) {
-        qCWarning(CLASS_LC) << "Failed to execute" << command << ":"
-                            << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
-                            << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
+        qCWarning(lcWifiShellScript) << "Failed to execute" << command << ":"
+                                     << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
+                                     << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
         return "";
     }
     QByteArray bytes = process.readAllStandardOutput();

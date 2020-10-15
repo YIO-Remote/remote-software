@@ -25,11 +25,9 @@
 #include <QFileInfo>
 #include <QFontDatabase>
 #include <QGuiApplication>
-#include <QLoggingCategory>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
-#include <QtDebug>
 
 #include "bluetooth.h"
 #include "commandlinehandler.h"
@@ -46,13 +44,12 @@
 #include "jsonfile.h"
 #include "launcher.h"
 #include "logger.h"
+#include "logging.h"
 #include "notifications.h"
 #include "softwareupdate.h"
 #include "standbycontrol.h"
 #include "translation.h"
 #include "yioapi.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "main");
 
 int main(int argc, char* argv[]) {
     bool initializing = true;
@@ -87,6 +84,8 @@ int main(int argc, char* argv[]) {
     // Attention: app might terminate within process depending on cmd line arguments!
     cmdLineHandler.process(app, resourcePath, environment->getConfigurationPath());
 
+    Logger *logger = Logger::instance();
+
     // LOAD CONFIG
     bool configError = false;
     if (!QFile::exists(cmdLineHandler.configFile())) {
@@ -95,7 +94,7 @@ int main(int argc, char* argv[]) {
 
     Config* config = new Config(&engine, cmdLineHandler.configFile(), cmdLineHandler.configSchemaFile(), environment);
     if (!config->readConfig()) {
-        qCCritical(CLASS_LC).noquote() << "Invalid configuration!" << endl << config->getError();
+        qCCritical(lcApp).noquote() << "Invalid configuration!" << endl << config->getError();
         configError = true;
     }
 
@@ -105,6 +104,10 @@ int main(int argc, char* argv[]) {
 
     engine.rootContext()->setContextProperty("config", config);
     engine.rootContext()->setContextProperty("configError", configError);
+
+    // NOTIFICATIONS
+    Notifications notifications(&engine);
+    engine.rootContext()->setContextProperty("notifications", &notifications);
 
     // LOGGER
     QVariantMap logCfg = config->getSettings().value("logging").toMap();
@@ -116,15 +119,19 @@ int main(int argc, char* argv[]) {
     if (path == ".") {
         path = resourcePath + "/log";
     }
-    Logger logger(path, logCfg.value("level", "WARN").toString(), logCfg.value("console", true).toBool(),
-                  logCfg.value("showSource", true).toBool(), logCfg.value("queueSize", 100).toInt(),
-                  logCfg.value("purgeHours", 72).toInt());
-    engine.rootContext()->setContextProperty("logger", &logger);
-    Logger::getInstance()->write(QString("YIO App %1").arg(version));
 
-    // NOTIFICATIONS
-    Notifications notifications(&engine);
-    engine.rootContext()->setContextProperty("notifications", &notifications);
+    QObject::connect(logger, &Logger::userError, [&notifications](const QString& error) {
+        notifications.add(true, error);
+    });
+
+    logger->setDefaultHandlerEnabled(logCfg.value("console", true).toBool());
+    logger->setLogDirectory(path);
+    logger->setLogLevel(logCfg.value("level", "WARN").toString());
+    logger->setShowSourcePos(logCfg.value("showSource", true).toBool());
+    logger->setQueueSize(logCfg.value("queueSize", 100).toInt());
+    logger->setLogFilePurgeHours(logCfg.value("purgeHours", 72).toInt());
+
+    qCInfo(lcApp) << "YIO App" << version;
 
     // LOADING CUSTOM COMPONENTS
     qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");

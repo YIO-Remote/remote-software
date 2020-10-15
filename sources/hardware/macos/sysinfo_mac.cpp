@@ -37,16 +37,14 @@
 #include <sys/sysctl.h>
 #include <time.h>
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
+#include "../../logging.h"
 #include "smc.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "sysinfo");
 
 SystemInfoMac::SystemInfoMac(QObject *parent) : SystemInfo(parent) {}
 
-void SystemInfoMac::init() { getCpuSample(&m_lastCpuSample); }
+void SystemInfoMac::init() {
+    getCpuSample(&m_lastCpuSample);
+}
 
 QString SystemInfoMac::uptime() {
     struct timeval boottime;
@@ -54,7 +52,7 @@ QString SystemInfoMac::uptime() {
     int            mib[2] = {CTL_KERN, KERN_BOOTTIME};
 
     if (sysctl(mib, 2, &boottime, &len, NULL, 0) < 0) {
-        qCCritical(CLASS_LC) << "Failed to read kernel boot time";
+        qCCritical(lcSysInfo) << "Failed to read kernel boot time";
         return "error";
     }
 
@@ -108,9 +106,9 @@ float SystemInfoMac::cpuLoadAverage() {
 
     auto totalTime = delta.totalSystemTime + delta.totalUserTime + delta.totalIdleTime;
     auto onePercent = totalTime / 100.0;
-    qCDebug(CLASS_LC) << "system:" << static_cast<double>(delta.totalSystemTime) / onePercent
-                      << "user:" << static_cast<double>(delta.totalUserTime) / onePercent
-                      << "idle:" << static_cast<double>(delta.totalIdleTime) / onePercent;
+    qCDebug(lcSysInfo) << "system:" << static_cast<double>(delta.totalSystemTime) / onePercent
+                       << "user:" << static_cast<double>(delta.totalUserTime) / onePercent
+                       << "idle:" << static_cast<double>(delta.totalIdleTime) / onePercent;
 
     auto percent = (delta.totalSystemTime + delta.totalUserTime) / onePercent;
     return qBound(0.0f, static_cast<float>(percent), 100.0f);
@@ -127,7 +125,7 @@ bool SystemInfoMac::getCpuSample(SystemInfoMac::CpuSample *sample) {
     kern_return_t kr = host_processor_info(mach_host_self(), PROCESSOR_CPU_LOAD_INFO, &processorCount,
                                            reinterpret_cast<processor_info_array_t *>(&cpuLoad), &processorMsgCount);
     if (kr != KERN_SUCCESS) {
-        qCCritical(CLASS_LC) << "Error getting host processor information" << mach_error_string(kr);
+        qCCritical(lcSysInfo) << "Error getting host processor information" << mach_error_string(kr);
         return false;
     }
 

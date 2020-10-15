@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 
+#include "../logging.h"
 #include "batterycharger.h"
 #include "batteryfuelgauge.h"
 #include "displaycontrol.h"

@@ -22,10 +22,7 @@
 
 #include "device.h"
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.device");
+#include "../logging.h"
 
 Device::Device(QString name, QObject *parent) : QObject(parent), m_open(false), m_name(name) {}
 
@@ -63,5 +60,5 @@ QString Device::errorString() const { return m_errorString; }
 void Device::setErrorString(const QString &str) { m_errorString = str; }
 
 const QLoggingCategory &Device::logCategory() const {
-    return CLASS_LC();
+    return lcDevice();
 }

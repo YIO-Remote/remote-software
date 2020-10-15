@@ -23,12 +23,10 @@
 #include "filedownload.h"
 
 #include <QDataStream>
-#include <QDebug>
-#include <QLoggingCategory>
 #include <QStorageInfo>
 #include <QTimer>
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "filedownload");
+#include "logging.h"
 
 // SI or IEC 80000-13 - you choose!
 static const int DATA_UNIT = 1000;
@@ -45,7 +43,7 @@ bool FileDownload::checkDiskSpace(const QDir &path, int requiredMB) {
     QStorageInfo storage = QStorageInfo(path);
 
     if (requiredMB <= 0) {
-        qCDebug(CLASS_LC) << "Storage check is disabled";
+        qCDebug(lcOtaDownload) << "Storage check is disabled";
         return true;
     }
 
@@ -54,11 +52,11 @@ bool FileDownload::checkDiskSpace(const QDir &path, int requiredMB) {
     bool valid = storage.isValid() && storage.isReady() &&  // && !storage.isReadOnly()
                  availableMB >= requiredMB && path.exists();
 
-    qCDebug(CLASS_LC) << "Storage check for" << requiredMB << "MB:" << valid << "[" << path.path()
-                      << ", fileSystemType:" << storage.fileSystemType()
-                      << ", size:" << storage.bytesTotal() / DATA_UNIT / DATA_UNIT << "MB"
-                      << ", available:" << availableMB << "MB"
-                      << ", isReadOnly:" << storage.isReadOnly() << "]";
+    qCDebug(lcOtaDownload) << "Storage check for" << requiredMB << "MB:" << valid << "[" << path.path()
+                           << ", fileSystemType:" << storage.fileSystemType()
+                           << ", size:" << storage.bytesTotal() / DATA_UNIT / DATA_UNIT << "MB"
+                           << ", available:" << availableMB << "MB"
+                           << ", isReadOnly:" << storage.isReadOnly() << "]";
 
     return valid;
 }
@@ -71,21 +69,21 @@ int FileDownload::download(const QUrl &downloadUrl, const QDir &destinationDir, 
 
     m_downloadId++;
     m_downloadQueue.enqueue({m_downloadId, downloadUrl, destinationDir, fileName, requiredFreeMB});
-    qCDebug(CLASS_LC) << "Enqueued download:" << m_downloadId << downloadUrl.toString();
+    qCDebug(lcOtaDownload) << "Enqueued download:" << m_downloadId << downloadUrl.toString();
 
     return m_downloadId;
 }
 
 void FileDownload::startNextDownload() {
     if (m_downloadQueue.isEmpty()) {
-        qCDebug(CLASS_LC) << "Finished, no more files to download";
+        qCDebug(lcOtaDownload) << "Finished, no more files to download";
         emit downloadQueueEmpty();
         return;
     }
 
     Download download = m_downloadQueue.dequeue();
     m_currentDownloadId = download.id;
-    qCDebug(CLASS_LC) << "Starting next download:" << download.id << download.url.toString();
+    qCDebug(lcOtaDownload) << "Starting next download:" << download.id << download.url.toString();
 
     // check local preconditions
     if (!prepareFileDownload(download)) {
@@ -93,7 +91,7 @@ void FileDownload::startNextDownload() {
         return;  // skip this download
     }
 
-    qCDebug(CLASS_LC) << "Downloading file from" << download.url.toString() << "to:" << m_outputFile.fileName();
+    qCDebug(lcOtaDownload) << "Downloading file from" << download.url.toString() << "to:" << m_outputFile.fileName();
 
     // Download into a temp file and rename after successful download
     QNetworkRequest request(download.url);
@@ -117,7 +115,7 @@ bool FileDownload::prepareFileDownload(const Download &download) {
 
     QFile finalFile(download.destinationDir.path() + "/" + download.fileName);
     if (finalFile.exists()) {
-        qCCritical(CLASS_LC) << "Destination file already exists:" << finalFile.fileName();
+        qCCritical(lcOtaDownload) << "Destination file already exists:" << finalFile.fileName();
         emit downloadFailed(download.id, tr("Destination file already exists"));
         return false;
     }
@@ -132,8 +130,8 @@ bool FileDownload::prepareFileDownload(const Download &download) {
     }
 
     if (fileError) {
-        qCCritical(CLASS_LC) << "Error opening temporary download file" << m_outputFile
-                             << "Error:" << m_outputFile.error() << m_outputFile.errorString();
+        qCCritical(lcOtaDownload) << "Error opening temporary download file" << m_outputFile
+                                  << "Error:" << m_outputFile.error() << m_outputFile.errorString();
         emit downloadFailed(download.id, m_outputFile.errorString());
     }
 
@@ -164,38 +162,40 @@ void FileDownload::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal) {
         dowloadSpeed = "0 B/s";
     }
 
-    qCDebug(CLASS_LC) << "Bytes received:" << bytesReceived << "Bytes total:" << bytesTotal
-                      << "Elapsed ms:" << m_downloadTimer.elapsed() << "Download speed:" << dowloadSpeed;
+    qCDebug(lcOtaDownload) << "Bytes received:" << bytesReceived << "Bytes total:" << bytesTotal
+                           << "Elapsed ms:" << m_downloadTimer.elapsed() << "Download speed:" << dowloadSpeed;
 
     emit downloadProgress(m_currentDownloadId, bytesReceived, bytesTotal, dowloadSpeed);
 }
 
 void FileDownload::onDownloadError(QNetworkReply::NetworkError error) {
-    qCDebug(CLASS_LC) << "Download error:" << error << m_outputFile.errorString();
+    qCDebug(lcOtaDownload) << "Download error:" << error << m_outputFile.errorString();
 }
 
 void FileDownload::onDownloadFinished() {
     m_outputFile.flush();
     m_outputFile.close();
 
-    qCDebug(CLASS_LC) << "Elapsed ms:" << m_downloadTimer.elapsed();
+    qCDebug(lcOtaDownload) << "Elapsed ms:" << m_downloadTimer.elapsed();
 
     if (m_currentReply->error() == QNetworkReply::NetworkError::NoError) {
         // TODO(zehnm) validate download
 
         QString finalName = m_outputFile.fileName().remove(".part");
 
-        qCDebug(CLASS_LC) << "Download finished. Renaming download file to make install available at:" << finalName;
+        qCDebug(lcOtaDownload) << "Download finished. Renaming download file to make install available at:"
+                               << finalName;
 
         if (m_outputFile.rename(finalName)) {
             emit downloadComplete(m_currentDownloadId, m_outputFile.fileName());
         } else {
-            qCCritical(CLASS_LC) << "Error renaming download file:" << m_outputFile.error()
-                                 << m_outputFile.errorString();
+            qCCritical(lcOtaDownload) << "Error renaming download file:" << m_outputFile.error()
+                                      << m_outputFile.errorString();
             emit downloadFailed(m_currentDownloadId, m_outputFile.errorString());
         }
     } else {
-        qCWarning(CLASS_LC) << "Failed to download file:" << m_currentReply->error() << m_currentReply->errorString();
+        qCWarning(lcOtaDownload) << "Failed to download file:" << m_currentReply->error()
+                                 << m_currentReply->errorString();
         emit downloadFailed(m_currentDownloadId, m_currentReply->errorString());
     }
 

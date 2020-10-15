@@ -49,6 +49,12 @@ class Apds9960GestureSensor : public GestureSensor {
 
     Gesture gesture() const override { return m_gesture; }
 
+    // Device interface
+ protected:
+    const QLoggingCategory& logCategory() const override {
+        return lcApds9960Gesture();
+    }
+
  private:
     APDS9960* p_apds;
     Gesture   m_gesture;

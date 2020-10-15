@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #include <QQmlApplicationEngine>
-#include <QtDebug>
 
 #include "entities.h"
 #include "mediaplayer.h"

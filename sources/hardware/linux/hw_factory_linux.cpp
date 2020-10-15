@@ -22,9 +22,6 @@
 
 #include "hw_factory_linux.h"
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
 #include "../../configutil.h"
 #include "../hw_config.h"
 #include "../systemservice_name.h"
@@ -36,8 +33,6 @@
 #if defined(CONFIG_WPA_SUPPLICANT)
 #include "wifi_wpasupplicant.h"
 #endif
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.factory.linux");
 
 HardwareFactoryLinux::HardwareFactoryLinux(const QVariantMap &config, const QString &profile, QObject *parent)
     : HardwareFactoryDefault(parent) {
@@ -127,7 +122,7 @@ WifiControl *HardwareFactoryLinux::buildWifiControl(const QVariantMap &wifiCfg) 
 #if defined(CONFIG_WPA_SUPPLICANT)
     wpaSupplicantAvailable = true;
     if (!useShellScript) {
-        qCDebug(CLASS_LC()) << "Using wpa_supplicant as WiFi control interface";
+        qCDebug(lcHwFactory) << "Using wpa_supplicant as WiFi control interface";
         WifiWpaSupplicant *wps = new WifiWpaSupplicant(getWebServerControl(), getSystemService(), this);
 
         QVariantMap wpaCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_WPA_SUPP).toMap();
@@ -138,7 +133,7 @@ WifiControl *HardwareFactoryLinux::buildWifiControl(const QVariantMap &wifiCfg) 
     }
 #endif
     if (useShellScript || !wpaSupplicantAvailable) {
-        qCDebug(CLASS_LC()) << "Using shell scripts to control WiFi";
+        qCDebug(lcHwFactory) << "Using shell scripts to control WiFi";
         WifiShellScripts *wss = new WifiShellScripts(getSystemService(), this);
 
         QVariantMap shCfg = wifiCfg.value(HW_CFG_WIFI_INTERFACE).toMap().value(HW_CFG_WIFI_IF_SHELLSCRIPT).toMap();

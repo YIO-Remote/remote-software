@@ -23,13 +23,10 @@
 #include "commandlinehandler.h"
 
 #include <QCommandLineParser>
-#include <QLoggingCategory>
-#include <QtDebug>
 
 #include "config.h"
 #include "jsonfile.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "env");
+#include "logging.h"
 
 CommandLineHandler::CommandLineHandler(QObject *parent) : QObject(parent), m_profile(""), m_cfgFile("") {}
 
@@ -105,13 +102,13 @@ void CommandLineHandler::process(const QCoreApplication &app, const QString &res
     }
 
     if (!QFile::exists(m_cfgSchemaFile)) {
-        qCWarning(CLASS_LC)
+        qCWarning(lcEnv)
             << "App configuration schema not found, configuration file will not be validated! Missing file:"
             << m_cfgSchemaFile;
     }
 
     if (!QFile::exists(m_hwCfgSchemaFile)) {
-        qCWarning(CLASS_LC)
+        qCWarning(lcEnv)
             << "Hardware configuration schema not found, configuration file will not be validated! Missing file:"
             << m_hwCfgSchemaFile;
     }
