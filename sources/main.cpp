@@ -202,7 +202,10 @@ int main(int argc, char* argv[]) {
     hwFactory->initialize();
 
     // YIO API
-    YioAPI* yioapi = new YioAPI(&engine);
+    YioAPI* yioapi = YioAPI::getInstance();
+    bool ok;
+    int webSocketPort = qEnvironmentVariableIntValue("YIO_WEBSOCKET_PORT", &ok);
+    yioapi->setWebSocketPort(ok ? webSocketPort : 946);
     engine.rootContext()->setContextProperty("api", yioapi);
 
     // FACTORY RESET HANDLER

@@ -38,6 +38,8 @@ class YioAPI : public YioAPIInterface {
     Q_INTERFACES(YioAPIInterface)
 
  public:
+    static YioAPI* getInstance();
+
     Q_PROPERTY(bool running READ running NOTIFY runningChanged)        // returns the state of the API
     Q_PROPERTY(QString hostname READ hostname NOTIFY hostnameChanged)  // returns the hostname of the remote
 
@@ -50,6 +52,9 @@ class YioAPI : public YioAPIInterface {
      * @brief sendMessage Sends a message to all clients
      */
     Q_INVOKABLE void sendMessage(QString message) override;
+
+    void setWebSocketPort(quint16 port) { m_port = port; }
+    quint16 webSocketPort() { return m_port; }
 
     // CONFIG MANIPULATION METHODS
     QVariantMap getConfig() override;
@@ -67,11 +72,6 @@ class YioAPI : public YioAPIInterface {
     void             discoverNetworkServices() override;
     Q_INVOKABLE void discoverNetworkServices(QString mdns) override;
 
-    explicit YioAPI(QQmlApplicationEngine* engine = nullptr);
-    ~YioAPI() override;
-
-    static YioAPI* getInstance() { return s_instance; }
-
  signals:
     //    void closed();
     //    void messageReceived(QVariantMap message);
@@ -87,35 +87,10 @@ class YioAPI : public YioAPIInterface {
     void onClientDisconnected();
 
  private:
-    QWebSocketServer*       m_server;
-    QMap<QWebSocket*, bool> m_clients;  // websocket client, true if authentication was successful
+    YioAPI();
+    ~YioAPI() override;
 
-    QList<QWebSocket*> m_subscribed_clients;
-    QObject*           m_context;
-    void               subscribeOnSignalEvent(const QString& event);
-
-    bool m_running = false;
-
-    static YioAPI*         s_instance;
-    QQmlApplicationEngine* m_engine;
-
-    QString m_token = "0";  // "c82b5fd6bea6fc3faf9a30bb864a9ee2"
-    // QCryptographicHash::hash(m_token.toLocal8Bit(), QCryptographicHash::Sha512);
-    QByteArray m_hash =
-        "{U\xC0<$\xF7\n\xA7PA\xC3=\xBEk\xF5\xC1\xCA\x8B\t\x91\xA0\x9Et\xBA"
-        "E\xE9\xA0)\xE4\x07^E\x04\x17Xg\xE4)\x04\xB7\xD4\x9D,\x19%\xD7\xA1\xDC\x84U\x83\xA2\xAA\x1D\xD7:\xBE\xF6"
-        "1\xFA\x90\xED\x16\xBB";
-    QString m_hostname;
-
-    QZeroConf  m_zeroConf;
-    QZeroConf* m_zeroConfBrowser;
-
-    QStringList m_discoverableServices;
-    QString     m_prevIp;
-
-    Entities*     m_entities;
-    Integrations* m_integrations;
-    Config*       m_config;
+    void subscribeOnSignalEvent(const QString& event);
 
     // API CALLS
     void apiSendResponse(QWebSocket* client, const int& id, const bool& success, QVariantMap response);
@@ -168,4 +143,30 @@ class YioAPI : public YioAPIInterface {
     void apiSettingsSetDarkMode(QWebSocket* client, const int& id, const QVariantMap& map);
 
     void apiLoggerControl(QWebSocket* client, const int& id, const QVariantMap& map);
+
+ private:
+    quint16                 m_port;
+    bool                    m_running = false;
+    QWebSocketServer*       m_server;
+    QMap<QWebSocket*, bool> m_clients;  // websocket client, true if authentication was successful
+
+    QList<QWebSocket*> m_subscribed_clients;
+    QObject*           m_context;
+
+    QString m_token = "0";  // "c82b5fd6bea6fc3faf9a30bb864a9ee2"
+    // QCryptographicHash::hash(m_token.toLocal8Bit(), QCryptographicHash::Sha512);
+    QByteArray m_hash =
+        "{U\xC0<$\xF7\n\xA7PA\xC3=\xBEk\xF5\xC1\xCA\x8B\t\x91\xA0\x9Et\xBA"
+        "E\xE9\xA0)\xE4\x07^E\x04\x17Xg\xE4)\x04\xB7\xD4\x9D,\x19%\xD7\xA1\xDC\x84U\x83\xA2\xAA\x1D\xD7:\xBE\xF6"
+        "1\xFA\x90\xED\x16\xBB";
+    QString m_hostname;
+
+    QZeroConf  m_zeroConf;
+
+    QStringList m_discoverableServices;
+    QString     m_prevIp;
+
+    Entities*     m_entities;
+    Integrations* m_integrations;
+    Config*       m_config;
 };
