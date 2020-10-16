@@ -22,10 +22,10 @@
 
 #include "yioapi.h"
 
+#include <QHostInfo>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QNetworkInterface>
 #include <QTimer>
 
 #include "launcher.h"
@@ -39,24 +39,28 @@
         qCDebug(lcApi) << message << client->peerAddress().toString(); \
     }
 
-YioAPI *YioAPI::s_instance = nullptr;
+YioAPI *YioAPI::getInstance() {
+    static YioAPI api;
+    return &api;
+}
 
-YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_engine(engine) {
-    s_instance = this;
+YioAPI::YioAPI() : m_port(946), m_server(nullptr), m_context(nullptr) {
     m_entities = Entities::getInstance();
     m_integrations = Integrations::getInstance();
     m_config = Config::getInstance();
 }
 
 YioAPI::~YioAPI() {
-    s_instance = nullptr;
+    if (m_server) {
+        delete m_server;
+    }
 }
 
 void YioAPI::start() {
     m_server = new QWebSocketServer(QStringLiteral("YIO API"), QWebSocketServer::NonSecureMode, this);
 
-    // start websocket server on port 946(YIO)
-    if (m_server->listen(QHostAddress::Any, 946)) {
+    // start websocket server
+    if (m_server->listen(QHostAddress::Any, m_port)) {
         connect(m_server, &QWebSocketServer::newConnection, this, &YioAPI::onNewConnection);
         connect(m_server, &QWebSocketServer::closed, this, &YioAPI::onClosed);
 
@@ -64,23 +68,13 @@ void YioAPI::start() {
         emit runningChanged();
     }
 
-    QString macAddr;
-    for (QNetworkInterface interface : QNetworkInterface::allInterfaces()) {
-        if (!(interface.flags() & QNetworkInterface::IsLoopBack)) {
-            macAddr = interface.hardwareAddress();
-            break;
-        }
-    }
-
-    macAddr.replace(":", "");
-    m_hostname = "";
-    m_hostname.append("YIO-Remote-").append(macAddr);
-    qCDebug(lcApi) << "NAME" << m_hostname;
+    m_hostname = QHostInfo::localHostName().split(QLatin1Char('.')).at(0);
+    qCDebug(lcApi) << "YIO api published as ZeroConf service name:" << m_hostname;
     emit hostnameChanged();
 
-    m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
+    m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", m_port);
 
-    qCDebug(lcApi) << "YIO api started";
+    qCDebug(lcApi) << "YIO api started on port" << m_port;
 }
 
 void YioAPI::stop() {
@@ -89,6 +83,7 @@ void YioAPI::stop() {
     m_running = false;
     m_zeroConf.stopServicePublish();
     emit runningChanged();
+    qCDebug(lcApi) << "YIO api stopped";
 }
 
 void YioAPI::sendMessage(QString message) {
@@ -852,7 +847,7 @@ void YioAPI::apiSystemSubscribeToEvents(QWebSocket *client, const int &id) {
     // add client to the subscribed client list
     m_subscribed_clients.append(client);
 
-    // connect to signals
+    // connect to signals. FIXME handle multiple clients and perform proper cleanup
     m_context = new QObject(this);
 
     QObject::connect(m_config, &Config::configChanged, m_context, [=]() { subscribeOnSignalEvent("config_changed"); });
@@ -882,8 +877,11 @@ void YioAPI::apiSystemUnsubscribeFromEvents(QWebSocket *client, const int &id) {
         return;
     }
 
-    QObject::disconnect(m_context);
-    m_context->deleteLater();
+    // FIXME handle multiple clients and perform proper cleanup
+    if (m_context) {
+        QObject::disconnect(m_context);
+        m_context->deleteLater();
+    }
 
     for (int i = 0; i < m_subscribed_clients.length(); i++) {
         if (m_subscribed_clients[i] == client) {
