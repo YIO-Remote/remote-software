@@ -46,11 +46,14 @@ class BluetoothControl : public QObject {
 
  public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void lookForDocks();
+
+ private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
     void onDeviceDiscovered(const QBluetoothDeviceInfo &device);
     void onDiscoveryFinished();
     void sendCredentialsToDock(const QString &msg);
-    void onDockConnected();
     void onPairingDone(const QBluetoothAddress &address, QBluetoothLocalDevice::Pairing pairing);
+    void onDockConnected();
+    void onSocketError(QBluetoothSocket::SocketError error);
 
  private:
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent;
