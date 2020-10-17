@@ -31,10 +31,16 @@ BluetoothControl::BluetoothControl(QObject *parent)
     : QObject(parent), m_discoveryAgent(nullptr), m_dockSocket(nullptr) {
     qCInfo(lcBluetooth) << "Bluetooth starting";
 
-    // if there is a bluetooth device, let's set up some things
+    // if there is a Bluetooth device, let's set up some things
     // FIXME move out of constructor
     if (m_localDevice.isValid()) {
         qCDebug(lcBluetooth) << "Bluetooth init OK";
+
+        QObject::connect(&m_localDevice, &QBluetoothLocalDevice::pairingDisplayConfirmation, this,
+                         &BluetoothControl::onPairingDisplayConfirmation);
+        QObject::connect(&m_localDevice, &QBluetoothLocalDevice::pairingFinished, this,
+                         &BluetoothControl::onPairingDone);
+        QObject::connect(&m_localDevice, &QBluetoothLocalDevice::error, this, &BluetoothControl::onPairingError);
     } else {
         qCCritical(lcBluetooth) << "Bluetooth device was not found.";
         Notifications::getInstance()->add(true, tr("Bluetooth device was not found."));
@@ -66,7 +72,7 @@ void BluetoothControl::setEnabled(bool enabled) {
 void BluetoothControl::lookForDocks() {
     setEnabled(true);
 
-    qCDebug(lcBluetooth) << "Creating bluetooth discovery agent";
+    qCDebug(lcBluetooth) << "Creating Bluetooth discovery agent";
     m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
 
     QObject::connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this,
@@ -97,10 +103,8 @@ void BluetoothControl::onDeviceDiscovered(const QBluetoothDeviceInfo &device) {
         emit    dockFound(name);
 
         // TODO(zehnm) split pairing & socket connection from discovery: UI should initiate pairing & command sending
-        qCInfo(lcBluetooth) << "YIO Dock found. Request pairing" << name;
-        QObject::connect(&m_localDevice, &QBluetoothLocalDevice::pairingFinished, this,
-                         &BluetoothControl::onPairingDone);
-        QObject::connect(&m_localDevice, &QBluetoothLocalDevice::error, this, &BluetoothControl::onPairingError);
+        qCInfo(lcBluetooth) << "YIO Dock found. Request pairing with" << name;
+
         m_localDevice.requestPairing(m_dockAddress, QBluetoothLocalDevice::Paired);
     }
 }
@@ -127,9 +131,14 @@ void BluetoothControl::sendCredentialsToDock(const QString &msg) {
     m_dockMessage = msg;
 }
 
+void BluetoothControl::onPairingDisplayConfirmation(const QBluetoothAddress &address, QString pin) {
+    qCInfo(lcBluetooth()) << "Confirming pairing request" << address << pin;
+    m_localDevice.pairingConfirmation(true);
+}
+
 void BluetoothControl::onPairingDone(const QBluetoothAddress &address, QBluetoothLocalDevice::Pairing pairing) {
     if (address == m_dockAddress && pairing == QBluetoothLocalDevice::Paired) {
-        qCInfo(lcBluetooth) << "Pairing done:" << address;
+        qCInfo(lcBluetooth) << "Pairing done with" << address;
         emit dockPaired(address.toString());
         m_dockSocket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this);
 
@@ -138,7 +147,7 @@ void BluetoothControl::onPairingDone(const QBluetoothAddress &address, QBluetoot
                          &BluetoothControl::onDockSocketError);
 
         m_dockSocket->connectToService(m_dockAddress, m_dockServiceUuid);
-        qCDebug(lcBluetooth) << "Connecting to bluetooth service" << m_dockAddress << "with uuid" << m_dockServiceUuid;
+        qCDebug(lcBluetooth) << "Connecting to Bluetooth service" << m_dockAddress << "with uuid" << m_dockServiceUuid;
     }
 }
 
@@ -149,11 +158,11 @@ void BluetoothControl::onPairingError(QBluetoothLocalDevice::Error error) {
 }
 
 void BluetoothControl::onDockConnected() {
-    qCDebug(lcBluetooth) << "Opening bluetooth socket to dock";
+    qCDebug(lcBluetooth) << "Opening Bluetooth socket to dock";
     emit dockConnected(m_dockAddress.toString(), m_dockServiceUuid.toString());
 
     if (!m_dockSocket->open(QIODevice::WriteOnly)) {
-        qCCritical(lcBluetooth()) << "Could not open bluetooth socket to dock";
+        qCCritical(lcBluetooth()) << "Could not open Bluetooth socket to dock";
         dockSetupError();
         return;
     }
@@ -167,7 +176,7 @@ void BluetoothControl::onDockConnected() {
         return;
     }
 
-    qCInfo(lcBluetooth) << "Message sent to dock.";
+    qCInfo(lcBluetooth) << "Wifi setup message sent to dock.";
 
     // TODO(zehnm) why this delay? For the dock to connect to wifi?
     QTimer::singleShot(6000, [=]() {
@@ -199,7 +208,7 @@ void BluetoothControl::dockSetupError() {
     close();
     setEnabled(false);
 
-    // TODO(zehnm) restart bluetooth service?
+    // TODO(zehnm) restart Bluetooth service?
 
     emit dockSetupFailed();
 }
