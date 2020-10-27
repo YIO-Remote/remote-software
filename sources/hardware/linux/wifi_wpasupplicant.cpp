@@ -170,6 +170,9 @@ bool WifiWpaSupplicant::clearConfiguredNetworks() {
 
     qCInfo(lcWifiWpaCtrl) << "All networks removed and disconnected";
 
+    // avoid deadlock.
+    // DISCONNECT doc states: "Disconnect and wait for REASSOCIATE or RECONNECT command before connecting."
+    controlRequest("RECONNECT");
     return true;
 }
 
