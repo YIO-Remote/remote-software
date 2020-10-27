@@ -111,7 +111,8 @@ Item {
     Timer {
         id: mdnsDiscoveryTimeout
         running: false
-        interval: 30000
+        // api.discoverNetworkServices timeout is hard-coded to 10s
+        interval: 11000
         repeat: false
 
         onTriggered: {
