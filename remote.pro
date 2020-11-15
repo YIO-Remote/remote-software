@@ -505,6 +505,7 @@ win32 {
 }
 
 DISTFILES += \
+    components/FpsItem.qml \
     config.json \
     config-schema.json \
     dependencies.cfg \

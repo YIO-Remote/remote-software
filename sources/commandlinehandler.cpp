@@ -47,6 +47,7 @@ void CommandLineHandler::process(const QCoreApplication &app, const QString &res
     QCommandLineOption hwCfgOpt(QStringList() << "hw-cfg", tr("Use hardware configuration file."), "FILE");
     QCommandLineOption hwCfgSchemaOpt(QStringList() << "hw-schema", tr("Use hardware configuration schema file."),
                                       "FILE");
+    QCommandLineOption fpsCfgOpt(QStringList() << "fps", tr("Show frames / second counter."));
 
     // Commands: execute & exit
     QCommandLineOption validateOption(QStringList() << "validate", tr("Validate json configuration files and exit."));
@@ -57,6 +58,7 @@ void CommandLineHandler::process(const QCoreApplication &app, const QString &res
     parser.addOption(cfgSchemaOpt);
     parser.addOption(hwCfgOpt);
     parser.addOption(hwCfgSchemaOpt);
+    parser.addOption(fpsCfgOpt);
 
     parser.addOption(validateOption);
 

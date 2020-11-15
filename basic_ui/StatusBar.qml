@@ -26,6 +26,7 @@ import Style 1.0
 import Battery 1.0
 import Haptic 1.0
 
+
 Item {
     id: statusBar
     width: parent.width; height: 40
@@ -178,6 +179,17 @@ Item {
             integrations.list[i].connecting.connect(loadingIconON);
             integrations.list[i].disconnected.connect(loadingIconOFF);
             integrations.list[i].connected.connect(loadingIconOFF);
+        }
+
+        if (Qt.application.arguments.includes('--fps')) {
+            Qt.createQmlObject(
+                    'import "qrc:components" as Components;
+                    Components.FpsItem {
+                        id: fpsItem
+                        width: 100; height: parent.height
+                        anchors { left: parent.left; leftMargin: 5 }
+                    }',
+                    statusBar, 'fpsCounter')
         }
     }
 
