@@ -508,7 +508,7 @@ DISTFILES += \
     components/FpsItem.qml \
     components/media_player/ui/CardTVChannelList \
     components/media_player/ui/CardTVChannelList.qml \
-    components/media_player/ui/ChannelView.qml \
+    components/media_player/ui/TVChannelView.qml \
     config.json \
     config-schema.json \
     dependencies.cfg \
