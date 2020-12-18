@@ -160,6 +160,7 @@ void MediaPlayer::search(const QString &searchText, const QString &itemKey) {
 void MediaPlayer::search(const QString &searchString) { command(MediaPlayerDef::C_SEARCH, searchString); }
 void MediaPlayer::getAlbum(const QString &id) { command(MediaPlayerDef::C_GETALBUM, id); }
 void MediaPlayer::getPlaylist(const QString &id) { command(MediaPlayerDef::C_GETPLAYLIST, id); }
+void MediaPlayer::getTVChannelList(const QString &id) { command(MediaPlayerDef::C_GETTVCHANNELLIST, id); }
 
 void MediaPlayer::setSearchModel(QObject *model) {
     m_searchModel = model;

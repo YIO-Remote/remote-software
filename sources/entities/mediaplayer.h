@@ -90,6 +90,8 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_INVOKABLE void search(const QString& searchText);
     Q_INVOKABLE void getAlbum(const QString& id);
     Q_INVOKABLE void getPlaylist(const QString& id);
+    Q_INVOKABLE void getTVChannelList(const QString& id);
+
 
     void setSearchModel(QObject* model) override;
     void setBrowseModel(QObject* model) override;

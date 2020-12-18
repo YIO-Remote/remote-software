@@ -173,7 +173,8 @@
                     "TURN_OFF",
                     "SEARCH",
                     "LIST",
-                    "SPEAKER_CONTROL"
+                    "SPEAKER_CONTROL",
+                    "TVCHANNELLIST"
                   ],
                   "title": "Feature",
                   "default": null

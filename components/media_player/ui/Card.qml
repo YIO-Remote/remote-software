@@ -126,6 +126,8 @@ Rectangle {
             features.push("SEARCH");
         if (obj.isSupported(MediaPlayer.F_LIST))
             features.push("LIST");
+        if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
+            features.push("TVCHANNELLIST");
         if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
             features.push("SPEAKER_CONTROL");
 
@@ -172,6 +174,9 @@ Rectangle {
                     else if (card.features.indexOf("LIST")-1 == index ) {
                         return cardList;
                     }
+                    else if (card.features.indexOf("TVCHANNELLIST")-1 == index ) {
+                        return cardTVList;
+                    }
                     else if (card.features.indexOf("SPEAKER_CONTROL")-1 == index ) {
                         return cardSpeakerControl;
                     }
@@ -195,13 +200,15 @@ Rectangle {
             CardPlaylists {}
         }
 
+        Component {
+            id: cardTVList
+             CardTVChannelList {}
+        }
+
         // TODO: Speaker control UI is missing
         Component {
             id: cardSpeakerControl
-            Rectangle {
-                anchors.fill: parent
-                color: "green"
-            }
+            CardTVChannelList {}
         }
     }
 
@@ -217,6 +224,8 @@ Rectangle {
                 i++;
             if (obj.isSupported(MediaPlayer.F_LIST))
                 i++;
+            if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
+                i++;
             if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
                 i++;
 
@@ -228,6 +237,8 @@ Rectangle {
                 return 80;
             else if (i === 3)
                 return 40;
+            else if (i === 4)
+                return 20;
         }
 
         // home
@@ -292,6 +303,28 @@ Rectangle {
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
                     cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
+                }
+            }
+        }
+
+        //TVChannelList
+        Text {
+            visible: obj.isSupported(MediaPlayer.F_TVCHANNELLIST) ? true : false
+            color: Style.color.text
+            opacity: cardSwipeView.currentIndex === features.indexOf("TVCHANNELLIST") ? 1 : 0.5
+            text: Style.icon.playlist
+            renderType: Text.NativeRendering
+            width: 60; height: 60
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
+
+            MouseArea {
+                anchors.fill: parent
+                width: parent.width + 30; height: width
+
+                onClicked: {
+                    Haptic.playEffect(Haptic.Click);
+                    cardSwipeView.setCurrentIndex(features.indexOf("TVCHANNELLIST"));
                 }
             }
         }
