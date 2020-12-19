@@ -202,13 +202,16 @@ Rectangle {
 
         Component {
             id: cardTVList
-             CardTVChannelList {}
+            CardTVChannelList {}
         }
 
         // TODO: Speaker control UI is missing
         Component {
             id: cardSpeakerControl
-            CardTVChannelList {}
+            Rectangle {
+                anchors.fill: parent
+                color: "green"
+            }
         }
     }
 
