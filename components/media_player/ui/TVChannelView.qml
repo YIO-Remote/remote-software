@@ -65,7 +65,7 @@ Rectangle {
         width: parent.width; height: parent.height-100
         maximumFlickVelocity: 6000
         flickDeceleration: 1000
-        contentHeight: 150 + image.height + title.height + artist.height + trackListView.height
+        contentHeight: 150 + image.height + title.height + artist.height + channelListView.height
         boundsBehavior: Flickable.DragAndOvershootBounds
         flickableDirection: Flickable.VerticalFlick
         clip: true
@@ -147,18 +147,18 @@ Rectangle {
         }
 
         ListView {
-            id: trackListView
+            id: channelListView
             width: parent.width-60; height: childrenRect.height
             spacing: 20
             interactive: false
             anchors { top: artist.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
 
             model: tvchannelModel.model
-            delegate: trackThumbnail
+            delegate: channelThumbnail
         }
 
         Component {
-            id: trackThumbnail
+            id: channelThumbnail
 
             Item {
                 width: parent.width; height: 80

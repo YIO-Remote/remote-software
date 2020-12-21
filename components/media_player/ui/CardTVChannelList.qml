@@ -44,7 +44,7 @@ Rectangle {
         if (isCurrentItem && start) {
             console.debug("LOAD USER TVPLAYLISTS");
             start = false;
-            obj.getTVChannelList("overview");
+            obj.getTVChannelList("all");
             obj.browseModelChanged.connect(onFirstLoadComplete);
         }
         if (!isCurrentItem) {
@@ -63,19 +63,19 @@ Rectangle {
 
     function load(tvchannel, type) {
         swipeView.currentIndex++;
-        if (type === "playlist") {
+        if (type === "tvchannellist") {
             obj.getTVChannelList(tvchannel);
             obj.browseModelChanged.connect(onBrowseModelChanged);
         }
     }
 
     function onBrowseModelChanged(model) {
-        if (playlistLoader) {
-            if (playlistLoader.source != "qrc:/components/media_player/ui/TVChannelView.qml")
-                playlistLoader.setSource("qrc:/components/media_player/ui/TVChannelView.qml", { "tvchannelModel": model })
-            else if (playlistLoader.item) {
-                playlistLoader.item.tvchannelModel = model;
-                playlistLoader.item.itemFlickable.contentY = 0;
+        if (channellistLoader) {
+            if (channellistLoader.source != "qrc:/components/media_player/ui/TVChannelView.qml")
+                channellistLoader.setSource("qrc:/components/media_player/ui/TVChannelView.qml", { "tvchannelModel": model })
+            else if (channellistLoader.item) {
+                channellistLoader.item.tvchannelModel = model;
+                channellistLoader.item.itemFlickable.contentY = 0;
             }
         }
         obj.browseModelChanged.disconnect(onBrowseModelChanged);
@@ -145,7 +145,7 @@ Rectangle {
                 id: playListThumbnail
 
                 Item {
-                    id: trackThumbnailItem
+                    id: channelThumbnailItem
                     width: parent.width-60; height: 80
                     anchors.horizontalCenter: parent.horizontalCenter
 
@@ -222,7 +222,7 @@ Rectangle {
         Item {
 
             Loader {
-                id: playlistLoader
+                id: channellistLoader
                 asynchronous: true
                 anchors.fill: parent
             }
