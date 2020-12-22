@@ -130,6 +130,48 @@ void MediaPlayer::setVolume(int value) { command(MediaPlayerDef::C_VOLUME_SET, v
 void MediaPlayer::volumeUp() { command(MediaPlayerDef::C_VOLUME_UP, ""); }
 void MediaPlayer::volumeDown() { command(MediaPlayerDef::C_VOLUME_DOWN, ""); }
 
+// navigation
+void MediaPlayer::cursorUp() {
+    command(MediaPlayerDef::C_CURSOR_UP, "");
+}
+
+void MediaPlayer::cursorDown() {
+    command(MediaPlayerDef::C_CURSOR_DOWN, "");
+}
+
+void MediaPlayer::cursorLeft() {
+    command(MediaPlayerDef::C_CURSOR_LEFT, "");
+}
+
+void MediaPlayer::cursorRight() {
+    command(MediaPlayerDef::C_CURSOR_RIGHT, "");
+}
+
+void MediaPlayer::cursorOK() {
+    command(MediaPlayerDef::C_CURSOR_OK, "");
+}
+
+void MediaPlayer::back() {
+    command(RemoteDef::C_BACK, "");
+}
+
+void MediaPlayer::menu() {
+    command(MediaPlayerDef::C_MENU, "");
+}
+
+// tuner commands
+void MediaPlayer::channelUp() {
+    command(MediaPlayerDef::C_CHANNEL_UP, "");
+}
+
+void MediaPlayer::channelDown() {
+    command(MediaPlayerDef::C_CHANNEL_DOWN, "");
+}
+
+void MediaPlayer::muteToggle() {
+    command(MediaPlayerDef::C_MUTE_TOGGLE, "");
+}
+
 bool MediaPlayer::supportsOn() {
     if (isSupported(MediaPlayerDef::F_TURN_ON) && isSupported(MediaPlayerDef::F_TURN_OFF)) {
         return true;
@@ -158,9 +200,11 @@ void MediaPlayer::search(const QString &searchText, const QString &itemKey) {
     command(MediaPlayerDef::C_SEARCH_ITEM, map);
 }
 void MediaPlayer::search(const QString &searchString) { command(MediaPlayerDef::C_SEARCH, searchString); }
+void MediaPlayer::commandMediaPlayer(const QString &commandString) { command(MediaPlayerDef::C_MEDIAPLAYERCOMMAND, commandString); }
 void MediaPlayer::getAlbum(const QString &id) { command(MediaPlayerDef::C_GETALBUM, id); }
 void MediaPlayer::getPlaylist(const QString &id) { command(MediaPlayerDef::C_GETPLAYLIST, id); }
 void MediaPlayer::getTVChannelList(const QString &id) { command(MediaPlayerDef::C_GETTVCHANNELLIST, id); }
+void MediaPlayer::getMediaPlayerRemote(const QString &id) { command(MediaPlayerDef::C_GETMEDIAPLAYERREMOTE, id); }
 
 void MediaPlayer::setSearchModel(QObject *model) {
     m_searchModel = model;

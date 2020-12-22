@@ -174,7 +174,8 @@
                     "SEARCH",
                     "LIST",
                     "SPEAKER_CONTROL",
-                    "TVCHANNELLIST"
+                    "TVCHANNELLIST",
+                    "MEDIAPLAYERREMOTE"
                   ],
                   "title": "Feature",
                   "default": null
