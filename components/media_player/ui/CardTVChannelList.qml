@@ -48,7 +48,7 @@ Rectangle {
             obj.browseModelChanged.connect(onFirstLoadComplete);
         }
         if (!isCurrentItem) {
-            playListListView.contentY = 0-120;
+            tvChannelListListView.contentY = 0-120;
         }
     }
 
@@ -95,10 +95,10 @@ Rectangle {
         clip: true
 
         Item {
-            property alias playListListView: playListListView
+            property alias tvChannelListListView: tvChannelListListView
 
             ListView {
-                id: playListListView
+                id: tvChannelListListView
                 width: parent.width; height: parent.height-100
                 spacing: 20
                 anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
