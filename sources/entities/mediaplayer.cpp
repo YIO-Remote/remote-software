@@ -200,7 +200,7 @@ void MediaPlayer::search(const QString &searchText, const QString &itemKey) {
     command(MediaPlayerDef::C_SEARCH_ITEM, map);
 }
 void MediaPlayer::search(const QString &searchString) { command(MediaPlayerDef::C_SEARCH, searchString); }
-void MediaPlayer::commandMediaPlayer(const QString &commandString) { command(MediaPlayerDef::C_MEDIAPLAYERCOMMAND, commandString); }
+void MediaPlayer::textInputMediaPlayer(const QString &textString) { command(MediaPlayerDef::C_MEDIAPLAYERTEXTINPUT, textString); }
 void MediaPlayer::getAlbum(const QString &id) { command(MediaPlayerDef::C_GETALBUM, id); }
 void MediaPlayer::getPlaylist(const QString &id) { command(MediaPlayerDef::C_GETPLAYLIST, id); }
 void MediaPlayer::getTVChannelList(const QString &id) { command(MediaPlayerDef::C_GETTVCHANNELLIST, id); }

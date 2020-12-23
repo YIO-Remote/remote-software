@@ -100,7 +100,7 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_INVOKABLE void addToQueue(const QString& itemKey, const QString& type);
     Q_INVOKABLE void search(const QString& searchText, const QString& itemKey);  // Search
     Q_INVOKABLE void search(const QString& searchText);
-    Q_INVOKABLE void commandMediaPlayer(const QString& commandText);
+    Q_INVOKABLE void textInputMediaPlayer(const QString& textString);
     Q_INVOKABLE void getAlbum(const QString& id);
     Q_INVOKABLE void getPlaylist(const QString& id);
     Q_INVOKABLE void getTVChannelList(const QString& id);

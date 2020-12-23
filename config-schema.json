@@ -175,7 +175,17 @@
                     "LIST",
                     "SPEAKER_CONTROL",
                     "TVCHANNELLIST",
-                    "MEDIAPLAYERREMOTE"
+                    "MEDIAPLAYERREMOTE",
+                    "CHANNEL_UP",
+                    "CURSOR_UP",
+                    "CURSOR_DOWN",
+                    "CURSOR_LEFT",
+                    "CURSOR_RIGHT",
+                    "CURSOR_OK",
+                    "MENU",
+                    "CHANNEL_UP",
+                    "CHANNEL_DOWN",
+                    "MUTE_TOGGLE"
                   ],
                   "title": "Feature",
                   "default": null
