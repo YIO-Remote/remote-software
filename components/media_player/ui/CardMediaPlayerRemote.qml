@@ -171,7 +171,7 @@ Rectangle {
             cursorVisible: false
             width: parent.width-90; height: parent.height
             anchors { left: textInputIcon.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
-            placeholderText: qsTr("Search") + translateHandler.emptyString
+            placeholderText: "Textinput" + translateHandler.emptyString
             color: Style.color.background
             font { family: "Open Sans Regular"; pixelSize: 27 }
 

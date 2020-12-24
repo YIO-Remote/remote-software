@@ -98,7 +98,7 @@ Rectangle {
                 }
                 break;
             case ButtonHandler.TOP_LEFT:
-                if (obj.isSupported(MediaPlayer.F_MUTE_TOGGLE)) {
+                if (obj.isSupported(MediaPlayer.F_MUTE)) {
                     obj.muteToggle();
                 }
                 break;
