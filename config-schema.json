@@ -184,8 +184,7 @@
                     "CURSOR_OK",
                     "MENU",
                     "CHANNEL_UP",
-                    "CHANNEL_DOWN",
-                    "MUTE_TOGGLE"
+                    "CHANNEL_DOWN"
                   ],
                   "title": "Feature",
                   "default": null

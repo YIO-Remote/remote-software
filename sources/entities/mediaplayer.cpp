@@ -169,7 +169,7 @@ void MediaPlayer::channelDown() {
 }
 
 void MediaPlayer::muteToggle() {
-    command(MediaPlayerDef::C_MUTE_TOGGLE, "");
+    command(MediaPlayerDef::C_MUTE, "");
 }
 
 bool MediaPlayer::supportsOn() {
