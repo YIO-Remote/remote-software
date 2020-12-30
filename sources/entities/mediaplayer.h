@@ -105,6 +105,7 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_INVOKABLE void getPlaylist(const QString& id);
     Q_INVOKABLE void getTVChannelList(const QString& id);
     Q_INVOKABLE void getMediaPlayerRemote(const QString &id);
+    Q_INVOKABLE void getMediaPlayerEPGView(const QString &id);
 
 
     void setSearchModel(QObject* model) override;

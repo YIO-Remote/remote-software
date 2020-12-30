@@ -53,6 +53,7 @@
         <file>components/media_player/ui/CardPlaylists.qml</file>
         <file>components/media_player/ui/CardTVChannelList.qml</file>
 	<file>components/media_player/ui/CardMediaPlayerRemote.qml</file>
+        <file>components/media_player/ui/CardMediaPlayerEPGView.qml</file>
         <file>components/remote/ui/ir/CardChannels.qml</file>
         <file>components/remote/ui/ir/CardButtons.qml</file>
         <file>components/remote/ui/ir/Button.qml</file>

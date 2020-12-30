@@ -73,27 +73,27 @@ Rectangle {
                 }
                 break;
             case ButtonHandler.DPAD_UP:
-                if (obj.isSupported(MediaPlayer.F_CURSOR_UP)) {
+                if (obj.isSupported(MediaPlayer.F_UP)) {
                     obj.cursorUp();
                 }
                 break;
             case ButtonHandler.DPAD_DOWN:
-                if (obj.isSupported(MediaPlayer.F_CURSOR_DOWN)) {
+                if (obj.isSupported(MediaPlayer.F_DOWN)) {
                     obj.cursorDown();
                 }
                 break;
             case ButtonHandler.DPAD_LEFT:
-                if (obj.isSupported(MediaPlayer.F_CURSOR_LEFT)) {
+                if (obj.isSupported(MediaPlayer.F_LEFT)) {
                     obj.cursorLeft();
                 }
                 break;
             case ButtonHandler.DPAD_RIGHT:
-                if (obj.isSupported(MediaPlayer.F_CURSOR_RIGHT)) {
+                if (obj.isSupported(MediaPlayer.F_RIGHT)) {
                     obj.cursorRight();
                 }
                 break;
             case ButtonHandler.DPAD_MIDDLE:
-                if (obj.isSupported(MediaPlayer.F_CURSOR_OK)) {
+                if (obj.isSupported(MediaPlayer.F_OK)) {
                     obj.cursorOK();
                 }
                 break;
@@ -180,6 +180,8 @@ Rectangle {
             features.push("TVCHANNELLIST");
         if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
             features.push("MEDIAPLAYERREMOTE");
+        if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
+            features.push("MEDIAPLAYEREPGVIEW");
         if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
             features.push("SPEAKER_CONTROL");
 
@@ -222,16 +224,15 @@ Rectangle {
                 sourceComponent: {
                     if (card.features.indexOf("SEARCH")-1 == index ) {
                         return cardSearch;
-                    }
-                    else if (card.features.indexOf("LIST")-1 == index ) {
+                    } else if (card.features.indexOf("LIST")-1 == index ) {
                         return cardList;
-                    }
-                    else if (card.features.indexOf("TVCHANNELLIST")-1 == index ) {
+                    } else if (card.features.indexOf("TVCHANNELLIST")-1 == index ) {
                         return cardTVList;
-                    }else if (card.features.indexOf("MEDIAPLAYERREMOTE")-1 == index ) {
+                    } else if (card.features.indexOf("MEDIAPLAYERREMOTE")-1 == index ) {
                         return cardMediaPlayerRemote;
-                    }
-                    else if (card.features.indexOf("SPEAKER_CONTROL")-1 == index ) {
+                    } else if (card.features.indexOf("MEDIAPLAYEREPGVIEW")-1 == index ) {
+                        return cardMediaPlayerEPGView;
+                    } else if (card.features.indexOf("SPEAKER_CONTROL")-1 == index ) {
                         return cardSpeakerControl;
                     }
                 }
@@ -264,6 +265,11 @@ Rectangle {
             CardMediaPlayerRemote {}
         }
 
+        Component {
+            id: cardMediaPlayerEPGView
+            CardMediaPlayerEPGView {}
+        }
+
         // TODO: Speaker control UI is missing
         Component {
             id: cardSpeakerControl
@@ -289,6 +295,8 @@ Rectangle {
             if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
                 i++;
             if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
+                i++;
+            if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
                 i++;
             if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
                 i++;
@@ -411,6 +419,28 @@ Rectangle {
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
                     cardSwipeView.setCurrentIndex(features.indexOf("MEDIAPLAYERREMOTE"));
+                }
+            }
+        }
+
+        //EPGView
+        Text {
+            visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW) ? true : false
+            color: Style.color.text
+            opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYEREPGVIEW") ? 1 : 0.5
+            text: Style.icon.remote
+            renderType: Text.NativeRendering
+            width: 60; height: 60
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
+
+            MouseArea {
+                anchors.fill: parent
+                width: parent.width + 30; height: width
+
+                onClicked: {
+                    Haptic.playEffect(Haptic.Click);
+                    cardSwipeView.setCurrentIndex(features.indexOf("MEDIAPLAYEREPGVIEW"));
                 }
             }
         }

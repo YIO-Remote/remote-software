@@ -132,23 +132,23 @@ void MediaPlayer::volumeDown() { command(MediaPlayerDef::C_VOLUME_DOWN, ""); }
 
 // navigation
 void MediaPlayer::cursorUp() {
-    command(MediaPlayerDef::C_CURSOR_UP, "");
+    command(MediaPlayerDef::C_UP, "");
 }
 
 void MediaPlayer::cursorDown() {
-    command(MediaPlayerDef::C_CURSOR_DOWN, "");
+    command(MediaPlayerDef::C_DOWN, "");
 }
 
 void MediaPlayer::cursorLeft() {
-    command(MediaPlayerDef::C_CURSOR_LEFT, "");
+    command(MediaPlayerDef::C_LEFT, "");
 }
 
 void MediaPlayer::cursorRight() {
-    command(MediaPlayerDef::C_CURSOR_RIGHT, "");
+    command(MediaPlayerDef::C_RIGHT, "");
 }
 
 void MediaPlayer::cursorOK() {
-    command(MediaPlayerDef::C_CURSOR_OK, "");
+    command(MediaPlayerDef::C_OK, "");
 }
 
 void MediaPlayer::back() {
@@ -205,6 +205,7 @@ void MediaPlayer::getAlbum(const QString &id) { command(MediaPlayerDef::C_GETALB
 void MediaPlayer::getPlaylist(const QString &id) { command(MediaPlayerDef::C_GETPLAYLIST, id); }
 void MediaPlayer::getTVChannelList(const QString &id) { command(MediaPlayerDef::C_GETTVCHANNELLIST, id); }
 void MediaPlayer::getMediaPlayerRemote(const QString &id) { command(MediaPlayerDef::C_GETMEDIAPLAYERREMOTE, id); }
+void MediaPlayer::getMediaPlayerEPGView(const QString &id) { command(MediaPlayerDef::C_GETMEDIAPLAYEREPGVIEW, id); }
 
 void MediaPlayer::setSearchModel(QObject *model) {
     m_searchModel = model;
