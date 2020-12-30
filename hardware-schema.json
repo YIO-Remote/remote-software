@@ -143,7 +143,10 @@
         "enabled": { "$ref": "#/definitions/enabled" },
         "i2c":  { "$ref": "#/definitions/i2c" },
         "interrupt": {
-          "gpio":  { "$ref": "#/definitions/gpio" }
+          "type": "object",
+          "properties": {
+            "gpio":  { "$ref": "#/definitions/gpio" }
+          }
         }
       }
     },
