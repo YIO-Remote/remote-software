@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://yio-remote.com/hardware.json",
+  "type": "object",
   "title": "YIO remote hardware configuration schema",
   "$comment": "This schema is optimized for the YIO hardware only. Other platforms can define their own schema and configuration structure: The hardware.json file may only be used by the specific environment factory to initialize its drivers.",
   "definitions": {
