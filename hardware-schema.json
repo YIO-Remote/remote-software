@@ -66,7 +66,6 @@
       "required": ["clk", "mosi", "cs"]
     }
   },
-  "type": "object",
   "required": [
     "systemservice",
     "wifi",
@@ -78,9 +77,11 @@
       "title": "Display",
       "properties": {
         "control": {
+          "type": "object",
           "properties": {
             "enabled": { "$ref": "#/definitions/enabled" },
             "backlight" : {
+              "type": "object",
               "properties": {
                 "gpio":  { "$ref": "#/definitions/gpio" }
               }
