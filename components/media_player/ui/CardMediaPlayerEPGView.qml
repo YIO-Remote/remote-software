@@ -58,7 +58,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function onTextInput() {
+    /*function onTextInput() {
         obj.textInputMediaPlayer(textInputTextField.text);
         textInputTextField.focus = false;
         textInputTextField.text = "";
@@ -139,7 +139,7 @@ Rectangle {
 
 
 
-    Rectangle {
+   /* Rectangle {
         id: commandContainer
         width: 300; height: 80
         anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
@@ -192,8 +192,67 @@ Rectangle {
                     inputPanel.active = false
             }
         }
-    }
+    }*/
+    /*ScrollView {
+        width: 200
+        height: 200
+        clip: true
+    MenuBar {
+            Menu {
+                title: "File"
+                MenuItem { text: "Open..." }
+                MenuItem { text: "Close" }
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+            }
+            Menu {
+                title: "Edit"
+                MenuItem { text: "Cut" }
+                MenuItem { text: "Copy" }
+                MenuItem { text: "Paste" }
+            }
+        }
+    /*ScrollView {
+        width: 200
+        height: 200
+        clip: true
 
+        Label {
+            text: "ABC"
+            font.pixelSize: 224
+        }*/
+    //}
     /*
         Grid {
             id: cursorField

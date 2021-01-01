@@ -280,193 +280,221 @@ Rectangle {
         }
     }
 
-    // BOTTOM MENU
-    Grid {
-        id: bottomMenu
-        width: childrenRect.width; height: 60
+
+    ScrollView{
+        width: bottomMenu.width
+        height: 60
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+        id: bottomMenuScrollArea
         anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
-        spacing: {
-            var i = 0;
 
-            if (obj.isSupported(MediaPlayer.F_SEARCH))
-                i++;
-            if (obj.isSupported(MediaPlayer.F_LIST))
-                i++;
-            if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
-                i++;
-            if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
-                i++;
-            if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
-                i++;
-            if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
-                i++;
+        // BOTTOM MENU
+        Grid {
+            id: bottomMenu
+            height: 60
+            width: childrenRect.width
+            anchors.centerIn: parent;
+            columns:{
+                var i = 0;
+                if (obj.isSupported(MediaPlayer.F_SEARCH))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_LIST))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
+                    i++;
+                return i;
+            }
+            //anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
+            anchors { bottomMargin: 20; horizontalCenter: bottomMenuScrollArea.horizontalCenter }
+            spacing: {
+                var i = 0;
 
-            if (i === 0)
-                return 100;
-            else if (i === 1)
-                return 100;
-            else if (i === 2)
-                return 80;
-            else if (i === 3)
-                return 40;
-            else if (i === 4)
-                return 20;
-        }
+                if (obj.isSupported(MediaPlayer.F_SEARCH))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_LIST))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
+                    i++;
+                if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
+                    i++;
 
-        // home
-        Text {
-            color: Style.color.text
-            opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
-            text: Style.icon.home
-            renderType: Text.NativeRendering
-            width: 60; height: 60
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+                if (i === 0)
+                    return 100;
+                else if (i === 1)
+                    return 100;
+                else if (i === 2)
+                    return 80;
+                else if (i === 3)
+                    return 40;
+                else
+                    return 20;
+            }
 
-            MouseArea {
-                anchors.fill: parent
-                width: parent.width + 30; height: width
+            // home
+            Text {
+                color: Style.color.text
+                opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
+                text: Style.icon.home
+                renderType: Text.NativeRendering
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
 
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    //                    cardSwipeView.currentIndex = 0;
-                    cardSwipeView.setCurrentIndex(0);
+                MouseArea {
+                    anchors.fill: parent
+                    width: parent.width + 30; height: width
+
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        //                    cardSwipeView.currentIndex = 0;
+                        cardSwipeView.setCurrentIndex(0);
+                    }
                 }
             }
-        }
 
-        // search
-        Text {
-            visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
-            color: Style.color.text
-            opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
-            text: Style.icon.search
-            renderType: Text.NativeRendering
-            width: 60; height: 60
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            // search
+            Text {
+                visible: obj.isSupported(MediaPlayer.F_SEARCH) ? true : false
+                color: Style.color.text
+                opacity: cardSwipeView.currentIndex === features.indexOf("SEARCH") ? 1 : 0.5
+                text: Style.icon.search
+                renderType: Text.NativeRendering
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
 
-            MouseArea {
-                anchors.fill: parent
-                width: parent.width + 30; height: width
+                MouseArea {
+                    anchors.fill: parent
+                    width: parent.width + 30; height: width
 
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        cardSwipeView.setCurrentIndex(features.indexOf("SEARCH"));
+                    }
                 }
             }
-        }
 
-        // playlists
-        Text {
-            visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
-            color: Style.color.text
-            opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
-            text: Style.icon.playlist
-            renderType: Text.NativeRendering
-            width: 60; height: 60
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            // playlists
+            Text {
+                visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
+                color: Style.color.text
+                opacity: cardSwipeView.currentIndex === features.indexOf("LIST") ? 1 : 0.5
+                text: Style.icon.playlist
+                renderType: Text.NativeRendering
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
 
-            MouseArea {
-                anchors.fill: parent
-                width: parent.width + 30; height: width
+                MouseArea {
+                    anchors.fill: parent
+                    width: parent.width + 30; height: width
 
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        cardSwipeView.setCurrentIndex(features.indexOf("LIST"));
+                    }
                 }
             }
-        }
 
-        //TVChannelList
-        Text {
-            visible: obj.isSupported(MediaPlayer.F_TVCHANNELLIST) ? true : false
-            color: Style.color.text
-            opacity: cardSwipeView.currentIndex === features.indexOf("TVCHANNELLIST") ? 1 : 0.5
-            text: Style.icon.playlist
-            renderType: Text.NativeRendering
-            width: 60; height: 60
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            //TVChannelList
+            Text {
+                visible: obj.isSupported(MediaPlayer.F_TVCHANNELLIST) ? true : false
+                color: Style.color.text
+                opacity: cardSwipeView.currentIndex === features.indexOf("TVCHANNELLIST") ? 1 : 0.5
+                text: Style.icon.playlist
+                renderType: Text.NativeRendering
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
 
-            MouseArea {
-                anchors.fill: parent
-                width: parent.width + 30; height: width
+                MouseArea {
+                    anchors.fill: parent
+                    width: parent.width + 30; height: width
 
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    cardSwipeView.setCurrentIndex(features.indexOf("TVCHANNELLIST"));
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        cardSwipeView.setCurrentIndex(features.indexOf("TVCHANNELLIST"));
+                    }
                 }
             }
-        }
 
-        //MediaPlayerRemote
-        Text {
-            visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE) ? true : false
-            color: Style.color.text
-            opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYERREMOTE") ? 1 : 0.5
-            text: Style.icon.remote
-            renderType: Text.NativeRendering
-            width: 60; height: 60
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            //MediaPlayerRemote
+            Text {
+                visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE) ? true : false
+                color: Style.color.text
+                opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYERREMOTE") ? 1 : 0.5
+                text: Style.icon.remote
+                renderType: Text.NativeRendering
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
 
-            MouseArea {
-                anchors.fill: parent
-                width: parent.width + 30; height: width
+                MouseArea {
+                    anchors.fill: parent
+                    width: parent.width + 30; height: width
 
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    cardSwipeView.setCurrentIndex(features.indexOf("MEDIAPLAYERREMOTE"));
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        cardSwipeView.setCurrentIndex(features.indexOf("MEDIAPLAYERREMOTE"));
+                    }
                 }
             }
-        }
 
-        //EPGView
-        Text {
-            visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW) ? true : false
-            color: Style.color.text
-            opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYEREPGVIEW") ? 1 : 0.5
-            text: Style.icon.remote
-            renderType: Text.NativeRendering
-            width: 60; height: 60
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            //EPGView
+            Text {
+                visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW) ? true : false
+                color: Style.color.text
+                opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYEREPGVIEW") ? 1 : 0.5
+                text: Style.icon.remote
+                renderType: Text.NativeRendering
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
 
-            MouseArea {
-                anchors.fill: parent
-                width: parent.width + 30; height: width
+                MouseArea {
+                    anchors.fill: parent
+                    width: parent.width + 30; height: width
 
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    cardSwipeView.setCurrentIndex(features.indexOf("MEDIAPLAYEREPGVIEW"));
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        cardSwipeView.setCurrentIndex(features.indexOf("MEDIAPLAYEREPGVIEW"));
+                    }
                 }
             }
-        }
 
-        // speakers
-        Text {
-            visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
-            color: Style.color.text
-            opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
-            text: Style.icon.speaker
-            renderType: Text.NativeRendering
-            width: 60; height: 60
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
+            // speakers
+            Text {
+                visible: obj.isSupported(MediaPlayer.F_SPEAKER_CONTROL) ? true : false
+                color: Style.color.text
+                opacity: cardSwipeView.currentIndex === features.indexOf("SPEAKER_CONTROL") ? 1 : 0.5
+                text: Style.icon.speaker
+                renderType: Text.NativeRendering
+                width: 60; height: 60
+                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                font {family: "icons"; pixelSize: 80 }
 
-            MouseArea {
-                anchors.fill: parent
-                width: parent.width + 30; height: width
+                MouseArea {
+                    anchors.fill: parent
+                    width: parent.width + 30; height: width
 
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
+                    onClicked: {
+                        Haptic.playEffect(Haptic.Click);
+                        cardSwipeView.setCurrentIndex(features.indexOf("SPEAKER_CONTROL"));
+                    }
                 }
             }
-        }
-    }
+
+        }}
 
     property alias contextMenuLoader: contextMenuLoader
 
