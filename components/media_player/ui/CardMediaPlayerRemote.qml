@@ -193,7 +193,87 @@ Rectangle {
             }
         }
     }
+    Item {
+            id: tooltips
+            width: parent.width; height: 80
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 60
 
+            Item {
+                id: leftToolTip
+                width: childrenRect.width; height: 60
+                anchors { left: parent.left; leftMargin: 20; verticalCenter: parent.verticalCenter }
+
+                Text {
+                    color: Style.color.text
+                    text: Style.icon.circle
+                    width: 60; height: 60
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                    font { family: "icons"; pixelSize: 60 }
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                }
+
+                Text {
+                    color: Style.color.text
+                    opacity: 0.5
+                    text: qsTr("Mute") + translateHandler.emptyString
+                    verticalAlignment: Text.AlignVCenter
+                    anchors { left: parent.left; leftMargin: 50; verticalCenter: parent.verticalCenter }
+                    font { family: "Open Sans Regular"; pixelSize: 24 }
+                    lineHeight: 1
+                }
+            }
+
+            Item {
+                id: middleToolTip
+                width: childrenRect.width; height: 60
+                anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+
+                Text {
+                    color: Style.color.text
+                    text: Style.icon.square
+                    width: 60; height: 60
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                    font {family: "icons"; pixelSize: 60 }
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                }
+
+                Text {
+                    color: Style.color.text
+                    opacity: 0.5
+                    text: qsTr("Back") + translateHandler.emptyString
+                    verticalAlignment: Text.AlignVCenter
+                    anchors { left: parent.left; leftMargin: 50; verticalCenter: parent.verticalCenter }
+                    font { family: "Open Sans Regular"; pixelSize: 24 }
+                    lineHeight: 1
+                }
+            }
+
+            Item {
+                id: rightToolTip
+                width: childrenRect.width; height: 60
+                anchors { right: parent.right; rightMargin: 40; verticalCenter: parent.verticalCenter }
+
+                Text {
+                    color: Style.color.text
+                    text: Style.icon.square_full
+                    width: 60; height: 60
+                    verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+                    font { family: "icons"; pixelSize: 60 }
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                }
+
+                Text {
+                    color: Style.color.text
+                    opacity: 0.5
+                    text: qsTr("Menu") + translateHandler.emptyString
+                    verticalAlignment: Text.AlignVCenter
+                    anchors { left: parent.left; leftMargin: 50; verticalCenter: parent.verticalCenter }
+                    font { family: "Open Sans Regular"; pixelSize: 24 }
+                    lineHeight: 1
+                }
+            }
+    }
     /*
         Grid {
             id: cursorField
