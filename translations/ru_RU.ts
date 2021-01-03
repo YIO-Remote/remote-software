@@ -127,7 +127,7 @@ To learn more about the project, visit
   <context>
     <name>BluetoothControl</name>
     <message>
-      <location filename="../sources/bluetooth.cpp" line="41"/>
+      <location filename="../sources/bluetooth.cpp" line="46"/>
       <source>Bluetooth device was not found.</source>
       <translation>Устройство Bluetooth не найдено.</translation>
     </message>
@@ -167,22 +167,22 @@ To learn more about the project, visit
       <translation>Включить</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="416"/>
+      <location filename="../components/climate/ui/Card.qml" line="420"/>
       <source>Mode</source>
       <translation>Режим</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="426"/>
+      <location filename="../components/climate/ui/Card.qml" line="430"/>
       <source>Off</source>
       <translation>Выкл</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="432"/>
+      <location filename="../components/climate/ui/Card.qml" line="436"/>
       <source>Heat</source>
       <translation>Тепло</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="438"/>
+      <location filename="../components/climate/ui/Card.qml" line="442"/>
       <source>Cool</source>
       <translation>Холод</translation>
     </message>
@@ -386,32 +386,37 @@ To learn more about the project, visit
   <context>
     <name>CommandLineHandler</name>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="40"/>
+      <location filename="../sources/commandlinehandler.cpp" line="42"/>
       <source>Use configuration profile.</source>
       <translation>Использовать профиль конфигурации.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="43"/>
+      <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use configuration file.</source>
       <translation>Использовать файл конфигурации.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="44"/>
+      <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use configuration schema file.</source>
       <translation>Использовать файл схемы конфигурации.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="45"/>
+      <location filename="../sources/commandlinehandler.cpp" line="47"/>
       <source>Use hardware configuration file.</source>
       <translation>Использовать конфигурационный файл оборудования.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="46"/>
+      <location filename="../sources/commandlinehandler.cpp" line="48"/>
       <source>Use hardware configuration schema file.</source>
       <translation>Использовать схему конфигурации для оборудования.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
+      <source>Show frames / second counter.</source>
+      <translation type="unfinished">Show frames / second counter.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="53"/>
       <source>Validate json configuration files and exit.</source>
       <translation>Проверить конфигурационные файлы json и выйти.</translation>
     </message>
@@ -540,12 +545,12 @@ to fix the problem.</source>
   <context>
     <name>FileDownload</name>
     <message>
-      <location filename="../sources/filedownload.cpp" line="114"/>
+      <location filename="../sources/filedownload.cpp" line="112"/>
       <source>Not enough free space (%1 MB).</source>
       <translation>Недостаточно свободного места (%1 MB).</translation>
     </message>
     <message>
-      <location filename="../sources/filedownload.cpp" line="121"/>
+      <location filename="../sources/filedownload.cpp" line="119"/>
       <source>Destination file already exists</source>
       <translation>Файл уже существует</translation>
     </message>
@@ -596,30 +601,38 @@ to set up YIO remote</source>
   <context>
     <name>JsonFile</name>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="80"/>
-      <location filename="../sources/jsonfile.cpp" line="133"/>
+      <location filename="../sources/jsonfile.cpp" line="78"/>
+      <location filename="../sources/jsonfile.cpp" line="131"/>
       <source>empty name</source>
       <translation>нет имени</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="86"/>
+      <location filename="../sources/jsonfile.cpp" line="84"/>
       <source>empty data</source>
       <translation>нет данных</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="97"/>
+      <location filename="../sources/jsonfile.cpp" line="95"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
       <translation>cannot open file &apos;%1&apos; for writing: %2</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="140"/>
+      <location filename="../sources/jsonfile.cpp" line="138"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
       <translation>cannot open file &apos;%1&apos; for reading: %2</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="149"/>
+      <location filename="../sources/jsonfile.cpp" line="147"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
       <translation>invalid JSON file &apos;%1&apos; at offset %2</translation>
+    </message>
+  </context>
+  <context>
+    <name>Logger</name>
+    <message>
+      <location filename="../sources/logger.cpp" line="300"/>
+      <source>Error creating log file &apos;%1&apos;.</source>
+      <translation type="unfinished">Error creating log file &apos;%1&apos;.</translation>
     </message>
   </context>
   <context>
@@ -719,20 +732,17 @@ to set up YIO remote</source>
   <context>
     <name>QGuiApplication</name>
     <message>
-      <location filename="../sources/main.cpp" line="247"/>
-      <source>An error occured while restoring to defaults. Please try again.</source>
-      <translation>Произошла ошибка при сбросе настроек. Пожалуйста, повторите позже.</translation>
-    </message>
-    <message>
-      <location filename="../sources/main.cpp" line="251"/>
-      <source>Default config file not found. Cannot restore to defaults.</source>
-      <translation>Файл конфигурации по умолчанию не найден. Сброс настроек невозможен.</translation>
+      <location filename="../sources/main.cpp" line="220"/>
+      <source>Factory reset failed.
+ %1</source>
+      <translation type="unfinished">Factory reset failed.
+ %1</translation>
     </message>
   </context>
   <context>
     <name>QObject</name>
     <message>
-      <location filename="../sources/hardware/wifi_control.h" line="37"/>
+      <location filename="../sources/hardware/wifi_control.h" line="36"/>
       <source>WiFi device was not found.</source>
       <translation>Wi-Fi устройство не найдено.</translation>
     </message>
@@ -781,59 +791,59 @@ Navigate your internet browser to: http://</source>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="93"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="106"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="162"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="98"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="111"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="167"/>
       <source>Settings</source>
       <translation>Настройки</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="178"/>
       <source>New software is available.</source>
       <translation>Доступно обновление.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="178"/>
       <source>Your software is up to date.</source>
       <translation>Установлена последняя версия.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="190"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="195"/>
       <source>Display</source>
       <translation>Экран</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="196"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="201"/>
       <source>Language</source>
       <translation>Язык</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="209"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="214"/>
       <source>Integrations</source>
       <translation>Интеграция</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="216"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="221"/>
       <source>Battery &amp; power</source>
       <translation>Батарея и мощность</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="223"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="228"/>
       <source>m remaining</source>
       <translation>м осталось</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="230"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="235"/>
       <source>WiFi &amp; bluetooth</source>
       <translation>Wi-Fi и Bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="236"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="241"/>
       <source>System</source>
       <translation>Система</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="242"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="247"/>
       <source>About</source>
       <translation>О приложении</translation>
     </message>
@@ -983,7 +993,7 @@ a power source and wait until it starts blinking.
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="136"/>
+      <location filename="../setup/SetupStep8.qml" line="144"/>
       <source>Setting up your YIO Dock</source>
       <translation>Настройка YIO Dock</translation>
     </message>
@@ -1067,52 +1077,52 @@ Remote configuration after restarting the remote.</source>
   <context>
     <name>SoftwareUpdate</name>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="165"/>
+      <location filename="../sources/softwareupdate.cpp" line="163"/>
       <source>Cannot connect to the update server.</source>
       <translation>Не удается подключиться к серверу для обновления.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="196"/>
+      <location filename="../sources/softwareupdate.cpp" line="194"/>
       <source>Invalid request.</source>
       <translation>Неверный запрос.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="199"/>
+      <location filename="../sources/softwareupdate.cpp" line="197"/>
       <source>Unsupported device.</source>
       <translation>Устройство не поддерживается.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="202"/>
+      <location filename="../sources/softwareupdate.cpp" line="200"/>
       <source>Service currently not available.</source>
       <translation>Служба недоступна.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="205"/>
+      <location filename="../sources/softwareupdate.cpp" line="203"/>
       <source>Request error %1</source>
       <translation>Ошибка в запросе %1</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="209"/>
+      <location filename="../sources/softwareupdate.cpp" line="207"/>
       <source>Software update:</source>
       <translation>Программное обновление:</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <location filename="../sources/softwareupdate.cpp" line="224"/>
       <source>New software is available</source>
       <translation>Доступно обновление</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <location filename="../sources/softwareupdate.cpp" line="224"/>
       <source>Download</source>
       <translation>Скачать</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="243"/>
+      <location filename="../sources/softwareupdate.cpp" line="241"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
       <translation>Для обновления требуется более 50% заряда батареи.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="303"/>
+      <location filename="../sources/softwareupdate.cpp" line="301"/>
       <source>Download failed: %1</source>
       <translation>Ошибка загрузки: %1</translation>
     </message>
@@ -1215,32 +1225,37 @@ YIO remote %1</translation>
       <translation>Английская</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="186"/>
+      <location filename="../basic_ui/settings/System.qml" line="188"/>
+      <source>24-hour clock</source>
+      <translation type="unfinished">24-hour clock</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Uptime</source>
       <translation>Аптайм</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="214"/>
+      <location filename="../basic_ui/settings/System.qml" line="246"/>
       <source>CPU temperature</source>
       <translation>Температура процессора</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="241"/>
+      <location filename="../basic_ui/settings/System.qml" line="273"/>
       <source>CPU load</source>
       <translation>Загрузка ЦП</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="267"/>
+      <location filename="../basic_ui/settings/System.qml" line="299"/>
       <source>Used memory</source>
       <translation>Используемая память</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="291"/>
+      <location filename="../basic_ui/settings/System.qml" line="323"/>
       <source>Reboot</source>
       <translation>Перезагрузить</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="305"/>
+      <location filename="../basic_ui/settings/System.qml" line="337"/>
       <source>Shutdown</source>
       <translation>Выключить</translation>
     </message>

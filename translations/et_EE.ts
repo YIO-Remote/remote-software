@@ -6,7 +6,7 @@
     <message>
       <location filename="../basic_ui/settings/About.qml" line="35"/>
       <source>Thank you!</source>
-      <translation type="unfinished">Thank you!</translation>
+      <translation>Aitäh!</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/About.qml" line="44"/>
@@ -128,7 +128,7 @@ To learn more about the project, visit
   <context>
     <name>BluetoothControl</name>
     <message>
-      <location filename="../sources/bluetooth.cpp" line="41"/>
+      <location filename="../sources/bluetooth.cpp" line="46"/>
       <source>Bluetooth device was not found.</source>
       <translation type="unfinished">Bluetooth device was not found.</translation>
     </message>
@@ -168,22 +168,22 @@ To learn more about the project, visit
       <translation type="unfinished">Turn on</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="416"/>
+      <location filename="../components/climate/ui/Card.qml" line="420"/>
       <source>Mode</source>
       <translation type="unfinished">Mode</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="426"/>
+      <location filename="../components/climate/ui/Card.qml" line="430"/>
       <source>Off</source>
       <translation type="unfinished">Off</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="432"/>
+      <location filename="../components/climate/ui/Card.qml" line="436"/>
       <source>Heat</source>
       <translation type="unfinished">Heat</translation>
     </message>
     <message>
-      <location filename="../components/climate/ui/Card.qml" line="438"/>
+      <location filename="../components/climate/ui/Card.qml" line="442"/>
       <source>Cool</source>
       <translation type="unfinished">Cool</translation>
     </message>
@@ -289,7 +289,7 @@ To learn more about the project, visit
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Lülitage sisse</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="280"/>
@@ -324,7 +324,7 @@ To learn more about the project, visit
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Otsi</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
@@ -367,13 +367,13 @@ To learn more about the project, visit
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
-      <translation type="unfinished">Turn off</translation>
+      <translation>Lülita välja</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn on</source>
-      <translation type="unfinished">Turn on</translation>
+      <translation>Lülita sisse</translation>
     </message>
   </context>
   <context>
@@ -381,38 +381,43 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="136"/>
       <source>% Charged</source>
-      <translation type="unfinished">% Charged</translation>
+      <translation>Laetud</translation>
     </message>
   </context>
   <context>
     <name>CommandLineHandler</name>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="40"/>
+      <location filename="../sources/commandlinehandler.cpp" line="42"/>
       <source>Use configuration profile.</source>
       <translation type="unfinished">Use configuration profile.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="43"/>
+      <location filename="../sources/commandlinehandler.cpp" line="45"/>
       <source>Use configuration file.</source>
       <translation type="unfinished">Use configuration file.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="44"/>
+      <location filename="../sources/commandlinehandler.cpp" line="46"/>
       <source>Use configuration schema file.</source>
       <translation type="unfinished">Use configuration schema file.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="45"/>
+      <location filename="../sources/commandlinehandler.cpp" line="47"/>
       <source>Use hardware configuration file.</source>
       <translation type="unfinished">Use hardware configuration file.</translation>
     </message>
     <message>
-      <location filename="../sources/commandlinehandler.cpp" line="46"/>
+      <location filename="../sources/commandlinehandler.cpp" line="48"/>
       <source>Use hardware configuration schema file.</source>
       <translation type="unfinished">Use hardware configuration schema file.</translation>
     </message>
     <message>
       <location filename="../sources/commandlinehandler.cpp" line="50"/>
+      <source>Show frames / second counter.</source>
+      <translation type="unfinished">Show frames / second counter.</translation>
+    </message>
+    <message>
+      <location filename="../sources/commandlinehandler.cpp" line="53"/>
       <source>Validate json configuration files and exit.</source>
       <translation type="unfinished">Validate json configuration files and exit.</translation>
     </message>
@@ -441,7 +446,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation type="unfinished">Reboot</translation>
+      <translation>Taaskäivita</translation>
     </message>
   </context>
   <context>
@@ -450,7 +455,7 @@ to fix the problem.</translation>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Tühista</translation>
     </message>
   </context>
   <context>
@@ -458,7 +463,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation type="unfinished">Auto brightness</translation>
+      <translation>Automaatne heledus</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
@@ -468,12 +473,12 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="253"/>
       <source>Far</source>
-      <translation type="unfinished">Far</translation>
+      <translation>Kaugel</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="262"/>
       <source>Close</source>
-      <translation type="unfinished">Close</translation>
+      <translation>Sulge</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="272"/>
@@ -483,7 +488,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation type="unfinished">Dark mode</translation>
+      <translation>Tume režiim</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
@@ -506,7 +511,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Light</source>
-      <translation type="unfinished">Light</translation>
+      <translation>Tuli</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -521,12 +526,12 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
-      <translation type="unfinished">Climate</translation>
+      <translation>Kliima</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Switch</source>
-      <translation type="unfinished">Switch</translation>
+      <translation>Lüliti</translation>
     </message>
   </context>
   <context>
@@ -535,18 +540,18 @@ to fix the problem.</translation>
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Lemmikud</translation>
     </message>
   </context>
   <context>
     <name>FileDownload</name>
     <message>
-      <location filename="../sources/filedownload.cpp" line="114"/>
+      <location filename="../sources/filedownload.cpp" line="112"/>
       <source>Not enough free space (%1 MB).</source>
       <translation type="unfinished">Not enough free space (%1 MB).</translation>
     </message>
     <message>
-      <location filename="../sources/filedownload.cpp" line="121"/>
+      <location filename="../sources/filedownload.cpp" line="119"/>
       <source>Destination file already exists</source>
       <translation type="unfinished">Destination file already exists</translation>
     </message>
@@ -581,46 +586,54 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Ühenda</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation type="unfinished">Disconnect</translation>
+      <translation>Ühenda lahti</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation type="unfinished">Add new</translation>
+      <translation>Lisa uus</translation>
     </message>
   </context>
   <context>
     <name>JsonFile</name>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="80"/>
-      <location filename="../sources/jsonfile.cpp" line="133"/>
+      <location filename="../sources/jsonfile.cpp" line="78"/>
+      <location filename="../sources/jsonfile.cpp" line="131"/>
       <source>empty name</source>
       <translation type="unfinished">empty name</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="86"/>
+      <location filename="../sources/jsonfile.cpp" line="84"/>
       <source>empty data</source>
       <translation type="unfinished">empty data</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="97"/>
+      <location filename="../sources/jsonfile.cpp" line="95"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
       <translation>cannot open file &apos;%1&apos; for writing: %2</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="140"/>
+      <location filename="../sources/jsonfile.cpp" line="138"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
       <translation>cannot open file &apos;%1&apos; for reading: %2</translation>
     </message>
     <message>
-      <location filename="../sources/jsonfile.cpp" line="149"/>
+      <location filename="../sources/jsonfile.cpp" line="147"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
       <translation>invalid JSON file &apos;%1&apos; at offset %2</translation>
+    </message>
+  </context>
+  <context>
+    <name>Logger</name>
+    <message>
+      <location filename="../sources/logger.cpp" line="300"/>
+      <source>Error creating log file &apos;%1&apos;.</source>
+      <translation type="unfinished">Error creating log file &apos;%1&apos;.</translation>
     </message>
   </context>
   <context>
@@ -629,7 +642,7 @@ to set up YIO remote</translation>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation type="unfinished">Favorites</translation>
+      <translation>Lemmikud</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
@@ -720,20 +733,17 @@ to set up YIO remote</translation>
   <context>
     <name>QGuiApplication</name>
     <message>
-      <location filename="../sources/main.cpp" line="247"/>
-      <source>An error occured while restoring to defaults. Please try again.</source>
-      <translation type="unfinished">An error occured while restoring to defaults. Please try again.</translation>
-    </message>
-    <message>
-      <location filename="../sources/main.cpp" line="251"/>
-      <source>Default config file not found. Cannot restore to defaults.</source>
-      <translation type="unfinished">Default config file not found. Cannot restore to defaults.</translation>
+      <location filename="../sources/main.cpp" line="220"/>
+      <source>Factory reset failed.
+ %1</source>
+      <translation type="unfinished">Factory reset failed.
+ %1</translation>
     </message>
   </context>
   <context>
     <name>QObject</name>
     <message>
-      <location filename="../sources/hardware/wifi_control.h" line="37"/>
+      <location filename="../sources/hardware/wifi_control.h" line="36"/>
       <source>WiFi device was not found.</source>
       <translation type="unfinished">WiFi device was not found.</translation>
     </message>
@@ -782,59 +792,59 @@ Navigate your internet browser to: http://</translation>
   <context>
     <name>Settings</name>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="93"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="106"/>
-      <location filename="../basic_ui/pages/Settings.qml" line="162"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="98"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="111"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="167"/>
       <source>Settings</source>
       <translation type="unfinished">Settings</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="178"/>
       <source>New software is available.</source>
       <translation type="unfinished">New software is available.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="173"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="178"/>
       <source>Your software is up to date.</source>
       <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="190"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="195"/>
       <source>Display</source>
       <translation type="unfinished">Display</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="196"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="201"/>
       <source>Language</source>
       <translation type="unfinished">Language</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="209"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="214"/>
       <source>Integrations</source>
       <translation type="unfinished">Integrations</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="216"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="221"/>
       <source>Battery &amp; power</source>
       <translation type="unfinished">Battery &amp; power</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="223"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="228"/>
       <source>m remaining</source>
       <translation type="unfinished">m remaining</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="230"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="235"/>
       <source>WiFi &amp; bluetooth</source>
       <translation type="unfinished">WiFi &amp; bluetooth</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="236"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="241"/>
       <source>System</source>
       <translation type="unfinished">System</translation>
     </message>
     <message>
-      <location filename="../basic_ui/pages/Settings.qml" line="242"/>
+      <location filename="../basic_ui/pages/Settings.qml" line="247"/>
       <source>About</source>
       <translation type="unfinished">About</translation>
     </message>
@@ -984,7 +994,7 @@ a power source and wait until it starts blinking.
   <context>
     <name>SetupStep8</name>
     <message>
-      <location filename="../setup/SetupStep8.qml" line="136"/>
+      <location filename="../setup/SetupStep8.qml" line="144"/>
       <source>Setting up your YIO Dock</source>
       <translation type="unfinished">Setting up your YIO Dock</translation>
     </message>
@@ -1070,52 +1080,52 @@ Remote configuration after restarting the remote.</translation>
   <context>
     <name>SoftwareUpdate</name>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="165"/>
+      <location filename="../sources/softwareupdate.cpp" line="163"/>
       <source>Cannot connect to the update server.</source>
       <translation type="unfinished">Cannot connect to the update server.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="196"/>
+      <location filename="../sources/softwareupdate.cpp" line="194"/>
       <source>Invalid request.</source>
       <translation type="unfinished">Invalid request.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="199"/>
+      <location filename="../sources/softwareupdate.cpp" line="197"/>
       <source>Unsupported device.</source>
       <translation type="unfinished">Unsupported device.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="202"/>
+      <location filename="../sources/softwareupdate.cpp" line="200"/>
       <source>Service currently not available.</source>
       <translation type="unfinished">Service currently not available.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="205"/>
+      <location filename="../sources/softwareupdate.cpp" line="203"/>
       <source>Request error %1</source>
       <translation type="unfinished">Request error %1</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="209"/>
+      <location filename="../sources/softwareupdate.cpp" line="207"/>
       <source>Software update:</source>
       <translation type="unfinished">Software update:</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <location filename="../sources/softwareupdate.cpp" line="224"/>
       <source>New software is available</source>
       <translation type="unfinished">New software is available</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="226"/>
+      <location filename="../sources/softwareupdate.cpp" line="224"/>
       <source>Download</source>
       <translation type="unfinished">Download</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="243"/>
+      <location filename="../sources/softwareupdate.cpp" line="241"/>
       <source>The remote needs to be at least 50% battery to perform updates.</source>
       <translation type="unfinished">The remote needs to be at least 50% battery to perform updates.</translation>
     </message>
     <message>
-      <location filename="../sources/softwareupdate.cpp" line="303"/>
+      <location filename="../sources/softwareupdate.cpp" line="301"/>
       <source>Download failed: %1</source>
       <translation type="unfinished">Download failed: %1</translation>
     </message>
@@ -1218,32 +1228,37 @@ YIO remote %1</translation>
       <translation type="unfinished">Imperial</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="186"/>
+      <location filename="../basic_ui/settings/System.qml" line="188"/>
+      <source>24-hour clock</source>
+      <translation type="unfinished">24-hour clock</translation>
+    </message>
+    <message>
+      <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Uptime</source>
       <translation type="unfinished">Uptime</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="214"/>
+      <location filename="../basic_ui/settings/System.qml" line="246"/>
       <source>CPU temperature</source>
       <translation type="unfinished">CPU temperature</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="241"/>
+      <location filename="../basic_ui/settings/System.qml" line="273"/>
       <source>CPU load</source>
       <translation type="unfinished">CPU load</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="267"/>
+      <location filename="../basic_ui/settings/System.qml" line="299"/>
       <source>Used memory</source>
       <translation type="unfinished">Used memory</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="291"/>
+      <location filename="../basic_ui/settings/System.qml" line="323"/>
       <source>Reboot</source>
       <translation type="unfinished">Reboot</translation>
     </message>
     <message>
-      <location filename="../basic_ui/settings/System.qml" line="305"/>
+      <location filename="../basic_ui/settings/System.qml" line="337"/>
       <source>Shutdown</source>
       <translation type="unfinished">Shutdown</translation>
     </message>

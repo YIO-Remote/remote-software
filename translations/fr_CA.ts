@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="cs" sourcelanguage="en">
+<TS version="2.1" language="fr-CA" sourcelanguage="en">
   <context>
     <name>About</name>
     <message>
@@ -32,7 +32,7 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="99"/>
       <source>Battery health</source>
-      <translation>Zdraví baterie</translation>
+      <translation type="unfinished">Battery health</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="125"/>
@@ -42,28 +42,28 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="158"/>
       <source>Screen on</source>
-      <translation>Obrazovka zapnuta</translation>
+      <translation type="unfinished">Screen on</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="177"/>
       <source>Screen off</source>
-      <translation>Vypnutá obrazovka</translation>
+      <translation type="unfinished">Screen off</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="206"/>
       <source>Battery level</source>
-      <translation>Úroveň baterie</translation>
+      <translation type="unfinished">Battery level</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="253"/>
       <source>Average power</source>
-      <translation>Průměrná spotřeba</translation>
+      <translation type="unfinished">Average power</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="313"/>
       <source>No data available yet</source>
       <extracomment>Battery level history data. When no data avaialable yet it shows this text under the empty graph.</extracomment>
-      <translation>Nejsou k dispozici žádná data</translation>
+      <translation type="unfinished">No data available yet</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Battery.qml" line="337"/>
@@ -112,17 +112,17 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="40"/>
       <source>Bluetooth</source>
-      <translation>Bluetooth</translation>
+      <translation type="unfinished">Bluetooth</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="61"/>
       <source>Area detection</source>
-      <translation>Detekce prostoru</translation>
+      <translation type="unfinished">Area detection</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Bluetooth.qml" line="99"/>
       <source>Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</source>
-      <translation>Automaticky vyhledá bluetooth majáky přiřazené k zónám, najde nejbližší a zobrazí zařízení v dané zóně.</translation>
+      <translation type="unfinished">Automatically scans for bluetooth beacons associated with areas, finds the closest and displays devices in that area.</translation>
     </message>
   </context>
   <context>
@@ -139,7 +139,7 @@ To learn more about the project, visit
       <location filename="../components/climate/ui/Button.qml" line="45"/>
       <location filename="../components/climate/ui/Button.qml" line="47"/>
       <source>Temperature: </source>
-      <translation>Teplota: </translation>
+      <translation type="unfinished">Temperature: </translation>
     </message>
   </context>
   <context>
@@ -147,12 +147,12 @@ To learn more about the project, visit
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Remove from favorites</source>
-      <translation>Odebrat z oblíbených</translation>
+      <translation type="unfinished">Remove from favorites</translation>
     </message>
     <message>
       <location filename="../components/ButtonBase.qml" line="373"/>
       <source>Add to favorites</source>
-      <translation>Přidat k oblíbeným</translation>
+      <translation type="unfinished">Add to favorites</translation>
     </message>
   </context>
   <context>
@@ -160,47 +160,47 @@ To learn more about the project, visit
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn off</source>
-      <translation>Vypnout</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="403"/>
       <source>Turn on</source>
-      <translation>Zapnout</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="420"/>
       <source>Mode</source>
-      <translation>Režim</translation>
+      <translation type="unfinished">Mode</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="430"/>
       <source>Off</source>
-      <translation>Vypnuto</translation>
+      <translation type="unfinished">Off</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="436"/>
       <source>Heat</source>
-      <translation>Teplo</translation>
+      <translation type="unfinished">Heat</translation>
     </message>
     <message>
       <location filename="../components/climate/ui/Card.qml" line="442"/>
       <source>Cool</source>
-      <translation>Chladit</translation>
+      <translation type="unfinished">Cool</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="253"/>
       <source>Mute</source>
-      <translation>Ztišit</translation>
+      <translation type="unfinished">Mute</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="278"/>
       <source>Back</source>
-      <translation>Zpět</translation>
+      <translation type="unfinished">Back</translation>
     </message>
     <message>
       <location filename="../components/remote/ui/ir/Card.qml" line="303"/>
       <source>Menu</source>
-      <translation>Menu</translation>
+      <translation type="unfinished">Menu</translation>
     </message>
   </context>
   <context>
@@ -208,7 +208,7 @@ To learn more about the project, visit
     <message>
       <location filename="../components/remote/ui/ir/CardButtons.qml" line="69"/>
       <source>Source</source>
-      <translation>Zdroj</translation>
+      <translation type="unfinished">Source</translation>
     </message>
   </context>
   <context>
@@ -284,17 +284,17 @@ To learn more about the project, visit
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn off</source>
-      <translation>Vypnout</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="267"/>
       <source>Turn on</source>
-      <translation>Zapnout</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardColor.qml" line="280"/>
       <source>Color</source>
-      <translation>Barevně</translation>
+      <translation type="unfinished">Color</translation>
     </message>
   </context>
   <context>
@@ -302,12 +302,12 @@ To learn more about the project, visit
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn off</source>
-      <translation>Vypnout</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardDimmable.qml" line="235"/>
       <source>Turn on</source>
-      <translation>Zapnout</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
   </context>
   <context>
@@ -315,7 +315,7 @@ To learn more about the project, visit
     <message>
       <location filename="../components/media_player/ui/CardPlaylists.qml" line="126"/>
       <source>My playlists</source>
-      <translation>Můj seznam stop</translation>
+      <translation type="unfinished">My playlists</translation>
     </message>
   </context>
   <context>
@@ -324,41 +324,41 @@ To learn more about the project, visit
       <location filename="../components/media_player/ui/CardSearch.qml" line="129"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="166"/>
       <source>Search</source>
-      <translation>Hledat</translation>
+      <translation type="unfinished">Search</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="226"/>
       <source>Recent searches</source>
-      <translation>Poslední vyhledávání</translation>
+      <translation type="unfinished">Recent searches</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="234"/>
       <source>Clear</source>
-      <translation>Vymazat</translation>
+      <translation type="unfinished">Clear</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="350"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="410"/>
       <source>Albums</source>
-      <translation>Alba</translation>
+      <translation type="unfinished">Albums</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="352"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="412"/>
       <source>Tracks</source>
-      <translation>Stopy</translation>
+      <translation type="unfinished">Tracks</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="354"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="414"/>
       <source>Artists</source>
-      <translation>Interpreti</translation>
+      <translation type="unfinished">Artists</translation>
     </message>
     <message>
       <location filename="../components/media_player/ui/CardSearch.qml" line="356"/>
       <location filename="../components/media_player/ui/CardSearch.qml" line="416"/>
       <source>Playlists</source>
-      <translation>Seznamy skladeb</translation>
+      <translation type="unfinished">Playlists</translation>
     </message>
   </context>
   <context>
@@ -367,13 +367,13 @@ To learn more about the project, visit
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn off</source>
-      <translation>Vypnout</translation>
+      <translation type="unfinished">Turn off</translation>
     </message>
     <message>
       <location filename="../components/light/ui/CardSwitch.qml" line="160"/>
       <location filename="../components/switch/ui/CardSwitch.qml" line="159"/>
       <source>Turn on</source>
-      <translation>Zapnout</translation>
+      <translation type="unfinished">Turn on</translation>
     </message>
   </context>
   <context>
@@ -381,7 +381,7 @@ To learn more about the project, visit
     <message>
       <location filename="../basic_ui/ChargingScreen.qml" line="136"/>
       <source>% Charged</source>
-      <translation>% Nabito</translation>
+      <translation type="unfinished">% Charged</translation>
     </message>
   </context>
   <context>
@@ -446,7 +446,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/ConfigError.qml" line="90"/>
       <source>Reboot</source>
-      <translation>Restartovat</translation>
+      <translation type="unfinished">Reboot</translation>
     </message>
   </context>
   <context>
@@ -455,7 +455,7 @@ to fix the problem.</translation>
       <location filename="../basic_ui/ContextMenu.qml" line="139"/>
       <location filename="../components/climate/ui/ContextMenu.qml" line="138"/>
       <source>Cancel</source>
-      <translation>Zrušit</translation>
+      <translation type="unfinished">Cancel</translation>
     </message>
   </context>
   <context>
@@ -463,7 +463,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="51"/>
       <source>Auto brightness</source>
-      <translation>Automatický jas</translation>
+      <translation type="unfinished">Auto brightness</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="162"/>
@@ -488,17 +488,17 @@ to fix the problem.</translation>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="293"/>
       <source>Dark mode</source>
-      <translation>Tmavý režim</translation>
+      <translation type="unfinished">Dark mode</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="325"/>
       <source>Cleaning mode</source>
-      <translation>Režim čištění</translation>
+      <translation type="unfinished">Cleaning mode</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Display.qml" line="335"/>
       <source>Touch the display for 10 seconds to turn cleaning mode off.</source>
-      <translation>Dotkněte se displeje na 10 sekund pro vypnutí režimu čištění.</translation>
+      <translation type="unfinished">Touch the display for 10 seconds to turn cleaning mode off.</translation>
     </message>
   </context>
   <context>
@@ -506,7 +506,7 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
       <source>Media</source>
-      <translation>Média</translation>
+      <translation type="unfinished">Media</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="110"/>
@@ -521,12 +521,12 @@ to fix the problem.</translation>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Remote</source>
-      <translation>Vzdálený</translation>
+      <translation type="unfinished">Remote</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
       <source>Climate</source>
-      <translation>Podnebí</translation>
+      <translation type="unfinished">Climate</translation>
     </message>
     <message>
       <location filename="../sources/entities/entities.h" line="111"/>
@@ -540,7 +540,7 @@ to fix the problem.</translation>
       <location filename="../basic_ui/pages/Favorites.qml" line="31"/>
       <source>Favorites</source>
       <extracomment>Name of the settings page</extracomment>
-      <translation>Oblíbené</translation>
+      <translation type="unfinished">Favorites</translation>
     </message>
   </context>
   <context>
@@ -573,7 +573,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/InitialSetup.qml" line="44"/>
       <source>Loading</source>
-      <translation>Načítá se</translation>
+      <translation type="unfinished">Loading</translation>
     </message>
   </context>
   <context>
@@ -581,22 +581,22 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="49"/>
       <source> - Disconnected</source>
-      <translation> - Odpojeno</translation>
+      <translation type="unfinished"> - Disconnected</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="133"/>
       <source>Connect</source>
-      <translation>Připojit</translation>
+      <translation type="unfinished">Connect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="165"/>
       <source>Disconnect</source>
-      <translation>Odpojit</translation>
+      <translation type="unfinished">Disconnect</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Integrations.qml" line="199"/>
       <source>Add new</source>
-      <translation>Přidat nový</translation>
+      <translation type="unfinished">Add new</translation>
     </message>
   </context>
   <context>
@@ -615,17 +615,17 @@ to set up YIO remote</translation>
     <message>
       <location filename="../sources/jsonfile.cpp" line="95"/>
       <source>cannot open file &apos;%1&apos; for writing: %2</source>
-      <translation>cannot open file &apos;%1&apos; for writing: %2</translation>
+      <translation type="unfinished">cannot open file &apos;%1&apos; for writing: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="138"/>
       <source>cannot open file &apos;%1&apos; for reading: %2</source>
-      <translation>cannot open file &apos;%1&apos; for reading: %2</translation>
+      <translation type="unfinished">cannot open file &apos;%1&apos; for reading: %2</translation>
     </message>
     <message>
       <location filename="../sources/jsonfile.cpp" line="147"/>
       <source>invalid JSON file &apos;%1&apos; at offset %2</source>
-      <translation>invalid JSON file &apos;%1&apos; at offset %2</translation>
+      <translation type="unfinished">invalid JSON file &apos;%1&apos; at offset %2</translation>
     </message>
   </context>
   <context>
@@ -642,27 +642,27 @@ to set up YIO remote</translation>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Favorites</source>
       <extracomment>menu items that are in the bottom menu</extracomment>
-      <translation>Oblíbené</translation>
+      <translation type="unfinished">Favorites</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="78"/>
       <source>Settings</source>
-      <translation>Nastavení</translation>
+      <translation type="unfinished">Settings</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Lights</source>
-      <translation>Světla</translation>
+      <translation type="unfinished">Lights</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Blinds</source>
-      <translation>Žaluzie</translation>
+      <translation type="unfinished">Blinds</translation>
     </message>
     <message>
       <location filename="../basic_ui/MainNavigation.qml" line="79"/>
       <source>Media</source>
-      <translation>Média</translation>
+      <translation type="unfinished">Media</translation>
     </message>
   </context>
   <context>
@@ -670,22 +670,22 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="64"/>
       <source>Network</source>
-      <translation>Síť</translation>
+      <translation type="unfinished">Network</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="246"/>
       <source>Wi-Fi signal strength</source>
-      <translation>Síla signálu Wi-Fi</translation>
+      <translation type="unfinished">Wi-Fi signal strength</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="283"/>
       <source>IP address</source>
-      <translation>IP adresa</translation>
+      <translation type="unfinished">IP address</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Network.qml" line="319"/>
       <source>MAC address</source>
-      <translation>MAC Adresa</translation>
+      <translation type="unfinished">MAC address</translation>
     </message>
   </context>
   <context>
@@ -693,7 +693,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/Notification.qml" line="232"/>
       <source>Dismiss</source>
-      <translation>Zrušit</translation>
+      <translation type="unfinished">Dismiss</translation>
     </message>
   </context>
   <context>
@@ -701,7 +701,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/NotificationDrawer.qml" line="36"/>
       <source>Notifications</source>
-      <translation>Oznámení</translation>
+      <translation type="unfinished">Notifications</translation>
     </message>
   </context>
   <context>
@@ -709,12 +709,12 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="102"/>
       <source>Low battery</source>
-      <translation>Slabá baterie</translation>
+      <translation type="unfinished">Low battery</translation>
     </message>
     <message>
       <location filename="../basic_ui/PopupLowBattery.qml" line="112"/>
       <source>Please charge the remote soon</source>
-      <translation>Brzy dobijte ovladač prosím</translation>
+      <translation type="unfinished">Please charge the remote soon</translation>
     </message>
   </context>
   <context>
@@ -722,12 +722,12 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="112"/>
       <source>Profiles</source>
-      <translation>Profily</translation>
+      <translation type="unfinished">Profiles</translation>
     </message>
     <message>
       <location filename="../basic_ui/Profiles.qml" line="194"/>
       <source>To edit your profiles, use the web configurator tool in settings.</source>
-      <translation>Pro úpravu profilů použijte nástroj webového konfigurátoru v nastavení.</translation>
+      <translation type="unfinished">To edit your profiles, use the web configurator tool in settings.</translation>
     </message>
   </context>
   <context>
@@ -779,7 +779,7 @@ to set up YIO remote</translation>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="39"/>
       <source>Remote configuration</source>
-      <translation>Vzdálená konfigurace</translation>
+      <translation type="unfinished">Remote configuration</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/RemoteConfig.qml" line="74"/>
@@ -796,7 +796,7 @@ Navigate your internet browser to: http://</translation>
       <location filename="../basic_ui/pages/Settings.qml" line="111"/>
       <location filename="../basic_ui/pages/Settings.qml" line="167"/>
       <source>Settings</source>
-      <translation>Nastavení</translation>
+      <translation type="unfinished">Settings</translation>
     </message>
     <message>
       <location filename="../basic_ui/pages/Settings.qml" line="178"/>
@@ -886,13 +886,13 @@ Navigate your internet browser to: http://</translation>
       <location filename="../setup/SetupStep4.qml" line="97"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation type="unfinished">Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="115"/>
       <source>Password</source>
-      <translation>Heslo</translation>
+      <translation type="unfinished">Password</translation>
     </message>
     <message>
       <location filename="../setup/SetupStep4.qml" line="174"/>
@@ -1107,7 +1107,7 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="207"/>
       <source>Software update:</source>
-      <translation>Aktualizace softwaru:</translation>
+      <translation type="unfinished">Software update:</translation>
     </message>
     <message>
       <location filename="../sources/softwareupdate.cpp" line="224"/>
@@ -1140,14 +1140,14 @@ Remote configuration after restarting the remote.</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="50"/>
       <source>Auto update</source>
-      <translation>Automatická aktualizace</translation>
+      <translation type="unfinished">Auto update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="73"/>
       <source>Automatically look for updates and update when a new software version is available.
 Updates are installed between 03.00 am and 05.00 am.</source>
-      <translation>Automaticky vyhledávat a nainstalovat aktualizace pokud je k dispozici nová verze.
-Aktualizace probíhají mezi 03:00 a 05:00.</translation>
+      <translation type="unfinished">Automatically look for updates and update when a new software version is available.
+Updates are installed between 03.00 am and 05.00 am.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
@@ -1159,32 +1159,32 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="93"/>
       <source>Your software is up to date.</source>
-      <translation>Váš systém je aktuální.</translation>
+      <translation type="unfinished">Your software is up to date.</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>Installed version: YIO Remote </source>
-      <translation>Verze systému: YIO Remote </translation>
+      <translation type="unfinished">Installed version: YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="104"/>
       <source>YIO Remote </source>
-      <translation>YIO Remote </translation>
+      <translation type="unfinished">YIO Remote </translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="114"/>
       <source>Update</source>
-      <translation>Aktualizace</translation>
+      <translation type="unfinished">Update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="130"/>
       <source>Download</source>
-      <translation>Stáhnout</translation>
+      <translation type="unfinished">Download</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/Softwareupdate.qml" line="153"/>
       <source>Check for update</source>
-      <translation>Zkontrolovat aktualizace</translation>
+      <translation type="unfinished">Check for update</translation>
     </message>
   </context>
   <context>
@@ -1192,22 +1192,22 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="17"/>
       <source>Download completed</source>
-      <translation>Stahování dokončeno</translation>
+      <translation type="unfinished">Download completed</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="49"/>
       <source>Downloading</source>
-      <translation>Stahování</translation>
+      <translation type="unfinished">Downloading</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="74"/>
       <source>Update</source>
-      <translation>Aktualizace</translation>
+      <translation type="unfinished">Update</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/SoftwareupdateDownloading.qml" line="89"/>
       <source>Cancel</source>
-      <translation>Zrušit</translation>
+      <translation type="unfinished">Cancel</translation>
     </message>
   </context>
   <context>
@@ -1215,7 +1215,7 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="92"/>
       <source>Unit system</source>
-      <translation>Jednotky</translation>
+      <translation type="unfinished">Unit system</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="131"/>
@@ -1235,12 +1235,12 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="218"/>
       <source>Uptime</source>
-      <translation>Doba provozu</translation>
+      <translation type="unfinished">Uptime</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="246"/>
       <source>CPU temperature</source>
-      <translation>Teplota CPU</translation>
+      <translation type="unfinished">CPU temperature</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="273"/>
@@ -1250,17 +1250,17 @@ YIO remote %1</translation>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="299"/>
       <source>Used memory</source>
-      <translation>Využitá paměť</translation>
+      <translation type="unfinished">Used memory</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="323"/>
       <source>Reboot</source>
-      <translation>Restartovat</translation>
+      <translation type="unfinished">Reboot</translation>
     </message>
     <message>
       <location filename="../basic_ui/settings/System.qml" line="337"/>
       <source>Shutdown</source>
-      <translation>Vypnout</translation>
+      <translation type="unfinished">Shutdown</translation>
     </message>
   </context>
   <context>
@@ -1292,7 +1292,7 @@ YIO remote %1</translation>
       <location filename="../basic_ui/settings/WifiConnect.qml" line="92"/>
       <source>Enter password for
 &quot;%1&quot;</source>
-      <translation>Enter password for
+      <translation type="unfinished">Enter password for
 &quot;%1&quot;</translation>
     </message>
     <message>
