@@ -506,6 +506,9 @@ win32 {
 
 DISTFILES += \
     components/FpsItem.qml \
+    components/media_player/ui/CardMediaPlayerEPGView.qml \
+    components/media_player/ui/CardMediaPlayerRemote.qml \
+    components/media_player/ui/MediaPlayerRemoteView.qml \
     config.json \
     config-schema.json \
     dependencies.cfg \

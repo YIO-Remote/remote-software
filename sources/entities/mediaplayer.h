@@ -76,6 +76,18 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_INVOKABLE void volumeUp();
     Q_INVOKABLE void volumeDown();
 
+    // navigation
+    Q_INVOKABLE void cursorUp();
+    Q_INVOKABLE void cursorDown();
+    Q_INVOKABLE void cursorLeft();
+    Q_INVOKABLE void cursorRight();
+    Q_INVOKABLE void cursorOK();
+    Q_INVOKABLE void channelUp();
+    Q_INVOKABLE void channelDown();
+    Q_INVOKABLE void muteToggle();
+    Q_INVOKABLE void back();
+    Q_INVOKABLE void menu();
+
     bool isOn() override { return m_state == MediaPlayerDef::ON || m_state == MediaPlayerDef::PLAYING; }
     bool supportsOn() override;
     bool updateAttrByIndex(int attrIndex, const QVariant& value) override;
@@ -88,8 +100,13 @@ class MediaPlayer : public Entity, MediaPlayerInterface {
     Q_INVOKABLE void addToQueue(const QString& itemKey, const QString& type);
     Q_INVOKABLE void search(const QString& searchText, const QString& itemKey);  // Search
     Q_INVOKABLE void search(const QString& searchText);
+    Q_INVOKABLE void textInputMediaPlayer(const QString& textString);
     Q_INVOKABLE void getAlbum(const QString& id);
     Q_INVOKABLE void getPlaylist(const QString& id);
+    Q_INVOKABLE void getTVChannelList(const QString& id);
+    Q_INVOKABLE void getMediaPlayerRemote(const QString &id);
+    Q_INVOKABLE void getMediaPlayerEPGView(const QString &id);
+
 
     void setSearchModel(QObject* model) override;
     void setBrowseModel(QObject* model) override;

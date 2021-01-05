@@ -97,27 +97,27 @@ Rectangle {
                 }
                 break;
             case ButtonHandler.DPAD_UP:
-                if (obj.isSupported(Remote.F_CURSOR_UP)) {
+                if (obj.isSupported(Remote.F_UP)) {
                     obj.cursorUp();
                 }
                 break;
             case ButtonHandler.DPAD_DOWN:
-                if (obj.isSupported(Remote.F_CURSOR_DOWN)) {
+                if (obj.isSupported(Remote.F_DOWN)) {
                     obj.cursorDown();
                 }
                 break;
             case ButtonHandler.DPAD_LEFT:
-                if (obj.isSupported(Remote.F_CURSOR_LEFT)) {
+                if (obj.isSupported(Remote.F_LEFT)) {
                     obj.cursorLeft();
                 }
                 break;
             case ButtonHandler.DPAD_RIGHT:
-                if (obj.isSupported(Remote.F_CURSOR_RIGHT)) {
+                if (obj.isSupported(Remote.F_RIGHT)) {
                     obj.cursorRight();
                 }
                 break;
             case ButtonHandler.DPAD_MIDDLE:
-                if (obj.isSupported(Remote.F_CURSOR_OK)) {
+                if (obj.isSupported(Remote.F_OK)) {
                     obj.cursorOK();
                 }
                 break;

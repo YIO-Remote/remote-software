@@ -101,23 +101,23 @@ void Remote::live() {
 
 // navigation
 void Remote::cursorUp() {
-    command(RemoteDef::C_CURSOR_UP, "");
+    command(RemoteDef::C_UP, "");
 }
 
 void Remote::cursorDown() {
-    command(RemoteDef::C_CURSOR_DOWN, "");
+    command(RemoteDef::C_DOWN, "");
 }
 
 void Remote::cursorLeft() {
-    command(RemoteDef::C_CURSOR_LEFT, "");
+    command(RemoteDef::C_LEFT, "");
 }
 
 void Remote::cursorRight() {
-    command(RemoteDef::C_CURSOR_RIGHT, "");
+    command(RemoteDef::C_RIGHT, "");
 }
 
 void Remote::cursorOK() {
-    command(RemoteDef::C_CURSOR_OK, "");
+    command(RemoteDef::C_OK, "");
 }
 
 void Remote::back() {
