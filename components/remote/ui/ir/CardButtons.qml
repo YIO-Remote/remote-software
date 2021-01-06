@@ -24,6 +24,7 @@ import Style 1.0
 
 import Haptic 1.0
 import ButtonHandler 1.0
+import Entity.Remote 1.0
 
 
 Item {
