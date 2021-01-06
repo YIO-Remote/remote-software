@@ -123,7 +123,7 @@ Rectangle {
                         Text {
                             id: title
                             color: Style.color.text
-                            text: "TV Kanal"//qsTr("My playlists") + translateHandler.emptyString
+                            text: qsTr("EPG") + translateHandler.emptyString
                             font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                             lineHeight: 1
                             anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
