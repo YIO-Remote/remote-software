@@ -23,11 +23,9 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
 
-
 import Haptic 1.0
 
 import "qrc:/basic_ui" as BasicUI
-import "qrc:/components/remote/ui/ir"
 
 Rectangle {
     id: main
@@ -38,330 +36,67 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*property var tvchannelListBrowseModel
+    property var epgitemListBrowseModel
     property bool isCurrentItem: parent._currentItem
-    property bool start: true*/
+    property bool start: true
 
-    /*onIsCurrentItemChanged: {
+    onIsCurrentItemChanged: {
         if (isCurrentItem && start) {
-            console.debug("LOAD USER TVPLAYLISTS");
+            console.debug("LOAD USER EPG");
             start = false;
-            obj.getTVChannelList("all");
+            obj.getEPGItemList("all");
             obj.browseModelChanged.connect(onFirstLoadComplete);
         }
         if (!isCurrentItem) {
             tvChannelListListView.contentY = 0-120;
         }
-    }*/
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*function onTextInput() {
-        obj.textInputMediaPlayer(textInputTextField.text);
-        textInputTextField.focus = false;
-        textInputTextField.text = "";
-    }
-    /*function onFirstLoadComplete(model) {
-        main.tvchannelListBrowseModel = model.model;
+    function onFirstLoadComplete(model) {
+        main.epgitemListBrowseModel = model.model;
         obj.browseModelChanged.disconnect(onFirstLoadComplete);
     }
 
     function load(tvchannel, type) {
         swipeView.currentIndex++;
         if (type === "tvchannellist") {
-            obj.getTVChannelList(tvchannel);
+            obj.getgetEPGItemListList(tvchannel);
             obj.browseModelChanged.connect(onBrowseModelChanged);
         }
     }
 
-   /* function onBrowseModelChanged(model) {
+    function onBrowseModelChanged(model) {
         if (channellistLoader) {
-            if (channellistLoader.source != "qrc:/components/media_player/ui/MediaPlayerRemoteView.qml")
-                channellistLoader.setSource("qrc:/components/media_player/ui/MediaPlayerRemoteView.qml", { "tvchannelModel": model })
+            if (channellistLoader.source != "qrc:/components/media_player/ui/TVChannelView.qml")
+                channellistLoader.setSource("qrc:/components/media_player/ui/TVChannelView.qml", { "tvchannelModel": model })
             else if (channellistLoader.item) {
                 channellistLoader.item.tvchannelModel = model;
                 channellistLoader.item.itemFlickable.contentY = 0;
             }
         }
         obj.browseModelChanged.disconnect(onBrowseModelChanged);
-    }*/
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //property alias swipeView: swipeView
+    property alias swipeView: swipeView
 
-    /*   SwipeView {
+    SwipeView {
         id: swipeView
         width: parent.width; height: parent.height
         currentIndex: 0
         interactive: false
-        clip: true*/
-
-    //Item {
-
-    /*Rectangle {
-            id: powerButton
-            visible: true
-            width: 118; height: 60
-            radius: height/2
-            color: Style.color.red
-            anchors { top: parent.top; left: parent.left }
-
-            Text {
-                color: Style.color.line
-                text: Style.icon.power_on
-                width: 70; height: 70
-                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 60 }
-                anchors.centerIn: parent
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    //if (obj.isSupported(Remote.F_POWER_TOGGLE)) {
-                    obj.play();
-                    /*} else if (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) {
-                            if (obj.isOn)
-                                obj.powerOff();
-                            else
-                                obj.powerOn();
-                        }
-                }
-            }
-        }*/
-
-
-
-   /* Rectangle {
-        id: commandContainer
-        width: 300; height: 80
-        anchors { top: parent.top; topMargin: 100; horizontalCenter: parent.horizontalCenter }
-        color: Style.color.text
-        radius: Style.cornerRadius
-
-
-        Text {
-            id: textInputIcon
-            color: Style.color.background
-            text: Style.icon.down_arrow_bold
-            renderType: Text.NativeRendering
-            width: 70; height: 70
-            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-            font {family: "icons"; pixelSize: 80 }
-            anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    Haptic.playEffect(Haptic.Click);
-                    onTextInput();
-                }
-            }
-        }
-
-        TextField {
-            id: textInputTextField
-            cursorVisible: false
-            width: parent.width-90; height: parent.height
-            anchors { left: textInputIcon.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
-            placeholderText: "Textinput" + translateHandler.emptyString
-            color: Style.color.background
-            font { family: "Open Sans Regular"; pixelSize: 27 }
-
-            background: Rectangle {
-                color: Style.color.backgroundTransparent
-                border.width: 0
-            }
-
-            onAccepted: {
-                onTextInput();
-            }
-
-            onFocusChanged: {
-                if (focus) {
-                    inputPanel.active = true
-                    itemFlickable.contentY = 0;
-                } else
-                    inputPanel.active = false
-            }
-        }
-    }*/
-    /*ScrollView {
-        width: 200
-        height: 200
-        clip: true
-    MenuBar {
-            Menu {
-                title: "File"
-                MenuItem { text: "Open..." }
-                MenuItem { text: "Close" }
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-            }
-            Menu {
-                title: "Edit"
-                MenuItem { text: "Cut" }
-                MenuItem { text: "Copy" }
-                MenuItem { text: "Paste" }
-            }
-        }
-    /*ScrollView {
-        width: 200
-        height: 200
         clip: true
 
-        Label {
-            text: "ABC"
-            font.pixelSize: 224
-        }*/
-    //}
-    /*
-        Grid {
-            id: cursorField
-            width: parent.width
-            visible: true
-            columns: 3
-            anchors { top: searchContainer.bottom; topMargin: 30; horizontalCenter: parent.horizontalCenter }
+        Item {
+            property alias tvChannelListListView: tvChannelListListView
 
-            Text {
-                text: " "
-            }
-            Button {
-                visible: true//obj.isSupported(Remote.F_DIGIT_1)
-                title: "▲"
-                mouseArea.onClicked: { obj.channel(1); }
-            }
-            Text {
-                text: " "
-            }
-            Button {
-                visible: true//obj.isSupported(Remote.F_DIGIT_1)
-                title: "◄"
-                mouseArea.onClicked: { obj.channel(1); }
-            }
-            Button {
-                visible: true//obj.isSupported(Remote.F_DIGIT_1)
-                title: "OK"
-                mouseArea.onClicked: { obj.channel(1); }
-            }
-            Button {
-                visible: true//obj.isSupported(Remote.F_DIGIT_1)
-                title: "►"
-                mouseArea.onClicked: { obj.channel(1); }
-            }
-            Text {
-                text: " "
-            }
-            Button {
-                visible: true//obj.isSupported(Remote.F_DIGIT_1)
-                title: "▼"
-                mouseArea.onClicked: { obj.channel(1); }
-            }
-            Text {
-                text: " "
-            }
-        }*/
-    /*Rectangle {
-            id: searchContainer
-            width: parent.width - 60; height: 80
-            anchors { top: cursorField.bottom; topMargin: 100; horizontalCenter: cursorField.horizontalCenter }
-            //color: Style.color.text
-            //radius: Style.cornerRadius
-            TextField {
-                id: searchTextField
-                cursorVisible: true
-                width: parent.width-90; height: parent.height
-            }
-            */
-    /*Text {
-                id: searchIcon
-                color: Style.color.background
-                text: Style.icon.search
-                renderType: Text.NativeRendering
-                width: 70; height: 70
-                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 80 }
-                anchors { top: cursorField.bottom; left: parent.left; leftMargin: 10; }
-
-                /*MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        Haptic.playEffect(Haptic.Click);
-                        onSearch();
-                    }
-                }*/
-    //}
-
-    /*TextField {
-
-            cursorVisible: true
-            width: parent.width-90; height: parent.height
-            anchors { top: cursorField.bottom; left: searchIcon.right; leftMargin: 10;}
-            //placeholderText: qsTr("Search") + translateHandler.emptyString
-            //color: Style.color.background
-            font { family: "Open Sans Regular"; pixelSize: 27 }
-
-            /*background: Rectangle {
-                    color: Style.color.backgroundTransparent
-                    border.width: 0
-                }*/
-
-    /*onAccepted: {
-                    onSearch();
-                }
-
-                onFocusChanged: {
-                    if (focus) {
-                        inputPanel.active = true
-                        itemFlickable.contentY = 0;
-                    } else
-                        inputPanel.active = false
-                }*/
-    //  }
-    // }
-
-
-    //}
-
-    /*property alias tvChannelListListView: tvChannelListListView
             ListView {
                 id: tvChannelListListView
                 width: parent.width; height: parent.height-100
@@ -375,7 +110,7 @@ Rectangle {
                 cacheBuffer: 3000
 
                 delegate: playListThumbnail
-                model: main.tvchannelListBrowseModel
+                model: main.epgitemListBrowseModel
 
                 ScrollBar.vertical: ScrollBar {
                     opacity: 0.5
@@ -388,7 +123,7 @@ Rectangle {
                         Text {
                             id: title
                             color: Style.color.text
-                            text: "Remote"//qsTr("My playlists") + translateHandler.emptyString
+                            text: "TV Kanal"//qsTr("My playlists") + translateHandler.emptyString
                             font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                             lineHeight: 1
                             anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
@@ -404,9 +139,9 @@ Rectangle {
                         NumberAnimation { properties: "opacity"; from: 0; to: 1; duration: 300; easing.type: Easing.InExpo }
                     }
                 }
-            }*/
+            }
 
-    /*Component {
+            Component {
                 id: playListThumbnail
 
                 Item {
@@ -481,10 +216,10 @@ Rectangle {
                         }
                     }
                 }
-            }*/
-    /*}
+            }
+        }
 
-/* Item {
+        Item {
 
             Loader {
                 id: channellistLoader
@@ -513,7 +248,6 @@ Rectangle {
                     }
                 }
             }
-        }*/
-    //}
+        }
+    }
 }
-//}
