@@ -932,7 +932,7 @@
             },
             "updateUrl": {
               "type": "string",
-              "format": "uri",
+              "format": "url",
               "pattern": "^(https?)://",
               "title": "Base update URL",
               "default": "https://update.yio.app/v1/"
