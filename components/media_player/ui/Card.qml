@@ -499,7 +499,8 @@ Rectangle {
                 }
             }
 
-        }}
+        }
+    }
 
     property alias contextMenuLoader: contextMenuLoader
 
