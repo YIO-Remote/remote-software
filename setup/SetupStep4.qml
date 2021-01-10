@@ -46,6 +46,7 @@ Rectangle {
         swipeViewObj.parent.parent.wifiPassword = passwordField.text;
         swipeViewObj.parent.parent.wifiSsid = name;
 
+        wifi.clearConfiguredNetworks();
         wifi.join(name, passwordField.text, security);
         inputPanel.active = false;
         container.state = "closed";

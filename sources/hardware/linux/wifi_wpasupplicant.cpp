@@ -158,19 +158,18 @@ bool WifiWpaSupplicant::clearConfiguredNetworks() {
 
     setConnected(false);
 
-    if (!controlRequest("REMOVE_NETWORK all")) {
-        return false;
+    bool ret = false;
+    if (controlRequest("REMOVE_NETWORK all") && saveConfiguration()) {
+        stopScanTimer();
+
+        qCInfo(lcWifiWpaCtrl) << "Disconnected, all networks removed and cleared configuration";
+        ret = true;
     }
 
-    if (!saveConfiguration()) {
-        return false;
-    }
-
-    stopScanTimer();
-
-    qCInfo(lcWifiWpaCtrl) << "All networks removed and disconnected";
-
-    return true;
+    // avoid deadlock.
+    // DISCONNECT doc states: "Disconnect and wait for REASSOCIATE or RECONNECT command before connecting."
+    controlRequest("RECONNECT");
+    return ret;
 }
 
 bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiSecurity::Enum security) {
