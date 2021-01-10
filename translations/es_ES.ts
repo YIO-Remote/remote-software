@@ -865,17 +865,17 @@ Lleve su navegador de internet a: http://</translation>
   <context>
     <name>SetupStep3</name>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="63"/>
+      <location filename="../setup/SetupStep3.qml" line="67"/>
       <source>Wi-Fi setup</source>
       <translation>Configurar Wi-Fi</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="74"/>
+      <location filename="../setup/SetupStep3.qml" line="78"/>
       <source>Select a Wi-Fi network.</source>
       <translation>Seleccione una red Wi-Fi.</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep3.qml" line="166"/>
+      <location filename="../setup/SetupStep3.qml" line="170"/>
       <source>Join other</source>
       <translation>Únete a otros</translation>
     </message>
@@ -883,19 +883,19 @@ Lleve su navegador de internet a: http://</translation>
   <context>
     <name>SetupStep4</name>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="97"/>
+      <location filename="../setup/SetupStep4.qml" line="98"/>
       <source>Enter password for
 &quot;%1&quot;</source>
       <translation>Introduzca contraseña para
 &quot;%1&quot;</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="115"/>
+      <location filename="../setup/SetupStep4.qml" line="116"/>
       <source>Password</source>
       <translation>Contraseña</translation>
     </message>
     <message>
-      <location filename="../setup/SetupStep4.qml" line="174"/>
+      <location filename="../setup/SetupStep4.qml" line="175"/>
       <source>Join</source>
       <translation>Unirse</translation>
     </message>
