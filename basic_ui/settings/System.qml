@@ -177,6 +177,38 @@ Rectangle {
             color: Style.color.background
         }
 
+        ButtonGroup { id: clockRadioGroup }
+
+        Item {
+            width: parent.width; height: childrenRect.height + 40
+
+            Text {
+                id: clockTypeText
+                color: Style.color.text
+                text: qsTr("24-hour clock") + translateHandler.emptyString
+                anchors { left: parent.left; leftMargin: 20; top: parent.top; topMargin: 20 }
+                font: Style.font.button
+            }
+
+            BasicUI.CustomSwitch {
+                id: clockTypeButton
+
+                anchors { right: parent.right; rightMargin: 20; verticalCenter: clockTypeText.verticalCenter }
+
+                checked: !config.settings.clock12h
+                mouseArea.onClicked: {
+                    var tmp = config.settings;
+                    tmp.clock12h = !tmp.clock12h;
+                    config.settings = tmp;
+                }
+            }
+        }
+
+        Rectangle {
+            width: parent.width; height: 2
+            color: Style.color.background
+        }
+
         Item {
             width: parent.width; height: childrenRect.height + 40
 
@@ -311,5 +343,22 @@ Rectangle {
                 }
             }
         }
+
+        // TODO(marton/zehnm) only show factory reset button if: factoryReset.supported
+        // TODO(marton/zehnm) add user confirmation to make sure that the remote will be resetted
+        /*
+        Item {
+            width: parent.width; height: childrenRect.height + 30
+            BasicUI.CustomButton {
+                id: buttonFactoryReset
+                buttonText: qsTr("Factory reset") + translateHandler.emptyString
+                anchors { top: parent.top; topMargin: 30; left: parent.left; leftMargin: 40 }
+
+                mouseArea.onClicked: {
+                    factoryReset.performReset();
+                }
+            }
+        }
+        */
     }
 }

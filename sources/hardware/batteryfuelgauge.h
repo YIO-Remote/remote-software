@@ -39,26 +39,29 @@ class BatteryFuelGauge : public Device {
     Q_PROPERTY(bool isCharging READ getIsCharging NOTIFY isChargingChanged)
 
  public:
-    virtual void    begin()                         = 0;
-    virtual int     getVoltage()                    = 0;
-    virtual int     getFullChargeCapacity()         = 0;
-    virtual int     getAverageCurrent()             = 0;
-    virtual int     getAveragePower()               = 0;
-    virtual int     getStateOfCharge()              = 0;
-    virtual int16_t getInternalTemperatureC()       = 0;  // Result in 0.1 Celsius
-    virtual int     getStateOfHealth()              = 0;
-    virtual int     getFullAvailableCapacity()      = 0;
-    virtual int     getRemainingCapacity()          = 0;
-    virtual int     getDesignCapacity()             = 0;
+    virtual void    begin() = 0;
+    virtual int     getVoltage() = 0;
+    virtual int     getFullChargeCapacity() = 0;
+    virtual int     getAverageCurrent() = 0;
+    virtual int     getAveragePower() = 0;
+    virtual int     getStateOfCharge() = 0;
+    virtual int16_t getInternalTemperatureC() = 0;  // Result in 0.1 Celsius
+    virtual int     getStateOfHealth() = 0;
+    virtual int     getFullAvailableCapacity() = 0;
+    virtual int     getRemainingCapacity() = 0;
+    virtual int     getDesignCapacity() = 0;
     virtual void    changeCapacity(int newCapacity) = 0;
-    virtual int     getLevel()                      = 0;
-    virtual int     getHealth()                     = 0;
-    virtual bool    getIsCharging()                 = 0;
-    virtual float   remainingLife()                 = 0;  // result in hours
+    virtual int     getLevel() = 0;
+    virtual int     getHealth() = 0;
+    virtual bool    getIsCharging() = 0;
+    virtual float   remainingLife() = 0;  // result in hours
 
     void setCapacity(int capacity) { m_capacity = capacity; }
 
     int getCapacity() { return m_capacity; }
+
+ public slots:
+    virtual void updateBatteryValues() = 0;
 
  signals:
     void levelChanged();

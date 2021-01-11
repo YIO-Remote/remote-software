@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include <QDebug>
 #include <QList>
 #include <QObject>
 #include <QProcess>
@@ -205,7 +204,7 @@ class WifiControl : public QObject {
      */
     void joinError(WifiControl::JoinError error);
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     /**
      * @brief Enable WiFi device
      */

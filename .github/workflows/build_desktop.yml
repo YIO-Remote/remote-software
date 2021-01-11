@@ -21,7 +21,7 @@ env:
   APP_PRO: remote.pro
   APP_NAME: app
   PROJECT_NAME: remote-software
-  # Build artifact output path. Used to set project specific YIO_BIN env var in 'qt_creator' step.
+  # Build artifact output path. Used to set project specific YIO_BIN env var.
   BIN_OUTPUT_PATH: "binaries"
   DEBUG_OUTPUT: "false"
 
@@ -35,7 +35,7 @@ jobs:
         - {
             name: "Linux Latest x64", artifact: "Linux-x64", build: "release",
             qmake-args: "CONFIG+=release",
-            os: ubuntu-latest
+            os: ubuntu-20.04
           }
         - {
             name: "macOS Latest x64", artifact: "macOS-x64", build: "release",
@@ -56,6 +56,7 @@ jobs:
         # history required to determine number of commits since last release tag
         fetch-depth: 0
         path: ${{ env.PROJECT_NAME }}
+
     - name: Fetch all tags to determine version
       run: |
         cd ${{ env.PROJECT_NAME }}
@@ -66,7 +67,11 @@ jobs:
       run: |
         YIO_INTG_LIB_VERSION=$(cat "${GITHUB_WORKSPACE}/${{ env.PROJECT_NAME }}/dependencies.cfg" | awk '/^integrations.library:/{print $2}')
         echo "Required integrations.library: $YIO_INTG_LIB_VERSION"
-        echo "::set-env name=YIO_INTG_LIB_VERSION::$YIO_INTG_LIB_VERSION"
+        echo "YIO_INTG_LIB_VERSION=$YIO_INTG_LIB_VERSION" >> $GITHUB_ENV
+
+    - name: Set build output directory
+      shell: bash
+      run: echo "YIO_BIN=${GITHUB_WORKSPACE}/${BIN_OUTPUT_PATH}" >> $GITHUB_ENV  
 
     - name: Checkout integrations.library
       uses: actions/checkout@v2
@@ -79,7 +84,9 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt update
-        sudo apt install libavahi-client-dev libgl1-mesa-dev
+        sudo apt install libavahi-client-dev libgl1-mesa-dev g++-8 libstdc++-8-dev
+        # Qt Creator library path is required for Qt linguist tools. Otherwise we'll get libicui18n.so.56 not found!
+        echo "LD_LIBRARY_PATH=${GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:${LD_LIBRARY_PATH}" >> $GITHUB_ENV
 
     - name: Download Qt Creator
       id: qt_creator
@@ -95,20 +102,11 @@ jobs:
             set(qtc_platform "windows_vs2015_64")
           elseif ("${{ matrix.config.environment_script }}" MATCHES "vcvars64.bat")
             set(qtc_platform "windows_msvc2017_x64")
-          elseif ("${{ matrix.config.environment_script }}" MATCHES "vcvars32.bat")
-            set(qtc_platform "windows_msvc2017_x86")
           endif()
         elseif ("${{ runner.os }}" STREQUAL "Linux")
           set(qtc_platform "linux_gcc_64_rhel72")
         elseif ("${{ runner.os }}" STREQUAL "macOS")
           set(qtc_platform "mac_x64")
-        endif()
-
-        # Set YIO_BIN env var for other steps
-        message("::set-env name=YIO_BIN::${qtc_output_directory}")
-        # Qt Creator library path is required for Qt linguist tools. Otherwise we'll get libicui18n.so.56 not found!
-        if ("${{ runner.os }}" STREQUAL "Linux")
-          message("::set-env name=LD_LIBRARY_PATH::$ENV{GITHUB_WORKSPACE}/qtcreator/lib/Qt/lib:$ENV{LD_LIBRARY_PATH}")
         endif()
 
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/../downloads" download_dir)
@@ -181,9 +179,6 @@ jobs:
           if ("${{ matrix.config.environment_script }}" MATCHES "vcvars64.bat")
             set(qt_package_name "qt.qt5.${qt_version_dotless}.win64_msvc2017_64")
             set(qt_dir_prefix "${qt_version}/msvc2017_64")
-          elseif ("${{ matrix.config.environment_script }}" MATCHES "vcvars32.bat")
-            set(qt_package_name "qt.qt5.${qt_version_dotless}.win32_msvc2017")
-            set(qt_dir_prefix "${qt_version}/msvc2017")
           else()
           endif()
         elseif ("${{ runner.os }}" STREQUAL "Linux")
@@ -222,11 +217,6 @@ jobs:
         set(package_version ${CMAKE_MATCH_1})
         set(package_suffix ${CMAKE_MATCH_2})
         string(REPLACE "-debug-symbols" "" package_suffix "${package_suffix}")
-
-        # Workaround for CMake's greedy regex
-        if ("${{ matrix.config.environment_script }}" MATCHES "vcvars32.bat")
-          string(REPLACE "X86_64" "X86" package_suffix "${package_suffix}")
-        endif()
 
         file(MAKE_DIRECTORY qt5)
 
@@ -298,7 +288,7 @@ jobs:
     - name: Configure
       shell: cmake -P {0}
       run: |
-        if ("${{ runner.os }}" STREQUAL "Windows" AND NOT "x${{ matrix.config.environment_script }}" STREQUAL "x")
+        if ("${{ runner.os }}" STREQUAL "Windows")
           execute_process(
             COMMAND "${{ matrix.config.environment_script }}" && set
             OUTPUT_FILE environment_script_output.txt
@@ -307,9 +297,6 @@ jobs:
           foreach(line IN LISTS output_lines)
             if (line MATCHES "^([a-zA-Z0-9_-]+)=(.*)$")
               set(ENV{${CMAKE_MATCH_1}} "${CMAKE_MATCH_2}")
-
-              # Set for other steps
-              message("::set-env name=${CMAKE_MATCH_1}::${CMAKE_MATCH_2}")
             endif()
           endforeach()
         endif()
@@ -342,6 +329,12 @@ jobs:
       shell: cmake -P {0}
       run: |
         if ("${{ runner.os }}" STREQUAL "Windows")
+          file(STRINGS environment_script_output.txt output_lines)
+          foreach(line IN LISTS output_lines)
+            if (line MATCHES "^([a-zA-Z0-9_-]+)=(.*)$")
+              set(ENV{${CMAKE_MATCH_1}} "${CMAKE_MATCH_2}")
+            endif()
+          endforeach()
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/;$ENV{PATH}")
         else()
           set(ENV{PATH} "${{ steps.qt.outputs.qt_dir }}/bin/:$ENV{PATH}")
@@ -371,9 +364,9 @@ jobs:
     - name: Set build artifact name
       shell: bash
       run: |
-        APP_VERSION=$(cat ${{ env.YIO_BIN }}/version.txt | awk '{print $1}')
+        APP_VERSION=$(cat "${{ env.YIO_BIN }}/version.txt" | awk '{print $1}')
         echo "App version: $APP_VERSION"
-        echo "::set-env name=ARTIFACT_NAME::${{ env.APP_NAME }}-$APP_VERSION-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-${{ matrix.config.build }}"
+        echo "ARTIFACT_NAME=${{ env.APP_NAME }}-$APP_VERSION-Qt${{ env.QT_VERSION }}-${{ matrix.config.artifact }}-${{ matrix.config.build }}" >> $GITHUB_ENV
 
     - uses: actions/upload-artifact@v1
       id: upload_artifact

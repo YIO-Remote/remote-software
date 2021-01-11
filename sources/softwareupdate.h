@@ -88,7 +88,7 @@ class SoftwareUpdate : public QObject {
     void downloadComplete();
     void downloadFailed();
 
- private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ private slots:
     void onCheckForUpdateFinished(QNetworkReply* reply);
     void onDownloadProgress(int id, qint64 bytesReceived, qint64 bytesTotal, const QString& speed);
     void onDownloadComplete(int id, const QString& filePath);

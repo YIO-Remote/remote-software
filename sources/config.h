@@ -26,8 +26,8 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QtDebug>
 
+#include "environment.h"
 #include "jsonfile.h"
 #include "yio-interface/configinterface.h"
 #include "yio-interface/unitsystem.h"
@@ -49,6 +49,8 @@ class Config : public QObject, public ConfigInterface {
     Q_PROPERTY(UnitSystem::Enum unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
 
  public:
+    static const QString CFG_FILE_NAME;
+    static const QString CFG_FILE_NAME_DEF;
     // Common configuration keys. Initialized in config.cpp
     // HELP: anyone knows how to properly define "static const QString" constants across Qt plugin boundaries?
     static const QString KEY_ID;
@@ -143,8 +145,25 @@ class Config : public QObject, public ConfigInterface {
 
     QQmlApplicationEngine* getAppEngine() { return m_engine; }
 
+    /**
+     * @brief QML facade for Environment::isFirstRun
+     */
+    Q_INVOKABLE bool isFirstRun() { return m_environment->isFirstRun(); }
+    /**
+     * @brief QML facade for Environment::finishFirstRun().
+     */
+    Q_INVOKABLE bool finishFirstRun() { return m_environment->finishFirstRun(); }
+
+    /**
+     * @brief Resets the configuration and prepares the remote for the initial setup run.
+     * The remote must be rebooted after calling this method.
+     * @return true if successful, false otherwise
+     */
+    bool resetConfigurationForFirstRun();
+
  public:
-    explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath, QString appPath);
+    explicit Config(QQmlApplicationEngine* engine, QString configFilePath, QString schemaFilePath,
+                    Environment* environment);
     ~Config() override;
 
     static Config* getInstance() { return s_instance; }
@@ -174,7 +193,7 @@ class Config : public QObject, public ConfigInterface {
     template <class EnumClass>
     EnumClass stringToEnum(const QVariant& enumString, const EnumClass& defaultValue) const {
         const auto metaEnum = QMetaEnum::fromType<EnumClass>();
-        bool ok;
+        bool       ok;
         const auto value = metaEnum.keyToValue(enumString.toString().toUtf8(), &ok);
         return ok ? static_cast<EnumClass>(value) : defaultValue;
     }
@@ -201,4 +220,6 @@ class Config : public QObject, public ConfigInterface {
     QVariantMap      m_cacheUIPages;
     QVariantMap      m_cacheUIGroups;
     UnitSystem::Enum m_cacheUnitSystem = UnitSystem::METRIC;
+
+    Environment* m_environment;
 };

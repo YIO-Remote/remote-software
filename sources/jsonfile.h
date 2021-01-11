@@ -94,7 +94,7 @@ class JsonFile : public QObject {
  signals:
     void nameChanged(const QString &name);
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     /**
      * @brief setName Sets the full file name
      * @param name The file name including path

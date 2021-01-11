@@ -26,10 +26,9 @@
 #include <wiringPi.h>
 
 #include <QFuture>
-#include <QLoggingCategory>
 #include <QtConcurrent/QtConcurrentRun>
-#include <QtDebug>
 
+#include "../../../logging.h"
 #include "mcp23017_handler.h"
 
 #define CLK 107
@@ -37,15 +36,13 @@
 #define CS 105
 #define RST 104
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.display");
-
 DisplayControlYio::DisplayControlYio(int backlightPin, QObject *parent)
     : DisplayControl("YIO display control", parent) {
     Q_ASSERT(backlightPin);
-    qCDebug(CLASS_LC()) << name() << "[backlightPin=" << backlightPin << "]";
+    qCDebug(lcDevDisplay) << name() << "[backlightPin=" << backlightPin << "]";
 
     // move the low level hardware handling to a separate thread
-    m_thread                      = new QThread(this);
+    m_thread = new QThread(this);
     DisplayControlYioThread *dcyt = new DisplayControlYioThread(backlightPin);
 
     connect(this, &DisplayControlYio::enterStandby, dcyt, &DisplayControlYioThread::enterStandby);
@@ -55,11 +52,13 @@ DisplayControlYio::DisplayControlYio(int backlightPin, QObject *parent)
     dcyt->moveToThread(m_thread);
 }
 
-DisplayControlYio::~DisplayControlYio() { close(); }
+DisplayControlYio::~DisplayControlYio() {
+    close();
+}
 
 bool DisplayControlYio::open() {
     if (isOpen()) {
-        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        qCWarning(lcDevDisplay) << DBG_WARN_DEVICE_OPEN;
         return true;
     }
 
@@ -80,16 +79,16 @@ void DisplayControlYio::close() {
 
 bool DisplayControlYio::setMode(Mode mode) {
     if (!isOpen()) {
-        qCWarning(CLASS_LC()) << "Display device is closed. Cannot change mode to" << mode;
+        qCWarning(lcDevDisplay) << "Display device is closed. Cannot change mode to" << mode;
         return false;
     }
 
     if (mode == StandbyOn) {
-        qCDebug(CLASS_LC) << "Entering standby";
+        qCDebug(lcDevDisplay) << "Entering standby";
         emit enterStandby();
         return true;
     } else if (mode == StandbyOff) {
-        qCDebug(CLASS_LC) << "Leaving standby";
+        qCDebug(lcDevDisplay) << "Leaving standby";
         emit leaveStandby();
         return true;
     }
@@ -99,7 +98,7 @@ bool DisplayControlYio::setMode(Mode mode) {
 
 void DisplayControlYio::setBrightness(int from, int to) {
     if (!isOpen()) {
-        qCWarning(CLASS_LC()) << "Display device is closed. Cannot change brightness";
+        qCWarning(lcDevDisplay()) << "Display device is closed. Cannot change brightness";
         return;
     }
     emit setBrightnessSignal(from, to);
@@ -108,19 +107,23 @@ void DisplayControlYio::setBrightness(int from, int to) {
     emit currentBrightnessChanged();
 }
 
-void DisplayControlYio::setBrightness(int to) { setBrightness(m_currentBrightness, to); }
+void DisplayControlYio::setBrightness(int to) {
+    setBrightness(m_currentBrightness, to);
+}
 
 qreal DisplayControlYio::pixelDensity() {
     QScreen *screen = QGuiApplication::screens().at(0);
     return qreal(screen->logicalDotsPerInch());
 }
 
-const QLoggingCategory &DisplayControlYio::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory &DisplayControlYio::logCategory() const {
+    return lcDevDisplay();
+}
 
 // THREADED STUFF
 
 void DisplayControlYioThread::setBrightness(int from, int to) {
-    qCDebug(CLASS_LC) << "Changing brightness:" << from << " -> " << to;
+    qCDebug(lcDevDisplay) << "Changing brightness:" << from << " -> " << to;
 
     if (from < 0) {
         from = 0;
@@ -183,7 +186,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
 
     digitalWrite(CS, LOW);
     control_bit = 0x0000;
-    Addr        = (control_bit | Addr);
+    Addr = (control_bit | Addr);
 
     for (i = 0; i < 9; i++) {
         if (Addr & (1 << (8 - i))) {
@@ -211,7 +214,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data0       = (control_bit | Data0);
+    Data0 = (control_bit | Data0);
 
     // data
     for (i = 0; i < 9; i++) {
@@ -238,7 +241,7 @@ void DisplayControlYioThread::spi_screenreg_set(int32_t Addr, int32_t Data0, int
     digitalWrite(CS, LOW);
 
     control_bit = 0x0100;
-    Data1       = (control_bit | Data1);
+    Data1 = (control_bit | Data1);
 
     // data
     for (i = 0; i < 9; i++) {

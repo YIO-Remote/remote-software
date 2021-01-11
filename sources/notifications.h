@@ -27,7 +27,6 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 
-#include "logger.h"
 #include "yio-interface/notificationsinterface.h"
 
 class Notification {
@@ -89,7 +88,6 @@ class Notifications : public QObject, public NotificationsInterface {
 
     static Notifications * s_instance;
     QQmlApplicationEngine *m_engine;
-    QLoggingCategory       m_log;
 
     void show(int id);
 };

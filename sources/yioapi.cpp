@@ -22,36 +22,45 @@
 
 #include "yioapi.h"
 
+#include <QHostInfo>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QLoggingCategory>
-#include <QNetworkInterface>
 #include <QTimer>
-#include <QtDebug>
 
 #include "launcher.h"
+#include "logger.h"
+#include "logging.h"
 #include "standbycontrol.h"
 #include "translation.h"
 
-static Q_LOGGING_CATEGORY(CLASS_LC, "api");
+#define WEBSOCKET_CLIENT_DEBUG(message)                                \
+    if (lcApi().isDebugEnabled()) {                                    \
+        qCDebug(lcApi) << message << client->peerAddress().toString(); \
+    }
 
-YioAPI *YioAPI::s_instance = nullptr;
-
-YioAPI::YioAPI(QQmlApplicationEngine *engine) : m_engine(engine) {
-    s_instance     = this;
-    m_entities     = Entities::getInstance();
-    m_integrations = Integrations::getInstance();
-    m_config       = Config::getInstance();
+YioAPI *YioAPI::getInstance() {
+    static YioAPI api;
+    return &api;
 }
 
-YioAPI::~YioAPI() { s_instance = nullptr; }
+YioAPI::YioAPI() : m_port(946), m_server(nullptr), m_context(nullptr) {
+    m_entities = Entities::getInstance();
+    m_integrations = Integrations::getInstance();
+    m_config = Config::getInstance();
+}
+
+YioAPI::~YioAPI() {
+    if (m_server) {
+        delete m_server;
+    }
+}
 
 void YioAPI::start() {
     m_server = new QWebSocketServer(QStringLiteral("YIO API"), QWebSocketServer::NonSecureMode, this);
 
-    // start websocket server on port 946(YIO)
-    if (m_server->listen(QHostAddress::Any, 946)) {
+    // start websocket server
+    if (m_server->listen(QHostAddress::Any, m_port)) {
         connect(m_server, &QWebSocketServer::newConnection, this, &YioAPI::onNewConnection);
         connect(m_server, &QWebSocketServer::closed, this, &YioAPI::onClosed);
 
@@ -59,23 +68,13 @@ void YioAPI::start() {
         emit runningChanged();
     }
 
-    QString macAddr;
-    for (QNetworkInterface interface : QNetworkInterface::allInterfaces()) {
-        if (!(interface.flags() & QNetworkInterface::IsLoopBack)) {
-            macAddr = interface.hardwareAddress();
-            break;
-        }
-    }
-
-    macAddr.replace(":", "");
-    m_hostname = "";
-    m_hostname.append("YIO-Remote-").append(macAddr);
-    qCDebug(CLASS_LC) << "NAME" << m_hostname;
+    m_hostname = QHostInfo::localHostName().split(QLatin1Char('.')).at(0);
+    qCDebug(lcApi) << "YIO api published as ZeroConf service name:" << m_hostname;
     emit hostnameChanged();
 
-    m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", 946);
+    m_zeroConf.startServicePublish(m_hostname.toUtf8(), "_yio-remote._tcp", "local", m_port);
 
-    qCDebug(CLASS_LC) << "YIO api started";
+    qCDebug(lcApi) << "YIO api started on port" << m_port;
 }
 
 void YioAPI::stop() {
@@ -84,6 +83,7 @@ void YioAPI::stop() {
     m_running = false;
     m_zeroConf.stopServicePublish();
     emit runningChanged();
+    qCDebug(lcApi) << "YIO api stopped";
 }
 
 void YioAPI::sendMessage(QString message) {
@@ -96,7 +96,9 @@ void YioAPI::sendMessage(QString message) {
     }
 }
 
-QVariantMap YioAPI::getConfig() { return m_config->getConfig(); }
+QVariantMap YioAPI::getConfig() {
+    return m_config->getConfig();
+}
 
 bool YioAPI::setConfig(QVariantMap config) {
     m_config->setConfig(config);
@@ -110,7 +112,7 @@ bool YioAPI::setConfig(QVariantMap config) {
 bool YioAPI::addEntity(QVariantMap entity) {
     // get the type of the new entity
     QString entityType = entity.value("type").toString();
-    qCDebug(CLASS_LC) << "Adding entity type:" << entityType;
+    qCDebug(lcApi) << "Adding entity type:" << entityType;
 
     // remove the key that is not needed
     entity.remove("type");
@@ -120,7 +122,7 @@ bool YioAPI::addEntity(QVariantMap entity) {
         return false;
     }
 
-    qCDebug(CLASS_LC) << "Entity type is supported";
+    qCDebug(lcApi) << "Entity type is supported";
 
     // check the input if it's OK
     if (!entity.contains(Config::KEY_AREA) && !entity.contains(Config::KEY_ENTITY_ID) &&
@@ -129,22 +131,22 @@ bool YioAPI::addEntity(QVariantMap entity) {
         return false;
     }
 
-    qCDebug(CLASS_LC) << "Input data is OK.";
+    qCDebug(lcApi) << "Input data is OK.";
 
     // check if entity alread loaded. If so, it exist in config.json and the database
     QObject *eObj = m_entities->get(entity.value("entity_id").toString());
 
-    qCDebug(CLASS_LC) << "Entity object:" << eObj;
+    qCDebug(lcApi) << "Entity object:" << eObj;
     if (eObj) {
-        qCDebug(CLASS_LC) << "Entity is loaded.";
+        qCDebug(lcApi) << "Entity is loaded.";
         return false;
     }
 
-    qCDebug(CLASS_LC) << "Entity is not loaded.";
+    qCDebug(lcApi) << "Entity is not loaded.";
 
     // get the config
-    QVariantMap  c            = getConfig();
-    QVariantMap  entities     = c.value("entities").toMap();
+    QVariantMap  c = getConfig();
+    QVariantMap  entities = c.value("entities").toMap();
     QVariantList entitiesType = entities.value(entityType).toList();
 
     // add the entity to the lsit
@@ -169,21 +171,21 @@ bool YioAPI::addEntity(QVariantMap entity) {
             // add it to the entity registry
             m_entities->add(entityType, entity, integration);
 
-            qCDebug(CLASS_LC) << "Add entity success: true";
+            qCDebug(lcApi) << "Add entity success: true";
 
             return true;
         } else {
-            qCDebug(CLASS_LC) << "Add entity success: false";
+            qCDebug(lcApi) << "Add entity success: false";
             return false;
         }
     } else {
-        qCDebug(CLASS_LC) << "Add entity success: false";
+        qCDebug(lcApi) << "Add entity success: false";
         return false;
     }
 }
 
 bool YioAPI::updatEntity(QVariantMap entity) {
-    qCDebug(CLASS_LC) << "Update entity:" << entity.value("entity_id").toString();
+    qCDebug(lcApi) << "Update entity:" << entity.value("entity_id").toString();
 
     // remove entity
     if (!removeEntity(entity.value("entity_id").toString())) {
@@ -195,14 +197,14 @@ bool YioAPI::updatEntity(QVariantMap entity) {
 }
 
 bool YioAPI::removeEntity(QString entityId) {
-    qCDebug(CLASS_LC) << "Removing entity:" << entityId;
+    qCDebug(lcApi) << "Removing entity:" << entityId;
 
     QObject *        o = m_entities->get(entityId);
     EntityInterface *eIface;
     if (o) {
         eIface = qobject_cast<EntityInterface *>(o);
         if (!eIface) {
-            qCDebug(CLASS_LC) << "Entity doesn't exist, probably already removed:" << entityId;
+            qCDebug(lcApi) << "Entity doesn't exist, probably already removed:" << entityId;
             return false;
         }
     }
@@ -210,7 +212,7 @@ bool YioAPI::removeEntity(QString entityId) {
     // remove entity from groups
     QVariantMap groups = m_config->getGroups();
     for (QVariantMap::const_iterator iter = groups.cbegin(); iter != groups.cend(); ++iter) {
-        QVariantMap  item          = iter.value().toMap();
+        QVariantMap  item = iter.value().toMap();
         QVariantList groupEntities = item.value("entities").toList();
         for (int i = 0; i < groupEntities.length(); i++) {
             if (groupEntities[i].toString() == entityId) {
@@ -226,7 +228,7 @@ bool YioAPI::removeEntity(QString entityId) {
     // remove entity from favorites
     QVariantMap profiles = m_config->getProfiles();
     for (QVariantMap::const_iterator iter = profiles.cbegin(); iter != profiles.cend(); ++iter) {
-        QVariantMap  item            = iter.value().toMap();
+        QVariantMap  item = iter.value().toMap();
         QVariantList profileEntities = item.value("favorites").toList();
         for (int i = 0; i < profileEntities.length(); i++) {
             if (profileEntities[i].toString() == entityId) {
@@ -242,9 +244,9 @@ bool YioAPI::removeEntity(QString entityId) {
 
     // remove from config
     // get the config
-    eIface                    = qobject_cast<EntityInterface *>(o);
-    QVariantMap  c            = getConfig();
-    QVariantMap  entities     = c.value("entities").toMap();
+    eIface = qobject_cast<EntityInterface *>(o);
+    QVariantMap  c = getConfig();
+    QVariantMap  entities = c.value("entities").toMap();
     QVariantList entitiesType = entities.value(eIface->type()).toList();
 
     for (int i = 0; i < entitiesType.length(); i++) {
@@ -269,10 +271,10 @@ bool YioAPI::removeEntity(QString entityId) {
         // remove from database
         m_entities->remove(entityId);
         m_config->setProfiles(profiles);
-        qCDebug(CLASS_LC) << "Removing entity success:" << entityId;
+        qCDebug(lcApi) << "Removing entity success:" << entityId;
         return true;
     } else {
-        qCDebug(CLASS_LC) << "Removing entity failure:" << entityId;
+        qCDebug(lcApi) << "Removing entity failure:" << entityId;
         return false;
     }
 }
@@ -280,9 +282,9 @@ bool YioAPI::removeEntity(QString entityId) {
 bool YioAPI::addIntegration(QVariantMap integration) {
     // get the type of the new integration
     QString integrationType = integration.value("type").toString();
-    QString integrationId   = integration.value("id").toString();
+    QString integrationId = integration.value("id").toString();
 
-    qCDebug(CLASS_LC) << "Adding integration type:" << integrationType;
+    qCDebug(lcApi) << "Adding integration type:" << integrationType;
 
     // remove the key that is not needed
     integration.remove("type");
@@ -292,7 +294,7 @@ bool YioAPI::addIntegration(QVariantMap integration) {
         return false;
     }
 
-    qCDebug(CLASS_LC) << "Integration type is supported";
+    qCDebug(lcApi) << "Integration type is supported";
 
     // check if the input is OK
     if (!integration.contains(Config::KEY_TYPE) && !integration.contains(Config::KEY_ID) &&
@@ -300,7 +302,7 @@ bool YioAPI::addIntegration(QVariantMap integration) {
         return false;
     }
 
-    qCDebug(CLASS_LC) << "Input data is OK.";
+    qCDebug(lcApi) << "Input data is OK.";
 
     // check if the integration already exists
     QObject *iObj = m_integrations->get(integrationId);
@@ -318,8 +320,8 @@ bool YioAPI::addIntegration(QVariantMap integration) {
     delete iObj;
 
     // get the config
-    QVariantMap  c                = getConfig();
-    QVariantMap  integrations     = c.value("integrations").toMap();
+    QVariantMap  c = getConfig();
+    QVariantMap  integrations = c.value("integrations").toMap();
     QVariantMap  integrationsType = integrations.value(integrationType).toMap();
     QVariantList integrationsData = integrationsType.value("data").toList();
 
@@ -372,8 +374,8 @@ bool YioAPI::updateIntegration(QVariantMap integration) {
     // delete iObj;
 
     // get the config
-    QVariantMap  c                = getConfig();
-    QVariantMap  integrations     = c.value("integrations").toMap();
+    QVariantMap  c = getConfig();
+    QVariantMap  integrations = c.value("integrations").toMap();
     QVariantMap  integrationsType = integrations.value(integrationType).toMap();
     QVariantList integrationsData = integrationsType.value("data").toList();
 
@@ -385,7 +387,7 @@ bool YioAPI::updateIntegration(QVariantMap integration) {
             ii.insert("friendly_name", integration.value("friendly_name").toString());
             ii.insert("data", integration.value("data").toMap());
             integrationsData[i] = ii;
-            success             = true;
+            success = true;
         }
     }
 
@@ -403,7 +405,7 @@ bool YioAPI::updateIntegration(QVariantMap integration) {
 }
 
 bool YioAPI::removeIntegration(QString integrationId) {
-    QObject *integration     = m_integrations->get(integrationId);
+    QObject *integration = m_integrations->get(integrationId);
     QString  integrationType = m_integrations->getType(integrationId);
 
     // unload all entities connected to the integration
@@ -425,9 +427,9 @@ bool YioAPI::removeIntegration(QString integrationId) {
     }
 
     // remove integration from config file
-    QVariantMap  config                     = getConfig();
-    QVariantMap  configIntegrations         = config.value("integrations").toMap();
-    QVariantMap  configIntegrationsType     = configIntegrations.value(integrationType).toMap();
+    QVariantMap  config = getConfig();
+    QVariantMap  configIntegrations = config.value("integrations").toMap();
+    QVariantMap  configIntegrationsType = configIntegrations.value(integrationType).toMap();
     QVariantList configIntegrationsTypeData = configIntegrationsType.value("data").toList();
 
     // iterate through the data and remove the integration config
@@ -463,7 +465,7 @@ void YioAPI::discoverNetworkServices() {
 
     for (int i = 0; i < m_discoverableServices.length(); i++) {
         if (m_discoverableServices[i] != "") {
-            qCDebug(CLASS_LC) << "Starting mdns discovery" << m_discoverableServices[i];
+            qCDebug(lcApi) << "Starting mdns discovery" << m_discoverableServices[i];
             discoverNetworkServices(m_discoverableServices[i]);
         }
     }
@@ -471,8 +473,8 @@ void YioAPI::discoverNetworkServices() {
 
 void YioAPI::discoverNetworkServices(QString mdns) {
     QZeroConf *zeroConfBrowser = new QZeroConf(this);
-    QObject *  context         = new QObject();
-    m_prevIp                   = "";
+    QObject *  context = new QObject();
+    m_prevIp = "";
 
     connect(zeroConfBrowser, &QZeroConf::serviceAdded, context, [=](QZeroConfService item) {
         QVariantMap txt;
@@ -485,7 +487,7 @@ void YioAPI::discoverNetworkServices(QString mdns) {
         }
 
         if (m_prevIp != item->ip().toString()) {
-            qCDebug(CLASS_LC) << "Zeroconf found" << item;
+            qCDebug(lcApi) << "Zeroconf found" << item;
 
             m_prevIp = item->ip().toString();
 
@@ -514,7 +516,7 @@ void YioAPI::discoverNetworkServices(QString mdns) {
         }
 
         if (m_prevIp != item->ip().toString()) {
-            qCDebug(CLASS_LC) << "Zeroconf updated" << item;
+            qCDebug(lcApi) << "Zeroconf updated" << item;
 
             m_prevIp = item->ip().toString();
 
@@ -535,19 +537,19 @@ void YioAPI::discoverNetworkServices(QString mdns) {
     if (!zeroConfBrowser->browserExists()) {
         zeroConfBrowser->startBrowser(mdns);
         QTimer::singleShot(10000, [=]() {
-            qCDebug(CLASS_LC) << "Stopping mdns discovery after 10 seconds";
+            qCDebug(lcApi) << "Stopping mdns discovery after 10 seconds";
             if (context) {
                 context->deleteLater();
             }
-            qCDebug(CLASS_LC) << "Context deleted";
+            qCDebug(lcApi) << "Context deleted";
             if (zeroConfBrowser->browserExists()) {
                 zeroConfBrowser->stopBrowser();
             }
-            qCDebug(CLASS_LC) << "Zeroconf browser stopped";
+            qCDebug(lcApi) << "Zeroconf browser stopped";
             if (zeroConfBrowser) {
                 zeroConfBrowser->deleteLater();
             }
-            qCDebug(CLASS_LC) << "Zeroconf browser deleted";
+            qCDebug(lcApi) << "Zeroconf browser deleted";
         });
     }
 }
@@ -561,7 +563,7 @@ void YioAPI::onNewConnection() {
     // send message to client after connected to authenticate
     QVariantMap map;
     map.insert("type", "auth_required");
-    QJsonDocument doc     = QJsonDocument::fromVariant(map);
+    QJsonDocument doc = QJsonDocument::fromVariant(map);
     QString       message = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
     socket->sendTextMessage(message);
@@ -574,17 +576,17 @@ void YioAPI::processMessage(QString message) {
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
 
     if (client) {
-        // qDebug(CLASS_LC) << message;
+        // qCDebug(lcApi) << message;
 
         // convert message to json
         QJsonParseError parseerror;
         QJsonDocument   doc = QJsonDocument::fromJson(message.toUtf8(), &parseerror);
         if (parseerror.error != QJsonParseError::NoError) {
-            qCWarning(CLASS_LC) << "JSON error:" << parseerror.errorString();
+            qCWarning(lcApi) << "JSON error:" << parseerror.errorString();
             return;
         }
 
-        QVariantMap map  = doc.toVariant().toMap();
+        QVariantMap map = doc.toVariant().toMap();
         QString     type = map.value("type").toString();
         int         id;
 
@@ -707,11 +709,14 @@ void YioAPI::processMessage(QString message) {
             } else if (type == "set_dark_mode") {
                 /// Set dark mode
                 apiSettingsSetDarkMode(client, id, map);
+            } else if (type == "log") {
+                /// Logger control
+                apiLoggerControl(client, id, map);
             }
 
         } else {
             QVariantMap response;
-            qCWarning(CLASS_LC) << "Client not authenticated";
+            qCWarning(lcApi) << "Client not authenticated";
             response.insert("type", "auth_error");
             response.insert("message", "Please authenticate");
             QJsonDocument json = QJsonDocument::fromVariant(response);
@@ -722,19 +727,19 @@ void YioAPI::processMessage(QString message) {
 }
 
 void YioAPI::onClientDisconnected() {
-    qCDebug(CLASS_LC) << "Client disconnected";
+    qCDebug(lcApi) << "Client disconnected";
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
     if (client) {
         client->close();
-        qCDebug(CLASS_LC) << "Client closed" << client;
+        WEBSOCKET_CLIENT_DEBUG("Client closed")
         m_clients.remove(client);
         client->deleteLater();
-        qCDebug(CLASS_LC) << "Client removed";
+        qCDebug(lcApi) << "Client removed";
     }
 }
 
 void YioAPI::subscribeOnSignalEvent(const QString &event) {
-    qCDebug(CLASS_LC) << "Sending message to all subscribed clients";
+    qCDebug(lcApi) << "Sending message to all subscribed clients";
 
     for (int i = 0; i < m_subscribed_clients.length(); i++) {
         QVariantMap response;
@@ -758,36 +763,36 @@ void YioAPI::apiSendResponse(QWebSocket *client, const int &id, const bool &succ
         if (m_clients.contains(client)) {
             if (client->isValid()) {
                 client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
-                qCDebug(CLASS_LC) << "Sent response to client" << client;
+                WEBSOCKET_CLIENT_DEBUG("Sent response to client")
             }
         }
     }
-    //    qCDebug(CLASS_LC) << "Response sent to client:" << client << "id:" << id << "response:" << response;
+    //    qCDebug(lcApi) << "Response sent to client:" << client << "id:" << id << "response:" << response;
 }
 
 void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Client authenticating:" << m_clients[client];
+    qCDebug(lcApi) << "Client authenticating:" << m_clients[client];
 
     QVariantMap response;
 
     if (map.contains("token")) {
-        qCDebug(CLASS_LC) << "Has token";
+        qCDebug(lcApi) << "Has token";
 
         // QByteArray hash = QCryptographicHash::hash(map.value("token").toString().toLocal8Bit(),
         //                                            QCryptographicHash::Sha512);
 
         if (map.value("token").toString() == m_token) {
-            qDebug(CLASS_LC) << "Token OK";
+            qCDebug(lcApi) << "Token OK";
             response.insert("type", "auth_ok");
             QJsonDocument json = QJsonDocument::fromVariant(response);
             client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
 
             m_clients[client] = true;
 
-            qCDebug(CLASS_LC) << "Client connected:" << client;
+            WEBSOCKET_CLIENT_DEBUG("Client connected:")
 
         } else {
-            qCWarning(CLASS_LC) << "Token NOT OK";
+            qCWarning(lcApi) << "Token NOT OK";
             response.insert("type", "auth_error");
             response.insert("message", "Invalid token");
             QJsonDocument json = QJsonDocument::fromVariant(response);
@@ -795,7 +800,7 @@ void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {
             client->disconnect();
         }
     } else {
-        qCWarning(CLASS_LC) << "No token";
+        qCWarning(lcApi) << "No token";
         response.insert("type", "auth_error");
         response.insert("message", "Token needed");
         QJsonDocument json = QJsonDocument::fromVariant(response);
@@ -806,9 +811,9 @@ void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {
 
 void YioAPI::apiSystemButton(const int &id, const QVariantMap &map) {
     Q_UNUSED(id);
-    QString buttonName   = map["name"].toString();
+    QString buttonName = map["name"].toString();
     QString buttonAction = map["action"].toString();
-    qDebug(CLASS_LC) << "Button simulation:" << buttonName << "," << buttonAction;
+    qCDebug(lcApi) << "Button simulation:" << buttonName << "," << buttonAction;
 
     if (buttonAction == "pressed") {
         emit buttonPressed(buttonName);
@@ -819,19 +824,19 @@ void YioAPI::apiSystemButton(const int &id, const QVariantMap &map) {
 
 void YioAPI::apiSystemReboot(QWebSocket *client, const int &id) {
     Q_UNUSED(id);
-    qCDebug(CLASS_LC) << "Request for reboot" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for reboot")
     Launcher launcher;
     launcher.launch("reboot");
 }
 
 void YioAPI::apiSystemShutdown(QWebSocket *client, const int &id) {
     Q_UNUSED(id);
-    qCDebug(CLASS_LC) << "Request for shutdown" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for shutdown")
     StandbyControl::getInstance()->shutdown();
 }
 
 void YioAPI::apiSystemSubscribeToEvents(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for subscribe to events" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for subscribe to events")
     QVariantMap response;
 
     if (m_subscribed_clients.contains(client)) {
@@ -842,7 +847,7 @@ void YioAPI::apiSystemSubscribeToEvents(QWebSocket *client, const int &id) {
     // add client to the subscribed client list
     m_subscribed_clients.append(client);
 
-    // connect to signals
+    // connect to signals. FIXME handle multiple clients and perform proper cleanup
     m_context = new QObject(this);
 
     QObject::connect(m_config, &Config::configChanged, m_context, [=]() { subscribeOnSignalEvent("config_changed"); });
@@ -863,7 +868,8 @@ void YioAPI::apiSystemSubscribeToEvents(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiSystemUnsubscribeFromEvents(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for unsubscribe from events" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for unsubscribe from events")
+
     QVariantMap response;
 
     if (!m_subscribed_clients.contains(client)) {
@@ -871,8 +877,11 @@ void YioAPI::apiSystemUnsubscribeFromEvents(QWebSocket *client, const int &id) {
         return;
     }
 
-    QObject::disconnect(m_context);
-    m_context->deleteLater();
+    // FIXME handle multiple clients and perform proper cleanup
+    if (m_context) {
+        QObject::disconnect(m_context);
+        m_context->deleteLater();
+    }
 
     for (int i = 0; i < m_subscribed_clients.length(); i++) {
         if (m_subscribed_clients[i] == client) {
@@ -886,7 +895,7 @@ void YioAPI::apiSystemUnsubscribeFromEvents(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiGetConfig(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get config" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get config")
 
     QVariantMap response;
     QVariantMap config = getConfig();
@@ -900,7 +909,7 @@ void YioAPI::apiGetConfig(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiSetConfig(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for set config" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for set config")
 
     QVariantMap response;
     QVariantMap config = map.value("config").toMap();
@@ -913,13 +922,13 @@ void YioAPI::apiSetConfig(QWebSocket *client, const int &id, const QVariantMap &
 }
 
 void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for discover integrations" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for discover integrations")
 
     QTimer * timeOutTimer = new QTimer();
-    QObject *context      = new QObject(this);
+    QObject *context = new QObject(this);
 
     QObject::connect(this, &YioAPI::serviceDiscovered, context, [=](QVariantMap services) {
-        qCDebug(CLASS_LC) << "Service discovered";
+        qCDebug(lcApi) << "Service discovered";
         QVariantMap response;
         QVariantMap map;
 
@@ -945,10 +954,10 @@ void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
     timeOutTimer->setSingleShot(true);
 
     connect(timeOutTimer, &QTimer::timeout, this, [=]() {
-        qCDebug(CLASS_LC) << "API Discovery timeout.";
+        qCDebug(lcApi) << "API Discovery timeout.";
         QVariantMap response;
         response.insert("message", "discovery_done");
-        qCDebug(CLASS_LC) << "API Discovery timeout, response created.";
+        qCDebug(lcApi) << "API Discovery timeout, response created.";
         apiSendResponse(client, id, true, response);
 
         if (context) {
@@ -960,7 +969,7 @@ void YioAPI::apiIntegrationsDiscover(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiIntegrationsGetSupported(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get supported integrations" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get supported integrations")
 
     QVariantMap response;
     QStringList supportedIntegrations = m_integrations->supportedIntegrations();
@@ -973,11 +982,11 @@ void YioAPI::apiIntegrationsGetSupported(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiIntegrationsGetLoaded(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get supported integrations" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get supported integrations")
 
     QVariantMap response;
     QStringList loadedIntegrations = m_integrations->listIds();
-    QVariantMap config             = getConfig().value("integrations").toMap();
+    QVariantMap config = getConfig().value("integrations").toMap();
 
     QVariantMap integrations;
     // iterate through the loaded integrations
@@ -996,7 +1005,7 @@ void YioAPI::apiIntegrationsGetLoaded(QWebSocket *client, const int &id) {
 
 void YioAPI::apiIntegrationGetData(QWebSocket *client, const int &id, const QVariantMap &map) {
     QString integration = map.value("integration").toString();
-    qCDebug(CLASS_LC) << "Request for get integration" << integration << "setup data" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get integration" << integration << "setup data")
 
     QVariantMap response;
     bool        success = false;
@@ -1017,7 +1026,7 @@ void YioAPI::apiIntegrationGetData(QWebSocket *client, const int &id, const QVar
 }
 
 void YioAPI::apiIntegrationAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for add integration" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for add integration")
 
     QVariantMap response;
 
@@ -1029,7 +1038,7 @@ void YioAPI::apiIntegrationAdd(QWebSocket *client, const int &id, const QVariant
 }
 
 void YioAPI::apiIntegrationUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for update integration" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for update integration")
 
     QVariantMap response;
 
@@ -1043,7 +1052,7 @@ void YioAPI::apiIntegrationUpdate(QWebSocket *client, const int &id, const QVari
 
 void YioAPI::apiIntegrationRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
     QString integrationId = map.value("integration_id").toString();
-    qCDebug(CLASS_LC) << "Request for remove integration" << integrationId << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for remove integration" << integrationId)
 
     QVariantMap response;
 
@@ -1055,7 +1064,7 @@ void YioAPI::apiIntegrationRemove(QWebSocket *client, const int &id, const QVari
 }
 
 void YioAPI::apiEntitiesGetSupported(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get supported entities" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get supported entities")
 
     QVariantMap response;
     QStringList supportedEntities = m_entities->supportedEntities();
@@ -1068,7 +1077,7 @@ void YioAPI::apiEntitiesGetSupported(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiEntitiesGetLoaded(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get loaded entities" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get loaded entities")
 
     QVariantMap response;
     QVariantMap loadedEntities = getConfig().value("entities").toMap();
@@ -1082,7 +1091,7 @@ void YioAPI::apiEntitiesGetLoaded(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get all available entities" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get all available entities")
 
     QVariantMap      response;
     QVariantList     availableEntities;
@@ -1113,7 +1122,7 @@ void YioAPI::apiEntitiesGetAvailable(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiEntitiesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for add entity" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for add entity")
 
     QVariantMap response;
 
@@ -1125,7 +1134,7 @@ void YioAPI::apiEntitiesAdd(QWebSocket *client, const int &id, const QVariantMap
 }
 
 void YioAPI::apiEntitiesUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for update entity" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for update entity")
 
     QVariantMap response;
 
@@ -1138,7 +1147,7 @@ void YioAPI::apiEntitiesUpdate(QWebSocket *client, const int &id, const QVariant
 
 void YioAPI::apiEntitiesRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
     QString entityId = map.value("entity_id").toString();
-    qCDebug(CLASS_LC) << "Request for remove entity" << entityId << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for remove entity" << entityId)
 
     QVariantMap response;
 
@@ -1150,7 +1159,7 @@ void YioAPI::apiEntitiesRemove(QWebSocket *client, const int &id, const QVariant
 }
 
 void YioAPI::apiProfilesGetAll(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get all profiles" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get all profiles")
 
     QVariantMap response;
     QVariantMap profiles = m_config->getProfiles();
@@ -1164,7 +1173,7 @@ void YioAPI::apiProfilesGetAll(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiProfilesSet(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for set profile" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for set profile")
 
     QVariantMap response;
     QString     newProfileId = map.value("profile").toString();
@@ -1180,7 +1189,7 @@ void YioAPI::apiProfilesSet(QWebSocket *client, const int &id, const QVariantMap
 }
 
 void YioAPI::apiProfilesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for add profile" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for add profile")
 
     QVariantMap response;
     QVariantMap profiles = m_config->getProfiles();
@@ -1200,7 +1209,7 @@ void YioAPI::apiProfilesAdd(QWebSocket *client, const int &id, const QVariantMap
 }
 
 void YioAPI::apiProfilesUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for update profile" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for update profile")
 
     QVariantMap response;
     if (!map.value("data").toMap().isEmpty()) {
@@ -1214,7 +1223,7 @@ void YioAPI::apiProfilesUpdate(QWebSocket *client, const int &id, const QVariant
 }
 
 void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for remove profile" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for remove profile")
 
     bool success = false;
 
@@ -1246,7 +1255,7 @@ void YioAPI::apiProfilesRemove(QWebSocket *client, const int &id, const QVariant
 }
 
 void YioAPI::apiPagesGetAll(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get all pages" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get all pages")
 
     QVariantMap response;
     QVariantMap pages = m_config->getPages();
@@ -1259,10 +1268,10 @@ void YioAPI::apiPagesGetAll(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiPagesAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for add a page" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for add a page")
 
     QVariantMap response;
-    QVariantMap pages   = m_config->getPages();
+    QVariantMap pages = m_config->getPages();
     QVariantMap newPage = map.value("page").toMap();
 
     if (!newPage.isEmpty()) {
@@ -1278,7 +1287,7 @@ void YioAPI::apiPagesAdd(QWebSocket *client, const int &id, const QVariantMap &m
 }
 
 void YioAPI::apiPagesUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for update page" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for update page")
 
     QVariantMap response;
     if (!map.value("data").toMap().isEmpty()) {
@@ -1292,7 +1301,7 @@ void YioAPI::apiPagesUpdate(QWebSocket *client, const int &id, const QVariantMap
 }
 
 void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for remove page" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for remove page")
 
     bool success = false;
 
@@ -1303,7 +1312,7 @@ void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap
 
     for (QVariantMap::const_iterator iter = profiles.cbegin(); iter != profiles.cend(); ++iter) {
         QVariantMap profile = iter.value().toMap();
-        QStringList pages   = profile.value("pages").toStringList();
+        QStringList pages = profile.value("pages").toStringList();
 
         for (int i = 0; i < pages.length(); i++) {
             if (pages[i] == map.value("page_id").toString()) {
@@ -1338,7 +1347,7 @@ void YioAPI::apiPagesRemove(QWebSocket *client, const int &id, const QVariantMap
 }
 
 void YioAPI::apiGroupsGetAll(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get all groups" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get all groups")
 
     QVariantMap response;
     QVariantMap groups = m_config->getGroups();
@@ -1351,10 +1360,10 @@ void YioAPI::apiGroupsGetAll(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiGroupsAdd(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for add a group" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for add a group")
 
     QVariantMap response;
-    QVariantMap groups   = m_config->getGroups();
+    QVariantMap groups = m_config->getGroups();
     QVariantMap newGroup = map.value("group").toMap();
 
     if (!newGroup.isEmpty()) {
@@ -1370,7 +1379,7 @@ void YioAPI::apiGroupsAdd(QWebSocket *client, const int &id, const QVariantMap &
 }
 
 void YioAPI::apiGroupsUpdate(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for update group" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for update group")
 
     QVariantMap response;
     if (!map.value("data").toMap().isEmpty()) {
@@ -1384,7 +1393,7 @@ void YioAPI::apiGroupsUpdate(QWebSocket *client, const int &id, const QVariantMa
 }
 
 void YioAPI::apiGroupsRemove(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for remove group" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for remove group")
 
     bool success = false;
 
@@ -1408,7 +1417,7 @@ void YioAPI::apiGroupsRemove(QWebSocket *client, const int &id, const QVariantMa
 }
 
 void YioAPI::apiSettingsGetAllLanguages(QWebSocket *client, const int &id) {
-    qCDebug(CLASS_LC) << "Request for get all languages" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for get all languages")
 
     QVariantMap  response;
     QVariantList languages = m_config->getLanguages();
@@ -1421,7 +1430,7 @@ void YioAPI::apiSettingsGetAllLanguages(QWebSocket *client, const int &id) {
 }
 
 void YioAPI::apiSettingsSetLanguage(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for set a language" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for set a language")
 
     QVariantMap response;
     if (!map.value("language").toString().isEmpty()) {
@@ -1437,7 +1446,7 @@ void YioAPI::apiSettingsSetLanguage(QWebSocket *client, const int &id, const QVa
 }
 
 void YioAPI::apiSettingsSetAutoBrightness(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for set auto brightness" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for set auto brightness")
 
     QVariantMap response;
     QVariantMap settings = m_config->getSettings();
@@ -1451,7 +1460,7 @@ void YioAPI::apiSettingsSetAutoBrightness(QWebSocket *client, const int &id, con
 }
 
 void YioAPI::apiSettingsSetDarkMode(QWebSocket *client, const int &id, const QVariantMap &map) {
-    qCDebug(CLASS_LC) << "Request for set dark mode" << client;
+    WEBSOCKET_CLIENT_DEBUG("Request for set dark mode")
 
     QVariantMap response;
     QVariantMap uiConfig = m_config->getUIConfig();
@@ -1461,5 +1470,110 @@ void YioAPI::apiSettingsSetDarkMode(QWebSocket *client, const int &id, const QVa
         apiSendResponse(client, id, true, response);
     } else {
         apiSendResponse(client, id, false, response);
+    }
+}
+
+void YioAPI::apiLoggerControl(QWebSocket *client, const int &id, const QVariantMap &map) {
+    // Handle log
+    QVariantMap response;
+    Logger *    logger = Logger::instance();
+    QString     logAction = map["action"].toString();
+    QString     logTarget = map["target"].toString();
+
+    qCDebug(lcApi) << "YioAPI LOGGER : " << logAction;
+
+    if (logAction == "start") {
+        // enable logger target, default is queue
+        if (logTarget == "file") {
+            logger->setFileEnabled(true);
+        } else if (logTarget == "console") {
+            logger->setDefaultHandlerEnabled(true);
+        } else {
+            logger->setQueueEnabled(true);
+        }
+        apiSendResponse(client, id, true, response);
+    } else if (logAction == "stop") {
+        // disable logger queue target, default is queue
+        if (logTarget == "file") {
+            logger->setFileEnabled(false);
+        } else if (logTarget == "console") {
+            logger->setDefaultHandlerEnabled(false);
+        } else {
+            logger->setQueueEnabled(false);
+        }
+        apiSendResponse(client, id, true, response);
+    } else if (logAction == "show_source") {
+        // show source position in log line
+        logger->setShowSourcePos(true);
+        apiSendResponse(client, id, true, response);
+    } else if (logAction == "hide_source") {
+        // hide source position in log line
+        logger->setShowSourcePos(false);
+        apiSendResponse(client, id, true, response);
+    } else if (logAction == "purge") {
+        // purge log files
+        int hours = 5 * 24;
+        if (map.contains("days")) {
+            hours = map["days"].toInt() * 24;
+        } else if (map.contains("hours")) {
+            hours = map["hours"].toInt();
+        }
+        logger->purgeFiles(hours);
+        apiSendResponse(client, id, true, response);
+    } else if (logAction == "clear_log_level") {
+        logger->clearLogRules();
+        apiSendResponse(client, id, true, response);
+    } else if (logAction == "set_log_level") {
+        // set log level
+        QString level = QStringLiteral("DEBUG");
+        QString category;
+        if (map.contains("level")) {
+            level = map["level"].toString();
+        }
+        if (map.contains("category")) {
+            category = map["category"].toString();
+            logger->addLogRule({category + QLatin1Char('=') + level.toLower()});
+        } else {
+            logger->setLogLevel(level);
+        }
+        apiSendResponse(client, id, true, response);
+    } else if (logAction == "get_messages") {
+        // get log messages
+        int         count = 50;
+        QtMsgType   level = QtDebugMsg;
+        QStringList categories;
+        if (map.contains("count")) {
+            count = map["count"].toInt();
+        }
+        if (map.contains("level")) {
+            level = logger->toMsgType(map["level"].toString());
+        }
+        if (map.contains("categories")) {
+            categories = map["categories"].toStringList();
+        }
+        QJsonArray  messages = logger->getQueuedMessages(count, level, categories);
+        QJsonObject jsonObj;
+        jsonObj.insert("id", id);
+        jsonObj.insert("success", true);
+        jsonObj.insert("type", "result");
+        jsonObj.insert("messages", messages);
+        QJsonDocument json = QJsonDocument(jsonObj);
+        if (client && m_clients.contains(client) && client->isValid()) {
+            client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+        }
+    } else if (logAction == "get_info") {
+        // get log info
+        QJsonObject info = logger->getInformation();
+        QJsonObject jsonObj;
+        jsonObj.insert("id", id);
+        jsonObj.insert("success", true);
+        jsonObj.insert("type", "result");
+        jsonObj.insert("info", info);
+        QJsonDocument json = QJsonDocument(jsonObj);
+        if (client && m_clients.contains(client) && client->isValid()) {
+            client->sendTextMessage(json.toJson(QJsonDocument::JsonFormat::Compact));
+        }
+    } else {
+        qCWarning(lcApi) << "YioAPI Bad LOGGER Action : " << logAction;
     }
 }

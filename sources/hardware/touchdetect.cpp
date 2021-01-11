@@ -22,10 +22,7 @@
 
 #include "touchdetect.h"
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.touchevent");
+#include "../logging.h"
 
 TouchEventFilter *TouchEventFilter::s_instance = nullptr;
 
@@ -33,7 +30,7 @@ TouchEventFilter::TouchEventFilter() {
     s_instance = this;
     m_source   = nullptr;
 
-    qCDebug(CLASS_LC) << "TouchEventFilter init";
+    qCDebug(lcTouch) << "TouchEventFilter init";
 }
 
 TouchEventFilter::~TouchEventFilter() {
@@ -44,7 +41,7 @@ TouchEventFilter::~TouchEventFilter() {
 void TouchEventFilter::setSource(QObject *source) {
     source->installEventFilter(this);
     m_source = source;
-    qCDebug(CLASS_LC) << "Setting source" << m_source;
+    qCDebug(lcTouch) << "Setting source" << m_source;
 }
 
 QObject *TouchEventFilter::getInstance(QQmlEngine *engine, QJSEngine *scriptEngine) {

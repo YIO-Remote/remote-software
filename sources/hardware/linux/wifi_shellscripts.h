@@ -71,7 +71,7 @@ class WifiShellScripts : public WifiControl {
 
     void setScriptTimeout(int scriptTimeoutMs) { m_scriptTimeout = scriptTimeoutMs; }
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
 
     void on() override;
     void off() override;

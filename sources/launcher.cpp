@@ -22,20 +22,17 @@
 
 #include "launcher.h"
 
-#include <QLoggingCategory>
 #include <QPluginLoader>
-#include <QtDebug>
 
+#include "logging.h"
 #include "notifications.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "plugin");
 
 Launcher::Launcher(QObject *parent) : QObject(parent), m_process(new QProcess(this)) {}
 
 QString Launcher::launch(const QString &program) {
     m_process->start(program);
     m_process->waitForFinished(-1);
-    QByteArray bytes  = m_process->readAllStandardOutput();
+    QByteArray bytes = m_process->readAllStandardOutput();
     QString    output = QString::fromLocal8Bit(bytes);
     return output;
 }
@@ -45,11 +42,11 @@ QObject *Launcher::loadPlugin(const QString &path, const QString &pluginName) {
     QPluginLoader pluginLoader(pluginPath, this);
 
     QJsonObject metaData = pluginLoader.metaData()["MetaData"].toObject();
-    qCInfo(CLASS_LC) << "LOADING PLUGIN:" << pluginPath << "version:" << metaData["version"].toString();
+    qCInfo(lcPlugin) << "Loading plugin:" << pluginPath << "version:" << metaData["version"].toString();
 
     QObject *plugin = pluginLoader.instance();
     if (!plugin) {
-        qCCritical(CLASS_LC) << "FAILED TO LOAD PLUGIN: " << pluginPath << pluginLoader.errorString();
+        qCCritical(lcPlugin) << "Failed to load plugin:" << pluginPath << pluginLoader.errorString();
         Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
     }
 

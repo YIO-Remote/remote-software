@@ -24,7 +24,9 @@ import QtQuick.Layouts 1.3
 import Style 1.0
 
 import Haptic 1.0
+import ButtonHandler 1.0
 import Entity.Remote 1.0
+
 
 Item {
     width: parent.width - 60

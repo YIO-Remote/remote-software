@@ -32,5 +32,6 @@
         <file>images/remote/home-white-48dp.svg</file>
         <file>images/remote/info-white-48dp.svg</file>
         <file>images/remote/menu-white-48dp.svg</file>
+        <file>images/spinner.png</file>
     </qresource>
 </RCC>

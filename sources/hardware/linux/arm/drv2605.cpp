@@ -37,29 +37,28 @@
 
 #include <unistd.h>
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.DRV2605");
+#include "../../../logging.h"
 
 Drv2605::Drv2605(const QString& i2cDevice, int i2cDeviceId, QObject* parent)
     : HapticMotor("DRV2605 haptic motor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {
     Q_ASSERT(!i2cDevice.isEmpty());
     Q_ASSERT(i2cDeviceId);
-    qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId;
+    qCDebug(lcDevHaptic) << name() << i2cDevice << "with id:" << i2cDeviceId;
 }
 
-Drv2605::~Drv2605() { close(); }
+Drv2605::~Drv2605() {
+    close();
+}
 
 bool Drv2605::open() {
     if (isOpen()) {
-        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        qCWarning(lcDevHaptic) << DBG_WARN_DEVICE_OPEN;
         return true;
     }
 
     m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
     if (m_i2cFd == -1) {
-        qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
+        qCCritical(lcDevHaptic) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
         setErrorString(ERR_DEV_HAPMOT_INIT);
         emit error(DeviceError::InitializationError, ERR_DEV_HAPMOT_INIT);
         return false;
@@ -122,17 +121,29 @@ void Drv2605::playEffect(Effect effect) {
     }
 }
 
-void Drv2605::setWaveform(uint8_t slot, uint8_t w) { writeRegister8(DRV2605_REG_WAVESEQ1 + slot, w); }
+void Drv2605::setWaveform(uint8_t slot, uint8_t w) {
+    writeRegister8(DRV2605_REG_WAVESEQ1 + slot, w);
+}
 
-void Drv2605::selectLibrary(uint8_t lib) { writeRegister8(DRV2605_REG_LIBRARY, lib); }
+void Drv2605::selectLibrary(uint8_t lib) {
+    writeRegister8(DRV2605_REG_LIBRARY, lib);
+}
 
-void Drv2605::go() { writeRegister8(DRV2605_REG_GO, 1); }
+void Drv2605::go() {
+    writeRegister8(DRV2605_REG_GO, 1);
+}
 
-void Drv2605::stop() { writeRegister8(DRV2605_REG_GO, 0); }
+void Drv2605::stop() {
+    writeRegister8(DRV2605_REG_GO, 0);
+}
 
-void Drv2605::setMode(uint8_t mode) { writeRegister8(DRV2605_REG_MODE, mode); }
+void Drv2605::setMode(uint8_t mode) {
+    writeRegister8(DRV2605_REG_MODE, mode);
+}
 
-void Drv2605::setRealtimeValue(uint8_t rtp) { writeRegister8(DRV2605_REG_RTPIN, rtp); }
+void Drv2605::setRealtimeValue(uint8_t rtp) {
+    writeRegister8(DRV2605_REG_RTPIN, rtp);
+}
 
 int Drv2605::readRegister8(uint8_t reg) {
     if (!isOpen()) {
@@ -148,4 +159,6 @@ void Drv2605::writeRegister8(uint8_t reg, uint8_t val) {
     wiringPiI2CWriteReg8(m_i2cFd, reg, val);
 }
 
-const QLoggingCategory& Drv2605::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory& Drv2605::logCategory() const {
+    return lcDevHaptic();
+}

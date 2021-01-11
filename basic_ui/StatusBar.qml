@@ -26,6 +26,7 @@ import Style 1.0
 import Battery 1.0
 import Haptic 1.0
 
+
 Item {
     id: statusBar
     width: parent.width; height: 40
@@ -124,13 +125,12 @@ Item {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     Timer { // timer that updates the time and date
         id: timer
-        interval: 100
+        interval: 2000
         repeat: true
         running: true
 
-        onTriggered:
-        {
-            timeText.text =  Qt.formatDateTime(new Date(),"hh:mm")
+        onTriggered: {
+            timeText.text = Qt.formatTime(new Date(), config.settings.clock12h ? "hh:mm AP" : "hh:mm")
         }
     }
 
@@ -139,7 +139,7 @@ Item {
     Text { // time in the middle
         id: timeText
         color: Style.color.text
-        text: "22:00"
+        text: ""
         verticalAlignment: Text.AlignVCenter
         height: parent.height
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
@@ -179,6 +179,17 @@ Item {
             integrations.list[i].connecting.connect(loadingIconON);
             integrations.list[i].disconnected.connect(loadingIconOFF);
             integrations.list[i].connected.connect(loadingIconOFF);
+        }
+
+        if (Qt.application.arguments.includes('--fps')) {
+            Qt.createQmlObject(
+                    'import "qrc:components" as Components;
+                    Components.FpsItem {
+                        id: fpsItem
+                        width: 100; height: parent.height
+                        anchors { left: parent.left; leftMargin: 5 }
+                    }',
+                    statusBar, 'fpsCounter')
         }
     }
 

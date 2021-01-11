@@ -32,30 +32,47 @@
 
 class BluetoothControl : public QObject {
     Q_OBJECT
+    Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY bluetoothStatusChanged)
 
  public:
     explicit BluetoothControl(QObject *parent = nullptr);
-    virtual ~BluetoothControl() {}
+    ~BluetoothControl();
 
-    void turnOn();
-    void turnOff();
+    bool isEnabled();
+    void setEnabled(bool enabled);
 
  signals:
-    void dockFound(QString name);
-    void dockMessageSent();
+    void bluetoothStatusChanged();
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+    void dockFound(const QString &name);
+    void dockPaired(const QString &address);
+    void dockConnected(const QString &address, const QString &serviceUuid);
+
+    void dockMessageSent();
+    void dockSetupFailed();
+
+ public slots:
     void lookForDocks();
+    void sendCredentialsToDock(const QString &msg);
+
+ private slots:
     void onDeviceDiscovered(const QBluetoothDeviceInfo &device);
     void onDiscoveryFinished();
-    void sendCredentialsToDock(const QString &msg);
-    void onDockConnected();
+    void onPairingDisplayConfirmation(const QBluetoothAddress &address, QString pin);
     void onPairingDone(const QBluetoothAddress &address, QBluetoothLocalDevice::Pairing pairing);
+    void onPairingError(QBluetoothLocalDevice::Error error);
+    void onDockConnected();
+    void onDockSocketError(QBluetoothSocket::SocketError error);
+
+ private:
+    void close();
+    void dockSetupError();
 
  private:
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent;
     QBluetoothLocalDevice           m_localDevice;
 
+    // FIXME support multiple devices
     QBluetoothAddress m_dockAddress;
     QBluetoothUuid    m_dockServiceUuid;
     QBluetoothSocket *m_dockSocket;

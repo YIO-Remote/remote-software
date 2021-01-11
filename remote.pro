@@ -27,11 +27,26 @@ CONFIG += c++17 disable-desktop
 CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_MESSAGELOGCONTEXT
 
-# SOFTWARE VERSION
-GIT_HASH = "$$system(git log -1 --format="%H")"
-GIT_BRANCH = "$$system(git rev-parse --abbrev-ref HEAD)"
-GIT_VERSION = "$$system(git describe --match "v[0-9]*" --tags HEAD --always)"
+# === Version and build information ===========================================
+# If built in Buildroot use custom package version, otherwise Git
+isEmpty(YIO_BUILD_VERSION) {
+    GIT_VERSION = "$$system(git describe --match "v[0-9]*" --tags HEAD --always)"
+    GIT_HASH = "$$system(git log -1 --format="%H")"
+    GIT_BRANCH = "$$system(git rev-parse --abbrev-ref HEAD)"
+} else {
+    GIT_VERSION = $$YIO_BUILD_VERSION
+    contains(GIT_VERSION, "^v?(0|[1-9]\d*)\..*") {
+        # (simplified) version string = regular release
+        GIT_HASH = ""
+        GIT_BRANCH = "master"
+    } else {
+        # git hash as version = custom build
+        GIT_HASH = $$YIO_BUILD_VERSION
+        GIT_BRANCH = ""
+    }
+}
 REMOTE_VERSION = $$replace(GIT_VERSION, v, "")
 DEFINES += APP_VERSION=\\\"$$REMOTE_VERSION\\\"
 
@@ -42,6 +57,8 @@ win32 {
 } else {
     BUILDDATE=$$system(date +"%Y-%m-%dT%H:%M:%S")
 }
+# =============================================================================
+
 CONFIG(debug, debug|release) {
     DEBUG_BUILD = true
 } else {
@@ -101,6 +118,7 @@ HEADERS += \
     sources/entities/switch.h \
     sources/entities/weather.h \
     sources/environment.h \
+    sources/factoryreset.h \
     sources/filedownload.h \
     sources/fileio.h \
     sources/hardware/batterycharger.h \
@@ -127,6 +145,7 @@ HEADERS += \
     sources/jsonfile.h \
     sources/launcher.h \
     sources/logger.h \
+    sources/logging.h \
     sources/softwareupdate.h \
     sources/standbycontrol.h \
     sources/translation.h \
@@ -166,6 +185,7 @@ SOURCES += \
     sources/entities/switch.cpp \
     sources/entities/weather.cpp \
     sources/environment.cpp \
+    sources/factoryreset.cpp \
     sources/filedownload.cpp \
     sources/hardware/buttonhandler.cpp \
     sources/hardware/device.cpp \
@@ -173,6 +193,7 @@ SOURCES += \
     sources/hardware/touchdetect.cpp \
     sources/integrations/integrations.cpp \
     sources/logger.cpp \
+    sources/logging.cpp \
     sources/main.cpp \
     sources/jsonfile.cpp \
     sources/launcher.cpp \
@@ -259,10 +280,10 @@ linux {
             sources/hardware/linux/arm/displaycontrol_yio.cpp \
             sources/hardware/linux/arm/drv2605.cpp \
             sources/hardware/linux/arm/mcp23017_interrupt.cpp
-
-        # needed for std::filesystem
-        LIBS += -lstdc++fs
     }
+
+    # needed for std::filesystem
+    LIBS += -lstdc++fs
 }
 
 # Android specific files (empty template for now)
@@ -484,6 +505,7 @@ win32 {
 }
 
 DISTFILES += \
+    components/FpsItem.qml \
     config.json \
     config-schema.json \
     dependencies.cfg \

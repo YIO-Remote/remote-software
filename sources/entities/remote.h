@@ -25,7 +25,6 @@
 #include <QString>
 #include <QVariant>
 
-#include "../logger.h"
 #include "entity.h"
 #include "yio-interface/entities/remoteinterface.h"
 
@@ -123,6 +122,4 @@ class Remote : public Entity, RemoteInterface {
     QVariantList m_commands;
     QVariantList m_channels;
     QVariantMap  m_settings;
-
-    QLoggingCategory m_log;
 };

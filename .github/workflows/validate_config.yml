@@ -18,7 +18,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - run: npm install -g ajv-cli
+    - run: npm install -g ajv-cli@3.3.0
     - run: ajv validate -s config-schema.json  -d config.json
     - run: ajv validate -s hardware-schema.json  -d hardware.json
     

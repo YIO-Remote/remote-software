@@ -11,7 +11,6 @@
 
   env:
     APP_NAME: YIO-remote-software
-    APP_ARCHITECTURE: RPi0
     PROJECT_NAME: remote-software
     HASH_FILENAME: yio-remote-software.hash
 
@@ -23,50 +22,61 @@
         matrix:
           config:
           - {
-              name: "RPi0 Release Build", artifact: "RPi0-release",
-              qmake-args: "CONFIG+=release"
+              name: "remote-os v0.x Build", artifact: "RPi0-release",
+              qmake-args: "CONFIG+=release",
+              build-image: "zehnm/yio-crosscompile-action:1.1.0"
             }
           - {
-              name: "RPi0 Debug Build", artifact: "RPi0-debug",
-              qmake-args: "CONFIG+=debug CONFIG+=qml_debug"
+              name: "remote-os v1.x Build", artifact: "RPi0-Qt5.12.8",
+              qmake-args: "CONFIG+=release",
+              build-image: "zehnm/yio-crosscompile-action:2.0.0"
             }
-  
+
       steps:
-        - name: github env vars
-          run: |
-            echo "$GITHUB_REF"
-            echo "$GITHUB_HEAD_REF"
-            echo "$GITHUB_BASE_REF"
-  
         - name: Checkout ${{ env.PROJECT_NAME}}
           uses: actions/checkout@v2
           with:
             # History of 500 should be more than enough to calculate commit count since last release tag.
             fetch-depth: 500
+            # Check out into sub folder, we also need the integrations.library at the same level!
             path: ${{ env.PROJECT_NAME}}
 
         - name: Fetch all tags to determine version
+          # Used in cross compile step
           run: |
             cd ${{ env.PROJECT_NAME}}
             git fetch origin +refs/tags/*:refs/tags/*
             git describe --match "v[0-9]*" --tags HEAD --always
   
-        - name: Set build timestamp
-          run: echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"
-  
+        # Unfortunately we can't use a dynamic Action as in "uses: ${{ matrix.config.build-image }}" 
+        # - name: Cross compile
+        #   id: cross-compile
+        #   uses: zehnm/yio-crosscompile-action@2.0.0
+        #   with:
+        #     project-name: ${{ env.PROJECT_NAME }}
+        #     output-path: ${GITHUB_WORKSPACE}/binaries/app
+        #     qmake-args: ${{ matrix.config.qmake-args }}
+        #
+        # So let's do it manually :-( Maybe one day we'll get that feature from GitHub...
         - name: Cross compile
-          id: cross-compile
-          uses: zehnm/yio-crosscompile-action@master
-          with:
-            project-name: ${{ env.PROJECT_NAME }}
-            output-path: ${GITHUB_WORKSPACE}/binaries/app
-            qmake-args: ${{ matrix.config.qmake-args }}
-  
+          run: |
+              docker pull ${{ matrix.config.build-image }}
+              docker run --workdir /github/workspace --rm  \
+                  -e GITHUB_WORKSPACE=/github/workspace \
+                  -v /home/runner/work/${{ env.PROJECT_NAME}}/${{ env.PROJECT_NAME}}:/github/workspace \
+                  ${{ matrix.config.build-image }} ${{ env.PROJECT_NAME}} /github/workspace/binaries/app ${{ matrix.config.qmake-args }} https://github.com/YIO-Remote/integrations.library.git .
+
+        - name: Get artifact version
+          run: |
+            read -r APP_VERSION < binaries/version.txt
+            echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+
         - name: Upload build artefacts
-          uses: actions/upload-artifact@v1
+          uses: actions/upload-artifact@v2
           with:
             path: binaries
-            name: ${{ env.APP_NAME }}-${{ matrix.config.artifact }}
+            name: ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ matrix.config.artifact }}
+            if-no-files-found: error
 
     release:
       name: Create Release
@@ -75,38 +85,30 @@
       needs: build
 
       steps:
-        - run: mkdir release debug
-        - name: Download release artifact
-          uses: actions/download-artifact@v1
-          with:
-            name: ${{ env.APP_NAME }}-${{ env.APP_ARCHITECTURE }}-release
-            path: ./release
-        - name: Download debug artifact
-          uses: actions/download-artifact@v1
-          with:
-            name: ${{ env.APP_NAME }}-${{ env.APP_ARCHITECTURE }}-debug
-            path: ./debug
-        - name: Get artifact version
+        - name: Download build artifacts
+          uses: actions/download-artifact@v2
+
+        - name: Display structure of downloaded files
+          run: ls -R
+
+        - name: Get timestamp
           run: |
-            read -r APP_VERSION < release/version.txt
-            echo "::set-env name=APP_VERSION::$APP_VERSION"
-            echo "::set-env name=TIMESTAMP::$(date +"%Y%m%d_%H%M%S")"
+            echo "TIMESTAMP=$(date +"%Y%m%d_%H%M%S")" >> $GITHUB_ENV
 
         - name: Create GitHub development build archives
           if: "!contains(github.ref, 'tags/v')"
           run: |
-            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
-            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.TIMESTAMP }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
+            for D in *; do if [ -d "${D}" ]; then tar cvf $D-${{ env.TIMESTAMP }}.tar -C $D .; fi; done;
             for filename in *.tar; do echo "sha256  `sha256sum $filename`" >> ${{ env.HASH_FILENAME }}; done;
 
-        - name: Create Pre-Release ${{ env.APP_VERSION }}
+        - name: Create Pre-Release
           uses: "marvinpinto/action-automatic-releases@latest"
           if: "!contains(github.ref, 'tags/v')"
           with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             automatic_release_tag: "latest"
             prerelease: true
-            title: "Development Build ${{ env.APP_VERSION }}"
+            title: "Development Build"
             files: |
                 *.tar
                 ${{ env.HASH_FILENAME }}
@@ -114,11 +116,10 @@
         - name: Create GitHub release archives
           if: "contains(github.ref, 'tags/v')"
           run: |
-            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-debug.tar -C debug .
-            tar cvf ${{ env.APP_NAME }}-v${{ env.APP_VERSION }}-${{ env.APP_ARCHITECTURE }}-release.tar -C release .
+            for D in *; do if [ -d "${D}" ]; then tar cvf $D.tar -C $D .; fi; done;
             for filename in *.tar; do echo "sha256  `sha256sum $filename`" >> ${{ env.HASH_FILENAME }}; done;
 
-        - name: Create Release ${{ env.APP_VERSION }}
+        - name: Create Release
           uses: "marvinpinto/action-automatic-releases@latest"
           if: "contains(github.ref, 'tags/v')"
           with:
@@ -127,3 +128,4 @@
             files: |
               *.tar
               ${{ env.HASH_FILENAME }}
+  

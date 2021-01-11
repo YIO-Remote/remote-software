@@ -23,7 +23,6 @@
 #include "light.h"
 
 #include <QQmlApplicationEngine>
-#include <QtDebug>
 
 LightInterface::~LightInterface() {}
 

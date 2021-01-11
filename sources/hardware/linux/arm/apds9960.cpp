@@ -28,36 +28,36 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
 
-#include <QLoggingCategory>
-#include <QtDebug>
+#include "apds9960.h"
 
 #include <unistd.h>
 
+#include <QtDebug>
+
 #include "../../device.h"
 #include "../../proximitysensor.h"
-#include "apds9960.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960");
 
 APDS9960::APDS9960(const QString &i2cDevice, int i2cDeviceId, QObject *parent)
     : Device("APDS9960 sensor", parent), m_i2cDevice(i2cDevice), m_i2cDeviceId(i2cDeviceId), m_i2cFd(0) {
     Q_ASSERT(!i2cDevice.isEmpty());
     Q_ASSERT(i2cDeviceId);
-    qCDebug(CLASS_LC()) << name() << i2cDevice << "with id:" << i2cDeviceId;
+    qCDebug(lcApds9960) << name() << i2cDevice << "with id:" << i2cDeviceId;
 }
 
-APDS9960::~APDS9960() { close(); }
+APDS9960::~APDS9960() {
+    close();
+}
 
 bool APDS9960::open() {
     if (isOpen()) {
-        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_OPEN;
+        qCWarning(lcApds9960) << DBG_WARN_DEVICE_OPEN;
         return true;
     }
 
     bool initialized = false;
     m_i2cFd = wiringPiI2CSetupInterface(qPrintable(m_i2cDevice), m_i2cDeviceId);
     if (m_i2cFd == -1) {
-        qCCritical(CLASS_LC) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
+        qCCritical(lcApds9960) << "Unable to open or select I2C device" << m_i2cDeviceId << "on" << m_i2cDevice;
     } else {
         uint8_t x = uint8_t(wiringPiI2CReadReg8(m_i2cFd, APDS9960_ID));
         if (x == 0xAB) {
@@ -84,7 +84,9 @@ void APDS9960::close() {
     }
 }
 
-const QLoggingCategory &APDS9960::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory &APDS9960::logCategory() const {
+    return lcApds9960();
+}
 
 void APDS9960::enable(bool en) {
     ASSERT_DEVICE_OPEN()
@@ -282,7 +284,7 @@ uint8_t APDS9960::readProximity() {
 
 bool APDS9960::gestureValid() {
     if (!isOpen()) {
-        qCWarning(CLASS_LC) << DBG_WARN_DEVICE_CLOSED;
+        qCWarning(lcApds9960) << DBG_WARN_DEVICE_CLOSED;
         return false;
     }
 

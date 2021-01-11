@@ -22,10 +22,7 @@
 
 #include "buttonhandler.h"
 
-#include <QLoggingCategory>
-#include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.buttonhandler");
+#include "../logging.h"
 
 ButtonHandler *ButtonHandler::s_instance = nullptr;
 
@@ -41,7 +38,7 @@ ButtonHandler::ButtonHandler(InterruptHandler *interruptHandler, YioAPI *api, QO
     connect(m_api, &YioAPI::buttonPressed, this, &ButtonHandler::onYIOAPIPressed);
     connect(m_api, &YioAPI::buttonReleased, this, &ButtonHandler::onYIOAPIReleased);
 
-    qCDebug(CLASS_LC) << "Intialized";
+    qCDebug(lcBtnHandler) << "Initialized";
 }
 
 ButtonHandler::~ButtonHandler() { s_instance = nullptr; }

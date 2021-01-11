@@ -51,6 +51,13 @@ Item {
             api.discoverNetworkServices("_yio-dock-api._tcp");
             mdnsDiscoveryTimeout.start();
         }
+
+        onDockSetupFailed: {
+            bluetoothDiscoveryTimeout.stop();
+
+            _swipeView.dockSuccess = false;
+            _swipeView.incrementCurrentIndex();
+        }
     }
 
     Connections {
@@ -92,7 +99,7 @@ Item {
     Timer {
         id: bluetoothDiscoveryTimeout
         running: _currentItem
-        interval: 20000
+        interval: 30000
         repeat: false
 
         onTriggered: {
@@ -104,7 +111,8 @@ Item {
     Timer {
         id: mdnsDiscoveryTimeout
         running: false
-        interval: 20000
+        // api.discoverNetworkServices timeout is hard-coded to 10s
+        interval: 11000
         repeat: false
 
         onTriggered: {

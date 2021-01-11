@@ -26,6 +26,7 @@
 #include <QTimer>
 
 #include "../config.h"
+#include "../logging.h"
 
 EntityInterface::~EntityInterface() {}
 
@@ -208,7 +209,7 @@ void Entity::initializeSupportedFeatures(const QVariantMap& config) {
     for (int i = 0; i < features.length(); i++) {
         int feature = getFeatureIndex(features[i]);
         if (feature < 0) {
-            qWarning() << "not defined feature" << features[i];
+            qCWarning(lcEntity) << "not defined feature" << features[i];
             continue;
         }
         int byte = feature / 8;

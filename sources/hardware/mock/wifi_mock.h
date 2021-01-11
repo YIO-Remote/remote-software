@@ -50,7 +50,7 @@ class WifiMock : public WifiControl {
     void       setCountryCode(const QString &countryCode) override;
     WifiStatus wifiStatus() const override;
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void on() override;
     void off() override;
 

@@ -80,7 +80,7 @@ class ButtonHandler : public QObject {
     YioAPI*               m_api;
     bool                  m_resetButtonsPressed;
 
- private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ private slots:
     void onInterrupt(int event);
     void onYIOAPIPressed(QString button);
     void onYIOAPIReleased(QString button);

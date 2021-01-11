@@ -23,16 +23,13 @@
 
 #include "apds9960proximity.h"
 
-#include <QLoggingCategory>
 #include <QtDebug>
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "hw.dev.APDS9960.proximity");
 
 Apds9960ProximitySensor::Apds9960ProximitySensor(APDS9960 *apds, InterruptHandler *interruptHandler, QObject *parent)
     : ProximitySensor("APDS990 proximity sensor", parent), p_apds(apds) {
     Q_ASSERT(apds);
     Q_ASSERT(interruptHandler);
-    qCDebug(CLASS_LC) << name();
+    qCDebug(lcApds9960Prox) << name();
 
     connect(interruptHandler, &InterruptHandler::interruptEvent, this, [&](int event) {
         if (event == InterruptHandler::APDS9960) {
@@ -44,7 +41,7 @@ Apds9960ProximitySensor::Apds9960ProximitySensor(APDS9960 *apds, InterruptHandle
 void Apds9960ProximitySensor::proximityDetection(bool state) {
     if (p_apds->isOpen()) {
         if (state != m_proximityDetection) {
-            qCDebug(CLASS_LC) << "Proximity detection set to" << state;
+            qCDebug(lcApds9960Prox) << "Proximity detection set to" << state;
             if (state) {
                 // turn on
                 p_apds->enableProximityInterrupt();
@@ -64,13 +61,13 @@ void Apds9960ProximitySensor::readInterrupt() {
         m_proximity = p_apds->readProximity();
         if (m_proximity > 0) {
             // prevent log flooding while docking
-            qCDebug(CLASS_LC) << "Proximity" << m_proximity;
+            qCDebug(lcApds9960Prox) << "Proximity" << m_proximity;
         }
 
         if (m_proximityDetection) {
             if (m_proximity > m_proximitySetting) {
                 // turn of proximity detection
-                qCDebug(CLASS_LC) << "Proximity detected, turning detection off";
+                qCDebug(lcApds9960Prox) << "Proximity detected, turning detection off";
                 proximityDetection(false);
 
                 // let qml know
@@ -83,4 +80,6 @@ void Apds9960ProximitySensor::readInterrupt() {
     }
 }
 
-const QLoggingCategory &Apds9960ProximitySensor::logCategory() const { return CLASS_LC(); }
+const QLoggingCategory &Apds9960ProximitySensor::logCategory() const {
+    return lcApds9960Prox();
+}

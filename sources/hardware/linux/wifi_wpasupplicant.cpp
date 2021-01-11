@@ -35,7 +35,6 @@
 
 #include <QEventLoop>
 #include <QFile>
-#include <QLoggingCategory>
 #include <QProcess>
 #include <QThread>
 #include <QTimer>
@@ -44,11 +43,10 @@
 #include <cstdio>
 #include <exception>
 
+#include "../../logging.h"
 #include "../hw_config.h"
 #include "../systemservice_name.h"
 #include "common/wpa_ctrl.h"
-
-static Q_LOGGING_CATEGORY(CLASS_LC, "WpaCtrl");
 
 const size_t WPA_BUF_SIZE = 2048;
 
@@ -99,7 +97,7 @@ QDebug operator<<(QDebug debug, const WifiStatus& wifiStatus) {
 
 bool WifiWpaSupplicant::init() {
     if (!m_ctrl) {
-        qCDebug(CLASS_LC) << "Initializing driver with socket:" << m_wpaSupplicantSocketPath;
+        qCDebug(lcWifiWpaCtrl) << "Initializing driver with socket:" << m_wpaSupplicantSocketPath;
 
         if (!connectWpaControlSocket()) {
             return false;
@@ -114,8 +112,8 @@ bool WifiWpaSupplicant::init() {
         startSignalStrengthScanning();
         startWifiStatusScanning();
 
-        qCDebug(CLASS_LC) << "wpa_supplicant control interface successfully initialized. WiFi connection:"
-                          << isConnected();
+        qCDebug(lcWifiWpaCtrl) << "wpa_supplicant control interface successfully initialized. WiFi connection:"
+                               << isConnected();
     }
 
     return true;
@@ -152,7 +150,7 @@ bool WifiWpaSupplicant::reset() {
 }
 
 bool WifiWpaSupplicant::clearConfiguredNetworks() {
-    qCDebug(CLASS_LC) << "Disconnecting and removing all networks...";
+    qCDebug(lcWifiWpaCtrl) << "Disconnecting and removing all networks...";
 
     if (!controlRequest("DISCONNECT")) {
         return false;
@@ -160,23 +158,22 @@ bool WifiWpaSupplicant::clearConfiguredNetworks() {
 
     setConnected(false);
 
-    if (!controlRequest("REMOVE_NETWORK all")) {
-        return false;
+    bool ret = false;
+    if (controlRequest("REMOVE_NETWORK all") && saveConfiguration()) {
+        stopScanTimer();
+
+        qCInfo(lcWifiWpaCtrl) << "Disconnected, all networks removed and cleared configuration";
+        ret = true;
     }
 
-    if (!saveConfiguration()) {
-        return false;
-    }
-
-    stopScanTimer();
-
-    qCDebug(CLASS_LC) << "All networks removed and disconnected";
-
-    return true;
+    // avoid deadlock.
+    // DISCONNECT doc states: "Disconnect and wait for REASSOCIATE or RECONNECT command before connecting."
+    controlRequest("RECONNECT");
+    return ret;
 }
 
 bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiSecurity::Enum security) {
-    qCDebug(CLASS_LC) << "Joining network:" << ssid << security;
+    qCInfo(lcWifiWpaCtrl) << "Joining network:" << ssid << security;
 
     // For more details about network creation & security option see:
     // https://github.com/loh-tar/wpa-cute/blob/master/src/networkconfig.cpp#L198
@@ -212,7 +209,7 @@ bool WifiWpaSupplicant::join(const QString& ssid, const QString& password, WifiS
             keyMgmnt = "WPA-PSK";
             break;
         default:
-            qCWarning(CLASS_LC) << "Authentication mode not (yet) implemented:" << security;
+            qCWarning(lcWifiWpaCtrl) << "Authentication mode not (yet) implemented:" << security;
             return false;
     }
 
@@ -309,8 +306,8 @@ bool WifiWpaSupplicant::setNetworkParam(const QString& networkId, const QString&
 void WifiWpaSupplicant::checkNetworkJoin() {
     m_checkNetworkCount++;
 
-    qCDebug(CLASS_LC) << "Checking Wifi state after enabling network configuration (" << m_checkNetworkCount << "/"
-                      << getNetworkJoinRetryCount() << ")";
+    qCInfo(lcWifiWpaCtrl) << "Checking Wifi state after enabling network configuration (" << m_checkNetworkCount << "/"
+                           << getNetworkJoinRetryCount() << ")";
 
     if (checkConnection()) {
         p_networkJoinTimer->stop();
@@ -325,7 +322,8 @@ void WifiWpaSupplicant::checkNetworkJoin() {
     if (m_checkNetworkCount >= getNetworkJoinRetryCount()) {
         p_networkJoinTimer->stop();
 
-        qCWarning(CLASS_LC) << "Failed to establish connection to AP after" << getNetworkJoinRetryCount() << "retries";
+        qCWarning(lcWifiWpaCtrl) << "Failed to establish connection to AP after" << getNetworkJoinRetryCount()
+                                 << "retries";
 
         emit joinError(JoinError::Timeout);
     }
@@ -343,7 +341,9 @@ bool WifiWpaSupplicant::writeWepKey(const QString& networkId, const QString& val
     return setNetworkParam(networkId, var.arg(keyId), value, !hex);
 }
 
-void WifiWpaSupplicant::startNetworkScan() { controlRequest("SCAN"); }
+void WifiWpaSupplicant::startNetworkScan() {
+    controlRequest("SCAN");
+}
 
 QList<WifiNetwork>& WifiWpaSupplicant::scanForAvailableNetworks(int timeout) {
     QEventLoop loop;
@@ -358,7 +358,7 @@ QList<WifiNetwork>& WifiWpaSupplicant::scanForAvailableNetworks(int timeout) {
 }
 
 bool WifiWpaSupplicant::startAccessPoint() {
-    qCDebug(CLASS_LC) << "TODO starting access point...";
+    qCDebug(lcWifiWpaCtrl) << "TODO starting access point...";
 
     if (!clearConfiguredNetworks()) {
         return false;
@@ -389,7 +389,7 @@ bool WifiWpaSupplicant::startAccessPoint() {
     // FIXME legacy function for PHP setup portal
     QFile qFile("/networklist");
     if (!qFile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
-        qCWarning(CLASS_LC) << "Error opening file:" << qFile.fileName();
+        qCWarning(lcWifiWpaCtrl) << "Error opening file:" << qFile.fileName();
         return false;
     }
     QTextStream out(&qFile);
@@ -435,12 +435,12 @@ QString WifiWpaSupplicant::countryCode() {
 void WifiWpaSupplicant::setCountryCode(const QString& countryCode) {
     // turned out, that setting the country code in wpa_supplicant alone wasn't enough
     QProcess process;
-    QString command = "iw reg set " + countryCode;
+    QString  command = "iw reg set " + countryCode;
     process.start(command);
     if (!process.waitForFinished(10000)) {
-        qCWarning(CLASS_LC) << "Failed to execute" << command << ":"
-                            << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
-                            << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
+        qCWarning(lcWifiWpaCtrl) << "Failed to execute" << command << ":"
+                                 << "stdout:" << QString::fromLocal8Bit(process.readAllStandardOutput())
+                                 << "errout:" << QString::fromLocal8Bit(process.readAllStandardError());
     }
 
     QString cmd = "SET country %1";
@@ -459,13 +459,13 @@ bool WifiWpaSupplicant::wpsPushButtonConfigurationAuth(const WifiNetwork& networ
 bool WifiWpaSupplicant::connectWpaControlSocket() {
     m_ctrl = wpa_ctrl_open(m_wpaSupplicantSocketPath.toStdString().c_str());
     if (!m_ctrl) {
-        qCCritical(CLASS_LC) << "wpa_ctrl_open(" << m_wpaSupplicantSocketPath << ") failed. Error:" << errno
-                             << strerror(errno);
+        qCCritical(lcWifiWpaCtrl) << "wpa_ctrl_open(" << m_wpaSupplicantSocketPath << ") failed. Error:" << errno
+                                  << strerror(errno);
         return false;
     }
     auto res = wpa_ctrl_attach(m_ctrl);
     if (res < 0) {
-        qCCritical(CLASS_LC) << "notifier attach failed with error:" << res;
+        qCCritical(lcWifiWpaCtrl) << "notifier attach failed with error:" << res;
         wpa_ctrl_close(m_ctrl);
         m_ctrl = nullptr;
         return false;
@@ -481,7 +481,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd) {
 
 bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buflen) {
     if (!m_ctrl) {
-        qCDebug(CLASS_LC) << "Not initialized. Ignoring control request:" << cmd;
+        qCDebug(lcWifiWpaCtrl) << "Not initialized. Ignoring control request:" << cmd;
         return false;
     }
 
@@ -492,7 +492,8 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
 
     buf[buflen] = '\0';
     if (res < 0) {
-        qCCritical(CLASS_LC) << "wpa_ctrl_request failed for command" << cmd << "with error:" << res;
+        qCCritical(lcWifiWpaCtrl) << "wpa_ctrl_request failed for command" << cmd << "with error:" << res
+                                  << strerror(errno);
         return false;
     }
 
@@ -501,7 +502,7 @@ bool WifiWpaSupplicant::controlRequest(const QString& cmd, char* buf, size_t buf
 
     // filter out responses which are too verbose. Unfortunately there's no qCTrace()
     if (!cmd.startsWith("BSS ")) {
-        qCDebug(CLASS_LC) << cmd << "response:" << response;
+        qCDebug(lcWifiWpaCtrl) << cmd << "response:" << response;
     }
 
     if (response.startsWith("FAIL\n")) {
@@ -542,7 +543,7 @@ void WifiWpaSupplicant::parseEvent(char* msg) {
     }
 
     QString event = QString::fromLocal8Bit(pos);
-    qCDebug(CLASS_LC) << "Event:" << event;
+    qCDebug(lcWifiWpaCtrl) << "Event:" << event;
 
     if (event.startsWith(WPA_CTRL_REQ)) {
         processCtrlReq(event);
@@ -604,7 +605,7 @@ void WifiWpaSupplicant::processCtrlReq(const QString& req) {
     bool ok;
     int  id = networkId.toInt(&ok);
     if (!ok) {
-        qCWarning(CLASS_LC()) << "Bad request data:" << req;
+        qCWarning(lcWifiWpaCtrl()) << "Bad request data:" << req;
         return;
     }
 
@@ -631,7 +632,7 @@ void WifiWpaSupplicant::readScanResults() {
         if (!addBSS(i)) break;
     }
 
-    qCDebug(CLASS_LC) << "Networks found:" << m_scanResults.size();
+    qCDebug(lcWifiWpaCtrl) << "Networks found:" << m_scanResults.size();
     emit networksFound(m_scanResults);
 }
 
@@ -676,9 +677,9 @@ bool WifiWpaSupplicant::addBSS(int networkId) {
     }
 
     WifiSecurity::Enum security = getSecurityFromFlags(flags, networkId);
-    WifiNetwork  network{id, ssid, bssid, level, security, flags.contains("[WPS")};
+    WifiNetwork        network{id, ssid, bssid, level, security, flags.contains("[WPS")};
 
-    // qCDebug(CLASS_LC) << "Network found:" << network; // too verbose
+    // qCDebug(lcWifiWpaCtrl) << "Network found:" << network; // too verbose
 
     m_scanResults.append(network);
 
@@ -782,7 +783,7 @@ int WifiWpaSupplicant::parseSignalStrength(const char* buffer) {
     } else if ((rssi = strstr(buffer, "RSSI=")) != nullptr) {
         rssiValue = atoi(&rssi[sizeof("RSSI")]);
     } else {
-        qCDebug(CLASS_LC) << "Failed to get RSSI value";
+        qCInfo(lcWifiWpaCtrl) << "Failed to get RSSI value";
     }
 
     return rssiValue;
@@ -801,9 +802,10 @@ bool WifiWpaSupplicant::checkConnection() {
 
 bool WifiWpaSupplicant::saveConfiguration(bool resetCfgIfFailed /* = true */) {
     if (!controlRequest("SAVE_CONFIG")) {
-        qCWarning(CLASS_LC) << "Error saving current wpa_supplicant configuration! Please verify that "
-                               "/etc/wpa_supplicant/wpa_supplicant-wlan0.conf has 'update_config=1' set. Otherwise the "
-                               "configration cannot be persisted!";
+        qCWarning(lcWifiWpaCtrl)
+            << "Error saving current wpa_supplicant configuration! Please verify that "
+               "/etc/wpa_supplicant/wpa_supplicant-wlan0.conf has 'update_config=1' set. Otherwise the "
+               "configration cannot be persisted!";
         if (resetCfgIfFailed) {
             controlRequest("RECONFIGURE");  // reload from cfg and hope for the best
         }
@@ -819,7 +821,7 @@ void WifiWpaSupplicant::timerEvent(QTimerEvent* event) {
         return;
     }
     if (!isConnected()) {
-        qCDebug(CLASS_LC) << "Ignoring scanning event: WiFi is not connected!";
+        qCDebug(lcWifiWpaCtrl) << "Ignoring scanning event: WiFi is not connected!";
         return;
     }
 
@@ -827,7 +829,7 @@ void WifiWpaSupplicant::timerEvent(QTimerEvent* event) {
     if (m_wifiStatusScanning) {
         if (controlRequest("STATUS", buf, WPA_BUF_SIZE)) {
             WifiStatus wifiStatus = parseStatus(buf);
-            qCDebug(CLASS_LC) << "wifiStatus:" << wifiStatus;
+            qCDebug(lcWifiWpaCtrl) << "wifiStatus:" << wifiStatus;
 
             emit wifiStatusChanged(wifiStatus);
 
@@ -850,13 +852,17 @@ void WifiWpaSupplicant::timerEvent(QTimerEvent* event) {
     }
 }
 
-bool WifiWpaSupplicant::getRemoveNetworksBeforeJoin() const { return m_removeNetworksBeforeJoin; }
+bool WifiWpaSupplicant::getRemoveNetworksBeforeJoin() const {
+    return m_removeNetworksBeforeJoin;
+}
 
 void WifiWpaSupplicant::setRemoveNetworksBeforeJoin(bool removeNetworksBeforeJoin) {
     m_removeNetworksBeforeJoin = removeNetworksBeforeJoin;
 }
 
-QString WifiWpaSupplicant::getWpaSupplicantSocketPath() const { return m_wpaSupplicantSocketPath; }
+QString WifiWpaSupplicant::getWpaSupplicantSocketPath() const {
+    return m_wpaSupplicantSocketPath;
+}
 
 void WifiWpaSupplicant::setWpaSupplicantSocketPath(const QString& wpaSupplicantSocketPath) {
     m_wpaSupplicantSocketPath = wpaSupplicantSocketPath;
