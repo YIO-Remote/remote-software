@@ -267,12 +267,12 @@ Rectangle {
 
         Component {
             id: cardMediaPlayerEPGView
-            Rectangle {
+            /*Rectangle {
                 anchors.fill: parent
                 color: "green"
-            }
+            }*/
             // TODO: Implementation on Progress
-            // CardMediaPlayerEPGView {}
+            CardMediaPlayerEPGView {}
         }
 
         // TODO: Speaker control UI is missing

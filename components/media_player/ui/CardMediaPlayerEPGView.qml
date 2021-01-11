@@ -22,6 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
+import QtQml.Models 2.2
 
 import Haptic 1.0
 
@@ -36,20 +37,22 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var epgitemListBrowseModel
+    property var tvchannelListBrowseModel
     property bool isCurrentItem: parent._currentItem
-    property bool start: true
+    //property bool start: true
+
 
     onIsCurrentItemChanged: {
-        if (isCurrentItem && start) {
-            console.debug("LOAD USER EPG");
-            start = false;
-            obj.getEPGItemList("all");
-            obj.browseModelChanged.connect(onFirstLoadComplete);
-        }
-        if (!isCurrentItem) {
+        //if (isCurrentItem && start) {
+        //if (start){
+        console.debug("LOAD USER EPG");
+        //  start = false;
+        obj.getMediaPlayerEPGView("all");
+        obj.browseModelChanged.connect(onFirstLoadComplete);
+        //}
+        /*if (!isCurrentItem) {
             tvChannelListListView.contentY = 0-120;
-        }
+        }*/
     }
 
 
@@ -57,22 +60,22 @@ Rectangle {
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
-        main.epgitemListBrowseModel = model.model;
+        main.tvchannelListBrowseModel = model.model;
         obj.browseModelChanged.disconnect(onFirstLoadComplete);
     }
 
     function load(tvchannel, type) {
         swipeView.currentIndex++;
-        if (type === "tvchannellist") {
-            obj.getgetEPGItemListList(tvchannel);
+        if (type === "epg") {
+            obj.getMediaPlayerEPGView(tvchannel);
             obj.browseModelChanged.connect(onBrowseModelChanged);
         }
     }
 
     function onBrowseModelChanged(model) {
         if (channellistLoader) {
-            if (channellistLoader.source != "qrc:/components/media_player/ui/TVChannelView.qml")
-                channellistLoader.setSource("qrc:/components/media_player/ui/TVChannelView.qml", { "tvchannelModel": model })
+            if (channellistLoader.source != "qrc:/components/media_player/ui/EPGItemView.qml")
+                channellistLoader.setSource("qrc:/components/media_player/ui/EPGItemView.qml", { "tvchannelModel": model })
             else if (channellistLoader.item) {
                 channellistLoader.item.tvchannelModel = model;
                 channellistLoader.item.itemFlickable.contentY = 0;
@@ -90,136 +93,93 @@ Rectangle {
     SwipeView {
         id: swipeView
         width: parent.width; height: parent.height
+        opacity: 0.9
         currentIndex: 0
         interactive: false
         clip: true
 
+
+
+
         Item {
-            property alias tvChannelListListView: tvChannelListListView
-
-            ListView {
-                id: tvChannelListListView
-                width: parent.width; height: parent.height-100
-                spacing: 20
-                anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
-                maximumFlickVelocity: 6000
-                flickDeceleration: 1000
-                boundsBehavior: Flickable.DragAndOvershootBounds
-                flickableDirection: Flickable.VerticalFlick
-                clip: true
-                cacheBuffer: 3000
-
-                delegate: playListThumbnail
-                model: main.epgitemListBrowseModel
-
-                ScrollBar.vertical: ScrollBar {
-                    opacity: 0.5
-                }
-
-                header: Component {
-                    Item {
-                        width: parent.width; height: 120
-
-                        Text {
-                            id: title
-                            color: Style.color.text
-                            text: qsTr("EPG") + translateHandler.emptyString
-                            font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
-                            lineHeight: 1
-                            anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
-                        }
-                    }
-                }
-
-                populate: Transition {
-                    id: popTransition
-                    SequentialAnimation {
-                        PropertyAction { property: "opacity"; value: 0 }
-                        PauseAnimation { duration: popTransition.ViewTransition.index*100 }
-                        NumberAnimation { properties: "opacity"; from: 0; to: 1; duration: 300; easing.type: Easing.InExpo }
-                    }
-                }
+            Text {
+                id: title
+                color: Style.color.text
+                text: qsTr("EPG List") + translateHandler.emptyString
+                font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
+                lineHeight: 1
+                anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
             }
 
-            Component {
-                id: playListThumbnail
+            property alias epgItemListListView: epgItemListListView
+            Flickable
+            {
+                anchors.top: title.bottom
+                topMargin: 10
 
-                Item {
-                    id: channelThumbnailItem
-                    width: parent.width-60; height: 80
-                    anchors.horizontalCenter: parent.horizontalCenter
+                id: fl
+                width: parent.width; height: parent.height-160
+                contentWidth: 2000
+                contentHeight: 8000
+                clip: true
+                boundsBehavior: Flickable.DragAndOvershootBounds
+                ScrollBar.horizontal: ScrollBar {
+                    opacity: 0.5
+                }
+                ScrollBar.vertical: ScrollBar { opacity: 0.5
+                }
+                Repeater
+                {
+                    id:epgItemListListView
+                    model: main.tvchannelListBrowseModel
+                    delegate:epgItemListItem
+
+                }
+                Component {
+                    id: epgItemListItem
 
                     Rectangle {
-                        id: tvchannelImage
-                        width: 80; height: 80
-
-                        Image {
-                            source: item_image
+                        id: item_key
+                        x: 20 + item_xCoordinate
+                        y: 10 + item_column * item_height
+                        height: item_height
+                        width: item_width
+                        border.color: "#000000"
+                        color: item_color
+                        Text {
+                            id: epgItemTitleText
+                            text: item_title
+                            elide: Text.ElideRight
+                            width: epgRectangle.width
+                            wrapMode: Text.NoWrap
+                            color: "#000000"
+                            anchors { left: parent.left; leftMargin: 0; verticalCenter: parent.verticalCenter}
+                            font { family: "Open Sans Regular"; pixelSize: 14; bold: true }
+                        }
+                        MouseArea {
                             anchors.fill: parent
-                            fillMode: Image.PreserveAspectCrop
-                            asynchronous: true
+
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click);
+                                load(item_key, item_type);
+                            }
                         }
-                    }
-
-                    Text {
-                        id: tvchannelTimeText
-                        text: item_time
-                        elide: Text.ElideRight
-                        width: itemFlickable.width-60-tvchannelImage.width-20-80
-                        wrapMode: Text.NoWrap
-                        color: Style.color.text
-                        anchors { left: tvchannelImage.right; leftMargin: 20; top: tvchannelImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
-                        font { family: "Open Sans Regular"; pixelSize: 25 }
-                        lineHeight: 1
-                    }
-                    Text {
-                        id: tvchannelTitleText
-                        text: item_title
-                        elide: Text.ElideRight
-                        width: itemFlickable.width-60-tvchannelImage.width-20-80
-                        wrapMode: Text.NoWrap
-                        color: Style.color.text
-                        anchors { left: tvchannelImage.right; leftMargin: 20; top: tvchannelImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
-                        font { family: "Open Sans Regular"; pixelSize: 25 }
-                        lineHeight: 1
-                    }
-
-                    Text {
-                        id: tvchannelSubTitleText
-                        text: item_subtitle
-                        elide: Text.ElideRight
-                        visible: item_subtitle == "" ? false : true
-                        width: tvchannelTitleText.width
-                        wrapMode: Text.NoWrap
-                        color: Style.color.text
-                        opacity: 0.6
-                        anchors { left: tvchannelTitleText.left; top: tvchannelTitleText.bottom; topMargin: 5 }
-                        font { family: "Open Sans Regular"; pixelSize: 20 }
-                        lineHeight: 1
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click);
-                            load(item_key, item_type);
-                        }
-                    }
-
-                    BasicUI.ContextMenuIcon {
-                        anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-
-                        mouseArea.onClicked: {
-                            Haptic.playEffect(Haptic.Click);
-                            contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
+                        BasicUI.ContextMenuIcon {
+                            anchors { right: item_key.right; verticalCenter: parent.verticalCenter }
+                            width: 10
+                            height: 10
+                            mouseArea.onClicked: {
+                                Haptic.playEffect(Haptic.Click);
+                                contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
+                            }
                         }
                     }
                 }
             }
         }
 
-        Item {
+        //Will be implemented for the next release
+        /*Item {
 
             Loader {
                 id: channellistLoader
@@ -248,6 +208,6 @@ Rectangle {
                     }
                 }
             }
-        }
+        }*/
     }
 }

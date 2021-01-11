@@ -506,6 +506,7 @@ win32 {
 
 DISTFILES += \
     components/FpsItem.qml \
+    components/media_player/ui/EPGItemView.qml \
     config.json \
     config-schema.json \
     dependencies.cfg \
