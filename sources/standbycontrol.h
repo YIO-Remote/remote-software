@@ -121,7 +121,7 @@ class StandbyControl : public QObject {
     // The default interval is 1.
     QSurfaceFormat m_format = QSurfaceFormat::defaultFormat();
 
- private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ private slots:
     void onSecondsTimerTimeout();
     void loadSettings();
     void onTouchDetected();

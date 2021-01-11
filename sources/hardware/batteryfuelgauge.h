@@ -60,7 +60,7 @@ class BatteryFuelGauge : public Device {
 
     int getCapacity() { return m_capacity; }
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     virtual void updateBatteryValues() = 0;
 
  signals:

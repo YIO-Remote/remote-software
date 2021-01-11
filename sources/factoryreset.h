@@ -38,7 +38,7 @@ class FactoryReset : public QObject {
     bool    isSupported() const;
     QString getError() const { return m_error; }
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void performReset();
 
  signals:

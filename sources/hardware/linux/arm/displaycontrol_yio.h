@@ -89,7 +89,7 @@ class DisplayControlYioThread : public QObject {
  private:
     void spi_screenreg_set(int32_t Addr, int32_t Data0, int32_t Data1);
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void setBrightness(int from, int to);
     void enterStandby();
     void leaveStandby();

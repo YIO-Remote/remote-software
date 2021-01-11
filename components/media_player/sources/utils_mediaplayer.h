@@ -43,7 +43,7 @@ class MediaPlayerUtilsImageProvider : public QObject, public QQuickImageProvider
 
     QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void updateImage(const QImage& image);
 
  signals:
@@ -61,7 +61,7 @@ class MediaPlayerUtilsWorker : public QObject {
     explicit MediaPlayerUtilsWorker(QObject* parent = nullptr);
     ~MediaPlayerUtilsWorker();
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void generateImages(const QString& url);
     void generateImagesReply();
 
@@ -94,7 +94,7 @@ class MediaPlayerUtils : public QObject {
     void setImageURL(QString url);
     void setEnabled(bool value);
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void onProcessingDone(const QColor& pixelColor, const QImage& image);
 
  signals:
