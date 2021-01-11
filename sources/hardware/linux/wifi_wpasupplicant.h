@@ -119,12 +119,12 @@ class WifiWpaSupplicant : public WifiControl {
      */
     void authenticationRequest(QString type, int networkId, QString text);
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
 
     void on() override;
     void off() override;
 
- protected slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ protected slots:
 
     /**
      * @brief p_networkJoinTimer slot to verify network join status.

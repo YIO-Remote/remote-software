@@ -177,7 +177,7 @@ class HardwareFactory : public QObject {
      */
     virtual bool buildDevices(const QVariantMap& config) = 0;
 
- protected slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ protected slots:
     /**
      * @brief Error callback function for device drivers. InitializationError and CommunicationError are propagated as
      * user notifications.

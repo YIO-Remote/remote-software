@@ -117,7 +117,7 @@ class BQ27441 : public BatteryFuelGauge {
     // Extended Data Commands
     uint16_t getOpConfig();
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void  updateBatteryValues() override;
 
     // Device interface

@@ -94,7 +94,7 @@ class FileDownload : public QObject {
      */
     void downloadQueueEmpty();
 
- private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ private slots:
     void startNextDownload();
     void onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void onDownloadError(QNetworkReply::NetworkError error);

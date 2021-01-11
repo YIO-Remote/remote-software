@@ -80,7 +80,7 @@ class YioAPI : public YioAPIInterface {
     void buttonPressed(QString button);
     void buttonReleased(QString button);
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void onClosed();
     void onNewConnection();
     void processMessage(QString message);

@@ -90,7 +90,7 @@ class Integrations : public QObject, IntegrationsInterface {
     void listChanged();
     void loadComplete();
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void onCreateDone(QMap<QObject*, QVariant> map);
 
  private:
