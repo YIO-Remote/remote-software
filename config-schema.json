@@ -462,12 +462,11 @@
                 "items": {
                   "$id": "#/properties/entities/properties/remote/items/properties/custom_features/items",
                   "type": "string",
-                  "title": "The Custom Features Schema",
+                  "title": "Custom Features for additional remote buttons",
                   "default": "",
                   "examples": [
                     "Button1, Button2, Button3"
-                  ],
-                  "pattern": ""
+                  ]
                 }
               },
               "supported_features": {

@@ -1,6 +1,7 @@
 /******************************************************************************
  *
  * Copyright (C) 2018-2020 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020-2021 Nikolas Slottke <nikoslottke@gmail.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -164,7 +165,7 @@ Item {
 
             Button {
                 visible: obj.isSupported(Remote.F_DIGIT_ENTER)
-                title: "E"
+                title: "ENT"
                 mouseArea.onClicked: { }
             }
         }

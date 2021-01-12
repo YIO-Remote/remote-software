@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * Copyright (C) 2020 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020-2021 Nikolas Slottke <nikoslottke@gmail.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -52,14 +52,8 @@ Item {
                     width: parent.width
                     title: qsTr(modelData.replace(new RegExp("_", "g"), ' ')) + translateHandler.emptyString
                     mouseArea.onClicked: { obj.customCommand(index); }
-                    //Component.onCompleted: console.log("button height:", height)
                 }
             }
-        }
-
-        Component.onCompleted: {
-            //console.log("customButtonFlick.contentHeight:", customButtonFlick.contentHeight)
-            //console.log("customButtonRep.count:", customButtonRep.count)
         }
     }
 }
