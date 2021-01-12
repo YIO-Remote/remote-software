@@ -53,6 +53,7 @@ Rectangle {
             security = WifiSecurity.DEFAULT;
         }
 
+        wifi.clearConfiguredNetworks();
         wifi.join(name, passwordField.text, security);
         inputPanel.active = false;
         container.state = "closed";

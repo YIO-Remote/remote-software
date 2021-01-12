@@ -107,7 +107,7 @@ class Logger : public QObject {
     QJsonArray  getQueuedMessages(int maxCount, QtMsgType logLevel, const QStringList& categories);
     QJsonObject getInformation();
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     /**
      * @brief Triggers file rotation
      */

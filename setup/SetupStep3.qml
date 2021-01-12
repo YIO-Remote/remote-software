@@ -28,11 +28,15 @@ import WifiControl 1.0
 
 import "qrc:/basic_ui" as BasicUI
 
+// TODO(marton) back swipe or button to choose language / country setting again
 Item {
     id: container
     width: 480; height: 800
 
     Component.onCompleted: {
+        // TODO(marton) check if Wifi connection is already established and ask user to use it, or to set it up again.
+        //              This state can happen through a reboot during a previous setup process.
+        // Connection check: wifi.wifiStatus.connected
         networkScanTimer.start();
     }
 

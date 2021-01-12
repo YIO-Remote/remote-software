@@ -122,6 +122,17 @@ bool Entity::isSupported(int feature) {
     return !!(m_supported_features[byte] & (1 << bit));
 }
 
+QStringList Entity::customButtons() {
+    // dummy implementation for updated integrations.library until PR is ready
+    qCWarning(lcEntity) << "customButtons() not yet implemented";
+    return QStringList();
+}
+
+void Entity::clickCustomButton(int index) {
+    // dummy implementation for updated integrations.library until PR is ready
+    qCWarning(lcEntity) << "clickCustomButton(index) not yet implemented";
+}
+
 QStringList Entity::supported_features() {
     QStringList list;
     for (int i = 0; i < MAX_FEATURES; i++) {

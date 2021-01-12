@@ -267,11 +267,6 @@ Rectangle {
 
         Component {
             id: cardMediaPlayerEPGView
-            /*Rectangle {
-                anchors.fill: parent
-                color: "green"
-            }*/
-            // TODO: Implementation on Progress
             CardMediaPlayerEPGView {}
         }
 
@@ -498,6 +493,7 @@ Rectangle {
                     }
                 }
             }
+
         }
     }
 

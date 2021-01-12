@@ -51,11 +51,11 @@ class BluetoothControl : public QObject {
     void dockMessageSent();
     void dockSetupFailed();
 
- public slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ public slots:
     void lookForDocks();
     void sendCredentialsToDock(const QString &msg);
 
- private slots:  // NOLINT open issue: https://github.com/cpplint/cpplint/pull/99
+ private slots:
     void onDeviceDiscovered(const QBluetoothDeviceInfo &device);
     void onDiscoveryFinished();
     void onPairingDisplayConfirmation(const QBluetoothAddress &address, QString pin);

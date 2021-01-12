@@ -156,8 +156,6 @@ Rectangle {
             id: description
             color: Style.color.text
             text: tvchannelModel.description
-            //horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
-            //elide: Text.ElideRight
             wrapMode: Text.WordWrap
             width: view.width
             height:200
