@@ -135,7 +135,7 @@ Rectangle {
         }
 
         Text {
-            id: artist
+            id: subtitle
             color: Style.color.text
             text: tvchannelModel.subtitle
             horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
@@ -145,79 +145,26 @@ Rectangle {
             font: Style.font.button
             anchors { top: title.bottom; horizontalCenter: parent.horizontalCenter }
         }
+        ScrollView {
+            id: view
+            anchors { top: subtitle.bottom; leftMargin: 20}
 
-        ListView {
-            id: channelListView
-            width: parent.width-60; height: childrenRect.height
-            spacing: 20
-            interactive: false
-            anchors { top: artist.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
 
-            model: tvchannelModel.model
-            delegate: channelThumbnail
+            width: parent.width-10
+            height:200
+         TextArea {
+            id: description
+            color: Style.color.text
+            text: tvchannelModel.description
+            //horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
+            //elide: Text.ElideRight
+            wrapMode: Text.WordWrap
+            width: view.width
+            height:200
+            font: Style.font.button
+
+        }
         }
 
-        Component {
-            id: channelThumbnail
-
-            Item {
-                width: parent.width; height: 80
-
-                Text {
-                    id: tvchannelTimeText
-                    text: item_time
-                    color: Style.color.text
-                    elide: Text.ElideLeft
-                    width: 33
-                    wrapMode: Text.WrapAnywhere
-                    anchors { left: parent.left; verticalCenter: parent.baseline }
-                    font { family: "Open Sans Regular"; pixelSize: 18; bold: true }
-                    lineHeight: 1
-                }
-
-                Text {
-                    id: tvchannelTitleText
-                    text: item_title
-                    elide: Text.ElideRight
-                    width: parent.width-100
-                    wrapMode: Text.NoWrap
-                    color: Style.color.text
-                    anchors { left: parent.left; leftMargin: 45; top: parent.top }
-                    font { family: "Open Sans Regular"; pixelSize: 25 }
-                    lineHeight: 1
-                }
-
-                Text {
-                    id: tvchannelSubTitleText
-                    text: item_subtitle
-                    elide: Text.ElideRight
-                    width: tvchannelTitleText.width
-                    wrapMode: Text.NoWrap
-                    color: Style.color.text
-                    opacity: 0.6
-                    anchors { left: tvchannelTitleText.left; top: tvchannelTitleText.bottom; topMargin: 5 }
-                    font { family: "Open Sans Regular"; pixelSize: 20 }
-                    lineHeight: 1
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        Haptic.playEffect(Haptic.Click);
-                        obj.playMedia(item_key, item_type);
-                    }
-                }
-
-                BasicUI.ContextMenuIcon {
-                    colorBg: mediaplayerUtils.pixelColor
-                    anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-
-                    mouseArea.onClicked: {
-                        Haptic.playEffect(Haptic.Click);
-                        contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": main.width, "id": item_key, "type": item_type, "list": item_commands })
-                    }
-                }
-            }
-        }
     }
 }

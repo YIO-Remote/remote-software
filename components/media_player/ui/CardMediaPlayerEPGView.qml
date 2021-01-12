@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
-import QtQml.Models 2.2
+//import QtQml.Models 2.2
 
 import Haptic 1.0
 
@@ -139,7 +139,7 @@ Rectangle {
                     id: epgItemListItem
 
                     Rectangle {
-                        id: item_key
+                        id: epgItem
                         x: 20 + item_xCoordinate
                         y: 10 + item_column * item_height
                         height: item_height
@@ -178,8 +178,7 @@ Rectangle {
             }
         }
 
-        //Will be implemented for the next release
-        /*Item {
+        Item {
 
             Loader {
                 id: channellistLoader
@@ -208,6 +207,6 @@ Rectangle {
                     }
                 }
             }
-        }*/
+        }
     }
 }
