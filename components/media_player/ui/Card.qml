@@ -460,7 +460,7 @@ Rectangle {
                 visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW) ? true : false
                 color: Style.color.text
                 opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYEREPGVIEW") ? 1 : 0.5
-                text: Style.icon.remote
+                text: Style.icon.playlist
                 renderType: Text.NativeRendering
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
@@ -498,8 +498,8 @@ Rectangle {
                     }
                 }
             }
-
-        }}
+        }
+    }
 
     property alias contextMenuLoader: contextMenuLoader
 
