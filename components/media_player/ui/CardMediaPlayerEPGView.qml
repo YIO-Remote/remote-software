@@ -139,7 +139,7 @@ Rectangle {
                     id: epgItemListItem
 
                     Rectangle {
-                        id: epgItem
+                        id: epgItemRectangle
                         x: 20 + item_xCoordinate
                         y: 10 + item_column * item_height
                         height: item_height
@@ -150,7 +150,7 @@ Rectangle {
                             id: epgItemTitleText
                             text: item_title
                             elide: Text.ElideRight
-                            width: epgRectangle.width
+                            width: epgItemRectangle.width
                             wrapMode: Text.NoWrap
                             color: "#000000"
                             anchors { left: parent.left; leftMargin: 0; verticalCenter: parent.verticalCenter}
