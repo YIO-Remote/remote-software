@@ -165,7 +165,7 @@ Rectangle {
                             }
                         }
                         BasicUI.ContextMenuIcon {
-                            anchors { right: item_key.right; verticalCenter: parent.verticalCenter }
+                            anchors { right: epgItemRectangle.right; verticalCenter: parent.verticalCenter }
                             width: 10
                             height: 10
                             mouseArea.onClicked: {
