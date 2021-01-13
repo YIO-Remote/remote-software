@@ -119,7 +119,7 @@ Rectangle {
 
                 id: fl
                 width: parent.width; height: parent.height-160
-                contentWidth: 2000
+                contentWidth: 15000
                 contentHeight: 8000
                 clip: true
                 boundsBehavior: Flickable.DragAndOvershootBounds
