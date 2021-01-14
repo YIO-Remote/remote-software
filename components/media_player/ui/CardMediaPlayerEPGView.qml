@@ -22,7 +22,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
-//import QtQml.Models 2.2
 
 import Haptic 1.0
 
@@ -39,20 +38,21 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     property var tvchannelListBrowseModel
     property bool isCurrentItem: parent._currentItem
-    //property bool start: true
+    property bool start: true
 
 
     onIsCurrentItemChanged: {
-        //if (isCurrentItem && start) {
-        //if (start){
-        console.debug("LOAD USER EPG");
-        //  start = false;
-        obj.getMediaPlayerEPGView("all");
-        obj.browseModelChanged.connect(onFirstLoadComplete);
-        //}
-        /*if (!isCurrentItem) {
-            tvChannelListListView.contentY = 0-120;
-        }*/
+        if (isCurrentItem && start) {
+            if (start){
+                console.debug("LOAD USER EPG");
+                start = false;
+                obj.getMediaPlayerEPGView("all");
+                obj.browseModelChanged.connect(onFirstLoadComplete);
+            }
+            if (!isCurrentItem) {
+                epgItemListListView.contentY = 0-120;
+            }
+        }
     }
 
 
