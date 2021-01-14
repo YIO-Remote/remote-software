@@ -50,7 +50,7 @@ Item {
                 Button {
                     visible: true
                     width: parent.width
-                    title: qsTr(modelData.replace(new RegExp("_", "g"), ' ')) + translateHandler.emptyString
+                    title: modelData.replace(new RegExp("_", "g"), ' ')
                     mouseArea.onClicked: { obj.customCommand(index); }
                 }
             }
