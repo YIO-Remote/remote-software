@@ -46,11 +46,11 @@ Item {
                 visible: obj.isSupported(Remote.F_FUNCTION_RED)
                 width: height
                 border { color: Style.color.dark; width: 2 }
-                color: "#FF0000"
+                color: Style.color.red
                 mouseArea.onClicked: { obj.red(); }
                 mouseArea.onPressed: {}
-                mouseArea.onReleased: { redButton.color = "#FF0000" }
-                mouseArea.onCanceled: { redButton.color = "#FF0000" }
+                mouseArea.onReleased: { redButton.color = Style.color.red }
+                mouseArea.onCanceled: { redButton.color = Style.color.red }
             }
 
             Button {
@@ -58,11 +58,11 @@ Item {
                 visible: obj.isSupported(Remote.F_FUNCTION_GREEN)
                 width: height
                 border { color: Style.color.dark; width: 2 }
-                color: "#008000"
+                color: Style.color.green
                 mouseArea.onClicked: { obj.green(); }
                 mouseArea.onPressed: {}
-                mouseArea.onReleased: { greenButton.color = "#008000" }
-                mouseArea.onCanceled: { greenButton.color = "#008000" }
+                mouseArea.onReleased: { greenButton.color = Style.color.green }
+                mouseArea.onCanceled: { greenButton.color = Style.color.green }
             }
 
             Button {
@@ -70,11 +70,11 @@ Item {
                 visible: obj.isSupported(Remote.F_FUNCTION_YELLOW)
                 width: height
                 border { color: Style.color.dark; width: 2 }
-                color: "#FFFF00"
+                color: Style.color.yellow
                 mouseArea.onClicked: { obj.yellow(); }
                 mouseArea.onPressed: {}
-                mouseArea.onReleased: { yellowButton.color = "#FFFF00" }
-                mouseArea.onCanceled: { yellowButton.color = "#FFFF00" }
+                mouseArea.onReleased: { yellowButton.color = Style.color.yellow }
+                mouseArea.onCanceled: { yellowButton.color = Style.color.yellow }
             }
 
             Button {
@@ -82,11 +82,11 @@ Item {
                 visible: obj.isSupported(Remote.F_FUNCTION_BLUE)
                 width: height
                 border { color: Style.color.dark; width: 2 }
-                color: "#0000FF"
+                color: Style.color.blue
                 mouseArea.onClicked: { obj.blue(); }
                 mouseArea.onPressed: {}
-                mouseArea.onReleased: { blueButton.color = "#0000FF" }
-                mouseArea.onCanceled: { blueButton.color = "#0000FF" }
+                mouseArea.onReleased: { blueButton.color = Style.color.blue }
+                mouseArea.onCanceled: { blueButton.color = Style.color.blue }
             }
         }
 
@@ -98,11 +98,11 @@ Item {
                 visible: obj.isSupported(Remote.F_FUNCTION_ORANGE)
                 width: height
                 border { color: Style.color.dark; width: 2 }
-                color: "#FFA500"
+                color: Style.color.orange
                 mouseArea.onClicked: { obj.orange(); }
                 mouseArea.onPressed: {}
-                mouseArea.onReleased: { orangeButton.color = "#FFA500" }
-                mouseArea.onCanceled: { orangeButton.color = "#FFA500" }
+                mouseArea.onReleased: { orangeButton.color = Style.color.orange }
+                mouseArea.onCanceled: { orangeButton.color = Style.color.orange }
             }
         }
     }

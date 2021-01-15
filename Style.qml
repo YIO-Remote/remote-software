@@ -50,6 +50,8 @@ QtObject {
         property color orangeTint: Qt.lighter(orange)
         property color blue: "#19435E"
         property color blueTint: Qt.lighter(blue)
+        property color yellow: "#FFFF00"
+        property color yellowTint: Qt.lighter("#FFFF00")
 
         property color background: darkMode ? "#000000" : "#ffffff"
         property color backgroundTransparent: darkMode ? "#00000000" :  "#00000000"
