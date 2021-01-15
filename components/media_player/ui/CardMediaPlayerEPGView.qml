@@ -36,7 +36,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var tvchannelListBrowseModel
+    property var epgItemListBrowseModel
     property bool isCurrentItem: parent._currentItem
     property bool start: true
 
@@ -60,14 +60,14 @@ Rectangle {
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
-        main.tvchannelListBrowseModel = model.model;
+        main.epgItemListBrowseModel = model.model;
         obj.browseModelChanged.disconnect(onFirstLoadComplete);
     }
 
-    function load(tvchannel, type) {
+    function load(epgItem, type) {
         swipeView.currentIndex++;
         if (type === "epg") {
-            obj.getMediaPlayerEPGView(tvchannel);
+            obj.getMediaPlayerEPGView(epgItem);
             obj.browseModelChanged.connect(onBrowseModelChanged);
         }
     }
@@ -75,9 +75,9 @@ Rectangle {
     function onBrowseModelChanged(model) {
         if (channellistLoader) {
             if (channellistLoader.source != "qrc:/components/media_player/ui/EPGItemView.qml")
-                channellistLoader.setSource("qrc:/components/media_player/ui/EPGItemView.qml", { "tvchannelModel": model })
+                channellistLoader.setSource("qrc:/components/media_player/ui/EPGItemView.qml", { "epgItemModel": model })
             else if (channellistLoader.item) {
-                channellistLoader.item.tvchannelModel = model;
+                channellistLoader.item.epgItemModel = model;
                 channellistLoader.item.itemFlickable.contentY = 0;
             }
         }
@@ -93,7 +93,6 @@ Rectangle {
     SwipeView {
         id: swipeView
         width: parent.width; height: parent.height
-        opacity: 0.9
         currentIndex: 0
         interactive: false
         clip: true
@@ -131,7 +130,7 @@ Rectangle {
                 Repeater
                 {
                     id:epgItemListListView
-                    model: main.tvchannelListBrowseModel
+                    model: main.epgItemListBrowseModel
                     delegate:epgItemListItem
 
                 }
@@ -144,7 +143,7 @@ Rectangle {
                         y: 10 + item_column * item_height
                         height: item_height
                         width: item_width
-                        border.color: "#000000"
+                        border.color: Style.color.dark
                         color: item_color
                         Text {
                             id: epgItemTitleText
@@ -152,7 +151,7 @@ Rectangle {
                             elide: Text.ElideRight
                             width: epgItemRectangle.width
                             wrapMode: Text.NoWrap
-                            color: "#000000"
+                            color: Style.color.dark
                             anchors { left: parent.left; leftMargin: 0; verticalCenter: parent.verticalCenter}
                             font { family: "Open Sans Regular"; pixelSize: 14; bold: true }
                         }
