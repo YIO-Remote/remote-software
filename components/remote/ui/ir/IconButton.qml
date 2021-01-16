@@ -32,16 +32,20 @@ Rectangle {
 
     property alias mouseArea: mouseArea
     property alias background: bg.color
-    property alias image: image
+    property alias icon: icon
 
     Behavior on color {
         PropertyAnimation { easing.type: Easing.OutExpo; duration: 300 }
     }
 
-    Image {
-        id: image
-        width: 48; height: 48
+    Text {
+        id: icon
+        width: 70; height: 70
         anchors.centerIn: parent
+        color: Style.color.text
+        verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+        font {family: "icons"; pixelSize: 60 }
+        text: Style.icon.warning
     }
 
     MouseArea {

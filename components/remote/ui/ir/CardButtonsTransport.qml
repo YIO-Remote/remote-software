@@ -44,20 +44,19 @@ Item {
             spacing: 32
             IconButton {
                 visible: obj.isSupported(Remote.F_RECORD)
-                image.source: "qrc:/images/remote/fiber_manual_record-white-48dp.svg"
+                icon.text: Style.icon.circle_full
                 mouseArea.onClicked: { obj.record(); }
             }
 
             IconButton {
                 visible: obj.isSupported(Remote.F_PLAY)
-                image.source: "qrc:/images/remote/play_arrow-white-48dp.svg"
+                icon.text: Style.icon.play
                 mouseArea.onClicked: { obj.play(); }
             }
 
             IconButton {
                 visible: obj.isSupported(Remote.F_STOP)
-                image.visible: true
-                image.source: "qrc:/images/remote/stop-white-48dp.svg"
+                icon.text: Style.icon.square_full
                 mouseArea.onClicked: { obj.stop(); }
             }
         }
@@ -67,20 +66,19 @@ Item {
             spacing: 32
             IconButton {
                 visible: obj.isSupported(Remote.F_BACKWARD)
-                image.source: "qrc:/images/remote/fast_rewind-white-48dp.svg"
+                icon.text: Style.icon.warning
                 mouseArea.onClicked: { obj.backward(); }
             }
 
             IconButton {
                 visible: obj.isSupported(Remote.F_PAUSE)
-                image.visible: true
-                image.source: "qrc:/images/remote/pause-white-48dp.svg"
+                icon.text: Style.icon.pause
                 mouseArea.onClicked: { obj.pause(); }
             }
 
             IconButton {
                 visible: obj.isSupported(Remote.F_FORWARD)
-                image.source: "qrc:/images/remote/fast_forward-white-48dp.svg"
+                icon.text: Style.icon.warning
                 mouseArea.onClicked: { obj.forward(); }
             }
         }
@@ -90,19 +88,19 @@ Item {
             spacing: 32
             IconButton {
                 visible: obj.isSupported(Remote.F_PREVIOUS)
-                image.source: "qrc:/images/remote/skip_previous-white-48dp.svg"
+                icon.text: Style.icon.prev
                 mouseArea.onClicked: { obj.previous(); }
             }
 
             IconButton {
                 visible: obj.isSupported(Remote.F_INFO)
-                image.source: "qrc:/images/remote/info-white-48dp.svg"
+                icon.text: Style.icon.warning
                 mouseArea.onClicked: { obj.info(); }
             }
 
             IconButton {
                 visible: obj.isSupported(Remote.F_NEXT)
-                image.source: "qrc:/images/remote/skip_next-white-48dp.svg"
+                icon.text: Style.icon.next
                 mouseArea.onClicked: { obj.next(); }
             }
         }
@@ -134,13 +132,13 @@ Item {
 
             IconButton {
                 visible: obj.isSupported(Remote.F_HOME)
-                image.source: "qrc:/images/remote/home-white-48dp.svg"
+                icon.text: Style.icon.home
                 mouseArea.onClicked: { obj.home(); }
             }
 
             IconButton {
                 visible: obj.isSupported(Remote.F_MENU)
-                image.source: "qrc:/images/remote/menu-white-48dp.svg"
+                icon.text: Style.icon.warning
                 mouseArea.onClicked: { obj.menu(); }
             }
         }
