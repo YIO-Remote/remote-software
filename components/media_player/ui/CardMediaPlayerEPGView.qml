@@ -145,6 +145,7 @@ Rectangle {
                         width: item_width
                         border.color: Style.color.dark
                         color: item_epgItemColor
+                        
                         Text {
                             id: epgItemTitleText
                             text: item_title

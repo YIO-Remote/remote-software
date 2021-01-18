@@ -245,6 +245,16 @@ void Remote::muteToggle() {
     command(RemoteDef::C_MUTE_TOGGLE, "");
 }
 
+// function commands
+void Remote::red() { command(RemoteDef::C_FUNCTION_RED, ""); }
+void Remote::blue() { command(RemoteDef::C_FUNCTION_BLUE, ""); }
+void Remote::green() { command(RemoteDef::C_FUNCTION_GREEN, ""); }
+void Remote::orange() { command(RemoteDef::C_FUNCTION_ORANGE, ""); }
+void Remote::yellow() { command(RemoteDef::C_FUNCTION_YELLOW, ""); }
+
+// custom commands
+void Remote::customCommand(int index) { clickCustomButton(index); }
+
 bool Remote::supportsOn() {
     if (isSupported(RemoteDef::F_POWER_ON) && isSupported(RemoteDef::F_POWER_OFF)) {
         return true;

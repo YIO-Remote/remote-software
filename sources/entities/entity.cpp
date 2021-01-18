@@ -22,6 +22,7 @@
 
 #include "entity.h"
 
+#include <QDebug>
 #include <QTimer>
 
 #include "../config.h"
@@ -43,14 +44,15 @@ Entity::Entity(const QString& type, const QVariantMap& config, IntegrationInterf
       m_enumAttr(nullptr),
       m_enumFeatures(nullptr),
       m_enumCommands(nullptr),
-      m_specificInterface(nullptr) {
+      m_specificInterface(nullptr),
+      m_custom_features(config.value(Config::KEY_CUSTOM_FEATURES).toStringList()) {
     memset(m_supported_features, 0, sizeof(m_supported_features));
 
     QString entityId = config.value("entity_id").toString();
     setObjectName(entityId);
 
     QStringList f = Config::getInstance()->profileFavorites();
-    m_favorite    = f.contains(entityId);
+    m_favorite = f.contains(entityId);
 }
 
 Entity::~Entity() {}
@@ -122,15 +124,12 @@ bool Entity::isSupported(int feature) {
     return !!(m_supported_features[byte] & (1 << bit));
 }
 
-QStringList Entity::customButtons() {
-    // dummy implementation for updated integrations.library until PR is ready
-    qCWarning(lcEntity) << "customButtons() not yet implemented";
-    return QStringList();
-}
+QStringList Entity::customButtons() { return m_custom_features; }
 
 void Entity::clickCustomButton(int index) {
-    // dummy implementation for updated integrations.library until PR is ready
-    qCWarning(lcEntity) << "clickCustomButton(index) not yet implemented";
+    if (m_integrationObj) {
+        m_integrationObj->sendCommand(m_type, entity_id(), index, "custom_command");
+    }
 }
 
 QStringList Entity::supported_features() {

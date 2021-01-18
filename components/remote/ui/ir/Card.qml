@@ -1,6 +1,7 @@
 /******************************************************************************
  *
  * Copyright (C) 2018-2019 Marton Borzak <hello@martonborzak.com>
+ * Copyright (C) 2020-2021 Nikolas Slottke <nikoslottke@gmail.com>
  *
  * This file is part of the YIO-Remote software project.
  *
@@ -69,51 +70,163 @@ Rectangle {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // BUTTON REPEAT TIMER
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Timer {
+        id: volumeUpTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.volumeUp()
+    }
+
+    Timer {
+        id: volumeDownTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.volumeDown()
+    }
+
+    Timer {
+        id: channelUpTimer
+        interval: 500
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.channelUp()
+    }
+
+    Timer {
+        id: channelDownTimer
+        interval: 500
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.channelDown()
+    }
+
+    Timer {
+        id: cursorUpTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorUp()
+    }
+
+    Timer {
+        id: cursorDownTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorDown()
+    }
+
+    Timer {
+        id: cursorLeftTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorLeft()
+    }
+
+    Timer {
+        id: cursorRightTimer
+        interval: 250
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: obj.cursorRight()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONNECT TO BUTTONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Connections {
         target: ButtonHandler
 
+        onButtonReleased: {
+            switch (button) {
+            case ButtonHandler.VOLUME_UP:
+                print("volume up released")
+                volumeUpTimer.stop()
+                break;
+            case ButtonHandler.VOLUME_DOWN:
+                print("volume down released")
+                volumeDownTimer.stop()
+                break;
+            case ButtonHandler.CHANNEL_UP:
+                print("channel up released")
+                channelUpTimer.stop()
+                break;
+            case ButtonHandler.CHANNEL_DOWN:
+                print("channel down released")
+                channelDownTimer.stop()
+                break;
+            case ButtonHandler.DPAD_UP:
+                print("dpad up released")
+                cursorUpTimer.stop()
+                break;
+            case ButtonHandler.DPAD_DOWN:
+                print("dpad down released")
+                cursorDownTimer.stop()
+                break;
+            case ButtonHandler.DPAD_LEFT:
+                print("dpad left released")
+                cursorLeftTimer.stop()
+                break;
+            case ButtonHandler.DPAD_RIGHT:
+                print("dpad right released")
+                cursorRightTimer.stop()
+                break;
+            }
+        }
+
         onButtonPressed: {
             switch (button) {
             case ButtonHandler.VOLUME_UP:
                 if (obj.isSupported(Remote.F_VOLUME_UP)) {
-                    obj.volumeUp();
+                    volumeUpTimer.start()
                 }
                 break;
             case ButtonHandler.VOLUME_DOWN:
                 if (obj.isSupported(Remote.F_VOLUME_DOWN)) {
-                    obj.volumeDown();
+                    volumeDownTimer.start()
                 }
                 break;
             case ButtonHandler.CHANNEL_UP:
                 if (obj.isSupported(Remote.F_CHANNEL_UP)) {
-                    obj.channelUp();
+                    channelUpTimer.start()
                 }
                 break;
             case ButtonHandler.CHANNEL_DOWN:
                 if (obj.isSupported(Remote.F_CHANNEL_DOWN)) {
-                    obj.channelDown();
+                    channelDownTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_UP:
                 if (obj.isSupported(Remote.F_UP)) {
-                    obj.cursorUp();
+                   cursorUpTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_DOWN:
                 if (obj.isSupported(Remote.F_DOWN)) {
-                    obj.cursorDown();
+                    cursorDownTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_LEFT:
                 if (obj.isSupported(Remote.F_LEFT)) {
-                    obj.cursorLeft();
+                    cursorLeftTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_RIGHT:
                 if (obj.isSupported(Remote.F_RIGHT)) {
-                    obj.cursorRight();
+                    cursorRightTimer.start()
                 }
                 break;
             case ButtonHandler.DPAD_MIDDLE:
@@ -177,25 +290,72 @@ Rectangle {
         id: pagesSwipeView
         width: parent.width; height: parent.height - topItem.height - tooltips.height - 50
         anchors { top: topItem.bottom; topMargin: 0 }
-        currentIndex: 0
+        visible: false
 
         // buttons
-        Loader {
-            asynchronous: true
-            sourceComponent: buttonView
+        Repeater {
+            model: pages()
+            delegate: Loader {
+                asynchronous: true
+                sourceComponent: modelData
+                onLoaded: {
+                    if (index == 0) {
+                        pagesSwipeView.setCurrentIndex(0)
+                        pagesSwipeView.visible = true
+                    }
+                }
+            }
         }
+    }
 
-        // transport buttons
-        Loader {
-            asynchronous: true
-            sourceComponent: buttonTransportView
+    function pages() {
+        var items = []
+        if (obj.isSupported(Remote.F_POWER_TOGGLE) ||
+                (obj.isSupported(Remote.F_POWER_ON) && obj.isSupported(Remote.F_POWER_OFF)) ||
+                obj.isSupported(Remote.F_DIGIT_1) ||
+                obj.isSupported(Remote.F_DIGIT_2) ||
+                obj.isSupported(Remote.F_DIGIT_3) ||
+                obj.isSupported(Remote.F_DIGIT_4) ||
+                obj.isSupported(Remote.F_DIGIT_5) ||
+                obj.isSupported(Remote.F_DIGIT_6) ||
+                obj.isSupported(Remote.F_DIGIT_7) ||
+                obj.isSupported(Remote.F_DIGIT_8) ||
+                obj.isSupported(Remote.F_DIGIT_9) ||
+                obj.isSupported(Remote.F_DIGIT_SEPARATOR) ||
+                obj.isSupported(Remote.F_DIGIT_0) ||
+                obj.isSupported(Remote.F_DIGIT_ENTER)) {
+            items.push(buttonView)
         }
-
-        // channels
-        Loader {
-            asynchronous: true
-            sourceComponent: channelView
+        if (obj.isSupported(Remote.F_RECORD) ||
+                obj.isSupported(Remote.F_PLAY) ||
+                obj.isSupported(Remote.F_STOP) ||
+                obj.isSupported(Remote.F_BACKWARD) ||
+                obj.isSupported(Remote.F_PAUSE) ||
+                obj.isSupported(Remote.F_FORWARD) ||
+                obj.isSupported(Remote.F_PREVIOUS) ||
+                obj.isSupported(Remote.F_INFO) ||
+                obj.isSupported(Remote.F_NEXT) ||
+                obj.isSupported(Remote.F_EXIT) ||
+                obj.isSupported(Remote.F_GUIDE) ||
+                obj.isSupported(Remote.F_BACK) ||
+                obj.isSupported(Remote.F_HOME) ||
+                obj.isSupported(Remote.F_MENU)) {
+            items.push(buttonTransportView)
         }
+        if (obj.isSupported(Remote.F_FUNCTION_RED) ||
+                obj.isSupported(Remote.F_FUNCTION_GREEN) ||
+                obj.isSupported(Remote.F_FUNCTION_BLUE) ||
+                obj.isSupported(Remote.F_FUNCTION_YELLOW) ||
+                obj.isSupported(Remote.F_FUNCTION_ORANGE)) {
+            items.push(functionButtonView)
+        }
+        if (obj.channels.length > 0) {
+            items.push(channelView)
+        }
+        if (obj.customButtons().length > 0) {
+            items.push(customButtonView)
+        }
+        return items
     }
 
     Component {
@@ -211,6 +371,16 @@ Rectangle {
     Component {
         id: channelView
         CardChannels {}
+    }
+
+    Component {
+        id: customButtonView
+        CardButtonsCustom {}
+    }
+
+    Component {
+        id: functionButtonView
+        CardButtonsFunction {}
     }
 
     PageIndicator {

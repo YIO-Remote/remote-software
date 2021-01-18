@@ -455,6 +455,20 @@
                 ],
                 "pattern": ""
               },
+              "custom_features": {
+                "$id": "#/properties/entities/properties/remote/items/properties/custom_features",
+                "type": "array",
+                "title": "The custom_features Schema",
+                "items": {
+                  "$id": "#/properties/entities/properties/remote/items/properties/custom_features/items",
+                  "type": "string",
+                  "title": "Custom Features for additional remote buttons",
+                  "default": "",
+                  "examples": [
+                    "Button1, Button2, Button3"
+                  ]
+                }
+              },
               "supported_features": {
                 "$id": "#/properties/entities/properties/remote/items/properties/supported_features",
                 "type": "array",
