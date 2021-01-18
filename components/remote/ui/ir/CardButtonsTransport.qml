@@ -44,7 +44,7 @@ Item {
             spacing: 32
             IconButton {
                 visible: obj.isSupported(Remote.F_RECORD)
-                icon.text: Style.icon.circle_full
+                icon.text: Style.icon.record
                 mouseArea.onClicked: { obj.record(); }
             }
 
@@ -56,7 +56,7 @@ Item {
 
             IconButton {
                 visible: obj.isSupported(Remote.F_STOP)
-                icon.text: Style.icon.square_full
+                icon.text: Style.icon.stop
                 mouseArea.onClicked: { obj.stop(); }
             }
         }
@@ -66,7 +66,7 @@ Item {
             spacing: 32
             IconButton {
                 visible: obj.isSupported(Remote.F_BACKWARD)
-                icon.text: Style.icon.warning
+                icon.text: Style.icon.rewind
                 mouseArea.onClicked: { obj.backward(); }
             }
 
@@ -78,7 +78,7 @@ Item {
 
             IconButton {
                 visible: obj.isSupported(Remote.F_FORWARD)
-                icon.text: Style.icon.warning
+                icon.text: Style.icon.fast_forward
                 mouseArea.onClicked: { obj.forward(); }
             }
         }
@@ -94,7 +94,7 @@ Item {
 
             IconButton {
                 visible: obj.isSupported(Remote.F_INFO)
-                icon.text: Style.icon.warning
+                icon.text: Style.icon.info
                 mouseArea.onClicked: { obj.info(); }
             }
 
@@ -138,7 +138,7 @@ Item {
 
             IconButton {
                 visible: obj.isSupported(Remote.F_MENU)
-                icon.text: Style.icon.warning
+                icon.text: Style.icon.menu
                 mouseArea.onClicked: { obj.menu(); }
             }
         }
