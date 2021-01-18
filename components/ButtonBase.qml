@@ -49,7 +49,6 @@ Rectangle {
             else {
                 buttonContainer.opacity = 0.3
                 buttonContainer.enabled = false
-                buttonContainer.close();
             }
         }
     }

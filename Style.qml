@@ -50,6 +50,8 @@ QtObject {
         property color orangeTint: Qt.lighter(orange)
         property color blue: "#19435E"
         property color blueTint: Qt.lighter(blue)
+        property color yellow: "#FFFF00"
+        property color yellowTint: Qt.lighter("#FFFF00")
 
         property color background: darkMode ? "#000000" : "#ffffff"
         property color backgroundTransparent: darkMode ? "#00000000" :  "#00000000"
@@ -89,19 +91,26 @@ QtObject {
 
         readonly property string close: "\uE915"
         readonly property string home: "\uE900"
+        readonly property string menu: "\uE934"
 
         readonly property string light: "\uE901"
         readonly property string link: "\uE902"
         readonly property string music: "\uE903"
         readonly property string prev: "\uE909"
         readonly property string next: "\uE904"
+        readonly property string rewind: "\uE935"
+        readonly property string fast_forward: "\uE936"
         readonly property string pause: "\uE905"
         readonly property string play: "\uE906"
+        readonly property string stop: "\uE93A"
+        readonly property string record: "\uE939"
         readonly property string playlist: "\uE907"
         readonly property string search: "\uE90C"
         readonly property string speaker: "\uE90D"
         readonly property string speakers: "\uE90E"
         readonly property string radio: "\uE90A"
+        readonly property string cc: "\uE937"
+        readonly property string info: "\uE938"
 
         readonly property string power_on: "\uE908"
         readonly property string remote: "\uE90B"
