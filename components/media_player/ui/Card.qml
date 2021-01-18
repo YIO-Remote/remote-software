@@ -267,12 +267,7 @@ Rectangle {
 
         Component {
             id: cardMediaPlayerEPGView
-            Rectangle {
-                anchors.fill: parent
-                color: "green"
-            }
-            // TODO: Implementation on Progress
-            // CardMediaPlayerEPGView {}
+            CardMediaPlayerEPGView {}
         }
 
         // TODO: Speaker control UI is missing
@@ -460,7 +455,7 @@ Rectangle {
                 visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW) ? true : false
                 color: Style.color.text
                 opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYEREPGVIEW") ? 1 : 0.5
-                text: Style.icon.remote
+                text: Style.icon.playlist
                 renderType: Text.NativeRendering
                 width: 60; height: 60
                 verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
