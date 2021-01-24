@@ -144,14 +144,15 @@ Rectangle {
                         height: item_height
                         width: item_width
                         border.color: Style.color.dark
-                        color: item_color
+                        color: item_epgItemColor
+                        
                         Text {
                             id: epgItemTitleText
                             text: item_title
                             elide: Text.ElideRight
                             width: epgItemRectangle.width
                             wrapMode: Text.NoWrap
-                            color: Style.color.dark
+                            color: item_epgItemTextColor
                             anchors { left: parent.left; leftMargin: 0; verticalCenter: parent.verticalCenter}
                             font { family: "Open Sans Regular"; pixelSize: 14; bold: true }
                         }
