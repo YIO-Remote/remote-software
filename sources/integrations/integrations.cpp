@@ -52,14 +52,13 @@ Integrations::Integrations(const QString& pluginPath) : m_pluginPath(pluginPath)
 }
 
 QObject* Integrations::loadPlugin(const QString& type) {
-    Launcher* l = new Launcher();
-    QObject*  obj = l->loadPlugin(m_pluginPath, type);
+    Launcher launcher;
+    QObject*  obj = launcher.loadPlugin(m_pluginPath, type);
 
     // store the plugin objects
-    m_plugins.insert(type, obj);
-
-    // cleanup
-    l->deleteLater();
+    if (obj) {
+        m_plugins.insert(type, obj);
+    }
 
     return obj;
 }
@@ -127,6 +126,7 @@ void Integrations::load() {
         // if the plugin is the config, but not in the plugins directory
         if (obj == nullptr) {
             m_integrationsToLoad--;
+            continue;
         }
 
         // push the config to the integration
@@ -137,7 +137,7 @@ void Integrations::load() {
         createInstance(obj, map);
     }
 
-    if (m_integrationsToLoad == 0) {
+    if (m_integrationsToLoad == 0 || m_integrationsLoaded == m_integrationsToLoad) {
         emit loadComplete();
     }
 }
