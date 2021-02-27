@@ -88,7 +88,7 @@ void YioAPI::stop() {
 
 void YioAPI::sendMessage(QString message) {
     if (m_logMsgPayload) {
-        qCDebug(lcApi) << "MSG OUT:" << message;
+        qCDebug(lcApi).noquote() << "MSG OUT:" << message;
     }
 
     QMap<QWebSocket *, bool>::iterator i;
@@ -110,9 +110,11 @@ bool YioAPI::setConfig(QVariantMap config) {
         if (m_logMsgPayload) {
             QJsonDocument doc = QJsonDocument::fromVariant(config);
             QByteArray    json = doc.toJson(QJsonDocument::Compact);
-            qCWarning(lcApi) << "Invalid configuration:\n" << json << "\nValidation error:" << m_config->getError();
+            qCWarning(lcApi).noquote().nospace() << "Invalid configuration:\n"
+                                                 << json << "\nValidation error: " << m_config->getError();
         } else {
-            qCWarning(lcApi) << "Error setting invalid configuration. Validation error:" << m_config->getError();
+            qCWarning(lcApi).noquote() << "Error setting invalid configuration. Validation error:"
+                                       << m_config->getError();
         }
         return false;
     }
@@ -577,7 +579,7 @@ void YioAPI::onNewConnection() {
     QString       message = doc.toJson(QJsonDocument::JsonFormat::Compact);
 
     if (m_logMsgPayload) {
-        qCDebug(lcApi) << "MSG OUT:" << message;
+        qCDebug(lcApi).noquote() << "MSG OUT:" << message;
     }
     socket->sendTextMessage(message);
     m_clients.insert(socket, false);
@@ -589,7 +591,7 @@ void YioAPI::processMessage(const QString &message) {
     QWebSocket *client = qobject_cast<QWebSocket *>(sender());
 
     if (m_logMsgPayload) {
-        qCDebug(lcApi) << "MSG IN:" << message;
+        qCDebug(lcApi).noquote() << "MSG IN:" << message;
     }
 
     if (client) {
@@ -604,11 +606,13 @@ void YioAPI::processMessage(const QString &message) {
         QVariantMap map = doc.toVariant().toMap();
         QString     type = map.value("type").toString();
 
-        if (type == "auth" && !m_clients[client]) {
+        if (type == "auth") {
             /// Authentication
-            apiAuth(client, map);
+            if (!m_clients[client]) {
+                apiAuth(client, map);
+            }
         } else if (m_clients[client]) {
-            int         id;
+            int id;
 
             if (map.contains("id")) {
                 id = map.value("id").toInt();
@@ -741,7 +745,7 @@ void YioAPI::processMessage(const QString &message) {
             QJsonDocument json = QJsonDocument::fromVariant(response);
             QString       message = json.toJson(QJsonDocument::JsonFormat::Compact);
             if (m_logMsgPayload) {
-                qCDebug(lcApi) << "MSG OUT:" << message;
+                qCDebug(lcApi).noquote() << "MSG OUT:" << message;
             }
             client->sendTextMessage(message);
             client->disconnect();
@@ -767,7 +771,7 @@ void YioAPI::subscribeOnSignalEvent(const QString &event) {
     QJsonDocument json = QJsonDocument::fromVariant(response);
     QString       message = json.toJson(QJsonDocument::JsonFormat::Compact);
     if (m_logMsgPayload) {
-        qCDebug(lcApi) << "MSG OUT:" << message;
+        qCDebug(lcApi).noquote() << "MSG OUT:" << message;
     } else {
         qCDebug(lcApi) << "Sending message to all subscribed clients";
     }
@@ -806,14 +810,15 @@ void YioAPI::apiSendResponse(QWebSocket *client, int id, bool success, QVariantM
     client->sendTextMessage(message);
 
     if (m_logMsgPayload) {
-        qCDebug(lcApi) << "MSG OUT" << client->peerAddress().toString() << ":" << message;
+        qCDebug(lcApi).noquote().nospace() << "MSG OUT (" << client->peerAddress().toString() << "): " << message;
     } else {
         WEBSOCKET_CLIENT_DEBUG("Sent response to client")
     }
 }
 
 void YioAPI::apiAuth(QWebSocket *client, const QVariantMap &map) {
-    qCDebug(lcApi) << "Client authenticating:" << m_clients[client];
+    WEBSOCKET_CLIENT_DEBUG(QString("Client is authenticated: %1").arg(m_clients[client]));
+    //    qCDebug(lcApi) << "Client" << client << "is authenticated:" << m_clients[client];
 
     QVariantMap response;
 
@@ -1250,7 +1255,7 @@ void YioAPI::apiProfilesUpdate(QWebSocket *client, int id, const QVariantMap &ma
 void YioAPI::apiProfilesRemove(QWebSocket *client, int id, const QVariantMap &map) {
     WEBSOCKET_CLIENT_DEBUG("Request for remove profile")
 
-    bool success = false;
+    bool        success = false;
     QVariantMap profiles = m_config->getProfiles();
 
     if (profiles.count() == 1) {
