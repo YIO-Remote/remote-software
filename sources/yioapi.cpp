@@ -113,8 +113,7 @@ bool YioAPI::setConfig(QVariantMap config) {
             qCWarning(lcApi).noquote().nospace() << "Invalid configuration:\n"
                                                  << json << "\nValidation error: " << m_config->getError();
         } else {
-            qCWarning(lcApi).noquote() << "Error setting invalid configuration. Validation error:"
-                                       << m_config->getError();
+            qCWarning(lcApi).noquote() << "Error setting invalid configuration:" << m_config->getError();
         }
         return false;
     }
@@ -812,7 +811,7 @@ void YioAPI::apiSendResponse(QWebSocket *client, int id, bool success, QVariantM
     if (m_logMsgPayload) {
         qCDebug(lcApi).noquote().nospace() << "MSG OUT (" << client->peerAddress().toString() << "): " << message;
     } else {
-        WEBSOCKET_CLIENT_DEBUG("Sent response to client")
+        WEBSOCKET_CLIENT_DEBUG(QString("Sent %1 response to client").arg(success ? "success" : "error"))
     }
 }
 
@@ -999,7 +998,6 @@ void YioAPI::apiIntegrationsDiscover(QWebSocket *client, int id) {
     timeOutTimer->setSingleShot(true);
 
     connect(timeOutTimer, &QTimer::timeout, this, [=]() {
-        qCDebug(lcApi) << "API Discovery timeout.";
         QVariantMap response;
         response.insert("message", "discovery_done");
         qCDebug(lcApi) << "API Discovery timeout, response created.";
