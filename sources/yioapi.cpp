@@ -223,36 +223,44 @@ bool YioAPI::removeEntity(QString entityId) {
 
     // remove entity from groups
     QVariantMap groups = m_config->getGroups();
+    QVariantMap modifiedGroups;
     for (QVariantMap::const_iterator iter = groups.cbegin(); iter != groups.cend(); ++iter) {
         QVariantMap  item = iter.value().toMap();
         QVariantList groupEntities = item.value("entities").toList();
         for (int i = 0; i < groupEntities.length(); i++) {
             if (groupEntities[i].toString() == entityId) {
+                qCDebug(lcApi) << "Removing entity" << entityId << "from group:" << iter.key();
                 groupEntities.removeAt(i);
+                item.insert("entities", groupEntities);
+                modifiedGroups.insert(iter.key(), item);
                 break;
             }
         }
-        item.insert("entities", groupEntities);
-        groups.insert(iter.key(), item);
+    }
+    for (QVariantMap::const_iterator iter = modifiedGroups.cbegin(); iter != modifiedGroups.cend(); ++iter) {
+        groups.insert(iter.key(), iter.value());
     }
     m_config->setGroups(groups);
 
     // remove entity from favorites
     QVariantMap profiles = m_config->getProfiles();
+    QVariantMap modifiedProfiles;
     for (QVariantMap::const_iterator iter = profiles.cbegin(); iter != profiles.cend(); ++iter) {
         QVariantMap  item = iter.value().toMap();
         QVariantList profileEntities = item.value("favorites").toList();
         for (int i = 0; i < profileEntities.length(); i++) {
             if (profileEntities[i].toString() == entityId) {
+                qCDebug(lcApi) << "Removing entity" << entityId << "from favorites:" << iter.key();
                 profileEntities.removeAt(i);
+                item.insert("favorites", profileEntities);
+                modifiedProfiles.insert(iter.key(), item);
                 break;
             }
         }
-        item.insert("favorites", profileEntities);
-        profiles.insert(iter.key(), item);
     }
-
-    //    m_config->setProfiles(profiles);
+    for (QVariantMap::const_iterator iter = modifiedProfiles.cbegin(); iter != modifiedProfiles.cend(); ++iter) {
+        profiles.insert(iter.key(), iter.value());
+    }
 
     // remove from config
     // get the config
@@ -263,18 +271,21 @@ bool YioAPI::removeEntity(QString entityId) {
 
     for (int i = 0; i < entitiesType.length(); i++) {
         if (entitiesType[i].toMap().value("entity_id").toString() == entityId) {
+            qCDebug(lcApi) << "Removing entity definition:" << entityId;
             entitiesType.removeAt(i);
             break;
         }
     }
 
     // put entities back to config
+    qCDebug(lcApi) << "put entities back to config without:" << entityId;
     entities.insert(eIface->type(), entitiesType);
     c.insert("entities", entities);
 
     delete eIface;
 
     // write the config back
+    qCDebug(lcApi) << "Writing config without entity:" << entityId;
     bool success = setConfig(c);
     if (success) {
         // if it is a media player and playing, remove from mini media player
@@ -870,9 +881,17 @@ void YioAPI::apiSystemButton(int id, const QVariantMap &map) {
 
 void YioAPI::apiSystemReboot(QWebSocket *client, int id) {
     Q_UNUSED(id);
+
+#if defined(Q_OS_LINUX)
+#if defined(Q_PROCESSOR_ARM)
     WEBSOCKET_CLIENT_DEBUG("Request for reboot")
     Launcher launcher;
     launcher.launch("reboot");
+    return;
+#endif
+#endif
+    Q_UNUSED(client);
+    qCInfo(lcApi) << "Ignoring reboot! Please restart app";
 }
 
 void YioAPI::apiSystemShutdown(QWebSocket *client, int id) {
