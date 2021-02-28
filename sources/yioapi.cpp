@@ -206,7 +206,7 @@ bool YioAPI::updatEntity(QVariantMap entity) {
 }
 
 bool YioAPI::removeEntity(QString entityId) {
-    qCInfo(lcApi) << "Removing entity:" << entityId;
+    qCDebug(lcApi) << "Removing entity:" << entityId;
 
     QObject *        entityObject = m_entities->get(entityId);
     EntityInterface *eIface = nullptr;
@@ -297,7 +297,7 @@ bool YioAPI::removeEntity(QString entityId) {
         m_config->setProfiles(profiles);
     }
 
-    qCDebug(lcApi) << "Entity removed:" << entityId;
+    qCInfo(lcApi) << "Entity removed:" << entityId;
     return true;
 }
 
@@ -366,7 +366,7 @@ bool YioAPI::addIntegration(QVariantMap integration) {
 
     // load the integrations
     m_integrations->load();
-    qCDebug(lcApi) << "Added integration:" << integrationId;
+    qCInfo(lcApi) << "Added integration:" << integrationId;
     return true;
 }
 
@@ -468,7 +468,6 @@ bool YioAPI::removeIntegration(QString integrationId) {
     QVariantList configIntegrationsTypeData = configIntegrationsType.value("data").toList();
 
     // iterate through the data and remove the integration config
-    // FIXME doesn't seem to always remove the integration from the "integrations/TYPE/data/" section
     for (int i = 0; i < configIntegrationsTypeData.length(); i++) {
         QVariantMap item = configIntegrationsTypeData[i].toMap();
         if (item.value("id").toString() == integrationId) {
@@ -487,6 +486,8 @@ bool YioAPI::removeIntegration(QString integrationId) {
         qCWarning(lcApi) << "Error removing integration" << integrationId << ": Configuration could not be saved";
         return false;
     }
+
+    qCInfo(lcApi) << "Removed integration:" << integrationId;
     return true;
 }
 
