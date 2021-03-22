@@ -293,7 +293,6 @@ Rectangle {
             id: bottomMenu
             height: 60
             width: childrenRect.width
-            anchors.centerIn: parent;
             columns:{
                 var i = 0;
                 if (obj.isSupported(MediaPlayer.F_SEARCH))
@@ -311,7 +310,7 @@ Rectangle {
                 return i;
             }
             //anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
-            anchors { bottomMargin: 20; horizontalCenter: bottomMenuScrollArea.horizontalCenter }
+            anchors { centerIn: parent; bottomMargin: 20; horizontalCenter: bottomMenuScrollArea.horizontalCenter }
             spacing: {
                 var i = 0;
 
