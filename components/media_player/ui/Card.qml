@@ -309,8 +309,7 @@ Rectangle {
                     i++;
                 return i;
             }
-            //anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
-            anchors { centerIn: parent; bottomMargin: 20; horizontalCenter: bottomMenuScrollArea.horizontalCenter }
+            anchors { centerIn: parent; bottomMargin: 20;}
             spacing: {
                 var i = 0;
 
