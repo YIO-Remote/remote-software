@@ -109,29 +109,65 @@ Item {
 
         onButtonPressed: {
             switch (button) {
-            case ButtonHandler.DPAD_MIDDLE:
-                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ) {
-                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
-                } else {
-                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+            case ButtonHandler.VOLUME_UP:
+                volume.stop();
+                volume.volumeUp = true;
+                volume.start(obj.volume);
+                break;
+            case ButtonHandler.VOLUME_DOWN:
+                volume.stop();
+                volume.volumeUp = false;
+                volume.start(obj.volume);
+                break;
+            case ButtonHandler.CHANNEL_UP:
+                if (obj.isSupported(MediaPlayer.F_CHANNEL_UP)) {
+                    obj.channelUp();
                 }
                 break;
-            case ButtonHandler.DPAD_RIGHT:
-                if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
-                    mediaPlayers.currentIndex += 1;
-                } else {
-                    Haptic.playEffect(Haptic.Buzz);
+            case ButtonHandler.CHANNEL_DOWN:
+                if (obj.isSupported(MediaPlayer.F_CHANNEL_DOWN)) {
+                    obj.channelDown();
+                }
+                break;
+            case ButtonHandler.DPAD_UP:
+                if (obj.isSupported(MediaPlayer.F_UP)) {
+                    obj.cursorUp();
+                }
+                break;
+            case ButtonHandler.DPAD_DOWN:
+                if (obj.isSupported(MediaPlayer.F_DOWN)) {
+                    obj.cursorDown();
                 }
                 break;
             case ButtonHandler.DPAD_LEFT:
-                if (mediaPlayers.currentIndex > 0) {
-                    mediaPlayers.currentIndex -= 1;
-                } else {
-                    Haptic.playEffect(Haptic.Buzz);
+                if (obj.isSupported(MediaPlayer.F_LEFT)) {
+                    obj.cursorLeft();
                 }
                 break;
-            case ButtonHandler.TOP_RIGHT:
-                miniMediaPlayer.state = "closed";
+            case ButtonHandler.DPAD_RIGHT:
+                if (obj.isSupported(MediaPlayer.F_RIGHT)) {
+                    obj.cursorRight();
+                }
+                break;
+            case ButtonHandler.DPAD_MIDDLE:
+                if (obj.isSupported(MediaPlayer.F_OK)) {
+                    obj.cursorOK();
+                }
+                break;
+            case ButtonHandler.TOP_LEFT:
+                if (obj.isSupported(MediaPlayer.F_MUTE)) {
+                    obj.muteToggle();
+                }
+                break;
+            case ButtonHandler.BOTTOM_LEFT:
+                if (obj.isSupported(MediaPlayer.F_BACK)) {
+                    obj.back();
+                }
+                break;
+            case ButtonHandler.BOTTOM_RIGHT:
+                if (obj.isSupported(MediaPlayer.F_MENU)) {
+                    obj.menu();
+                }
                 break;
             }
         }
