@@ -119,7 +119,7 @@ Rectangle {
                 id: fl
                 width: parent.width; height: parent.height-160
                 contentWidth: 15000
-                contentHeight: 1000
+                contentHeight: 1
                 clip: true
                 boundsBehavior: Flickable.DragAndOvershootBounds
                 ScrollBar.horizontal: ScrollBar {
