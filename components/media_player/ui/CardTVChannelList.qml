@@ -140,7 +140,76 @@ Rectangle {
                     }
                 }
             }
+            Flow {
+                                    id: tags
+                                    width: parent.width
+                                    anchors { top: title.bottom; topMargin: 30 }
+                                    spacing: 20
 
+
+                                    BasicUI.Tag {
+                                        id: tagAll
+                                        tag: "All"
+
+
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            onClicked: {
+                                                    if (!tagAll.selected) {
+                                                        tagAll.selected = true
+                                                        tagTV.selected = false
+                                                        tagRadio.selected = false
+                                                        obj.getTVChannelList("All")
+                                                    }
+
+
+                                            }
+                                        }
+                                    }
+                                    BasicUI.Tag {
+                                        id: tagTV
+                                        tag: "TV"
+
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            onClicked: {
+                                                if (!tagTV.selected) {
+                                                    tagAll.selected = false
+                                                    tagRadio.selected = false
+                                                    tagTV.selected = true
+                                                    obj.getTVChannelList("TV")
+                                                }
+
+                                        }
+                                    }
+
+
+
+                                }
+                                    BasicUI.Tag {
+                                        id: tagRadio
+                                        tag: "Radio"
+
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            onClicked: {
+                                                if (!tagRadio.selected) {
+                                                    tagAll.selected = false
+                                                    tagTV.selected = false
+                                                    tagRadio.selected = true
+                                                    obj.getTVChannelList("Radio")
+                                                }
+
+                                        }
+                                    }
+
+
+
+                                }
+            }
             Component {
                 id: playListThumbnail
 
