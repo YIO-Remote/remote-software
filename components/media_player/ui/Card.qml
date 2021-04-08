@@ -176,8 +176,8 @@ Rectangle {
             features.push("SEARCH");
         if (obj.isSupported(MediaPlayer.F_LIST))
             features.push("LIST");
-        if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
-            features.push("TVCHANNELLIST");
+        if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
+            features.push("MEDIAPLAYERCHANNELLIST");
         if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
             features.push("MEDIAPLAYERREMOTE");
         if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
@@ -226,8 +226,8 @@ Rectangle {
                         return cardSearch;
                     } else if (card.features.indexOf("LIST")-1 == index ) {
                         return cardList;
-                    } else if (card.features.indexOf("TVCHANNELLIST")-1 == index ) {
-                        return cardTVList;
+                    } else if (card.features.indexOf("MEDIAPLAYERCHANNELLIST")-1 == index ) {
+                        return cardChannelList;
                     } else if (card.features.indexOf("MEDIAPLAYERREMOTE")-1 == index ) {
                         return cardMediaPlayerRemote;
                     } else if (card.features.indexOf("MEDIAPLAYEREPGVIEW")-1 == index ) {
@@ -256,8 +256,8 @@ Rectangle {
         }
 
         Component {
-            id: cardTVList
-            CardTVChannelList {}
+            id: cardChannelList
+            CardChannelList {}
         }
 
         Component {
@@ -299,7 +299,7 @@ Rectangle {
                     i++;
                 if (obj.isSupported(MediaPlayer.F_LIST))
                     i++;
-                if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
                     i++;
                 if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
                     i++;
@@ -317,7 +317,7 @@ Rectangle {
                     i++;
                 if (obj.isSupported(MediaPlayer.F_LIST))
                     i++;
-                if (obj.isSupported(MediaPlayer.F_TVCHANNELLIST))
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
                     i++;
                 if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
                     i++;
@@ -404,11 +404,11 @@ Rectangle {
                 }
             }
 
-            //TVChannelList
+            //ChannelList
             Text {
-                visible: obj.isSupported(MediaPlayer.F_TVCHANNELLIST) ? true : false
+                visible: obj.isSupported(MediaPlayer.F_MEDIAPLAYERCHANNELLIST) ? true : false
                 color: Style.color.text
-                opacity: cardSwipeView.currentIndex === features.indexOf("TVCHANNELLIST") ? 1 : 0.5
+                opacity: cardSwipeView.currentIndex === features.indexOf("MEDIAPLAYERCHANNELLIST") ? 1 : 0.5
                 text: Style.icon.playlist
                 renderType: Text.NativeRendering
                 width: 60; height: 60
@@ -421,7 +421,7 @@ Rectangle {
 
                     onClicked: {
                         Haptic.playEffect(Haptic.Click);
-                        cardSwipeView.setCurrentIndex(features.indexOf("TVCHANNELLIST"));
+                        cardSwipeView.setCurrentIndex(features.indexOf("MEDIAPLAYERCHANNELLIST"));
                     }
                 }
             }

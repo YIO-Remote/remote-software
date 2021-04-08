@@ -204,7 +204,7 @@ void MediaPlayer::textInputMediaPlayer(const QString &textString) {
     command(MediaPlayerDef::C_MEDIAPLAYERTEXTINPUT, textString); }
 void MediaPlayer::getAlbum(const QString &id) { command(MediaPlayerDef::C_GETALBUM, id); }
 void MediaPlayer::getPlaylist(const QString &id) { command(MediaPlayerDef::C_GETPLAYLIST, id); }
-void MediaPlayer::getTVChannelList(const QString &id) { command(MediaPlayerDef::C_GETTVCHANNELLIST, id); }
+void MediaPlayer::getMediaPlayerChannelList(const QString &id) { command(MediaPlayerDef::C_GETMEDIAPLAYERCHANNELLIST, id); }
 void MediaPlayer::getMediaPlayerRemote(const QString &id) { command(MediaPlayerDef::C_GETMEDIAPLAYERREMOTE, id); }
 void MediaPlayer::getMediaPlayerEPGView(const QString &id) { command(MediaPlayerDef::C_GETMEDIAPLAYEREPGVIEW, id); }
 

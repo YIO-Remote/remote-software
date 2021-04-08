@@ -46,12 +46,12 @@
         <file>components/media_player/ui/CardHome.qml</file>
         <file>components/media_player/ui/CardSearch.qml</file>
         <file>components/media_player/ui/AlbumView.qml</file>
-        <file>components/media_player/ui/TVChannelView.qml</file>
+        <file>components/media_player/ui/ChannelView.qml</file>
         <file>basic_ui/ContextMenuIcon.qml</file>
         <file>basic_ui/ContextMenu.qml</file>
         <file>basic_ui/Tag.qml</file>
         <file>components/media_player/ui/CardPlaylists.qml</file>
-        <file>components/media_player/ui/CardTVChannelList.qml</file>
+        <file>components/media_player/ui/CardChannelList.qml</file>
 	<file>components/media_player/ui/CardMediaPlayerRemote.qml</file>
         <file>components/media_player/ui/CardMediaPlayerEPGView.qml</file>
         <file>components/media_player/ui/EPGItemView.qml</file>
