@@ -46,8 +46,8 @@ Rectangle {
             if (start){
                 console.debug("LOAD USER EPG");
                 start = false;
-                obj.getMediaPlayerEPGView("all");
                 obj.browseModelChanged.connect(onFirstLoadComplete);
+                obj.getMediaPlayerEPGView("all");
             }
             if (!isCurrentItem) {
                 epgItemListListView.contentY = 0-120;
@@ -67,8 +67,8 @@ Rectangle {
     function load(epgItem, type) {
         swipeView.currentIndex++;
         if (type === "epg") {
-            obj.getMediaPlayerEPGView(epgItem);
             obj.browseModelChanged.connect(onBrowseModelChanged);
+            obj.getMediaPlayerEPGView(epgItem);
         }
     }
 

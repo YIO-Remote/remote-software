@@ -44,8 +44,8 @@ Rectangle {
         if (isCurrentItem && start) {
             console.debug("LOAD USER PLAYLISTS");
             start = false;
-            obj.getPlaylist("user");
             obj.browseModelChanged.connect(onFirstLoadComplete);
+            obj.getPlaylist("user");
         }
         if (!isCurrentItem) {
             playListListView.contentY = 0-120;
@@ -57,15 +57,15 @@ Rectangle {
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
-        main.playListBrowseModel = model.model;
         obj.browseModelChanged.disconnect(onFirstLoadComplete);
+        main.playListBrowseModel = model.model;
     }
 
     function load(album, type) {
         swipeView.currentIndex++;
         if (type === "playlist") {
-            obj.getPlaylist(album);
             obj.browseModelChanged.connect(onBrowseModelChanged);
+            obj.getPlaylist(album);
         }
     }
 

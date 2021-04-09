@@ -62,11 +62,11 @@ Rectangle {
     function load(album, type) {
         swipeView.currentIndex++;
         if (type === "album") {
+            obj.browseModelChanged.connect(onBrowseModelChanged);
             obj.getAlbum(album);
-            obj.browseModelChanged.connect(onBrowseModelChanged);
         } else if (type === "playlist") {
-            obj.getPlaylist(album);
             obj.browseModelChanged.connect(onBrowseModelChanged);
+            obj.getPlaylist(album);
         }
     }
 
