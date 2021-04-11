@@ -23,6 +23,7 @@
 #include "launcher.h"
 
 #include <QPluginLoader>
+#include <QVersionNumber>
 
 #include "logging.h"
 #include "notifications.h"
@@ -42,12 +43,25 @@ QObject *Launcher::loadPlugin(const QString &path, const QString &pluginName) {
     QPluginLoader pluginLoader(pluginPath, this);
 
     QJsonObject metaData = pluginLoader.metaData()["MetaData"].toObject();
-    qCInfo(lcPlugin) << "Loading plugin:" << pluginPath << "version:" << metaData["version"].toString();
+    QString     pluginIntgLibVersion = metaData["dependencies"].toObject()["integrations.library"].toString();
+
+    qCInfo(lcPlugin) << "Loading plugin:" << pluginPath << "version:" << metaData["version"].toString()
+                     << "intg.lib:" << pluginIntgLibVersion;
+
+    if (pluginIntgLibVersion.isEmpty()) {
+        Notifications::getInstance()->add(true, tr("Incompatible plugin %1: metadata missing").arg(pluginName));
+        return nullptr;
+    }
+
+    if (!isCompatibleIntgLibVersion(pluginIntgLibVersion)) {
+        Notifications::getInstance()->add(true, tr("Incompatible plugin %1: integration lib mismatch").arg(pluginName));
+        return nullptr;
+    }
 
     QObject *plugin = pluginLoader.instance();
     if (!plugin) {
         qCCritical(lcPlugin) << "Failed to load plugin:" << pluginPath << pluginLoader.errorString();
-        Notifications::getInstance()->add(true, "Failed to load " + QString(pluginName));
+        Notifications::getInstance()->add(true, tr("Failed to load %1").arg(pluginName));
     }
 
     return plugin;
@@ -65,4 +79,28 @@ QString Launcher::getPluginPath(const QString &path, const QString &pluginName) 
     pluginPath = path + "/lib" + pluginName;
 #endif
     return pluginPath;
+}
+
+bool Launcher::isCompatibleIntgLibVersion(const QString &pluginIntgLibVersion) {
+    // special case for environments where the metadata is not available
+    if (pluginIntgLibVersion == "?") {
+        qCWarning(lcPlugin) << "Integration version check not available: skipping!";
+        return true;
+    }
+
+    QString        intgLibVersion(INTG_LIB_VERSION);
+    QVersionNumber intgVersion = QVersionNumber::fromString(cleanVersionString(intgLibVersion));
+    QVersionNumber intgVersionPlugin = QVersionNumber::fromString(cleanVersionString(pluginIntgLibVersion));
+
+    qCDebug(lcPlugin) << "intg.lib app:" << intgVersion << "plugin:" << intgVersionPlugin;
+
+    return intgVersionPlugin.majorVersion() == intgVersion.majorVersion() &&
+           intgVersionPlugin.minorVersion() == intgVersion.minorVersion();
+}
+
+QString Launcher::cleanVersionString(const QString &version) {
+    if (version.startsWith('v')) {
+        return version.mid(1);
+    }
+    return version;
 }

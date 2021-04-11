@@ -74,7 +74,8 @@ QMAKE_SUBSTITUTES += version.txt.in
 # WHY is lupdate integration such a major pain?
 INTG_LIB_PATH = $$(YIO_SRC)
 isEmpty(INTG_LIB_PATH) {
-    message("Environment variables YIO_SRC not defined! Using '$$clean_path($$PWD/..)' for integrations.library project.")
+    INTG_LIB_PATH = $$clean_path($$PWD/../integrations.library)
+    message("Environment variables YIO_SRC not defined! Using '$$INTG_LIB_PATH' for integrations.library project.")
     # === Integration interface library: all plugin headers and shared data models
     ! include($$clean_path($$PWD/../integrations.library/yio-interfaces.pri)) {
         error( "Couldn't find the yio-interfaces.pri file!" )
@@ -90,7 +91,8 @@ isEmpty(INTG_LIB_PATH) {
         error( "Couldn't find the qmake-destination-path.pri file!" )
     }
 } else {
-    message("YIO_SRC is set: using '$$(YIO_SRC)/integrations.library' for integrations.library project.")
+    INTG_LIB_PATH = $$(YIO_SRC)/integrations.library
+    message("YIO_SRC is set: using '$$INTG_LIB_PATH' for integrations.library project.")
     ! include($$(YIO_SRC)/integrations.library/yio-interfaces.pri) {
         error( "Couldn't find the yio-interfaces.pri file!" )
     }
@@ -104,6 +106,17 @@ isEmpty(INTG_LIB_PATH) {
         error( "Couldn't find the qmake-destination-path.pri file!" )
     }
 }
+
+# verify integrations.library version
+unix {
+    INTG_GIT_VERSION = "$$system(cd $$INTG_LIB_PATH && git describe --match "v[0-9]*" --tags HEAD --always)"
+} else {
+    # sorry, no priority...
+    INTG_GIT_VERSION = "?"
+}
+
+DEFINES += INTG_LIB_VERSION=\\\"$$INTG_GIT_VERSION\\\"
+
 # =============================================================================
 
 HEADERS += \
