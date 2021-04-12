@@ -282,7 +282,7 @@ Rectangle {
 
 
     ScrollView{
-        width: bottomMenu.width
+        width: parent.width
         height: 60
         ScrollBar.vertical.policy: ScrollBar.AlwaysOff
         id: bottomMenuScrollArea

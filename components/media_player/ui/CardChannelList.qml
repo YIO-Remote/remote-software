@@ -76,8 +76,11 @@ Rectangle {
             else if (channellistLoader.item) {
                 channellistLoader.item.channelModel = model;
                 channellistLoader.item.itemFlickable.contentY = 0;
+
             }
-        }
+
+
+       }
         obj.browseModelChanged.disconnect(onBrowseModelChanged);
     }
 
@@ -124,7 +127,7 @@ Rectangle {
                         Text {
                             id: title
                             color: Style.color.text
-                            text: model.get(0) //qsTr("TV Channel List") + translateHandler.emptyString
+                            text: qsTr("TV Channel List") + translateHandler.emptyString
                             font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
                             lineHeight: 1
                             anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
@@ -142,13 +145,16 @@ Rectangle {
                 }
             }
             Flow {
+
+
+
                                     id: tags
                                     width: parent.width
                                     anchors { top: headerComponent.bottom; topMargin: 30 }
                                     spacing: 20
 
 
-                                    BasicUI.Tag {
+                                   BasicUI.Tag {
                                         id: tagAll
                                         tag: "All"
 
@@ -168,6 +174,7 @@ Rectangle {
                                             }
                                         }
                                     }
+
                                     BasicUI.Tag {
                                         id: tagTV
                                         tag: "TV"
@@ -218,6 +225,9 @@ Rectangle {
                     id: channelThumbnailItem
                     width: parent.width-60; height: 80
                     anchors.horizontalCenter: parent.horizontalCenter
+
+
+
 
                     Rectangle {
                         id: tvchannelImage

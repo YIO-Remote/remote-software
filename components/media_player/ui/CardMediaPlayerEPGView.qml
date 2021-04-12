@@ -131,9 +131,9 @@ Rectangle {
                 {
                     id:epgItemListListView
                     model: main.epgItemListBrowseModel
-                    delegate:epgItemListItem
+                    //delegate:epgItemListItem
 
-                }
+
                 Component {
                     id: epgItemListItem
 
@@ -174,7 +174,7 @@ Rectangle {
                             }
                         }
                     }
-                }
+                }}
             }
         }
 
