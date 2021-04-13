@@ -1,3 +1,4 @@
+
 /******************************************************************************
  *
  * Copyright (C) 2020 Michael Lörcher <MichaelLoercher@web.de>
@@ -29,7 +30,8 @@ import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: main
-    width: parent.width; height: parent.height
+    width: parent.width
+    height: parent.height
     color: Style.color.dark
     radius: Style.cornerRadius
 
@@ -40,50 +42,50 @@ Rectangle {
     property bool isCurrentItem: parent._currentItem
     property bool start: true
 
-
     onIsCurrentItemChanged: {
         if (isCurrentItem && start) {
-            if (start){
-                console.debug("LOAD USER EPG");
-                start = false;
-                obj.browseModelChanged.connect(onFirstLoadComplete);
-                obj.getMediaPlayerEPGView("all");
+            if (start) {
+                console.debug("LOAD USER EPG")
+                start = false
+                obj.browseModelChanged.connect(onFirstLoadComplete)
+                obj.getMediaPlayerEPGView("all")
             }
             if (!isCurrentItem) {
-                epgItemListListView.contentY = 0-120;
+                epgItemListListView.contentY = 0 - 120
             }
         }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
-        main.epgItemListBrowseModel = model.model;
-        obj.browseModelChanged.disconnect(onFirstLoadComplete);
+        main.epgItemListBrowseModel = model.model
+        obj.browseModelChanged.disconnect(onFirstLoadComplete)
     }
 
     function load(epgItem, type) {
-        swipeView.currentIndex++;
+        swipeView.currentIndex++
         if (type === "epg") {
-            obj.browseModelChanged.connect(onBrowseModelChanged);
-            obj.getMediaPlayerEPGView(epgItem);
+            obj.browseModelChanged.connect(onBrowseModelChanged)
+            obj.getMediaPlayerEPGView(epgItem)
         }
     }
 
     function onBrowseModelChanged(model) {
         if (channellistLoader) {
             if (channellistLoader.source != "qrc:/components/media_player/ui/EPGItemView.qml")
-                channellistLoader.setSource("qrc:/components/media_player/ui/EPGItemView.qml", { "epgItemModel": model })
+                channellistLoader.setSource(
+                            "qrc:/components/media_player/ui/EPGItemView.qml", {
+                                "epgItemModel": model
+                            })
             else if (channellistLoader.item) {
-                channellistLoader.item.epgItemModel = model;
-                channellistLoader.item.itemFlickable.contentY = 0;
+                channellistLoader.item.epgItemModel = model
+                channellistLoader.item.itemFlickable.contentY = 0
             }
         }
-        obj.browseModelChanged.disconnect(onBrowseModelChanged);
+        obj.browseModelChanged.disconnect(onBrowseModelChanged)
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS
@@ -92,32 +94,39 @@ Rectangle {
 
     SwipeView {
         id: swipeView
-        width: parent.width; height: parent.height
+        width: parent.width
+        height: parent.height
         currentIndex: 0
         interactive: false
         clip: true
-
-
-
 
         Item {
             Text {
                 id: title
                 color: Style.color.text
                 text: qsTr("EPG List") + translateHandler.emptyString
-                font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
+                font {
+                    family: "Open Sans Bold"
+                    weight: Font.Bold
+                    pixelSize: 40
+                }
                 lineHeight: 1
-                anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
+                anchors {
+                    left: parent.left
+                    leftMargin: 30
+                    top: parent.top
+                    topMargin: 30
+                }
             }
 
             property alias epgItemListListView: epgItemListListView
-            Flickable
-            {
+            Flickable {
                 anchors.top: title.bottom
                 topMargin: 10
 
                 id: fl
-                width: parent.width; height: parent.height-160
+                width: parent.width
+                height: parent.height - 160
                 contentWidth: 15000
                 contentHeight: 500
                 clip: true
@@ -125,56 +134,73 @@ Rectangle {
                 ScrollBar.horizontal: ScrollBar {
                     opacity: 0.5
                 }
-                ScrollBar.vertical: ScrollBar { opacity: 0.5
+                ScrollBar.vertical: ScrollBar {
+                    opacity: 0.5
                 }
-                Repeater
-                {
-                    id:epgItemListListView
+                Repeater {
+                    id: epgItemListListView
                     model: main.epgItemListBrowseModel
-                    delegate:epgItemListItem
+                    delegate: epgItemListItem
                 }
 
-               Component {
+                Component {
                     id: epgItemListItem
 
                     Rectangle {
-                        id: epgItemRectangle
+                        //id: epgItemRectangle
                         x: 20 + item_xCoordinate
                         y: 10 + item_column * item_height
                         height: item_height
                         width: item_width
                         border.color: Style.color.dark
                         color: item_epgItemColor
-                        
+
                         Text {
-                            id: epgItemTitleText
+                            //id: epgItemTitleText
                             text: item_title
                             elide: Text.ElideRight
-                            width: epgItemRectangle.width
+                            width: parent.width
                             wrapMode: Text.NoWrap
                             color: item_epgItemTextColor
-                            anchors { left: parent.left; leftMargin: 0; verticalCenter: parent.verticalCenter}
-                            font { family: "Open Sans Regular"; pixelSize: 14; bold: true }
+                            anchors {
+                                left: parent.left
+                                leftMargin: 0
+                                verticalCenter: parent.verticalCenter
+                            }
+                            font {
+                                family: "Open Sans Regular"
+                                pixelSize: 14
+                                bold: true
+                            }
                         }
                         MouseArea {
                             anchors.fill: parent
 
                             onClicked: {
-                                Haptic.playEffect(Haptic.Click);
-                                load(item_key, item_type);
+                                Haptic.playEffect(Haptic.Click)
+                                load(item_key, item_type)
                             }
                         }
                         BasicUI.ContextMenuIcon {
-                            anchors { right: epgItemRectangle.right; verticalCenter: parent.verticalCenter }
+                            anchors {
+                                right: parent.right
+                                verticalCenter: parent.verticalCenter
+                            }
                             width: 10
                             height: 10
                             mouseArea.onClicked: {
-                                Haptic.playEffect(Haptic.Click);
-                                contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
+                                Haptic.playEffect(Haptic.Click)
+                                contextMenuLoader.setSource(
+                                            "qrc:/basic_ui/ContextMenu.qml", {
+                                                "width": itemFlickable.width,
+                                                "id": item_key,
+                                                "type": item_type,
+                                                "list": item_commands
+                                            })
                             }
                         }
                     }
-                }//}
+                } //}
             }
         }
 
@@ -191,19 +217,30 @@ Rectangle {
                 color: Style.color.text
                 text: Style.icon.left_arrow
                 renderType: Text.NativeRendering
-                width: 70; height: 70
-                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 80 }
-                anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 20 }
+                width: 70
+                height: 70
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {
+                    family: "icons"
+                    pixelSize: 80
+                }
+                anchors {
+                    left: parent.left
+                    leftMargin: 10
+                    top: parent.top
+                    topMargin: 20
+                }
 
                 MouseArea {
                     id: backButtonMouseArea
-                    width: parent.width + 20; height: parent.height + 20
+                    width: parent.width + 20
+                    height: parent.height + 20
                     anchors.centerIn: parent
 
                     onClicked: {
-                        Haptic.playEffect(Haptic.Click);
-                        swipeView.currentIndex = 0;
+                        Haptic.playEffect(Haptic.Click)
+                        swipeView.currentIndex = 0
                     }
                 }
             }
