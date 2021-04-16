@@ -45,13 +45,13 @@ Rectangle {
     onIsCurrentItemChanged: {
         if (isCurrentItem && start) {
             if (start) {
-                console.debug("LOAD USER EPG")
-                start = false
-                obj.browseModelChanged.connect(onFirstLoadComplete)
-                obj.getMediaPlayerEPGView("all")
+                console.debug("LOAD USER EPG");
+                start = false;
+                obj.browseModelChanged.connect(onFirstLoadComplete);
+                obj.getMediaPlayerEPGView("all");
             }
             if (!isCurrentItem) {
-                epgItemListListView.contentY = 0 - 120
+                epgItemListListView.contentY = 0 - 120;
             }
         }
     }
@@ -60,31 +60,30 @@ Rectangle {
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
-        main.epgItemListBrowseModel = model.model
-        obj.browseModelChanged.disconnect(onFirstLoadComplete)
+        main.epgItemListBrowseModel = model.model;
+        obj.browseModelChanged.disconnect(onFirstLoadComplete);
     }
 
     function load(epgItem, type) {
-        swipeView.currentIndex++
+        swipeView.currentIndex++;
         if (type === "epg") {
-            obj.browseModelChanged.connect(onBrowseModelChanged)
-            obj.getMediaPlayerEPGView(epgItem)
+            obj.browseModelChanged.connect(onBrowseModelChanged);
+            obj.getMediaPlayerEPGView(epgItem);
         }
     }
 
     function onBrowseModelChanged(model) {
         if (channellistLoader) {
-            if (channellistLoader.source != "qrc:/components/media_player/ui/EPGItemView.qml")
+            if (channellistLoader.source != "qrc:/components/media_player/ui/EPGItemView.qml");
                 channellistLoader.setSource(
                             "qrc:/components/media_player/ui/EPGItemView.qml", {
                                 "epgItemModel": model
-                            })
-            else if (channellistLoader.item) {
-                channellistLoader.item.epgItemModel = model
-                channellistLoader.item.itemFlickable.contentY = 0
+                            });
+        }else if (channellistLoader.item) {
+                channellistLoader.item.epgItemModel = model;
+                channellistLoader.item.itemFlickable.contentY = 0;
             }
-        }
-        obj.browseModelChanged.disconnect(onBrowseModelChanged)
+        obj.browseModelChanged.disconnect(onBrowseModelChanged);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,14 +139,14 @@ Rectangle {
                 Repeater {
                     id: epgItemListListView
                     model: main.epgItemListBrowseModel
-                   // delegate: epgItemListItem
-                //}
+                    delegate: epgItemListItem
+                }
 
-                //Component {
-                  //  id: epgItemListItem
+                Component {
+                    id: epgItemListItem
 
                     Rectangle {
-                        //id: epgItemRectangle
+                        id: epgItemRectangle
                         x: 20 + item_xCoordinate
                         y: 10 + item_column * item_height
                         height: item_height
@@ -177,8 +176,8 @@ Rectangle {
                             anchors.fill: parent
 
                             onClicked: {
-                                Haptic.playEffect(Haptic.Click)
-                                load(item_key, item_type)
+                                Haptic.playEffect(Haptic.Click);
+                                load(item_key, item_type);
                             }
                         }
                         BasicUI.ContextMenuIcon {
@@ -189,14 +188,14 @@ Rectangle {
                             width: 10
                             height: 10
                             mouseArea.onClicked: {
-                                Haptic.playEffect(Haptic.Click)
+                                Haptic.playEffect(Haptic.Click);
                                 contextMenuLoader.setSource(
                                             "qrc:/basic_ui/ContextMenu.qml", {
                                                 "width": itemFlickable.width,
                                                 "id": item_key,
                                                 "type": item_type,
                                                 "list": item_commands
-                                            })
+                                            });
                             }
                         }
                     }
@@ -239,8 +238,8 @@ Rectangle {
                     anchors.centerIn: parent
 
                     onClicked: {
-                        Haptic.playEffect(Haptic.Click)
-                        swipeView.currentIndex = 0
+                        Haptic.playEffect(Haptic.Click);
+                        swipeView.currentIndex = 0;
                     }
                 }
             }
