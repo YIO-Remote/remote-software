@@ -608,17 +608,22 @@ to set up YIO remote</source>
 <context>
     <name>Launcher</name>
     <message>
-        <location filename="../sources/launcher.cpp" line="52"/>
+        <location filename="../sources/launcher.cpp" line="55"/>
         <source>Incompatible plugin %1: metadata missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/launcher.cpp" line="57"/>
+        <location filename="../sources/launcher.cpp" line="60"/>
         <source>Incompatible plugin %1: integration lib mismatch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sources/launcher.cpp" line="64"/>
+        <location filename="../sources/launcher.cpp" line="66"/>
+        <source>Plugin %1 requires app version %2 or higher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/launcher.cpp" line="73"/>
         <source>Failed to load %1</source>
         <translation type="unfinished"></translation>
     </message>
