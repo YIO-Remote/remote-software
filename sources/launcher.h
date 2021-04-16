@@ -38,6 +38,11 @@ class Launcher : public QObject {
      */
     bool isCompatibleIntgLibVersion(const QString &pluginIntgLibVersion);
 
+    /**
+     * @brief Returns true if the required minium app version is fulfilled
+     */
+    bool isCompatibleAppVersion(const QString &requiredMinAppVersion);
+
  private:
     QString cleanVersionString(const QString &version);
 

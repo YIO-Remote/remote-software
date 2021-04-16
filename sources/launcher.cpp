@@ -22,6 +22,7 @@
 
 #include "launcher.h"
 
+#include <QCoreApplication>
 #include <QPluginLoader>
 #include <QVersionNumber>
 
@@ -43,10 +44,12 @@ QObject *Launcher::loadPlugin(const QString &path, const QString &pluginName) {
     QPluginLoader pluginLoader(pluginPath, this);
 
     QJsonObject metaData = pluginLoader.metaData()["MetaData"].toObject();
-    QString     pluginIntgLibVersion = metaData["dependencies"].toObject()["integrations.library"].toString();
+    QJsonObject dependencies = metaData["dependencies"].toObject();
+    QString     pluginIntgLibVersion = dependencies["integrations.library"].toString();
+    QString     requiredMinAppVersion = dependencies["app"].toString();
 
     qCInfo(lcPlugin) << "Loading plugin:" << pluginPath << "version:" << metaData["version"].toString()
-                     << "intg.lib:" << pluginIntgLibVersion;
+                     << "intg.lib:" << pluginIntgLibVersion << "min app version:" << requiredMinAppVersion;
 
     if (pluginIntgLibVersion.isEmpty()) {
         Notifications::getInstance()->add(true, tr("Incompatible plugin %1: metadata missing").arg(pluginName));
@@ -55,6 +58,12 @@ QObject *Launcher::loadPlugin(const QString &path, const QString &pluginName) {
 
     if (!isCompatibleIntgLibVersion(pluginIntgLibVersion)) {
         Notifications::getInstance()->add(true, tr("Incompatible plugin %1: integration lib mismatch").arg(pluginName));
+        return nullptr;
+    }
+
+    if (!isCompatibleAppVersion(requiredMinAppVersion)) {
+        Notifications::getInstance()->add(
+            true, tr("Plugin %1 requires app version %2 or higher").arg(pluginName, requiredMinAppVersion));
         return nullptr;
     }
 
@@ -96,6 +105,13 @@ bool Launcher::isCompatibleIntgLibVersion(const QString &pluginIntgLibVersion) {
 
     return intgVersionPlugin.majorVersion() == intgVersion.majorVersion() &&
            intgVersionPlugin.minorVersion() == intgVersion.minorVersion();
+}
+
+bool Launcher::isCompatibleAppVersion(const QString &requiredMinAppVersion) {
+    QVersionNumber appVersion = QVersionNumber::fromString(cleanVersionString(QCoreApplication::applicationVersion()));
+    QVersionNumber reqMinVersion = QVersionNumber::fromString(cleanVersionString(requiredMinAppVersion));
+
+    return QVersionNumber::compare(appVersion, reqMinVersion) >= 0;
 }
 
 QString Launcher::cleanVersionString(const QString &version) {
