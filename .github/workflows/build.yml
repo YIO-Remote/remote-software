@@ -31,6 +31,11 @@
               qmake-args: "CONFIG+=release",
               build-image: "zehnm/yio-crosscompile-action:2.0.0"
             }
+          - {
+              name: "remote-os v2.0 Build", artifact: "RPi0-Qt5.15.2",
+              qmake-args: "CONFIG+=release",
+              build-image: "zehnm/yio-crosscompile-action:3.0.0"
+            }
 
       steps:
         - name: Checkout ${{ env.PROJECT_NAME}}

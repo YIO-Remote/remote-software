@@ -33,6 +33,18 @@ class Launcher : public QObject {
     QObject *loadPlugin(const QString &path, const QString &pluginName);
     QString  getPluginPath(const QString &path, const QString &pluginName);
 
+    /**
+     * @brief Returns true if the given integrations.library version of a plugin is compatible with the application.
+     */
+    bool isCompatibleIntgLibVersion(const QString &pluginIntgLibVersion);
+
+    /**
+     * @brief Returns true if the required minium app version is fulfilled
+     */
+    bool isCompatibleAppVersion(const QString &requiredMinAppVersion);
+
  private:
+    QString cleanVersionString(const QString &version);
+
     QProcess *m_process;
 };

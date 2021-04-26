@@ -37,10 +37,18 @@ jobs:
         fetch-depth: 2
         path: remote-software
 
+    - name: Determine integrations.library version
+      shell: bash
+      run: |
+        YIO_INTG_LIB_VERSION=$(cat "${GITHUB_WORKSPACE}/remote-software/dependencies.cfg" | awk '/^integrations.library:/{print $2}')
+        echo "Required integrations.library: $YIO_INTG_LIB_VERSION"
+        echo "YIO_INTG_LIB_VERSION=$YIO_INTG_LIB_VERSION" >> $GITHUB_ENV
+
     - name: Checkout integrations.library
       uses: actions/checkout@v2
       with:
         repository: YIO-Remote/integrations.library
+        ref: ${{ env.YIO_INTG_LIB_VERSION }}
         path: integrations.library
 
     # If this run was triggered by a pull request event, then checkout

@@ -45,7 +45,7 @@ Environment::Environment(QObject *parent) : QObject(parent), m_markerFileFirstRu
     m_yioRemote = runningOnYioRemote(rpiRevision);
     m_deviceType = determineDeviceType(m_os, m_yioRemote, rpiRevision);
 
-    if (m_yioRemote) {
+    if (m_os == OS::Linux) {
         QStorageInfo storage = QStorageInfo("/");
         if (storage.isReadOnly()) {
             m_markerFileFirstRun = "/var/yio/firstrun";

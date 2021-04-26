@@ -206,6 +206,7 @@ int main(int argc, char* argv[]) {
     bool ok;
     int webSocketPort = qEnvironmentVariableIntValue("YIO_WEBSOCKET_PORT", &ok);
     yioapi->setWebSocketPort(ok ? webSocketPort : 946);
+    yioapi->setLogMsgPayload(qEnvironmentVariableIntValue("YIO_API_LOG_MSG_PAYLOAD") == 1);
     engine.rootContext()->setContextProperty("api", yioapi);
 
     // FACTORY RESET HANDLER
