@@ -25,7 +25,6 @@ import QtQuick.Controls 2.12
 import Style 1.0
 
 import Haptic 1.0
-
 import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
@@ -59,6 +58,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
         main.channelListBrowseModel = model.model;
+        //Shared.childmodel = model.model;
         obj.browseModelChanged.disconnect(onFirstLoadComplete);
     }
 

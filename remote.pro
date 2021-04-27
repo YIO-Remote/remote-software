@@ -24,7 +24,7 @@
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++17 disable-desktop
 #disable qtquickcompiler for QML debugging!
-CONFIG += qtquickcompiler
+#CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT
@@ -506,6 +506,9 @@ win32 {
 
 DISTFILES += \
     components/FpsItem.qml \
+    components/media_player/ui/ChildModel.qml \
+    components/media_player/ui/Shared.qml \
+    components/media_player/ui/model.qml \
     components/remote/ui/ir/Button.qml \
     components/remote/ui/ir/Card.qml \
     components/remote/ui/ir/CardButtons.qml \

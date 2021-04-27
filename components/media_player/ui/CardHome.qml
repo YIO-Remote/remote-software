@@ -330,7 +330,11 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
             font {family: "icons"; pixelSize: 80 }
             anchors.centerIn: parent
-            opacity: obj.state === 3 ? 1 : 0
+            opacity: if (obj.isSupported(MediaPlayer.F_STOP)) {
+                         obj.state === 3 ? 1 : 0
+                     } else {
+                         opacity: 0
+                     }
 
             Behavior on opacity {
                 NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
