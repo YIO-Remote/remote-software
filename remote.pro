@@ -24,7 +24,7 @@
 QT += qml quick websockets quickcontrols2 bluetooth
 CONFIG += c++17 disable-desktop
 #disable qtquickcompiler for QML debugging!
-#CONFIG += qtquickcompiler
+CONFIG += qtquickcompiler
 
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT
