@@ -1,3 +1,5 @@
+
+
 /******************************************************************************
  *
  * Copyright (C) 2020 Michael Lörcher <MichaelLoercher@web.de>
@@ -19,7 +21,6 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *****************************************************************************/
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
@@ -29,7 +30,8 @@ import "qrc:/basic_ui" as BasicUI
 
 Rectangle {
     id: main
-    width: parent.width; height: parent.height
+    width: parent.width
+    height: parent.height
     color: Style.color.dark
     radius: Style.cornerRadius
 
@@ -42,49 +44,47 @@ Rectangle {
 
     onIsCurrentItemChanged: {
         if (isCurrentItem && start) {
-            console.debug("LOAD USER TVPLAYLISTS");
-            start = false;
-            obj.browseModelChanged.connect(onFirstLoadComplete);
-            obj.getMediaPlayerChannelList("All");
+            console.debug("LOAD USER TVPLAYLISTS")
+            start = false
+            obj.browseModelChanged.connect(onFirstLoadComplete)
+            obj.getMediaPlayerChannelList("All")
         }
         if (!isCurrentItem) {
-            channelListListView.contentY = 0-120;
+            channelListListView.contentY = -120
         }
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUNCTIONS
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function onFirstLoadComplete(model) {
-        main.channelListBrowseModel = model.model;
+        main.channelListBrowseModel = model.model
         //Shared.childmodel = model.model;
-        obj.browseModelChanged.disconnect(onFirstLoadComplete);
+        obj.browseModelChanged.disconnect(onFirstLoadComplete)
     }
 
     function load(tvchannel, type) {
-        swipeView.currentIndex++;
+        swipeView.currentIndex++
         if (type === "tvchannellist") {
-            obj.browseModelChanged.connect(onBrowseModelChanged);
-            obj.getMediaPlayerChannelList(tvchannel);
+            obj.browseModelChanged.connect(onBrowseModelChanged)
+            obj.getMediaPlayerChannelList(tvchannel)
         }
     }
 
     function onBrowseModelChanged(model) {
         if (channellistLoader) {
             if (channellistLoader.source != "qrc:/components/media_player/ui/ChannelView.qml")
-                channellistLoader.setSource("qrc:/components/media_player/ui/ChannelView.qml", { "channelModel": model })
+                channellistLoader.setSource(
+                            "qrc:/components/media_player/ui/ChannelView.qml", {
+                                "channelModel": model
+                            })
             else if (channellistLoader.item) {
-                channellistLoader.item.channelModel = model;
-                channellistLoader.item.itemFlickable.contentY = 0;
-
+                channellistLoader.item.channelModel = model
+                channellistLoader.item.itemFlickable.contentY = 0
             }
-
-
-       }
-        obj.browseModelChanged.disconnect(onBrowseModelChanged);
+        }
+        obj.browseModelChanged.disconnect(onBrowseModelChanged)
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UI ELEMENTS
@@ -93,7 +93,8 @@ Rectangle {
 
     SwipeView {
         id: swipeView
-        width: parent.width; height: parent.height
+        width: parent.width
+        height: parent.height
         currentIndex: 0
         interactive: false
         clip: true
@@ -103,9 +104,13 @@ Rectangle {
 
             ListView {
                 id: channelListListView
-                width: parent.width; height: parent.height-100
+                width: parent.width
+                height: parent.height - 100
                 spacing: 20
-                anchors { top: parent.top; horizontalCenter: parent.horizontalCenter }
+                anchors {
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                }
                 maximumFlickVelocity: 6000
                 flickDeceleration: 1000
                 boundsBehavior: Flickable.DragAndOvershootBounds
@@ -121,17 +126,27 @@ Rectangle {
                 }
 
                 header: Component {
-                    id:headerComponent
+                    id: headerComponent
                     Item {
-                        width: parent.width; height: 120
+                        width: parent.width
+                        height: 120
 
                         Text {
                             id: title
                             color: Style.color.text
                             text: qsTr("TV Channel List") + translateHandler.emptyString
-                            font { family: "Open Sans Bold"; weight: Font.Bold; pixelSize: 40 }
+                            font {
+                                family: "Open Sans Bold"
+                                weight: Font.Bold
+                                pixelSize: 40
+                            }
                             lineHeight: 1
-                            anchors { left: parent.left; leftMargin: 30; top: parent.top; topMargin: 30 }
+                            anchors {
+                                left: parent.left
+                                leftMargin: 30
+                                top: parent.top
+                                topMargin: 30
+                            }
                         }
                     }
                 }
@@ -139,100 +154,96 @@ Rectangle {
                 populate: Transition {
                     id: popTransition
                     SequentialAnimation {
-                        PropertyAction { property: "opacity"; value: 0 }
-                        PauseAnimation { duration: popTransition.ViewTransition.index*100 }
-                        NumberAnimation { properties: "opacity"; from: 0; to: 1; duration: 300; easing.type: Easing.InExpo }
+                        PropertyAction {
+                            property: "opacity"
+                            value: 0
+                        }
+                        PauseAnimation {
+                            duration: popTransition.ViewTransition.index * 100
+                        }
+                        NumberAnimation {
+                            properties: "opacity"
+                            from: 0
+                            to: 1
+                            duration: 300
+                            easing.type: Easing.InExpo
+                        }
                     }
                 }
             }
             Flow {
 
+                id: tags
+                width: parent.width
+                anchors {
+                    top: headerComponent.bottom
+                    topMargin: 30
+                }
+                spacing: 20
 
+                BasicUI.Tag {
+                    id: tagAll
+                    tag: "All"
 
-                                    id: tags
-                                    width: parent.width
-                                    anchors { top: headerComponent.bottom; topMargin: 30 }
-                                    spacing: 20
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            if (!tagAll.selected) {
+                                tagAll.selected = true
+                                tagTV.selected = false
+                                tagRadio.selected = false
+                                obj.getMediaPlayerChannelList("All")
+                            }
+                        }
+                    }
+                }
 
+                BasicUI.Tag {
+                    id: tagTV
+                    tag: "TV"
 
-                                   BasicUI.Tag {
-                                        id: tagAll
-                                        tag: "All"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            if (!tagTV.selected) {
+                                tagAll.selected = false
+                                tagRadio.selected = false
+                                tagTV.selected = true
+                                obj.getMediaPlayerChannelList("TV")
+                            }
+                        }
+                    }
+                }
+                BasicUI.Tag {
+                    id: tagRadio
+                    tag: "Radio"
 
-
-
-                                        MouseArea {
-                                            anchors.fill: parent
-                                            onClicked: {
-                                                    if (!tagAll.selected) {
-                                                        tagAll.selected = true
-                                                        tagTV.selected = false
-                                                        tagRadio.selected = false
-                                                        obj.getMediaPlayerChannelList("All")
-                                                    }
-
-
-                                            }
-                                        }
-                                    }
-
-                                    BasicUI.Tag {
-                                        id: tagTV
-                                        tag: "TV"
-
-
-                                        MouseArea {
-                                            anchors.fill: parent
-                                            onClicked: {
-                                                if (!tagTV.selected) {
-                                                    tagAll.selected = false
-                                                    tagRadio.selected = false
-                                                    tagTV.selected = true
-                                                    obj.getMediaPlayerChannelList("TV")
-                                                }
-
-                                        }
-                                    }
-
-
-
-                                }
-                                    BasicUI.Tag {
-                                        id: tagRadio
-                                        tag: "Radio"
-
-
-                                        MouseArea {
-                                            anchors.fill: parent
-                                            onClicked: {
-                                                if (!tagRadio.selected) {
-                                                    tagAll.selected = false
-                                                    tagTV.selected = false
-                                                    tagRadio.selected = true
-                                                    obj.getMediaPlayerChannelList("Radio")
-                                                }
-
-                                        }
-                                    }
-
-
-
-                                }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            if (!tagRadio.selected) {
+                                tagAll.selected = false
+                                tagTV.selected = false
+                                tagRadio.selected = true
+                                obj.getMediaPlayerChannelList("Radio")
+                            }
+                        }
+                    }
+                }
             }
             Component {
                 id: playListThumbnail
 
                 Item {
                     id: channelThumbnailItem
-                    width: parent.width-60; height: 80
+                    width: parent.width - 60
+                    height: 80
                     anchors.horizontalCenter: parent.horizontalCenter
-
-
-
 
                     Rectangle {
                         id: tvchannelImage
-                        width: 80; height: 80
+                        width: 80
+                        height: 80
 
                         Image {
                             source: item_image
@@ -246,22 +257,38 @@ Rectangle {
                         id: tvchannelTimeText
                         text: item_time
                         elide: Text.ElideRight
-                        width: itemFlickable.width-60-tvchannelImage.width-20-80
+                        width: itemFlickable.width - 60 - tvchannelImage.width - 20 - 80
                         wrapMode: Text.NoWrap
                         color: Style.color.text
-                        anchors { left: tvchannelImage.right; leftMargin: 20; top: tvchannelImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
-                        font { family: "Open Sans Regular"; pixelSize: 25 }
+                        anchors {
+                            left: tvchannelImage.right
+                            leftMargin: 20
+                            top: tvchannelImage.top
+                            topMargin: item_subtitle == "" ? 26 : 12
+                        }
+                        font {
+                            family: "Open Sans Regular"
+                            pixelSize: 25
+                        }
                         lineHeight: 1
                     }
                     Text {
                         id: tvchannelTitleText
                         text: item_title
                         elide: Text.ElideRight
-                        width: itemFlickable.width-60-tvchannelImage.width-20-80
+                        width: itemFlickable.width - 60 - tvchannelImage.width - 20 - 80
                         wrapMode: Text.NoWrap
                         color: Style.color.text
-                        anchors { left: tvchannelImage.right; leftMargin: 20; top: tvchannelImage.top; topMargin: item_subtitle == "" ? 26 : 12 }
-                        font { family: "Open Sans Regular"; pixelSize: 25 }
+                        anchors {
+                            left: tvchannelImage.right
+                            leftMargin: 20
+                            top: tvchannelImage.top
+                            topMargin: item_subtitle == "" ? 26 : 12
+                        }
+                        font {
+                            family: "Open Sans Regular"
+                            pixelSize: 25
+                        }
                         lineHeight: 1
                     }
 
@@ -274,8 +301,15 @@ Rectangle {
                         wrapMode: Text.NoWrap
                         color: Style.color.text
                         opacity: 0.6
-                        anchors { left: tvchannelTitleText.left; top: tvchannelTitleText.bottom; topMargin: 5 }
-                        font { family: "Open Sans Regular"; pixelSize: 20 }
+                        anchors {
+                            left: tvchannelTitleText.left
+                            top: tvchannelTitleText.bottom
+                            topMargin: 5
+                        }
+                        font {
+                            family: "Open Sans Regular"
+                            pixelSize: 20
+                        }
                         lineHeight: 1
                     }
 
@@ -283,17 +317,26 @@ Rectangle {
                         anchors.fill: parent
 
                         onClicked: {
-                            Haptic.playEffect(Haptic.Click);
-                            load(item_key, item_type);
+                            Haptic.playEffect(Haptic.Click)
+                            load(item_key, item_type)
                         }
                     }
 
                     BasicUI.ContextMenuIcon {
-                        anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                        anchors {
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                        }
 
                         mouseArea.onClicked: {
-                            Haptic.playEffect(Haptic.Click);
-                            contextMenuLoader.setSource("qrc:/basic_ui/ContextMenu.qml", { "width": itemFlickable.width, "id": item_key, "type": item_type, "list": item_commands })
+                            Haptic.playEffect(Haptic.Click)
+                            contextMenuLoader.setSource(
+                                        "qrc:/basic_ui/ContextMenu.qml", {
+                                            "width": itemFlickable.width,
+                                            "id": item_key,
+                                            "type": item_type,
+                                            "list": item_commands
+                                        })
                         }
                     }
                 }
@@ -313,19 +356,30 @@ Rectangle {
                 color: Style.color.text
                 text: Style.icon.left_arrow
                 renderType: Text.NativeRendering
-                width: 70; height: 70
-                verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
-                font {family: "icons"; pixelSize: 80 }
-                anchors { left: parent.left; leftMargin: 10; top: parent.top; topMargin: 20 }
+                width: 70
+                height: 70
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font {
+                    family: "icons"
+                    pixelSize: 80
+                }
+                anchors {
+                    left: parent.left
+                    leftMargin: 10
+                    top: parent.top
+                    topMargin: 20
+                }
 
                 MouseArea {
                     id: backButtonMouseArea
-                    width: parent.width + 20; height: parent.height + 20
+                    width: parent.width + 20
+                    height: parent.height + 20
                     anchors.centerIn: parent
 
                     onClicked: {
-                        Haptic.playEffect(Haptic.Click);
-                        swipeView.currentIndex = 0;
+                        Haptic.playEffect(Haptic.Click)
+                        swipeView.currentIndex = 0
                     }
                 }
             }

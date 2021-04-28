@@ -51,7 +51,7 @@ Rectangle {
                 obj.getMediaPlayerEPGView("all");
             }
             if (!isCurrentItem) {
-                epgItemListListView.contentY = 0 - 120;
+                epgItemListListView.contentY = -120;
             }
         }
     }
