@@ -315,13 +315,15 @@ Rectangle {
         anchors {
             bottom: parent.bottom
             bottomMargin: 20
-            horizontalCenter: parent.horizontalCenter
+
         }
 
         // BOTTOM MENU
         Grid {
             id: bottomMenu
+            width: bottomMenuScrollArea.width
             height: 60
+            anchors.horizontalCenter: parent.horizontalCenter
 
             columns: {
                 var i = 1
