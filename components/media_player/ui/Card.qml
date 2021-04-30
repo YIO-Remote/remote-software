@@ -286,15 +286,19 @@ Rectangle {
         height: 60
         ScrollBar.vertical.policy: ScrollBar.AlwaysOff
         id: bottomMenuScrollArea
-        anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
+        anchors { bottom: parent.bottom; bottomMargin: 30;}
+
+
 
         // BOTTOM MENU
         Grid {
             id: bottomMenu
             height: 60
-            width: childrenRect.width
+            //width: bottomMenuScrollArea.width
+
+
             columns:{
-                var i = 0;
+                var i = 1;
                 if (obj.isSupported(MediaPlayer.F_SEARCH))
                     i++;
                 if (obj.isSupported(MediaPlayer.F_LIST))
@@ -309,7 +313,9 @@ Rectangle {
                     i++;
                 return i;
             }
-            anchors { centerIn: parent; bottomMargin: 20;}
+            anchors { horizontalCenter: bottomMenuScrollArea.horizontalCenter;}
+
+
             spacing: {
                 var i = 0;
 
@@ -339,6 +345,7 @@ Rectangle {
             }
 
             // home
+
             Text {
                 color: Style.color.text
                 opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
