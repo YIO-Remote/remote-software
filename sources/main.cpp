@@ -249,7 +249,6 @@ int main(int argc, char* argv[]) {
     // UTILS
     qmlRegisterType<MediaPlayerUtils>("MediaPlayerUtils", 1, 0, "MediaPlayerUtils");
 
-
     // LOAD FONTS
     QFontDatabase::addApplicationFont(resourcePath + "/fonts/OpenSans-Light.ttf");
     QFontDatabase::addApplicationFont(resourcePath + "/fonts/OpenSans-Regular.ttf");

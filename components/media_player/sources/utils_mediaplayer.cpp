@@ -211,7 +211,7 @@ void MediaPlayerUtilsWorker::generateImagesReply() {
 
         m_reply->deleteLater();
         m_reply = nullptr;
-        qCDebug(lcMediaPlayer) << this <<"Network reply deleted";
+        qCDebug(lcMediaPlayer) << this << "Network reply deleted";
     }
 }
 
