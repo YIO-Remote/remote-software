@@ -306,280 +306,309 @@ Rectangle {
         }
     }
 
-    ScrollView {
+    Item {
+        id: bottomMenuArea
         width: parent.width
         height: 60
-        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-        id: bottomMenuScrollArea
         anchors {
             bottom: parent.bottom
             bottomMargin: 20
         }
-        Item {
-            id: gridContainer
-            width: Math.max(bottomMenuScrollArea.width, bottomMenu.width)
-            height: bottomMenu.height
+        Flickable {
+            id: bottomMenuAreaFlickable
+            anchors.fill: parent
+            contentHeight: bottomMenuArea.height
+            contentWidth: {
+                var i = 1
+                if (obj.isSupported(MediaPlayer.F_SEARCH))
+                    i++
+                if (obj.isSupported(MediaPlayer.F_LIST))
+                    i++
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
+                    i++
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
+                    i++
+                if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
+                    i++
+                if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
+                    i++
+                return (i * 80)
+            }
+            flickableDirection: Flickable.HorizontalFlick
+            boundsBehavior: Flickable.DragAndOvershootBounds
+            ScrollBar.horizontal: ScrollBar.visible
 
-            // BOTTOM MENU
-            Grid {
-                id: bottomMenu
-                //width: parent.width
-                height: 60
-                anchors.horizontalCenter: parent.horizontalCenter
-                columns: {
-                    var i = 1
-                    if (obj.isSupported(MediaPlayer.F_SEARCH))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_LIST))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
-                        i++
-                    return i
-                }
-                columnSpacing: {
-                    var i = 0
+            Item {
+                id: bottomMenuContainer
+                width: Math.max(bottomMenuArea.width, bottomMenu.width)
+                height: bottomMenu.height
 
-                    if (obj.isSupported(MediaPlayer.F_SEARCH))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_LIST))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
-                        i++
-                    if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
-                        i++
-
-                    if (i === 0)
-                        return 100
-                    else if (i === 1)
-                        return 100
-                    else if (i === 2)
-                        return 80
-                    else if (i === 3)
-                        return 40
-                    else
-                        return 20
-                }
-
-                // home
-                Text {
-                    color: Style.color.text
-                    opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
-                    text: Style.icon.home
-                    renderType: Text.NativeRendering
-                    width: 60
+                // BOTTOM MENU
+                Grid {
+                    id: bottomMenu
                     height: 60
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font {
-                        family: "icons"
-                        pixelSize: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    columns: {
+                        var i = 1
+                        if (obj.isSupported(MediaPlayer.F_SEARCH))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_LIST))
+                            i++
+                        if (obj.isSupported(
+                                    MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
+                            i++
+                        return i
+                    }
+                    columnSpacing: {
+                        var i = 0
+
+                        if (obj.isSupported(MediaPlayer.F_SEARCH))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_LIST))
+                            i++
+                        if (obj.isSupported(
+                                    MediaPlayer.F_MEDIAPLAYERCHANNELLIST))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_MEDIAPLAYERREMOTE))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_MEDIAPLAYEREPGVIEW))
+                            i++
+                        if (obj.isSupported(MediaPlayer.F_SPEAKERCONTROL))
+                            i++
+
+                        if (i === 0)
+                            return 100
+                        else if (i === 1)
+                            return 100
+                        else if (i === 2)
+                            return 80
+                        else if (i === 3)
+                            return 40
+                        else
+                            return 20
                     }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        width: parent.width + 30
-                        height: width
+                    // home
+                    Text {
+                        color: Style.color.text
+                        opacity: cardSwipeView.currentIndex === 0 ? 1 : 0.5
+                        text: Style.icon.home
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {
+                            family: "icons"
+                            pixelSize: 80
+                        }
 
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click)
-                            //                    cardSwipeView.currentIndex = 0;
-                            cardSwipeView.setCurrentIndex(0)
+                        MouseArea {
+                            anchors.fill: parent
+                            width: parent.width + 30
+                            height: width
+
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click)
+                                cardSwipeView.currentIndex = 0;
+                                cardSwipeView.setCurrentIndex(0)
+                            }
                         }
                     }
-                }
 
-                // search
-                Text {
-                    visible: obj.isSupported(
-                                 MediaPlayer.F_SEARCH) ? true : false
-                    color: Style.color.text
-                    opacity: cardSwipeView.currentIndex === features.indexOf(
-                                 "SEARCH") ? 1 : 0.5
-                    text: Style.icon.search
-                    renderType: Text.NativeRendering
-                    width: 60
-                    height: 60
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font {
-                        family: "icons"
-                        pixelSize: 80
-                    }
+                    // search
+                    Text {
+                        visible: obj.isSupported(
+                                     MediaPlayer.F_SEARCH) ? true : false
+                        color: Style.color.text
+                        opacity: cardSwipeView.currentIndex === features.indexOf(
+                                     "SEARCH") ? 1 : 0.5
+                        text: Style.icon.search
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {
+                            family: "icons"
+                            pixelSize: 80
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        width: parent.width + 30
-                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            width: parent.width + 30
+                            height: width
 
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click)
-                            cardSwipeView.setCurrentIndex(features.indexOf(
-                                                              "SEARCH"))
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click)
+                                cardSwipeView.setCurrentIndex(features.indexOf(
+                                                                  "SEARCH"))
+                            }
                         }
                     }
-                }
 
-                // playlists
-                Text {
-                    visible: obj.isSupported(MediaPlayer.F_LIST) ? true : false
-                    color: Style.color.text
-                    opacity: cardSwipeView.currentIndex === features.indexOf(
-                                 "LIST") ? 1 : 0.5
-                    text: Style.icon.playlist
-                    renderType: Text.NativeRendering
-                    width: 60
-                    height: 60
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font {
-                        family: "icons"
-                        pixelSize: 80
-                    }
+                    // playlists
+                    Text {
+                        visible: obj.isSupported(
+                                     MediaPlayer.F_LIST) ? true : false
+                        color: Style.color.text
+                        opacity: cardSwipeView.currentIndex === features.indexOf(
+                                     "LIST") ? 1 : 0.5
+                        text: Style.icon.playlist
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {
+                            family: "icons"
+                            pixelSize: 80
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        width: parent.width + 30
-                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            width: parent.width + 30
+                            height: width
 
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click)
-                            cardSwipeView.setCurrentIndex(
-                                        features.indexOf("LIST"))
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click)
+                                cardSwipeView.setCurrentIndex(
+                                            features.indexOf("LIST"))
+                            }
                         }
                     }
-                }
 
-                //ChannelList
-                Text {
-                    visible: obj.isSupported(
-                                 MediaPlayer.F_MEDIAPLAYERCHANNELLIST) ? true : false
-                    color: Style.color.text
-                    opacity: cardSwipeView.currentIndex === features.indexOf(
-                                 "MEDIAPLAYERCHANNELLIST") ? 1 : 0.5
-                    text: Style.icon.playlist
-                    renderType: Text.NativeRendering
-                    width: 60
-                    height: 60
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font {
-                        family: "icons"
-                        pixelSize: 80
-                    }
+                    //ChannelList
+                    Text {
+                        visible: obj.isSupported(
+                                     MediaPlayer.F_MEDIAPLAYERCHANNELLIST) ? true : false
+                        color: Style.color.text
+                        opacity: cardSwipeView.currentIndex === features.indexOf(
+                                     "MEDIAPLAYERCHANNELLIST") ? 1 : 0.5
+                        text: Style.icon.playlist
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {
+                            family: "icons"
+                            pixelSize: 80
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        width: parent.width + 30
-                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            width: parent.width + 30
+                            height: width
 
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click)
-                            cardSwipeView.setCurrentIndex(
-                                        features.indexOf(
-                                            "MEDIAPLAYERCHANNELLIST"))
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click)
+                                cardSwipeView.setCurrentIndex(
+                                            features.indexOf(
+                                                "MEDIAPLAYERCHANNELLIST"))
+                            }
                         }
                     }
-                }
 
-                //MediaPlayerRemote
-                Text {
-                    visible: obj.isSupported(
-                                 MediaPlayer.F_MEDIAPLAYERREMOTE) ? true : false
-                    color: Style.color.text
-                    opacity: cardSwipeView.currentIndex === features.indexOf(
-                                 "MEDIAPLAYERREMOTE") ? 1 : 0.5
-                    text: Style.icon.remote
-                    renderType: Text.NativeRendering
-                    width: 60
-                    height: 60
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font {
-                        family: "icons"
-                        pixelSize: 80
-                    }
+                    //MediaPlayerRemote
+                    Text {
+                        visible: obj.isSupported(
+                                     MediaPlayer.F_MEDIAPLAYERREMOTE) ? true : false
+                        color: Style.color.text
+                        opacity: cardSwipeView.currentIndex === features.indexOf(
+                                     "MEDIAPLAYERREMOTE") ? 1 : 0.5
+                        text: Style.icon.remote
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {
+                            family: "icons"
+                            pixelSize: 80
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        width: parent.width + 30
-                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            width: parent.width + 30
+                            height: width
 
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click)
-                            cardSwipeView.setCurrentIndex(
-                                        features.indexOf("MEDIAPLAYERREMOTE"))
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click)
+                                cardSwipeView.setCurrentIndex(
+                                            features.indexOf(
+                                                "MEDIAPLAYERREMOTE"))
+                            }
                         }
                     }
-                }
 
-                //EPGView
-                Text {
-                    visible: obj.isSupported(
-                                 MediaPlayer.F_MEDIAPLAYEREPGVIEW) ? true : false
-                    color: Style.color.text
-                    opacity: cardSwipeView.currentIndex === features.indexOf(
-                                 "MEDIAPLAYEREPGVIEW") ? 1 : 0.5
-                    text: Style.icon.playlist
-                    renderType: Text.NativeRendering
-                    width: 60
-                    height: 60
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font {
-                        family: "icons"
-                        pixelSize: 80
-                    }
+                    //EPGView
+                    Text {
+                        visible: obj.isSupported(
+                                     MediaPlayer.F_MEDIAPLAYEREPGVIEW) ? true : false
+                        color: Style.color.text
+                        opacity: cardSwipeView.currentIndex === features.indexOf(
+                                     "MEDIAPLAYEREPGVIEW") ? 1 : 0.5
+                        text: Style.icon.playlist
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {
+                            family: "icons"
+                            pixelSize: 80
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        width: parent.width + 30
-                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            width: parent.width + 30
+                            height: width
 
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click)
-                            cardSwipeView.setCurrentIndex(
-                                        features.indexOf("MEDIAPLAYEREPGVIEW"))
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click)
+                                cardSwipeView.setCurrentIndex(
+                                            features.indexOf(
+                                                "MEDIAPLAYEREPGVIEW"))
+                            }
                         }
                     }
-                }
 
-                // speakers
-                Text {
-                    visible: obj.isSupported(
-                                 MediaPlayer.F_SPEAKER_CONTROL) ? true : false
-                    color: Style.color.text
-                    opacity: cardSwipeView.currentIndex === features.indexOf(
-                                 "SPEAKER_CONTROL") ? 1 : 0.5
-                    text: Style.icon.speaker
-                    renderType: Text.NativeRendering
-                    width: 60
-                    height: 60
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font {
-                        family: "icons"
-                        pixelSize: 80
-                    }
+                    // speakers
+                    Text {
+                        visible: obj.isSupported(
+                                     MediaPlayer.F_SPEAKER_CONTROL) ? true : false
+                        color: Style.color.text
+                        opacity: cardSwipeView.currentIndex === features.indexOf(
+                                     "SPEAKER_CONTROL") ? 1 : 0.5
+                        text: Style.icon.speaker
+                        renderType: Text.NativeRendering
+                        width: 60
+                        height: 60
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font {
+                            family: "icons"
+                            pixelSize: 80
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        width: parent.width + 30
-                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            width: parent.width + 30
+                            height: width
 
-                        onClicked: {
-                            Haptic.playEffect(Haptic.Click)
-                            cardSwipeView.setCurrentIndex(
-                                        features.indexOf("SPEAKER_CONTROL"))
+                            onClicked: {
+                                Haptic.playEffect(Haptic.Click)
+                                cardSwipeView.setCurrentIndex(
+                                            features.indexOf("SPEAKER_CONTROL"))
+                            }
                         }
                     }
                 }
