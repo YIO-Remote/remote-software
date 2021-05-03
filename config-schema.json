@@ -147,6 +147,7 @@
                   "type": "string",
                   "enum": [
                     "SOURCE",
+                    "BACK",
                     "APP_NAME",
                     "VOLUME",
                     "VOLUME_UP",
@@ -174,7 +175,7 @@
                     "SEARCH",
                     "LIST",
                     "SPEAKER_CONTROL",
-                    "TVCHANNELLIST",
+                    "MEDIAPLAYERCHANNELLIST",
                     "MEDIAPLAYERREMOTE",
                     "MEDIAPLAYEREPGVIEW",
                     "UP",

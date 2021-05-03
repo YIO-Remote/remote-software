@@ -108,33 +108,33 @@ Item {
         enabled: miniMediaPlayer.state == "open" && (StandbyControl.mode === StandbyControl.ON || StandbyControl.mode === StandbyControl.DIM)
 
         onButtonPressed: {
-            switch (button) {
-            case ButtonHandler.DPAD_MIDDLE:
-                if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ) {
-                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
-                } else {
-                    entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+                    switch (button) {
+                    case ButtonHandler.DPAD_MIDDLE:
+                        if (entities.mediaplayersPlaying[mediaPlayers.currentIndex].state === MediaPlayer.PLAYING ) {
+                            entities.mediaplayersPlaying[mediaPlayers.currentIndex].pause();
+                        } else {
+                            entities.mediaplayersPlaying[mediaPlayers.currentIndex].play();
+                        }
+                        break;
+                    case ButtonHandler.DPAD_RIGHT:
+                        if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
+                            mediaPlayers.currentIndex += 1;
+                        } else {
+                            Haptic.playEffect(Haptic.Buzz);
+                        }
+                        break;
+                    case ButtonHandler.DPAD_LEFT:
+                        if (mediaPlayers.currentIndex > 0) {
+                            mediaPlayers.currentIndex -= 1;
+                        } else {
+                            Haptic.playEffect(Haptic.Buzz);
+                        }
+                        break;
+                    case ButtonHandler.TOP_RIGHT:
+                        miniMediaPlayer.state = "closed";
+                        break;
+                    }
                 }
-                break;
-            case ButtonHandler.DPAD_RIGHT:
-                if (mediaPlayers.currentIndex < mediaPlayers.count-1) {
-                    mediaPlayers.currentIndex += 1;
-                } else {
-                    Haptic.playEffect(Haptic.Buzz);
-                }
-                break;
-            case ButtonHandler.DPAD_LEFT:
-                if (mediaPlayers.currentIndex > 0) {
-                    mediaPlayers.currentIndex -= 1;
-                } else {
-                    Haptic.playEffect(Haptic.Buzz);
-                }
-                break;
-            case ButtonHandler.TOP_RIGHT:
-                miniMediaPlayer.state = "closed";
-                break;
-            }
-        }
     }
 
     Connections {

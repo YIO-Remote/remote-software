@@ -51,6 +51,7 @@ Rectangle {
             PropertyChanges {target: songTitle; opacity: 1; anchors.topMargin: 20 }
             PropertyChanges {target: artist; opacity: 1 }
             PropertyChanges {target: playButton; opacity: 1; anchors.bottomMargin: 80 }
+            PropertyChanges {target: stopButton; opacity: 1; anchors.bottomMargin: 80 }
             PropertyChanges {target: prevButton; opacity: 1 }
             PropertyChanges {target: nextButton; opacity: 1 }
             PropertyChanges {target: progressBar; opacity: 1 }
@@ -61,6 +62,7 @@ Rectangle {
             PropertyChanges {target: songTitle; opacity: 0; anchors.topMargin: 40 }
             PropertyChanges {target: artist; opacity: 0 }
             PropertyChanges {target: playButton; opacity: 0; anchors.bottomMargin: 40 }
+            PropertyChanges {target: stopButton; opacity: 0; anchors.bottomMargin: 40 }
             PropertyChanges {target: prevButton; opacity: 0 }
             PropertyChanges {target: nextButton; opacity: 0 }
             PropertyChanges {target: progressBar; opacity: 0 }
@@ -95,6 +97,8 @@ Rectangle {
                 ParallelAnimation {
                     PropertyAnimation { target: playButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     PropertyAnimation { target: playButton; properties: "anchors.bottomMargin"; easing.type: Easing.OutBack; easing.overshoot: 1.4; duration: 300 }
+                    PropertyAnimation { target: stopButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
+                    PropertyAnimation { target: stopButton; properties: "anchors.bottomMargin"; easing.type: Easing.OutBack; easing.overshoot: 1.4; duration: 300 }
                     PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                     PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 300 }
                 }
@@ -107,6 +111,7 @@ Rectangle {
             PropertyAnimation { target: artist; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
             PropertyAnimation { target: progressBar; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
             PropertyAnimation { target: playButton; properties: "opacity, anchors.bottomMargin"; easing.type: Easing.OutExpo; duration: 200 }
+            PropertyAnimation { target: stopButton; properties: "opacity, anchors.bottomMargin"; easing.type: Easing.OutExpo; duration: 200 }
             PropertyAnimation { target: prevButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
             PropertyAnimation { target: nextButton; properties: "opacity"; easing.type: Easing.OutExpo; duration: 200 }
         }
@@ -259,6 +264,7 @@ Rectangle {
         }
     }
 
+
     Item {
         id: playButton
         width: 120; height: 120
@@ -309,6 +315,45 @@ Rectangle {
         }
     }
 
+    Item {
+        id: stopButton
+        width: 120; height: 120
+
+        anchors { horizontalCenter:prevButton.right; bottom: parent.bottom; bottomMargin: 80 }
+
+
+        Text {
+            color: Style.color.text
+            text: Style.icon.stop
+            renderType: Text.NativeRendering
+            width: 85; height: 85
+            verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter
+            font {family: "icons"; pixelSize: 80 }
+            anchors.centerIn: parent
+            opacity: if (obj.isSupported(MediaPlayer.F_STOP)) {
+                         obj.state === 3 ? 1 : 0
+                     } else {
+                         opacity: 0
+                     }
+
+            Behavior on opacity {
+                NumberAnimation { duration: 100; easing.type: Easing.OutExpo }
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                Haptic.playEffect(Haptic.Click);
+                if (obj.state === 3) {
+                    obj.stop();
+                } else {
+
+                }
+            }
+        }
+    }
     Item {
         id: nextButton
         width: 120; height: 120

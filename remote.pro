@@ -519,6 +519,17 @@ win32 {
 
 DISTFILES += \
     components/FpsItem.qml \
+    components/media_player/ui/ChildModel.qml \
+    components/media_player/ui/Shared.qml \
+    components/media_player/ui/model.qml \
+    components/remote/ui/ir/Button.qml \
+    components/remote/ui/ir/Card.qml \
+    components/remote/ui/ir/CardButtons.qml \
+    components/remote/ui/ir/CardButtonsCustom.qml \
+    components/remote/ui/ir/CardButtonsFunction.qml \
+    components/remote/ui/ir/CardButtonsTransport.qml \
+    components/remote/ui/ir/CardChannels.qml \
+    components/remote/ui/ir/IconButton.qml \
     config.json \
     config-schema.json \
     dependencies.cfg \

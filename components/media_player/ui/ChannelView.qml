@@ -42,7 +42,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    property var tvchannelModel
+    property var channelModel
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     MediaPlayerUtils {
         id: mediaplayerUtils
-        imageURL: tvchannelModel.imageUrl
+        imageURL: channelModel.imageUrl
     }
 
 
@@ -86,7 +86,7 @@ Rectangle {
             id: image
             width: 280; height: 280
             anchors { horizontalCenter: parent.horizontalCenter; top: parent.top; topMargin: 100 }
-            url: tvchannelModel.imageUrl === "" ? "qrc:/images/mini-music-player/no_image.png" : tvchannelModel.imageUrl
+            url: channelModel.imageUrl === "" ? "qrc:/images/mini-music-player/no_image.png" : channelModel.imageUrl
         }
 
         Text {
@@ -103,7 +103,7 @@ Rectangle {
                 anchors.centerIn: parent
                 onClicked: {
                     Haptic.playEffect(Haptic.Click);
-                    obj.playMedia(tvchannelModel.id, tvchannelModel.type);
+                    obj.playMedia(channelModel.id, channelModel.type);
                 }
             }
         }
@@ -111,7 +111,7 @@ Rectangle {
         Text {
             id: time
             color: Style.color.text
-            text: tvchannelModel.time
+            text: channelModel.time
             horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
@@ -124,7 +124,7 @@ Rectangle {
         Text {
             id: title
             color: Style.color.text
-            text: tvchannelModel.title
+            text: channelModel.title
             horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
@@ -137,7 +137,7 @@ Rectangle {
         Text {
             id: artist
             color: Style.color.text
-            text: tvchannelModel.subtitle
+            text: channelModel.subtitle
             horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
             wrapMode: Text.NoWrap
@@ -153,7 +153,7 @@ Rectangle {
             interactive: false
             anchors { top: artist.bottom; topMargin: 40; horizontalCenter: parent.horizontalCenter }
 
-            model: tvchannelModel.model
+            model: channelModel.model
             delegate: channelThumbnail
         }
 
