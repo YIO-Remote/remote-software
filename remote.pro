@@ -518,6 +518,7 @@ win32 {
 }
 
 DISTFILES += \
+    components/ButtonBase.qml \
     components/FpsItem.qml \
     components/media_player/ui/ChildModel.qml \
     components/media_player/ui/Shared.qml \

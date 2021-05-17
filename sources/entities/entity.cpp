@@ -193,6 +193,7 @@ void Entity::setConnected(bool value) {
         m_connected = value;
         emit connectedChanged();
     }
+
 }
 
 void Entity::setFavorite(bool value) {
