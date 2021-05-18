@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
     // Attention: app might terminate within process depending on cmd line arguments!
     cmdLineHandler.process(app, resourcePath, environment->getConfigurationPath());
 
-    Logger *logger = Logger::instance();
+    Logger* logger = Logger::instance();
 
     // LOAD CONFIG
     bool configError = false;
@@ -120,9 +120,8 @@ int main(int argc, char* argv[]) {
         path = resourcePath + "/log";
     }
 
-    QObject::connect(logger, &Logger::userError, [&notifications](const QString& error) {
-        notifications.add(true, error);
-    });
+    QObject::connect(logger, &Logger::userError,
+                     [&notifications](const QString& error) { notifications.add(true, error); });
 
     logger->setDefaultHandlerEnabled(logCfg.value("console", true).toBool());
     logger->setLogDirectory(path);
@@ -154,8 +153,8 @@ int main(int argc, char* argv[]) {
                                            "Not creatable as it is an information object only");
 
     qRegisterMetaType<States>("States");
-    qmlRegisterUncreatableType<IntegrationConnectionStates>("IntegrationConnectionStates", 1, 0, "IntegrationConnectionStates", "Not creatable as it is an enum type");
-
+    qmlRegisterUncreatableType<IntegrationConnectionStates>(
+        "IntegrationConnectionStates", 1, 0, "IntegrationConnectionStates", "Not creatable as it is an enum type");
 
     // DRIVERS
     HardwareFactory* hwFactory = HardwareFactory::build(
@@ -207,8 +206,8 @@ int main(int argc, char* argv[]) {
 
     // YIO API
     YioAPI* yioapi = YioAPI::getInstance();
-    bool ok;
-    int webSocketPort = qEnvironmentVariableIntValue("YIO_WEBSOCKET_PORT", &ok);
+    bool    ok;
+    int     webSocketPort = qEnvironmentVariableIntValue("YIO_WEBSOCKET_PORT", &ok);
     yioapi->setWebSocketPort(ok ? webSocketPort : 946);
     yioapi->setLogMsgPayload(qEnvironmentVariableIntValue("YIO_API_LOG_MSG_PAYLOAD") == 1);
     engine.rootContext()->setContextProperty("api", yioapi);
