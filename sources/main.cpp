@@ -153,6 +153,10 @@ int main(int argc, char* argv[]) {
     qmlRegisterUncreatableType<WifiStatus>("WifiControl", 1, 0, "WifiStatus",
                                            "Not creatable as it is an information object only");
 
+    qRegisterMetaType<States>("States");
+    qmlRegisterUncreatableType<IntegrationConnectionStates>("IntegrationConnectionStates", 1, 0, "IntegrationConnectionStates", "Not creatable as it is an enum type");
+
+
     // DRIVERS
     HardwareFactory* hwFactory = HardwareFactory::build(
         cmdLineHandler.hardwareConfigFile(), cmdLineHandler.hardwareConfigSchemaFile(), cmdLineHandler.getProfile());
