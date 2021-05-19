@@ -43,14 +43,6 @@ Rectangle {
     Connections {
         target: obj
 
-        onStateChanged: {
-            if (obj.state === 2) {
-                buttonContainer.opacity = 0.3
-                buttonContainer.enabled = false
-                buttonContainer.close()
-            }
-        }
-
         onConnectedChanged: {
             if (obj.connected) {
                 buttonContainer.opacity = 1

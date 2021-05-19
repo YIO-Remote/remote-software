@@ -24,9 +24,12 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Style 1.0
 
+
 import Haptic 1.0
 
 import "qrc:/basic_ui" as BasicUI
+
+
 
 Rectangle {
     id: main
